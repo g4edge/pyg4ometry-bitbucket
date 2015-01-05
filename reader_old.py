@@ -201,7 +201,7 @@ class reader :
                 
             print data[1]
         
-            #v1.exportSTL(stlFile)
+            # v1.exportSTL(stlFile)
             v1.exportSAT(satFile)
 
 
@@ -210,7 +210,8 @@ class reader :
             f.write('import acis "/Users/robertainsworth/bdsim/utils/pyFluka/pyFluka/'+satFile+'" attributes_on separate_bodies\n')
         v1.close()
         f.close()
-        os.system('/Applications/Cubit-13.1/Cubit.app/Contents/MacOS/cubitcl -input main.jou -nographics -nojournal -batch > /dev/null')
+#        os.system('/Applications/Cubit-13.1/Cubit.app/Contents/MacOS/cubitcl -input main.jou -nographics -nojournal -batch > /dev/null')
+        os.system('/Applications/Cubit.app/Contents/MacOS/cubitcl -input main.jou -nographics -nojournal -batch > /dev/null')
 
         transList = pl.array(transList)
 
@@ -289,7 +290,7 @@ class reader :
         v1.close()
         subRegionList.append(bodyList)    
         subRegionOpList.append(bodyOpList)    
-        os.system('/Applications/Cubit-13.1/Cubit.app/Contents/MacOS/cubitcl -input main.jou -nographics -nojournal -batch > /dev/null')
+        os.system('/Applications/Cubit.app/Contents/MacOS/cubitcl -input main.jou -nographics -nojournal -batch > /dev/null')
         transList = pl.array(transList)
         return subRegionList,subRegionOpList
 
@@ -311,4 +312,4 @@ class reader :
         regJ.f.write('unite all\n')
         regJ.exportSAT(region+'.sat')
         regJ.close()
-        os.system('/Applications/Cubit-13.1/Cubit.app/Contents/MacOS/cubitcl -input region.jou -nographics -nojournal -batch > /dev/null')
+        os.system('/Applications/Cubit.app/Contents/MacOS/cubitcl -input region.jou -nographics -nojournal -batch > /dev/null')
