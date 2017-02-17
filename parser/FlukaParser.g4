@@ -51,7 +51,7 @@ lattice
 //     ;
 
 booleanExpression
-    : LParen booleanExpression RParen
+    : LParen booleanExpression+ RParen
     | Complement booleanExpression
     | (Subtraction | Intersection) (booleanExpression | ID)
     ;
