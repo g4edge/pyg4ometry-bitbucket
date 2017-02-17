@@ -71,7 +71,7 @@ translat
     ;
 
 transform
-    : StartTransform ID body+ EndTransform
+    : StartTransform (ID | Integer) body+ EndTransform
     ;
 
 
