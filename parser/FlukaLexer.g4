@@ -68,7 +68,7 @@ BodyCode
     ;
 
 Lattice
-    : 'L' {getCharPositionInLine() == 1}? 'ATTICE' ~[\r\n] -> skip
+    : 'L' {getCharPositionInLine() == 1}? 'ATTICE'
     ;
 
 RegionName

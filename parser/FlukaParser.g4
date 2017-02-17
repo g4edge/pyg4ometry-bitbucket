@@ -27,6 +27,7 @@ geo
 geoCard
     : body
     | region
+    | lattice
     ;
 
 body
@@ -37,6 +38,10 @@ body
 
 region
     : RegionName Integer (booleanExpression)+
+    ;
+
+lattice
+    : Lattice ID+
     ;
 
 // booleanExpression
