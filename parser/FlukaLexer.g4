@@ -10,17 +10,6 @@ lexer grammar FlukaLexer;
 
 
 
-// Atoms.
-// InLineCommentNorm
-//     : '!' ~[\r\n]*
-// 	-> skip
-//     ;
-
-// // Currently skip preprocessor directives.
-// LineCommentNorm
-//     : '*' {getCharPositionInLine() != 1}? ~[\r\n]*
-// 	-> skip
-//     ;
 
 
 GeoBegin
@@ -28,20 +17,8 @@ GeoBegin
 	-> pushMode(geometry) // , skip
     ;
 
-// GeoBegin
-//     : GeoStart GeoTitle
-// 	-> mode(geometry)
-//     ;
 
-// fragment
-// GeoStart
-//     :  .*? ('GEOBEGIN'|EOF) ~[\r\n]*
-//     ;
-// GeoTitle
-//     : ~[\r\n
 
-// AfterGeo
-//     :
 
 mode ignoreRest;
 
