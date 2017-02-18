@@ -9,14 +9,41 @@ lexer grammar FlukaLexer;
 // }
 
 
+InLineComment
+    : '!' ~[\r\n]*
+	-> skip
+    ;
 
+Whitespace
+    : [ \t]
+	->skip
+    ;
 
+// Currently skipping preprocessor directives.
+LineComment
+    : ('*'|'#') {getCharPositionInLine() == 1}? ~[\r\n]*
+	-> skip
+    ;
 
 GeoBegin
-    : .*? 'GEOBEGIN' ~[\r\n]*
+    : 'G' {getCharPositionInLine() == 1}? 'EOBEGIN' ~[\r\n]*
 	-> pushMode(geometry) // , skip
     ;
 
+Keyword
+    : [A-Za-z] {getCharPositionInLine() == 1}? [A-Za-z0-9_]+
+	-> skip
+    ;
+
+ID
+    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_]*
+	-> skip
+    ;
+
+Newline
+    : '\r'? '\n'
+	-> skip
+    ;
 
 
 
@@ -99,29 +126,29 @@ Digit
     ;
 
 
-Newline
+GeoNewline
     : '\r'? '\n'
 	-> channel(HIDDEN)
     ;
 
-Whitespace
+GeoWhitespace
     : [ \t]
 	->channel(HIDDEN)
     ;
 
-// An ID does not start at the beginning of the line.
-ID
+// An GeoID does not start at the beginning of the line.
+GeoID
     : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_]*
     ;
 
 // Atoms.
-InLineComment
+GeoInLineComment
     : '!' ~[\r\n]*
 	-> skip
     ;
 
 // Currently skip preprocessor directives.
-LineComment
+GeoLineComment
     : ('*'|'#') {getCharPositionInLine() == 1}? ~[\r\n]*
 	-> skip
     ;
