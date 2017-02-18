@@ -8,6 +8,13 @@ lexer grammar FlukaLexer;
 //     }
 // }
 
+tokens{
+    Integer,
+    Float,
+    ID
+}
+
+// This is the default mode.
 
 InLineComment
     : '!' ~[\r\n]*
@@ -45,6 +52,24 @@ Newline
 	-> skip
     ;
 
+Integer
+    : '-'? Digit+ -> skip
+    ;
+
+Float
+    : ('+' | '-'?)
+	( // (1.3 | 1. | 1E5 | 1.E5 | 0041E5 | 1.14E+04
+	    Digit+ '.'? Digit* 'E'? ('+'|'-')? Digit*
+	|
+	    '.' Digit+  // .123
+	)
+	-> skip
+    ;
+
+fragment
+Digit
+    : [0-9]
+    ;
 
 
 mode ignoreRest;
@@ -107,21 +132,22 @@ EndTransform
     :'$' {getCharPositionInLine() == 1}? 'end_transform'
     ;
 
-Integer
-    : '-'? Digit+
+GeoInteger
+    : '-'? GeoDigit+ ->type(Integer)
     ;
 
-Float
+GeoFloat
     : ('+' | '-'?)
 	( // (1.3 | 1. | 1E5 | 1.E5 | 0041E5 | 1.14E+04
-	    Digit+ '.'? Digit* 'E'? ('+'|'-')? Digit*
+	    GeoDigit+ '.'? GeoDigit* 'E'? ('+'|'-')? GeoDigit*
 	|
-	    '.' Digit+  // .123
+	    '.' GeoDigit+  // .123
 	)
+	-> type(Float)
     ;
 
 fragment
-Digit
+GeoDigit
     : [0-9]
     ;
 
@@ -139,6 +165,7 @@ GeoWhitespace
 // An GeoID does not start at the beginning of the line.
 GeoID
     : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_]*
+	-> type(ID)
     ;
 
 // Atoms.

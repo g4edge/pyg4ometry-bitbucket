@@ -32,8 +32,8 @@ geoCard
 
 body
     : geoDirective
-    | BodyCode GeoID Float+
-    | BodyCode (Delim (GeoID|Float)?)*
+    | BodyCode ID Float+
+    | BodyCode (Delim (ID|Float)?)*
     ;
 
 region
@@ -41,19 +41,19 @@ region
     ;
 
 lattice
-    : Lattice GeoID+
+    : Lattice ID+
     ;
 
 // booleanExpression
 //     : LParen booleanExpression RParen
 //     | Complement booleanExpression (Complement booleanExpression)*
-//     | ((Intersection|Subtraction) GeoID)+
+//     | ((Intersection|Subtraction) ID)+
 //     ;
 
 booleanExpression
     : LParen booleanExpression+ RParen
     | Complement booleanExpression
-    | (Subtraction | Intersection) (booleanExpression | GeoID)
+    | (Subtraction | Intersection) (booleanExpression | ID)
     ;
 
 geoDirective
@@ -67,11 +67,11 @@ expansion
     ;
 
 translat
-    : StartTranslat Float Float Float body+ EndTranslat
+    : StartTranslat (Float Float Float | Integer) body+ EndTranslat
     ;
 
 transform
-    : StartTransform (GeoID | Integer) body+ EndTransform
+    : StartTransform (ID | Integer) body+ EndTransform
     ;
 
 
