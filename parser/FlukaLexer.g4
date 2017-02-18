@@ -71,16 +71,11 @@ Digit
     : [0-9]
     ;
 
-
-mode ignoreRest;
-
-Stuff : .*? EOF -> skip ;
-
 mode geometry;
 
 GeoEnd
     : 'G' {getCharPositionInLine() == 1}? 'EOEND'
-	-> mode(ignoreRest) // , skip
+	-> popMode
     ;
 
 // GeoTitle
