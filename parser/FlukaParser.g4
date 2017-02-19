@@ -29,7 +29,7 @@ geoCard
 
 body
     : geoDirective
-    | BodyCode ID Float+
+    | BodyCode (ID | Integer) Float+
     | BodyCode (Delim (ID|Float)?)*
     ;
 
