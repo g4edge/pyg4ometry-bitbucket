@@ -95,7 +95,7 @@ StartExpansion
     ;
 
 StartTranslat
-    : /* '$' {getCharPositionInLine() == 1}? */ '$start_translat'
+    :  '$' {getCharPositionInLine() == 1}? 'start_translat'
     ;
 
 StartTransform
