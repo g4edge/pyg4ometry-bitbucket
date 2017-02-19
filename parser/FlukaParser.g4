@@ -10,15 +10,12 @@ model
     : command+ ;
 
 command
-    // : geoCommand
-    : GeoBegin geo GeoEnd
+    : geoBegin geo GeoEnd
     ;
 
-// /* Geometry rules: */
-// geoCommand
-//     : geoCard
-//     | geoDirective
-//     ;
+geoBegin
+    : GeoBegin (Float | Integer | ID)*
+    ;
 
 geo
     : /*GeoBegin*/ geoCard+ // GeoEnd

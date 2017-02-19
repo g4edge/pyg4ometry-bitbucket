@@ -43,7 +43,7 @@ Keyword
     ;
 
 ID
-    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_]*
+    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
 	-> skip
     ;
 
@@ -159,7 +159,7 @@ GeoWhitespace
 
 // An GeoID does not start at the beginning of the line.
 GeoID
-    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_]*
+    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
 	-> type(ID)
     ;
 
