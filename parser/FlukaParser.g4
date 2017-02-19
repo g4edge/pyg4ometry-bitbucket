@@ -18,7 +18,7 @@ geoBegin
     ;
 
 geo
-    : /*GeoBegin*/ geoCard+ // GeoEnd
+    : geoCard+
     ;
 
 geoCard
@@ -40,12 +40,6 @@ region
 lattice
     : Lattice ID+
     ;
-
-// booleanExpression
-//     : LParen booleanExpression RParen
-//     | Complement booleanExpression (Complement booleanExpression)*
-//     | ((Intersection|Subtraction) ID)+
-//     ;
 
 booleanExpression
     : LParen booleanExpression+ RParen
@@ -70,15 +64,3 @@ translat
 transform
     : StartTransform (ID | Integer) body+ EndTransform
     ;
-
-
-// pre_directive
-//     : if (command | pre_directive)+ endif
-//     | elif (command | predirective)+
-//     | define
-//     ;
-
-// if
-
-
-/* End Geometry rules */

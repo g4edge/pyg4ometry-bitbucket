@@ -1,13 +1,5 @@
 lexer grammar FlukaLexer;
 
-// @lexer::members {
-//     int lastTokenType = 0;
-//     public void emit(Token token) {
-// 	super.emit(token);
-// 	lastTokenType = token.getType();
-//     }
-// }
-
 tokens{
     Integer,
     Float,
@@ -34,7 +26,7 @@ LineComment
 
 GeoBegin
     : 'G' {getCharPositionInLine() == 1}? 'EOBEGIN' ~[\r\n]*
-	-> pushMode(geometry) // , skip
+	-> pushMode(geometry)
     ;
 
 Keyword
@@ -78,10 +70,6 @@ GeoEnd
 	-> popMode
     ;
 
-// GeoTitle
-//      : .*? '\n' // {lastTokenType == GeoBegin}? ~[\r\n]*
-//      ;
-
 End
     : 'E' {getCharPositionInLine() == 1}? 'ND'
     -> skip
@@ -113,7 +101,6 @@ StartTranslat
 StartTransform
     : '$' {getCharPositionInLine() == 1}? 'start_transform'
     ;
-//  How about sending them to another channel?
 
 EndExpansion
     : '$' {getCharPositionInLine() == 1}? 'end_expansion'
@@ -157,13 +144,12 @@ GeoWhitespace
 	->channel(HIDDEN)
     ;
 
-// An GeoID does not start at the beginning of the line.
+// A GeoID does not start at the beginning of the line.
 GeoID
     : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
 	-> type(ID)
     ;
 
-// Atoms.
 GeoInLineComment
     : '!' ~[\r\n]*
 	-> skip
@@ -175,40 +161,9 @@ GeoLineComment
 	-> skip
     ;
 
-Delim
-    : [,:;/]
-    ;
-
-Intersection: '+' ;
-Subtraction : '-' ;
-Complement : '|' ;
-LParen : '(' ;
-RParen : ')' ;
-
-/* case insensitive lexer matching */
-// fragment A:('a'|'A');
-// fragment B:('b'|'B');
-// fragment C:('c'|'C');
-// fragment D:('d'|'D');
-// fragment E:('e'|'E');
-// fragment F:('f'|'F');
-// fragment G:('g'|'G');
-// fragment H:('h'|'H');
-// fragment I:('i'|'I');
-// fragment J:('j'|'J');
-// fragment K:('k'|'K');
-// fragment L:('l'|'L');
-// fragment M:('m'|'M');
-// fragment N:('n'|'N');
-// fragment O:('o'|'O');
-// fragment P:('p'|'P');
-// fragment Q:('q'|'Q');
-// fragment R:('r'|'R');
-// fragment S:('s'|'S');
-// fragment T:('t'|'T');
-// fragment U:('u'|'U');
-// fragment V:('v'|'V');
-// fragment W:('w'|'W');
-// fragment X:('x'|'X');
-// fragment Y:('y'|'Y');
-// fragment Z:('z'|'Z');
+Delim        : [,:;/] ;
+Intersection : '+' ;
+Subtraction  : '-' ;
+Complement   : '|' ;
+LParen       : '(' ;
+RParen       : ')' ;
