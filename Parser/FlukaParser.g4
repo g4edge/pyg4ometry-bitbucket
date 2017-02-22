@@ -1,13 +1,14 @@
 parser grammar FlukaParser ;
 
 options {
-    tokenVocab=FlukaLexer;
-//    language=Python2 ;
+tokenVocab=FlukaLexer;
+language=Python2 ;
 }
 
 
 model
-    : command+ ;
+    : command+
+    ;
 
 command
     : geoBegin geo GeoEnd
