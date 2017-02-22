@@ -141,7 +141,8 @@ GeoNewline
 
 GeoWhitespace
     : [ \t]
-	->channel(HIDDEN)
+	->skip
+// 	->channel(HIDDEN)
     ;
 
 // A GeoID does not start at the beginning of the line.
