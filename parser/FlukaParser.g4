@@ -28,9 +28,9 @@ geoCard
     ;
 
 body
-    : geoDirective
-    | BodyCode (ID | Integer) Float+
-    | BodyCode (Delim (ID|Float)?)*
+    : geoDirective                     # GeometryDirective
+    | BodyCode (ID | Integer) Float+   # BodyDefSpaceDelim
+    | BodyCode (Delim (ID|Float)?)*    # BodyDefPunctDelim
     ;
 
 region
