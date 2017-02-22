@@ -20,22 +20,22 @@ Whitespace
 
 // Currently skipping preprocessor directives.
 LineComment
-    : ('*'|'#') {getCharPositionInLine() == 1}? ~[\r\n]*
+    : ('*'|'#') {self.getCharPositionInLine() == 1}? ~[\r\n]*
 	-> skip
     ;
 
 GeoBegin
-    : 'G' {getCharPositionInLine() == 1}? 'EOBEGIN' ~[\r\n]*
+    : 'G' {self.getCharPositionInLine() == 1}? 'EOBEGIN' ~[\r\n]*
 	-> pushMode(geometry)
     ;
 
 Keyword
-    : [A-Za-z] {getCharPositionInLine() == 1}? [A-Za-z0-9_]+
+    : [A-Za-z] {self.getCharPositionInLine() == 1}? [A-Za-z0-9_]+
 	-> skip
     ;
 
 ID
-    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
+    : [A-Za-z] {self.getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
 	-> skip
     ;
 
@@ -66,52 +66,52 @@ Digit
 mode geometry;
 
 GeoEnd
-    : 'G' {getCharPositionInLine() == 1}? 'EOEND'
+    : 'G' {self.getCharPositionInLine() == 1}? 'EOEND'
 	-> popMode
     ;
 
 End
-    : 'E' {getCharPositionInLine() == 1}? 'ND'
+    : 'E' {self.getCharPositionInLine() == 1}? 'ND'
     -> skip
     ;
 
 BodyCode
-    : [A-Z] {getCharPositionInLine() == 1}? [A-Z] [A-Z]
+    : [A-Z] {self.getCharPositionInLine() == 1}? [A-Z] [A-Z]
     ;
 
 Lattice
-    : 'L' {getCharPositionInLine() == 1}? 'ATTICE'
+    : 'L' {self.getCharPositionInLine() == 1}? 'ATTICE'
     ;
 
 RegionName
-    : [A-Za-z] {getCharPositionInLine() == 1}? [A-Za-z0-9_]+
+    : [A-Za-z] {self.getCharPositionInLine() == 1}? [A-Za-z0-9_]+
     ;
 // $Start_expansion takes precedence over $Start_translat, which in turn takes
 // precedence over $Start_transform.  Leave this until the visitor to resolve (?)
 
 // Geometry directives:
 StartExpansion
-    : '$' {getCharPositionInLine() == 1}? 'start_expansion'
+    : '$' {self.getCharPositionInLine() == 1}? 'start_expansion'
     ;
 
 StartTranslat
-    :  '$' {getCharPositionInLine() == 1}? 'start_translat'
+    :  '$' {self.getCharPositionInLine() == 1}? 'start_translat'
     ;
 
 StartTransform
-    : '$' {getCharPositionInLine() == 1}? 'start_transform'
+    : '$' {self.getCharPositionInLine() == 1}? 'start_transform'
     ;
 
 EndExpansion
-    : '$' {getCharPositionInLine() == 1}? 'end_expansion'
+    : '$' {self.getCharPositionInLine() == 1}? 'end_expansion'
     ;
 
 EndTranslat
-    : '$' {getCharPositionInLine() == 1}? 'end_translat'
+    : '$' {self.getCharPositionInLine() == 1}? 'end_translat'
     ;
 
 EndTransform
-    :'$' {getCharPositionInLine() == 1}? 'end_transform'
+    :'$' {self.getCharPositionInLine() == 1}? 'end_transform'
     ;
 
 GeoInteger
@@ -147,7 +147,7 @@ GeoWhitespace
 
 // A GeoID does not start at the beginning of the line.
 GeoID
-    : [A-Za-z] {getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
+    : [A-Za-z] {self.getCharPositionInLine() != 1}? [A-Za-z0-9_-]*
 	-> type(ID)
     ;
 
@@ -158,7 +158,7 @@ GeoInLineComment
 
 // Currently skip preprocessor directives.
 GeoLineComment
-    : ('*'|'#') {getCharPositionInLine() == 1}? ~[\r\n]*
+    : ('*'|'#') {self.getCharPositionInLine() == 1}? ~[\r\n]*
 	-> skip
     ;
 
