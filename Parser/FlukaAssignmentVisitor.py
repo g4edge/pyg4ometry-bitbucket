@@ -8,7 +8,7 @@ from IPython import embed
 
 class FlukaAssignmentVisitor(FlukaParserVisitor):
 
-    def __init(self):
+    def __init__(self):
         self.bodies = {}
 
     def visitBodyDefSpaceDelim(self, ctx):
