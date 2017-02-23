@@ -22,4 +22,5 @@ class FlukaAssignmentVisitor(FlukaParserVisitor):
 
         # Bodies are keyed with their IDs.  Entry is a tuple, first element is
         # the body type.  The rest are the data members in order.
-        self.bodies[body_ID] = tuple(floats.insert(0, body_type))
+        floats.insert(0, body_type)
+        self.bodies[body_ID] = tuple(floats)
