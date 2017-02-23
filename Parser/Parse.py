@@ -5,10 +5,27 @@ from FlukaLexer import FlukaLexer
 from FlukaParser import FlukaParser
 from FlukaTreeVisitor import FlukaTreeVisitor
 
+from IPython import embed
 
-def PreProcessFile(file):
+def PrePreProcessFile(filein):
+    '''
+    Make some edits to the file so that it can be used by cpp,
+    returning a file object.
+    '''
+    pass
+    # with open(filein, "r+") as model, open("prepreprocessed", "r+") as pp_model:
+    #     model_lines = model.readline()
+
+    #     for line in model_lines:
+
+
+# def _PrePreProcessLine(linein):
+#     if line[0] ==
+#     if line[:7] == 'define':
+
+def PreProcessFile(filein):
     # Can use cpp preprocessor with a bit of  prepreprocessing.
-    p1 = _sp.Popen(['sed', 's/^#if/& defined/g', file], stdout=_sp.PIPE)
+    p1 = _sp.Popen(['sed', 's/^#if/& defined/g', filein], stdout=_sp.PIPE)
     p2 = _sp.Popen(['sed', 's/^#elif/& defined/g'], stdin=p1.stdout,
                    stdout=_sp.PIPE)
     p1.stdout.close()
