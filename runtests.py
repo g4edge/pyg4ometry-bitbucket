@@ -1,3 +1,3 @@
-import pyfluka.tests.test
+import pyfluka.tests.tests
 
-pyfluka.tests.test.visiting()
+pyfluka.tests.tests.visiting()

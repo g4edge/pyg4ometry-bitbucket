@@ -3,7 +3,7 @@ import subprocess as _sp
 import antlr4 as _antlr4
 from FlukaLexer import FlukaLexer
 from FlukaParser import FlukaParser
-from FlukaTreeVisitor import FlukaTreeVisitor
+from FlukaAssignmentVisitor import FlukaAssignmentVisitor
 
 from IPython import embed
 

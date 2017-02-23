@@ -14,7 +14,7 @@ class Model(object):
         self._VisitTree(tree)
 
     def _VisitTree(self, tree):
-        visitor = Parser.FlukaTreeVisitor()
+        visitor = Parser.FlukaAssignmentVisitor()
         visitor.visit(tree)
 
 
