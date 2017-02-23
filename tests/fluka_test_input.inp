@@ -1,0 +1,10 @@
+* Comments are skipped
+COMMANDS OUTSIDE GEO ARE SKIPPED ! inline comments are skipped
+#define MACRO_DEF
+GEOBEGIN               1.0E-04                           1.0          COMBNAME
+    0    0                   MC-CAD
+RPP outerb     -3.E8 3.E8 -3.E8 3.E8 -3.E8 3.E8
+RPP innerb     -2.E8 2.E8 -2.E8 2.E8 -2.E8 2.E8
+GEOEND
+* ...
+MORE TO BE SKIPPEDlol
