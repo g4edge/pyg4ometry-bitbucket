@@ -5,6 +5,9 @@ GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 RPP outerb     -3.E8 3.E8 -3.E8 3.E8 -3.E8 3.E8
 RPP innerb     -2.E8 2.E8 -2.E8 2.E8 -2.E8 2.E8
+$start_translat 0.0 -3000.0 2000.0
+RCC TAS_BODY   0.0 0.0 -150.0 0.0 0.0 300.0 25.0
+$end_translat
 GEOEND
 * ...
-MORE TO BE SKIPPEDlol
+MORE TO BE SKIPPED
