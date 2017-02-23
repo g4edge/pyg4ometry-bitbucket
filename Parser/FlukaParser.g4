@@ -59,7 +59,7 @@ expansion
     ;
 
 translat
-    : StartTranslat (Float Float Float | Integer) body+ EndTranslat
+    : StartTranslat Float Float Float body+ EndTranslat
     ;
 
 transform
