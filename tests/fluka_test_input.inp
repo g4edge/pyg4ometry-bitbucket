@@ -8,6 +8,9 @@ RPP innerb     -2.E8 2.E8 -2.E8 2.E8 -2.E8 2.E8
 $start_translat 0.0 -3000.0 2000.0
 RCC TAS_BODY   0.0 0.0 -150.0 0.0 0.0 300.0 25.0
 $end_translat
+$start_expansion 2.0
+RCC TAS_BODY   0.0 0.0 -150.0 0.0 0.0 300.0 25.0
+$end_expansion
 GEOEND
 * ...
 MORE TO BE SKIPPED
