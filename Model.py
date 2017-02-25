@@ -52,9 +52,6 @@ class Model(object):
 
         return None
 
-    def _VisitTree(self, tree):
-        visitor = Parser.FlukaAssignmentVisitor()
-        visitor.visit(tree)
 
 class _FlukaAssignmentListener(Parser.FlukaParserListener):
 
@@ -117,9 +114,7 @@ class _FlukaAssignmentListener(Parser.FlukaParserListener):
         floats = map(float, float_strings)
         return floats
 
-    # def _GetAssignments(tree):
 
-    def PyGDMLSolidFactory(name):
 class Body(object):
     '''
     A class representing a body as defined in Fluka.
