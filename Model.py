@@ -3,17 +3,24 @@ import antlr4 as _antlr4
 import pygdml as pygdml
 
 class Model(object):
+
     def __init__(self, input):
         self.bodies = {}
         self.materials = {}
         self.translations = {}
-
-
+        self.expansions = {}
+        self.transformations = {}
+        self.filename = input
 
         # get the antlr4 tree.
         tree = Parser.Parse(input)
-        print "visiting"
-        self._VisitTree(tree)
+        assignment_listener = _FlukaAssignmentListener()
+        walker = _antlr4.ParseTreeWalker()
+        walker.walk(assignment_listener, tree)
+
+        self._get_listener_assignments(assignment_listener)
+        self.report_body_count()
+
     def report_body_count(self):
         '''
         Prints the different types of bodies that appear in the model
