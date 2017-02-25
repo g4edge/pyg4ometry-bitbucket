@@ -14,6 +14,28 @@ class Model(object):
         tree = Parser.Parse(input)
         print "visiting"
         self._VisitTree(tree)
+    def report_body_count(self):
+        '''
+        Prints the different types of bodies that appear in the model
+        and their frequencies, in order.
+        '''
+        body_types = [body.body_type for body in
+                      self.bodies.itervalues()]
+        unique_body_types = set(body_types)
+
+        body_count = [body_types.count(body_type)
+                      for body_type in unique_body_types]
+        body_and_count = zip(unique_body_types, body_count)
+        body_and_count.sort(key = lambda i: i[1], reverse=True)
+
+        for body, count in body_and_count:
+            body_description = (body
+                                + " - "
+                                + _Fluka_body_code_meanings[body]).ljust(60,'.')
+            print body_description + str(count)
+
+        return None
+
 
     def _VisitTree(self, tree):
         visitor = Parser.FlukaAssignmentVisitor()
