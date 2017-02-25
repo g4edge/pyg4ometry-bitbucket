@@ -30,12 +30,12 @@ GeoBegin
     ;
 
 Keyword
-    : [A-Za-z] {self.column == 1}? [A-Za-z0-9_]+
+    : [A-Za-z] {self.column == 1}? [A-Za-z0-9_-]+
 	-> skip
     ;
 
 ID
-    : [A-Za-z] {self.column != 1}? [A-Za-z0-9_-]*
+    : [A-Za-z@] {self.column != 1}? [A-Za-z0-9_-]*
 	-> skip
     ;
 
