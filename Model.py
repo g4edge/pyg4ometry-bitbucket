@@ -19,6 +19,66 @@ class Model(object):
         visitor = Parser.FlukaAssignmentVisitor()
         visitor.visit(tree)
 
+class _FlukaAssignmentListener(Parser.FlukaParserListener):
+
+    def __init__(self):
+
+        self.bodies = {}
+        self.materials = {}
+
+        self.translations = {}
+        self.expansions = {}
+        self.transformations = {}
+
+        self._transform_stack = []
+        self._translat_stack = []
+        self._expansion_stack = []
+
+    def enterBodyDefSpaceDelim(self, ctx):
+        if ctx.ID():
+            body_name = ctx.ID().getText()
+        else:
+            body_name = int(ctx.Integer().getText())
+
+        body_type = ctx.BodyCode().getText()
+        # ctx.Float() returns a list of Float contexts associated with this body
+        # Get their text, and convert it to floats.
+        body_data = self._get_floats(ctx)
+
+        body = Body(body_name, body_type, body_data,
+                    self._transform_stack,
+                    self._translat_stack,
+                    self._expansion_stack)
+
+        self.bodies[body_name] = body
+
+    def enterTranslat(self, ctx):
+        # embed()
+        # ctx.Float() returns an array of 3 terminal nodes.
+        # These correspond to the 3-vector that forms the translation.
+        translation = self._get_floats(ctx)
+        self._translat_stack.append(translation)
+
+    def exitTranslat(self, ctx):
+        self._translat_stack.pop()
+        return None
+
+    def enterExpansion(self, ctx):
+        self._expansion_stack.append(ctx.Float().getText())
+
+    def exitExpansion(self, ctx):
+        self._expansion_stack.pop()
+        return None
+
+    @staticmethod
+    def _get_floats(ctx):
+        '''
+        Gets the Float tokens associated with the rule and returns
+        them as an array of python floats.
+        '''
+        float_strings = [i.getText() for i in ctx.Float()]
+        floats = map(float, float_strings)
+        return floats
 
     # def _GetAssignments(tree):
 
