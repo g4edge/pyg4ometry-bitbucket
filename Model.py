@@ -139,3 +139,26 @@ class Body(object):
         pass
 
 
+_Fluka_body_code_meanings = {
+    "RPP": "Rectangular Parallelepiped",
+    "BOX": "General Rectangular Parallelepiped",
+    "SPH": "Sphere",
+    "RCC": "Right Circular Cylinder",
+    "REC": "Right Ellitpical Cylinder",
+    "TRC": "Truncated Right Angle Cone",
+    "ELL": "Elippsoid of Revolution",
+    "WED": "Right Angle Wedge",
+    "RAW": "Right Angle Wedge",
+    "ARB": "Abitrary Convex Polyhedron",
+    "XYP": "Infinite Half-space",
+    "XZP": "Infinite Half-space",
+    "YZP": "Infinite Half-space",
+    "PLA": "Generic Infinite Half-space",
+    "XCC": "Infinite Circular Cylinder parallel to the x-axis",
+    "YCC": "Infinite Circular Cylinder parallel to the y-axis",
+    "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
+    "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
+    "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
+    "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis",
+    "QUA": "Generic Quadric"
+}
