@@ -36,6 +36,14 @@ class Model(object):
 
         return None
 
+    def _get_listener_assignments(self, assignment_listener):
+        self.bodies = assignment_listener.bodies
+        self.materials = assignment_listener.materials
+        self.translations = assignment_listener.translations
+        self.expansions = assignment_listener.expansions
+        self.transformations = assignment_listener.transformations
+
+        return None
 
     def _VisitTree(self, tree):
         visitor = Parser.FlukaAssignmentVisitor()
