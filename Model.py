@@ -1,4 +1,6 @@
 from . import Parser
+import antlr4 as _antlr4
+import pygdml as pygdml
 
 class Model(object):
     def __init__(self, input):
