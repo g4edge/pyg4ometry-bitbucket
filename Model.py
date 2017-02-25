@@ -174,9 +174,9 @@ class Body(object):
 
         return pygdml.solid.Sphere(self.name,
                                    0.0,
-                                   centre_x
-                                   centre_y
-                                   centre_z
+                                   centre_x,
+                                   centre_y,
+                                   centre_z,
                                    radius)
 
     def _get_RCC_as_gdml_solid(self):
