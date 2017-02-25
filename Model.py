@@ -21,6 +21,9 @@ class Model(object):
         self._get_listener_assignments(assignment_listener)
         self.report_body_count()
 
+    def convert_model_to_gdml(self):
+        pass
+
     def report_body_count(self):
         '''
         Prints the different types of bodies that appear in the model
