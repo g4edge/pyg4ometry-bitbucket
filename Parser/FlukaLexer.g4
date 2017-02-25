@@ -1,9 +1,9 @@
 lexer grammar FlukaLexer;
 
-tokens{
-    Integer,
+tokens{Integer,
     Float,
-    ID
+    ID,
+    Delim
 }
 
 // This is the default mode.
@@ -61,6 +61,10 @@ Float
 fragment
 Digit
     : [0-9]
+    ;
+
+Delim : [,:;/]
+	-> skip
     ;
 
 mode geometry;
@@ -162,7 +166,10 @@ GeoLineComment
 	-> skip
     ;
 
-Delim        : [,:;/] ;
+GeoDelim
+    : [,:;/]
+	-> type(Delim)
+    ;
 Intersection : '+' ;
 Subtraction  : '-' ;
 Complement   : '|' ;
