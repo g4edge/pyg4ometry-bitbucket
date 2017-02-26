@@ -11,21 +11,15 @@ model
     ;
 
 command
-    : geoBegin geo GeoEnd
+    : geoBegin geocards GeoEnd
     ;
 
 geoBegin
     : GeoBegin (Float | Integer | ID)*
     ;
 
-geo
-    : geoCard+
-    ;
-
-geoCard
-    : body
-    | region
-    | lattice
+geocards
+    : (body | region | lattice)+
     ;
 
 body
