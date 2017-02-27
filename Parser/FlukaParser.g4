@@ -36,10 +36,10 @@ lattice
     : Lattice ID+
     ;
 
-booleanExpression
-    : LParen booleanExpression+ RParen
-    | Complement booleanExpression
-    | (Subtraction | Intersection) (booleanExpression | ID)
+unaryExpression
+    : LParen unaryExpression+ RParen
+    | Complement unaryExpression
+    | (Subtraction | Intersection) (unaryExpression | ID)
     ;
 
 geoDirective
