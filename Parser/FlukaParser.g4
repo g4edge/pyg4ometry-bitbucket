@@ -29,17 +29,17 @@ body
     ;
 
 region
-    : RegionName Integer (booleanExpression)+
+    : RegionName Integer (unaryBooleanExpression)+
     ;
 
 lattice
     : Lattice ID+
     ;
 
-unaryExpression
-    : LParen unaryExpression+ RParen
-    | Complement unaryExpression
-    | (Subtraction | Intersection) (unaryExpression | ID)
+unaryBooleanExpression
+    : LParen unaryBooleanExpression+ RParen
+    | Complement unaryBooleanExpression
+    | (Subtraction | Intersection) (unaryBooleanExpression | ID)
     ;
 
 geoDirective
