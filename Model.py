@@ -21,8 +21,12 @@ class Model(object):
         walker = _antlr4.ParseTreeWalker()
         walker.walk(assignment_listener, tree)
 
+        visitor = _FlukaRegionVisitor()
+        visitor.visit(tree)
+
         self._get_listener_assignments(assignment_listener)
         self.report_body_count()
+        self._convert_bodies_to_gdml_solids()
 
     def convert_model_to_gdml(self):
         pass
