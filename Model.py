@@ -10,10 +10,12 @@ class Model(object):
         self.translations = {}
         self.expansions = {}
         self.transformations = {}
+        self.regions = {}
         self.filename = input
 
         # get the antlr4 tree.
         tree = Parser.Parse(input)
+
         assignment_listener = _FlukaAssignmentListener()
         walker = _antlr4.ParseTreeWalker()
         walker.walk(assignment_listener, tree)
