@@ -126,6 +126,15 @@ class _FlukaAssignmentListener(Parser.FlukaParserListener):
         return floats
 
 
+class _FlukaRegionVisitor(Parser.FlukaParserVisitor.FlukaParserVisitor):
+
+    def __init__(self):
+        pass
+
+    def visitBooleanExpression(self, ctx):
+        pass
+
+
 class Body(object):
     '''
     A class representing a body as defined in Fluka.
