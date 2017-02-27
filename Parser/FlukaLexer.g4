@@ -172,6 +172,6 @@ GeoDelim
     ;
 Intersection : '+' ;
 Subtraction  : '-' ;
-Complement   : '|' ;
+Union   : '|' ;
 LParen       : '(' ;
 RParen       : ')' ;

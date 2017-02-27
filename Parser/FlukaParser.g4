@@ -38,7 +38,7 @@ lattice
 
 unaryBooleanExpression
     : LParen unaryBooleanExpression+ RParen
-    | Complement unaryBooleanExpression
+    | Union unaryBooleanExpression
     | (Subtraction | Intersection) (unaryBooleanExpression | ID)
     ;
 
