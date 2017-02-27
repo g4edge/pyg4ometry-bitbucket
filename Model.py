@@ -162,7 +162,7 @@ class Body(object):
         '''
         Get this Fluka body as a pygdml instance.
         '''
-        return getattr(self, "_get_" + self.body_type + "_as_gdml_solid")
+        return getattr(self, "_get_" + self.body_type + "_as_gdml_solid")()
 
     def _get_RPP_as_gdml_solid(self):
         pass
