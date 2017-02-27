@@ -1,6 +1,7 @@
 from . import Parser
 import antlr4 as _antlr4
 import pygdml as pygdml
+from math import pi
 
 class Model(object):
 
@@ -175,16 +176,17 @@ class Body(object):
         '''
         data = self._get_data_in_mm()
         centre_x = data[0]
-        centre_z = data[1]
+        centre_y = data[1]
         centre_z = data[2]
         radius   = data[3]
 
         return pygdml.solid.Sphere(self.name,
                                    0.0,
-                                   centre_x,
-                                   centre_y,
-                                   centre_z,
-                                   radius)
+                                   radius,
+                                   0.0,
+                                   0.0,
+                                   pi,
+                                   pi)
 
     def _get_RCC_as_gdml_solid(self):
         pass
