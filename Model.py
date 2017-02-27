@@ -98,11 +98,11 @@ class _FlukaAssignmentListener(Parser.FlukaParserListener):
         self.bodies[body_name] = body
 
     def enterTranslat(self, ctx):
-        # embed()
         # ctx.Float() returns an array of 3 terminal nodes.
         # These correspond to the 3-vector that forms the translation.
         translation = self._get_floats(ctx)
         self._translat_stack.append(translation)
+        return None
 
     def exitTranslat(self, ctx):
         self._translat_stack.pop()
