@@ -170,8 +170,9 @@ GeoDelim
     : [,:;/]
 	-> type(Delim)
     ;
-Intersection : '+' ;
-Subtraction  : '-' ;
-Union   : '|' ;
+
+Plus : '+' ;
+Minus  : '-' ;
+Bar   : '|' ;
 LParen       : '(' ;
 RParen       : ')' ;
