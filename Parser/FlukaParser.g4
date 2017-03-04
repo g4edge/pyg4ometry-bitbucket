@@ -29,17 +29,32 @@ body
     ;
 
 region
-    : RegionName Integer (unaryBooleanExpression)+
+    : RegionName Integer zone
+    | RegionName Integer zoneUnion
     ;
 
-lattice
-    : Lattice ID+
+zone
+    : booleanExpression
+    | subZone
     ;
 
-unaryBooleanExpression
-    : LParen unaryBooleanExpression+ RParen
-    | Union unaryBooleanExpression
-    | (Subtraction | Intersection) (unaryBooleanExpression | ID)
+subZone
+    : (Minus | Plus)? LParen booleanExpression RParen
+    ;
+
+zoneUnion
+    : Bar zone (Bar zone)+
+    ;
+
+booleanExpression
+    : unaryExpression
+    | unaryExpression booleanExpression
+    | unaryExpression subZone
+    | booleanExpression Bar booleanExpression
+    ;
+
+unaryExpression
+    : (Minus | Plus) ID
     ;
 
 geoDirective
@@ -58,4 +73,8 @@ translat
 
 transform
     : StartTransform (ID | Integer) body+ EndTransform
+    ;
+
+lattice
+    : Lattice ID+
     ;
