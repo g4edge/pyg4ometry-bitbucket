@@ -47,10 +47,10 @@ zoneUnion
     ;
 
 booleanExpression
-    : unaryExpression
-    | unaryExpression booleanExpression
-    | unaryExpression subZone
-    | booleanExpression Bar booleanExpression
+    : unaryExpression                    # singleUnary
+    | unaryExpression booleanExpression  # unaryAndBoolean
+    | unaryExpression subZone            # unaryAndSubZone
+    | booleanExpression Bar booleanExpression # booleanBarBoolean
     ;
 
 unaryExpression
