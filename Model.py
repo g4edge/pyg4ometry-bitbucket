@@ -208,12 +208,23 @@ class _UnaryGDMLSolid(object):
 
         if self.operator == '+' and other.operator == '+':
             return self._combine_plus_plus(other)
+        elif self.operator == '-' and other.operator == '-':
+            return self._combine_minus_minus(other)
+        elif self.operator == '-' and other.operator == '+':
+            return self._combine_minus_plus(other)
+        elif self.operator == '+' and other.operator == '-':
+            return self._combine_plus_minus(other)
+        else:
+            raise Exception("One or more unknown operator types:",
+                            self.operator, other.operator)
 
+    def _combine_minus_plus(self, other):
+        return other._combine_plus_minus(self)
 
-    def _combine_plus_minus(self, pygdml_solid):
+    def _combine_plus_minus(self, other):
         name = self.solid.name
         other_name = other.solid.name
-        output_name = "(" + name + "_intersection_" + other_name + ")"
+        output_name = "(" + name + "_subtraction_" + other_name + ")"
 
         other_transformation = self._get_transformation(other)
 
@@ -224,12 +235,11 @@ class _UnaryGDMLSolid(object):
         output_operator = '+'
         output_centre = self.centre
 
-        return _UnaryGDMLSolid(resultant_solid,
-                               resultant_operator,
-                               resultant_centre)
+        return _UnaryGDMLSolid(output_solid,
+                               output_operator,
+                               output_centre)
 
-
-    def _combine_plus_plus(self, pygdml_solid):
+    def _combine_plus_plus(self, other):
 
         name = self.solid.name
         other_name = other.solid.name
@@ -244,9 +254,9 @@ class _UnaryGDMLSolid(object):
         output_operator = '+'
         output_centre = self.centre
 
-        return _UnaryGDMLSolid(resultant_solid,
-                               resultant_operator,
-                               resultant_centre)
+        return _UnaryGDMLSolid(output_solid,
+                               output_operator,
+                               output_centre)
 
     def _combine_minus_minus(self, other):
         name = self.solid.name
