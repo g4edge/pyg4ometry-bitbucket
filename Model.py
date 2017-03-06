@@ -263,7 +263,6 @@ class _UnaryGDMLSolid(object):
                                      other.solid,
                                      other_transformation)
 
-
     def _get_transformation(self, other):
         # other_transformation is the transformation applied to the
         # second volume w.r.t the first, which is situated at (0,0,0),
