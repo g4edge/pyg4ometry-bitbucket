@@ -7,7 +7,7 @@ SPH  UglyBall  2.5  0.0  0.0  5.0
 END
 MahThi     5 +NiceBall -UglyBall
 END
+GEOEND
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+..
 MATERIAL         6.0                 1.8                              GRAPHITE
 ASSIGNMA    GRAPHITE    MahThi
-GEOEND
