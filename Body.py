@@ -94,7 +94,17 @@ class BOX(BodyBase):
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(BOX, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class SPH(BodyBase):
 
@@ -141,128 +151,345 @@ class SPH(BodyBase):
 
 class RCC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(RCC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class REC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(REC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class TRC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(TRC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class ELL(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(ELL, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class WED(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(WED, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class RAW(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(RAW, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class ARB(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(ARB, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class XYP(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(XYP, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class XZP(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(XZP, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class YZP(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(YZP, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class PLA(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(PLA, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class XCC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(XCC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class YCC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(YCC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class ZCC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(ZCC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class XEC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(XEC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class YEC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(YEC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class ZEC(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+                 parameters,
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(ZEC, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
         pass
+
+    def get_as_gdml_solid(self):
+        pass
+
 
 class QUA(BodyBase):
 
-    def __init__(self, name, parameters, expansion_stack,
+    def __init__(self, name,
+
+                 parameters,
+
+                 expansion_stack,
                  translation_stack,
                  transformation_stack):
+        super(QUA, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
+
+    def get_coordinates_of_centre(self):
+        pass
+
+    def get_as_gdml_solid(self):
         pass
 
 
