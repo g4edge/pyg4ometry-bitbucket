@@ -103,6 +103,7 @@ class BOX(BodyBase):
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
+
     def get_coordinates_of_centre(self):
         pass
 
