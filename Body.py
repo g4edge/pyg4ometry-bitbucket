@@ -98,7 +98,11 @@ class BOX(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
 
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
     def get_coordinates_of_centre(self):
         pass
 
@@ -160,6 +164,11 @@ class RCC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -179,6 +188,11 @@ class REC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -198,6 +212,11 @@ class TRC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -217,6 +236,11 @@ class ELL(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -236,6 +260,11 @@ class WED(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -255,6 +284,11 @@ class RAW(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -274,6 +308,11 @@ class ARB(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -293,6 +332,11 @@ class XYP(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -312,6 +356,11 @@ class XZP(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -331,6 +380,11 @@ class YZP(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -350,6 +404,11 @@ class PLA(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -369,6 +428,11 @@ class XCC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -388,6 +452,11 @@ class YCC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -407,6 +476,11 @@ class ZCC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -426,6 +500,11 @@ class XEC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -445,6 +524,11 @@ class YEC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -464,6 +548,11 @@ class ZEC(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
@@ -485,6 +574,11 @@ class QUA(BodyBase):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        self._set_parameters(parameters)
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", [])
+        self.parameters = self._ParametersType(*parameters)
 
     def get_coordinates_of_centre(self):
         pass
