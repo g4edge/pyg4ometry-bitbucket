@@ -15,9 +15,9 @@ class BodyBase(object):
                  transformation_stack):
 
         self.name = name
-        self.expansion_stack = expansion_stack
-        self.translation_stack = translation_stack
-        self.transformation_stack = transformation_stack
+        self._expansion_stack = expansion_stack
+        self._translation_stack = translation_stack
+        self._transformation_stack = transformation_stack
 
     def set_transformation_definitions(self, something):
         pass
