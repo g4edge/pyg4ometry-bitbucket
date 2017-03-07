@@ -22,13 +22,13 @@ class BodyBase(object):
     def set_transformation_definitions(self, something):
         pass
 
-    def _get_data_in_mm(self):
+    def _get_parameters_in_mm(self):
         '''
         pygdml is in units of millimetres.  Fluka is in units of
         centimetres.  Helper function for this purpose.
         '''
         cm = 10.0
-        return [i * cm for i in self.data]
+        return [i * cm for i in self.parameters]
 
     # def get_body_as_gdml_solid(self):
     #     '''
@@ -43,7 +43,7 @@ class BodyBase(object):
         '''This is a method which gets the coordinates of the centre of the
         body as defined in GDML.  This is necessary as a bookkeeping
         measure as gdml solids have no sense of their position.
-        Indices = xyz of data.
+        Indices = xyz of parameters.
         '''
 
         Fluka_body_xyz_indices = {
@@ -75,15 +75,15 @@ class BodyBase(object):
         z_index = Fluka_body_xyz_indices[self.name][2]
 
         centre = namedtuple("centre", ['x','y','z'])
-        centre = centre(self.data[x_index],
-                        self.data[y_index],
-                        self.data[z_index])
+        centre = centre(self.parameters[x_index],
+                        self.parameters[y_index],
+                        self.parameters[z_index])
 
         return centre
 
 class RPP(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
@@ -91,14 +91,14 @@ class RPP(BodyBase):
 
 class BOX(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class SPH(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
 
@@ -107,16 +107,16 @@ class SPH(BodyBase):
                                   translation_stack,
                                   transformation_stack)
 
-        self._set_body_specific_parameters(data)
+        self._set_body_specific_parameters(parameters)
 
-    def _set_body_specific_parameters(self, data):
-        # A named tuple for representing the geometry data associated with
+    def _set_body_specific_parameters(self, parameters):
+        # A named tuple for representing the geometry parameters associated with
         # the object.
-        self._DataType = namedtuple("Data", ['v_x',
+        self._ParametersType = namedtuple("Parameters", ['v_x',
                                              'v_y',
                                              'v_z',
                                              'radius'])
-        self.data = self._DataType(*data)
+        self.parameters = self._ParametersType(*parameters)
         return None
 
     def get_coordinates_of_centre(self):
@@ -124,143 +124,143 @@ class SPH(BodyBase):
         Returns the coordinates of the centre of the sphere.
         '''
         centre = namedtuple("centre", ['x','y','z'])
-        centre = centre(self.data.v_x,
-                        self.data.v_y,
-                        self.data.v_z)
+        centre = centre(self.parameters.v_x,
+                        self.parameters.v_y,
+                        self.parameters.v_z)
         return centre
 
     def get_as_gdml_solid(self):
         '''
         Construct a pgydml orb (full, solid sphere) solid.
         '''
-        # A function-local data for use with mm (rather than fluka cm)
-        data_in_mm = self._DataType(*self._get_data_in_mm())
+        # A function-local parameters for use with mm (rather than fluka cm)
+        parameters_in_mm = self._ParametersType(*self._get_parameters_in_mm())
 
-        return pygdml.solid.Orb(self.name, data_in_mm.radius)
+        return pygdml.solid.Orb(self.name, parameters_in_mm.radius)
 
 
 class RCC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class REC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class TRC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class ELL(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class WED(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class RAW(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class ARB(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class XYP(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class XZP(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class YZP(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class PLA(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class XCC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class YCC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class ZCC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class XEC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class YEC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class ZEC(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass
 
 class QUA(BodyBase):
 
-    def __init__(self, name, data, expansion_stack,
+    def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
         pass

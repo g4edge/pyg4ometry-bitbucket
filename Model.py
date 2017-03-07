@@ -98,17 +98,17 @@ class _FlukaAssignmentListener(Parser.FlukaParserListener):
         body_type = ctx.BodyCode().getText()
         # ctx.Float() returns a list of Float contexts associated with this body
         # Get their text, and convert it to floats.
-        body_data = self._get_floats(ctx)
+        body_parameters = self._get_floats(ctx)
 
         body_constructor = getattr(Body, body_type)
 
         body = body_constructor(body_name,
-                                body_data,
+                                body_parameters,
                                 self._transform_stack,
                                 self._translat_stack,
                                 self._expansion_stack)
 
-        # body = Body(body_name, body_type, body_data,
+        # body = Body(body_name, body_type, body_parameters,
         #             self._transform_stack,
         #             self._translat_stack,
         #             self._expansion_stack)
@@ -296,7 +296,7 @@ def _get_tuple_in_mm(input_tuple):
     returns namedtuple of identical shape but with mm instead
     '''
     mm = 10.0
-    data = [i * mm for i in input_tuple]
-    _DataType = namedtuple("Data", input_tuple._fields)
+    parameters = [i * mm for i in input_tuple]
+    _ParametersType = namedtuple("Parameters", input_tuple._fields)
 
-    return _DataType(*data)
+    return _ParametersType(*parameters)
