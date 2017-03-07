@@ -107,9 +107,9 @@ class SPH(BodyBase):
                                   translation_stack,
                                   transformation_stack)
 
-        self._set_body_specific_parameters(parameters)
+        self._set_parameters(parameters)
 
-    def _set_body_specific_parameters(self, parameters):
+    def _set_parameters(self, parameters):
         # A named tuple for representing the geometry parameters associated with
         # the object.
         self._ParametersType = namedtuple("Parameters", ['v_x',
