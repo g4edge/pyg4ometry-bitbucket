@@ -113,9 +113,9 @@ class SPH(BodyBase):
         # A named tuple for representing the geometry parameters associated with
         # the object.
         self._ParametersType = namedtuple("Parameters", ['v_x',
-                                             'v_y',
-                                             'v_z',
-                                             'radius'])
+                                                         'v_y',
+                                                         'v_z',
+                                                         'radius'])
         self.parameters = self._ParametersType(*parameters)
         return None
 
