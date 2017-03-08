@@ -24,21 +24,30 @@ class BodyBase(object):
     def set_transformation_definitions(self, something):
         pass
 
-    def _get_parameters_in_mm(self):
+    @staticmethod
+    def _parameters_in_mm(func):
         '''
-        pygdml is in units of millimetres.  Fluka is in units of
-        centimetres.  Helper function for this purpose.
+        Chances parameter units to millimetres local only to the
+        function "func".
+        Tuples are supposed to be immutable, but this saves a
+        dependency.
         '''
-        cm = 10.0
-        return [i * cm for i in self.parameters]
+        def wrapped(self):
+            mm = 10.0
+            fields = self.parameters._fields
+            parameters_in_mm = [i * mm for i in self.parameters]
+            # Redefine the named tuple so the returned object is the same shape
+            parameters_type = namedtuple("Parameters", fields)
+            self.parameters = parameters_type(*parameters_in_mm)
+            # Call function
+            output = func(self)
+            # Put the coordinates back to cm.
+            parameters_in_cm = [i * 1/mm for i in self.parameters]
+            self.parameters = parameters_type(*parameters_in_cm)
+            return output
 
-    # def get_body_as_gdml_solid(self):
-    #     '''
-    #     Get this Fluka body as a pygdml instance.
-    #     '''
-    #     return getattr(self, "_get_"
-    #                    + self.body_type
-    #                    + "_as_gdml_solid")()
+        return wrapped
+
 
 
     def get_coordinates_of_centre(self):
@@ -109,9 +118,11 @@ class SPH(BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         '''
-        Returns the coordinates of the centre of the sphere.
+        Returns the coordinates of the centre of the sphere in
+        MILLIMETRES, as this is used for GDML.
         '''
         centre = namedtuple("centre", ['x','y','z'])
         centre = self._centre(self.parameters.v_x,
@@ -119,14 +130,12 @@ class SPH(BodyBase):
                               self.parameters.v_z)
         return centre
 
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         '''
         Construct a pgydml orb (full, solid sphere) solid.
         '''
-        # A function-local parameters for use with mm (rather than fluka cm)
-        parameters_in_mm = self._ParametersType(*self._get_parameters_in_mm())
-
-        return pygdml.solid.Orb(self.name, parameters_in_mm.radius)
+        return pygdml.solid.Orb(self.name, self.parameters.radius)
 
 
 class RCC(BodyBase):
