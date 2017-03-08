@@ -49,12 +49,43 @@ class BodyBase(object):
         return wrapped
 
 
+class RPP(BodyBase):
+    '''
+    An RPP is a rectangular parallelpiped (a cuboid).
+    '''
+    def __init__(self, name, parameters, expansion_stack,
+                 translation_stack,
+                 transformation_stack):
+        super(RPP, self).__init__(name,
+                                  expansion_stack,
+                                  translation_stack,
+                                  transformation_stack)
 
+        self._set_parameters(parameters)
+
+        if (self.parameters.x_min > self.parameters.x_max or
+            self.parameters.y_min > self.parameters.y_max or
+            self.parameters.z_min > self.parameters.z_max):
+            raise Warning("This RPP \"" + name + "\" has mins larger than "
+                          "its maxes\n. It is ignored in Fluka but "
+                          "won't be ignored here!")
+
+
+    def _set_parameters(self, parameters):
+        self._ParametersType = namedtuple("Parameters", ['x_min',
+                                                         'x_max',
+                                                         'y_min',
+                                                         'y_max',
+                                                         'z_min',
+                                                         'z_max'])
+        self.parameters = self._ParametersType(*parameters)
+        return None
+
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        '''This is a method which gets the coordinates of the centre of the
-        body as defined in GDML.  This is necessary as a bookkeeping
-        measure as gdml solids have no sense of their position.
-        Indices = xyz of parameters.
+        '''
+        Return the coordinates of the centre of the Rectangular
+        Parallelepiped (cuboid).  Returns named tuple. with members x,y and z.
         '''
 
         centre_x = (self.parameters.x_max + self.parameters.x_min)*0.5
@@ -65,12 +96,16 @@ class BodyBase(object):
 
         return centre
 
-class RPP(BodyBase):
+    @BodyBase._parameters_in_mm
+    def get_as_gdml_solid(self):
+        '''
+        Construct a pygdml Box from this body definition
+        '''
+        x_length = self.parameters.x_max - self.parameters.x_min
+        y_length = self.parameters.y_max - self.parameters.y_min
+        z_length = self.parameters.z_max - self.parameters.z_min
 
-    def __init__(self, name, parameters, expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        pass
+        return pygdml.Box(self.name, x_length, y_length, z_length)
 
 
 class BOX(BodyBase):
