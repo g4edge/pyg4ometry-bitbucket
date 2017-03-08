@@ -108,11 +108,6 @@ class _FlukaAssignmentListener(Parser.FlukaParserListener):
                                 self._translat_stack,
                                 self._expansion_stack)
 
-        # body = Body(body_name, body_type, body_parameters,
-        #             self._transform_stack,
-        #             self._translat_stack,
-        #             self._expansion_stack)
-
         self.bodies[body_name] = body
 
     def enterTranslat(self, ctx):
@@ -165,6 +160,7 @@ class _FlukaRegionVisitor(Parser.FlukaParserVisitor.FlukaParserVisitor):
         region_centre = [region_centre_x,
                          region_centre_y,
                          region_centre_z]
+
         region_gdml = region_solid.solid
         region_name = ctx.RegionName().getText()
 
