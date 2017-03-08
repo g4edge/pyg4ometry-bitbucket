@@ -272,12 +272,10 @@ class _UnaryGDMLSolid(object):
         # other_transformation is the transformation applied to the
         # second volume w.r.t the first, which is situated at (0,0,0),
         # when peforming the boolean operation
-        centre =  _get_tuple_in_mm(self.centre)
-        other_centre =  _get_tuple_in_mm(other.centre)
 
-        offset_x = other_centre.x - centre.x
-        offset_y = other_centre.y - centre.y
-        offset_z = other_centre.z - centre.z
+        offset_x = other.centre.x - self.centre.x
+        offset_y = other.centre.y - self.centre.y
+        offset_z = other.centre.z - self.centre.z
 
         other_translation = [offset_x, offset_y, offset_z]
         other_rotation = [0,0,0]
