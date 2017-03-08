@@ -18,6 +18,8 @@ class BodyBase(object):
         self._expansion_stack = expansion_stack
         self._translation_stack = translation_stack
         self._transformation_stack = transformation_stack
+        # Named tuple constructor for later use.
+        self._centre = namedtuple("centre", ['x','y','z'])
 
     def set_transformation_definitions(self, something):
         pass
@@ -46,38 +48,11 @@ class BodyBase(object):
         Indices = xyz of parameters.
         '''
 
-        Fluka_body_xyz_indices = {
-            "RPP": None,
-            "BOX": None,
-            "SPH": [0,1,2],
-            "RCC": None,
-            "REC": None,
-            "TRC": None,
-            "ELL": None,
-            "WED": None,
-            "RAW": None,
-            "ARB": None,
-            "XYP": None,
-            "XZP": None,
-            "YZP": None,
-            "PLA": None,
-            "XCC": None,
-            "YCC": None,
-            "ZCC": None,
-            "XEC": None,
-            "YEC": None,
-            "ZEC": None,
-            "QUA": None
-        }
+        centre_x = (self.parameters.x_max + self.parameters.x_min)*0.5
+        centre_y = (self.parameters.y_max + self.parameters.y_min)*0.5
+        centre_z = (self.parameters.z_max + self.parameters.z_min)*0.5
 
-        x_index = Fluka_body_xyz_indices[self.name][0]
-        y_index = Fluka_body_xyz_indices[self.name][1]
-        z_index = Fluka_body_xyz_indices[self.name][2]
-
-        centre = namedtuple("centre", ['x','y','z'])
-        centre = centre(self.parameters[x_index],
-                        self.parameters[y_index],
-                        self.parameters[z_index])
+        centre = self._centre(centre_x, centre_y, centre_z)
 
         return centre
 
@@ -139,9 +114,9 @@ class SPH(BodyBase):
         Returns the coordinates of the centre of the sphere.
         '''
         centre = namedtuple("centre", ['x','y','z'])
-        centre = centre(self.parameters.v_x,
-                        self.parameters.v_y,
-                        self.parameters.v_z)
+        centre = self._centre(self.parameters.v_x,
+                              self.parameters.v_y,
+                              self.parameters.v_z)
         return centre
 
     def get_as_gdml_solid(self):
