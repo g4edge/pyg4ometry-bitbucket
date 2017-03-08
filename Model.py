@@ -2,6 +2,7 @@ from . import Parser
 import antlr4 as _antlr4
 import pygdml as _pygdml
 import Body
+from Parser.FlukaParserVisitor import FlukaParserVisitor
 from math import pi
 from collections import namedtuple
 
@@ -139,7 +140,7 @@ class _FlukaAssignmentListener(Parser.FlukaParserListener):
         return floats
 
 
-class _FlukaRegionVisitor(Parser.FlukaParserVisitor.FlukaParserVisitor):
+class _FlukaRegionVisitor(FlukaParserVisitor):
 
     def __init__(self, bodies, materials):
         self.bodies = bodies
