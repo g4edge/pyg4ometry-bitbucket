@@ -39,7 +39,7 @@ zone
     ;
 
 subZone
-    : (Minus | Plus)? LParen expr RParen
+    : (Minus | Plus) LParen expr RParen
     ;
 
 zoneUnion
