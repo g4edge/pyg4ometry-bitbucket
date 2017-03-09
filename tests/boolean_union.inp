@@ -4,8 +4,9 @@ GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 SPH  NiceBall  0.0  0.0  0.0  5.0
 SPH  UglyBall  2.5  0.0  0.0  5.0
+SPH  Hohoball  5.0  0.0  0.0  5.0
 END
-MahThi     5 | +NiceBall | +UglyBall
+MahThi     5 | +NiceBall +Hohoball | +UglyBall
 END
 GEOEND
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+..
