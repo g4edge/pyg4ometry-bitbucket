@@ -33,6 +33,10 @@ region
     | RegionName Integer zoneUnion
     ;
 
+zoneUnion
+    : Bar zone (Bar zone)+
+    ;
+
 zone
     : expr
     | subZone
@@ -42,15 +46,11 @@ subZone
     : (Minus | Plus) LParen expr RParen
     ;
 
-zoneUnion
-    : Bar zone (Bar zone)+
-    ;
-
 expr
-    : unaryExpression                    # singleUnary
-    | unaryExpression expr  # unaryAndBoolean
-    | unaryExpression subZone            # unaryAndSubZone
-    | expr Bar expr # booleanBarBoolean
+    : unaryExpression         # singleUnary
+    | unaryExpression expr    # unaryAndBoolean
+    | unaryExpression subZone # unaryAndSubZone
+    | expr Bar expr           # booleanBarBoolean
     ;
 
 unaryExpression
