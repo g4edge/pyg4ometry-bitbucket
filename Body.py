@@ -1,6 +1,7 @@
-import pygdml as pygdml
 from collections import namedtuple
 import math as _math
+import pygdml as pygdml
+
 from IPython import embed
 
 class BodyBase(object):

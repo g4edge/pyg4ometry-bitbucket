@@ -1,10 +1,10 @@
-from . import Parser
+from collections import namedtuple
 import antlr4 as _antlr4
 import pygdml as _pygdml
-import Body
 from Parser.FlukaParserVisitor import FlukaParserVisitor
-from math import pi
-from collections import namedtuple
+from . import Parser
+import Body
+
 
 class Model(object):
 
