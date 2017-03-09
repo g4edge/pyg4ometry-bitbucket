@@ -200,6 +200,9 @@ class _UnaryGDMLSolid(object):
     def combine(self, other):
         '''
         Combine two _UnaryGDMLSolids, returning the third resultant.
+        Doesn't handle simple union solids, as these are not
+        "combinations" between two Fluka unary operations, but instead
+        have their own syntax.  This is handled by the "union" method
         '''
 
         if self.operator == '+' and other.operator == '+':
