@@ -186,6 +186,13 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         else:
             return _UnaryGDMLSolid(gdml_solid, '-', body_centre)
 
+    def visitZoneUnion(self, ctx):
+        # Get the zones:
+        zones = [self.visit(zone) for zone in ctx.zone()]
+        union_of_zones = reduce(lambda first, second:
+                                first.union(second), zones)
+        return union_of_zones
+
 
 class _UnaryGDMLSolid(object):
     '''
@@ -287,5 +294,18 @@ class _UnaryGDMLSolid(object):
 
         return other_transformation
 
+    def union(self, other):
+        output_name = "(%s_union_%s)" % (self.solid.name, other.solid.name)
+        other_transformation = self._get_transformation(other)
 
+        output_operator = '+'
+        output_centre = self.centre
 
+        output_solid =  _pygdml.Union(output_name,
+                                      self.solid,
+                                      other.solid,
+                                      other_transformation)
+
+        return _UnaryGDMLSolid(output_solid,
+                               output_operator,
+                               output_centre)
