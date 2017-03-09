@@ -34,23 +34,23 @@ region
     ;
 
 zone
-    : booleanExpression
+    : expr
     | subZone
     ;
 
 subZone
-    : (Minus | Plus)? LParen booleanExpression RParen
+    : (Minus | Plus)? LParen expr RParen
     ;
 
 zoneUnion
     : Bar zone (Bar zone)+
     ;
 
-booleanExpression
+expr
     : unaryExpression                    # singleUnary
-    | unaryExpression booleanExpression  # unaryAndBoolean
+    | unaryExpression expr  # unaryAndBoolean
     | unaryExpression subZone            # unaryAndSubZone
-    | booleanExpression Bar booleanExpression # booleanBarBoolean
+    | expr Bar expr # booleanBarBoolean
     ;
 
 unaryExpression

@@ -153,7 +153,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         self.regions = {}
 
     def visitRegion(self, ctx):
-        # region_solid = self.visit(self.booleanexpression())
+        # region_solid = self.visit(self.expr())
         region_solid = self.visitChildren(ctx)
         region_centre_x = region_solid.centre.x
         region_centre_y = region_solid.centre.y
@@ -172,7 +172,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
-        right_solid = self.visit(ctx.booleanExpression())
+        right_solid = self.visit(ctx.expr())
         return left_solid.combine(right_solid)
 
     def visitUnaryExpression(self, ctx):
