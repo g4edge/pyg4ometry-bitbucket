@@ -159,7 +159,6 @@ class SPH(BodyBase):
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
         '''
-        centre = namedtuple("centre", ['x','y','z'])
         centre = self._centre(self.parameters.v_x,
                               self.parameters.v_y,
                               self.parameters.v_z)
