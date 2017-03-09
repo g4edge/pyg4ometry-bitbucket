@@ -274,10 +274,13 @@ class _UnaryGDMLSolid(object):
         output_operator = '-'
         output_centre = self.centre
 
-        output_solid = _pygdml.Union(output_name,
-                                     self.solid,
-                                     other.solid,
-                                     other_transformation)
+        output_solid =  _pygdml.Union(output_name,
+                                       self.solid,
+                                       other.solid,
+                                       other_transformation)
+        return _UnaryGDMLSolid(output_solid,
+                               output_operator,
+                               output_centre)
 
     def _get_transformation(self, other):
         # other_transformation is the transformation applied to the
