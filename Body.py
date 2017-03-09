@@ -641,6 +641,18 @@ class QUA(BodyBase):
         pass
 
 
+class Translation(object):
+    pass
+
+
+class Transformation(object):
+    pass
+
+
+class Expansion(object):
+    pass
+
+
 code_meanings = {
     "RPP": "Rectangular Parallelepiped",
     "BOX": "General Rectangular Parallelepiped",
