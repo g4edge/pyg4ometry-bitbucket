@@ -285,13 +285,4 @@ class _UnaryGDMLSolid(object):
         return other_transformation
 
 
-def _get_tuple_in_mm(input_tuple):
-    '''
-    input_tuple:  a namedtuple.
-    returns namedtuple of identical shape but with mm instead
-    '''
-    mm = 10.0
-    parameters = [i * mm for i in input_tuple]
-    _ParametersType = namedtuple("Parameters", input_tuple._fields)
 
-    return _ParametersType(*parameters)
