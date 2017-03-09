@@ -1,5 +1,6 @@
 import pygdml as pygdml
 from collections import namedtuple
+import math as _math
 from IPython import embed
 
 class BodyBase(object):
@@ -173,6 +174,13 @@ class SPH(BodyBase):
 
 
 class RCC(BodyBase):
+    '''
+    v_(x,y,z) = coordinates of the centre of one of the circular planes
+    faces
+    h_(x,y,z) = components of vector pointing in the direction of the
+    other plane face, with magnitude equal to the cylinder length.
+    radius    = cylinder radius
+    '''
 
     def __init__(self, name,
                  parameters,
@@ -185,15 +193,42 @@ class RCC(BodyBase):
                                   transformation_stack)
         self._set_parameters(parameters)
 
+        self.length = _math.sqrt(self.parameters.h_x**2
+                                 + self.parameters.h_y**2
+                                 + self.parameters.h_z**2)
+
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ['v_x',
+                                                         'v_y',
+                                                         'v_z',
+                                                         'h_x',
+                                                         'h_y',
+                                                         'h_z',
+                                                         'radius'])
         self.parameters = self._ParametersType(*parameters)
+        return None
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        '''
+        Returns the coordinates of the centre of the sphere in
+        MILLIMETRES, as this is used for GDML.
+        '''
 
+        centre_x = self.parameters.v_x + self.parameters.h_x * self.length*0.5
+        centre_y = self.parameters.v_y + self.parameters.h_y * self.length*0.5
+        centre_z = self.parameters.v_z + self.parameters.h_z * self.length*0.5
+
+        return self._centre(centre_x, centre_y, centre_z)
+
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Tubs(self.name, 0.0,
+                                 self.parameters.radius,
+                                 self.length,
+                                 0.0,
+                                 2*_math.pi)
 
 
 class REC(BodyBase):
