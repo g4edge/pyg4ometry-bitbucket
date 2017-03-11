@@ -22,6 +22,9 @@ class BodyBase(object):
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
         self._centre = namedtuple("centre", ['x','y','z'])
+        self._rotation = namedtuple("rotation", ['x_rotation',
+                                                 'y_rotation',
+                                                 'z_rotation'])
 
     def set_transformation_definitions(self, something):
         pass
@@ -49,6 +52,18 @@ class BodyBase(object):
             return output
 
         return wrapped
+
+    @staticmethod
+    def _rotation_from_directions(x_direction,
+                                 y_direction,
+                                 z_direction):
+
+        norm  = _norm(x_direction, y_direction, z_direction)
+        x_rotation = _math.acos(x_direction/norm)
+        y_rotation = _math.acos(y_direction/norm)
+        z_rotation = _math.acos(z_direction/norm)
+
+        return self._rotation(x_rotation, y_rotation, z_rotation)
 
 
 class RPP(BodyBase):
@@ -97,6 +112,13 @@ class RPP(BodyBase):
         centre = self._centre(centre_x, centre_y, centre_z)
 
         return centre
+
+    def get_rotation(self):
+        x_direction = self.parameters.x_max - self.parameters_x_min
+        y_direction = self.parameters.y_may - self.parameters_y_min
+        z_direction = self.parameters.z_maz - self.parameters_z_min
+
+        return _rotations_from_directions(x_direction, y_direction, z_direction)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -166,6 +188,9 @@ class SPH(BodyBase):
                               self.parameters.v_z)
         return centre
 
+    def get_rotation(self):
+        return _rotation(0,0,0)
+
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         '''
@@ -222,12 +247,18 @@ class RCC(BodyBase):
 
         return self._centre(centre_x, centre_y, centre_z)
 
+    def get_rotation(self):
+        x_direction = self.parameters.h_x
+        y_direction = self.parameters.h_y
+        z_direction = self.parameters.h_z
+
+        return _rotations_from_directions(x_direction, y_direction, z_direction)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         return pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
-                                 self.length,
+                                 self.length*0.5,
                                  0.0,
                                  2*_math.pi)
 
@@ -653,6 +684,8 @@ class Transformation(object):
 class Expansion(object):
     pass
 
+def _norm(x1, x2, x3):
+    return _math.sqrt(x1**2 + x2**2 + x3**2)
 
 code_meanings = {
     "RPP": "Rectangular Parallelepiped",
