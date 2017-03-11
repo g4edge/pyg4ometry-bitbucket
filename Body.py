@@ -692,25 +692,25 @@ def _norm(x1, x2, x3):
     return _math.sqrt(x1**2 + x2**2 + x3**2)
 
 code_meanings = {
-    "RPP": "Rectangular Parallelepiped",
+    "ARB": "Abitrary Convex Polyhedron",
     "BOX": "General Rectangular Parallelepiped",
-    "SPH": "Sphere",
+    "ELL": "Elippsoid of Revolution",
+    "PLA": "Generic Infinite Half-space",
+    "QUA": "Generic Quadric"
+    "RAW": "Right Angle Wedge",
     "RCC": "Right Circular Cylinder",
     "REC": "Right Ellitpical Cylinder",
+    "RPP": "Rectangular Parallelepiped",
+    "SPH": "Sphere",
     "TRC": "Truncated Right Angle Cone",
-    "ELL": "Elippsoid of Revolution",
     "WED": "Right Angle Wedge",
-    "RAW": "Right Angle Wedge",
-    "ARB": "Abitrary Convex Polyhedron",
+    "XCC": "Infinite Circular Cylinder parallel to the x-axis",
+    "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
     "XYP": "Infinite Half-space",
     "XZP": "Infinite Half-space",
-    "YZP": "Infinite Half-space",
-    "PLA": "Generic Infinite Half-space",
-    "XCC": "Infinite Circular Cylinder parallel to the x-axis",
     "YCC": "Infinite Circular Cylinder parallel to the y-axis",
-    "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
-    "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
     "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
+    "YZP": "Infinite Half-space",
+    "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
     "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis",
-    "QUA": "Generic Quadric"
 }
