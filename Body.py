@@ -219,9 +219,9 @@ class RCC(BodyBase):
                                   transformation_stack)
         self._set_parameters(parameters)
 
-        self.length = _math.sqrt(self.parameters.h_x**2
-                                 + self.parameters.h_y**2
-                                 + self.parameters.h_z**2)
+        self.length = _norm(self.parameters.h_x,
+                            self.parameters.h_y,
+                            self.parameters.h_z)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
