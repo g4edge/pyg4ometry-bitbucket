@@ -288,7 +288,12 @@ class REC(BodyBase):
 
 
 class TRC(BodyBase):
-
+    '''
+    - V_(x,y,z) (centre of the centre of the major face),
+    - Hx, Hy, Hz (components of a vector corresponding to the TRC
+    height, directed from the major to the minor base), R(1) (radius
+    of the major base), R(2) (radius of the minor base)
+    '''
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -301,8 +306,16 @@ class TRC(BodyBase):
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ['v_x',
+                                                         'v_y',
+                                                         'v_z',
+                                                         'h_x',
+                                                         'h_y',
+                                                         'h_z',
+                                                         'radius_major',
+                                                         'radius_minor'])
         self.parameters = self._ParametersType(*parameters)
+        return None
 
     def get_coordinates_of_centre(self):
         pass
