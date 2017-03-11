@@ -674,7 +674,10 @@ class QUA(BodyBase):
 
 
 class Translation(object):
-    pass
+    def __init__(self, delta_x, delta_y, delta_z):
+        self.delta_x = delta_x
+        self.delta_y = delta_y
+        self.delta_z = delta_z
 
 
 class Transformation(object):
