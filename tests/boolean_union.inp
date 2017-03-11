@@ -6,7 +6,7 @@ SPH  NiceBall  0.0  0.0  0.0  5.0
 SPH  UglyBall  2.5  0.0  0.0  5.0
 SPH  Hohoball  5.0  0.0  0.0  5.0
 END
-MahThi     5 | +NiceBall +Hohoball | +UglyBall
+MahThi     5 | +NiceBall | +UglyBall | +Hohoball
 END
 GEOEND
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+..
