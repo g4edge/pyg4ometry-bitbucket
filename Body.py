@@ -640,7 +640,15 @@ class PLA(BodyBase):
 
 
 class XCC(BodyBase):
+    """
+    Infinite circular cylinder parallel to x-axis
 
+    parameters:
+
+    a_y    -- y-coordinate of the centre of the cylinder
+    a_z    -- z-coordinate of the centre of the cylinder
+    radius -- radius of the cylinder
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -669,7 +677,15 @@ class XCC(BodyBase):
 
 
 class YCC(BodyBase):
+    """
+    Infinite circular cylinder parallel to y-axis
 
+    parameters:
+
+    a_x    -- x-coordinate of the centre of the cylinder
+    a_z    -- z-coordinate of the centre of the cylinder
+    radius -- radius of the cylinder
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -698,7 +714,15 @@ class YCC(BodyBase):
 
 
 class ZCC(BodyBase):
+    """
+    Infinite circular cylinder parallel to z-axis
 
+    parameters:
+
+    a_x    -- x-coordinate of the centre of the cylinder
+    a_y    -- y-coordinate of the centre of the cylinder
+    radius -- radius of the cylinder
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
