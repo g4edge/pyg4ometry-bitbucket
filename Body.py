@@ -516,6 +516,7 @@ class XYP(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
@@ -591,6 +592,7 @@ class YZP(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
