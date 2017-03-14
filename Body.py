@@ -659,21 +659,28 @@ class XCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["a_y",
+                                                         "a_z",
+                                                         "radius"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        return self._centre(0.0, self.parameters.a_y, self.parameters.a_z)
 
     def get_rotation(self):
-        pass
+        return self._rotation(0.0, 0.5 * _math.pi, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Tubs(self.name, 0.0,
+                                 self.parameters.radius,
+                                 self.scale * 0.5,
+                                 0.0,
+                                 2*_math.pi)
 
 
 class YCC(BodyBase):
@@ -696,21 +703,28 @@ class YCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["a_x",
+                                                         "a_z",
+                                                         "radius"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        return self._centre(self.parameters.a_x, 0.0, self.parameters.a_z)
 
     def get_rotation(self):
-        pass
+        return self._rotation(0.5 * _math.pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Tubs(self.name, 0.0,
+                                 self.parameters.radius,
+                                 self.scale * 0.5,
+                                 0.0,
+                                 2*_math.pi)
 
 
 class ZCC(BodyBase):
@@ -733,21 +747,28 @@ class ZCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["a_x",
+                                                         "a_y",
+                                                         "radius"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        return self._centre(self.parameters.a_x, self.parameters.a_y, 0.0)
 
     def get_rotation(self):
-        pass
+        return self._rotation(0.0, 0.0, 0.5 * _math.pi)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Tubs(self.name, 0.0,
+                                 self.parameters.radius,
+                                 self.scale * 0.5,
+                                 0.0,
+                                 2*_math.pi)
 
 
 class XEC(BodyBase):
