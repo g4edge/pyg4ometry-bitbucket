@@ -54,7 +54,7 @@ class BodyBase(object):
         return wrapped
 
     @staticmethod
-    def _rotation_from_directions(x_direction,
+    def _rotations_from_directions(x_direction,
                                  y_direction,
                                  z_direction):
 
