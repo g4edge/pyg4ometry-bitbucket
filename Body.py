@@ -709,7 +709,7 @@ code_meanings = {
     "BOX": "General Rectangular Parallelepiped",
     "ELL": "Elippsoid of Revolution",
     "PLA": "Generic Infinite Half-space",
-    "QUA": "Generic Quadric"
+    "QUA": "Generic Quadric",
     "RAW": "Right Angle Wedge",
     "RCC": "Right Circular Cylinder",
     "REC": "Right Ellitpical Cylinder",
@@ -725,5 +725,5 @@ code_meanings = {
     "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
     "YZP": "Infinite Half-space",
     "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
-    "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis",
+    "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
 }
