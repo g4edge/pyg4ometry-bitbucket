@@ -22,9 +22,7 @@ class BodyBase(object):
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
         self._centre = namedtuple("centre", ['x','y','z'])
-        self._rotation = namedtuple("rotation", ['x_rotation',
-                                                 'y_rotation',
-                                                 'z_rotation'])
+        self._rotation = namedtuple("rotation", ['x','y','z'])
 
     def set_transformation_definitions(self, something):
         pass
