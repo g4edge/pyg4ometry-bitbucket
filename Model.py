@@ -2,7 +2,7 @@ from collections import namedtuple
 import antlr4 as _antlr4
 import pygdml as _pygdml
 from Parser.FlukaParserVisitor import FlukaParserVisitor
-from . import Parser
+from Parser.Parse import Parse
 import Body
 
 
