@@ -125,9 +125,9 @@ class RPP(BodyBase):
         '''
         Construct a pygdml Box from this body definition
         '''
-        x_length = self.parameters.x_max - self.parameters.x_min
-        y_length = self.parameters.y_max - self.parameters.y_min
-        z_length = self.parameters.z_max - self.parameters.z_min
+        x_length = abs(self.parameters.x_max - self.parameters.x_min)
+        y_length = abs(self.parameters.y_max - self.parameters.y_min)
+        z_length = abs(self.parameters.z_max - self.parameters.z_min)
 
         return pygdml.Box(self.name,
                           0.5 * x_length,
