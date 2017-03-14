@@ -421,7 +421,9 @@ class ARB(BodyBase):
 
 
 class XYP(BodyBase):
-
+    '''
+    Infinite plane perpendicular to the z-axis.
+    '''
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -434,18 +436,33 @@ class XYP(BodyBase):
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ['v_z'])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        centre_x = 0.0
+        centre_y = 0.0
+        centre_z = self.parameters.v_z + (self.scale * 0.5)
 
+        return self._centre(centre_x, centre_y, centre_z)
+
+    @BodyBase._parameters_in_mm
+    def get_rotation(self):
+        return self._rotation(0,0,0)
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Box(self.name,
+                                0.5 * self.scale,
+                                0.5 * self.scale,
+                                0.5 * self.scale)
 
 
 class XZP(BodyBase):
-
+    '''
+    Infinite plane perpendicular to the y-axis.
+    '''
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -456,20 +473,34 @@ class XZP(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ['v_y'])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        centre_x = 0.0
+        centre_y = self.parameters.v_y + (self.scale * 0.5)
+        centre_z = 0.0
 
+    @BodyBase._parameters_in_mm
+    def get_rotation(self):
+        return self._rotation(0,0,0)
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Box(self.name,
+                                0.5 * self.scale,
+                                0.5 * self.scale,
+                                0.5 * self.scale)
 
 
 class YZP(BodyBase):
-
+    '''
+    Infinite plane perpendicular to the x-axis.
+    '''
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -482,14 +513,25 @@ class YZP(BodyBase):
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ['v_x'])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        centre_x = self.parameters.v_x + (self.scale * 0.5)
+        centre_y = 0.0
+        centre_z = 0.0
 
+    @BodyBase._parameters_in_mm
+    def get_rotation(self):
+        return self._rotation(0,0,0)
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Box(self.name,
+                                0.5 * self.scale,
+                                0.5 * self.scale,
+                                0.5 * self.scale)
 
 
 class PLA(BodyBase):
