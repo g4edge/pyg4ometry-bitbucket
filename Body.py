@@ -129,7 +129,10 @@ class RPP(BodyBase):
         y_length = self.parameters.y_max - self.parameters.y_min
         z_length = self.parameters.z_max - self.parameters.z_min
 
-        return pygdml.Box(self.name, x_length, y_length, z_length)
+        return pygdml.Box(self.name,
+                          0.5 * x_length,
+                          0.5 * y_length,
+                          0.5 * z_length)
 
 
 class BOX(BodyBase):
