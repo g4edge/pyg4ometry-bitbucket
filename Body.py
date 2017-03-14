@@ -261,7 +261,7 @@ class RCC(BodyBase):
     def get_as_gdml_solid(self):
         return pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
-                                 self.length*0.5,
+                                 self.length * 0.5,
                                  0.0,
                                  2*_math.pi)
 
