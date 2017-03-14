@@ -163,13 +163,25 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                          region_centre_y,
                          region_centre_z]
 
+        region_rotation_x = region_solid.rotation.x
+        region_rotation_y = region_solid.rotation.y
+        region_rotation_z = region_solid.rotation.z
+        region_rotation = [region_rotation_x,
+                           region_rotation_y,
+                           region_rotation_z]
+
         region_gdml = region_solid.solid
         region_name = ctx.RegionName().getText()
 
         if region_solid.operator == '+':
-            placement = _pygdml.volume.Volume(
-                [0,0,0], region_centre, region_gdml, region_name,
-                self.world_volume, 1, False, "copper")
+            placement = _pygdml.volume.Volume(region_rotation,
+                                              region_centre,
+                                              region_gdml,
+                                              region_name,
+                                              self.world_volume,
+                                              1,
+                                              False,
+                                              "copper")
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
@@ -181,11 +193,12 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         body = self.bodies[body_name]
         gdml_solid = body.get_as_gdml_solid()
         body_centre = body.get_coordinates_of_centre()
+        body_rotation  = body.get_rotation()
 
         if ctx.Plus():
-            return _UnaryGDMLSolid(gdml_solid, '+', body_centre)
+            return _UnaryGDMLSolid(gdml_solid, '+', body_centre, body_rotation)
         else:
-            return _UnaryGDMLSolid(gdml_solid, '-', body_centre)
+            return _UnaryGDMLSolid(gdml_solid, '-', body_centre, body_rotation)
 
     def visitZoneUnion(self, ctx):
         # Get the zones:
@@ -200,10 +213,11 @@ class _UnaryGDMLSolid(object):
     A gdml solid with a unary operator from Fluka and a position.
     '''
 
-    def __init__(self, pygdml_solid, operator, centre):
+    def __init__(self, pygdml_solid, operator, centre, rotation):
         self.solid = pygdml_solid
         self.operator = operator
         self.centre = centre
+        self.rotation = rotation
 
     def combine(self, other):
         '''
@@ -231,7 +245,6 @@ class _UnaryGDMLSolid(object):
     def _combine_plus_minus(self, other):
         output_name = "(%s_subtraction_%s)" % (self.solid.name, other.solid.name)
 
-
         other_transformation = self._get_transformation(other)
 
         output_solid = _pygdml.solid.Subtraction(output_name,
@@ -240,10 +253,12 @@ class _UnaryGDMLSolid(object):
                                                  other_transformation)
         output_operator = '+'
         output_centre = self.centre
+        output_rotation = self.rotation
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
-                               output_centre)
+                               output_centre,
+                               output_rotation)
 
     def _combine_plus_plus(self, other):
 
@@ -256,10 +271,12 @@ class _UnaryGDMLSolid(object):
                                                   other_transformation)
         output_operator = '+'
         output_centre = self.centre
+        output_rotation = self.rotation
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
-                               output_centre)
+                               output_centre,
+                               output_rotation)
 
     def _combine_minus_minus(self, other):
         output_name = "(%s_union_%s)" % (self.solid.name,
@@ -268,6 +285,7 @@ class _UnaryGDMLSolid(object):
 
         output_operator = '-'
         output_centre = self.centre
+        output_rotation = self.rotation
 
         output_solid =  _pygdml.Union(output_name,
                                        self.solid,
@@ -275,19 +293,26 @@ class _UnaryGDMLSolid(object):
                                        other_transformation)
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
-                               output_centre)
+                               output_centre,
+                               output_rotation)
 
     def _get_transformation(self, other):
         # other_transformation is the transformation applied to the
-        # second volume w.r.t the first, which is situated at (0,0,0),
-        # when peforming the boolean operation
-
+        # second volume w.r.t the first, which is situated at (0,0,0)
+        # without rotation when peforming the boolean operation.
         offset_x = other.centre.x - self.centre.x
         offset_y = other.centre.y - self.centre.y
         offset_z = other.centre.z - self.centre.z
 
+        offset_x_rotation = other.rotation.x - self.rotation.x
+        offset_y_rotation = other.rotation.y - self.rotation.y
+        offset_z_rotation = other.rotation.z - self.rotation.z
+
         other_translation = [offset_x, offset_y, offset_z]
-        other_rotation = [0,0,0]
+        other_rotation = [offset_x_rotation,
+                          offset_y_rotation,
+                          offset_z_rotation]
+
         other_transformation = [other_rotation, other_translation]
 
         return other_transformation
@@ -298,6 +323,7 @@ class _UnaryGDMLSolid(object):
 
         output_operator = '+'
         output_centre = self.centre
+        output_rotation = self.rotation
 
         output_solid =  _pygdml.Union(output_name,
                                       self.solid,
