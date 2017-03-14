@@ -2,6 +2,7 @@ from collections import namedtuple
 import antlr4 as _antlr4
 import pygdml as _pygdml
 from Parser.FlukaParserVisitor import FlukaParserVisitor
+from Parser.FlukaParserListener import FlukaParserListener
 from Parser.Parse import Parse
 import Body
 
@@ -75,7 +76,7 @@ class Model(object):
         return None
 
 
-class _FlukaAssignmentListener(Parser.FlukaParserListener):
+class _FlukaAssignmentListener(FlukaParserListener):
 
     def __init__(self):
 
