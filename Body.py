@@ -267,7 +267,19 @@ class RCC(BodyBase):
 
 
 class REC(BodyBase):
+    """
+    Class representing the Right Elliptical Cylinder of Fluka.
 
+    Parameters:
+    v_(x,y,z) -- vector components of centre of one of the elliptical
+    plane faces.
+    h_(x,y,z) -- vector components of with magnitude equal to the
+    length of a the cylinder, pointing in the direction of the other face.
+    r_(x,y,z)_semi_minor -- components of a vector corresponding to
+    the minor half-axis of the cylinder elliptical base.
+    r_(x,y,z)_semi_major -- components of a vector corresponding to
+    the major half-axis of the cylinder elliptical base.
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
