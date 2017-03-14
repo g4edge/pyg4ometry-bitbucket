@@ -84,7 +84,7 @@ class RPP(BodyBase):
             self.parameters.y_min > self.parameters.y_max or
             self.parameters.z_min > self.parameters.z_max):
             raise Warning("This RPP \"" + name + "\" has mins larger than "
-                          "its maxes\n. It is ignored in Fluka but "
+                          "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
 
 
