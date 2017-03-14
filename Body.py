@@ -280,14 +280,52 @@ class REC(BodyBase):
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["v_x",
+                                                         "v_y",
+                                                         "v_z",
+                                                         "h_x",
+                                                         "h_y",
+                                                         "h_z",
+                                                         "r_x_semi_minor",
+                                                         "r_y_semi_minor",
+                                                         "r_z_semi_minor",
+                                                         "r_x_semi_major",
+                                                         "r_y_semi_major",
+                                                         "r_z_semi_major"])
         self.parameters = self._ParametersType(*parameters)
 
+        self.semi_minor = _norm(self.parameters.r_x_semi_minor,
+                                self.parameters.r_y_semi_minor,
+                                self.parameters.r_z_semi_minor)
+
+        self.semi_major = _norm(self.parameters.r_x_semi_major,
+                                self.parameters.r_y_semi_major,
+                                self.parameters.r_z_semi_major)
+
+        self.length = _norm(self.parameters.h_x,
+                            self.parameters.h_y,
+                            self.parameters.h_z)
+
     def get_coordinates_of_centre(self):
-        pass
+        centre_x = self.parameters.v_x + self.parameters.h_x * 0.5
+        centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
+        centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
+
+        return self._centre(centre_x, centre_y, centre_z)
+
+    def get_rotation(self):
+        x_direction = self.parameters.h_x
+        y_direction = self.parameters.h_y
+        z_direction = self.parameters.h_z
+
+        return _rotations_from_directions(x_direction, y_direction, z_direction)
 
     def get_as_gdml_solid(self):
-        pass
+
+        return pygdml.EllipticalTube(self.name,
+                                     self.semi_minor,
+                                     self.semi_major,
+                                     self.length * 0.5)
 
 
 class TRC(BodyBase):
