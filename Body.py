@@ -150,9 +150,14 @@ class BOX(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -318,6 +323,7 @@ class REC(BodyBase):
                             self.parameters.h_y,
                             self.parameters.h_z)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         centre_x = self.parameters.v_x + self.parameters.h_x * 0.5
         centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
@@ -332,6 +338,7 @@ class REC(BodyBase):
 
         return _rotations_from_directions(x_direction, y_direction, z_direction)
 
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
 
         return pygdml.EllipticalTube(self.name,
@@ -370,9 +377,14 @@ class TRC(BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -394,9 +406,11 @@ class ELL(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -418,9 +432,14 @@ class WED(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -442,9 +461,14 @@ class RAW(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -466,9 +490,14 @@ class ARB(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -500,7 +529,6 @@ class XYP(BodyBase):
 
         return self._centre(centre_x, centre_y, centre_z)
 
-    @BodyBase._parameters_in_mm
     def get_rotation(self):
         return self._rotation(0,0,0)
 
@@ -538,7 +566,6 @@ class XZP(BodyBase):
         centre_y = self.parameters.v_y + (self.scale * 0.5)
         centre_z = 0.0
 
-    @BodyBase._parameters_in_mm
     def get_rotation(self):
         return self._rotation(0,0,0)
 
@@ -575,7 +602,6 @@ class YZP(BodyBase):
         centre_y = 0.0
         centre_z = 0.0
 
-    @BodyBase._parameters_in_mm
     def get_rotation(self):
         return self._rotation(0,0,0)
 
@@ -604,9 +630,11 @@ class PLA(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -628,9 +656,14 @@ class XCC(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -652,9 +685,14 @@ class YCC(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -676,9 +714,14 @@ class ZCC(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -700,9 +743,14 @@ class XEC(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -724,9 +772,14 @@ class YEC(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -748,9 +801,14 @@ class ZEC(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
@@ -774,9 +832,14 @@ class QUA(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
+    @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation(self):
+        pass
+
+    @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
         pass
 
