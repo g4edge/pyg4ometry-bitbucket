@@ -244,9 +244,9 @@ class RCC(BodyBase):
         MILLIMETRES, as this is used for GDML.
         '''
 
-        centre_x = self.parameters.v_x + self.parameters.h_x * self.length*0.5
-        centre_y = self.parameters.v_y + self.parameters.h_y * self.length*0.5
-        centre_z = self.parameters.v_z + self.parameters.h_z * self.length*0.5
+        centre_x = self.parameters.v_x + self.parameters.h_x * 0.5
+        centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
+        centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
 
         return self._centre(centre_x, centre_y, centre_z)
 
