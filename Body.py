@@ -773,6 +773,17 @@ class ZCC(BodyBase):
 
 
 class XEC(BodyBase):
+    """
+    An infinite elliptical cylinder parallel to the x-axis.
+
+    Parameters:
+
+    centre_y (Ay) - y-coordinate of the centre of the ellipse face.
+    centre_z (Az) - z-coordinate of the centre of the ellipse face.
+    semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse
+    face.
+    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse face.
+    """
 
     def __init__(self, name,
                  parameters,
@@ -784,25 +795,41 @@ class XEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["centre_y",
+                                                         "centre_z",
+                                                         "semi_axis_y",
+                                                         "semi_axis_z"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        pass
+        return self._rotation(0.0, 0.5 * _math.pi, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.EllipticalTube(self.name,
+                                           self.parameters.semi_axis_z,
+                                           self.parameters.semi_axis_y,
+                                           0.5 * self.scale)
 
 
 class YEC(BodyBase):
+    """
+    An infinite elliptical cylinder parallel to the y-axis.
 
+    Parameters:
+
+    centre_z (Az) - z-coordinate of the centre of the ellipse face.
+    centre_x (Ax) - x-coordinate of the centre of the ellipse face.
+    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse face.
+    semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -813,25 +840,41 @@ class YEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["centre_z",
+                                                         "centre_x",
+                                                         "semi_axis_z",
+                                                         "semi_axis_x"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        pass
+        return self._rotation(0.5 * _math.pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.EllipticalTube(self.name,
+                                           self.parameters.semi_axis_x,
+                                           self.parameters.semi_axis_z,
+                                           0.5 * self.scale)
 
 
 class ZEC(BodyBase):
+    """
+    An infinite elliptical cylinder parallel to the z-axis.
 
+    Parameters:
+
+    centre_x (Ax) - x-coordinate of the centre of the ellipse face.
+    centre_y (Ay) - y-coordinate of the centre of the ellipse face.
+    semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
+    semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse face.
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -842,29 +885,34 @@ class ZEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["centre_x",
+                                                         "centre_y",
+                                                         "semi_axis_x",
+                                                         "semi_axis_y"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
 
     def get_rotation(self):
-        pass
+        return self._rotation(0.0, 0.0, 0.5 * _math.pi)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.EllipticalTube(self.name,
+                                           self.parameters.semi_axis_y,
+                                           self.parameters.semi_axis_x,
+                                           0.5 * self.scale)
 
 
 class QUA(BodyBase):
 
     def __init__(self, name,
-
                  parameters,
-
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
