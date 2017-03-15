@@ -51,10 +51,10 @@ class BodyBase(object):
 
         return wrapped
 
-    @staticmethod
-    def _rotations_from_directions(x_direction,
-                                 y_direction,
-                                 z_direction):
+    def _rotations_from_directions(self,
+                                   x_direction,
+                                   y_direction,
+                                   z_direction):
 
         norm  = _norm(x_direction, y_direction, z_direction)
         x_rotation = _math.acos(x_direction/norm)
@@ -116,7 +116,9 @@ class RPP(BodyBase):
         y_direction = self.parameters.y_may - self.parameters_y_min
         z_direction = self.parameters.z_maz - self.parameters_z_min
 
-        return _rotations_from_directions(x_direction, y_direction, z_direction)
+        return self._rotations_from_directions(x_direction,
+                                               y_direction,
+                                               z_direction)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -258,7 +260,9 @@ class RCC(BodyBase):
         y_direction = self.parameters.h_y
         z_direction = self.parameters.h_z
 
-        return _rotations_from_directions(x_direction, y_direction, z_direction)
+        return self._rotations_from_directions(x_direction,
+                                               y_direction,
+                                               z_direction)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -334,7 +338,9 @@ class REC(BodyBase):
         y_direction = self.parameters.h_y
         z_direction = self.parameters.h_z
 
-        return _rotations_from_directions(x_direction, y_direction, z_direction)
+        return self._rotations_from_directions(x_direction,
+                                               y_direction,
+                                               z_direction)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
