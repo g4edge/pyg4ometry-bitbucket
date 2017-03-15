@@ -209,6 +209,9 @@ class SPH(BodyBase):
 
 class RCC(BodyBase):
     '''
+    Right-angled Circular Cylinder
+
+    Parameters:
     v_(x,y,z) = coordinates of the centre of one of the circular planes
     faces
     h_(x,y,z) = components of vector pointing in the direction of the
