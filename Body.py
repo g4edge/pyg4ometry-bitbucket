@@ -645,8 +645,8 @@ class XCC(BodyBase):
 
     parameters:
 
-    a_y    -- y-coordinate of the centre of the cylinder
-    a_z    -- z-coordinate of the centre of the cylinder
+    centre_y    -- y-coordinate of the centre of the cylinder
+    centre_z    -- z-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
     def __init__(self, name,
@@ -662,14 +662,14 @@ class XCC(BodyBase):
         self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["a_y",
-                                                         "a_z",
+        self._ParametersType = namedtuple("Parameters", ["centre_y",
+                                                         "centre_z",
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(0.0, self.parameters.a_y, self.parameters.a_z)
+        return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
         return self._rotation(0.0, 0.5 * _math.pi, 0.0)
@@ -689,8 +689,8 @@ class YCC(BodyBase):
 
     parameters:
 
-    a_x    -- x-coordinate of the centre of the cylinder
-    a_z    -- z-coordinate of the centre of the cylinder
+    centre_x    -- x-coordinate of the centre of the cylinder
+    centre_z    -- z-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
     def __init__(self, name,
@@ -706,21 +706,22 @@ class YCC(BodyBase):
         self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["a_x",
-                                                         "a_z",
+        self._ParametersType = namedtuple("Parameters", ["centre_x",
+                                                         "centre_z",
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.a_x, 0.0, self.parameters.a_z)
+        return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
         return self._rotation(0.5 * _math.pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Tubs(self.name, 0.0,
+        return pygdml.solid.Tubs(self.name,
+                                 0.0,
                                  self.parameters.radius,
                                  self.scale * 0.5,
                                  0.0,
@@ -733,8 +734,8 @@ class ZCC(BodyBase):
 
     parameters:
 
-    a_x    -- x-coordinate of the centre of the cylinder
-    a_y    -- y-coordinate of the centre of the cylinder
+    centre_x    -- x-coordinate of the centre of the cylinder
+    centre_y    -- y-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
     def __init__(self, name,
@@ -750,14 +751,14 @@ class ZCC(BodyBase):
         self.scale = 1e6
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["a_x",
-                                                         "a_y",
+        self._ParametersType = namedtuple("Parameters", ["centre_x",
+                                                         "centre_y",
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.a_x, self.parameters.a_y, 0.0)
+        return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
 
     def get_rotation(self):
         return self._rotation(0.0, 0.0, 0.5 * _math.pi)
