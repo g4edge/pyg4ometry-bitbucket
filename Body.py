@@ -112,13 +112,7 @@ class RPP(BodyBase):
         return centre
 
     def get_rotation(self):
-        x_direction = self.parameters.x_max - self.parameters_x_min
-        y_direction = self.parameters.y_may - self.parameters_y_min
-        z_direction = self.parameters.z_maz - self.parameters_z_min
-
-        return self._rotations_from_directions(x_direction,
-                                               y_direction,
-                                               z_direction)
+        return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
