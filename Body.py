@@ -724,7 +724,7 @@ class XCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e6
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -768,7 +768,7 @@ class YCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e6
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -813,7 +813,7 @@ class ZCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e6
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -860,7 +860,7 @@ class XEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e6
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -905,7 +905,7 @@ class YEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e6
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -950,7 +950,7 @@ class ZEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e6
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
