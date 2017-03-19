@@ -956,8 +956,6 @@ class Expansion(object):
     def __init__(self, scaling_factor):
         self.scaling_factor = scaling_factor
 
-def _norm(x1, x2, x3):
-    return _math.sqrt(x1**2 + x2**2 + x3**2)
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
