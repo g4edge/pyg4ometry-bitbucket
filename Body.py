@@ -957,6 +957,94 @@ class Expansion(object):
         self.scaling_factor = scaling_factor
 
 
+def _get_rotation_matrix_between_vectors(vector_1, vector_2):
+    """
+    Returns the rotation matrix that rotates vector_1 to parallel to
+    vector_2.
+
+    Useful for ensuring a given face points in a certain
+    direction.
+
+    Parameters
+    ----------
+    vector_1 : Array-like 3-vector.
+
+    """
+    # Normalise input vectors (rot matrix won't be orthogonal otherwise)
+    vector_1 = vector_1 / _np.linalg.norm(vector_1)
+    vector_2 = vector_2 / _np.linalg.norm(vector_2)
+
+    cross_product = _np.cross(vector_1, vector_2)
+    cosine = _np.dot(vector_1, vector_2)
+    sine = _np.linalg.norm(cross_product)
+
+    identity = _np.identity(3)
+
+    # Check for trivial cases that Rodrigues' can't handle
+    if cosine == 1.0: # then they are already parallel
+        return identity
+    elif cosine == -1.0: # then they are anti-parallel
+        return -identity
+
+    # Construct the skew-symmetric cross product matrix.
+    first_row = [0, -cross_product[2], -cross_product[1]]
+    second_row = [cross_product[2], 0, -cross_product[0]]
+    third_row = [-cross_product[1], cross_product[0], 0]
+    cross_matrix = _np.matrix([first_row, second_row, third_row])
+
+    # Rodrigues' rotation formula.
+    rotation_matrix = (identity + cross_matrix
+                       + (cross_matrix
+                          * cross_matrix
+                          * (1 - cosine)
+                          / (sine**2)))
+
+    return rotation_matrix
+
+def _get_angles_from_matrix(matrix):
+    '''
+    Returns the Tait-Bryan (Euler) angles, sequence = (x-y-z)
+    for a given rotation matrix.
+
+    Source:
+    http://www.staff.city.ac.uk/~sbbh653/publications/euler.pdf
+
+    Parameters:
+    matrix -- a numpy matrix to extract the angles from.
+    '''
+
+    # Get the relevant elements from the matrix.
+    R_11 = matrix.item(0)
+    R_12 = matrix.item(1)
+    R_13 = matrix.item(2)
+    R_21 = matrix.item(3)
+    R_31 = matrix.item(6)
+    R_32 = matrix.item(7)
+    R_33 = matrix.item(8)
+
+    if (R_31 != -1 and R_31 != 1):
+        y_rotation = -_np.arcsin(R_31)
+        cosine_y_rotation = _np.cos(y_rotation)
+
+        x_rotation = _np.arctan2(R_32 / cosine_y_rotation,
+                                 R_33 / cosine_y_rotation)
+        z_rotation = _np.arctan2(R_21 / cosine_y_rotation,
+                                 R_11 / cosine_y_rotation)
+
+    elif R_31 == -1:
+        x_rotation = z_rotation + _np.arctan2(R_12,
+                                              R_13)
+        y_rotation = _np.pi / 2.
+        z_rotation = 0.0
+    elif R_31 == 1:
+        x_rotation = -z_rotation + _np.arctan2(-R_12,
+                                               -R_13)
+        z_rotation = 0.0
+        y_rotation = -_np.pi / 2
+
+    return [x_rotation, y_rotation, z_rotation]
+
+
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
     "BOX": "General Rectangular Parallelepiped",
