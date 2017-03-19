@@ -617,7 +617,23 @@ class YZP(BodyBase):
 
 
 class PLA(BodyBase):
+    """
+    Generic infinite half-space.
 
+    Parameters:
+    x_direction (Hx) :: x-component of a vector of arbitrary length
+                        perpendicular to the plane.  Pointing outside
+                        of the space.
+    y_direction (Hy) :: y-component of a vector of arbitrary length
+                        perpendicular to the plane.  Pointing outside
+                        of the space.
+    z_direction (Hz) :: z-component of a vector of arbitrary length
+                        perpendicular to the plane.  Pointing outside
+                        of the space.
+    x_position  (Vx) :: x-component of a point anywhere on the plane.
+    y_position  (Vy) :: y-component of a point anywhere on the plane.
+    z_position  (Vz) :: z-component of a point anywhere on the plane.
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -628,18 +644,64 @@ class PLA(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self.scale = 1e9
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
+        self._ParametersType = namedtuple("Parameters", ["x_direction",
+                                                         "y_direction",
+                                                         "z_direction",
+                                                         "x_position",
+                                                         "y_position",
+                                                         "z_position"])
         self.parameters = self._ParametersType(*parameters)
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        # The centre of the object will not, of course, be a point on
+        # the surface of the "plane" (Box).  The centre required for
+        # the face to lie on the provided point then needs to be
+        # found.
+        direction_norm = _np.linalg.norm([self.parameters.x_direction,
+                                          self.parameters.y_direction,
+                                          self.parameters.z_direction])
+
+        # This is the value that we can multiply the direction vector
+        # by to get it pointing towards the desired centre of the box.
+        scaling_factor = -0.5 * self.scale / direction_norm
+
+        centre_x = (scaling_factor
+                    * self.parameters.x_direction
+                    + self.parameters.x_position)
+        centre_y = (scaling_factor
+                    * self.parameters.y_direction
+                    + self.parameters.y_position)
+        centre_z = (scaling_factor
+                    * self.parameters.z_direction
+                    + self.parameters.z_position)
+
+        return self._centre(centre_x, centre_y, centre_z)
+
+    def get_rotation(self):
+        # Choose the face pointing in the direction of the positive
+        # z-axis to make the face of the plane.
+        initial_vector = _np.array([0,0,1])
+        plane_vector = _np.array([self.parameters.x_direction,
+                                  self.parameters.y_direction,
+                                  self.parameters.z_direction])
+
+        # Get the rotation matrix that maps initial_vector to plane_vector
+        rotation = _get_rotation_matrix_between_vectors(initial_vector,
+                                                       plane_vector)
+
+        angles = _get_angles_from_matrix(rotation)
+        return self._rotation(*angles)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        return pygdml.solid.Box(self.name,
+                                0.5 * self.scale,
+                                0.5 * self.scale,
+                                0.5 * self.scale)
 
 
 class XCC(BodyBase):
