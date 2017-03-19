@@ -1,7 +1,7 @@
 from collections import namedtuple
 import math as _math
 import pygdml as pygdml
-
+import numpy as _np
 from IPython import embed
 
 class BodyBase(object):
@@ -56,7 +56,7 @@ class BodyBase(object):
                                    y_direction,
                                    z_direction):
 
-        norm  = _norm(x_direction, y_direction, z_direction)
+        norm  = _np.linalg.norm([x_direction, y_direction, z_direction])
         x_rotation = _math.acos(x_direction/norm)
         y_rotation = _math.acos(y_direction/norm)
         z_rotation = _math.acos(z_direction/norm)
@@ -224,9 +224,9 @@ class RCC(BodyBase):
                                   transformation_stack)
         self._set_parameters(parameters)
 
-        self.length = _norm(self.parameters.h_x,
-                            self.parameters.h_y,
-                            self.parameters.h_z)
+        self.length = _np.linalg.norm([self.parameters.h_x,
+                                       self.parameters.h_y,
+                                       self.parameters.h_z])
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
@@ -310,17 +310,17 @@ class REC(BodyBase):
                                                          "r_z_semi_major"])
         self.parameters = self._ParametersType(*parameters)
 
-        self.semi_minor = _norm(self.parameters.r_x_semi_minor,
-                                self.parameters.r_y_semi_minor,
-                                self.parameters.r_z_semi_minor)
+        self.semi_minor = _np.linalg.norm([self.parameters.r_x_semi_minor,
+                                           self.parameters.r_y_semi_minor,
+                                           self.parameters.r_z_semi_minor])
 
-        self.semi_major = _norm(self.parameters.r_x_semi_major,
-                                self.parameters.r_y_semi_major,
-                                self.parameters.r_z_semi_major)
+        self.semi_major = _np.linalg.norm([self.parameters.r_x_semi_major,
+                                           self.parameters.r_y_semi_major,
+                                           self.parameters.r_z_semi_major])
 
-        self.length = _norm(self.parameters.h_x,
-                            self.parameters.h_y,
-                            self.parameters.h_z)
+        self.length = _np.linalg.norm([self.parameters.h_x,
+                                       self.parameters.h_y,
+                                       self.parameters.h_z])
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
