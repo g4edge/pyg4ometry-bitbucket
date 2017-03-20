@@ -224,10 +224,6 @@ class RCC(BodyBase):
                                   transformation_stack)
         self._set_parameters(parameters)
 
-        self.length = _np.linalg.norm([self.parameters.h_x,
-                                       self.parameters.h_y,
-                                       self.parameters.h_z])
-
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
                                                          'v_y',
@@ -245,7 +241,6 @@ class RCC(BodyBase):
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
         '''
-
         centre_x = self.parameters.v_x + self.parameters.h_x * 0.5
         centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
         centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
@@ -253,19 +248,29 @@ class RCC(BodyBase):
         return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        x_direction = self.parameters.h_x
-        y_direction = self.parameters.h_y
-        z_direction = self.parameters.h_z
+        # Choose the cylinder face pointing in the +z direction to
+        # have the coordinates (v_x, v_y, v_z), and point in the
+        # direction -(h_x, h_y, h_z)
+        initial_vector = _np.array([0,0,1])
+        # Negate the vector as I want it facing outwards.
+        plane_vector = -_np.array([self.parameters.h_x,
+                                   self.parameters.h_y,
+                                   self.parameters.h_z])
+        rotation = _get_rotation_matrix_between_vectors(initial_vector,
+                                                        plane_vector)
 
-        return self._rotations_from_directions(x_direction,
-                                               y_direction,
-                                               z_direction)
+        angles = _get_angles_from_matrix(rotation)
+        return self._rotation(*angles)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
+        length = _np.linalg.norm([self.parameters.h_x,
+                                  self.parameters.h_y,
+                                  self.parameters.h_z])
+
         return pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
-                                 self.length * 0.5,
+                                 length * 0.5,
                                  0.0,
                                  2*_math.pi)
 
