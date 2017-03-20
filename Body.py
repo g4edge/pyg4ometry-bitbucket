@@ -577,6 +577,7 @@ class XZP(BodyBase):
         centre_x = 0.0
         centre_y = self.parameters.v_y + (self.scale * 0.5)
         centre_z = 0.0
+        return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         return self._rotation(0,0,0)
@@ -614,6 +615,7 @@ class YZP(BodyBase):
         centre_x = self.parameters.v_x + (self.scale * 0.5)
         centre_y = 0.0
         centre_z = 0.0
+        return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         return self._rotation(0,0,0)
