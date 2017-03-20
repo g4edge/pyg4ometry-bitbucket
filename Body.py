@@ -315,17 +315,6 @@ class REC(BodyBase):
                                                          "r_z_semi_major"])
         self.parameters = self._ParametersType(*parameters)
 
-        self.semi_minor = _np.linalg.norm([self.parameters.r_x_semi_minor,
-                                           self.parameters.r_y_semi_minor,
-                                           self.parameters.r_z_semi_minor])
-
-        self.semi_major = _np.linalg.norm([self.parameters.r_x_semi_major,
-                                           self.parameters.r_y_semi_major,
-                                           self.parameters.r_z_semi_major])
-
-        self.length = _np.linalg.norm([self.parameters.h_x,
-                                       self.parameters.h_y,
-                                       self.parameters.h_z])
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
@@ -336,21 +325,37 @@ class REC(BodyBase):
         return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        x_direction = self.parameters.h_x
-        y_direction = self.parameters.h_y
-        z_direction = self.parameters.h_z
-
-        return self._rotations_from_directions(x_direction,
-                                               y_direction,
-                                               z_direction)
+        # Choose the ellipsoid face pointing in hte +z direction to
+        # have the coordinates (v_x, v_y, v_z), and point in the
+        # direction -(h_x, h_y, h_z)
+        initial_vector = _np.array([0, 0, 1])
+        # Negate the vector as I want it facing outwards.
+        plane_vector = -_np.array([self.parameters.h_x,
+                                   self.parameters.h_y,
+                                   self.parameters.h_z])
+        rotation = _get_rotation_matrix_between_vectors(initial_vector,
+                                                        plane_vector)
+        angles = _get_angles_from_matrix(rotation)
+        return self._rotation(*angles)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
+        semi_minor = _np.linalg.norm([self.parameters.r_x_semi_minor,
+                                      self.parameters.r_y_semi_minor,
+                                      self.parameters.r_z_semi_minor])
+
+        semi_major = _np.linalg.norm([self.parameters.r_x_semi_major,
+                                      self.parameters.r_y_semi_major,
+                                      self.parameters.r_z_semi_major])
+
+        length = _np.linalg.norm([self.parameters.h_x,
+                                  self.parameters.h_y,
+                                  self.parameters.h_z])
 
         return pygdml.EllipticalTube(self.name,
-                                     self.semi_minor,
-                                     self.semi_major,
-                                     self.length * 0.5)
+                                     semi_minor,
+                                     semi_major,
+                                     length * 0.5)
 
 
 class TRC(BodyBase):
