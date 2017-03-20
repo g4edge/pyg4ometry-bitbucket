@@ -191,7 +191,7 @@ class SPH(BodyBase):
         return centre
 
     def get_rotation(self):
-        return _rotation(0,0,0)
+        return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
