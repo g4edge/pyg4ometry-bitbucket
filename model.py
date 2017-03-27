@@ -9,17 +9,17 @@ import bodies
 
 class Model(object):
 
-    def __init__(self, input):
+    def __init__(self, filename):
         self.bodies = {}
         self.materials = {}
         self.translations = {}
         self.expansions = {}
         self.transformations = {}
         self.regions = {}
-        self.filename = input
+        self.filename = filename
 
         # get the antlr4 tree.
-        tree = Parse(input)
+        tree = Parse(filename)
 
         assignment_listener = _FlukaAssignmentListener()
         walker = _antlr4.ParseTreeWalker()
