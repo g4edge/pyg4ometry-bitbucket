@@ -258,7 +258,6 @@ class RCC(BodyBase):
                                    self.parameters.h_z])
         rotation = _get_rotation_matrix_between_vectors(initial_vector,
                                                         plane_vector)
-
         angles = _get_angles_from_matrix(rotation)
         return self._rotation(*angles)
 
@@ -538,7 +537,6 @@ class XYP(BodyBase):
         centre_x = 0.0
         centre_y = 0.0
         centre_z = self.parameters.v_z + (self.scale * 0.5)
-
         return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
@@ -703,7 +701,7 @@ class PLA(BodyBase):
 
         # Get the rotation matrix that maps initial_vector to plane_vector
         rotation = _get_rotation_matrix_between_vectors(initial_vector,
-                                                       plane_vector)
+                                                        plane_vector)
 
         angles = _get_angles_from_matrix(rotation)
         return self._rotation(*angles)

@@ -156,6 +156,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
     def visitRegion(self, ctx):
         # region_solid = self.visit(self.expr())
         region_solid = self.visitChildren(ctx)
+
         region_centre_x = region_solid.centre.x
         region_centre_y = region_solid.centre.y
         region_centre_z = region_solid.centre.z
