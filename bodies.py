@@ -536,7 +536,7 @@ class XYP(BodyBase):
     def get_coordinates_of_centre(self):
         centre_x = 0.0
         centre_y = 0.0
-        centre_z = self.parameters.v_z + (self.scale * 0.5)
+        centre_z = self.parameters.v_z - (self.scale * 0.5)
         return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
@@ -573,7 +573,7 @@ class XZP(BodyBase):
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         centre_x = 0.0
-        centre_y = self.parameters.v_y + (self.scale * 0.5)
+        centre_y = self.parameters.v_y - (self.scale * 0.5)
         centre_z = 0.0
         return self._centre(centre_x, centre_y, centre_z)
 
@@ -610,7 +610,7 @@ class YZP(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        centre_x = self.parameters.v_x + (self.scale * 0.5)
+        centre_x = self.parameters.v_x - (self.scale * 0.5)
         centre_y = 0.0
         centre_z = 0.0
         return self._centre(centre_x, centre_y, centre_z)
