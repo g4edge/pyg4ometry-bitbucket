@@ -1,6 +1,7 @@
 from Reader import Reader
 from CSG import *
-import Model
+import model
+import bodies
 import Parser
 
 __all__ = ['Reader','CSG']

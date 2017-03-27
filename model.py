@@ -4,7 +4,7 @@ import pygdml as _pygdml
 from Parser.FlukaParserVisitor import FlukaParserVisitor
 from Parser.FlukaParserListener import FlukaParserListener
 from Parser.Parse import Parse
-import Body
+import bodies
 
 
 class Model(object):
@@ -61,7 +61,7 @@ class Model(object):
         for body, count in body_and_count:
             body_description = (body
                                 + " - "
-                                + Body.code_meanings[body]).ljust(60,'.')
+                                + bodies.code_meanings[body]).ljust(60,'.')
             print body_description + str(count)
 
         return None
@@ -101,8 +101,8 @@ class _FlukaAssignmentListener(FlukaParserListener):
         # ctx.Float() returns a list of Float contexts associated with this body
         # Get their text, and convert it to floats.
         body_parameters = self._get_floats(ctx)
-
-        body_constructor = getattr(Body, body_type)
+        # embed()
+        body_constructor = getattr(bodies, body_type)
 
         body = body_constructor(body_name,
                                 body_parameters,
