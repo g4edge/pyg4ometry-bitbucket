@@ -333,4 +333,5 @@ class _UnaryGDMLSolid(object):
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
-                               output_centre)
+                               output_centre,
+                               output_rotation)
