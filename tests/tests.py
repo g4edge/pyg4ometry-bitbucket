@@ -13,7 +13,7 @@ def visiting(argv = None):
         file="/tests/fluka_test_input.inp"
 
 
-    model = pyfluka.Model.Model("/Users/Stuart/Physics/Packages"
+    model = pyfluka.model.Model("/Users/Stuart/Physics/Packages"
                                 "/python-tools/pyfluka/" + file)
 
 if __name__ == '__main__':
