@@ -2,8 +2,8 @@ TITLE
 An attempt at showing the wonders of boolean operations in Fluka
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
-REC  elipcyl     -10.0      12.0       7.0       0.0      58.0       0.0
-                    9.       0.0       0.0       0.0       0.0      17.0
+REC  elipcyl 0.0 0.0 0.0       -1.0 -1.0  0.0
+             9.  0.0 0.0        0.0  0.0 17.0
 END
 MahThi 5 +elipcyl
 END

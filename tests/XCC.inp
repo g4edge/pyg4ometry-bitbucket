@@ -1,8 +1,9 @@
 TITLE
-An attempt at showing the wonders of boolean operations in Fluka
+Test file for XCC (infinite cylinder parallel 2 x-axis)
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
-XCC mycyl 10. 10. 30.0
+* XCC parameters: Centre_y, Centre_z, radius
+XCC mycyl               15.       15.   10.0
 END
 MahThi     5 +mycyl
 END

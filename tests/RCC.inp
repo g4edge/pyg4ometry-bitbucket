@@ -1,8 +1,9 @@
 TITLE
-An attempt at showing the wonders of boolean operations in Fluka
+rcc title
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
-RCC mycyl  0.0 -2.0 0.0  0.0  2.0 0.0  1.0
+*               face_x face_y face_z  x_dir   y_dir  z_dir   radius
+RCC mycyl       0.0     0.0      0.0    0.0     -1.0    -1.0      1.0
 END
 MahThi     5 +mycyl
 END
