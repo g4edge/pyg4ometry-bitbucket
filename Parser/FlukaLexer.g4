@@ -29,14 +29,20 @@ GeoBegin
 	-> pushMode(geometry)
     ;
 
+Material
+    : 'M' {self.column == 1}? 'ATERIAL'
+    ;
+
+Compound
+    : 'C' {self.column == 1}? 'OMPOUND'
+    ;
+
 Keyword
     : [A-Za-z] {self.column == 1}? [A-Za-z0-9_-]+
-	-> skip
     ;
 
 ID
     : [A-Za-z@] {self.column != 1}? [A-Za-z0-9_-]*
-	-> skip
     ;
 
 Newline
@@ -45,7 +51,7 @@ Newline
     ;
 
 Integer
-    : '-'? Digit+ -> skip
+    : '-'? Digit+
     ;
 
 Float
@@ -55,7 +61,6 @@ Float
 	|
 	    '.' Digit+  // .123
 	)
-	-> skip
     ;
 
 fragment
