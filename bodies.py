@@ -1155,16 +1155,15 @@ def _get_angles_from_matrix(matrix):
                                  R_11 / cosine_y_rotation)
 
     elif R_31 == -1:
-        x_rotation = z_rotation + _np.arctan2(R_12,
-                                              R_13)
+        x_rotation = _np.arctan2(R_12,
+                                 R_13)
         y_rotation = _pi / 2.
         z_rotation = 0.0
     elif R_31 == 1:
-        x_rotation = -z_rotation + _np.arctan2(-R_12,
-                                               -R_13)
-        z_rotation = 0.0
+        x_rotation =  _np.arctan2(-R_12,
+                                  -R_13)
         y_rotation = -_pi / 2
-
+        z_rotation = 0.0
     return [x_rotation, y_rotation, z_rotation]
 
 
