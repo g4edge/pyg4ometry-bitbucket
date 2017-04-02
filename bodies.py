@@ -393,28 +393,61 @@ class TRC(BodyBase):
                                   transformation_stack)
         self._set_parameters(parameters)
 
+        # Useful derived parameters for later:
+        self._length = _np.linalg.norm([self.parameters.major_to_minor_x,
+                                        self.parameters.major_to_minor_y,
+                                        self.parameters.major_to_minor_z])
+
+        self._major_to_minor_vector = _np.array([self.parameters.major_to_minor_x,
+                                                 self.parameters.major_to_minor_y,
+                                                 self.parameters.major_to_minor_z])
+
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['v_x',
-                                                         'v_y',
-                                                         'v_z',
-                                                         'h_x',
-                                                         'h_y',
-                                                         'h_z',
-                                                         'radius_major',
-                                                         'radius_minor'])
+        self._ParametersType = namedtuple("Parameters", ['centre_major_x',
+                                                         'centre_major_y',
+                                                         'centre_major_z',
+                                                         'major_to_minor_x',
+                                                         'major_to_minor_y',
+                                                         'major_to_minor_z',
+                                                         'major_radius',
+                                                         'minor_radius'])
         self.parameters = self._ParametersType(*parameters)
         return None
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        pass
+        major_centre_vector = _np.array([self.parameters.centre_major_x,
+                                         self.parameters.centre_major_y,
+                                         self.parameters.centre_major_z])
+        centre = major_centre_vector + 0.5 * self._major_to_minor_vector
+        return self._centre(*centre)
 
     def get_rotation(self):
-        pass
+        # At the start, the major face is pointing at -z.
+        start_vector = _np.array([0,0,-1])
+        # We want the major face pointing in the opposite direction to
+        # major_to_minor_vector.
+        end_vector = -self._major_to_minor_vector
+
+        # Get the matrix that will give us this rotation
+        start_to_end_matrix = _get_rotation_matrix_between_vectors(start_vector,
+                                                                   end_vector)
+        # Get the euler angles from this matrix.
+        start_to_end_angles = _get_angles_from_matrix(start_to_end_matrix)
+        return self._rotation(*start_to_end_angles)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        pass
+        # Choose to put the major face at -z.  The above
+        # get_rotation method relies on this choice.
+        return _pygdml.solid.Cons(self.name,
+                                 0.0,
+                                 self.parameters.major_radius,
+                                 0.0,
+                                 self.parameters.minor_radius,
+                                 0.5 * self._length,
+                                 0.0,
+                                 2*_pi)
 
 
 class ELL(BodyBase):
