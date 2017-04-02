@@ -1,6 +1,6 @@
 from collections import namedtuple
 import math as _math
-import pygdml as pygdml
+import pygdml as _pygdml
 import numpy as _np
 from numpy import pi as _pi
 from IPython import embed
@@ -124,10 +124,10 @@ class RPP(BodyBase):
         y_length = abs(self.parameters.y_max - self.parameters.y_min)
         z_length = abs(self.parameters.z_max - self.parameters.z_min)
 
-        return pygdml.Box(self.name,
-                          0.5 * x_length,
-                          0.5 * y_length,
-                          0.5 * z_length)
+        return _pygdml.solid.Box(self.name,
+                                 0.5 * x_length,
+                                 0.5 * y_length,
+                                 0.5 * z_length)
 
 
 class BOX(BodyBase):
@@ -199,7 +199,7 @@ class SPH(BodyBase):
         '''
         Construct a pgydml orb (full, solid sphere) solid.
         '''
-        return pygdml.solid.Orb(self.name, self.parameters.radius)
+        return _pygdml.solid.Orb(self.name, self.parameters.radius)
 
 
 class RCC(BodyBase):
@@ -268,7 +268,7 @@ class RCC(BodyBase):
                                   self.parameters.h_y,
                                   self.parameters.h_z])
 
-        return pygdml.solid.Tubs(self.name, 0.0,
+        return _pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
                                  length * 0.5,
                                  0.0,
@@ -352,19 +352,36 @@ class REC(BodyBase):
                                   self.parameters.h_y,
                                   self.parameters.h_z])
 
-        return pygdml.EllipticalTube(self.name,
-                                     semi_minor,
-                                     semi_major,
-                                     length * 0.5)
+        return _pygdml.solid.EllipticalTube(self.name,
+                                            semi_minor,
+                                            semi_major,
+                                            length * 0.5)
 
 
 class TRC(BodyBase):
-    '''
-    - V_(x,y,z) (centre of the centre of the major face),
-    - Hx, Hy, Hz (components of a vector corresponding to the TRC
-    height, directed from the major to the minor base), R(1) (radius
-    of the major base), R(2) (radius of the minor base)
-    '''
+    """
+    Truncated Right-angled Cone.
+
+    Parameters
+    ----------
+
+    centre_major_x : x-coordinate of the centre of the larger face.
+    centre_major_y : y-coordinate of the centre of the larger face.
+    centre_major_z : z-coordinate of the centre of the larger face.
+
+    major_to_minor_x : x_coordinator of the vector pointing from the major
+                       to minor face.
+    major_to_minor_y : y_coordinator of the vector pointing from the major
+                       to minor face.
+    major_to_minor_z : z_coordinator of the vector pointing from the major
+                       to minor face.
+    The length of the major_to_minor vector is the length of the resulting
+    cone.
+
+    major_radius : radius of the larger face.
+    minor_radius : radius of the smaller face.
+    """
+
     def __init__(self, name,
                  parameters,
                  expansion_stack,
@@ -545,7 +562,7 @@ class XYP(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Box(self.name,
+        return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
                                 0.5 * self.scale)
@@ -583,7 +600,7 @@ class XZP(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Box(self.name,
+        return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
                                 0.5 * self.scale)
@@ -621,7 +638,7 @@ class YZP(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Box(self.name,
+        return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
                                 0.5 * self.scale)
@@ -709,7 +726,7 @@ class PLA(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Box(self.name,
+        return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
                                 0.5 * self.scale)
@@ -752,7 +769,7 @@ class XCC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Tubs(self.name, 0.0,
+        return _pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
                                  self.scale * 0.5,
                                  0.0,
@@ -796,7 +813,7 @@ class YCC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Tubs(self.name,
+        return _pygdml.solid.Tubs(self.name,
                                  0.0,
                                  self.parameters.radius,
                                  self.scale * 0.5,
@@ -889,7 +906,7 @@ class XEC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.EllipticalTube(self.name,
+        return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_z,
                                            self.parameters.semi_axis_y,
                                            0.5 * self.scale)
@@ -934,7 +951,7 @@ class YEC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.EllipticalTube(self.name,
+        return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_x,
                                            self.parameters.semi_axis_z,
                                            0.5 * self.scale)
@@ -979,7 +996,7 @@ class ZEC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.EllipticalTube(self.name,
+        return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_y,
                                            self.parameters.semi_axis_x,
                                            0.5 * self.scale)
