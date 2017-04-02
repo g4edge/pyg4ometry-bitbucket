@@ -2,6 +2,7 @@ from collections import namedtuple
 import math as _math
 import pygdml as pygdml
 import numpy as _np
+from numpy import pi as _pi
 from IPython import embed
 
 class BodyBase(object):
@@ -271,7 +272,7 @@ class RCC(BodyBase):
                                  self.parameters.radius,
                                  length * 0.5,
                                  0.0,
-                                 2*_math.pi)
+                                 2*_pi)
 
 
 class REC(BodyBase):
@@ -747,7 +748,7 @@ class XCC(BodyBase):
         return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.5 * _math.pi, 0.0)
+        return self._rotation(0.0, 0.5 * _pi, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -755,7 +756,7 @@ class XCC(BodyBase):
                                  self.parameters.radius,
                                  self.scale * 0.5,
                                  0.0,
-                                 2*_math.pi)
+                                 2*_pi)
 
 
 class YCC(BodyBase):
@@ -791,7 +792,7 @@ class YCC(BodyBase):
         return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.5 * _math.pi, 0.0, 0.0)
+        return self._rotation(0.5 * _pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -800,7 +801,7 @@ class YCC(BodyBase):
                                  self.parameters.radius,
                                  self.scale * 0.5,
                                  0.0,
-                                 2*_math.pi)
+                                 2*_pi)
 
 
 class ZCC(BodyBase):
@@ -836,7 +837,7 @@ class ZCC(BodyBase):
         return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.0, 0.5 * _math.pi)
+        return self._rotation(0.0, 0.0, 0.5 * _pi)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -844,7 +845,7 @@ class ZCC(BodyBase):
                                  self.parameters.radius,
                                  self.scale * 0.5,
                                  0.0,
-                                 2*_math.pi)
+                                 2*_pi)
 
 
 class XEC(BodyBase):
@@ -884,7 +885,7 @@ class XEC(BodyBase):
         return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.5 * _math.pi, 0.0)
+        return self._rotation(0.0, 0.5 * _pi, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -929,7 +930,7 @@ class YEC(BodyBase):
         return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.5 * _math.pi, 0.0, 0.0)
+        return self._rotation(0.5 * _pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -974,7 +975,7 @@ class ZEC(BodyBase):
         return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.0, 0.5 * _math.pi)
+        return self._rotation(0.0, 0.0, 0.5 * _pi)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
@@ -1106,13 +1107,13 @@ def _get_angles_from_matrix(matrix):
     elif R_31 == -1:
         x_rotation = z_rotation + _np.arctan2(R_12,
                                               R_13)
-        y_rotation = _np.pi / 2.
+        y_rotation = _pi / 2.
         z_rotation = 0.0
     elif R_31 == 1:
         x_rotation = -z_rotation + _np.arctan2(-R_12,
                                                -R_13)
         z_rotation = 0.0
-        y_rotation = -_np.pi / 2
+        y_rotation = -_pi / 2
 
     return [x_rotation, y_rotation, z_rotation]
 
