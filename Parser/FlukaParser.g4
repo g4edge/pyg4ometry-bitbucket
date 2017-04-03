@@ -34,14 +34,15 @@ model
     ;
 
 command
-    : material_declr (compound)*
+    : material_declr
     | geoBegin geocards GeoEnd
     | otherKeywords // Single-card commands.
     ;
 
 // Commands
 material_declr
-    : material (compound)*
+    : material              # SimpleMaterial
+    | material compound+    # CompoundMaterial
     ;
 
 material
