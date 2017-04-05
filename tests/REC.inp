@@ -1,5 +1,5 @@
 TITLE
-An attempt at showing the wonders of boolean operations in Fluka
+Example file for a Right Elliptical Cylinder
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 REC  elipcyl 0.0 0.0 0.0       -1.0 -1.0  0.0
