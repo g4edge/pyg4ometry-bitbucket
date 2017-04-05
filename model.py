@@ -149,7 +149,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         w = _pygdml.solid.Box("world", 10000, 10000, 10000)
         self.world_volume = _pygdml.Volume(
             [0,0,0], [0,0,0], w, "world-volume",
-            None, 1, False, "G4_Galatic")
+            None, 1, False, "G4_Galactic")
 
         self.regions = {}
 
