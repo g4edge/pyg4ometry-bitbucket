@@ -101,7 +101,6 @@ class _FlukaAssignmentListener(FlukaParserListener):
         # ctx.Float() returns a list of Float contexts associated with this body
         # Get their text, and convert it to floats.
         body_parameters = self._get_floats(ctx)
-        # embed()
         body_constructor = getattr(bodies, body_type)
 
         body = body_constructor(body_name,
