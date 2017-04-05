@@ -3,3 +3,8 @@
 *.java
 FM.pdf
 *.g4e
+tests/*.py
+*.tar.gz
+Parser/*.tokens
+Parser/*Listener.py
+Parser/*Visitor.py
