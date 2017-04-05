@@ -244,7 +244,7 @@ class _UnaryGDMLSolid(object):
         return other._combine_plus_minus(self)
 
     def _combine_plus_minus(self, other):
-        output_name = "(%s_subtraction_%s)" % (self.solid.name, other.solid.name)
+        output_name = "(%s_\_%s)" % (self.solid.name, other.solid.name)
 
         other_transformation = self._get_transformation(other)
 
@@ -263,7 +263,7 @@ class _UnaryGDMLSolid(object):
 
     def _combine_plus_plus(self, other):
 
-        output_name = "(%s_intersection_%s)" % (self.solid.name,
+        output_name = "(%s_+_%s)" % (self.solid.name,
                                                 other.solid.name)
         other_transformation = self._get_transformation(other)
         output_solid = _pygdml.solid.Intersection(output_name,
@@ -280,7 +280,7 @@ class _UnaryGDMLSolid(object):
                                output_rotation)
 
     def _combine_minus_minus(self, other):
-        output_name = "(%s_union_%s)" % (self.solid.name,
+        output_name = "(%s_|_%s)" % (self.solid.name,
                                          other.solid.name)
         other_transformation = self._get_transformation(other)
 
