@@ -237,8 +237,8 @@ class _UnaryGDMLSolid(object):
         elif self.operator == '+' and other.operator == '-':
             return self._combine_plus_minus(other)
         else:
-            raise Exception("One or more unknown operator types:",
-                            self.operator, other.operator)
+            raise SyntaxError("One or more unknown operator types: %s, %s"
+                              % (self.operator, other.operator))
 
     def _combine_minus_plus(self, other):
         return other._combine_plus_minus(self)
