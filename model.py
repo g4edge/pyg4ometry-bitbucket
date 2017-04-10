@@ -16,7 +16,9 @@ class Model(object):
         self.expansions = {}
         self.transformations = {}
         self.regions = {}
+                 **kwargs):
         self.filename = filename
+        self.debug = kwargs.get("debug")
 
         # get the antlr4 tree.
         tree = Parse(filename)
@@ -209,15 +211,16 @@ class _FlukaAssignmentListener(FlukaParserListener):
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
 
-    def __init__(self, bodies, materials):
+    def __init__(self, bodies, materials, debug=True):
         self.bodies = bodies
         self.materials = materials
+        self.debug = debug
+
+        self.regions = {}
         w = _pygdml.solid.Box("world", 10000, 10000, 10000)
         self.world_volume = _pygdml.Volume(
             [0,0,0], [0,0,0], w, "world-volume",
             None, 1, False, "G4_Galactic")
-
-        self.regions = {}
 
     def visitRegion(self, ctx):
         # region_solid = self.visit(self.expr())
@@ -240,7 +243,10 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         region_gdml = region_solid.solid
         region_name = ctx.RegionName().getText()
 
-        if region_solid.operator == '+':
+        # This allows us to plot subtractions without something to
+        # subtract from.  Useful for looking at all the solids.
+        if (region_solid.operator == '+' or
+            (region_solid.operator == '-' and self.debug)):
             placement = _pygdml.volume.Volume(region_rotation,
                                               region_centre,
                                               region_gdml,
@@ -249,6 +255,11 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                                               1,
                                               False,
                                               "copper")
+        else:
+            raise SyntaxError("in region definition: %s"
+                              % region_name)
+
+
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
