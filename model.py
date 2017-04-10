@@ -91,6 +91,12 @@ class _FlukaAssignmentListener(FlukaParserListener):
         self._translat_stack = []
         self._expansion_stack = []
 
+
+        self._Card = namedtuple("Card", ["keyword", "one",
+                                         "two", "three",
+                                         "four", "five",
+                                         "six", "sdum"])
+
     def enterBodyDefSpaceDelim(self, ctx):
         if ctx.ID():
             body_name = ctx.ID().getText()
@@ -138,6 +144,67 @@ class _FlukaAssignmentListener(FlukaParserListener):
         float_strings = [i.getText() for i in ctx.Float()]
         floats = map(float, float_strings)
         return floats
+
+    def _cards_from_rule(self, ctx):
+        # Get the tokens in a fixed format.
+        # Loop over all the tokens in the context:
+        tokens = []
+        # tokens = [ctx.getChild(i) for i in range(ctx.getChildCount)]
+        def get_tokens_iter(ctx):
+            if (type(ctx) is _antlr4.tree.Tree.TerminalNodeImpl):
+                    # and type(ctx.getPayload()) is _antlr4.Token):
+                    tokens.append(ctx.getPayload())
+            else:
+                for child in ctx.getChildren():
+                    get_tokens_iter(child)
+        get_tokens_iter(ctx)
+        return self._card_factory(tokens)
+
+    def _card_factory(self, tokens):
+        # tokens should be a list of tokens
+        # Sort in order:
+        tokens.sort(key=lambda token: token.start)
+        # Get unique line numbers
+        lines = set([token.line for token in tokens])
+
+        # Separate the tokens by their lines, starting from first line.
+        tokens_by_line = []
+        for line_number in lines:
+            # Nest list of tokens by line.
+            tokens_in_line = [token for token in tokens
+                              if token.line == line_number]
+            tokens_by_line.append(tokens_in_line)
+
+        cards = []
+        self.is_fixed = True
+        if self.is_fixed:
+            for line in tokens_by_line:
+                # Set variables to None before defining a new card instance.
+                (keyword, one, two, three, four, five, six, sdum) = 8 * [None]
+                for token in line:
+                    if token.column < 10:
+                        keyword = token.text
+                    elif token.column < 20:
+                        one = token.text
+                    elif token.column < 30:
+                        two = token.text
+                    elif token.column < 40:
+                        three = token.text
+                    elif token.column < 50:
+                        four = token.text
+                    elif token.column < 60:
+                        five = token.text
+                    elif token.column < 70:
+                        six = token.text
+                    elif token.column < 80:
+                        sdum = token.text
+
+                cards.append(self._Card(keyword, one,
+                                        two, three,
+                                        four, five,
+                                        six, sdum))
+        # embed()
+
 
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
