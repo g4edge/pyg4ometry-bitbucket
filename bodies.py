@@ -891,11 +891,11 @@ class ZCC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
-        return pygdml.solid.Tubs(self.name, 0.0,
-                                 self.parameters.radius,
-                                 self.scale * 0.5,
-                                 0.0,
-                                 2*_pi)
+        return _pygdml.solid.Tubs(self.name, 0.0,
+                                  self.parameters.radius,
+                                  self.scale * 0.5,
+                                  0.0,
+                                  2*_pi)
 
 
 class XEC(BodyBase):
