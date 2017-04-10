@@ -1098,7 +1098,7 @@ def _get_rotation_matrix_between_vectors(vector_1, vector_2):
     vector_2 = vector_2 / _np.linalg.norm(vector_2)
 
     cross_product = _np.cross(vector_1, vector_2)
-    cosine = _np.dot(vector_1, vector_2)
+    cosine = float(_np.dot(vector_1, vector_2))
     sine = _np.linalg.norm(cross_product)
 
     identity = _np.identity(3)
