@@ -357,7 +357,7 @@ class _UnaryGDMLSolid(object):
                                output_rotation)
 
     def _combine_minus_minus(self, other):
-        output_name = "(%s_|_%s)" % (self.solid.name,
+        output_name = "(%s_m_%s)" % (self.solid.name,
                                          other.solid.name)
         other_transformation = self._get_transformation(other)
 
