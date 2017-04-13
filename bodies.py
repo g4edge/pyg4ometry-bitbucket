@@ -887,7 +887,7 @@ class ZCC(BodyBase):
         return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.0, 0.5 * _pi)
+        return self._rotation(0.0, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
     def get_as_gdml_solid(self):
