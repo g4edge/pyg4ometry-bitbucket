@@ -256,7 +256,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                                               self.world_volume,
                                               1,
                                               False,
-                                              "copper")
+                                              "G4_Galactic")
         else:
             raise SyntaxError("in region definition: %s"
                               % region_name)
