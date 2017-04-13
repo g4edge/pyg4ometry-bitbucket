@@ -78,6 +78,7 @@ class Model(object):
         return None
 
 
+
 class _FlukaAssignmentListener(FlukaParserListener):
 
     def __init__(self):
@@ -209,6 +210,7 @@ class _FlukaAssignmentListener(FlukaParserListener):
 
 
 
+
 class _FlukaRegionVisitor(FlukaParserVisitor):
 
     def __init__(self, bodies, materials, debug=True):
