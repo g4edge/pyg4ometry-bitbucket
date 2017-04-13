@@ -341,7 +341,7 @@ class _UnaryGDMLSolid(object):
     def _combine_plus_plus(self, other):
 
         output_name = "%s_i_%s" % (self.solid.name,
-                                                other.solid.name)
+                                   other.solid.name)
         other_transformation = self._get_transformation(other)
         output_solid = _pygdml.solid.Intersection(output_name,
                                                   self.solid,
