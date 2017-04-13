@@ -212,8 +212,7 @@ class _FlukaAssignmentListener(FlukaParserListener):
 
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
-
-    def __init__(self, bodies, materials, debug=True):
+    def __init__(self, bodies, materials, debug=False):
         self.bodies = bodies
         self.materials = materials
         self.debug = debug
