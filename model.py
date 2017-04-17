@@ -1,11 +1,14 @@
 from collections import namedtuple
+import logging as _logging
 import antlr4 as _antlr4
 import pygdml as _pygdml
 from Parser.FlukaParserVisitor import FlukaParserVisitor
 from Parser.FlukaParserListener import FlukaParserListener
+from os.path import splitext, basename
 from Parser.Parse import Parse
 import bodies
 
+_logger = _logging.getLogger(__name__)
 
 class Model(object):
 
@@ -17,7 +20,23 @@ class Model(object):
         self.transformations = {}
         self.regions = {}
                  **kwargs):
+
         self.filename = filename
+        _logging.basicConfig(level=_logging.DEBUG,
+                     format='%(name)-20s %(levelname)-8s %(message)s',
+                     datefmt='%m-%d %H:%M',
+                     filename=basename(splitext(self.filename)[0]) + ".log",
+                     filemode='w')
+        # get class logger and set debug level
+        # self.logger = _logging.getLogger(__name__ + ".Model")
+
+        _logger.info("creating pyfluka model from file %s", filename)
+        self.bodies = dict()
+        self.translations = dict()
+        self.expansions = dict()
+        self.transformations = dict()
+        self.regions = dict()
+
         self.debug = kwargs.get("debug")
 
         # get the antlr4 tree.
@@ -213,12 +232,15 @@ class _FlukaAssignmentListener(FlukaParserListener):
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
     def __init__(self, bodies, materials, debug=False):
+        _logger = _logging.getLogger(__name__ + "._FlukaRegionVisitor")
         self.bodies = bodies
         self.materials = materials
         self.debug = debug
 
         self.regions = {}
-        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        WORLD_SIZE = 1e7
+        _logger.debug("worldvolume: name=world, dimensions=%s", WORLD_SIZE)
+        w = _pygdml.solid.Box("world", 1e5, 1e5, 1e5)
         self.world_volume = _pygdml.Volume(
             [0,0,0], [0,0,0], w, "world-volume",
             None, 1, False, "G4_Galactic")
@@ -248,6 +270,9 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         # subtract from.  Useful for looking at all the solids.
         if (region_solid.operator == '+' or
             (region_solid.operator == '-' and self.debug)):
+            _logger.debug("volume: name=%s, position=%s, rotation=%s, solid=%s",
+                              region_name, region_centre,
+                              region_rotation, region_gdml.name)
             placement = _pygdml.volume.Volume(region_rotation,
                                               region_centre,
                                               region_gdml,
@@ -333,6 +358,10 @@ class _UnaryGDMLSolid(object):
         output_operator = '+'
         output_centre = self.centre
         output_rotation = self.rotation
+        _logger.debug("boolean: type=subtraction, name=%s, "
+                          "solid1=%s, solid2=%s, trans=%s",
+                          output_name, self.solid.name,
+                          other.solid.name, other_transformation)
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
@@ -351,6 +380,10 @@ class _UnaryGDMLSolid(object):
         output_operator = '+'
         output_centre = self.centre
         output_rotation = self.rotation
+        _logger.debug("boolean: type=intersection, name=%s, "
+                          "solid1=%s, solid2=%s, trans=%s",
+                          output_name, self.solid.name,
+                          other.solid.name, other_transformation)
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
@@ -369,6 +402,33 @@ class _UnaryGDMLSolid(object):
                                        self.solid,
                                        other.solid,
                                        other_transformation)
+        _logger.debug("boolean: type=union, name=%s, "
+                          "solid1=%s, solid2=%s, trans=%s",
+                          output_name, self.solid.name,
+                          other.solid.name, other_transformation)
+
+        return _UnaryGDMLSolid(output_solid,
+                               output_operator,
+                               output_centre,
+                               output_rotation)
+
+    def union(self, other):
+        output_name = "%s_u_%s" % (self.solid.name, other.solid.name)
+        other_transformation = self._get_transformation(other)
+
+        output_operator = '+'
+        output_centre = self.centre
+        output_rotation = self.rotation
+
+        output_solid =  _pygdml.Union(output_name,
+                                      self.solid,
+                                      other.solid,
+                                      other_transformation)
+        _logger.debug("boolean: type=union, name=%s, "
+                          "solid1=%s, solid2=%s, trans=%s",
+                          output_name, self.solid.name,
+                          other.solid.name, other_transformation)
+
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
                                output_centre,
@@ -395,20 +455,4 @@ class _UnaryGDMLSolid(object):
 
         return other_transformation
 
-    def union(self, other):
-        output_name = "%s_u_%s" % (self.solid.name, other.solid.name)
-        other_transformation = self._get_transformation(other)
 
-        output_operator = '+'
-        output_centre = self.centre
-        output_rotation = self.rotation
-
-        output_solid =  _pygdml.Union(output_name,
-                                      self.solid,
-                                      other.solid,
-                                      other_transformation)
-
-        return _UnaryGDMLSolid(output_solid,
-                               output_operator,
-                               output_centre,
-                               output_rotation)

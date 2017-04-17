@@ -1,9 +1,34 @@
 from collections import namedtuple
+import logging as _logging
 import math as _math
 import pygdml as _pygdml
 import numpy as _np
 from numpy import pi as _pi
 from IPython import embed
+_bodies_logger = _logging.getLogger(__name__)
+
+def _gdml_logger(f):
+    # Logging the construction of the gdml solids.
+    def wrapped(self):
+        # Parameters for the gdml solids that are used here in bodies.
+        gdml_parameters = {"Box": ("pX", "pY", "pZ"),
+                           "Orb": ("pRMax"),
+                           "Tubs": ("pRMin", "pRMax", "pDz", "pSPhi", "pDPhi"),
+                           "Cons": ("pRmin1", "pRmax1", "pRmin2",
+                                    "pRmax2", "pDz", "pSPhi", "pDPhi"),
+                           "EllipticalTube": ("pDx", "pDy", "pDz")}
+        solid = f(self)
+        solid_type = type(solid).__name__
+        parameters =  [getattr(solid, parameter)
+                   for parameter in gdml_parameters[solid_type]]
+        logger = _logging.getLogger("pyfluka.bodies.%s" % type(self).__name__)
+        logger.debug("solid: type=%s, name=%s, rest=%s",
+                     solid_type,
+                     solid.name,
+                     parameters)
+        return solid
+    return wrapped
+
 
 class BodyBase(object):
     '''
@@ -116,6 +141,7 @@ class RPP(BodyBase):
         return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         '''
         Construct a pygdml Box from this body definition
@@ -153,6 +179,7 @@ class BOX(BodyBase):
         pass
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
@@ -195,6 +222,7 @@ class SPH(BodyBase):
         return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         '''
         Construct a pgydml orb (full, solid sphere) solid.
@@ -263,6 +291,7 @@ class RCC(BodyBase):
         return self._rotation(*angles)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         length = _np.linalg.norm([self.parameters.h_x,
                                   self.parameters.h_y,
@@ -437,6 +466,7 @@ class TRC(BodyBase):
         return self._rotation(*start_to_end_angles)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         # Choose to put the major face at -z.  The above
         # get_rotation method relies on this choice.
@@ -472,6 +502,7 @@ class ELL(BodyBase):
         pass
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
@@ -501,6 +532,7 @@ class WED(BodyBase):
         pass
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
@@ -530,6 +562,7 @@ class RAW(BodyBase):
         pass
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
@@ -559,6 +592,7 @@ class ARB(BodyBase):
         pass
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
@@ -594,6 +628,7 @@ class XYP(BodyBase):
         return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
@@ -632,6 +667,7 @@ class XZP(BodyBase):
         return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
@@ -670,6 +706,7 @@ class YZP(BodyBase):
         return self._rotation(0,0,0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
@@ -758,6 +795,7 @@ class PLA(BodyBase):
         return self._rotation(*angles)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
@@ -801,6 +839,7 @@ class XCC(BodyBase):
         return self._rotation(0.0, 0.5 * _pi, 0.0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
@@ -845,6 +884,7 @@ class YCC(BodyBase):
         return self._rotation(0.5 * _pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
                                  0.0,
@@ -890,6 +930,7 @@ class ZCC(BodyBase):
         return self._rotation(0.0, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                   self.parameters.radius,
@@ -938,6 +979,7 @@ class XEC(BodyBase):
         return self._rotation(0.0, 0.5 * _pi, 0.0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_z,
@@ -983,6 +1025,7 @@ class YEC(BodyBase):
         return self._rotation(0.5 * _pi, 0.0, 0.0)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_x,
@@ -1028,6 +1071,7 @@ class ZEC(BodyBase):
         return self._rotation(0.0, 0.0, 0.5 * _pi)
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_y,
@@ -1060,6 +1104,7 @@ class QUA(BodyBase):
         pass
 
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
