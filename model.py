@@ -7,18 +7,14 @@ from Parser.FlukaParserListener import FlukaParserListener
 from os.path import splitext, basename
 from Parser.Parse import Parse
 import bodies
+import materials
+from materials import fluka_g4_material_map as default_material_map
 
 _logger = _logging.getLogger(__name__)
 
 class Model(object):
-
-    def __init__(self, filename):
-        self.bodies = {}
-        self.materials = {}
-        self.translations = {}
-        self.expansions = {}
-        self.transformations = {}
-        self.regions = {}
+    def __init__(self, filename,
+                 material_map=default_material_map,
                  **kwargs):
 
         self.filename = filename
@@ -32,6 +28,7 @@ class Model(object):
 
         _logger.info("creating pyfluka model from file %s", filename)
         self.bodies = dict()
+        self.materials = materials._process_builtin_materials(material_map)
         self.translations = dict()
         self.expansions = dict()
         self.transformations = dict()
@@ -42,17 +39,31 @@ class Model(object):
         # get the antlr4 tree.
         tree = Parse(filename)
 
-        assignment_listener = _FlukaAssignmentListener()
+        assignment_listener = _FlukaAssignmentListener(self.materials)
         walker = _antlr4.ParseTreeWalker()
         walker.walk(assignment_listener, tree)
-
 
         self._get_listener_assignments(assignment_listener)
         self.report_body_count()
         self._convert_bodies_to_gdml_solids()
 
-        visitor = _FlukaRegionVisitor(self.bodies, self.materials)
+        visitor = _FlukaRegionVisitor(self.bodies,
+                                      self.materials,
+                                      debug=self.debug)
         visitor.visit(tree)
+
+        wv = visitor.world_volume
+        wv.setClip()
+        m = wv.pycsgmesh()
+        v = _pygdml.VtkViewer()
+        v.addSource(m)
+        # v.view()
+        out = _pygdml.Gdml()
+        out.add(wv)
+        out.write("test_tunnel.gdml")
+
+
+
     def convert_model_to_gdml(self):
         pass
 
@@ -99,12 +110,9 @@ class Model(object):
 
 
 class _FlukaAssignmentListener(FlukaParserListener):
-
-    def __init__(self):
-
+    def __init__(self, fluka_g4_material_map):
         self.bodies = {}
-        self.materials = {}
-
+        self.materials = fluka_g4_material_map
         self.translations = {}
         self.expansions = {}
         self.transformations = {}
@@ -118,6 +126,12 @@ class _FlukaAssignmentListener(FlukaParserListener):
                                          "two", "three",
                                          "four", "five",
                                          "six", "sdum"])
+
+    def enterSimpleMaterial(self, ctx):
+        material_card = self._cards_from_rule(ctx)
+
+    def enterCompoundMaterial(self, ctx):
+        cards = self._cards_from_rule(ctx)
 
     def enterBodyDefSpaceDelim(self, ctx):
         if ctx.ID():
