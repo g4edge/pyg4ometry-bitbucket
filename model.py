@@ -358,14 +358,13 @@ class _UnaryGDMLSolid(object):
                                output_rotation)
 
     def _combine_minus_minus(self, other):
-        output_name = "(%s_m_%s)" % (self.solid.name,
+        output_name = "%s_m_%s" % (self.solid.name,
                                          other.solid.name)
         other_transformation = self._get_transformation(other)
 
         output_operator = '-'
         output_centre = self.centre
         output_rotation = self.rotation
-
         output_solid =  _pygdml.Union(output_name,
                                        self.solid,
                                        other.solid,
