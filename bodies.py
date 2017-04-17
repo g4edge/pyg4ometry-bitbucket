@@ -975,7 +975,9 @@ class ZCC(BodyBase):
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
+        return self._centre(self.parameters.centre_x,
+                            self.parameters.centre_y,
+                            0.0)
 
     def get_rotation(self):
         return self._rotation(0.0, 0.0, 0.0)
@@ -983,7 +985,8 @@ class ZCC(BodyBase):
     @BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
-        return _pygdml.solid.Tubs(self.name, 0.0,
+        return _pygdml.solid.Tubs(self.name,
+                                  0.0,
                                   self.parameters.radius,
                                   self.scale * 0.5,
                                   0.0,
