@@ -14,7 +14,8 @@ def visiting(argv = None):
 
 
     model = pyfluka.model.Model("/Users/Stuart/Physics/Packages"
-                                "/python-tools/pyfluka/" + file)
+                                "/python-tools/pyfluka/" + file,
+                                debug=True)
 
 if __name__ == '__main__':
     visiting(sys.argv)
