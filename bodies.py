@@ -5,6 +5,7 @@ import pygdml as _pygdml
 import numpy as _np
 from numpy import pi as _pi
 from IPython import embed
+INFINITE_SIZE = 1e4 # mm!!!!
 _bodies_logger = _logging.getLogger(__name__)
 
 def _gdml_logger(f):
@@ -661,7 +662,7 @@ class XYP(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
@@ -700,7 +701,7 @@ class XZP(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_y'])
@@ -739,7 +740,7 @@ class YZP(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
@@ -792,7 +793,7 @@ class PLA(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["x_direction",
@@ -873,7 +874,7 @@ class XCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -918,7 +919,7 @@ class YCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -964,7 +965,7 @@ class ZCC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -1012,7 +1013,7 @@ class XEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -1058,7 +1059,7 @@ class YEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -1104,7 +1105,7 @@ class ZEC(BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = 1e9
+        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
