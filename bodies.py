@@ -309,14 +309,30 @@ class REC(BodyBase):
     Class representing the Right Elliptical Cylinder of Fluka.
 
     Parameters:
-    v_(x,y,z) -- vector components of centre of one of the elliptical
-    plane faces.
-    h_(x,y,z) -- vector components of with magnitude equal to the
-    length of a the cylinder, pointing in the direction of the other face.
-    r_(x,y,z)_semi_minor -- components of a vector corresponding to
-    the minor half-axis of the cylinder elliptical base.
-    r_(x,y,z)_semi_major -- components of a vector corresponding to
-    the major half-axis of the cylinder elliptical base.
+    face_centre_x : x-coordinate of the centre of one of the faces.
+    face_centre_y : y-coordinate of the centre of one of the faces.
+    face_centre_z : z-coordinate of the centre of one of the faces.
+
+    to_other_face_x : x-component of the vector pointing from
+                      face_centre to the other face.
+    to_other_face_y : y-component of the vector pointing from
+                      face_centre to the other face.
+    to_other_face_z : z-component of the vector pointing from
+                      face_centre to the other face.
+    The length of the vector to_other_face is the length of the
+    elliptical cylinder.
+
+    semi_minor_x : x-component of the semi-minor axis.
+    semi_minor_y : y-component of the semi-minor axis.
+    semi_minor_z : z-component of the semi-minor axis.
+    The length of the vector semi_minor is the length of the
+    semi-minor axis.
+
+    semi_major_x : x-component of the semi-major axis.
+    semi_major_y : y-component of the semi-major axis.
+    semi_major_z : z-component of the semi-major axis.
+    The length of the vector semi_major is the length of the
+    semi-major axis.
     """
     def __init__(self, name,
                  parameters,
@@ -330,56 +346,90 @@ class REC(BodyBase):
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["v_x",
-                                                         "v_y",
-                                                         "v_z",
-                                                         "h_x",
-                                                         "h_y",
-                                                         "h_z",
-                                                         "r_x_semi_minor",
-                                                         "r_y_semi_minor",
-                                                         "r_z_semi_minor",
-                                                         "r_x_semi_major",
-                                                         "r_y_semi_major",
-                                                         "r_z_semi_major"])
+        self._ParametersType = namedtuple("Parameters", ["face_centre_x",
+                                                         "face_centre_y",
+                                                         "face_centre_z",
+                                                         "to_other_face_x",
+                                                         "to_other_face_y",
+                                                         "to_other_face_z",
+                                                         "semi_minor_x",
+                                                         "semi_minor_y",
+                                                         "semi_minor_z",
+                                                         "semi_major_x",
+                                                         "semi_major_y",
+                                                         "semi_major_z"])
         self.parameters = self._ParametersType(*parameters)
 
 
     @BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        centre_x = self.parameters.v_x + self.parameters.h_x * 0.5
-        centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
-        centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
+        centre_x = (self.parameters.face_centre_x
+                    + self.parameters.to_other_face_x * 0.5)
+        centre_y = (self.parameters.face_centre_y
+                    + self.parameters.to_other_face_y * 0.5)
+        centre_z = (self.parameters.face_centre_z
+                    + self.parameters.to_other_face_z * 0.5)
 
         return self._centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        # Choose the ellipsoid face pointing in hte +z direction to
-        # have the coordinates (v_x, v_y, v_z), and point in the
-        # direction -(h_x, h_y, h_z)
-        initial_vector = _np.array([0, 0, 1])
+        # Perform 2 rotations:
+        # First to get the faces pointing in the correct direction.
+        # Second to get the major axis pointing in the correct direction.
+        # The minor axis will then also be pointing in the correct direction.
+
+        # The unrotated EllipticalTube initially lies parallel to the
+        # z-axis.
+        # Choose the face pointing in the -z direction to become
+        # face_centre.  This will point in the direction
+        # anti-parallel to_other_face.
+        start_face = _np.array([0, 0, +1])
         # Negate the vector as I want it facing outwards.
-        plane_vector = -_np.array([self.parameters.h_x,
-                                   self.parameters.h_y,
-                                   self.parameters.h_z])
-        rotation = _get_rotation_matrix_between_vectors(initial_vector,
-                                                        plane_vector)
-        angles = _get_angles_from_matrix(rotation)
+        end_face = _np.array([self.parameters.to_other_face_x,
+                              self.parameters.to_other_face_y,
+                              self.parameters.to_other_face_z])
+        # The matrix rotating the starting face to parallel to the desired.
+        start_to_end_face = _get_rotation_matrix_between_vectors(start_face,
+                                                                 end_face)
+        # The major-axis starts in the positive y direction.
+        start_major = _np.array([0, 1, 0])
+        # The major-axis after being rotated by the above matrix.
+        middle_major = start_to_end_face.dot(start_major)
+        # The output of "dot" is a matrix, so convert back to an array.
+        middle_major = _np.squeeze(_np.asarray(middle_major))
+        # The desired final vector points in the semi_major direction
+        end_major = _np.array([self.parameters.semi_major_x,
+                               self.parameters.semi_major_y,
+                               self.parameters.semi_major_z])
+        middle_to_end_major = _get_rotation_matrix_between_vectors(middle_major,
+                                                                   end_major)
+
+        resulting_matrix = middle_to_end_major.dot(start_to_end_face)
+
+        angles = _get_angles_from_matrix(resulting_matrix)
         return self._rotation(*angles)
 
+    # def get_rotation(self):
+    #     # vector starts out at [0,-
+    #     start_vector = [1,1,1]
+    #     end_vector =
+
     @BodyBase._parameters_in_mm
+    @_gdml_logger
     def get_as_gdml_solid(self):
-        semi_minor = _np.linalg.norm([self.parameters.r_x_semi_minor,
-                                      self.parameters.r_y_semi_minor,
-                                      self.parameters.r_z_semi_minor])
+        # EllipticalTube is defined in terms of half-lengths in x, y,
+        # and z.  Choose semi_major to start in the positive y direction.
+        semi_minor = _np.linalg.norm([self.parameters.semi_minor_x,
+                                      self.parameters.semi_minor_y,
+                                      self.parameters.semi_minor_z])
 
-        semi_major = _np.linalg.norm([self.parameters.r_x_semi_major,
-                                      self.parameters.r_y_semi_major,
-                                      self.parameters.r_z_semi_major])
+        semi_major = _np.linalg.norm([self.parameters.semi_major_x,
+                                      self.parameters.semi_major_y,
+                                      self.parameters.semi_major_z])
 
-        length = _np.linalg.norm([self.parameters.h_x,
-                                  self.parameters.h_y,
-                                  self.parameters.h_z])
+        length = _np.linalg.norm([self.parameters.to_other_face_x,
+                                  self.parameters.to_other_face_y,
+                                  self.parameters.to_other_face_z])
 
         return _pygdml.solid.EllipticalTube(self.name,
                                             semi_minor,
