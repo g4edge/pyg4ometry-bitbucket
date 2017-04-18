@@ -252,8 +252,8 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         self.regions = {}
         WORLD_SIZE = 1e7
-        _logger.debug("worldvolume: name=world, dimensions=%s", WORLD_SIZE)
-        w = _pygdml.solid.Box("world", 1e5, 1e5, 1e5)
+        _logger.debug("worldvolume: name=world; dimensions=%s", WORLD_SIZE)
+        w = _pygdml.solid.Box("world", WORLD_SIZE, WORLD_SIZE, WORLD_SIZE)
         self.world_volume = _pygdml.Volume(
             [0,0,0], [0,0,0], w, "world-volume",
             None, 1, False, "G4_Galactic")
@@ -283,7 +283,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         # subtract from.  Useful for looking at all the solids.
         if (region_solid.operator == '+' or
             (region_solid.operator == '-' and self.debug)):
-            _logger.debug("volume: name=%s, position=%s, rotation=%s, solid=%s",
+            _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
                               region_name, region_centre,
                               region_rotation, region_gdml.name)
             placement = _pygdml.volume.Volume(region_rotation,
@@ -371,8 +371,8 @@ class _UnaryGDMLSolid(object):
         output_operator = '+'
         output_centre = self.centre
         output_rotation = self.rotation
-        _logger.debug("boolean: type=subtraction, name=%s, "
-                          "solid1=%s, solid2=%s, trans=%s",
+        _logger.debug("boolean: type=Subtraction; name=%s; "
+                          "solid1=%s; solid2=%s; trans=%s",
                           output_name, self.solid.name,
                           other.solid.name, other_transformation)
 
@@ -393,8 +393,8 @@ class _UnaryGDMLSolid(object):
         output_operator = '+'
         output_centre = self.centre
         output_rotation = self.rotation
-        _logger.debug("boolean: type=intersection, name=%s, "
-                          "solid1=%s, solid2=%s, trans=%s",
+        _logger.debug("boolean: type=Intersection; name=%s; "
+                          "solid1=%s; solid2=%s; trans=%s",
                           output_name, self.solid.name,
                           other.solid.name, other_transformation)
 
@@ -415,8 +415,8 @@ class _UnaryGDMLSolid(object):
                                        self.solid,
                                        other.solid,
                                        other_transformation)
-        _logger.debug("boolean: type=union, name=%s, "
-                          "solid1=%s, solid2=%s, trans=%s",
+        _logger.debug("boolean: type=Union; name=%s; "
+                          "solid1=%s; solid2=%s; trans=%s",
                           output_name, self.solid.name,
                           other.solid.name, other_transformation)
 
@@ -437,8 +437,8 @@ class _UnaryGDMLSolid(object):
                                       self.solid,
                                       other.solid,
                                       other_transformation)
-        _logger.debug("boolean: type=union, name=%s, "
-                          "solid1=%s, solid2=%s, trans=%s",
+        _logger.debug("boolean: type=Union; name=%s; "
+                          "solid1=%s; solid2=%s; trans=%s",
                           output_name, self.solid.name,
                           other.solid.name, other_transformation)
 
@@ -467,5 +467,3 @@ class _UnaryGDMLSolid(object):
         other_transformation = [other_rotation, other_translation]
 
         return other_transformation
-
-

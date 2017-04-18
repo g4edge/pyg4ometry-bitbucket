@@ -23,7 +23,7 @@ def _gdml_logger(f):
         parameters =  [getattr(solid, parameter)
                    for parameter in gdml_parameters[solid_type]]
         logger = _logging.getLogger("pyfluka.bodies.%s" % type(self).__name__)
-        logger.debug("solid: type=%s, name=%s, rest=%s",
+        logger.debug("solid: type=%s; name=%s; rest=%s",
                      solid_type,
                      solid.name,
                      parameters)
