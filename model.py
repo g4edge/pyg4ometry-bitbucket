@@ -246,7 +246,6 @@ class _FlukaAssignmentListener(FlukaParserListener):
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
     def __init__(self, bodies, materials, debug=False):
-        _logger = _logging.getLogger(__name__ + "._FlukaRegionVisitor")
         self.bodies = bodies
         self.materials = materials
         self.debug = debug
