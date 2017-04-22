@@ -12,12 +12,12 @@ def _gdml_logger(f):
     # Logging the construction of the gdml solids.
     def wrapped(self):
         # Parameters for the gdml solids that are used here in bodies.
-        gdml_parameters = {"Box": ("pX", "pY", "pZ"),
-                           "Orb": ("pRMax"),
-                           "Tubs": ("pRMin", "pRMax", "pDz", "pSPhi", "pDPhi"),
-                           "Cons": ("pRmin1", "pRmax1", "pRmin2",
-                                    "pRmax2", "pDz", "pSPhi", "pDPhi"),
-                           "EllipticalTube": ("pDx", "pDy", "pDz")}
+        gdml_parameters = {"Box": ["pX", "pY", "pZ"],
+                           "Orb": ["pRMax"],
+                           "Tubs": ["pRMin", "pRMax", "pDz", "pSPhi", "pDPhi"],
+                           "Cons": ["pRmin1", "pRmax1", "pRmin2",
+                                    "pRmax2", "pDz", "pSPhi", "pDPhi"],
+                           "EllipticalTube": ["pDx", "pDy", "pDz"]}
         solid = f(self)
         solid_type = type(solid).__name__
         parameters =  [getattr(solid, parameter)
