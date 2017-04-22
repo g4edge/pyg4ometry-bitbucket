@@ -1,4 +1,4 @@
-from collections import namedtuple
+from collections import namedtuple as _namedtuple
 import logging as _logging
 import antlr4 as _antlr4
 import pygdml as _pygdml
@@ -122,10 +122,10 @@ class _FlukaAssignmentListener(FlukaParserListener):
         self._expansion_stack = []
 
 
-        self._Card = namedtuple("Card", ["keyword", "one",
-                                         "two", "three",
-                                         "four", "five",
-                                         "six", "sdum"])
+        self._Card = _namedtuple("Card", ["keyword", "one",
+                                          "two", "three",
+                                          "four", "five",
+                                          "six", "sdum"])
 
     def enterSimpleMaterial(self, ctx):
         material_card = self._cards_from_rule(ctx)
