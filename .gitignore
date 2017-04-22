@@ -8,3 +8,4 @@ tests/*.py
 Parser/*.tokens
 Parser/*Listener.py
 Parser/*Visitor.py
+*.log
