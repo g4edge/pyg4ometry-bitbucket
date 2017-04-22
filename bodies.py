@@ -1178,6 +1178,9 @@ class Expansion(object):
     def __init__(self, scaling_factor):
         self.scaling_factor = scaling_factor
 
+def _rotations_between_vectors(vector_1, vector_2):
+    matrix = _get_rotation_matrix_between_vectors(vector_1, vector_2)
+    return _get_angles_from_matrix(matrix)
 
 def _get_rotation_matrix_between_vectors(vector_1, vector_2):
     """
