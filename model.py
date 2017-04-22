@@ -317,6 +317,11 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         else:
             return _UnaryGDMLSolid(gdml_solid, '-', body_centre, body_rotation)
 
+    def visitUnaryAndSubZone(self, ctx):
+        first= self.visit(ctx.subZone())
+        second = self.visit(ctx.unaryExpression())
+        return first.combine(second)
+
     def visitZoneUnion(self, ctx):
         # Get the zones:
         zones = [self.visit(zone) for zone in ctx.zone()]
@@ -324,7 +329,19 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                                 first.union(second), zones)
         return union_of_zones
 
+    def visitSubZone(self, ctx):
+        if ctx.Plus():
+            operator = '+'
+        elif ctx.Minus():
+            operator = '-'
+        solid = self.visit(ctx.expr())
+        return _UnaryGDMLSolid(solid.solid,
+                               operator,
+                               solid.centre,
+                               solid.rotation)
 
+
+
 class _UnaryGDMLSolid(object):
     '''
     A gdml solid with a unary operator from Fluka and a position.
