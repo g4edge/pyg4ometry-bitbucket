@@ -239,8 +239,6 @@ class _FlukaAssignmentListener(FlukaParserListener):
                                         two, three,
                                         four, five,
                                         six, sdum))
-        # embed()
-
 
 
 
@@ -259,7 +257,6 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             None, 1, False, "G4_Galactic")
 
     def visitRegion(self, ctx):
-        # region_solid = self.visit(self.expr())
         region_solid = self.visitChildren(ctx)
 
         region_centre_x = region_solid.centre.x
