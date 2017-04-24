@@ -187,7 +187,6 @@ class BOX(BodyBase):
 
 
 class SPH(BodyBase):
-
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
