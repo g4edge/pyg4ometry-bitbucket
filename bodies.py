@@ -1,10 +1,11 @@
 from collections import namedtuple
 import logging as _logging
 import math as _math
-import pygdml as _pygdml
 import numpy as _np
 from numpy import pi as _pi
-from IPython import embed
+
+import pygdml as _pygdml
+
 INFINITE_SIZE = 1e8 # mm
 _bodies_logger = _logging.getLogger(__name__)
 

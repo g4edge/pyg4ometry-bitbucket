@@ -1,15 +1,17 @@
 from collections import namedtuple as _namedtuple
 from collections import Counter as _Counter
 import logging as _logging
+from os.path import splitext, basename
+
 import antlr4 as _antlr4
 import pygdml as _pygdml
-from Parser.FlukaParserVisitor import FlukaParserVisitor
-from Parser.FlukaParserListener import FlukaParserListener
-from os.path import splitext, basename
-from Parser.Parse import Parse
+
 import bodies
 import materials
 from materials import fluka_g4_material_map as default_material_map
+from Parser.FlukaParserVisitor import FlukaParserVisitor
+from Parser.FlukaParserListener import FlukaParserListener
+from Parser.Parse import Parse
 
 _logger = _logging.getLogger(__name__)
 
