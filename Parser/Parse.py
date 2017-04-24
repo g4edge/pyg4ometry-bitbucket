@@ -1,26 +1,9 @@
 import subprocess as _sp
 
 import antlr4 as _antlr4
+
 from FlukaLexer import FlukaLexer
 from FlukaParser import FlukaParser
-
-from IPython import embed
-
-def PrePreProcessFile(filein):
-    '''
-    Make some edits to the file so that it can be used by cpp,
-    returning a file object.
-    '''
-    pass
-    # with open(filein, "r+") as model, open("prepreprocessed", "r+") as pp_model:
-    #     model_lines = model.readline()
-
-    #     for line in model_lines:
-
-
-# def _PrePreProcessLine(linein):
-#     if line[0] ==
-#     if line[:7] == 'define':
 
 def PreProcessFile(filein):
     # Can use cpp preprocessor with a bit of  prepreprocessing.
