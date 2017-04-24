@@ -87,8 +87,6 @@ class Model(object):
                                 + bodies.code_meanings[body]).ljust(60,'.')
             print body_description + str(count)
 
-        return None
-
     def _get_listener_assignments(self, assignment_listener):
         self.bodies = assignment_listener.bodies
         self.materials = assignment_listener.materials
@@ -96,7 +94,6 @@ class Model(object):
         self.expansions = assignment_listener.expansions
         self.transformations = assignment_listener.transformations
 
-        return None
 
 
 
@@ -149,18 +146,15 @@ class _FlukaAssignmentListener(FlukaParserListener):
         # These correspond to the 3-vector that forms the translation.
         translation = self._get_floats(ctx)
         self._translat_stack.append(translation)
-        return None
 
     def exitTranslat(self, ctx):
         self._translat_stack.pop()
-        return None
 
     def enterExpansion(self, ctx):
         self._expansion_stack.append(ctx.Float().getText())
 
     def exitExpansion(self, ctx):
         self._expansion_stack.pop()
-        return None
 
     @staticmethod
     def _get_floats(ctx):
