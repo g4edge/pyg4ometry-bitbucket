@@ -45,7 +45,6 @@ class Model(object):
 
         self._get_listener_assignments(assignment_listener)
         self.report_body_count()
-        self._convert_bodies_to_gdml_solids()
 
         visitor = _FlukaRegionVisitor(self.bodies,
                                       self.materials,
@@ -64,8 +63,10 @@ class Model(object):
 
     def report_body_count(self):
         '''
-        Prints the different types of bodies that appear in the model
-        and their frequencies, in order.
+        Prints the different types of bodies that are defined (not
+        necessarily used!) that appear in the model and their
+        frequencies, in order.
+
         '''
 
         # Get unique body types as list of strings from all the body defs
