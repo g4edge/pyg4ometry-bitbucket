@@ -62,16 +62,6 @@ class Model(object):
         out.add(wv)
         out.write("test_tunnel.gdml")
 
-
-
-    def convert_model_to_gdml(self):
-        pass
-
-    def _convert_bodies_to_gdml_solids(self):
-        gdml_solids= dict([(body.name, body.get_as_gdml_solid())
-                           for body in self.bodies.itervalues()])
-        return None
-
     def report_body_count(self):
         '''
         Prints the different types of bodies that appear in the model
