@@ -1,4 +1,5 @@
 from collections import namedtuple as _namedtuple
+from collections import Counter as _Counter
 import logging as _logging
 import antlr4 as _antlr4
 import pygdml as _pygdml
@@ -18,38 +19,28 @@ class Model(object):
                  **kwargs):
 
         self.filename = filename
+        self.material_map = material_map
         _logging.basicConfig(level=_logging.DEBUG,
                      format='%(name)-20s %(levelname)-8s %(message)s',
                      datefmt='%m-%d %H:%M',
                      filename=basename(splitext(self.filename)[0]) + ".log",
                      filemode='w')
-        # get class logger and set debug level
-        # self.logger = _logging.getLogger(__name__ + ".Model")
-
         _logger.info("creating pyfluka model from file %s", filename)
-        self.bodies = dict()
-        self.materials = materials._process_builtin_materials(material_map)
-        self.translations = dict()
-        self.expansions = dict()
-        self.transformations = dict()
-        self.regions = dict()
 
         self.debug = kwargs.get("debug")
 
         # get the antlr4 tree.
-        tree = Parse(filename)
+        self.tree = Parse(filename)
 
-        assignment_listener = _FlukaAssignmentListener(self.materials)
-        walker = _antlr4.ParseTreeWalker()
-        walker.walk(assignment_listener, tree)
 
-        self._get_listener_assignments(assignment_listener)
+        self._materials_from_model()
+        self._bodies_from_model()
         self.report_body_count()
 
         visitor = _FlukaRegionVisitor(self.bodies,
-                                      self.materials,
+                                      self.region_material_map,
                                       debug=self.debug)
-        visitor.visit(tree)
+        visitor.visit(self.tree)
 
         wv = visitor.world_volume
         wv.setClip()
@@ -62,109 +53,58 @@ class Model(object):
         out.write("test_tunnel.gdml")
 
     def report_body_count(self):
-        '''
-        Prints the different types of bodies that are defined (not
-        necessarily used!) that appear in the model and their
-        frequencies, in order.
+        """
+        Prints the frequency of bodies in order and by type that are used
+        in region definitions.  Bodies which are defined but not used
+        are not included in this count.
+        """
 
-        '''
-
-        # Get unique body types as list of strings from all the body defs
-        body_types = [type(body).__name__ for body in
-                      self.bodies.itervalues()]
-        unique_body_types = set(body_types)
-
-        # Count how many times each body definition appears and sort.
-        body_count = [body_types.count(body_type)
-                      for body_type in unique_body_types]
-        body_and_count = zip(unique_body_types, body_count)
+        body_and_count = self._body_freq_map.items()
         body_and_count.sort(key = lambda i: i[1], reverse=True)
-
         # Print result, with alignment.
+        print "Bodies used in region definitions:"
         for body, count in body_and_count:
             body_description = (body
                                 + " - "
                                 + bodies.code_meanings[body]).ljust(60,'.')
             print body_description + str(count)
 
-    def _get_listener_assignments(self, assignment_listener):
-        self.bodies = assignment_listener.bodies
-        self.materials = assignment_listener.materials
-        self.translations = assignment_listener.translations
-        self.expansions = assignment_listener.expansions
-        self.transformations = assignment_listener.transformations
+    def _materials_from_model(self):
+        # This gets the materials and maps them to their region (volumes)
+        material_listener = _FlukaMaterialGetter(self.material_map)
+        walker = _antlr4.ParseTreeWalker()
+        walker.walk(material_listener, self.tree)
+        self.region_material_map = material_listener.region_material_map
 
+    def _bodies_from_model(self):
+        body_listener = _FlukaBodyListener()
+        walker = _antlr4.ParseTreeWalker()
+        walker.walk(body_listener, self.tree)
+        self.bodies = body_listener.bodies
+        used_bodies_by_type = body_listener._used_bodies_by_type
+        self._body_freq_map = _Counter(used_bodies_by_type)
 
 
 
-class _FlukaAssignmentListener(FlukaParserListener):
+class _FlukaMaterialGetter(FlukaParserListener):
+    # This class gets the materials as pygdml.materials instances.
+    # Or perhaps as pyfluka.materials Material instances (???)
+
     def __init__(self, fluka_g4_material_map):
-        self.bodies = {}
         self.materials = fluka_g4_material_map
-        self.translations = {}
-        self.expansions = {}
-        self.transformations = {}
-
-        self._transform_stack = []
-        self._translat_stack = []
-        self._expansion_stack = []
-
+        self.region_material_map = dict()
 
         self._Card = _namedtuple("Card", ["keyword", "one",
                                           "two", "three",
                                           "four", "five",
                                           "six", "sdum"])
 
+
     def enterSimpleMaterial(self, ctx):
         material_card = self._cards_from_rule(ctx)
 
     def enterCompoundMaterial(self, ctx):
         cards = self._cards_from_rule(ctx)
-
-    def enterBodyDefSpaceDelim(self, ctx):
-        if ctx.ID():
-            body_name = ctx.ID().getText()
-        else:
-            body_name = int(ctx.Integer().getText())
-
-        body_type = ctx.BodyCode().getText()
-        # ctx.Float() returns a list of Float contexts associated with this body
-        # Get their text, and convert it to floats.
-        body_parameters = self._get_floats(ctx)
-        body_constructor = getattr(bodies, body_type)
-
-        body = body_constructor(body_name,
-                                body_parameters,
-                                self._transform_stack,
-                                self._translat_stack,
-                                self._expansion_stack)
-
-        self.bodies[body_name] = body
-
-    def enterTranslat(self, ctx):
-        # ctx.Float() returns an array of 3 terminal nodes.
-        # These correspond to the 3-vector that forms the translation.
-        translation = self._get_floats(ctx)
-        self._translat_stack.append(translation)
-
-    def exitTranslat(self, ctx):
-        self._translat_stack.pop()
-
-    def enterExpansion(self, ctx):
-        self._expansion_stack.append(ctx.Float().getText())
-
-    def exitExpansion(self, ctx):
-        self._expansion_stack.pop()
-
-    @staticmethod
-    def _get_floats(ctx):
-        '''
-        Gets the Float tokens associated with the rule and returns
-        them as an array of python floats.
-        '''
-        float_strings = [i.getText() for i in ctx.Float()]
-        floats = map(float, float_strings)
-        return floats
 
     def _cards_from_rule(self, ctx):
         # Get the tokens in a fixed format.
@@ -225,6 +165,68 @@ class _FlukaAssignmentListener(FlukaParserListener):
                                         four, five,
                                         six, sdum))
 
+
+
+class _FlukaBodyListener(FlukaParserListener):
+    def __init__(self):
+        self.bodies = {}
+        self._unique_body_names = set()
+        self._used_bodies_by_type = list()
+
+        self._transform_stack = []
+        self._translat_stack = []
+        self._expansion_stack = []
+
+    def enterBodyDefSpaceDelim(self, ctx):
+        if ctx.ID():
+            body_name = ctx.ID().getText()
+        else:
+            body_name = int(ctx.Integer().getText())
+
+        body_type = ctx.BodyCode().getText()
+        body_parameters = self._get_floats(ctx)
+        body_constructor = getattr(bodies, body_type)
+
+        body = body_constructor(body_name,
+                                body_parameters,
+                                self._transform_stack,
+                                self._translat_stack,
+                                self._expansion_stack)
+
+        self.bodies[body_name] = body
+
+    def enterUnaryExpression(self, ctx):
+        body_name = ctx.ID().getText()
+        if body_name in self._unique_body_names:
+            return None
+        else:
+            self._unique_body_names.add(body_name)
+            body_type = type(self.bodies[body_name]).__name__
+            self._used_bodies_by_type.append(body_type)
+
+    def enterTranslat(self, ctx):
+        # ctx.Float() returns an array of 3 terminal nodes.
+        # These correspond to the 3-vector that forms the translation.
+        translation = self._get_floats(ctx)
+        self._translat_stack.append(translation)
+
+    def exitTranslat(self, ctx):
+        self._translat_stack.pop()
+
+    def enterExpansion(self, ctx):
+        self._expansion_stack.append(ctx.Float().getText())
+
+    def exitExpansion(self, ctx):
+        self._expansion_stack.pop()
+
+    def _get_floats(self, ctx):
+        '''
+        Gets the Float tokens associated with the rule and returns
+        them as an array of python floats.
+        '''
+        float_strings = [i.getText() for i in ctx.Float()]
+        floats = map(float, float_strings)
+        return floats
 
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
