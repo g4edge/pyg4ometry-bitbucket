@@ -5,7 +5,7 @@ import pygdml as _pygdml
 import numpy as _np
 from numpy import pi as _pi
 from IPython import embed
-INFINITE_SIZE = 1e4 # mm!!!!
+INFINITE_SIZE = 1e8 # mm
 _bodies_logger = _logging.getLogger(__name__)
 
 def _gdml_logger(f):
