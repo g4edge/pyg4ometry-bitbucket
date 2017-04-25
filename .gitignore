@@ -6,6 +6,4 @@ FM.pdf
 tests/*.py
 *.tar.gz
 Parser/*.tokens
-Parser/*Listener.py
-Parser/*Visitor.py
 *.log
