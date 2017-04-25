@@ -47,7 +47,7 @@ class Model(object):
         self._world_volume = visitor.world_volume
         self._world_volume.setClip()
 
-    def write_to_gdml(self, out_path=None):
+    def write_to_gdml(self, out_path=None, make_gmad=False):
         """
         Convert the region to GDML.  Default output file name is
         "./" + basename + ".gdml".
@@ -60,6 +60,9 @@ class Model(object):
         out = _pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
+
+        if make_gmad == True:
+            self._write_test_gmad(out_path)
 
     def view_mesh(self):
         if not hasattr(self, "_world_volume"):
@@ -100,6 +103,20 @@ class Model(object):
         self.bodies = body_listener.bodies
         used_bodies_by_type = body_listener._used_bodies_by_type
         self._body_freq_map = _Counter(used_bodies_by_type)
+
+    def _write_test_gmad(self, gdml_path):
+        gmad_path = splitext(gdml_path)[0] + ".gmad"
+        with open(gmad_path, 'w') as gmad:
+            gmad.write("test_component: element, l=10.*m, geometry=\"gdml:%s\","
+                       " outerDiameter=2.1*m;\n" % gdml_path)
+            gmad.write('\n')
+            gmad.write("component : line = (test_component);\n")
+            gmad.write('\n')
+            gmad.write("beam,  particle=\"e-\",\n"
+                       "energy=1.5 * GeV,\n"
+                       "X0=0.1*um;\n")
+            gmad.write('\n')
+            gmad.write("use, period=component;\n")
 
 
 
