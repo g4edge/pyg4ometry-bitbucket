@@ -31,9 +31,8 @@ class Model(object):
 
         self.debug = kwargs.get("debug")
 
-        # get the antlr4 tree.
+        # get the syntax tree.
         self.tree = Parse(filename)
-
 
         self._materials_from_model()
         self._bodies_from_model()
