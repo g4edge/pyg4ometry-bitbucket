@@ -20,12 +20,12 @@ class Model(object):
                  material_map=default_material_map,
                  **kwargs):
 
-        self.filename = filename
+        self._filename = filename
         self.material_map = material_map
         _logging.basicConfig(level=_logging.DEBUG,
                      format='%(name)-20s %(levelname)-8s %(message)s',
                      datefmt='%m-%d %H:%M',
-                     filename=basename(splitext(self.filename)[0]) + ".log",
+                     filename=basename(splitext(self._filename)[0]) + ".log",
                      filemode='w')
         _logger.info("creating pyfluka model from file %s", filename)
 
