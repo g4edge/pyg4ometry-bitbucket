@@ -1,13 +1,14 @@
-import pyfluka
+#!/usr/bin/env python
 import sys
 from IPython import embed
+import pyfluka
 
-def visiting(argv = None):
+def to_gdml(argv = None):
     '''
     A test for visiting a file.
     '''
 
-    if len(sys.argv) > 1:
+    if len(sys.argv) == 2:
         inp_path = sys.argv[1]
 
     model = pyfluka.model.Model(inp_path, debug=True)
@@ -15,4 +16,4 @@ def visiting(argv = None):
 
 
 if __name__ == '__main__':
-    visiting(sys.argv)
+    to_gdml(sys.argv)
