@@ -59,7 +59,7 @@ class Model(object):
             out_path = "./" + basename(splitext(self._filename)[0]) + ".gdml"
         out = _pygdml.Gdml()
         out.add(self._world_volume)
-        out.write("test_tunnel.gdml")
+        out.write(out_path)
 
     def view_mesh(self):
         if not hasattr(self, "_world_volume"):
