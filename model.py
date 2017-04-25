@@ -299,8 +299,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         # This allows us to plot subtractions without something to
         # subtract from.  Useful for looking at all the solids.
-        if (region_solid.operator == '+' or
-            (region_solid.operator == '-' and self.debug)):
+        if region_solid.operator == '+' or region_solid.operator == '-':
             _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
                               region_name, region_centre,
                               region_rotation, region_gdml.name)
@@ -312,9 +311,6 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                                               1,
                                               False,
                                               "G4_Galactic")
-        else:
-            raise SyntaxError("in region definition: %s"
-                              % region_name)
 
 
 
