@@ -41,7 +41,7 @@ class Model(object):
     def _gdml_world_volume(self):
         # Populate, get, and clip the world volume.
         visitor = _FlukaRegionVisitor(self.bodies,
-                                      self.region_material_map,
+                                      self._region_material_map,
                                       debug=self.debug)
         visitor.visit(self.tree)
         self._world_volume = visitor.world_volume
@@ -94,7 +94,7 @@ class Model(object):
         material_listener = _FlukaMaterialGetter(self.material_map)
         walker = _antlr4.ParseTreeWalker()
         walker.walk(material_listener, self.tree)
-        self.region_material_map = material_listener.region_material_map
+        self._region_material_map = material_listener._region_material_map
 
     def _bodies_from_model(self):
         body_listener = _FlukaBodyListener()
@@ -126,13 +126,12 @@ class _FlukaMaterialGetter(FlukaParserListener):
 
     def __init__(self, fluka_g4_material_map):
         self.materials = fluka_g4_material_map
-        self.region_material_map = dict()
+        self._region_material_map = dict()
 
         self._Card = _namedtuple("Card", ["keyword", "one",
                                           "two", "three",
                                           "four", "five",
                                           "six", "sdum"])
-
 
     def enterSimpleMaterial(self, ctx):
         material_card = self._cards_from_rule(ctx)
