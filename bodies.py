@@ -32,7 +32,7 @@ def _gdml_logger(f):
     return wrapped
 
 
-class BodyBase(object):
+class _BodyBase(object):
     '''
     A class representing a body as defined in Fluka.
     get_body_as_gdml_solid() returns the body as a pygdml.solid
@@ -92,7 +92,7 @@ class BodyBase(object):
         return self._rotation(x_rotation, y_rotation, z_rotation)
 
 
-class RPP(BodyBase):
+class RPP(_BodyBase):
     '''
     An RPP is a rectangular parallelpiped (a cuboid).
     '''
@@ -124,7 +124,7 @@ class RPP(BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         '''
         Return the coordinates of the centre of the Rectangular
@@ -142,7 +142,7 @@ class RPP(BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         '''
@@ -158,7 +158,7 @@ class RPP(BodyBase):
                                  0.5 * z_length)
 
 
-class BOX(BodyBase):
+class BOX(_BodyBase):
 
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
@@ -173,20 +173,20 @@ class BOX(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
     def get_rotation(self):
         pass
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
 
-class SPH(BodyBase):
+class SPH(_BodyBase):
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
@@ -208,7 +208,7 @@ class SPH(BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         '''
         Returns the coordinates of the centre of the sphere in
@@ -222,7 +222,7 @@ class SPH(BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         '''
@@ -231,7 +231,7 @@ class SPH(BodyBase):
         return _pygdml.solid.Orb(self.name, self.parameters.radius)
 
 
-class RCC(BodyBase):
+class RCC(_BodyBase):
     '''
     Right-angled Circular Cylinder
 
@@ -265,7 +265,7 @@ class RCC(BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         '''
         Returns the coordinates of the centre of the sphere in
@@ -291,7 +291,7 @@ class RCC(BodyBase):
         angles = _get_angles_from_matrix(rotation)
         return self._rotation(*angles)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         length = _np.linalg.norm([self.parameters.h_x,
@@ -305,7 +305,7 @@ class RCC(BodyBase):
                                  2*_pi)
 
 
-class REC(BodyBase):
+class REC(_BodyBase):
     """
     Class representing the Right Elliptical Cylinder of Fluka.
 
@@ -362,7 +362,7 @@ class REC(BodyBase):
         self.parameters = self._ParametersType(*parameters)
 
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         centre_x = (self.parameters.face_centre_x
                     + self.parameters.to_other_face_x * 0.5)
@@ -415,7 +415,7 @@ class REC(BodyBase):
     #     start_vector = [1,1,1]
     #     end_vector =
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         # EllipticalTube is defined in terms of half-lengths in x, y,
@@ -438,7 +438,7 @@ class REC(BodyBase):
                                             length * 0.5)
 
 
-class TRC(BodyBase):
+class TRC(_BodyBase):
     """
     Truncated Right-angled Cone.
 
@@ -494,7 +494,7 @@ class TRC(BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         major_centre_vector = _np.array([self.parameters.centre_major_x,
                                          self.parameters.centre_major_y,
@@ -516,7 +516,7 @@ class TRC(BodyBase):
         start_to_end_angles = _get_angles_from_matrix(start_to_end_matrix)
         return self._rotation(*start_to_end_angles)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         # Choose to put the major face at -z.  The above
@@ -531,7 +531,7 @@ class TRC(BodyBase):
                                  2*_pi)
 
 
-class ELL(BodyBase):
+class ELL(_BodyBase):
 
     def __init__(self, name,
                  parameters,
@@ -548,17 +548,17 @@ class ELL(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
 
-class WED(BodyBase):
+class WED(_BodyBase):
 
     def __init__(self, name,
                  parameters,
@@ -575,20 +575,20 @@ class WED(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
     def get_rotation(self):
         pass
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
 
-class RAW(BodyBase):
+class RAW(_BodyBase):
 
     def __init__(self, name,
                  parameters,
@@ -605,20 +605,20 @@ class RAW(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
     def get_rotation(self):
         pass
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
 
-class ARB(BodyBase):
+class ARB(_BodyBase):
 
     def __init__(self, name,
                  parameters,
@@ -635,20 +635,20 @@ class ARB(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
     def get_rotation(self):
         pass
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         pass
 
 
-class XYP(BodyBase):
+class XYP(_BodyBase):
     '''
     Infinite plane perpendicular to the z-axis.
     '''
@@ -668,7 +668,7 @@ class XYP(BodyBase):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         centre_x = 0.0
         centre_y = 0.0
@@ -678,7 +678,7 @@ class XYP(BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -687,7 +687,7 @@ class XYP(BodyBase):
                                 0.5 * self.scale)
 
 
-class XZP(BodyBase):
+class XZP(_BodyBase):
     '''
     Infinite plane perpendicular to the y-axis.
     '''
@@ -707,7 +707,7 @@ class XZP(BodyBase):
         self._ParametersType = namedtuple("Parameters", ['v_y'])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self.scale * 0.5)
@@ -717,7 +717,7 @@ class XZP(BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -726,7 +726,7 @@ class XZP(BodyBase):
                                 0.5 * self.scale)
 
 
-class YZP(BodyBase):
+class YZP(_BodyBase):
     '''
     Infinite plane perpendicular to the x-axis.
     '''
@@ -746,7 +746,7 @@ class YZP(BodyBase):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         centre_x = self.parameters.v_x - (self.scale * 0.5)
         centre_y = 0.0
@@ -756,7 +756,7 @@ class YZP(BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -765,7 +765,7 @@ class YZP(BodyBase):
                                 0.5 * self.scale)
 
 
-class PLA(BodyBase):
+class PLA(_BodyBase):
     """
     Generic infinite half-space.
 
@@ -804,7 +804,7 @@ class PLA(BodyBase):
                                                          "z_position"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         # The centre of the object will not, of course, be a point on
         # the surface of the "plane" (Box).  The centre required for
@@ -845,7 +845,7 @@ class PLA(BodyBase):
         angles = _get_angles_from_matrix(rotation)
         return self._rotation(*angles)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -854,7 +854,7 @@ class PLA(BodyBase):
                                 0.5 * self.scale)
 
 
-class XCC(BodyBase):
+class XCC(_BodyBase):
     """
     Infinite circular cylinder parallel to x-axis
 
@@ -882,14 +882,14 @@ class XCC(BodyBase):
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
         return self._rotation(0.0, 0.5 * _pi, 0.0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
@@ -899,7 +899,7 @@ class XCC(BodyBase):
                                  2*_pi)
 
 
-class YCC(BodyBase):
+class YCC(_BodyBase):
     """
     Infinite circular cylinder parallel to y-axis
 
@@ -927,14 +927,14 @@ class YCC(BodyBase):
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
         return self._rotation(0.5 * _pi, 0.0, 0.0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
@@ -945,7 +945,7 @@ class YCC(BodyBase):
                                  2*_pi)
 
 
-class ZCC(BodyBase):
+class ZCC(_BodyBase):
     """
     Infinite circular cylinder parallel to z-axis
 
@@ -973,7 +973,7 @@ class ZCC(BodyBase):
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self._centre(self.parameters.centre_x,
                             self.parameters.centre_y,
@@ -982,7 +982,7 @@ class ZCC(BodyBase):
     def get_rotation(self):
         return self._rotation(0.0, 0.0, 0.0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
@@ -993,7 +993,7 @@ class ZCC(BodyBase):
                                   2*_pi)
 
 
-class XEC(BodyBase):
+class XEC(_BodyBase):
     """
     An infinite elliptical cylinder parallel to the x-axis.
 
@@ -1025,14 +1025,14 @@ class XEC(BodyBase):
                                                          "semi_axis_z"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
         return self._rotation(0.0, 0.5 * _pi, 0.0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
@@ -1041,7 +1041,7 @@ class XEC(BodyBase):
                                            0.5 * self.scale)
 
 
-class YEC(BodyBase):
+class YEC(_BodyBase):
     """
     An infinite elliptical cylinder parallel to the y-axis.
 
@@ -1071,14 +1071,14 @@ class YEC(BodyBase):
                                                          "semi_axis_x"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
         return self._rotation(0.5 * _pi, 0.0, 0.0)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
@@ -1087,7 +1087,7 @@ class YEC(BodyBase):
                                            0.5 * self.scale)
 
 
-class ZEC(BodyBase):
+class ZEC(_BodyBase):
     """
     An infinite elliptical cylinder parallel to the z-axis.
 
@@ -1117,14 +1117,14 @@ class ZEC(BodyBase):
                                                          "semi_axis_y"])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
 
     def get_rotation(self):
         return self._rotation(0.0, 0.0, 0.5 * _pi)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
@@ -1133,7 +1133,7 @@ class ZEC(BodyBase):
                                            0.5 * self.scale)
 
 
-class QUA(BodyBase):
+class QUA(_BodyBase):
 
     def __init__(self, name,
                  parameters,
@@ -1150,14 +1150,14 @@ class QUA(BodyBase):
         self._ParametersType = namedtuple("Parameters", [])
         self.parameters = self._ParametersType(*parameters)
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         pass
 
     def get_rotation(self):
         pass
 
-    @BodyBase._parameters_in_mm
+    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
         pass
