@@ -39,20 +39,36 @@ class Model(object):
         self._bodies_from_model()
         self.report_body_count()
 
+    def _gdml_world_volume(self):
+        # Populate, get, and clip the world volume.
         visitor = _FlukaRegionVisitor(self.bodies,
                                       self.region_material_map,
                                       debug=self.debug)
         visitor.visit(self.tree)
+        self._world_volume = visitor.world_volume
+        self._world_volume.setClip()
 
-        wv = visitor.world_volume
-        wv.setClip()
-        m = wv.pycsgmesh()
-        v = _pygdml.VtkViewer()
-        v.addSource(m)
-        # v.view()
+    def write_to_gdml(self, out_path=None):
+        """
+        Convert the region to GDML.  Default output file name is
+        "./" + basename + ".gdml".
+
+        """
+        if not hasattr(self, "_world_volume"):
+            self._gdml_world_volume()
+        if out_path == None:
+            out_path = "./" + basename(splitext(self._filename)[0]) + ".gdml"
         out = _pygdml.Gdml()
-        out.add(wv)
+        out.add(self._world_volume)
         out.write("test_tunnel.gdml")
+
+    def view_mesh(self):
+        if not hasattr(self, "_world_volume"):
+            self._gdml_world_volume()
+        world_mesh = self._world_volume.pycsgmesh()
+        viewer = _pygdml.VtkViewer()
+        viewer.addSource(world_mesh)
+        viewer.view()
 
     def report_body_count(self):
         """
