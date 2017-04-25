@@ -8,14 +8,11 @@ def visiting(argv = None):
     '''
 
     if len(sys.argv) > 1:
-        file = sys.argv[1]
-    else:
-        file="/tests/fluka_test_input.inp"
+        inp_path = sys.argv[1]
 
+    model = pyfluka.model.Model(inp_path, debug=True)
+    model.write_to_gdml(make_gmad = True)
 
-    model = pyfluka.model.Model("/Users/Stuart/Physics/Packages"
-                                "/python-tools/pyfluka/" + file,
-                                debug=True)
 
 if __name__ == '__main__':
     visiting(sys.argv)
