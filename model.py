@@ -363,7 +363,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         second = self.visit(ctx.unaryExpression())
         return first.combine(second)
 
-    def visitZoneUnion(self, ctx):
+    def visitMultipleUnion(self, ctx):
         # Get the zones:
         zones = [self.visit(zone) for zone in ctx.zone()]
         union_of_zones = reduce(lambda first, second:
