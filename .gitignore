@@ -7,3 +7,5 @@ tests/*.py
 *.tar.gz
 Parser/*.tokens
 *.log
+*.gdml
+*.gmad
