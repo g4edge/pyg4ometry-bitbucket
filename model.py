@@ -42,6 +42,7 @@ class Model(object):
         # Populate, get, and clip the world volume.
         visitor = _FlukaRegionVisitor(self.bodies,
                                       self._region_material_map,
+                                      self._region_max_scale_map,
                                       debug=self.debug)
         visitor.visit(self.tree)
         self._world_volume = visitor.world_volume
@@ -101,8 +102,9 @@ class Model(object):
         walker = _antlr4.ParseTreeWalker()
         walker.walk(body_listener, self.tree)
         self.bodies = body_listener.bodies
-        used_bodies_by_type = body_listener._used_bodies_by_type
+        used_bodies_by_type = body_listener.used_bodies_by_type
         self._body_freq_map = _Counter(used_bodies_by_type)
+        self._region_max_scale_map = body_listener.region_max_scale_map
 
     def _write_test_gmad(self, gdml_path):
         gmad_path = splitext(gdml_path)[0] + ".gmad"
@@ -202,13 +204,22 @@ class _FlukaMaterialGetter(FlukaParserListener):
 
 class _FlukaBodyListener(FlukaParserListener):
     def __init__(self):
-        self.bodies = {}
-        self._unique_body_names = set()
-        self._used_bodies_by_type = list()
+        self.bodies = dict()
+
+        self.region_max_scale_map = dict()
+        self.unique_body_names = set()
+        self.used_bodies_by_type = list()
 
         self._transform_stack = []
         self._translat_stack = []
         self._expansion_stack = []
+
+    def enterRegion(self, ctx):
+        self.max_scale = 0.0
+
+    def exitRegion(self, ctx):
+        region_name = ctx.RegionName().getText()
+        self.region_max_scale_map[region_name] = self.max_scale
 
     def enterBodyDefSpaceDelim(self, ctx):
         if ctx.ID():
@@ -230,12 +241,15 @@ class _FlukaBodyListener(FlukaParserListener):
 
     def enterUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
-        if body_name in self._unique_body_names:
+        self.max_scale = max(self.max_scale,
+                             abs(self.bodies[body_name]._get_scale()))
+
+        if body_name in self.unique_body_names:
             return None
         else:
-            self._unique_body_names.add(body_name)
+            self.unique_body_names.add(body_name)
             body_type = type(self.bodies[body_name]).__name__
-            self._used_bodies_by_type.append(body_type)
+            self.used_bodies_by_type.append(body_type)
 
     def enterTranslat(self, ctx):
         # ctx.Float() returns an array of 3 terminal nodes.
@@ -261,11 +275,13 @@ class _FlukaBodyListener(FlukaParserListener):
         floats = map(float, float_strings)
         return floats
 
+
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
-    def __init__(self, bodies, materials, debug=False):
+    def __init__(self, bodies, materials, region_scale_map, debug=False):
         self.bodies = bodies
         self.materials = materials
+        self.region_scale_map = region_scale_map
         self.debug = debug
 
         self.regions = {}
@@ -277,6 +293,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             None, 1, False, "G4_Galactic")
 
     def visitRegion(self, ctx):
+        self.region_name = ctx.RegionName().getText()
         region_solid = self.visitChildren(ctx)
 
         region_centre_x = region_solid.centre.x
@@ -320,7 +337,18 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
     def visitUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
+
         body = self.bodies[body_name]
+        body_type = type(body).__name__
+        scale = self.region_scale_map[self.region_name] * 100
+
+        # If an infinite body:
+        if body_type in {"XEC", "YEC", "ZEC",
+                         "XCC", "YCC", "ZCC",
+                         "XZP", "XYP", "YZP",
+                         "PLA"}:
+            body.scale = scale
+
         gdml_solid = body.get_as_gdml_solid()
         body_centre = body.get_coordinates_of_centre()
         body_rotation  = body.get_rotation()
