@@ -142,6 +142,14 @@ class RPP(_BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
+    def _get_scale(self):
+        return (max(self.parameters.x_max - self.parameters.x_min,
+                    self.parameters.y_max - self.parameters.y_min,
+                    self.parameters.y_max - self.parameters.y_min,
+                    *self.parameters))
+
+
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -222,6 +230,11 @@ class SPH(_BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
+    def _get_scale(self):
+        return (max(self.parameters.v_x,
+                    self.parameters.v_y,
+                    self.parameters.v_z)
+                + self.parameters.radius)
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -290,6 +303,15 @@ class RCC(_BodyBase):
                                                         plane_vector)
         angles = _get_angles_from_matrix(rotation)
         return self._rotation(*angles)
+
+    def _get_scale(self):
+        length = _np.linalg.norm([self.parameters.h_x,
+                                  self.parameters.h_y,
+                                  self.parameters.h_z])
+        return max(self.parameters.v_x,
+                   self.parameters.v_y,
+                   self.parameters.v_z,
+                   length)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -678,6 +700,9 @@ class XYP(_BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
+    def _get_scale(self):
+        return self.parameters.v_z
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -717,6 +742,9 @@ class XZP(_BodyBase):
     def get_rotation(self):
         return self._rotation(0,0,0)
 
+    def _get_scale(self):
+        return self.parameters.v_y
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -755,6 +783,9 @@ class YZP(_BodyBase):
 
     def get_rotation(self):
         return self._rotation(0,0,0)
+
+    def _get_scale(self):
+        return self.parameters.v_x
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -845,6 +876,8 @@ class PLA(_BodyBase):
         angles = _get_angles_from_matrix(rotation)
         return self._rotation(*angles)
 
+    def _get_scale(self):
+        return self.scale
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -888,6 +921,9 @@ class XCC(_BodyBase):
 
     def get_rotation(self):
         return self._rotation(0.0, 0.5 * _pi, 0.0)
+
+    def _get_scale(self):
+        return self.scale
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -934,6 +970,8 @@ class YCC(_BodyBase):
     def get_rotation(self):
         return self._rotation(0.5 * _pi, 0.0, 0.0)
 
+    def _get_scale(self):
+        return self.scale
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -981,6 +1019,9 @@ class ZCC(_BodyBase):
 
     def get_rotation(self):
         return self._rotation(0.0, 0.0, 0.0)
+
+    def _get_scale(self):
+        return self.scale
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1119,10 +1160,12 @@ class ZEC(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.centre_x, self.parameters.centre_y, 0.0)
+        return self._centre(self.parameters.centre_x,
+                            self.parameters.centre_y,
+                            0.0)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.0, 0.5 * _pi)
+        return self._rotation(0.0, 0.0, 0.0)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1131,6 +1174,9 @@ class ZEC(_BodyBase):
                                            self.parameters.semi_axis_y,
                                            self.parameters.semi_axis_x,
                                            0.5 * self.scale)
+
+    def _get_scale(self):
+        return self.scale
 
 
 class QUA(_BodyBase):
