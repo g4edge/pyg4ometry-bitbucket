@@ -70,8 +70,13 @@ class FlukaParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FlukaParser#zoneUnion.
-    def visitZoneUnion(self, ctx):
+    # Visit a parse tree produced by FlukaParser#multipleUnion.
+    def visitMultipleUnion(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FlukaParser#singleUnion.
+    def visitSingleUnion(self, ctx):
         return self.visitChildren(ctx)
 
 
@@ -97,6 +102,11 @@ class FlukaParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by FlukaParser#unaryAndSubZone.
     def visitUnaryAndSubZone(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FlukaParser#multipleSubZones.
+    def visitMultipleSubZones(self, ctx):
         return self.visitChildren(ctx)
 
 

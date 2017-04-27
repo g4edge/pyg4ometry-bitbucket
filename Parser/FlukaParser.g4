@@ -78,7 +78,8 @@ region
     ;
 
 zoneUnion
-    : Bar zone (Bar zone)+
+    : Bar zone (Bar zone)+ # multipleUnion
+    | Bar zone             # singleUnion
     ;
 
 zone
@@ -94,7 +95,7 @@ expr
     : unaryExpression         # singleUnary
     | unaryExpression expr    # unaryAndBoolean
     | unaryExpression subZone # unaryAndSubZone
-//    | expr Bar expr           # booleanBarBoolean ??????????
+    | subZone+                # multipleSubZones
     ;
 
 binaryUnion
