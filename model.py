@@ -340,15 +340,15 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         body = self.bodies[body_name]
         body_type = type(body).__name__
-        scale = self.region_scale_map[self.region_name] * 100
 
         # If an infinite body:
-        if body_type in {"XEC", "YEC", "ZEC",
-                         "XCC", "YCC", "ZCC",
-                         "XZP", "XYP", "YZP",
-                         "PLA"}:
-            body.scale = scale
-
+        if isinstance(body, bodies._InfiniteSolid):
+            scale = self.region_scale_map[self.region_name] * 10.
+            # Infinite bodies are factories for themselves, allowing
+            # for dynamic infinite scale for a common underlying body.
+            body = body(scale)
+            _logger.debug("Constructing infinite body %s with scale %s",
+                          body_type, scale)
         gdml_solid = body.get_as_gdml_solid()
         body_centre = body.get_coordinates_of_centre()
         body_rotation  = body.get_rotation()

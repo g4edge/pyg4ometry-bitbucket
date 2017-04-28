@@ -70,11 +70,15 @@ class _BodyBase(object):
             # Redefine the named tuple so the returned object is the same shape
             parameters_type = namedtuple("Parameters", fields)
             self.parameters = parameters_type(*parameters_in_mm)
+            if hasattr(self, "scale"):
+                self.scale *= mm
             # Call function
             output = func(self)
             # Put the coordinates back to cm.
             parameters_in_cm = [i * 1/mm for i in self.parameters]
             self.parameters = parameters_type(*parameters_in_cm)
+            if hasattr(self, "scale"):
+                self.scale /= mm
             return output
 
         return wrapped
@@ -91,6 +95,17 @@ class _BodyBase(object):
 
         return self._rotation(x_rotation, y_rotation, z_rotation)
 
+class _InfiniteSolid(object):
+    # Infinite bodies are factories for themselves, allowing
+    # for dynamic infinite scale for a common underlying body.
+    # This is useful because an infinite body maybe used multiple
+    # times, but in one usecase may need to be much bigger than in
+    # another.  This essentially allows for multiple bodies from a
+    # single Fluka definition.
+    def __call__(self, scale):
+        out = self
+        out.scale = scale
+        return out
 
 class RPP(_BodyBase):
     '''
@@ -670,7 +685,7 @@ class ARB(_BodyBase):
         pass
 
 
-class XYP(_BodyBase):
+class XYP(_BodyBase, _InfiniteSolid):
     '''
     Infinite plane perpendicular to the z-axis.
     '''
@@ -712,7 +727,7 @@ class XYP(_BodyBase):
                                 0.5 * self.scale)
 
 
-class XZP(_BodyBase):
+class XZP(_BodyBase, _InfiniteSolid):
     '''
     Infinite plane perpendicular to the y-axis.
     '''
@@ -754,7 +769,7 @@ class XZP(_BodyBase):
                                 0.5 * self.scale)
 
 
-class YZP(_BodyBase):
+class YZP(_BodyBase, _InfiniteSolid):
     '''
     Infinite plane perpendicular to the x-axis.
     '''
@@ -796,7 +811,7 @@ class YZP(_BodyBase):
                                 0.5 * self.scale)
 
 
-class PLA(_BodyBase):
+class PLA(_BodyBase, _InfiniteSolid):
     """
     Generic infinite half-space.
 
@@ -887,7 +902,7 @@ class PLA(_BodyBase):
                                 0.5 * self.scale)
 
 
-class XCC(_BodyBase):
+class XCC(_BodyBase, _InfiniteSolid):
     """
     Infinite circular cylinder parallel to x-axis
 
@@ -935,7 +950,7 @@ class XCC(_BodyBase):
                                  2*_pi)
 
 
-class YCC(_BodyBase):
+class YCC(_BodyBase, _InfiniteSolid):
     """
     Infinite circular cylinder parallel to y-axis
 
@@ -983,7 +998,7 @@ class YCC(_BodyBase):
                                  2*_pi)
 
 
-class ZCC(_BodyBase):
+class ZCC(_BodyBase, _InfiniteSolid):
     """
     Infinite circular cylinder parallel to z-axis
 
@@ -1034,7 +1049,7 @@ class ZCC(_BodyBase):
                                   2*_pi)
 
 
-class XEC(_BodyBase):
+class XEC(_BodyBase, _InfiniteSolid):
     """
     An infinite elliptical cylinder parallel to the x-axis.
 
@@ -1082,7 +1097,7 @@ class XEC(_BodyBase):
                                            0.5 * self.scale)
 
 
-class YEC(_BodyBase):
+class YEC(_BodyBase, _InfiniteSolid):
     """
     An infinite elliptical cylinder parallel to the y-axis.
 
@@ -1128,7 +1143,7 @@ class YEC(_BodyBase):
                                            0.5 * self.scale)
 
 
-class ZEC(_BodyBase):
+class ZEC(_BodyBase, _InfiniteSolid):
     """
     An infinite elliptical cylinder parallel to the z-axis.
 
