@@ -695,7 +695,6 @@ class XYP(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
@@ -737,7 +736,6 @@ class XZP(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_y'])
@@ -918,7 +916,6 @@ class XCC(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -966,7 +963,6 @@ class YCC(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -1014,7 +1010,6 @@ class ZCC(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -1068,7 +1063,6 @@ class XEC(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -1114,7 +1108,6 @@ class YEC(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -1160,7 +1153,6 @@ class ZEC(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
