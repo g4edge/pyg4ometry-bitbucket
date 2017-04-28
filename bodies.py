@@ -1189,9 +1189,6 @@ class ZEC(_BodyBase, _InfiniteSolid):
                                            self.parameters.semi_axis_x,
                                            0.5 * self.scale)
 
-    def _get_scale(self):
-        return self.scale
-
 
 class QUA(_BodyBase):
 
