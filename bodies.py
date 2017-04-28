@@ -9,6 +9,9 @@ import pygdml as _pygdml
 INFINITE_SIZE = 1e8 # mm
 _bodies_logger = _logging.getLogger(__name__)
 
+_centre = namedtuple("centre", ['x','y','z'])
+_rotation = namedtuple("rotation", ['x','y','z'])
+
 def _gdml_logger(f):
     # Logging the construction of the gdml solids.
     def wrapped(self):
@@ -49,8 +52,6 @@ class _BodyBase(object):
         self._translation_stack = translation_stack
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
-        self._centre = namedtuple("centre", ['x','y','z'])
-        self._rotation = namedtuple("rotation", ['x','y','z'])
 
     def set_transformation_definitions(self, something):
         pass
@@ -93,7 +94,7 @@ class _BodyBase(object):
         y_rotation = _math.acos(y_direction/norm)
         z_rotation = _math.acos(z_direction/norm)
 
-        return self._rotation(x_rotation, y_rotation, z_rotation)
+        return _rotation(x_rotation, y_rotation, z_rotation)
 
 class _InfiniteSolid(object):
     # Infinite bodies are factories for themselves, allowing
@@ -150,20 +151,15 @@ class RPP(_BodyBase):
         centre_y = (self.parameters.y_max + self.parameters.y_min)*0.5
         centre_z = (self.parameters.z_max + self.parameters.z_min)*0.5
 
-        centre = self._centre(centre_x, centre_y, centre_z)
+        centre = _centre(centre_x, centre_y, centre_z)
 
         return centre
 
     def get_rotation(self):
-        return self._rotation(0,0,0)
+        return _rotation(0,0,0)
 
-    def _get_scale(self):
-        return (max(self.parameters.x_max - self.parameters.x_min,
-                    self.parameters.y_max - self.parameters.y_min,
-                    self.parameters.y_max - self.parameters.y_min,
-                    *self.parameters))
-
-
+    def _extent(self):
+        return max(self.parameters)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -237,13 +233,13 @@ class SPH(_BodyBase):
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
         '''
-        centre = self._centre(self.parameters.v_x,
-                              self.parameters.v_y,
-                              self.parameters.v_z)
+        centre = _centre(self.parameters.v_x,
+                         self.parameters.v_y,
+                         self.parameters.v_z)
         return centre
 
     def get_rotation(self):
-        return self._rotation(0,0,0)
+        return _rotation(0,0,0)
 
     def _get_scale(self):
         return (max(self.parameters.v_x,
@@ -303,7 +299,7 @@ class RCC(_BodyBase):
         centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
         centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
 
-        return self._centre(centre_x, centre_y, centre_z)
+        return _centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         # Choose the cylinder face pointing in the +z direction to
@@ -317,7 +313,7 @@ class RCC(_BodyBase):
         rotation = _get_rotation_matrix_between_vectors(initial_vector,
                                                         plane_vector)
         angles = _get_angles_from_matrix(rotation)
-        return self._rotation(*angles)
+        return _rotation(*angles)
 
     def _get_scale(self):
         length = _np.linalg.norm([self.parameters.h_x,
@@ -408,7 +404,7 @@ class REC(_BodyBase):
         centre_z = (self.parameters.face_centre_z
                     + self.parameters.to_other_face_z * 0.5)
 
-        return self._centre(centre_x, centre_y, centre_z)
+        return _centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         # Perform 2 rotations:
@@ -445,7 +441,7 @@ class REC(_BodyBase):
         resulting_matrix = middle_to_end_major.dot(start_to_end_face)
 
         angles = _get_angles_from_matrix(resulting_matrix)
-        return self._rotation(*angles)
+        return _rotation(*angles)
 
     # def get_rotation(self):
     #     # vector starts out at [0,-
@@ -537,7 +533,7 @@ class TRC(_BodyBase):
                                          self.parameters.centre_major_y,
                                          self.parameters.centre_major_z])
         centre = major_centre_vector + 0.5 * self._major_to_minor_vector
-        return self._centre(*centre)
+        return _centre(*centre)
 
     def get_rotation(self):
         # At the start, the major face is pointing at -z.
@@ -551,7 +547,7 @@ class TRC(_BodyBase):
                                                                    end_vector)
         # Get the euler angles from this matrix.
         start_to_end_angles = _get_angles_from_matrix(start_to_end_matrix)
-        return self._rotation(*start_to_end_angles)
+        return _rotation(*start_to_end_angles)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -710,10 +706,10 @@ class XYP(_BodyBase, _InfiniteSolid):
         centre_x = 0.0
         centre_y = 0.0
         centre_z = self.parameters.v_z - (self.scale * 0.5)
-        return self._centre(centre_x, centre_y, centre_z)
+        return _centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        return self._rotation(0,0,0)
+        return _rotation(0,0,0)
 
     def _get_scale(self):
         return self.parameters.v_z
@@ -752,10 +748,10 @@ class XZP(_BodyBase, _InfiniteSolid):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self.scale * 0.5)
         centre_z = 0.0
-        return self._centre(centre_x, centre_y, centre_z)
+        return _centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        return self._rotation(0,0,0)
+        return _rotation(0,0,0)
 
     def _get_scale(self):
         return self.parameters.v_y
@@ -794,10 +790,10 @@ class YZP(_BodyBase, _InfiniteSolid):
         centre_x = self.parameters.v_x - (self.scale * 0.5)
         centre_y = 0.0
         centre_z = 0.0
-        return self._centre(centre_x, centre_y, centre_z)
+        return _centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        return self._rotation(0,0,0)
+        return _rotation(0,0,0)
 
     def _get_scale(self):
         return self.parameters.v_x
@@ -874,7 +870,7 @@ class PLA(_BodyBase, _InfiniteSolid):
                     * self.parameters.z_direction
                     + self.parameters.z_position)
 
-        return self._centre(centre_x, centre_y, centre_z)
+        return _centre(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         # Choose the face pointing in the direction of the positive
@@ -889,7 +885,7 @@ class PLA(_BodyBase, _InfiniteSolid):
                                                         plane_vector)
 
         angles = _get_angles_from_matrix(rotation)
-        return self._rotation(*angles)
+        return _rotation(*angles)
 
     def _get_scale(self):
         return self.scale
@@ -932,10 +928,10 @@ class XCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
+        return _centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.5 * _pi, 0.0)
+        return _rotation(0.0, 0.5 * _pi, 0.0)
 
     def _get_scale(self):
         return self.scale
@@ -980,10 +976,10 @@ class YCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+        return _centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.5 * _pi, 0.0, 0.0)
+        return _rotation(0.5 * _pi, 0.0, 0.0)
 
     def _get_scale(self):
         return self.scale
@@ -1028,12 +1024,12 @@ class ZCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.centre_x,
-                            self.parameters.centre_y,
-                            0.0)
+        return _centre(self.parameters.centre_x,
+                       self.parameters.centre_y,
+                       0.0)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.0, 0.0)
+        return _rotation(0.0, 0.0, 0.0)
 
     def _get_scale(self):
         return self.scale
@@ -1083,10 +1079,10 @@ class XEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
+        return _centre(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.5 * _pi, 0.0)
+        return _rotation(0.0, 0.5 * _pi, 0.0)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1129,10 +1125,10 @@ class YEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+        return _centre(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        return self._rotation(0.5 * _pi, 0.0, 0.0)
+        return _rotation(0.5 * _pi, 0.0, 0.0)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1175,12 +1171,15 @@ class ZEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return self._centre(self.parameters.centre_x,
-                            self.parameters.centre_y,
-                            0.0)
+        return _centre(self.parameters.centre_x,
+                       self.parameters.centre_y,
+                       0.0)
 
     def get_rotation(self):
-        return self._rotation(0.0, 0.0, 0.0)
+        return _rotation(0.0, 0.0, 0.0)
+
+    def _extent(self):
+        return max(self.parameters)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
