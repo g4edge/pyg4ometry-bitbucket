@@ -3,6 +3,7 @@ from CSG import *
 import model
 import bodies
 import Parser
+import materials
 import vector
 
 __all__ = ['Reader','CSG']
