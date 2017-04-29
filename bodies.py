@@ -344,6 +344,8 @@ class RCC(_BodyBase):
 
 class REC(_BodyBase):
     """
+    NOT IMPLEMENTED
+
     Class representing the Right Elliptical Cylinder of Fluka.
 
     Parameters:
@@ -377,6 +379,7 @@ class REC(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("REC Not Implemented!")
         super(REC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
