@@ -177,10 +177,15 @@ class RPP(_BodyBase):
 
 
 class BOX(_BodyBase):
+    """
+    BOX: General Rectangular Parallelepiped
 
+    NOT IMPLEMENTED
+    """
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("BOX Not Implemented!")
         super(BOX, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -564,17 +569,23 @@ class TRC(_BodyBase):
 
 
 class ELL(_BodyBase):
+    """
+    ELL: Elippsoid of Revolution
 
+    NOT IMPLEMENTED
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("ELL Not Implemented!")
         super(ELL, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", [])
@@ -591,12 +602,17 @@ class ELL(_BodyBase):
 
 
 class WED(_BodyBase):
+    """
+    WED: Right Angle Wedge
 
+    NOT IMPLEMENTED
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("ELL Not Implemented!")
         super(WED, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -621,12 +637,17 @@ class WED(_BodyBase):
 
 
 class RAW(_BodyBase):
+    """
+    RAW: Right Angle Wedge
 
+    NOT IMPLEMENTED
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("ELL Not Implemented!")
         super(RAW, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -651,12 +672,17 @@ class RAW(_BodyBase):
 
 
 class ARB(_BodyBase):
+    """
+    ARB: Abitrary Convex Polyhedron
 
+    NOT IMPLEMENTED
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("ELL Not Implemented!")
         super(ARB, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -1182,12 +1208,17 @@ class ZEC(_BodyBase, _InfiniteSolid):
 
 
 class QUA(_BodyBase):
+    """
+    QUA: Generic Quadric
 
+    NOT IMPLEMENTED
+    """
     def __init__(self, name,
                  parameters,
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
+        raise RuntimeError("QUA Not Implemented!")
         super(QUA, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
