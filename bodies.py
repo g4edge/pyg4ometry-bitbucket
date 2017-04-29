@@ -1224,8 +1224,8 @@ class ZEC(_BodyBase, _InfiniteSolid):
     @_gdml_logger
     def get_as_gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
-                                           self.parameters.semi_axis_y,
                                            self.parameters.semi_axis_x,
+                                           self.parameters.semi_axis_y,
                                            0.5 * self.scale)
 
 
