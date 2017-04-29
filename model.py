@@ -242,7 +242,7 @@ class _FlukaBodyListener(FlukaParserListener):
     def enterUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
         self.max_scale = max(self.max_scale,
-                             abs(self.bodies[body_name]._get_scale()))
+                             abs(self.bodies[body_name].extent()))
 
         if body_name in self.unique_body_names:
             return None

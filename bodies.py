@@ -157,8 +157,8 @@ class RPP(_BodyBase):
     def get_rotation(self):
         return _ThreeVector(0,0,0)
 
-    def _extent(self):
-        return max(self.parameters)
+    def extent(self):
+        return max(map(abs, self.parameters))
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -245,11 +245,9 @@ class SPH(_BodyBase):
     def get_rotation(self):
         return _ThreeVector(0,0,0)
 
-    def _get_scale(self):
-        return (max(self.parameters.v_x,
-                    self.parameters.v_y,
-                    self.parameters.v_z)
-                + self.parameters.radius)
+    def extent(self):
+        return max(map(abs, self.parameters))
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -319,14 +317,14 @@ class RCC(_BodyBase):
         angles = _get_angles_from_matrix(rotation)
         return _ThreeVector(*angles)
 
-    def _get_scale(self):
+    def extent(self):
+        centre_max = max(abs(_ThreeVector(self.parameters.v_x,
+                                          self.parameters.v_y,
+                                          self.parameters.v_z)))
         length = _np.linalg.norm([self.parameters.h_x,
                                   self.parameters.h_y,
                                   self.parameters.h_z])
-        return max(self.parameters.v_x,
-                   self.parameters.v_y,
-                   self.parameters.v_z,
-                   length)
+        return centre_max + length
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -556,6 +554,17 @@ class TRC(_BodyBase):
         start_to_end_angles = _get_angles_from_matrix(start_to_end_matrix)
         return _ThreeVector(*start_to_end_angles)
 
+    def extent(self):
+        length = _np.linalg.norm([self.parameters.major_to_minor_x,
+                                  self.parameters.major_to_minor_y,
+                                  self.parameters.major_to_minor_z])
+
+        return max(abs(centre_major_x) + length,
+                   abs(centre_major_y) + length,
+                   abs(centre_major_z) + length,
+                   minor_radius,
+                   major_radius)
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -738,8 +747,8 @@ class XYP(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0,0,0)
 
-    def _get_scale(self):
-        return self.parameters.v_z
+    def extent(self):
+        return abs(self.parameters.v_z)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -779,8 +788,8 @@ class XZP(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0,0,0)
 
-    def _get_scale(self):
-        return self.parameters.v_y
+    def extent(self):
+        return abs(self.parameters.v_y)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -821,8 +830,8 @@ class YZP(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0,0,0)
 
-    def _get_scale(self):
-        return self.parameters.v_x
+    def extent(self):
+        return abs(self.parameters.v_x)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -913,8 +922,11 @@ class PLA(_BodyBase, _InfiniteSolid):
         angles = _get_angles_from_matrix(rotation)
         return _ThreeVector(*angles)
 
-    def _get_scale(self):
-        return self.scale
+    def extent(self):
+        return max(abs(self.parameters.x_position),
+                   abs(self.parameters.y_position),
+                   abs(self.parameters.z_position))
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -958,8 +970,8 @@ class XCC(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0.0, 0.5 * _pi, 0.0)
 
-    def _get_scale(self):
-        return self.scale
+    def extent(self):
+        return max(map(abs, self.parameters))
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1005,8 +1017,9 @@ class YCC(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0.5 * _pi, 0.0, 0.0)
 
-    def _get_scale(self):
-        return self.scale
+    def extent(self):
+        return max(map(abs, self.parameters))
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -1054,8 +1067,8 @@ class ZCC(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0.0, 0.0, 0.0)
 
-    def _get_scale(self):
-        return self.scale
+    def extent(self):
+        return max(map(abs, self.parameters))
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1106,6 +1119,9 @@ class XEC(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0.0, 0.5 * _pi, 0.0)
 
+    def extent(self):
+        return max(map(abs, self.parameters))
+
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
@@ -1150,6 +1166,9 @@ class YEC(_BodyBase, _InfiniteSolid):
 
     def get_rotation(self):
         return _ThreeVector(0.5 * _pi, 0.0, 0.0)
+
+    def extent(self):
+        return max(map(abs, self.parameters))
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
@@ -1198,8 +1217,8 @@ class ZEC(_BodyBase, _InfiniteSolid):
     def get_rotation(self):
         return _ThreeVector(0.0, 0.0, 0.0)
 
-    def _extent(self):
-        return max(self.parameters)
+    def extent(self):
+        return max(map(abs, self.parameters))
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
