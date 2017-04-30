@@ -2,11 +2,13 @@ from collections import namedtuple as _namedtuple
 from collections import Counter as _Counter
 import logging as _logging
 from os.path import splitext, basename
+import warnings as _warnings
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
 
 import bodies
+from bodies import BodyNotImplementedError
 import materials
 from materials import fluka_g4_material_map as default_material_map
 from Parser.FlukaParserVisitor import FlukaParserVisitor
@@ -206,6 +208,7 @@ class _FlukaBodyListener(FlukaParserListener):
     def __init__(self):
         self.bodies = dict()
 
+        self.omitted_bodies = list()
         self.region_max_scale_map = dict()
         self.unique_body_names = set()
         self.used_bodies_by_type = list()
@@ -215,6 +218,7 @@ class _FlukaBodyListener(FlukaParserListener):
         self._expansion_stack = []
 
     def enterRegion(self, ctx):
+        self.region_name = ctx.RegionName().getText()
         self.max_scale = 0.0
 
     def exitRegion(self, ctx):
@@ -230,20 +234,33 @@ class _FlukaBodyListener(FlukaParserListener):
         body_type = ctx.BodyCode().getText()
         body_parameters = self._get_floats(ctx)
         body_constructor = getattr(bodies, body_type)
-
-        body = body_constructor(body_name,
-                                body_parameters,
-                                self._transform_stack,
-                                self._translat_stack,
-                                self._expansion_stack)
-
-        self.bodies[body_name] = body
+        try:
+            body = body_constructor(body_name,
+                                    body_parameters,
+                                    self._transform_stack,
+                                    self._translat_stack,
+                                    self._expansion_stack)
+            self.bodies[body_name] = body
+        except BodyNotImplementedError:
+            _warnings.simplefilter('once', UserWarning)
+            _warnings.warn(("\nBody type %s not supported.  All bodies"
+                            " of this type will be omitted.  If bodies"
+                            " of this type are used in regions, the"
+                            " conversion will fail.") % body_type,
+                           UserWarning)
+            self.omitted_bodies.append((body_name, body_type))
 
     def enterUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
-        self.max_scale = max(self.max_scale,
-                             abs(self.bodies[body_name].extent()))
+        try:
+            self.max_scale = max(self.max_scale,
+                                 abs(self.bodies[body_name].extent()))
+        except KeyError:
+            raise KeyError(("Undefined body \"{}\""
+                            " in region: \"{}\"!".format(body_name,
+                                                         self.region_name)))
 
+        # For logging purpose
         if body_name in self.unique_body_names:
             return None
         else:
@@ -347,8 +364,9 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             # Infinite bodies are factories for themselves, allowing
             # for dynamic infinite scale for a common underlying body.
             body = body(scale)
-            _logger.debug("Constructing infinite body %s with scale %s",
+            _logger.debug("infinite solid:  type=%s; scale=%s",
                           body_type, scale)
+
         gdml_solid = body.get_as_gdml_solid()
         body_centre = body.get_coordinates_of_centre()
         body_rotation  = body.get_rotation()
