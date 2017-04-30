@@ -7,7 +7,6 @@ from numpy import pi as _pi
 import pygdml as _pygdml
 from vector import ThreeVector as _ThreeVector
 
-INFINITE_SIZE = 1e8 # mm
 _bodies_logger = _logging.getLogger(__name__)
 
 
@@ -814,7 +813,6 @@ class YZP(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
@@ -870,7 +868,6 @@ class PLA(_BodyBase, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-        self.scale = INFINITE_SIZE
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["x_direction",
