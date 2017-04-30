@@ -182,11 +182,11 @@ class BOX(_BodyBase):
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("BOX Not Implemented!")
         super(BOX, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
@@ -374,11 +374,11 @@ class REC(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("REC Not Implemented!")
         super(REC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
@@ -588,11 +588,11 @@ class ELL(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("ELL Not Implemented!")
         super(ELL, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
 
@@ -621,11 +621,11 @@ class WED(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("ELL Not Implemented!")
         super(WED, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
@@ -656,11 +656,11 @@ class RAW(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("ELL Not Implemented!")
         super(RAW, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
@@ -691,11 +691,11 @@ class ARB(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("ELL Not Implemented!")
         super(ARB, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
@@ -1235,11 +1235,11 @@ class QUA(_BodyBase):
                  expansion_stack,
                  translation_stack,
                  transformation_stack):
-        raise RuntimeError("QUA Not Implemented!")
         super(QUA, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
+        raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
@@ -1364,6 +1364,16 @@ def _get_angles_from_matrix(matrix):
         z_rotation = 0.0
     return [x_rotation, y_rotation, z_rotation]
 
+class BodyNotImplementedError(Exception):
+    def __init__(self, body):
+        body_name = body.name
+        body_type = type(body).__name__
+        self.message = ("Body \"{}\" cannot be constructed.  Body type "
+                        "\"{}\" is not supported!").format(body_name,
+                                                           body_type)
+        super(Exception, self).__init__(self.message)
+        logger = _logging.getLogger("pyfluka.bodies.%s" % type(self).__name__)
+        logger.exception("Body not instantiated: %s; type=%s", body_name, body_type)
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
