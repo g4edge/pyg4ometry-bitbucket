@@ -7,8 +7,6 @@ from numpy import pi as _pi
 import pygdml as _pygdml
 from vector import ThreeVector as _ThreeVector
 
-_bodies_logger = _logging.getLogger(__name__)
-
 
 def _gdml_logger(f):
     # Logging the construction of the gdml solids.
