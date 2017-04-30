@@ -378,7 +378,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
     def visitUnaryAndSubZone(self, ctx):
         first= self.visit(ctx.subZone())
-        second = self.visit(ctx.unaryExpression())
+        second = self.visit(ctx.expr())
         return first.combine(second)
 
     def visitMultipleUnion(self, ctx):

@@ -148,15 +148,6 @@ class FlukaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FlukaParser#subZone.
-    def enterSubZone(self, ctx):
-        pass
-
-    # Exit a parse tree produced by FlukaParser#subZone.
-    def exitSubZone(self, ctx):
-        pass
-
-
     # Enter a parse tree produced by FlukaParser#singleUnary.
     def enterSingleUnary(self, ctx):
         pass
@@ -184,21 +175,21 @@ class FlukaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FlukaParser#multipleSubZones.
-    def enterMultipleSubZones(self, ctx):
+    # Enter a parse tree produced by FlukaParser#oneSubZone.
+    def enterOneSubZone(self, ctx):
         pass
 
-    # Exit a parse tree produced by FlukaParser#multipleSubZones.
-    def exitMultipleSubZones(self, ctx):
+    # Exit a parse tree produced by FlukaParser#oneSubZone.
+    def exitOneSubZone(self, ctx):
         pass
 
 
-    # Enter a parse tree produced by FlukaParser#binaryUnion.
-    def enterBinaryUnion(self, ctx):
+    # Enter a parse tree produced by FlukaParser#subZone.
+    def enterSubZone(self, ctx):
         pass
 
-    # Exit a parse tree produced by FlukaParser#binaryUnion.
-    def exitBinaryUnion(self, ctx):
+    # Exit a parse tree produced by FlukaParser#subZone.
+    def exitSubZone(self, ctx):
         pass
 
 

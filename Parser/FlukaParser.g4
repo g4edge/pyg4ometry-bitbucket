@@ -90,8 +90,8 @@ zone
 expr
     : unaryExpression         # singleUnary
     | unaryExpression expr    # unaryAndBoolean
-    | unaryExpression subZone # unaryAndSubZone
-    | subZone+                # multipleSubZones
+    | subZone expr            # unaryAndSubZone
+    | subZone                 # oneSubZone
     ;
 
 subZone
