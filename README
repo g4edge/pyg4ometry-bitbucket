@@ -1,10 +1,10 @@
-Get the python tun times via pip:
+Make sure to get the python run times via pip:
 
-pip install antlr4-python2-runtime
+$ pip install antlr4-python2-runtime
 
 Usage:
 
 >>> import pyfluka
 >>> a = pyfluka.model.Model("pyfluka/tests/tunnel_cross_section.inp")
 >>> a.view_mesh()
->>> a.write_to_gdml()
+>>> a.write_to_gdml("./my/output/path.gdml")
