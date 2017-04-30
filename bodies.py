@@ -556,11 +556,11 @@ class TRC(_BodyBase):
                                   self.parameters.major_to_minor_y,
                                   self.parameters.major_to_minor_z])
 
-        return max(abs(centre_major_x) + length,
-                   abs(centre_major_y) + length,
-                   abs(centre_major_z) + length,
-                   minor_radius,
-                   major_radius)
+        return max(abs(self.parameters.centre_major_x) + length,
+                   abs(self.parameters.centre_major_y) + length,
+                   abs(self.parameters.centre_major_z) + length,
+                   self.parameters.minor_radius,
+                   self.parameters.major_radius)
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
