@@ -87,10 +87,6 @@ zone
     | subZone
     ;
 
-subZone
-    : (Minus | Plus) LParen (expr | binaryUnion) RParen
-    ;
-
 expr
     : unaryExpression         # singleUnary
     | unaryExpression expr    # unaryAndBoolean
@@ -98,8 +94,8 @@ expr
     | subZone+                # multipleSubZones
     ;
 
-binaryUnion
-    : expr Bar expr
+subZone
+    : (Minus | Plus) LParen expr RParen
     ;
 
 unaryExpression
