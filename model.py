@@ -302,9 +302,10 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         self.debug = debug
 
         self.regions = {}
-        WORLD_SIZE = 1e7
-        _logger.debug("worldvolume: name=world; dimensions=%s", WORLD_SIZE)
-        w = _pygdml.solid.Box("world", WORLD_SIZE, WORLD_SIZE, WORLD_SIZE)
+
+        world_size = max(self.region_scale_map.values()) * 5.0
+        _logger.debug("worldvolume: name=world; dimensions=%s", world_size)
+        w = _pygdml.solid.Box("world", world_size, world_size, world_size)
         self.world_volume = _pygdml.Volume(
             [0,0,0], [0,0,0], w, "world-volume",
             None, 1, False, "G4_Galactic")
