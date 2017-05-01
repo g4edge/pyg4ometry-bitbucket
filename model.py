@@ -1,14 +1,13 @@
 from collections import namedtuple as _namedtuple
 from collections import Counter as _Counter
 import logging as _logging
-from os.path import splitext, basename
+import os.path as _path
 import warnings as _warnings
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
 
 import bodies
-from bodies import BodyNotImplementedError
 import materials
 from materials import fluka_g4_material_map as default_material_map
 from Parser.FlukaParserVisitor import FlukaParserVisitor
@@ -27,7 +26,8 @@ class Model(object):
         _logging.basicConfig(level=_logging.DEBUG,
                      format='%(name)-20s %(levelname)-8s %(message)s',
                      datefmt='%m-%d %H:%M',
-                     filename=basename(splitext(self._filename)[0]) + ".log",
+                     filename=_path.basename(
+                         _path.splitext(self._filename)[0]) + ".log",
                      filemode='w')
         _logger.info("creating pyfluka model from file %s", filename)
 
@@ -59,7 +59,10 @@ class Model(object):
         if not hasattr(self, "_world_volume"):
             self._gdml_world_volume()
         if out_path == None:
-            out_path = "./" + basename(splitext(self._filename)[0]) + ".gdml"
+            out_path = ("./"
+                        + _path.basename(
+                            _path.splitext(self._filename)[0])
+                        + ".gdml")
         out = _pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
@@ -109,7 +112,7 @@ class Model(object):
         self._region_max_scale_map = body_listener.region_max_scale_map
 
     def _write_test_gmad(self, gdml_path):
-        gmad_path = splitext(gdml_path)[0] + ".gmad"
+        gmad_path = _path.splitext(gdml_path)[0] + ".gmad"
         with open(gmad_path, 'w') as gmad:
             gmad.write("test_component: element, l=10.*m, geometry=\"gdml:%s\","
                        " outerDiameter=2.1*m;\n" % gdml_path)
@@ -241,7 +244,7 @@ class _FlukaBodyListener(FlukaParserListener):
                                     self._translat_stack,
                                     self._expansion_stack)
             self.bodies[body_name] = body
-        except BodyNotImplementedError:
+        except bodies.BodyNotImplementedError:
             _warnings.simplefilter('once', UserWarning)
             _warnings.warn(("\nBody type %s not supported.  All bodies"
                             " of this type will be omitted.  If bodies"
