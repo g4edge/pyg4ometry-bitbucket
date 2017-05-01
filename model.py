@@ -18,7 +18,7 @@ _logger = _logging.getLogger(__name__)
 
 class Model(object):
     def __init__(self, filename,
-                 material_map=default_material_map,
+                 material_map=None,
                  **kwargs):
 
         self._filename = filename
@@ -32,6 +32,8 @@ class Model(object):
         _logger.info("creating pyfluka model from file %s", filename)
 
         self.debug = kwargs.get("debug")
+        if not material_map:
+            material_map = default_material_map
 
         # get the syntax tree.
         self.tree = Parse(filename)
