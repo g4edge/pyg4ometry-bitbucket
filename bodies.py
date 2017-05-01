@@ -5,7 +5,7 @@ import numpy as _np
 from numpy import pi as _pi
 
 import pygdml as _pygdml
-from vector import ThreeVector as _ThreeVector
+import vector
 
 
 def _gdml_logger(f):
@@ -90,7 +90,7 @@ class _BodyBase(object):
         y_rotation = _math.acos(y_direction/norm)
         z_rotation = _math.acos(z_direction/norm)
 
-        return _ThreeVector(x_rotation, y_rotation, z_rotation)
+        return vector.Three(x_rotation, y_rotation, z_rotation)
 
 class _InfiniteSolid(object):
     # Infinite bodies are factories for themselves, allowing
@@ -147,12 +147,12 @@ class RPP(_BodyBase):
         centre_y = (self.parameters.y_max + self.parameters.y_min)*0.5
         centre_z = (self.parameters.z_max + self.parameters.z_min)*0.5
 
-        centre = _ThreeVector(centre_x, centre_y, centre_z)
+        centre = vector.Three(centre_x, centre_y, centre_z)
 
         return centre
 
     def get_rotation(self):
-        return _ThreeVector(0,0,0)
+        return vector.Three(0,0,0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -234,13 +234,13 @@ class SPH(_BodyBase):
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
         '''
-        centre = _ThreeVector(self.parameters.v_x,
+        centre = vector.Three(self.parameters.v_x,
                               self.parameters.v_y,
                               self.parameters.v_z)
         return centre
 
     def get_rotation(self):
-        return _ThreeVector(0,0,0)
+        return vector.Three(0,0,0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -298,7 +298,7 @@ class RCC(_BodyBase):
         centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
         centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
 
-        return _ThreeVector(centre_x, centre_y, centre_z)
+        return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         # Choose the cylinder face pointing in the +z direction to
@@ -312,10 +312,10 @@ class RCC(_BodyBase):
         rotation = _get_rotation_matrix_between_vectors(initial_vector,
                                                         plane_vector)
         angles = _get_angles_from_matrix(rotation)
-        return _ThreeVector(*angles)
+        return vector.Three(*angles)
 
     def extent(self):
-        centre_max = max(abs(_ThreeVector(self.parameters.v_x,
+        centre_max = max(abs(vector.Three(self.parameters.v_x,
                                           self.parameters.v_y,
                                           self.parameters.v_z)))
         length = _np.linalg.norm([self.parameters.h_x,
@@ -406,7 +406,7 @@ class REC(_BodyBase):
         centre_z = (self.parameters.face_centre_z
                     + self.parameters.to_other_face_z * 0.5)
 
-        return _ThreeVector(centre_x, centre_y, centre_z)
+        return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         # Perform 2 rotations:
@@ -443,7 +443,7 @@ class REC(_BodyBase):
         resulting_matrix = middle_to_end_major.dot(start_to_end_face)
 
         angles = _get_angles_from_matrix(resulting_matrix)
-        return _ThreeVector(*angles)
+        return vector.Three(*angles)
 
     # def get_rotation(self):
     #     # vector starts out at [0,-
@@ -535,7 +535,7 @@ class TRC(_BodyBase):
                                          self.parameters.centre_major_y,
                                          self.parameters.centre_major_z])
         centre = major_centre_vector + 0.5 * self._major_to_minor_vector
-        return _ThreeVector(*centre)
+        return vector.Three(*centre)
 
     def get_rotation(self):
         # At the start, the major face is pointing at -z.
@@ -549,7 +549,7 @@ class TRC(_BodyBase):
                                                                    end_vector)
         # Get the euler angles from this matrix.
         start_to_end_angles = _get_angles_from_matrix(start_to_end_matrix)
-        return _ThreeVector(*start_to_end_angles)
+        return vector.Three(*start_to_end_angles)
 
     def extent(self):
         length = _np.linalg.norm([self.parameters.major_to_minor_x,
@@ -739,10 +739,10 @@ class XYP(_BodyBase, _InfiniteSolid):
         centre_x = 0.0
         centre_y = 0.0
         centre_z = self.parameters.v_z - (self.scale * 0.5)
-        return _ThreeVector(centre_x, centre_y, centre_z)
+        return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0,0,0)
+        return vector.Three(0,0,0)
 
     def extent(self):
         return abs(self.parameters.v_z)
@@ -780,10 +780,10 @@ class XZP(_BodyBase, _InfiniteSolid):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self.scale * 0.5)
         centre_z = 0.0
-        return _ThreeVector(centre_x, centre_y, centre_z)
+        return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0,0,0)
+        return vector.Three(0,0,0)
 
     def extent(self):
         return abs(self.parameters.v_y)
@@ -821,10 +821,10 @@ class YZP(_BodyBase, _InfiniteSolid):
         centre_x = self.parameters.v_x - (self.scale * 0.5)
         centre_y = 0.0
         centre_z = 0.0
-        return _ThreeVector(centre_x, centre_y, centre_z)
+        return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0,0,0)
+        return vector.Three(0,0,0)
 
     def extent(self):
         return abs(self.parameters.v_x)
@@ -900,7 +900,7 @@ class PLA(_BodyBase, _InfiniteSolid):
                     * self.parameters.z_direction
                     + self.parameters.z_position)
 
-        return _ThreeVector(centre_x, centre_y, centre_z)
+        return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation(self):
         # Choose the face pointing in the direction of the positive
@@ -915,7 +915,7 @@ class PLA(_BodyBase, _InfiniteSolid):
                                                         plane_vector)
 
         angles = _get_angles_from_matrix(rotation)
-        return _ThreeVector(*angles)
+        return vector.Three(*angles)
 
     def extent(self):
         return max(abs(self.parameters.x_position),
@@ -960,10 +960,10 @@ class XCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return _ThreeVector(0.0, self.parameters.centre_y, self.parameters.centre_z)
+        return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0.0, 0.5 * _pi, 0.0)
+        return vector.Three(0.0, 0.5 * _pi, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -1007,10 +1007,10 @@ class YCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return _ThreeVector(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+        return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0.5 * _pi, 0.0, 0.0)
+        return vector.Three(0.5 * _pi, 0.0, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -1055,12 +1055,12 @@ class ZCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return _ThreeVector(self.parameters.centre_x,
+        return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
                             0.0)
 
     def get_rotation(self):
-        return _ThreeVector(0.0, 0.0, 0.0)
+        return vector.Three(0.0, 0.0, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -1109,10 +1109,10 @@ class XEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return _ThreeVector(0.0, self.parameters.centre_y, self.parameters.centre_z)
+        return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0.0, 0.5 * _pi, 0.0)
+        return vector.Three(0.0, 0.5 * _pi, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -1157,10 +1157,10 @@ class YEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return _ThreeVector(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+        return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation(self):
-        return _ThreeVector(0.5 * _pi, 0.0, 0.0)
+        return vector.Three(0.5 * _pi, 0.0, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -1205,12 +1205,12 @@ class ZEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        return _ThreeVector(self.parameters.centre_x,
+        return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
                             0.0)
 
     def get_rotation(self):
-        return _ThreeVector(0.0, 0.0, 0.0)
+        return vector.Three(0.0, 0.0, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))

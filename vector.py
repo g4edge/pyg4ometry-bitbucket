@@ -1,6 +1,6 @@
 import numpy as _np
 
-class ThreeVector(_np.ndarray):
+class Three(_np.ndarray):
     def __new__(cls, *coordinates):
         if (len(coordinates) == 1  # If coerced from another _np.array
             and isinstance(coordinates[0], _np.ndarray)):
