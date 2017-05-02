@@ -293,12 +293,12 @@ class RCC(_BodyBase):
         # direction -(h_x, h_y, h_z)
         initial_vector = vector.Three(0,0,1)
         # Negate the vector as I want it facing outwards.
-        plane_vector = -_np.array([self.parameters.h_x,
-                                   self.parameters.h_y,
-                                   self.parameters.h_z])
-        rotation = _get_rotation_matrix_between_vectors(initial_vector,
-                                                        plane_vector)
-        angles = _get_angles_from_matrix(rotation)
+        plane_vector = -vector.Three(self.parameters.h_x,
+                                     self.parameters.h_y,
+                                     self.parameters.h_z)
+        rotation = vector.rot_matrix_between_vectors(initial_vector,
+                                                     plane_vector)
+        angles = vector.angles_from_matrix(rotation)
         return vector.Three(*angles)
 
     def extent(self):
@@ -412,8 +412,8 @@ class REC(_BodyBase):
                               self.parameters.to_other_face_y,
                               self.parameters.to_other_face_z])
         # The matrix rotating the starting face to parallel to the desired.
-        start_to_end_face = _get_rotation_matrix_between_vectors(start_face,
-                                                                 end_face)
+        start_to_end_face = vector.rot_matrix_between_vectors(start_face,
+                                                              end_face)
         # The major-axis starts in the positive y direction.
         start_major = _np.array([0, 1, 0])
         # The major-axis after being rotated by the above matrix.
@@ -424,12 +424,12 @@ class REC(_BodyBase):
         end_major = _np.array([self.parameters.semi_major_x,
                                self.parameters.semi_major_y,
                                self.parameters.semi_major_z])
-        middle_to_end_major = _get_rotation_matrix_between_vectors(middle_major,
-                                                                   end_major)
+        middle_to_end_major = vector.rot_matrix_between_vectors(middle_major,
+                                                                end_major)
 
         resulting_matrix = middle_to_end_major.dot(start_to_end_face)
 
-        angles = _get_angles_from_matrix(resulting_matrix)
+        angles = vector.angles_from_matrix(resulting_matrix)
         return vector.Three(*angles)
 
     # def get_rotation(self):
@@ -532,10 +532,10 @@ class TRC(_BodyBase):
         end_vector = -self._major_to_minor_vector
 
         # Get the matrix that will give us this rotation
-        start_to_end_matrix = _get_rotation_matrix_between_vectors(start_vector,
-                                                                   end_vector)
+        start_to_end_matrix = vector.rot_matrix_between_vectors(start_vector,
+                                                                end_vector)
         # Get the euler angles from this matrix.
-        start_to_end_angles = _get_angles_from_matrix(start_to_end_matrix)
+        start_to_end_angles = vector.angles_from_matrix(start_to_end_matrix)
         return vector.Three(*start_to_end_angles)
 
     def extent(self):
@@ -898,10 +898,10 @@ class PLA(_BodyBase, _InfiniteSolid):
                                   self.parameters.z_direction])
 
         # Get the rotation matrix that maps initial_vector to plane_vector
-        rotation = _get_rotation_matrix_between_vectors(initial_vector,
-                                                        plane_vector)
+        rotation = vector.rot_matrix_between_vectors(initial_vector,
+                                                     plane_vector)
 
-        angles = _get_angles_from_matrix(rotation)
+        angles = vector.angles_from_matrix(rotation)
         return vector.Three(*angles)
 
     def extent(self):
@@ -1261,95 +1261,6 @@ class Expansion(object):
     def __init__(self, scaling_factor):
         self.scaling_factor = scaling_factor
 
-def _rotations_between_vectors(vector_1, vector_2):
-    matrix = _get_rotation_matrix_between_vectors(vector_1, vector_2)
-    return _get_angles_from_matrix(matrix)
-
-def _get_rotation_matrix_between_vectors(vector_1, vector_2):
-    """
-    Returns the rotation matrix that rotates vector_1 to parallel to
-    vector_2.
-
-    Useful for ensuring a given face points in a certain
-    direction.
-
-    Parameters
-    ----------
-    vector_1 : Array-like 3-vector.
-
-    """
-    # Normalise input vectors (rot matrix won't be orthogonal otherwise)
-    vector_1 = vector_1 / _np.linalg.norm(vector_1)
-    vector_2 = vector_2 / _np.linalg.norm(vector_2)
-
-    cross_product = _np.cross(vector_1, vector_2)
-    cosine = float(_np.dot(vector_1, vector_2))
-    sine = _np.linalg.norm(cross_product)
-
-    identity = _np.identity(3)
-
-    # Check for trivial cases that Rodrigues' can't handle
-    if cosine == 1.0: # then they are already parallel
-        return identity
-    elif cosine == -1.0: # then they are anti-parallel
-        return -identity
-
-    # Construct the skew-symmetric cross product matrix.
-    first_row = [0, -cross_product[2], -cross_product[1]]
-    second_row = [cross_product[2], 0, -cross_product[0]]
-    third_row = [-cross_product[1], cross_product[0], 0]
-    cross_matrix = _np.matrix([first_row, second_row, third_row])
-
-    # Rodrigues' rotation formula.
-    rotation_matrix = (identity + cross_matrix
-                       + (cross_matrix
-                          * cross_matrix
-                          * (1 - cosine)
-                          / (sine**2)))
-
-    return rotation_matrix
-
-def _get_angles_from_matrix(matrix):
-    '''
-    Returns the Tait-Bryan (Euler) angles, sequence = (x-y-z)
-    for a given rotation matrix.
-
-    Source:
-    http://www.staff.city.ac.uk/~sbbh653/publications/euler.pdf
-
-    Parameters:
-    matrix -- a numpy matrix to extract the angles from.
-    '''
-
-    # Get the relevant elements from the matrix.
-    R_11 = matrix.item(0)
-    R_12 = matrix.item(1)
-    R_13 = matrix.item(2)
-    R_21 = matrix.item(3)
-    R_31 = matrix.item(6)
-    R_32 = matrix.item(7)
-    R_33 = matrix.item(8)
-
-    if (R_31 != -1 and R_31 != 1):
-        y_rotation = -_np.arcsin(R_31)
-        cosine_y_rotation = _np.cos(y_rotation)
-
-        x_rotation = _np.arctan2(R_32 / cosine_y_rotation,
-                                 R_33 / cosine_y_rotation)
-        z_rotation = _np.arctan2(R_21 / cosine_y_rotation,
-                                 R_11 / cosine_y_rotation)
-
-    elif R_31 == -1:
-        x_rotation = _np.arctan2(R_12,
-                                 R_13)
-        y_rotation = _pi / 2.
-        z_rotation = 0.0
-    elif R_31 == 1:
-        x_rotation =  _np.arctan2(-R_12,
-                                  -R_13)
-        y_rotation = -_pi / 2
-        z_rotation = 0.0
-    return [x_rotation, y_rotation, z_rotation]
 
 class BodyNotImplementedError(Exception):
     def __init__(self, body):
