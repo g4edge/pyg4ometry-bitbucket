@@ -80,17 +80,6 @@ class _BodyBase(object):
 
         return wrapped
 
-    def _rotations_from_directions(self,
-                                   x_direction,
-                                   y_direction,
-                                   z_direction):
-
-        norm  = _np.linalg.norm([x_direction, y_direction, z_direction])
-        x_rotation = _math.acos(x_direction/norm)
-        y_rotation = _math.acos(y_direction/norm)
-        z_rotation = _math.acos(z_direction/norm)
-
-        return vector.Three(x_rotation, y_rotation, z_rotation)
 
 class _InfiniteSolid(object):
     # Infinite bodies are factories for themselves, allowing
