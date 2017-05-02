@@ -92,48 +92,6 @@ def rot_matrix_between_vectors(vector_1, vector_2):
         raise RuntimeError("Rotation matrix is not orthogonal!")
     return rotation_matrix
 
-def angles_from_matrix(matrix):
-    '''
-    Returns the Tait-Bryan (Euler) angles, sequence = (x-y-z)
-    for a given rotation matrix.
-
-    Source:
-    http://www.staff.city.ac.uk/~sbbh653/publications/euler.pdf
-
-    Parameters:
-    matrix -- a numpy matrix to extract the angles from.
-    '''
-
-    # Get the relevant elements from the matrix.
-    R_11 = matrix.item(0)
-    R_12 = matrix.item(1)
-    R_13 = matrix.item(2)
-    R_21 = matrix.item(3)
-    R_31 = matrix.item(6)
-    R_32 = matrix.item(7)
-    R_33 = matrix.item(8)
-
-    if (R_31 != -1 and R_31 != 1):
-        y_rotation = -_np.arcsin(R_31)
-        cosine_y_rotation = _np.cos(y_rotation)
-
-        x_rotation = _np.arctan2(R_32 / cosine_y_rotation,
-                                 R_33 / cosine_y_rotation)
-        z_rotation = _np.arctan2(R_21 / cosine_y_rotation,
-                                 R_11 / cosine_y_rotation)
-
-    elif R_31 == -1:
-        x_rotation = _np.arctan2(R_12,
-                                 R_13)
-        y_rotation = _np.pi / 2.
-        z_rotation = 0.0
-    elif R_31 == 1:
-        x_rotation =  _np.arctan2(-R_12,
-                                  -R_13)
-        y_rotation = -_np.pi / 2
-        z_rotation = 0.0
-    return [x_rotation, y_rotation, z_rotation]
-
 def rotation_between_vectors(vector_1, vector_2):
     matrix = _rot_matrix_between_vectors(vector_1, vector_2)
     return _get_angles_from_matrix(matrix)

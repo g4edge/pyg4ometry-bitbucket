@@ -5,6 +5,7 @@ import numpy as _np
 from numpy import pi as _pi
 
 import pygdml as _pygdml
+from pygdml import transformation as _trf
 import vector
 
 
@@ -298,7 +299,7 @@ class RCC(_BodyBase):
                                      self.parameters.h_z)
         rotation = vector.rot_matrix_between_vectors(initial_vector,
                                                      plane_vector)
-        angles = vector.angles_from_matrix(rotation)
+        angles = _trf.matrix2tbxyz(rotation)
         return vector.Three(*angles)
 
     def extent(self):
@@ -429,7 +430,7 @@ class REC(_BodyBase):
 
         resulting_matrix = middle_to_end_major.dot(start_to_end_face)
 
-        angles = vector.angles_from_matrix(resulting_matrix)
+        angles = _trf.matrix2tbxyz(resulting_matrix)
         return vector.Three(*angles)
 
     # def get_rotation(self):
@@ -535,7 +536,7 @@ class TRC(_BodyBase):
         start_to_end_matrix = vector.rot_matrix_between_vectors(start_vector,
                                                                 end_vector)
         # Get the euler angles from this matrix.
-        start_to_end_angles = vector.angles_from_matrix(start_to_end_matrix)
+        start_to_end_angles = _trf.matrix2tbxyz(start_to_end_matrix)
         return vector.Three(*start_to_end_angles)
 
     def extent(self):
@@ -901,7 +902,7 @@ class PLA(_BodyBase, _InfiniteSolid):
         rotation = vector.rot_matrix_between_vectors(initial_vector,
                                                      plane_vector)
 
-        angles = vector.angles_from_matrix(rotation)
+        angles = _trf.matrix2tbxyz(rotation)
         return vector.Three(*angles)
 
     def extent(self):
