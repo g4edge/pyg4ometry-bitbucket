@@ -283,17 +283,15 @@ class RCC(_BodyBase):
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
         '''
-        centre_x = self.parameters.v_x + self.parameters.h_x * 0.5
-        centre_y = self.parameters.v_y + self.parameters.h_y * 0.5
-        centre_z = self.parameters.v_z + self.parameters.h_z * 0.5
-
-        return vector.Three(centre_x, centre_y, centre_z)
+        return vector.Three(self.parameters.v_x + self.parameters.h_x * 0.5,
+                            self.parameters.v_y + self.parameters.h_y * 0.5,
+                            self.parameters.v_z + self.parameters.h_z * 0.5)
 
     def get_rotation(self):
         # Choose the cylinder face pointing in the +z direction to
         # have the coordinates (v_x, v_y, v_z), and point in the
         # direction -(h_x, h_y, h_z)
-        initial_vector = _np.array([0,0,1])
+        initial_vector = vector.Three(0,0,1)
         # Negate the vector as I want it facing outwards.
         plane_vector = -_np.array([self.parameters.h_x,
                                    self.parameters.h_y,
