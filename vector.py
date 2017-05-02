@@ -88,7 +88,7 @@ def rot_matrix_between_vectors(vector_1, vector_2):
             rotation_matrix.dot(vector_1).view(Three).reshape(3)):
         raise RuntimeError("Rotation matrix doesn't map vector onto other!")
     if not _np.array_equal(
-            _np.around(rotation_matrix.T.dot(rotation_matrix)), _np.eye(3)):
+            _np.allclose(rotation_matrix.T.dot(rotation_matrix)), _np.eye(3)):
         raise RuntimeError("Rotation matrix is not orthogonal!")
     return rotation_matrix
 
