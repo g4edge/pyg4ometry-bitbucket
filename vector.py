@@ -1,5 +1,7 @@
 import numpy as _np
 
+from pygdml import transformation as _trf
+
 class Three(_np.ndarray):
     def __new__(cls, *coordinates):
         # If an array-like of 3:
@@ -94,3 +96,14 @@ def rot_matrix_between_vectors(vector_1, vector_2):
 def rotation_between_vectors(vector_1, vector_2):
     matrix = _rot_matrix_between_vectors(vector_1, vector_2)
     return _get_angles_from_matrix(matrix)
+
+def tb_angles_from(vector_1, vector_2):
+    """
+    Return the Tait-Bryan angles [x, y, z] (order: x -> y -> z)
+    """
+
+    matrix = rot_matrix_between_vectors(vector_1, vector_2)
+    angles = _trf.matrix2tbxyz(matrix)
+    resultant = _trf.tbxyz2matrix(angles).dot(vector_1).view(Three).reshape(3)
+    assert resultant.parallel_to(vector_2)
+    return angles
