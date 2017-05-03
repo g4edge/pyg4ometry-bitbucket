@@ -2,11 +2,11 @@ import numpy as _np
 
 class Three(_np.ndarray):
     def __new__(cls, *coordinates):
-        if (len(coordinates) == 1  # If coerced from another _np.array
-            and isinstance(coordinates[0], _np.ndarray)):
-            obj = _np.asarray(coordinates[0]).view(cls)
-        elif len(coordinates) == 3: # If supplied as x,y,z
-            obj = _np.asarray(coordinates).view(cls)
+        # If an array-like of 3:
+        if (_np.shape(coordinates) == (1, 3)):
+            obj = _np.asarray(coordinates[0], dtype=float).view(cls)
+        elif _np.shape(coordinates) == (3,): # If supplied as x, y, z
+            obj = _np.asarray(coordinates, dtype=float).view(cls)
         else:
             raise TypeError("Unknown construction: %s" % (coordinates,))
         return obj
