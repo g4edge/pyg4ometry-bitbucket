@@ -302,9 +302,11 @@ class RCC(_BodyBase):
         final_vector = -vector.Three(self.parameters.h_x,
                                      self.parameters.h_y,
                                      self.parameters.h_z)
-        rotation = vector.rot_matrix_between_vectors(initial_vector,
-                                                     plane_vector)
-        angles = _trf.matrix2tbxyz(rotation)
+        angles = vector.tb_angles_from(initial_vector, final_vector)
+        # Assert that the matrix does indeed take map the initial
+        # vector to the final vector.
+        assert (_trf.tbxyz2matrix(angles).dot(initial_vector)
+                .view(vector.Three).reshape(3).parallel_to(final_vector))
         return vector.Three(*angles)
 
     def extent(self):
