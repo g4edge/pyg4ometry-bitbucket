@@ -502,15 +502,14 @@ class TRC(_BodyBase):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
-
-        # Useful derived parameters for later:
-        self._length = _np.linalg.norm([self.parameters.major_to_minor_x,
-                                        self.parameters.major_to_minor_y,
-                                        self.parameters.major_to_minor_z])
-
-        self._major_to_minor_vector = _np.array([self.parameters.major_to_minor_x,
-                                                 self.parameters.major_to_minor_y,
-                                                 self.parameters.major_to_minor_z])
+        self.major_centre = vector.Three([self.parameters.centre_major_x,
+                                          self.parameters.centre_major_y,
+                                          self.parameters.centre_major_z])
+        self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
+                                            self.parameters.major_to_minor_y,
+                                            self.parameters.major_to_minor_z])
+        assert self.parameters.major_radius > self.parameters.minor_radius
+        self.length = self.major_to_minor.length
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['centre_major_x',
@@ -526,25 +525,22 @@ class TRC(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        major_centre_vector = _np.array([self.parameters.centre_major_x,
-                                         self.parameters.centre_major_y,
-                                         self.parameters.centre_major_z])
-        centre = major_centre_vector + 0.5 * self._major_to_minor_vector
-        return vector.Three(*centre)
+        return self.major_centre + 0.5 * self.major_to_minor
 
     def get_rotation(self):
-        # At the start, the major face is pointing at -z.
-        start_vector = _np.array([0,0,-1])
+        # At the start, the major face is pointing at +z toward the
+        # minor face
+        initial_vector = vector.Three([0,0,1])
         # We want the major face pointing in the opposite direction to
         # major_to_minor_vector.
-        end_vector = -self._major_to_minor_vector
+        final_vector = self.major_to_minor
 
-        # Get the matrix that will give us this rotation
-        start_to_end_matrix = vector.rot_matrix_between_vectors(start_vector,
-                                                                end_vector)
-        # Get the euler angles from this matrix.
-        start_to_end_angles = _trf.matrix2tbxyz(start_to_end_matrix)
-        return vector.Three(*start_to_end_angles)
+        angles = vector.tb_angles_from(initial_vector, final_vector)
+        # Assert that the matrix does indeed take map the initial
+        # vector to the final vector.
+        assert (_trf.tbxyz2matrix(angles).dot(initial_vector)
+                .view(vector.Three).reshape(3).parallel_to(final_vector))
+        return vector.Three(*angles)
 
     def extent(self):
         length = _np.linalg.norm([self.parameters.major_to_minor_x,
@@ -560,16 +556,16 @@ class TRC(_BodyBase):
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
-        # Choose to put the major face at -z.  The above
-        # get_rotation method relies on this choice.
+        # The first face of pygdml.Cons is located at -z, and the
+        # second at +z.  Here choose to put the major face at -z.
         return _pygdml.solid.Cons(self.name,
-                                 0.0,
-                                 self.parameters.major_radius,
-                                 0.0,
-                                 self.parameters.minor_radius,
-                                 0.5 * self._length,
-                                 0.0,
-                                 2*_pi)
+                                  0.0,
+                                  self.parameters.major_radius,
+                                  0.0,
+                                  self.parameters.minor_radius,
+                                  0.5 * self.length,
+                                  0.0,
+                                  2*_pi)
 
 
 class ELL(_BodyBase):
