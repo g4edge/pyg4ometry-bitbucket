@@ -130,12 +130,12 @@ class RPP(_BodyBase):
     def get_coordinates_of_centre(self):
         '''
         Return the coordinates of the centre of the Rectangular
-        Parallelepiped (cuboid).  Returns named tuple. with members x,y and z.
+        Parallelepiped (cuboid).
         '''
 
-        centre_x = (self.parameters.x_max + self.parameters.x_min)*0.5
-        centre_y = (self.parameters.y_max + self.parameters.y_min)*0.5
-        centre_z = (self.parameters.z_max + self.parameters.z_min)*0.5
+        centre_x = 0.5 * (self.parameters.x_max + self.parameters.x_min)
+        centre_y = 0.5 * (self.parameters.y_max + self.parameters.y_min)
+        centre_z = 0.5 * (self.parameters.z_max + self.parameters.z_min)
 
         centre = vector.Three(centre_x, centre_y, centre_z)
 
