@@ -77,9 +77,9 @@ def rot_matrix_between_vectors(vector_1, vector_2):
     """
     # Trivial cases that the algorithm otherwise can't handle:
     if vector_1.parallel_to(vector_2):
-        return eye(3)
+        return _np.eye(3)
     elif -vector_1.parallel_to(vector_2):
-        return -eye(3)
+        return -_np.eye(3)
     # Get the axis to rotate around and the angle to rotate by:
     axis = (_np.cross(vector_1,
                       vector_2)
