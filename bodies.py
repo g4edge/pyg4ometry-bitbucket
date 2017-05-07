@@ -991,8 +991,8 @@ class YCC(_BodyBase, _InfiniteSolid):
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_x",
-                                                         "centre_z",
+        self._ParametersType = namedtuple("Parameters", ["centre_z",
+                                                         "centre_x",
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
