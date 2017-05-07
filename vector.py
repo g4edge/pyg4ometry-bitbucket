@@ -46,6 +46,21 @@ class Three(_np.ndarray):
         else:
             return False
 
+    @property
+    def unit(self):
+        """
+        Get this as a unit vector.
+        """
+        return self/_np.linalg.norm(self)
+
+    @property
+    def length(self):
+        """
+        vector length (l2 norm)
+
+        """
+        return _np.linalg.norm(self)
+
 
 def rot_matrix_between_vectors(vector_1, vector_2):
     """
