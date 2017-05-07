@@ -2,7 +2,7 @@ TITLE
 An attempt at showing the wonders of boolean operations in Fluka
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
-RPP mycuboid  -1.0  1.0  -1.0  1.0 -1.0  1.0
+RPP mycuboid  -10.0  1.0  -1.0  1.0 -1.0  1.0
 END
 MahThi     5 +mycuboid
 END

@@ -3,7 +3,7 @@ Test file for YCC (infinite cylinder parallel 2 y-axis)
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 * YCC parameters: Centre_z, Centre_x, radius
-YCC mycyll             15.0        15.0   10.0
+YCC mycyll            5.0        50.0   1.0
 END
 MahThi     5 +mycyll
 END

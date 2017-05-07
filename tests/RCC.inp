@@ -3,7 +3,7 @@ rcc title
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 *               face_x face_y face_z  x_dir   y_dir  z_dir   radius
-RCC mycyl       0.0     0.0      0.0    0.0     -1.0    -1.0      1.0
+RCC mycyl       0.0     0.0      .0    -10.0     10.    10.      1.0
 END
 MahThi     5 +mycyl
 END
