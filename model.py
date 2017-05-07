@@ -50,7 +50,8 @@ class Model(object):
                                       debug=self.debug)
         visitor.visit(self.tree)
         self._world_volume = visitor.world_volume
-        self._world_volume.setClip()
+        if not self.debug:
+            self._world_volume.setClip()
 
     def write_to_gdml(self, out_path=None, make_gmad=False):
         """
