@@ -508,7 +508,6 @@ class TRC(_BodyBase):
         self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
                                             self.parameters.major_to_minor_y,
                                             self.parameters.major_to_minor_z])
-        assert self.parameters.major_radius > self.parameters.minor_radius
         self.length = self.major_to_minor.length
 
     def _set_parameters(self, parameters):
