@@ -3,7 +3,7 @@ Test file for ZCC (infinite cylinder parallel 2 z-axis)
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 * ZCC parameters: Centre_x, Centre_y, radius
-ZCC mycyll             15.0        15.0   10.0
+ZCC mycyll             5.0        50.0   1.0
 END
 MahThi     5 +mycyll
 END

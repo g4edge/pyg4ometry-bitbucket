@@ -3,7 +3,7 @@ Test file for XZP
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 * XZP parameter = the coordinate of the plane on the y axis.
-XZP myyplane -10.0
+XZP myyplane +10.0
 END
 MahThi     5 +myyplane
 END

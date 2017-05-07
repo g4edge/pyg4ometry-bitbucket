@@ -4,8 +4,7 @@ GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 * Generic Infinite Half-Space parameters:
 *                 x_dir       y_dir       z_dir    x_pos      y_pos     z_pos
-* PLA   myplane       0.0	        -1.0         -1.0    10.0       0.0	  0.0
-PLA   myplane       0.0	        1.0         1.0    0.0       0.0	  0.0
+PLA   myplane       1.0	        1.0         1.00    0.00       0.0	  1.0
 END
 MahThi     5 +myplane
 END

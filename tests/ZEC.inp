@@ -3,7 +3,7 @@ An attempt at showing the wonders of boolean operations in Fluka
 GEOBEGIN               1.0E-04                           1.0          COMBNAME
     0    0                   MC-CAD
 * ZEC parameters: Centre_X, Centre_Y, Semi_axis_X, Semi_Axis_Y
-ZEC myell               0.0       0.0         40.0        80.0
+ZEC myell               100.0       200.0         20.0        40.0
 END
 MahThi     5 +myell
 END
