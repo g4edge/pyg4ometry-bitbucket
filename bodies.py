@@ -866,46 +866,27 @@ class PLA(_BodyBase, _InfiniteSolid):
                                                          "y_position",
                                                          "z_position"])
         self.parameters = self._ParametersType(*parameters)
+        self.perpendicular = vector.Three([self.parameters.x_direction,
+                                           self.parameters.y_direction,
+                                           self.parameters.z_direction])
+        self.surface_point = vector.Three([self.parameters.x_position,
+                                           self.parameters.y_position,
+                                           self.parameters.z_position])
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
-        # The centre of the object will not, of course, be a point on
-        # the surface of the "plane" (Box).  The centre required for
-        # the face to lie on the provided point then needs to be
-        # found.
-        direction_norm = _np.linalg.norm([self.parameters.x_direction,
-                                          self.parameters.y_direction,
-                                          self.parameters.z_direction])
-
-        # This is the value that we can multiply the direction vector
-        # by to get it pointing towards the desired centre of the box.
-        scaling_factor = -0.5 * self.scale / direction_norm
-
-        centre_x = (scaling_factor
-                    * self.parameters.x_direction
-                    + self.parameters.x_position)
-        centre_y = (scaling_factor
-                    * self.parameters.y_direction
-                    + self.parameters.y_position)
-        centre_z = (scaling_factor
-                    * self.parameters.z_direction
-                    + self.parameters.z_position)
-
-        return vector.Three(centre_x, centre_y, centre_z)
+        # This is the centre of the underlying gdml solid (i.e. won't
+        # be on the surface, but set backwards by half length scale's amount.
+        centre = (self.surface_point
+                  - (0.5 * self.scale * self.perpendicular.unit))
+        return centre
 
     def get_rotation(self):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
-        initial_vector = _np.array([0,0,1])
-        plane_vector = _np.array([self.parameters.x_direction,
-                                  self.parameters.y_direction,
-                                  self.parameters.z_direction])
-
-        # Get the rotation matrix that maps initial_vector to plane_vector
-        rotation = vector.rot_matrix_between_vectors(initial_vector,
-                                                     plane_vector)
-
-        angles = _trf.matrix2tbxyz(rotation)
+        initial_vector = vector.Three([0,0,1])
+        final_vector = self.perpendicular
+        angles = vector.tb_angles_from(initial_vector, final_vector)
         return vector.Three(*angles)
 
     def extent(self):
