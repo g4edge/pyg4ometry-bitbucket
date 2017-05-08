@@ -319,21 +319,12 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
     def visitRegion(self, ctx):
         self.region_name = ctx.RegionName().getText()
         region_solid = self.visitChildren(ctx)
-
-        region_centre_x = region_solid.centre.x
-        region_centre_y = region_solid.centre.y
-        region_centre_z = region_solid.centre.z
-        region_centre = [region_centre_x,
-                         region_centre_y,
-                         region_centre_z]
-
-        region_rotation_x = region_solid.rotation.x
-        region_rotation_y = region_solid.rotation.y
-        region_rotation_z = region_solid.rotation.z
-        region_rotation = [region_rotation_x,
-                           region_rotation_y,
-                           region_rotation_z]
-
+        region_centre = [region_solid.centre.x,
+                         region_solid.centre.y,
+                         region_solid.centre.z]
+        region_rotation = [region_solid.rotation.x,
+                          region_solid.rotation.y,
+                          region_solid.rotation.z]
         region_gdml = region_solid.solid
         region_name = ctx.RegionName().getText()
 
@@ -351,8 +342,6 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                                               1,
                                               False,
                                               "G4_Galactic")
-
-
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
