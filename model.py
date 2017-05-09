@@ -125,6 +125,7 @@ class Model(object):
         used_bodies_by_type = body_listener.used_bodies_by_type
         self._body_freq_map = _Counter(used_bodies_by_type)
         self._region_max_scale_map = body_listener.region_max_scale_map
+        self.region_names = body_listener.region_max_scale_map.keys()
 
     def _write_test_gmad(self, gdml_path):
         gmad_path = _path.splitext(gdml_path)[0] + ".gmad"
