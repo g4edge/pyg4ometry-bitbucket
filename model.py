@@ -50,6 +50,7 @@ class Model(object):
                                       debug=self.debug)
         visitor.visit(self.tree)
         self._world_volume = visitor.world_volume
+        self.regions = visitor.regions
         if not self.debug:
             self._world_volume.setClip()
 
@@ -317,6 +318,7 @@ class _FlukaBodyListener(FlukaParserListener):
 class _FlukaRegionVisitor(FlukaParserVisitor):
     def __init__(self, bodies, materials, region_scale_map, debug=False):
         self.bodies = bodies
+        self.regions = dict()
         self.materials = materials
         self.region_scale_map = region_scale_map
         self.debug = debug
@@ -348,6 +350,10 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
                               region_name, region_centre,
                               region_rotation, region_gdml.name)
+            self.regions[region_name] = bodies.Region(region_name,
+                                                      region_gdml,
+                                                      position=region_centre,
+                                                      rotation=region_rotation)
             placement = _pygdml.volume.Volume(region_rotation,
                                               region_centre,
                                               region_gdml,

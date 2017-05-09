@@ -1235,7 +1235,23 @@ class Translation(object):
         self.delta_x = delta_x
         self.delta_y = delta_y
         self.delta_z = delta_z
+class Region(object):
+    """
+    Class used for interfacing a Fluka region with a GDML volume.
+    This class has the underlying pygdml volume payload, alongside its
+    placement and rotation in the world volume, and a material.
 
+    """
+    # Encapsulating a region in this way allows individual regions to
+    # be picked and
+    def __init__(self, name, gdml_solid,
+                 material="G4_Galactic",
+                 position=[0,0,0],
+                 rotation=[0,0,0]):
+        self.name = name
+        self.gdml_solid = gdml_solid
+        self.position = position
+        self.rotation = rotation
 
 class Transformation(object):
     pass
