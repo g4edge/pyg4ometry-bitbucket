@@ -36,7 +36,7 @@ class Model(object):
         # Initialiser the world volume:
         self._world_volume = self._gdml_world_volume()
         # Bind the count to the report_body_count method
-        self.report_body_count = (lambda: self.report_body_count(count))
+        self.report_body_count = (lambda: self.report_body_count(body_freq_map))
 
     def _regions_from_tree(self):
         """
@@ -70,7 +70,7 @@ class Model(object):
 
         """
         self._initialise_world_volume(region_names)
-        if out_path == None:
+        if out_path is None:
             out_path = ("./"
                         + _path.basename(_path.splitext(self._filename)[0])
                         + ".gdml")
@@ -122,13 +122,13 @@ class Model(object):
         are not included in this count.
         """
         body_and_count = count.items()
-        body_and_count.sort(key = lambda i: i[1], reverse=True)
+        body_and_count.sort(key=lambda i: i[1], reverse=True)
         # Print result, with alignment.
         print "Bodies used in region definitions:"
         for body, count in body_and_count:
             body_description = (body
                                 + " - "
-                                + bodies.code_meanings[body]).ljust(60,'.')
+                                + bodies.code_meanings[body]).ljust(60, '.')
             print body_description + str(count)
 
     def _materials_from_tree(self):
@@ -200,9 +200,9 @@ class _FlukaMaterialGetter(FlukaParserListener):
         tokens = []
         # tokens = [ctx.getChild(i) for i in range(ctx.getChildCount)]
         def get_tokens_iter(ctx):
-            if (type(ctx) is _antlr4.tree.Tree.TerminalNodeImpl):
-                    # and type(ctx.getPayload()) is _antlr4.Token):
-                    tokens.append(ctx.getPayload())
+            if type(ctx) is _antlr4.tree.Tree.TerminalNodeImpl:
+                # and type(ctx.getPayload()) is _antlr4.Token):
+                tokens.append(ctx.getPayload())
             else:
                 for child in ctx.getChildren():
                     get_tokens_iter(child)
@@ -378,8 +378,8 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                          region_solid.centre.y,
                          region_solid.centre.z]
         region_rotation = [region_solid.rotation.x,
-                          region_solid.rotation.y,
-                          region_solid.rotation.z]
+                           region_solid.rotation.y,
+                           region_solid.rotation.z]
         region_gdml = region_solid.solid
         region_name = ctx.RegionName().getText()
 
@@ -387,12 +387,12 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         # subtract from.  Useful for looking at all the solids.
         if region_solid.operator == '+' or region_solid.operator == '-':
             _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
-                              region_name, region_centre,
-                              region_rotation, region_gdml.name)
-            self.regions[region_name] = bodies.Region(region_name,
-                                                      region_gdml,
-                                                      position=region_centre,
-                                                      rotation=region_rotation)
+                          region_name, region_centre,
+                          region_rotation, region_gdml.name)
+            self.regions[region_name] = pyfluka.bodies.Region(region_name,
+                                                              region_gdml,
+                                                              position=region_centre,
+                                                              rotation=region_rotation)
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
@@ -416,7 +416,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         gdml_solid = body.get_as_gdml_solid()
         body_centre = body.get_coordinates_of_centre()
-        body_rotation  = body.get_rotation()
+        body_rotation = body.get_rotation()
 
         if ctx.Plus():
             return _UnaryGDMLSolid(gdml_solid, '+', body_centre, body_rotation)
@@ -424,7 +424,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             return _UnaryGDMLSolid(gdml_solid, '-', body_centre, body_rotation)
 
     def visitUnaryAndSubZone(self, ctx):
-        first= self.visit(ctx.subZone())
+        first = self.visit(ctx.subZone())
         second = self.visit(ctx.expr())
         return first.combine(second)
 
@@ -495,9 +495,9 @@ class _UnaryGDMLSolid(object):
         output_centre = self.centre
         output_rotation = self.rotation
         _logger.debug("boolean: type=Subtraction; name=%s; "
-                          "solid1=%s; solid2=%s; trans=%s",
-                          output_name, self.solid.name,
-                          other.solid.name, other_transformation)
+                      "solid1=%s; solid2=%s; trans=%s",
+                      output_name, self.solid.name,
+                      other.solid.name, other_transformation)
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
@@ -517,9 +517,9 @@ class _UnaryGDMLSolid(object):
         output_centre = self.centre
         output_rotation = self.rotation
         _logger.debug("boolean: type=Intersection; name=%s; "
-                          "solid1=%s; solid2=%s; trans=%s",
-                          output_name, self.solid.name,
-                          other.solid.name, other_transformation)
+                      "solid1=%s; solid2=%s; trans=%s",
+                      output_name, self.solid.name,
+                      other.solid.name, other_transformation)
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
@@ -528,20 +528,20 @@ class _UnaryGDMLSolid(object):
 
     def _combine_minus_minus(self, other):
         output_name = "%s_m_%s" % (self.solid.name,
-                                         other.solid.name)
+                                   other.solid.name)
         other_transformation = self._get_transformation(other)
 
         output_operator = '-'
         output_centre = self.centre
         output_rotation = self.rotation
-        output_solid =  _pygdml.Union(output_name,
-                                       self.solid,
-                                       other.solid,
-                                       other_transformation)
+        output_solid = _pygdml.Union(output_name,
+                                     self.solid,
+                                     other.solid,
+                                     other_transformation)
         _logger.debug("boolean: type=Union; name=%s; "
-                          "solid1=%s; solid2=%s; trans=%s",
-                          output_name, self.solid.name,
-                          other.solid.name, other_transformation)
+                      "solid1=%s; solid2=%s; trans=%s",
+                      output_name, self.solid.name,
+                      other.solid.name, other_transformation)
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
@@ -556,14 +556,14 @@ class _UnaryGDMLSolid(object):
         output_centre = self.centre
         output_rotation = self.rotation
 
-        output_solid =  _pygdml.Union(output_name,
-                                      self.solid,
-                                      other.solid,
-                                      other_transformation)
+        output_solid = _pygdml.Union(output_name,
+                                     self.solid,
+                                     other.solid,
+                                     other_transformation)
         _logger.debug("boolean: type=Union; name=%s; "
-                          "solid1=%s; solid2=%s; trans=%s",
-                          output_name, self.solid.name,
-                          other.solid.name, other_transformation)
+                      "solid1=%s; solid2=%s; trans=%s",
+                      output_name, self.solid.name,
+                      other.solid.name, other_transformation)
 
         return _UnaryGDMLSolid(output_solid,
                                output_operator,
