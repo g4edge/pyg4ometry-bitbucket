@@ -7,12 +7,11 @@ import warnings as _warnings
 import antlr4 as _antlr4
 import pygdml as _pygdml
 
-import bodies
-import materials
-from materials import fluka_g4_material_map
-from Parser.FlukaParserVisitor import FlukaParserVisitor
-from Parser.FlukaParserListener import FlukaParserListener
-from Parser.Parse import Parse
+import pyfluka.bodies as bodies
+import pyfluka.materials as materials
+from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
+from pyfluka.Parser.FlukaParserListener import FlukaParserListener
+from pyfluka.Parser.Parse import Parse
 
 _logger = _logging.getLogger(__name__)
 class Model(object):
@@ -180,7 +179,7 @@ class _FlukaMaterialGetter(FlukaParserListener):
     # Or perhaps as pyfluka.materials Material instances (???)
 
     def __init__(self):
-        self.materials = fluka_g4_material_map
+        self.materials = materials.fluka_g4_material_map
         self._region_material_map = dict()
 
         self._Card = _namedtuple("Card", ["keyword", "one",
@@ -389,10 +388,10 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
                           region_name, region_centre,
                           region_rotation, region_gdml.name)
-            self.regions[region_name] = pyfluka.bodies.Region(region_name,
-                                                              region_gdml,
-                                                              position=region_centre,
-                                                              rotation=region_rotation)
+            self.regions[region_name] = bodies.Region(region_name,
+                                                      region_gdml,
+                                                      position=region_centre,
+                                                      rotation=region_rotation)
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
