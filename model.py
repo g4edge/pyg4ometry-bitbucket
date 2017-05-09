@@ -135,7 +135,7 @@ class Model(object):
         material_listener = _FlukaMaterialGetter()
         walker = _antlr4.ParseTreeWalker()
         walker.walk(material_listener, self.tree)
-        return material_listener._region_material_map
+        return material_listener.region_material_map
 
     def _bodies_from_tree(self):
         """
@@ -180,7 +180,7 @@ class _FlukaMaterialGetter(FlukaParserListener):
 
     def __init__(self):
         self.materials = materials.fluka_g4_material_map
-        self._region_material_map = dict()
+        self.region_material_map = dict()
 
         self._Card = _namedtuple("Card", ["keyword", "one",
                                           "two", "three",
