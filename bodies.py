@@ -1245,6 +1245,7 @@ class Region(object):
                  rotation=[0,0,0]):
         self.name = name
         self.gdml_solid = gdml_solid
+        self.material = material
         self.position = position
         self.rotation = rotation
 
