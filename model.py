@@ -52,7 +52,10 @@ class Model(object):
         self._world_volume = visitor.world_volume
         self.regions = visitor.regions
         if not self.debug:
-            self._world_volume.setClip()
+            try:
+                self._world_volume.setClip()
+            except _pygdml.solid.NullMeshError as error:
+                self._null_mesh_handler(error)
 
     def write_to_gdml(self, out_path=None, make_gmad=False):
         """
@@ -75,9 +78,17 @@ class Model(object):
             self._write_test_gmad(out_path)
 
     def view_mesh(self):
+        """
+        View the mesh for this.  If no region specificed then all
+        regions will be viewed.
+
+        """
         if not hasattr(self, "_world_volume"):
             self._gdml_world_volume()
-        world_mesh = self._world_volume.pycsgmesh()
+        try:
+            world_mesh = self._world_volume.pycsgmesh()
+        except _pygdml.solid.NullMeshError as error:
+            self._null_mesh_handler(error)
         viewer = _pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
@@ -128,6 +139,13 @@ class Model(object):
                        "X0=0.1*um;\n")
             gmad.write('\n')
             gmad.write("use, period=component;\n")
+
+    def _null_mesh_handler(self, error):
+        solid = error.solid
+        _logger.exception("nullmesh: name=%s; solid1=%s;"
+                          " solid2=%s, tra2=%s", solid.name,
+                          solid.obj1, solid.obj2, solid.tra2)
+        raise error
 
 
 
