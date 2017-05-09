@@ -1288,11 +1288,11 @@ code_meanings = {
     "WED": "Right Angle Wedge",
     "XCC": "Infinite Circular Cylinder parallel to the x-axis",
     "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
-    "XYP": "Infinite Half-space",
-    "XZP": "Infinite Half-space",
+    "XYP": "Infinite Half-space perpendicular to the z-axis",
+    "XZP": "Infinite Half-space perpendicular to the y-axis",
     "YCC": "Infinite Circular Cylinder parallel to the y-axis",
     "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
-    "YZP": "Infinite Half-space",
+    "YZP": "Infinite Half-space perpendicular to the x-axis",
     "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
     "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
 }
