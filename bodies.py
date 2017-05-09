@@ -1260,7 +1260,14 @@ class Region(object):
         Basically for adding to a world volume.
 
         """
-        pass
+        _pygdml.volume.Volume(self.rotation,
+                              self.position,
+                              self.gdml_solid,
+                              self.name,
+                              volume,
+                              1,
+                              False,
+                              self.material)
 
 class BodyNotImplementedError(Exception):
     def __init__(self, body):
