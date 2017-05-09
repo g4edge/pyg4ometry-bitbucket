@@ -9,66 +9,70 @@ import pygdml as _pygdml
 
 import bodies
 import materials
-from materials import fluka_g4_material_map as default_material_map
+from materials import fluka_g4_material_map
 from Parser.FlukaParserVisitor import FlukaParserVisitor
 from Parser.FlukaParserListener import FlukaParserListener
 from Parser.Parse import Parse
 
 _logger = _logging.getLogger(__name__)
-
 class Model(object):
-    def __init__(self, filename,
-                 material_map=None,
-                 **kwargs):
-
+    def __init__(self, filename):
         self._filename = filename
-        self.material_map = material_map
+        _logger.info("creating pyfluka model from file %s",
+                     _path.basename(filename))
         _logging.basicConfig(level=_logging.DEBUG,
-                     format='%(name)-20s %(levelname)-8s %(message)s',
-                     datefmt='%m-%d %H:%M',
-                     filename=_path.basename(
-                         _path.splitext(self._filename)[0]) + ".log",
-                     filemode='w')
-        _logger.info("creating pyfluka model from file %s", filename)
-
-        self.debug = kwargs.get("debug")
-        if not material_map:
-            material_map = default_material_map
+                             format='%(name)-20s %(levelname)-8s %(message)s',
+                             datefmt='%m-%d %H:%M',
+                             filename=_path.basename(
+                                 (_path.splitext(self._filename)[0])
+                                 + ".log"),
+                             filemode='w')
 
         # get the syntax tree.
         self.tree = Parse(filename)
+        self.materials = self._materials_from_tree()
+        self.bodies, self._region_scale_map, body_freq_map = self._bodies_from_tree()
+        self.regions = self._regions_from_tree()
+        # Initialiser the world volume:
+        self._world_volume = self._gdml_world_volume()
+        # Bind the count to the report_body_count method
+        self.report_body_count = (lambda: self.report_body_count(count))
 
-        self._materials_from_model()
-        self._bodies_from_model()
-        self.report_body_count()
+    def _regions_from_tree(self):
+        """
+        Get the region definitions from the tree.  Called in the
+        initialiser and then never called again.
+
+        """
+        visitor = _FlukaRegionVisitor(self.bodies,
+                                      self.materials,
+                                      self._region_scale_map)
+        visitor.visit(self.tree)
+        return visitor.regions
 
     def _gdml_world_volume(self):
-        # Populate, get, and clip the world volume.
-        visitor = _FlukaRegionVisitor(self.bodies,
-                                      self._region_material_map,
-                                      self._region_max_scale_map,
-                                      debug=self.debug)
-        visitor.visit(self.tree)
-        self._world_volume = visitor.world_volume
-        self.regions = visitor.regions
-        if not self.debug:
-            try:
-                self._world_volume.setClip()
-            except _pygdml.solid.NullMeshError as error:
-                self._null_mesh_handler(error)
+        """
+        This method insantiates the world volume.
 
-    def write_to_gdml(self, out_path=None, make_gmad=False):
+        """
+        world_size = max(self._region_scale_map.values()) * 5.0
+        _logger.debug("worldvolume: name=world; dimensions=%s", world_size)
+        w = _pygdml.solid.Box("world", world_size, world_size, world_size)
+        return _pygdml.Volume([0, 0, 0], [0, 0, 0], w, "world-volume",
+                              None, 1, False, "G4_Galactic")
+
+    def write_to_gdml(self, region_names=None,
+                      out_path=None,
+                      make_gmad=False):
         """
         Convert the region to GDML.  Default output file name is
         "./" + basename + ".gdml".
 
         """
-        if not hasattr(self, "_world_volume"):
-            self._gdml_world_volume()
+        self._initialise_world_volume(region_names)
         if out_path == None:
             out_path = ("./"
-                        + _path.basename(
-                            _path.splitext(self._filename)[0])
+                        + _path.basename(_path.splitext(self._filename)[0])
                         + ".gdml")
         out = _pygdml.Gdml()
         out.add(self._world_volume)
@@ -77,30 +81,47 @@ class Model(object):
         if make_gmad == True:
             self._write_test_gmad(out_path)
 
-    def view_mesh(self):
+    def view_mesh(self, region_names=None):
         """
-        View the mesh for this.  If no region specificed then all
-        regions will be viewed.
+        View the mesh for this.  By default, all regions are viewed,
+        but the keyword argument "do_regions" allows to view a subset, by
+        providing a name or list of names of regions.
 
         """
-        if not hasattr(self, "_world_volume"):
-            self._gdml_world_volume()
-        try:
-            world_mesh = self._world_volume.pycsgmesh()
-        except _pygdml.solid.NullMeshError as error:
-            self._null_mesh_handler(error)
+        world_mesh = self._initialise_world_volume(region_names)
         viewer = _pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
-    def report_body_count(self):
+    def _initialise_world_volume(self, region_names):
+        """
+        This function has the side effect of recreating the world
+        volume if the region_names requested are different to the ones
+        already assigned to it.
+
+        """
+        if not region_names:
+            region_names = self.regions.keys()
+        # if the world volume consists of different regions to the
+        # ones requested, then redo it with the requested volumes.
+        if list(region_names) != self._world_volume.daughterVolumes:
+            self._gdml_world_volume()
+            for region_name in list(region_names):
+                self.regions[region_name].add_to_volume(self._world_volume)
+        try:
+            self._world_volume.setClip()
+            world_mesh = self._world_volume.pycsgmesh()
+        except _pygdml.solid.NullMeshError as error:
+            self._null_mesh_handler(error)
+        return world_mesh
+
+    def report_body_count(self, count):
         """
         Prints the frequency of bodies in order and by type that are used
         in region definitions.  Bodies which are defined but not used
         are not included in this count.
         """
-
-        body_and_count = self._body_freq_map.items()
+        body_and_count = count.items()
         body_and_count.sort(key = lambda i: i[1], reverse=True)
         # Print result, with alignment.
         print "Bodies used in region definitions:"
@@ -110,22 +131,26 @@ class Model(object):
                                 + bodies.code_meanings[body]).ljust(60,'.')
             print body_description + str(count)
 
-    def _materials_from_model(self):
+    def _materials_from_tree(self):
         # This gets the materials and maps them to their region (volumes)
-        material_listener = _FlukaMaterialGetter(self.material_map)
+        material_listener = _FlukaMaterialGetter()
         walker = _antlr4.ParseTreeWalker()
         walker.walk(material_listener, self.tree)
-        self._region_material_map = material_listener._region_material_map
+        return material_listener._region_material_map
 
-    def _bodies_from_model(self):
+    def _bodies_from_tree(self):
+        """
+        return a tuple of bodies, region scale, and a count of bodies
+        by type.
+
+        """
         body_listener = _FlukaBodyListener()
         walker = _antlr4.ParseTreeWalker()
         walker.walk(body_listener, self.tree)
-        self.bodies = body_listener.bodies
-        used_bodies_by_type = body_listener.used_bodies_by_type
-        self._body_freq_map = _Counter(used_bodies_by_type)
-        self._region_max_scale_map = body_listener.region_max_scale_map
-        self.region_names = body_listener.region_max_scale_map.keys()
+        body_freq_map = body_listener.body_freq_map
+        region_max_scale_map = body_listener.region_max_scale_map
+        bodies = body_listener.bodies
+        return bodies, region_max_scale_map, body_freq_map
 
     def _write_test_gmad(self, gdml_path):
         gmad_path = _path.splitext(gdml_path)[0] + ".gmad"
@@ -154,7 +179,7 @@ class _FlukaMaterialGetter(FlukaParserListener):
     # This class gets the materials as pygdml.materials instances.
     # Or perhaps as pyfluka.materials Material instances (???)
 
-    def __init__(self, fluka_g4_material_map):
+    def __init__(self):
         self.materials = fluka_g4_material_map
         self._region_material_map = dict()
 
@@ -332,24 +357,19 @@ class _FlukaBodyListener(FlukaParserListener):
         floats = map(float, float_strings)
         return floats
 
+    def exitGeocards(self, ctx):
+        # When we've finished walking the geometry, count the bodies.
+        self.body_freq_map = _Counter(self.used_bodies_by_type)
+        del self.used_bodies_by_type
+
 
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
-    def __init__(self, bodies, materials, region_scale_map, debug=False):
+    def __init__(self, bodies, materials, _region_scale_map):
         self.bodies = bodies
         self.regions = dict()
         self.materials = materials
-        self.region_scale_map = region_scale_map
-        self.debug = debug
-
-        self.regions = {}
-
-        world_size = max(self.region_scale_map.values()) * 5.0
-        _logger.debug("worldvolume: name=world; dimensions=%s", world_size)
-        w = _pygdml.solid.Box("world", world_size, world_size, world_size)
-        self.world_volume = _pygdml.Volume(
-            [0,0,0], [0,0,0], w, "world-volume",
-            None, 1, False, "G4_Galactic")
+        self._region_scale_map = _region_scale_map
 
     def visitRegion(self, ctx):
         self.region_name = ctx.RegionName().getText()
@@ -373,14 +393,6 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                                                       region_gdml,
                                                       position=region_centre,
                                                       rotation=region_rotation)
-            placement = _pygdml.volume.Volume(region_rotation,
-                                              region_centre,
-                                              region_gdml,
-                                              region_name,
-                                              self.world_volume,
-                                              1,
-                                              False,
-                                              "G4_Galactic")
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
@@ -395,7 +407,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         # If an infinite body:
         if isinstance(body, bodies._InfiniteSolid):
-            scale = self.region_scale_map[self.region_name] * 10.
+            scale = self._region_scale_map[self.region_name] * 10.
             # Infinite bodies are factories for themselves, allowing
             # for dynamic infinite scale for a common underlying body.
             body = body(scale)
