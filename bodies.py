@@ -1230,11 +1230,6 @@ class QUA(_BodyBase):
         pass
 
 
-class Translation(object):
-    def __init__(self, delta_x, delta_y, delta_z):
-        self.delta_x = delta_x
-        self.delta_y = delta_y
-        self.delta_z = delta_z
 class Region(object):
     """
     Class used for interfacing a Fluka region with a GDML volume.
@@ -1253,14 +1248,19 @@ class Region(object):
         self.position = position
         self.rotation = rotation
 
-class Transformation(object):
-    pass
+    def view(self):
+        """
+        View this single volume.
 
+        """
+        pass
 
-class Expansion(object):
-    def __init__(self, scaling_factor):
-        self.scaling_factor = scaling_factor
+    def add_to_volume(self, volume):
+        """
+        Basically for adding to a world volume.
 
+        """
+        pass
 
 class BodyNotImplementedError(Exception):
     def __init__(self, body):
