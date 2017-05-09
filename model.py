@@ -211,6 +211,15 @@ class _FlukaMaterialGetter(FlukaParserListener):
 
 
 class _FlukaBodyListener(FlukaParserListener):
+    """
+    This class is for getting simple, declarative  information about
+    the geometry model.  In no particular order:
+
+    - Body definitions, including surrounding geometry directives
+    - Region "scale" for use in defining infinite cylinders and planes.
+    - Stats like names and frequencies for body types and regions.
+
+    """
     def __init__(self):
         self.bodies = dict()
 
@@ -224,22 +233,24 @@ class _FlukaBodyListener(FlukaParserListener):
         self._expansion_stack = []
 
     def enterRegion(self, ctx):
+        # These two are transient attributes which record the current
+        # region name and the corresponding max_scale.
         self.region_name = ctx.RegionName().getText()
         self.max_scale = 0.0
 
     def exitRegion(self, ctx):
-        region_name = ctx.RegionName().getText()
-        self.region_max_scale_map[region_name] = self.max_scale
+        # As we exit the region, record the max_scale for this region.
+        self.region_max_scale_map[self.region_name] = self.max_scale
 
     def enterBodyDefSpaceDelim(self, ctx):
-        if ctx.ID():
-            body_name = ctx.ID().getText()
-        else:
-            body_name = int(ctx.Integer().getText())
-
+        # This is where we get the body definitions and instantiate
+        # them with the relevant pyfuka.bodies classes.
+        body_name = ctx.ID().getText()
         body_type = ctx.BodyCode().getText()
         body_parameters = self._get_floats(ctx)
         body_constructor = getattr(bodies, body_type)
+        # Try and construct the body, if it's not implemented then add
+        # it to the list of omitted bodies.
         try:
             body = body_constructor(body_name,
                                     body_parameters,
@@ -257,6 +268,8 @@ class _FlukaBodyListener(FlukaParserListener):
             self.omitted_bodies.append((body_name, body_type))
 
     def enterUnaryExpression(self, ctx):
+        # Here we assign max_scale the current body's extent if it's
+        # larger than the previous max_scale.
         body_name = ctx.ID().getText()
         try:
             self.max_scale = max(self.max_scale,
@@ -266,7 +279,8 @@ class _FlukaBodyListener(FlukaParserListener):
                             " in region: \"{}\"!".format(body_name,
                                                          self.region_name)))
 
-        # For logging purpose
+        # For logging purposes.  If body hasn't yet been recorded as
+        # used, then record its name and type.
         if body_name in self.unique_body_names:
             return None
         else:
