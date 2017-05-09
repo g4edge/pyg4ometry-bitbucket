@@ -99,11 +99,14 @@ class Model(object):
         already assigned to it.
 
         """
-        if not region_names:
+        if region_names is None:
             region_names = self.regions.keys()
+        # Coerce a string to a single-element list.
+        elif isinstance(region_names, basestring):
+            region_names = [region_names]
         # if the world volume consists of different regions to the
         # ones requested, then redo it with the requested volumes.
-        if list(region_names) != self._world_volume.daughterVolumes:
+        if region_names != self._world_volume.daughterVolumes:
             self._gdml_world_volume()
             for region_name in list(region_names):
                 self.regions[region_name].add_to_volume(self._world_volume)
