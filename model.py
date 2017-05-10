@@ -67,8 +67,8 @@ class Model(object):
         """
         world_size = max(self._region_scale_map.values()) * 5.0
         _logger.debug("worldvolume: name=world; dimensions=%s", world_size)
-        w = _pygdml.solid.Box("world", world_size, world_size, world_size)
-        return _pygdml.Volume([0, 0, 0], [0, 0, 0], w, "world-volume",
+        world_box = _pygdml.solid.Box("world", world_size, world_size, world_size)
+        return _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
                               None, 1, False, "G4_Galactic")
 
     def write_to_gdml(self, region_names=None,
