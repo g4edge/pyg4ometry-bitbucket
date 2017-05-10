@@ -180,6 +180,17 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
 
+    def mesh_each_region(self):
+        good_regions = []
+        bad_regions = []
+        for region_name in self.regions.keys():
+            try:
+                self._generate_mesh(region_name)
+                good_regions.append(region_name)
+            except _pygdml.solid.NullMeshError as error:
+                bad_regions.append(region_name)
+        return good_regions, bad_regions
+
     def _null_mesh_handler(self, error):
         solid = error.solid
         _logger.exception("nullmesh: name=%s; solid1=%s;"
