@@ -1241,8 +1241,8 @@ class Region(object):
     # be picked and
     def __init__(self, name, gdml_solid,
                  material="G4_Galactic",
-                 position=[0,0,0],
-                 rotation=[0,0,0]):
+                 position=[0, 0, 0],
+                 rotation=[0, 0, 0]):
         self.name = name
         self.gdml_solid = gdml_solid
         self.material = material
