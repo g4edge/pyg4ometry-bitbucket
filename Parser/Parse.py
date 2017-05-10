@@ -1,5 +1,5 @@
 import subprocess as _sp
-
+import os.path as _path
 import antlr4 as _antlr4
 
 from FlukaLexer import FlukaLexer
@@ -18,7 +18,8 @@ def PreProcessFile(filein):
     return processed_model_string
 
 def Parse(input):
-
+    if not _path.exists(input):
+        raise IOError("File not found: %s" % input)
     # Preprocess input:
     processed_string = PreProcessFile(input)
 
