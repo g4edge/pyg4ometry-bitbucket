@@ -1249,13 +1249,30 @@ class Region(object):
         self.position = position
         self.rotation = rotation
 
-    def view(self):
+    def view(self, debug=False):
         """
-        View this single volume.
+        View this single region.
 
         """
-        pass
+        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
 
+        self.add_to_volume(world_volume)
+        try:
+            world_volume.setClip()
+            mesh = world_volume.pycsgmesh()
+            viewer = _pygdml.VtkViewer()
+            viewer.addSource(mesh)
+            viewer.view()
+        except _pygdml.solid.NullMeshError as error:
+            if debug:
+                print error.message
+                print "Debug:  Viewing consituent solids."
+                self._view_null_mesh(error)
+            else:
+                raise error
     def add_to_volume(self, volume):
         """
         Basically for adding to a world volume.
@@ -1269,6 +1286,28 @@ class Region(object):
                               1,
                               False,
                               self.material)
+
+    def _view_null_mesh(self, error):
+        solid1 = error.solid.obj1
+        solid2 = error.solid.obj2
+        tra2 = error.solid.tra2
+
+        world_box = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
+
+        volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                                 solid1.name, world_volume,
+                                 1, False, "G4_NITROUS_OXIDE")
+        volume2 = _pygdml.Volume(tra2[0], tra2[1], solid2,
+                                 solid2.name, world_volume,
+                                 1, False, "G4_NITROUS_OXIDE")
+        world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
+        viewer = _pygdml.VtkViewer()
+        viewer.addSource(mesh)
+        viewer.view()
 
 class BodyNotImplementedError(Exception):
     def __init__(self, body):
