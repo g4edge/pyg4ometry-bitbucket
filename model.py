@@ -126,9 +126,9 @@ class Model(object):
             region_names = [region_names]
         # if the world volume consists of different regions to the
         # ones requested, then redo it with the requested volumes.
-        if (set(region_names)
-            != set([volume.name
-                    for volume in self._world_volume.daughterVolumes])):
+        if (set(region_names) != set([volume.name
+                                      for volume
+                                      in self._world_volume.daughterVolumes])):
             self._world_volume = self._gdml_world_volume()
             for region_name in list(region_names):
                 self.regions[region_name].add_to_volume(self._world_volume)
