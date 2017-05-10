@@ -68,7 +68,7 @@ class Model(object):
         "./" + basename + ".gdml".
 
         """
-        self._initialise_world_volume(region_names)
+        self._generate_mesh(region_names)
         if out_path is None:
             out_path = ("./"
                         + _path.basename(_path.splitext(self._filename)[0])
@@ -80,23 +80,32 @@ class Model(object):
         if make_gmad == True:
             self._write_test_gmad(out_path)
 
-    def view_mesh(self, region_names=None):
+    def view_mesh(self, region_names=None, debug=False):
         """
-        View the mesh for this.  By default, all regions are viewed,
-        but the keyword argument "do_regions" allows to view a subset, by
-        providing a name or list of names of regions.
+        View the mesh for this model.
+
+        Parameters
+        ----------
+
+        region_names: A name or list of names of regions to be
+        viewed.  By default, all regions will be viewed.
+
+        debug: If True, will not clip the bounding box to the extent
+        of the geometry.  This is useful for checking placements and
+        as an optimisation--the mesh will only be generated once.  By
+        default, the bounding box will be clipped.
 
         """
-        world_mesh = self._initialise_world_volume(region_names)
+        world_mesh = self._generate_mesh(region_names)
         viewer = _pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
-    def _initialise_world_volume(self, region_names):
+    def _generate_mesh(self, region_names, debug=False):
         """
         This function has the side effect of recreating the world
         volume if the region_names requested are different to the ones
-        already assigned to it.
+        already assigned to it and returns the relevant mesh.
 
         """
         if region_names is None:
@@ -106,12 +115,15 @@ class Model(object):
             region_names = [region_names]
         # if the world volume consists of different regions to the
         # ones requested, then redo it with the requested volumes.
-        if region_names != self._world_volume.daughterVolumes:
-            self._gdml_world_volume()
+        if (set(region_names)
+            != set([volume.name
+                    for volume in self._world_volume.daughterVolumes])):
+            self._world_volume = self._gdml_world_volume()
             for region_name in list(region_names):
                 self.regions[region_name].add_to_volume(self._world_volume)
         try:
-            self._world_volume.setClip()
+            if not debug:
+                self._world_volume.setClip()
             world_mesh = self._world_volume.pycsgmesh()
         except _pygdml.solid.NullMeshError as error:
             self._null_mesh_handler(error)
