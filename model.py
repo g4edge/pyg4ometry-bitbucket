@@ -15,6 +15,17 @@ from pyfluka.Parser.Parse import Parse
 
 _logger = _logging.getLogger(__name__)
 class Model(object):
+    """
+    Class for loading Fluka model geometry, viewing its mesh, and
+    writing to GDML.
+
+    Parameters
+    ---------
+
+    filename:  path to Fluka input file
+
+    """
+
     def __init__(self, filename):
         self._filename = filename
         _logger.info("creating pyfluka model from file %s",
