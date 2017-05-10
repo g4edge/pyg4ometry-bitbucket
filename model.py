@@ -30,12 +30,12 @@ class Model(object):
         # get the syntax tree.
         self.tree = Parse(filename)
         self.materials = self._materials_from_tree()
-        self.bodies, self._region_scale_map, body_freq_map = self._bodies_from_tree()
+        (self.bodies,
+         self._region_scale_map,
+         self._body_freq_map) = self._bodies_from_tree()
         self.regions = self._regions_from_tree()
         # Initialiser the world volume:
         self._world_volume = self._gdml_world_volume()
-        # Bind the count to the report_body_count method
-        self.report_body_count = (lambda: self.report_body_count(body_freq_map))
 
     def _regions_from_tree(self):
         """
@@ -117,13 +117,13 @@ class Model(object):
             self._null_mesh_handler(error)
         return world_mesh
 
-    def report_body_count(self, count):
+    def report_body_count(self):
         """
         Prints the frequency of bodies in order and by type that are used
         in region definitions.  Bodies which are defined but not used
         are not included in this count.
         """
-        body_and_count = count.items()
+        body_and_count = self._body_freq_map.items()
         body_and_count.sort(key=lambda i: i[1], reverse=True)
         # Print result, with alignment.
         print "Bodies used in region definitions:"
