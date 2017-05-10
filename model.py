@@ -590,6 +590,12 @@ class _UnaryGDMLSolid(object):
                                output_rotation)
 
     def union(self, other):
+        """
+        Method for doing the union of this UnaryGDMLSolid with
+        another.  rotations and translations are propagates
+        appropriately to the daughter solid.
+
+        """
         output_name = "%s_u_%s" % (self.solid.name, other.solid.name)
         other_transformation = self._get_transformation(other)
 
