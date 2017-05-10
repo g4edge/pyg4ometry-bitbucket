@@ -198,7 +198,7 @@ class Model(object):
             try:
                 self._generate_mesh(region_name)
                 good_regions.append(region_name)
-            except _pygdml.solid.NullMeshError as error:
+            except _pygdml.solid.NullMeshError:
                 bad_regions.append(region_name)
         return good_regions, bad_regions
 
