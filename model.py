@@ -192,9 +192,14 @@ class Model(object):
             gmad.write("use, period=component;\n")
 
     def mesh_each_region(self):
+        """
+        Method for individually meshing each region and building up a
+        list of meshable and non-meshable regions from the model
+
+        """
         good_regions = []
         bad_regions = []
-        for region_name in self.regions.keys():
+        for region_name in self.regions:
             try:
                 self._generate_mesh(region_name)
                 good_regions.append(region_name)
