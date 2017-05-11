@@ -145,7 +145,10 @@ class RPP(_BodyBase):
         return vector.Three(0,0,0)
 
     def extent(self):
-        return max(map(abs, self.parameters))
+        return max([self.parameters.x_max - self.parameters.x_min,
+                    self.parameters.y_max - self.parameters.y_min,
+                    self.parameters.z_max - self.parameters.z_min])
+
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
