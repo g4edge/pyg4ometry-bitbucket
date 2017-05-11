@@ -539,10 +539,8 @@ class _UnarySolid(object):
         return other._combine_plus_minus(self)
 
     def _combine_plus_minus(self, other):
-        output_name = "%s_p_%s" % (self.solid.name, other.solid.name)
-
+        output_name = self._generate_name(other)
         other_transformation = self._get_transformation(other)
-
         output_solid = _pygdml.solid.Subtraction(output_name,
                                                  self.solid,
                                                  other.solid,
@@ -561,9 +559,7 @@ class _UnarySolid(object):
                            output_rotation)
 
     def _combine_plus_plus(self, other):
-
-        output_name = "%s_i_%s" % (self.solid.name,
-                                   other.solid.name)
+        output_name = self._generate_name(other)
         other_transformation = self._get_transformation(other)
         output_solid = _pygdml.solid.Intersection(output_name,
                                                   self.solid,
@@ -651,3 +647,8 @@ class _UnarySolid(object):
         other_transformation = [other_rotation, other_translation]
 
         return other_transformation
+
+    def _generate_name(self, other):
+        name = str(_uuid4())
+        name = name.replace("-","")
+        return "a" + name
