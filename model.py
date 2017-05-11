@@ -73,12 +73,22 @@ class Model(object):
         return _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
                               None, 1, False, "G4_Galactic")
 
-    def write_to_gdml(self, region_names=None,
-                      out_path=None,
-                      make_gmad=False):
+    def write_to_gdml(self, region_names=None, out_path=None, make_gmad=False):
         """
         Convert the region to GDML.  Default output file name is
         "./" + basename + ".gdml".
+
+        Parameters
+        ---------
+
+        region_names: A name or list of names of regions to be
+        converted to GDML.  By default, all regions will be converted.
+
+        out_path: Output path for file to be written to.  By default
+        will make a name based on the model filename.
+
+        make_gmad: Generate a skeleton GMAD file pre-filled with
+        references to corresponding the GDML file.
 
         """
         self._generate_mesh(region_names)
@@ -86,6 +96,9 @@ class Model(object):
             out_path = ("./"
                         + _path.basename(_path.splitext(self._filename)[0])
                         + ".gdml")
+        elif _path.splitext(out_path)[1] != "gdml":
+            out_path = _path.splitext(out_path)[0] + ".gdml"
+
         out = _pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
