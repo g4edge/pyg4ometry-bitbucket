@@ -460,9 +460,9 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         body_rotation = body.get_rotation()
 
         if ctx.Plus():
-            return _UnaryGDMLSolid(gdml_solid, '+', body_centre, body_rotation)
+            return _UnarySolid(gdml_solid, '+', body_centre, body_rotation)
         else:
-            return _UnaryGDMLSolid(gdml_solid, '-', body_centre, body_rotation)
+            return _UnarySolid(gdml_solid, '-', body_centre, body_rotation)
 
     def visitUnaryAndSubZone(self, ctx):
         first = self.visit(ctx.subZone())
@@ -482,14 +482,14 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         elif ctx.Minus():
             operator = '-'
         solid = self.visit(ctx.expr())
-        return _UnaryGDMLSolid(solid.solid,
+        return _UnarySolid(solid.solid,
                                operator,
                                solid.centre,
                                solid.rotation)
 
 
 
-class _UnaryGDMLSolid(object):
+class _UnarySolid(object):
     '''
     A gdml solid with a unary operator from Fluka and a position.
     '''
@@ -502,7 +502,7 @@ class _UnaryGDMLSolid(object):
 
     def combine(self, other):
         '''
-        Combine two _UnaryGDMLSolids, returning the third resultant.
+        Combine two _UnarySolids, returning the third resultant.
         Doesn't handle simple union solids, as these are not
         "combinations" between two Fluka unary operations, but instead
         have their own syntax.  This is handled by the "union" method
@@ -540,10 +540,10 @@ class _UnaryGDMLSolid(object):
                       output_name, self.solid.name,
                       other.solid.name, other_transformation)
 
-        return _UnaryGDMLSolid(output_solid,
-                               output_operator,
-                               output_centre,
-                               output_rotation)
+        return _UnarySolid(output_solid,
+                           output_operator,
+                           output_centre,
+                           output_rotation)
 
     def _combine_plus_plus(self, other):
 
@@ -562,14 +562,13 @@ class _UnaryGDMLSolid(object):
                       output_name, self.solid.name,
                       other.solid.name, other_transformation)
 
-        return _UnaryGDMLSolid(output_solid,
-                               output_operator,
-                               output_centre,
-                               output_rotation)
+        return _UnarySolid(output_solid,
+                           output_operator,
+                           output_centre,
+                           output_rotation)
 
     def _combine_minus_minus(self, other):
-        output_name = "%s_m_%s" % (self.solid.name,
-                                   other.solid.name)
+        output_name = self._generate_name(other)
         other_transformation = self._get_transformation(other)
 
         output_operator = '-'
@@ -584,19 +583,19 @@ class _UnaryGDMLSolid(object):
                       output_name, self.solid.name,
                       other.solid.name, other_transformation)
 
-        return _UnaryGDMLSolid(output_solid,
-                               output_operator,
-                               output_centre,
-                               output_rotation)
+        return _UnarySolid(output_solid,
+                           output_operator,
+                           output_centre,
+                           output_rotation)
 
     def union(self, other):
         """
-        Method for doing the union of this UnaryGDMLSolid with
+        Method for doing the union of this UnarySolid with
         another.  rotations and translations are propagates
         appropriately to the daughter solid.
 
         """
-        output_name = "%s_u_%s" % (self.solid.name, other.solid.name)
+        output_name = self._generate_name(other)
         other_transformation = self._get_transformation(other)
 
         output_operator = '+'
@@ -612,10 +611,10 @@ class _UnaryGDMLSolid(object):
                       output_name, self.solid.name,
                       other.solid.name, other_transformation)
 
-        return _UnaryGDMLSolid(output_solid,
-                               output_operator,
-                               output_centre,
-                               output_rotation)
+        return _UnarySolid(output_solid,
+                           output_operator,
+                           output_centre,
+                           output_rotation)
 
     def _get_transformation(self, other):
         # other_transformation is the transformation applied to the
