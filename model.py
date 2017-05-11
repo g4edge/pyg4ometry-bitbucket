@@ -134,6 +134,21 @@ class Model(object):
         already assigned to it and returns the relevant mesh.
 
         """
+        self._compose_world_volume(region_names)
+        try:
+            if setclip:
+                self._world_volume.setClip()
+            world_mesh = self._world_volume.pycsgmesh()
+        except _pygdml.solid.NullMeshError as error:
+            self._null_mesh_handler(error)
+        return world_mesh
+
+    def _compose_world_volume(self, region_names):
+        """
+        Add the region or regions in region_names to the world volume,
+        only if not already added.
+
+        """
         if region_names is None:
             region_names = self.regions.keys()
         # Coerce a string to a single-element list.
@@ -147,13 +162,6 @@ class Model(object):
             self._world_volume = self._gdml_world_volume()
             for region_name in list(region_names):
                 self.regions[region_name].add_to_volume(self._world_volume)
-        try:
-            if not debug:
-                self._world_volume.setClip()
-            world_mesh = self._world_volume.pycsgmesh()
-        except _pygdml.solid.NullMeshError as error:
-            self._null_mesh_handler(error)
-        return world_mesh
 
     def report_body_count(self):
         """
