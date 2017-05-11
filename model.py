@@ -106,7 +106,7 @@ class Model(object):
         if make_gmad == True:
             self._write_test_gmad(out_path)
 
-    def view_mesh(self, region_names=None, debug=False):
+    def view_mesh(self, region_names=None, setclip=True):
         """
         View the mesh for this model.
 
@@ -116,18 +116,18 @@ class Model(object):
         region_names: A name or list of names of regions to be
         viewed.  By default, all regions will be viewed.
 
-        debug: If True, will not clip the bounding box to the extent
+        setclip: If True, will  clip the bounding box to the extent
         of the geometry.  This is useful for checking placements and
         as an optimisation--the mesh will only be generated once.  By
         default, the bounding box will be clipped.
 
         """
-        world_mesh = self._generate_mesh(region_names, debug=debug)
+        world_mesh = self._generate_mesh(region_names, setclip=setclip)
         viewer = _pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
-    def _generate_mesh(self, region_names, debug=False):
+    def _generate_mesh(self, region_names, setclip=True):
         """
         This function has the side effect of recreating the world
         volume if the region_names requested are different to the ones
