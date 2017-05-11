@@ -3,6 +3,8 @@ from collections import Counter as _Counter
 import logging as _logging
 import os.path as _path
 import warnings as _warnings
+from uuid import uuid4 as _uuid4
+import time as _time
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
@@ -191,27 +193,40 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
 
-    def mesh_each_region(self):
+    def test_regions(self):
         """
-        Method for individually meshing each region and building up a
-        list of meshable and non-meshable regions from the model
+        Method for individually meshing each region and returning
+        dictionary of lists of good regions, bad regions, bad
+        intersections, and bad subtractions.
 
         """
-        good_regions = []
-        bad_regions = []
-        for region_name in self.regions:
+        output = {key:[] for key in ["good_regions", "bad_regions",
+                                     "bad_subs", "bad_ints"]}
+        number_of_regions = len(self.regions)
+        start = _time.time()
+        for index, region_name in enumerate(self.regions):
             try:
                 self._generate_mesh(region_name)
-                good_regions.append(region_name)
-            except _pygdml.solid.NullMeshError:
-                bad_regions.append(region_name)
-        return good_regions, bad_regions
+                output["good_regions"].append(region_name)
+            except _pygdml.solid.NullMeshError as error:
+                output["bad_regions"].append(region_name)
+                if isinstance(error.solid, _pygdml.solid.Intersection):
+                    output["bad_ints"].append(region_name)
+                elif isinstance(error.solid, _pygdml.solid.Subtraction):
+                    output["bad_subs"].append(region_name)
+            print "Tested {0}/{1}.".format(index + 1, number_of_regions)
+            print ("Succeded: {0}.  Failed: {1}.".format(
+                len(output["good_regions"]), len(output["bad_regions"])))
+
+        end = _time.time()
+        print (end - start)/60.0, "minutes elipsed since test begun."
+        return output
 
     def _null_mesh_handler(self, error):
         solid = error.solid
         _logger.exception("nullmesh: name=%s; solid1=%s;"
                           " solid2=%s, tra2=%s", solid.name,
-                          solid.obj1, solid.obj2, solid.tra2)
+                          solid.obj1.name, solid.obj2.name, solid.tra2)
         raise error
 
 
