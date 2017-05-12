@@ -1252,9 +1252,10 @@ class Region(object):
         self.position = position
         self.rotation = rotation
 
-    def view(self, debug=False):
+    def view(self):
         """
-        View this single region.
+        View this single region.  If a null mesh is encountered, try
+        the view_debug method to see the problematic boolean operation.
 
         """
         w = _pygdml.solid.Box("world", 10000, 10000, 10000)
@@ -1263,19 +1264,27 @@ class Region(object):
                                      1, False, "G4_NITROUS_OXIDE")
 
         self.add_to_volume(world_volume)
+        world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
+        viewer = _pygdml.VtkViewer()
+        viewer.addSource(mesh)
+        viewer.view()
+
+    def view_debug(self, first=None, second=None):
+        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
+        self.add_to_volume(world_volume)
         try:
             world_volume.setClip()
             mesh = world_volume.pycsgmesh()
-            viewer = _pygdml.VtkViewer()
-            viewer.addSource(mesh)
-            viewer.view()
+            print "Mesh was successful."
         except _pygdml.solid.NullMeshError as error:
-            if debug:
-                print error.message
-                print "Debug:  Viewing consituent solids."
-                self._view_null_mesh(error)
-            else:
-                raise error
+            print error.message
+            print "Debug:  Viewing consituent solids."
+            self._view_null_mesh(error, first, second)
+
     def add_to_volume(self, volume):
         """
         Basically for adding to a world volume.
@@ -1290,7 +1299,7 @@ class Region(object):
                               False,
                               self.material)
 
-    def _view_null_mesh(self, error):
+    def _view_null_mesh(self, error, first, second):
         solid1 = error.solid.obj1
         solid2 = error.solid.obj2
         tra2 = error.solid.tra2
@@ -1299,13 +1308,24 @@ class Region(object):
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
-
-        volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                                 solid1.name, world_volume,
-                                 1, False, "G4_NITROUS_OXIDE")
-        volume2 = _pygdml.Volume(tra2[0], tra2[1], solid2,
-                                 solid2.name, world_volume,
-                                 1, False, "G4_NITROUS_OXIDE")
+        if (first is None and second is None
+            or first is True and second is True):
+            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                                     solid1.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+            volume2 = _pygdml.Volume(tra2[0], tra2[1], solid2,
+                                     solid2.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+        elif first is True and second is not True:
+            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                                     solid1.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+        elif second is True and first is not True:
+            volume2 = _pygdml.Volume(tra2[0], tra2[1], solid2,
+                                     solid2.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+        if first is False and second is False:
+            raise RuntimeError("Must select at least one of the two solids to view")
         world_volume.setClip()
         mesh = world_volume.pycsgmesh()
         viewer = _pygdml.VtkViewer()
