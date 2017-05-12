@@ -5,6 +5,7 @@ import os.path as _path
 import warnings as _warnings
 from uuid import uuid4 as _uuid4
 import time as _time
+import cPickle as _cPickle
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
@@ -214,11 +215,14 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
 
-    def test_regions(self):
+    def test_regions(self, pickle=False):
         """
         Method for individually meshing each region and returning
         dictionary of lists of good regions, bad regions, bad
         intersections, and bad subtractions.
+
+        If pickle, then the returned dictionary will also be written
+        to file.
 
         """
         output = {key:[] for key in ["good_regions", "bad_regions",
@@ -241,6 +245,10 @@ class Model(object):
 
         end = _time.time()
         print (end - start)/60.0, "minutes elipsed since test begun."
+
+        if pickle is True:
+            with open("./{}_diag.pickle".format(self._filename), 'w') as f:
+                cPickle.dump(f, output)
         return output
 
     def _null_mesh_handler(self, error):
