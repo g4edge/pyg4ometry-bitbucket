@@ -1332,6 +1332,25 @@ class Region(object):
         viewer.addSource(mesh)
         viewer.view()
 
+    def atomic_solids(self):
+        """
+        return a dictionary of the atomic solids (i.e. no boolean solids)
+        making up this region.
+
+        """
+        solids = dict()
+        def dump_iter(solid):
+            if isinstance(solid, (_pygdml.solid.Intersection,
+                                  _pygdml.solid.Subtraction,
+                                  _pygdml.solid.Union)):
+                dump_iter(solid.obj1)
+                dump_iter(solid.obj2)
+            else:
+                solids[solid.name] = solid
+        dump_iter(self.gdml_solid)
+        return solids
+
+
 class BodyNotImplementedError(Exception):
     def __init__(self, body):
         body_name = body.name
