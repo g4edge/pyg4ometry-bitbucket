@@ -215,7 +215,7 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
 
-    def test_regions(self, pickle=False):
+    def test_regions(self, pickle=False, regions=None):
         """
         Method for individually meshing each region and returning
         dictionary of lists of good regions, bad regions, bad
@@ -225,11 +225,15 @@ class Model(object):
         to file.
 
         """
+        if regions is None:
+            regions = self.regions
+        elif isinstance(regions, basestring):
+            regions = [regions]
         output = {key:[] for key in ["good_regions", "bad_regions",
                                      "bad_subs", "bad_ints"]}
-        number_of_regions = len(self.regions)
+        number_of_regions = len(regions)
         start = _time.time()
-        for index, region_name in enumerate(self.regions):
+        for index, region_name in enumerate(regions):
             try:
                 self._generate_mesh(region_name)
                 output["good_regions"].append(region_name)
@@ -248,7 +252,7 @@ class Model(object):
 
         if pickle is True:
             with open("./{}_diag.pickle".format(self._filename), 'w') as f:
-                cPickle.dump(f, output)
+                _cPickle.dump(f, output)
         return output
 
     def _null_mesh_handler(self, error):
