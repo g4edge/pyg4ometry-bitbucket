@@ -255,7 +255,7 @@ class Model(object):
 
         if pickle is True:
             with open("./{}_diag.pickle".format(self._filename), 'w') as f:
-                _cPickle.dump(f, output)
+                _cPickle.dump(output, f)
         return output
 
     def _null_mesh_handler(self, error):
