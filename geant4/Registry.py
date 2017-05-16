@@ -38,6 +38,7 @@ class Registry :
 
     def setWorld(self, worldName) :
         self.worldName = worldName
+        self.worldVolume = self.logicalVolumeDict[self.worldName]
         self.orderLogicalVolumes(worldName)
         self.logicalVolumeList.append(worldName)
         
