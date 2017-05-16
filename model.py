@@ -107,7 +107,7 @@ class Model(object):
         if make_gmad == True:
             self._write_test_gmad(out_path)
 
-    def view_mesh(self, region_names=None, setclip=True):
+    def view(self, region_names=None, setclip=True):
         """
         View the mesh for this model.
 
