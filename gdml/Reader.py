@@ -516,7 +516,6 @@ class Reader :
     def _extractNodeData(self, node):
         node_name = node.tagName
         
-        print node,node_name
         if node.nodeType == node.ELEMENT_NODE:
             if(node_name == "volume"):
                 name      = node.attributes["name"].value
@@ -528,9 +527,10 @@ class Reader :
                 for chNode in node.childNodes :
                     if chNode.tagName == "physvol" : 
                         volref    = chNode.getElementsByTagName("volumeref")[0].attributes["ref"].value
-                        position  = self._evalCoordRef(node, "position")
-                        rotation  = self._evalCoordRef(node, "rotation")
-                        scale     = self._evalCoordRef(node, "scale")
+                        position  = self._evalCoordRef(chNode, "position")
+                        rotation  = self._evalCoordRef(chNode, "rotation")
+                        scale     = self._evalCoordRef(chNode, "scale")
+                        print chNode.attributes["name"].value,position, rotation, scale
                         physvol   = _g4.PhysicalVolume(rotation, position, _g4.registry.logicalVolumeDict[volref],
                                                        chNode.attributes["name"].value,vol,scale)
                         
