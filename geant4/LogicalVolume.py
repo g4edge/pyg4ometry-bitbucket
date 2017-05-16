@@ -18,7 +18,7 @@ class LogicalVolume :
 
         if len(self.daughterVolumes) == 0 :
             self.mesh = [self.solid.pycsgmesh()]
-            self.mesh[0].alpha     = 1.0
+            self.mesh[0].alpha     = 0.5
             self.mesh[0].wireframe = False
             self.mesh[0].colour    = [1,1,1]
 
@@ -29,8 +29,8 @@ class LogicalVolume :
                 daughterMeshes.append(dvMesh)
                 self.mesh = [self.solid.pycsgmesh(),daughterMeshes]
 
-            self.mesh[0].alpha     = 0.15
-            self.mesh[0].wireframe = True
+            self.mesh[0].alpha     = 0.5
+            self.mesh[0].wireframe = False
             self.mesh[0].colour    = [1,0,0]
             self.mesh[0].logical   = True
             
