@@ -18,6 +18,10 @@ class Reader :
         self.worldVolumeName  = str()
         self.exclude          = [] #parametrized volumes not converted
 
+        # load file
+        self.load()
+
+
     def load(self):
         data  = open(self.filename)
         #remove all newline charecters and whitespaces outside tags
@@ -530,7 +534,6 @@ class Reader :
                         position  = self._evalCoordRef(chNode, "position")
                         rotation  = self._evalCoordRef(chNode, "rotation")
                         scale     = self._evalCoordRef(chNode, "scale")
-                        print chNode.attributes["name"].value,position, rotation, scale
                         physvol   = _g4.PhysicalVolume(rotation, position, _g4.registry.logicalVolumeDict[volref],
                                                        chNode.attributes["name"].value,vol,scale)
                         
