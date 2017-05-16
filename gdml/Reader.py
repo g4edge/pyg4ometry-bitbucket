@@ -168,26 +168,20 @@ class Reader :
                 
         
     def parseStructure(self, xmldoc):
+
+        # find structure
         self.structure = xmldoc.getElementsByTagName("structure")[0]
-        
+
+        # loop over structure child nodes
         for chNode in self.structure.childNodes :
             self._extractNodeData(chNode)
 
-        # setup for world volume
-        _g4.registry.orderLogicalVolumes("ExpHallLV0x8f8d90")
-        _g4.registry.setWorld("ExpHallLV0x8f8d90")
+        # find world logical volume
+        self.setup  = xmldoc.getElementsByTagName("setup")[0]
+        worldLvName = self.setup.childNodes[0].attributes["ref"].value
+        _g4.registry.orderLogicalVolumes(worldLvName)
+        _g4.registry.setWorld(worldLvName)
 
-        #Build the heirarchy.
-        #All volumes point to their mother, but not to their daughters, so build the hirearchy in ascending order
-        #for name, attrs in self.gdmlphvols.iteritems():
-        #    for i in range(len(self.gdmlphvols[name])):
-        #        mother = self.gdmlphvols[name][i][0]
-        #        self.gdmlvols[mother][2].append(name)
-                
-        #Recursively build the structure in descending order starting from the world volume
-        #self._buildPycsgStructure(self.worldvolume, None, verbose=True)
-
-        
     def _box(self,**kwargs):
         name = self._get_var("name", str, "atr", **kwargs)
         x    = self._get_var("x", float, "lgt", **kwargs)/2
