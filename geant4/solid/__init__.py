@@ -7,6 +7,7 @@ from Sphere       import *
 from Cons         import *
 from Ellipsoid    import *
 from Trd          import *
+from Torus        import *
 from Union        import *
 from Intersection import *
 from Subtraction  import *
