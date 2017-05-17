@@ -1,5 +1,8 @@
 from SolidBase import SolidBase as _SolidBase
 from pygeometry.pycsg.core import CSG as _CSG
+from pygeometry.pycsg.geom import Vector as _Vector
+from pygeometry.pycsg.geom import Vertex as _Vertex
+from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
 import numpy as _np
@@ -111,13 +114,13 @@ class Polycone(_SolidBase) :
         wzlength = 3*max([abs(z) for z in self.pZpl])
         
         if self.pDPhi != 2*_np.pi:
-            pWedge = Wedge("wedge_temp",wrmax, self.pSPhi, self.pDPhi+self.pSPhi, wzlength).pycsgmesh()
+            pWedge = _Wedge("wedge_temp",wrmax, self.pSPhi, self.pDPhi+self.pSPhi, wzlength).pycsgmesh()
             self.mesh = pWedge.intersect(self.mesh)
 
         return self.mesh
         
 
-    def gdml(self, gw, prepend):
+    def gdmlWrite(self, gw, prepend):
         #oe = gw.doc.createElement('polycone')
         #oe.setAttribute('name', prepend + '_' + self.name)
         print "Solid Polyhedra not written out: not supported in writer yet!"
