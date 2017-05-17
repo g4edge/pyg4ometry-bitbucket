@@ -278,7 +278,7 @@ class Reader :
         y2   = self._get_var("y2", float, "lgt",**kwargs)/2
         z    = self._get_var("z", float, "lgt",**kwargs)/2
 
-        csgsolid = Trd(name, x1, x2, y1, y2, z)
+        csgsolid = _g4.solid.Trd(name, x1, x2, y1, y2, z)
         return csgsolid
 
     def _torus(self,**kwargs):
