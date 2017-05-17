@@ -551,7 +551,7 @@ class Reader :
                         print volref," ",position," ", rotation #DEBUG
                         """
             else:
-                print "Unrecognised node", nodename
+                print "Unrecognised node: ", node_name
                 
     def _evalCoordRef(self, node, coordstype): #TODO(aabramov): optimise fetching of parameters using self.get_var
        
