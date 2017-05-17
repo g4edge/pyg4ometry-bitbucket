@@ -1,4 +1,5 @@
 from pygeometry.geant4.Registry import registry as _registry
+import sys as _sys
 
 class LogicalVolume :
 
@@ -38,7 +39,8 @@ class LogicalVolume :
             self.mesh[0].wireframe = False
             self.mesh[0].colour    = [1,0,0]
             self.mesh[0].logical   = True
-            
+
+        print 'logical mesh', self.name
         return self.mesh
 
     def add(self, physicalVolume) :

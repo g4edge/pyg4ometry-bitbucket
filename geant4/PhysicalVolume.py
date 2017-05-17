@@ -1,6 +1,7 @@
 from pygeometry.geant4.Registry import registry as _registry
 import copy as _copy
 from pygeometry.transformation import *
+import sys as _sys
 
 class PhysicalVolume :
 
@@ -31,6 +32,7 @@ class PhysicalVolume :
         self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
         map_nlist(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
 
+        print 'physical mesh', self.name
         return self.mesh
 
     def gdmlWrite(self, gw, prepend) : 
