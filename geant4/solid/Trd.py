@@ -1,5 +1,9 @@
 from SolidBase import SolidBase as _SolidBase
 from pygeometry.geant4.Registry import registry as _registry
+from pygeometry.pycsg.core import CSG as _CSG
+from pygeometry.pycsg.geom import Polygon as _Polygon
+from pygeometry.pycsg.geom import Vertex as _Vertex
+from pygeometry.pycsg.geom import Vector as _Vector
 
 class Trd(_SolidBase) :
     """
@@ -62,9 +66,9 @@ class Trd(_SolidBase) :
         return self.mesh
 
     def csgmesh(self):
-        return self.mesh()
+        return self.mesh
 
-    def gdml(self, gw, prepend):
+    def gdmlWrite(self, gw, prepend):
         oe = gw.doc.createElement("trd")
         oe.setAttribute('name',prepend + '_' + self.name)
         oe.setAttribute('x1',str(2*self.pX1))
