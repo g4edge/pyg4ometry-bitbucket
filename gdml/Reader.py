@@ -387,8 +387,8 @@ class Reader :
         rot_dict = kwargs.get("rotation", {})
 
         try:                                   #if both inital solids are not correctly constructed this will fail
-            first_solid  = self.solids[first]
-            second_solid = self.solids[second]
+            first_solid  = _g4.registry.solidDict[first]
+            second_solid = _g4.registry.solidDict[second]
 
             x_rot = self._get_var("x", float, "ang", **rot_dict)
             y_rot = self._get_var("y", float, "ang", **rot_dict)
@@ -416,8 +416,8 @@ class Reader :
         rot_dict = kwargs.get("rotation", {})
 
         try:                                   #if both inital solids are not correctly constructed this will fail
-            first_solid  = self.solids[first]
-            second_solid = self.solids[second]
+            first_solid  = _g4.registry.solidDict[first]
+            second_solid = _g4.registry.solidDict[second]
 
             x_rot = self._get_var("x", float, "ang", **rot_dict)
             y_rot = self._get_var("y", float, "ang", **rot_dict)
