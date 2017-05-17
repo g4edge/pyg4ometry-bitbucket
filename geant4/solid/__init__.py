@@ -8,6 +8,8 @@ from Cons         import *
 from Ellipsoid    import *
 from Trd          import *
 from Torus        import *
+from Polycone     import *
+from Polyhedra    import *
 from Union        import *
 from Intersection import *
 from Subtraction  import *
