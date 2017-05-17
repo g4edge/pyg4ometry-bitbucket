@@ -35,6 +35,9 @@ class Tubs(_SolidBase) :
         return 'Tubs :'+self.name+' '+str(self.pRMin)+' '+str(self.pRMax)+' '+str(self.pDz)+' '+str(self.pSPhi)+' '+str(self.pDPhi)
         
     def pycsgmesh(self):
+
+        print 'Tubs mesh'
+
         if self.mesh :
             return self.mesh
 

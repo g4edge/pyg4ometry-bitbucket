@@ -7,7 +7,8 @@ from pygeometry.geant4.Registry import registry as _registry
 import numpy as _np
 
 class Sphere(_SolidBase) :
-    def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 16, nstack = 8) :
+    #def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 16, nstack = 8) :
+    def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice=4, nstack=4):
         """
         Constructs a section of a spherical shell. 
 
@@ -37,6 +38,7 @@ class Sphere(_SolidBase) :
         return 'Sphere : '+self.name+' '+str(self.pRmin)+' '+str(self.pRmax)+' '+str(self.pSPhi)+' '+str(self.pDPhi)+' '+str(self.pSTheta)+' '+str(self.pDTheta)+' '+str(self.nslice)+' '+str(self.nstack)
     
     def pycsgmesh(self):
+        print 'shpere mesh'
         if self.mesh :
             return self.mesh
 

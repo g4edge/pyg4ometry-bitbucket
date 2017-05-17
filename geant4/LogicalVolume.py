@@ -1,6 +1,8 @@
 from pygeometry.geant4.Registry import registry as _registry
 
 class LogicalVolume :
+    imeshed = 0
+
     def __init__(self, solid, material, name) :
         self.solid           = solid
         self.material        = material
@@ -13,6 +15,8 @@ class LogicalVolume :
         return 'Logical volume : '+self.name+' '+str(self.solid)+' '+str(self.material)
     
     def pycsgmesh(self) :
+        LogicalVolume.imeshed = LogicalVolume.imeshed + 1
+        print 'LogicalVolume mesh count',LogicalVolume.imeshed
         if self.mesh : 
             return self.mesh 
 
