@@ -46,7 +46,7 @@ class Polyhedra(_SolidBase) :
         fillfrac  = self.phiTotal/(2*_np.pi)
         slices    = (self.numSide)/fillfrac 
         
-        ph        = Polycone(self.name, self.phiStart, self.phiTotal, self.zPlane, self.rInner, self.rOuter, nslice=int(_np.ceil(slices)))
+        ph        = _Polycone(self.name, self.phiStart, self.phiTotal, self.zPlane, self.rInner, self.rOuter, nslice=int(_np.ceil(slices)))
         self.mesh = ph.pycsgmesh()
 
         return self.mesh
