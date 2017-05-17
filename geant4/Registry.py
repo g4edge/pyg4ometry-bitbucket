@@ -12,6 +12,7 @@ class Registry :
         self.parameterDict           = OrderedDict()
         self.logicalVolumeList       = []
         self.solidCountDict          = {}
+        self.volumeCountDict         = {}
 
     def addDefinition(self, definition) :    
         self.definitionDict[definition.name] = definition
@@ -30,11 +31,26 @@ class Registry :
     def addLogicalVolume(self,volume) :
         self.logicalVolumeDict[volume.name] = volume       
 
+        try:
+            self.volumeCountDict["logicalVolume"] = self.volumeCountDict["logicalVolume"] +1
+        except KeyError:
+            self.volumeCountDict["logicalVolume"] = 1
+            
     def addPhysicalVolume(self,volume) : 
         self.physicalVolumeDict[volume.name] = volume
-
+        
+        try:
+            self.volumeCountDict["physicalVolume"] = self.volumeCountDict["physicalVolume"] +1
+        except KeyError:
+            self.volumeCountDict["physicalVolume"] = 1
+            
     def addReplicaVolume(self,volume) :
         self.replicaVolumeDict[volume.name] = volume
+        
+        try:
+            self.volumeCountDict["replicaVolume"] = self.volumeCountDict["replicaVolume"] +1
+        except KeyError:
+            self.volumeCountDict["replicaVolume"] = 1
 
     def addParameterisedVolume(self,volume) :
         self.parametrisedVolumeDict[volume.name] = volume
@@ -64,6 +80,8 @@ class Registry :
         self.defineDict.clear()
         self.materialDict.clear()
         self.solidDict.clear()
+        self.solidCountDict.clear()
+        self.volumeCountDict.clear()
         self.logicalVolumeDict.clear()
         self.physicalVolumeDict.clear()
         self.replicaVolumeDict.clear()
