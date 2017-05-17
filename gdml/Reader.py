@@ -3,9 +3,8 @@ import pygeometry.vtk    as _vtk
 #import pygeometry.gdml   as _gdml
 import numpy             as _np
 from xml.dom import minidom as _minidom
-from xml.dom import getDOMImplementation
-from ast import literal_eval
-from math import pi
+import warnings as _warnings
+from math import pi as _pi
 
 class Reader :
     def __init__(self, filename) :
@@ -46,7 +45,12 @@ class Reader :
         self.structure = xmldoc.getElementsByTagName("define")[0]
 
         for df in self.structure.childNodes :
-            define_type  = df.tagName
+            try :
+                define_type  = df.tagName
+            except AttributeError :
+                # comment so continue
+                continue
+
             name         = df.attributes["name"].value
             attrs        = df.attributes
 
@@ -91,7 +95,7 @@ class Reader :
                         vals.append(pos)
 
                     else:
-                        warnings.warn("CSG solid paramets '"+prm+"' unknown")
+                        _warnings.warn("CSG solid paramets '"+prm+"' unknown")
 
                 gdml_attributes = {key: val for (key,val) in zip(keys, vals)}
 
@@ -115,7 +119,7 @@ class Reader :
                         count = count+1
 
                     else:
-                        warnings.warn("Poly-solid tag '"+tagname+"' unknown")
+                        _warnings.warn("Poly-solid tag '"+tagname+"' unknown")
 
                 keys.append("nzplanes")
                 vals.append(count)
@@ -147,7 +151,7 @@ class Reader :
                         vals.extend(vals_zpl)
                         count_pln = count_pln+1
                     else:
-                        warnings.warn("Extrusion solid tag '"+tagname+"' unknown")
+                        _warnings.warn("Extrusion solid tag '"+tagname+"' unknown")
 
                 keys.append("nzplanes")
                 vals.append(count_pln)
@@ -484,7 +488,7 @@ class Reader :
                     var = eval(self.constants[kwargs.get(varname, default)])
                     #print varname," ",kwargs.get(varname, default)," ",var
                 except(KeyError):
-                    warnings.warn("Variable "+varname+" not found")
+                    _warnings.warn("Variable "+varname+" not found")
                     var = None
 
         #convert units where neccessary
@@ -560,7 +564,7 @@ class Reader :
             elif(coordstype == "scale"):
                 aslist = self.positions[node.getElementsByTagName("scaleref")[0].attributes["ref"].value]
             else:
-                warnings.warn("Invalid coordinate type "+coordstype+". Valid types are 'position' and 'rotation'")
+                _warnings.warn("Invalid coordinate type "+coordstype+". Valid types are 'position' and 'rotation'")
                 aslist=None
         except(IndexError):
             try:
@@ -595,7 +599,7 @@ class Reader :
                     aslist = [x,y,z]
                     
                 else:
-                    warnings.warn("Warning: invalid coordinate type "+coordstype+". Valid types are 'position' and 'rotation'")
+                    _warnings.warn("Warning: invalid coordinate type "+coordstype+". Valid types are 'position' and 'rotation'")
                     aslist=None
                     
             except(IndexError):
@@ -608,7 +612,7 @@ class Reader :
 
     def _toStandUnits(self, value, unit):
         #standard units are mm for length and rad for angle
-        multf = {"default":1, "pm":1.e-6, "nm":1.e-3, "mum":1.e-3, "mm":1, "cm":10, "m":1.e3, "deg":2*pi/360, "rad":1}
+        multf = {"default":1, "pm":1.e-6, "nm":1.e-3, "mum":1.e-3, "mm":1, "cm":10, "m":1.e3, "deg":2*_pi/360, "rad":1}
         try:
             val = multf[unit]*value #if this fails the value is of unknown unit type
         except:
