@@ -26,10 +26,18 @@ class PhysicalVolume :
         PhysicalVolume.imeshed = PhysicalVolume.imeshed + 1
         print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
 
+        # see if the volume should be skipped
+        try :
+            _registry.logicalVolumeMeshSkip.index(self.logicalVolume.name)
+            print "Physical volume skipping ---------------------------------------- ",self.name
+            return []
+        except ValueError :
+            self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
+
         if self.mesh :
             return self.mesh
 
-        self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
+        # loop over daughter meshes
         map_nlist(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
 
         print 'physical mesh', self.name
