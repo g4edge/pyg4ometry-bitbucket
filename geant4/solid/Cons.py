@@ -61,7 +61,7 @@ class Cons(_SolidBase):
             self.factor = 1
 
         h = 2 * self.pDz
-        H1 = float(self.R2 * h) / float(self.R1 - self.R2)
+        self.H1 = float(self.R2 * h) / float(self.R1 - self.R2)
 
         try:  # Avoid crash when both inner radii are 0
             self.H2 = float(self.r2 * h) / float(self.r1 - self.r2)
@@ -71,7 +71,7 @@ class Cons(_SolidBase):
         self.h1 = self.factor * (h + self.H1)
         self.h2 = self.factor * (h + self.H2)
 
-        self.mesh = _CSG.cone(start=[0, 0, -self.factor * self.pDz], end=[0, 0, self.h1 - self.factor * self.pDz], radius=R1)
+        self.mesh = _CSG.cone(start=[0, 0, -self.factor * self.pDz], end=[0, 0, self.h1 - self.factor * self.pDz], radius=self.R1)
 
         return self.mesh
 
@@ -90,7 +90,7 @@ class Cons(_SolidBase):
         pBotCut = _Plane("pBotCut_temp", _Vector(0, 0, -1), -self.pDz, wzlength).pycsgmesh()
 
         if self.H2:
-            sInner = _CSG.cone(start=[0, 0, -self.factor * self.pDz], end=[0, 0, self.h2 - self.factor * self.pDz], radius=r1)
+            sInner = _CSG.cone(start=[0, 0, -self.factor * self.pDz], end=[0, 0, self.h2 - self.factor * self.pDz], radius=self.r1)
             self.mesh = self.mesh.subtract(sInner).intersect(pWedge).subtract(pBotCut).subtract(pTopCut)
         else:
             self.mesh = self.mesh.intersect(pWedge).subtract(pBotCut).subtract(pTopCut)
@@ -99,9 +99,12 @@ class Cons(_SolidBase):
 
 
     def gdmlWrite(self, gw, prepend):
+        print "Solid Cons not written out: not suported by writer yet"
+        """
         oe = gw.doc.createElement('cons')
         oe.setAttribute('name', prepend + '_' + self.name)
         oe.setAttribute('ax', str(self.pRmin))
         oe.setAttribute('ay', str(self.pRmax))
         oe.setAttribute('az', str(self.pDPhi))
         gw.solids.appendChild(oe)
+        """
