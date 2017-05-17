@@ -1,6 +1,7 @@
 from pygeometry.geant4.Registry import registry as _registry
 
 class LogicalVolume :
+
     imeshed = 0
 
     def __init__(self, solid, material, name) :

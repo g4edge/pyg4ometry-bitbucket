@@ -3,6 +3,9 @@ import copy as _copy
 from pygeometry.transformation import *
 
 class PhysicalVolume :
+
+    imeshed = 0
+
     def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1]) :
         self.rotation      = rotation
         self.position      = position
@@ -17,7 +20,11 @@ class PhysicalVolume :
     def __repr__(self) : 
         return 'Physical Volume : '+self.name+' '+str(self.rotation)+' '+str(self.position)
         
-    def pycsgmesh(self) : 
+    def pycsgmesh(self) :
+
+        PhysicalVolume.imeshed = PhysicalVolume.imeshed + 1
+        print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
+
         if self.mesh :
             return self.mesh
 
