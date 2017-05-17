@@ -1,6 +1,10 @@
 from SolidBase import SolidBase as _SolidBase
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
+from pygeometry.pycsg.core import CSG as _CSG
+from pygeometry.pycsg.geom import Vector as _Vector
+from pygeometry.pycsg.geom import Vertex as _Vertex
+from pygeometry.pycsg.geom import Polygon as _Polygon
 import numpy as _np
 
 
@@ -123,9 +127,9 @@ class Torus(_SolidBase) :
     def gdmlWrite(self, gw, prepend):
         oe = gw.doc.createElement('torus')
         oe.setAttribute('name', prepend + '_' + self.name)
-        oe.setAttribute('rmin',str(cs.pRmin))
-        oe.setAttribute('rmax',str(cs.pRmax))
-        oe.setAttribute('rtor',str(cs.pRtor))
-        oe.setAttribute('deltaphi',str(cs.pDPhi))
-        oe.setAttribute('startphi',str(cs.pSPhi))
+        oe.setAttribute('rmin',str(self.pRmin))
+        oe.setAttribute('rmax',str(self.pRmax))
+        oe.setAttribute('rtor',str(self.pRtor))
+        oe.setAttribute('deltaphi',str(self.pDPhi))
+        oe.setAttribute('startphi',str(self.pSPhi))
         gw.solids.appendChild(oe)
