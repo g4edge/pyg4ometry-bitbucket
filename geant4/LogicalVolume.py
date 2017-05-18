@@ -22,6 +22,9 @@ class LogicalVolume :
         LogicalVolume.imeshed = LogicalVolume.imeshed + 1
         print 'LogicalVolume mesh count',LogicalVolume.imeshed
 
+        if self.mesh :
+            return self.mesh
+
         # see if the volume should be skipped
         try :
             _registry.logicalVolumeMeshSkip.index(self.name)
@@ -30,8 +33,7 @@ class LogicalVolume :
         except ValueError :
             pass
 
-        if self.mesh :
-            return self.mesh
+
 
         if len(self.daughterVolumes) == 0 :
             self.mesh = [self.solid.pycsgmesh()]

@@ -23,8 +23,13 @@ class PhysicalVolume :
         
     def pycsgmesh(self) :
 
+
+
         PhysicalVolume.imeshed = PhysicalVolume.imeshed + 1
         print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
+
+        if self.mesh :
+            return self.mesh
 
         # see if the volume should be skipped
         try :
@@ -34,8 +39,7 @@ class PhysicalVolume :
         except ValueError :
             self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
 
-        if self.mesh :
-            return self.mesh
+
 
         # loop over daughter meshes
         map_nlist(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
