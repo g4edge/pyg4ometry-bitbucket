@@ -1,8 +1,12 @@
 from pygeometry.geant4.Registry import registry as _registry
 import copy as _copy
 from pygeometry.transformation import *
+import sys as _sys
 
 class PhysicalVolume :
+
+    imeshed = 0
+
     def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1]) :
         self.rotation      = rotation
         self.position      = position
@@ -17,13 +21,26 @@ class PhysicalVolume :
     def __repr__(self) : 
         return 'Physical Volume : '+self.name+' '+str(self.rotation)+' '+str(self.position)
         
-    def pycsgmesh(self) : 
+    def pycsgmesh(self) :
+
+        PhysicalVolume.imeshed = PhysicalVolume.imeshed + 1
+        print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
+
+        # see if the volume should be skipped
+        try :
+            _registry.logicalVolumeMeshSkip.index(self.logicalVolume.name)
+            print "Physical volume skipping ---------------------------------------- ",self.name
+            return []
+        except ValueError :
+            self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
+
         if self.mesh :
             return self.mesh
 
-        self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
+        # loop over daughter meshes
         map_nlist(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
 
+        print 'physical mesh', self.name
         return self.mesh
 
     def gdmlWrite(self, gw, prepend) : 

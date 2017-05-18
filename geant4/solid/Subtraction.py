@@ -6,6 +6,7 @@ from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.transformation import *
 import copy as _copy
+import sys as _sys
 
 class Subtraction(_SolidBase) :
     """
@@ -30,7 +31,7 @@ class Subtraction(_SolidBase) :
 
     def pycsgmesh(self):
 
-        if self.mesh : 
+        if self.mesh :
             return self.mesh
 
         rot = tbxyz(self.tra2[0])
@@ -44,5 +45,11 @@ class Subtraction(_SolidBase) :
 
         self.mesh = m1.subtract(m2)
         if not self.mesh.toPolygons():
+            print 'Subtraction null mesh',self.name,self.obj1.name, self.obj2.name
             raise NullMeshError(self)
+
+        self.obj1.mesh = None
+        self.obj2.mesh = None
+
+        print 'subtraction mesh ', self.name
         return self.mesh

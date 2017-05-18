@@ -5,6 +5,7 @@ from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
+import sys as _sys
 
 import numpy as _np
 
@@ -35,15 +36,13 @@ class Tubs(_SolidBase) :
         return 'Tubs :'+self.name+' '+str(self.pRMin)+' '+str(self.pRMax)+' '+str(self.pDz)+' '+str(self.pSPhi)+' '+str(self.pDPhi)
         
     def pycsgmesh(self):
-
-        print 'Tubs mesh'
-
         if self.mesh :
             return self.mesh
 
         self.basicmesh()
         self.csgmesh()
 
+        print 'tubs mesh',self.name
         return self.mesh
 
     def basicmesh(self) :         

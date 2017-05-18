@@ -5,6 +5,7 @@ from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 import numpy as _np
+import sys as _sys
 
 class Sphere(_SolidBase) :
     #def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 16, nstack = 8) :
@@ -38,13 +39,13 @@ class Sphere(_SolidBase) :
         return 'Sphere : '+self.name+' '+str(self.pRmin)+' '+str(self.pRmax)+' '+str(self.pSPhi)+' '+str(self.pDPhi)+' '+str(self.pSTheta)+' '+str(self.pDTheta)+' '+str(self.nslice)+' '+str(self.nstack)
     
     def pycsgmesh(self):
-        print 'shpere mesh'
         if self.mesh :
             return self.mesh
 
         self.basicmesh()
         self.csgmesh()
 
+        print 'shpere mesh',self.name
         return self.mesh
         
     def basicmesh(self) :

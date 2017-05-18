@@ -6,6 +6,7 @@ from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.transformation import *
 import copy as _copy
+import sys as _sys
 
 class Union(_SolidBase) :
     """
@@ -41,6 +42,14 @@ class Union(_SolidBase) :
         self.obj2mesh = m2
 
         self.mesh = m1.union(m2)
+        if not self.mesh.toPolygons():
+            print 'Union null mesh',self.name,self.obj1.name, self.obj2.name
+            raise NullMeshError(self)
+
+        self.obj1.mesh = None
+        self.obj2.mesh = None
+
+        print 'union mesh ', self.name
         return self.mesh
 
     def gdmlWrite(self,doc, solids) :

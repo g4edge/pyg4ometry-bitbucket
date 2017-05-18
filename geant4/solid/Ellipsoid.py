@@ -98,7 +98,7 @@ class Ellipsoid(_SolidBase) :
         return self.mesh
 
 
-    def gdml(self,gw, prepend):
+    def gdmlWrite(self,gw, prepend):
         oe = gw.doc.createElement('ellipsoid')
         oe.setAttribute('name', prepend + '_' + self.name)
         oe.setAttribute('ax', str(self.pRmin))

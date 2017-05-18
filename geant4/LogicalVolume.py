@@ -1,6 +1,8 @@
 from pygeometry.geant4.Registry import registry as _registry
+import sys as _sys
 
 class LogicalVolume :
+
     imeshed = 0
 
     def __init__(self, solid, material, name) :
@@ -15,10 +17,21 @@ class LogicalVolume :
         return 'Logical volume : '+self.name+' '+str(self.solid)+' '+str(self.material)
     
     def pycsgmesh(self) :
+
+        # count the logical volumes meshed
         LogicalVolume.imeshed = LogicalVolume.imeshed + 1
         print 'LogicalVolume mesh count',LogicalVolume.imeshed
-        if self.mesh : 
-            return self.mesh 
+
+        # see if the volume should be skipped
+        try :
+            _registry.logicalVolumeMeshSkip.index(self.name)
+            print "Logical volume skipping ---------------------------------------- ",self.name
+            return []
+        except ValueError :
+            pass
+
+        if self.mesh :
+            return self.mesh
 
         if len(self.daughterVolumes) == 0 :
             self.mesh = [self.solid.pycsgmesh()]
@@ -37,7 +50,8 @@ class LogicalVolume :
             self.mesh[0].wireframe = False
             self.mesh[0].colour    = [1,0,0]
             self.mesh[0].logical   = True
-            
+
+        print 'logical mesh', self.name
         return self.mesh
 
     def add(self, physicalVolume) :

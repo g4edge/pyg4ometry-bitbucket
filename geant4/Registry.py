@@ -13,6 +13,7 @@ class Registry :
         self.logicalVolumeList       = []
         self.solidCountDict          = {}
         self.volumeCountDict         = {}
+        self.logicalVolumeMeshSkip   = []
 
     def addDefinition(self, definition) :    
         self.definitionDict[definition.name] = definition

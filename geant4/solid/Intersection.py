@@ -38,7 +38,13 @@ class Intersection(_SolidBase) :
 
         self.mesh = m1.intersect(m2)
         if not self.mesh.toPolygons():
+            print 'Intersection null mesh',self.name,self.obj1.name, self.obj2.name
             raise NullMeshError(self)
+
+        self.obj1.mesh = None
+        self.obj2.mesh = None
+
+        print 'intersection mesh ', self.name
         return self.mesh
 
     def gdmlWrite(self,w) :
