@@ -29,6 +29,9 @@ class Union(_SolidBase) :
         return 'Union : ('+str(self.obj1)+') U ('+str(self.obj2)+')'
 
     def pycsgmesh(self):
+
+        print 'Union ',self.name, self.obj1.name, self.obj2.name
+
         if self.mesh : 
             return self.mesh
         

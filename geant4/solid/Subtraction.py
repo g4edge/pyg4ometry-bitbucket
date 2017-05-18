@@ -31,6 +31,8 @@ class Subtraction(_SolidBase) :
 
     def pycsgmesh(self):
 
+        print 'Subtraction ',self.name, self.obj1.name, self.obj2.name
+
         if self.mesh :
             return self.mesh
 

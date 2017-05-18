@@ -24,6 +24,11 @@ class Intersection(_SolidBase) :
         return 'Intersection : ('+str(self.obj1)+') n ('+str(self.obj2)+')'
 
     def pycsgmesh(self):
+
+        print 'Intersection' \
+              '' \
+              ' ',self.name, self.obj1.name, self.obj2.name
+
         if self.mesh : 
             return self.mesh
 
