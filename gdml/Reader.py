@@ -262,8 +262,8 @@ class Reader :
     def _ellipsoid(self,**kwargs):
         name  = self._get_var("name", str, "atr", **kwargs)
         ax    = self._get_var("ax", float, "lgt", **kwargs)
-        ay    = self._get_var("ay", float, "lgt", **kwargs)
-        az    = self._get_var("az", float, "lgt", **kwargs)
+        ay    = self._get_var("by", float, "lgt", **kwargs)
+        az    = self._get_var("cz", float, "lgt", **kwargs)
         bcut  = self._get_var("zcut1", float, "lgt", **kwargs)
         tcut  = self._get_var("zcut2", float, "lgt", **kwargs)
         
