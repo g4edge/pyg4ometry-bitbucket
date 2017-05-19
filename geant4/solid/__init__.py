@@ -10,6 +10,7 @@ from Trd          import *
 from Torus        import *
 from Polycone     import *
 from Polyhedra    import *
+from ExtrudedSolid import *
 from Union        import *
 from Intersection import *
 from Subtraction  import *
