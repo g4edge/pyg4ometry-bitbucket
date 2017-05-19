@@ -33,8 +33,6 @@ class LogicalVolume :
         except ValueError :
             pass
 
-
-
         if len(self.daughterVolumes) == 0 :
             self.mesh = [self.solid.pycsgmesh()]
             self.mesh[0].alpha     = 0.5
