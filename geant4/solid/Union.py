@@ -46,7 +46,7 @@ class Union(_SolidBase) :
 
         self.mesh = m1.union(m2)
         if not self.mesh.toPolygons():
-            print 'Union null mesh',self.name,self.obj1.name, self.obj2.name
+            print 'Union null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
             raise NullMeshError(self)
 
         self.obj1.mesh = None

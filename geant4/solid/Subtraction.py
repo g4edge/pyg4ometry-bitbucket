@@ -47,7 +47,7 @@ class Subtraction(_SolidBase) :
 
         self.mesh = m1.subtract(m2)
         if not self.mesh.toPolygons():
-            print 'Subtraction null mesh',self.name,self.obj1.name, self.obj2.name
+            print 'Subtraction null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
             raise NullMeshError(self)
 
         self.obj1.mesh = None

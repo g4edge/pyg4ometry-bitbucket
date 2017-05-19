@@ -43,7 +43,7 @@ class Intersection(_SolidBase) :
 
         self.mesh = m1.intersect(m2)
         if not self.mesh.toPolygons():
-            print 'Intersection null mesh',self.name,self.obj1.name, self.obj2.name
+            print 'Intersection null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
             raise NullMeshError(self)
 
         self.obj1.mesh = None
