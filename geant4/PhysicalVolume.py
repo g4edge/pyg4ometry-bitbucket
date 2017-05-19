@@ -23,8 +23,6 @@ class PhysicalVolume :
         
     def pycsgmesh(self) :
 
-
-
         PhysicalVolume.imeshed = PhysicalVolume.imeshed + 1
         print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
 
@@ -37,7 +35,10 @@ class PhysicalVolume :
             print "Physical volume skipping ---------------------------------------- ",self.name
             return []
         except ValueError :
-            self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
+            if self.position == [0,0,0] and self.rotation == [0,0,0] :
+                self.mesh = self.logicalVolume.pycsgmesh()
+            else :
+                self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
 
 
 
