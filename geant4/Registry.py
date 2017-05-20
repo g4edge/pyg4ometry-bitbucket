@@ -1,19 +1,22 @@
 from collections import OrderedDict 
 
 class Registry :
-    def __init__(self) : 
-        self.defineDict              = OrderedDict()
-        self.materialDict            = OrderedDict()
-        self.solidDict               = OrderedDict()
-        self.logicalVolumeDict       = OrderedDict()
-        self.physicalVolumeDict      = OrderedDict()
-        self.replicaVolumeDict       = OrderedDict()
-        self.parameterisedVolumeDict = OrderedDict()
-        self.parameterDict           = OrderedDict()
-        self.logicalVolumeList       = []
-        self.solidCountDict          = {}
-        self.volumeCountDict         = {}
-        self.logicalVolumeMeshSkip   = []
+    def __init__(self) :
+        self.defineDict                   = OrderedDict()
+        self.materialDict                 = OrderedDict()
+        self.solidDict                    = OrderedDict()
+        self.logicalVolumeDict            = OrderedDict()
+        self.physicalVolumeDict           = OrderedDict()
+        self.replicaVolumeDict            = OrderedDict()
+        self.parameterisedVolumeDict      = OrderedDict()
+        self.parameterDict                = OrderedDict()
+        self.logicalVolumeList            = []               # Ordered list of logical volumes from world down to bottom
+        self.solidTypeCountDict           = {}               # Box, Cons etc
+        self.solidUsageCountDict          = {}               # solidName1, solidName2
+        self.volumeTypeCountDict          = {}               # logical, physical
+        self.logicalVolumeUsageCountDict  = {}               # named logical usage in physical
+        self.logicalVolumeMeshSkip        = []               # meshes to skip because they are inefficient
+
 
     def addDefinition(self, definition) :    
         self.definitionDict[definition.name] = definition
@@ -25,36 +28,56 @@ class Registry :
         self.solidDict[solid.name] = solid
 
         try:
-            self.solidCountDict[solid.type] = self.solidCountDict[solid.type] +1
+            self.solidTypeCountDict[solid.type] += 1
         except KeyError:
-            self.solidCountDict[solid.type] = 1
+            self.solidTypeCountDict[solid.type] = 1
+
+        try:
+            self.solidUsageCountDict[solid.name] += 1
+        except KeyError:
+            self.solidUsageCountDict[solid.name] = 1
 
     def addLogicalVolume(self,volume) :
         self.logicalVolumeDict[volume.name] = volume       
 
+        # total number of logical volumes
         try:
-            self.volumeCountDict["logicalVolume"] = self.volumeCountDict["logicalVolume"] +1
+            self.volumeTypeCountDict["logicalVolume"] += 1
         except KeyError:
-            self.volumeCountDict["logicalVolume"] = 1
+            self.volumeTypeCountDict["logicalVolume"] = 1
             
     def addPhysicalVolume(self,volume) : 
         self.physicalVolumeDict[volume.name] = volume
-        
+
+        # number of physical volumes
         try:
-            self.volumeCountDict["physicalVolume"] = self.volumeCountDict["physicalVolume"] +1
+            self.volumeTypeCountDict["physicalVolume"] += 1
         except KeyError:
-            self.volumeCountDict["physicalVolume"] = 1
-            
+            self.volumeTypeCountDict["physicalVolume"] = 1
+
+        # usage of logical volumes
+        try:
+            self.logicalVolumeUsageCountDict[volume.logicalVolume.name] += 1
+        except KeyError:
+            self.logicalVolumeUsageCountDict[volume.logicalVolume.name] = 1
+
+
     def addReplicaVolume(self,volume) :
         self.replicaVolumeDict[volume.name] = volume
         
         try:
-            self.volumeCountDict["replicaVolume"] = self.volumeCountDict["replicaVolume"] +1
+            self.volumeTypeCountDict["replicaVolume"] += 1
         except KeyError:
-            self.volumeCountDict["replicaVolume"] = 1
+            self.volumeTypeCountDict["replicaVolume"] = 1
 
     def addParameterisedVolume(self,volume) :
         self.parametrisedVolumeDict[volume.name] = volume
+
+        try :
+            self.volumeTypeCountDict["parametrisedVolume"] += 1
+        except KeyError:
+            self.volumtTypeCountDict["parametrisedVolume"] = 1
+
 
     def addParameter(self, parameter):
         self.parameterDict[parameter.name] = parameter
@@ -64,7 +87,18 @@ class Registry :
         self.worldVolume = self.logicalVolumeDict[self.worldName]
         self.orderLogicalVolumes(worldName)
         self.logicalVolumeList.append(worldName)
-        
+
+    def volumeTree(self, lvName):
+        lv = self.logicalVolumeDict[lvName]
+
+    def solidTree(self, solidName):
+        solid = self.solidDict[solidName]
+
+        if solid.type == 'union' or solid.type == 'intersecton' or solid.type == 'subtraction' :
+            solidTree(solid.obj1.name)
+            solidTree(solid.obj2.name)
+
+
     def orderLogicalVolumes(self, lvName) :
 
         lv = self.logicalVolumeDict[lvName]
@@ -81,13 +115,18 @@ class Registry :
         self.defineDict.clear()
         self.materialDict.clear()
         self.solidDict.clear()
-        self.solidCountDict.clear()
-        self.volumeCountDict.clear()
+        self.volumeTypeCountDict.clear()
         self.logicalVolumeDict.clear()
         self.physicalVolumeDict.clear()
         self.replicaVolumeDict.clear()
         self.parameterisedVolumeDict.clear()
         self.parameterDict.clear()
+
+        self.logicalVolumeList.clear()
+        self.solidTypeCountDict.clear()
+        self.solidUsageCountDict.clear()
+        self.logicalVolumeUsageCountDict.clear()
+        self.logicalVolumeMeshSkip.clear()
 
 registry = Registry()
 
