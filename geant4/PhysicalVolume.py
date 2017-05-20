@@ -40,7 +40,9 @@ class PhysicalVolume :
             else :
                 self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
 
-
+                # Mesh is only placed once remove the logical mesh as it will not be used again
+                if _registry.logicalVolumeUsageCountDict[self.logicalVolume.name] == 1 :
+                    self.logicalVolume.mesh = None
 
         # loop over daughter meshes
         map_nlist(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
