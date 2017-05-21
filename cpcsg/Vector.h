@@ -20,24 +20,22 @@ class Vector {
   Vector  minus(const Vector &rhs) const;
   Vector  operator-(const Vector &rhs) const;
   Vector  times(double a) const;
-  Vector  times(float a) const;
-  Vector  times(int a) const;
   Vector  operator*(double a) const;
-  Vector  operator*(float  a) const;
-  Vector  operator*(int    a) const;
+  Vector  divideBy(double a) const ;
+  Vector  operator/(double a) const;
+  double  dot(const Vector &rhs) const;
+  Vector  scale(const Vector &rhs) const;
+  Vector  lerp(const Vector &rhs, double t) const;
+  double  length() const;
+  Vector  unit() const;
+  Vector  cross(const Vector &rhs) const;
+  double& operator[](int i);
+  double  operator[](int i) const;
 
- private:
+private:
   double _x,_y,_z;
   
   /*
-  vector  divideBy(double a);
-  vector  operator/(double a);
-  double  dot(cont vector &rhs);
-  vector  scale(const vector &rhs);
-  vector  lerp(const vector &rhs, double t);
-  vector  unit();
-  vector  cross(const vector &rhs);
-  double& operator[](int i);
   */
 };
 

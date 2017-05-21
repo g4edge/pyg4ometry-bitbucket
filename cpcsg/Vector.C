@@ -1,4 +1,5 @@
 #include "Vector.h"
+#include "math.h"
 
 Vector::Vector() 
 {
@@ -75,24 +76,70 @@ Vector Vector::operator*(double a) const
   return this->times(a);
 }
 
-Vector Vector::times(float a) const
+Vector  Vector::divideBy(double a) const 
 {
-  return Vector((double)a*_x, (double)a*_y, (double)a*_z);
+  return Vector(_x/a,_y/a,_z/a);
 }
 
-Vector Vector::operator*(float a) const
+Vector  Vector::operator/(double a) const
 {
-  return this->times(a);
+  return this->divideBy(a);
 }
 
-Vector Vector::times(int a) const
+double Vector::dot(const Vector &rhs) const 
 {
-  return Vector((double)a*_x, (double)a*_y, (double)a*_z);
+  return _x*rhs.x() + _y*rhs.y() + _z*rhs.z();
 }
 
-Vector Vector::operator*(int a) const
+Vector Vector::scale(const Vector &rhs) const
 {
-  return this->times(a);
+  return Vector(_x*rhs.x(), _y*rhs.y(), _z*rhs.z());
+}
+
+Vector Vector::lerp(const Vector &a, double t) const
+{
+  return this->plus(a.minus(*this).times(t));
+}
+
+double Vector::length() const 
+{
+  return sqrt(this->dot(*this));
+}
+
+Vector Vector::unit() const 
+{
+  return this->divideBy(this->length());
+}
+
+Vector Vector::cross(const Vector &rhs) const
+{
+  return Vector(_y*rhs._z - _z*rhs._y,
+		_z*rhs._x - _x*rhs._z,
+		_x*rhs._y - _y*rhs._x);
+}
+
+double& Vector::operator[](int i) 
+{
+  if(i==0) 
+    return _x;
+  else if(i==1)
+    return _y;
+  else if(i==2)
+    return _z;
+
+  return _x;
+}
+
+double Vector::operator[](int i) const 
+{
+  if(i==0) 
+    return _x;
+  else if(i==1)
+    return _y;
+  else if(i==2)
+    return _z;
+
+  return _x;  
 }
 
 Vector operator*(double d, const Vector& rhs) 

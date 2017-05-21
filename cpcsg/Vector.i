@@ -5,6 +5,10 @@
 #include "Vector.h"
 %}
 
+
+%ignore operator[];
+%ignore operator<<;
+
 /* Let's just grab the original header file here */
 %include "Vector.h"
 
@@ -20,6 +24,17 @@
     sprintf(tmp,"Vector(%g,%g,%g)", $self->x(),$self->y(),$self->z());
     return tmp;    
   }
+
+  Vector __rmul__(double a) const {
+    return $self->times(a);
+  }
+
+  double __getitem__(int i) {
+    return $self->operator[](i);
+  }
+
+  double __setitem__(int i, double d) {
+    return $self->operator[](i) = d;
+  }
 };
 
-%rename(Vector_add_dc) operator*(double a, const Vector &);
