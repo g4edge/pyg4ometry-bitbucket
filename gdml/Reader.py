@@ -14,6 +14,7 @@ class Reader :
         self.positions        = {}
         self.quantities       = {}
         self.rotations        = {}
+        self.matrices         = {}
         self.worldVolumeName  = str()
         self.exclude          = [] #parametrized volumes not converted
 
@@ -32,14 +33,14 @@ class Reader :
             else:
                 end=" "
             if(len(l) != 0):
-                fs += (l+end) 
+                fs += (l+end)
 
         xmldoc = _minidom.parseString(fs)
 
         self.parseDefines(xmldoc)
+        self.parseMaterials(xmldoc)
         self.parseSolids(xmldoc)
         self.parseStructure(xmldoc)
-        
 
     def parseDefines(self, xmldoc):
         self.structure = xmldoc.getElementsByTagName("define")[0]
@@ -66,9 +67,15 @@ class Reader :
                 self.quantities[name] =self._get_var("value", float, "atr", **def_attrs)
             elif(define_type == "rotation"):
                 self.rotations[name] = self._getCoordinateList(def_attrs)
+            elif(define_type == "matrix"):
+                self.matrices[name] = self._getMatrix(def_attrs)
             else:
                 print "Urecognised define: ", define_type
-                
+
+
+    def parseMaterials(self, xmldoc):
+        pass
+
     def parseSolids(self, xmldoc):
         solids_list = [] 
         self.xmlsolids = xmldoc.getElementsByTagName("solids")[0]
@@ -339,7 +346,17 @@ class Reader :
             
         csgsolid = _g4.solid.ExtrudedSolid(name, verts, zplanes)
         return csgsolid
-    
+
+    def _opticalsurface(self, **kwargs):
+        name = kwargs.get("name")
+        osfinish = kwargs.get("finish")
+        model = kwargs.get("model")
+        type = kwargs.get("type")
+        value = kwargs.get("value")
+
+        solid = _g4.solid.OpticalSurface(name, osfinish, model, type, value)
+        return solid
+
     def _tube(self,**kwargs):
         name  = self._get_var("name", str, "atr", **kwargs)
         rmin  = self._get_var("rmin", float, "lgt",**kwargs)
@@ -452,7 +469,7 @@ class Reader :
         supported_solids = {"box": self._box, "para": self._para, "tube": self._tube, "cone": self._cone, "ellipsoid": self._ellipsoid,
                             "polyhedra": self._polyhedra, "torus": self._torus, "xtru": self._xtru, "cutTube": self._cutTube, 
                             "trd":self._trd, "sphere":self._sphere, "orb": self._orb, "subtraction": self._subtraction,
-                             "intersection": self._intersection, "union": self._union}
+                             "intersection": self._intersection, "union": self._union, "opticalsurface":self._opticalsurface}
 
         st = solid_type
         if st in supported_solids.keys():
@@ -514,6 +531,9 @@ class Reader :
 
         return [x,y,z]
 
+    def _getMatrix(self, kwargs):
+        return None
+
     def _extractNodeData(self, node):
         node_name = node.tagName
         
@@ -550,6 +570,9 @@ class Reader :
             
                         print volref," ",position," ", rotation #DEBUG
                         """
+            elif node_name == "bordersurface":
+                name       = node.attributes["name"].value
+                
             else:
                 print "Unrecognised node: ", node_name
                 

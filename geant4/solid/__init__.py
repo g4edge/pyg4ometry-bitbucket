@@ -14,5 +14,6 @@ from ExtrudedSolid import *
 from Union        import *
 from Intersection import *
 from Subtraction  import *
+from OpticalSurface import *
 
 
