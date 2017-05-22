@@ -1,6 +1,7 @@
 #include "Polygon.h"
+#include "Plane.h"
 
-Polygon::Polygon(const vector<Vertex>& _vertices, void* _shared){
+Polygon::Polygon(const std::vector<Vertex>& _vertices, void* _shared){
   vertices = _vertices;
   shared = _shared;
   plane = Plane::fromPoints(vertices[0].pos,vertices[1].pos,vertices[2].pos);
@@ -15,7 +16,7 @@ Vertex Polygon::operator[](int i){
 }
 
 Polygon Polygon::clone(){
-  vector<Vertex> vclone;
+  std::vector<Vertex> vclone;
   for(unsigned i = 0;i<vertices.size();i++){
     vclone.push_back(vertices[i].clone());
   }
@@ -25,8 +26,8 @@ Polygon Polygon::clone(){
 void Polygon::flip(){
   std::reverse(vertices.begin(),vertices.end()); 
   for(unsigned i = 0;i<vertices.size();i++){
-    vertices[i] = vertices[i].flip();
+    vertices[i].flip();
   } 
-  plane.flip();
+  plane->flip();
 }
 

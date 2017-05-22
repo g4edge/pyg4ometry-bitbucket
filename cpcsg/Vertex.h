@@ -11,7 +11,7 @@ class Vertex {
   
   Vertex clone();
   void flip();
-  void interpolate(const Vertex& other, double t); 
+  Vertex interpolate(const Vertex& other, double t); 
   Vector pos;
   Vector norm;
 };

@@ -1,13 +1,13 @@
 #include "Vertex.h"
 
 Vertex::Vertex(){
-  pos = Vertex(0.0,0.0,0.0);
-  norm = Vertex(0.0,0.0,1.0);
+  pos = Vector(0.0,0.0,0.0);
+  norm = Vector(0.0,0.0,1.0);
 }
 
 Vertex::Vertex(const Vector& _pos, const Vector& _norm){
-  pos = Vertex(_pos);
-  norm = Vertex(_norm);
+  pos = Vector(_pos);
+  norm = Vector(_norm);
 }
 
 Vertex::Vertex(const Vertex& rhs){

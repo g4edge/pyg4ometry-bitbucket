@@ -1,4 +1,5 @@
 #include "Plane.h"
+#include "Polygon.h"
 
 Plane::Plane(const Vector& _normal, double _w){
   normal = _normal;
@@ -11,9 +12,9 @@ Plane::Plane(const Plane& plane){
 }
 
 
-Plane& Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
+Plane *Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
   Vector n = Vector((b.minus(a)).cross(c.minus(a)).unit());
-  return Plane(n,n.dot(a));
+  return new Plane(n,n.dot(a));
 }
 
 void Plane::flip(){
@@ -22,19 +23,19 @@ void Plane::flip(){
 }
 
 void Plane::splitPolygon(Polygon& polygon, 
-		    std::vector<Polygon> *coplanarFront, 
-		    std::vector<Polygon> *coplanarBack,
-		    std::vector<Polygon> *front,
-		    std::vector<Polygon> *back){
+		    std::vector<Polygon> &coplanarFront, 
+		    std::vector<Polygon> &coplanarBack,
+		    std::vector<Polygon> &front,
+		    std::vector<Polygon> &back){
   
-  PolyType polygonType = 0;
-  vector<PolyType> vertexLocs;
+  PolyType polygonType = COPLANAR;
+  std::vector<PolyType> vertexLocs;
   
   unsigned int numVertices = polygon.size();
 
   for(unsigned i = 0; i < numVertices; i++){
     double t = normal.dot(polygon.vertices[i].pos) - w;
-    PolyType loctype = -1;
+    PolyType loctype = INIT;
     if(t < -EPSILON){
       loctype = BACK;
     }
@@ -44,13 +45,13 @@ void Plane::splitPolygon(Polygon& polygon,
     else{
       loctype = COPLANAR;
     }
-    polygonType = (int) polyType | (int) loctype;
+    polygonType = PolyType((int) polygonType | (int) loctype);
     vertexLocs.push_back(loctype);
   }
 
 
   if(polygonType == COPLANAR){
-    double normalDotPlaneNormal = normal.dot(polygon.plane.normal());
+    double normalDotPlaneNormal = normal.dot((polygon.plane)->normal);
     if(normalDotPlaneNormal > 0){
       coplanarFront.push_back(polygon);
     }
@@ -65,8 +66,8 @@ void Plane::splitPolygon(Polygon& polygon,
     back.push_back(polygon);
   }
   else if(polygonType == SPANNING){
-    vector<Vertex> f;
-    vector<Vertex> b;
+    std::vector<Vertex> f;
+    std::vector<Vertex> b;
     for(unsigned i = 0;i < numVertices;i++){
       unsigned j = (i+1) % numVertices;
       PolyType ti = vertexLocs[i];
@@ -91,10 +92,10 @@ void Plane::splitPolygon(Polygon& polygon,
         b.push_back(v.clone());
       }
       if(f.size() >= 3){
-        front.push_back(Polygon(f,polygon.shared()));
+        front.push_back(Polygon(f,polygon.shared));
       }
       if(b.size() >=3){
-        back.push_back(Polygon(b,polygon.shared()));
+        back.push_back(Polygon(b,polygon.shared));
       }
 
     }

@@ -5,16 +5,17 @@
 #include "Vector.h"
 #include "Vertex.h"
 
+class Plane;
+
 class Polygon{
   public:
-    Polygon(const vector<Vertex>& _vertices, void* _shared);
+    Polygon(const std::vector<Vertex>& _vertices, void* _shared);
     Polygon clone();
     void flip();
-    size();
+    unsigned int size();
     Vertex operator [](int i);
-  private:
-    vector<Vertex> vertices;
-    Plane plane;
+    std::vector<Vertex> vertices;
+    Plane* plane;
     void* shared;
 };
 

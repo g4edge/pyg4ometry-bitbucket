@@ -176,6 +176,9 @@ class Vector(_object):
 
     def __setitem__(self, i, d):
         return _Vector.Vector___setitem__(self, i, d)
+
+    def __neg__(self):
+        return _Vector.Vector___neg__(self)
 Vector_swigregister = _Vector.Vector_swigregister
 Vector_swigregister(Vector)
 
