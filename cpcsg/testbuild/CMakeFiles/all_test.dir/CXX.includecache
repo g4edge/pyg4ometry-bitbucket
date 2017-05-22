@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.C
+BSPNode.h
+/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.h
+
+/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.h
+Polygon.h
+/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Polygon.h
+Plane.h
+/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Plane.h
+vector
+-
+
 /Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Plane.C
 Plane.h
 /Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Plane.h

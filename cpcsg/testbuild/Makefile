@@ -123,6 +123,33 @@ all_test/fast:
 	$(MAKE) -f CMakeFiles/all_test.dir/build.make CMakeFiles/all_test.dir/build
 .PHONY : all_test/fast
 
+BSPNode.o: BSPNode.C.o
+
+.PHONY : BSPNode.o
+
+# target to build an object file
+BSPNode.C.o:
+	$(MAKE) -f CMakeFiles/all_test.dir/build.make CMakeFiles/all_test.dir/BSPNode.C.o
+.PHONY : BSPNode.C.o
+
+BSPNode.i: BSPNode.C.i
+
+.PHONY : BSPNode.i
+
+# target to preprocess a source file
+BSPNode.C.i:
+	$(MAKE) -f CMakeFiles/all_test.dir/build.make CMakeFiles/all_test.dir/BSPNode.C.i
+.PHONY : BSPNode.C.i
+
+BSPNode.s: BSPNode.C.s
+
+.PHONY : BSPNode.s
+
+# target to generate assembly for a file
+BSPNode.C.s:
+	$(MAKE) -f CMakeFiles/all_test.dir/build.make CMakeFiles/all_test.dir/BSPNode.C.s
+.PHONY : BSPNode.C.s
+
 Plane.o: Plane.C.o
 
 .PHONY : Plane.o
@@ -240,6 +267,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... all_test"
+	@echo "... BSPNode.o"
+	@echo "... BSPNode.i"
+	@echo "... BSPNode.s"
 	@echo "... Plane.o"
 	@echo "... Plane.i"
 	@echo "... Plane.s"

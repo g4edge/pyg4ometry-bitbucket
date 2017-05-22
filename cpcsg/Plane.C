@@ -11,6 +11,9 @@ Plane::Plane(const Plane& plane){
   w = plane.w;
 }
 
+Plane *Plane::clone(){
+  return new Plane(normal.clone(),w);
+}
 
 Plane *Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
   Vector n = Vector((b.minus(a)).cross(c.minus(a)).unit());
@@ -22,19 +25,19 @@ void Plane::flip(){
   w = -w;
 }
 
-void Plane::splitPolygon(Polygon& polygon, 
-		    std::vector<Polygon> &coplanarFront, 
-		    std::vector<Polygon> &coplanarBack,
-		    std::vector<Polygon> &front,
-		    std::vector<Polygon> &back){
+void Plane::splitPolygon(Polygon* polygon, 
+		    std::vector<Polygon*> &coplanarFront, 
+		    std::vector<Polygon*> &coplanarBack,
+		    std::vector<Polygon*> &front,
+		    std::vector<Polygon*> &back){
   
   PolyType polygonType = COPLANAR;
   std::vector<PolyType> vertexLocs;
   
-  unsigned int numVertices = polygon.size();
+  unsigned int numVertices = polygon->size();
 
   for(unsigned i = 0; i < numVertices; i++){
-    double t = normal.dot(polygon.vertices[i].pos) - w;
+    double t = normal.dot(polygon->vertices[i].pos) - w;
     PolyType loctype = INIT;
     if(t < -EPSILON){
       loctype = BACK;
@@ -51,7 +54,7 @@ void Plane::splitPolygon(Polygon& polygon,
 
 
   if(polygonType == COPLANAR){
-    double normalDotPlaneNormal = normal.dot((polygon.plane)->normal);
+    double normalDotPlaneNormal = normal.dot((polygon->plane)->normal);
     if(normalDotPlaneNormal > 0){
       coplanarFront.push_back(polygon);
     }
@@ -72,8 +75,8 @@ void Plane::splitPolygon(Polygon& polygon,
       unsigned j = (i+1) % numVertices;
       PolyType ti = vertexLocs[i];
       PolyType tj = vertexLocs[j];
-      Vertex vi = polygon.vertices[i];
-      Vertex vj = polygon.vertices[j];
+      Vertex vi = polygon->vertices[i];
+      Vertex vj = polygon->vertices[j];
       if(ti != BACK){
         f.push_back(vi);
       }
@@ -92,10 +95,10 @@ void Plane::splitPolygon(Polygon& polygon,
         b.push_back(v.clone());
       }
       if(f.size() >= 3){
-        front.push_back(Polygon(f,polygon.shared));
+        front.push_back(new Polygon(f,polygon->shared));
       }
       if(b.size() >=3){
-        back.push_back(Polygon(b,polygon.shared));
+        back.push_back(new Polygon(b,polygon->shared));
       }
 
     }

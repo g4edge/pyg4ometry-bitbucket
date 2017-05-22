@@ -10,7 +10,7 @@ class Plane;
 class Polygon{
   public:
     Polygon(const std::vector<Vertex>& _vertices, void* _shared);
-    Polygon clone();
+    Polygon* clone();
     void flip();
     unsigned int size();
     Vertex operator [](int i);

@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.C" "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles/all_test.dir/BSPNode.C.o"
   "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Plane.C" "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles/all_test.dir/Plane.C.o"
   "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Polygon.C" "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles/all_test.dir/Polygon.C.o"
   "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/Vector.C" "/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles/all_test.dir/Vector.C.o"

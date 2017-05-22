@@ -15,12 +15,12 @@ Vertex Polygon::operator[](int i){
   return vertices[i];
 }
 
-Polygon Polygon::clone(){
+Polygon* Polygon::clone(){
   std::vector<Vertex> vclone;
   for(unsigned i = 0;i<vertices.size();i++){
     vclone.push_back(vertices[i].clone());
   }
-  return Polygon(vclone,shared);
+  return new Polygon(vclone,shared);
 }
 
 void Polygon::flip(){

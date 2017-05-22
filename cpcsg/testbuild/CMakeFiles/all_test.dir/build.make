@@ -153,12 +153,37 @@ CMakeFiles/all_test.dir/Vertex.C.o.provides: CMakeFiles/all_test.dir/Vertex.C.o.
 CMakeFiles/all_test.dir/Vertex.C.o.provides.build: CMakeFiles/all_test.dir/Vertex.C.o
 
 
+CMakeFiles/all_test.dir/BSPNode.C.o: CMakeFiles/all_test.dir/flags.make
+CMakeFiles/all_test.dir/BSPNode.C.o: ../BSPNode.C
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/all_test.dir/BSPNode.C.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/all_test.dir/BSPNode.C.o -c /Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.C
+
+CMakeFiles/all_test.dir/BSPNode.C.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/all_test.dir/BSPNode.C.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.C > CMakeFiles/all_test.dir/BSPNode.C.i
+
+CMakeFiles/all_test.dir/BSPNode.C.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/all_test.dir/BSPNode.C.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/BSPNode.C -o CMakeFiles/all_test.dir/BSPNode.C.s
+
+CMakeFiles/all_test.dir/BSPNode.C.o.requires:
+
+.PHONY : CMakeFiles/all_test.dir/BSPNode.C.o.requires
+
+CMakeFiles/all_test.dir/BSPNode.C.o.provides: CMakeFiles/all_test.dir/BSPNode.C.o.requires
+	$(MAKE) -f CMakeFiles/all_test.dir/build.make CMakeFiles/all_test.dir/BSPNode.C.o.provides.build
+.PHONY : CMakeFiles/all_test.dir/BSPNode.C.o.provides
+
+CMakeFiles/all_test.dir/BSPNode.C.o.provides.build: CMakeFiles/all_test.dir/BSPNode.C.o
+
+
 # Object files for target all_test
 all_test_OBJECTS = \
 "CMakeFiles/all_test.dir/Plane.C.o" \
 "CMakeFiles/all_test.dir/Polygon.C.o" \
 "CMakeFiles/all_test.dir/Vector.C.o" \
-"CMakeFiles/all_test.dir/Vertex.C.o"
+"CMakeFiles/all_test.dir/Vertex.C.o" \
+"CMakeFiles/all_test.dir/BSPNode.C.o"
 
 # External object files for target all_test
 all_test_EXTERNAL_OBJECTS =
@@ -167,9 +192,10 @@ liball_test.a: CMakeFiles/all_test.dir/Plane.C.o
 liball_test.a: CMakeFiles/all_test.dir/Polygon.C.o
 liball_test.a: CMakeFiles/all_test.dir/Vector.C.o
 liball_test.a: CMakeFiles/all_test.dir/Vertex.C.o
+liball_test.a: CMakeFiles/all_test.dir/BSPNode.C.o
 liball_test.a: CMakeFiles/all_test.dir/build.make
 liball_test.a: CMakeFiles/all_test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library liball_test.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alistairbutcher/Dropbox/LZ/pygeometry/cpcsg/testbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library liball_test.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/all_test.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/all_test.dir/link.txt --verbose=$(VERBOSE)
 
@@ -182,6 +208,7 @@ CMakeFiles/all_test.dir/requires: CMakeFiles/all_test.dir/Plane.C.o.requires
 CMakeFiles/all_test.dir/requires: CMakeFiles/all_test.dir/Polygon.C.o.requires
 CMakeFiles/all_test.dir/requires: CMakeFiles/all_test.dir/Vector.C.o.requires
 CMakeFiles/all_test.dir/requires: CMakeFiles/all_test.dir/Vertex.C.o.requires
+CMakeFiles/all_test.dir/requires: CMakeFiles/all_test.dir/BSPNode.C.o.requires
 
 .PHONY : CMakeFiles/all_test.dir/requires
 
