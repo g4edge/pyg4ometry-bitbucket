@@ -15,6 +15,7 @@ class Vector {
   double z() const;
 
   Vector  clone() const;  
+  Vector  negated() const;
   Vector  plus(const Vector &rhs) const;
   Vector  operator+(const Vector &rhs) const;
   Vector  minus(const Vector &rhs) const;

@@ -1,4 +1,4 @@
-all : _Vector.so
+all : _Vector.so _Vertex.so
 
 _%.so : %.o %_wrap.o
 	g++ -shared $? -L/opt/local/lib/ -lpython2.7 -o $@
