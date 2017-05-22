@@ -11,7 +11,7 @@ Plane::Plane(const Plane& plane){
 }
 
 
-Plane Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
+Plane& Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
   Vector n = Vector((b.minus(a)).cross(c.minus(a)).unit());
   return Plane(n,n.dot(a));
 }
