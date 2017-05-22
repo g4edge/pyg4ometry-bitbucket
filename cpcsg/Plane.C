@@ -2,17 +2,25 @@
 #include "Polygon.h"
 
 Plane::Plane(const Vector& _normal, double _w){
-  normal = _normal;
+  norm = _normal;
   w = _w;
 }
 
 Plane::Plane(const Plane& plane){
-  normal = plane.normal;
+  norm = plane.norm;
   w = plane.w;
 }
 
+Vector Plane::normal(){
+  return norm;
+}
+
+double Plane::par(){
+  return w;
+}
+
 Plane *Plane::clone(){
-  return new Plane(normal.clone(),w);
+  return new Plane(norm.clone(),w);
 }
 
 Plane *Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
@@ -21,7 +29,7 @@ Plane *Plane::fromPoints(const Vector& a, const Vector& b, const Vector& c){
 }
 
 void Plane::flip(){
-  normal = normal.negated();
+  norm = norm.negated();
   w = -w;
 }
 
@@ -37,7 +45,7 @@ void Plane::splitPolygon(Polygon* polygon,
   unsigned int numVertices = polygon->size();
 
   for(unsigned i = 0; i < numVertices; i++){
-    double t = normal.dot(polygon->vertices[i].pos) - w;
+    double t = norm.dot(polygon->vertices[i].position()) - w;
     PolyType loctype = INIT;
     if(t < -EPSILON){
       loctype = BACK;
@@ -54,7 +62,7 @@ void Plane::splitPolygon(Polygon* polygon,
 
 
   if(polygonType == COPLANAR){
-    double normalDotPlaneNormal = normal.dot((polygon->plane)->normal);
+    double normalDotPlaneNormal = norm.dot((polygon->plane)->norm);
     if(normalDotPlaneNormal > 0){
       coplanarFront.push_back(polygon);
     }
@@ -89,7 +97,7 @@ void Plane::splitPolygon(Polygon* polygon,
         }
       }
       if(((int) ti | (int) tj) == SPANNING){
-        double t = (w - normal.dot(vi.pos)) / normal.dot((vj.pos).minus(vi.pos));
+        double t = (w - norm.dot(vi.position())) / norm.dot((vj.position()).minus(vi.position()));
         Vertex v = vi.interpolate(vj,t);
         f.push_back(v);
         b.push_back(v.clone());

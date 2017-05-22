@@ -1,22 +1,48 @@
 #include "Vertex.h"
 
 Vertex::Vertex(){
-  pos = Vector(0.0,0.0,0.0);
-  norm = Vector(0.0,0.0,1.0);
+  pos = Vector();
+  norm = Vector();
+  hasNorm = false;
+}
+
+Vertex::Vertex(const Vector& _pos){
+  pos = Vector(_pos);
+  norm = Vector();
+  hasNorm = false;
 }
 
 Vertex::Vertex(const Vector& _pos, const Vector& _norm){
   pos = Vector(_pos);
   norm = Vector(_norm);
+  hasNorm = true;
+}
+
+Vector Vertex::position(){
+  return pos;
+}
+
+Vector Vertex::normal(){
+  return norm;
+}
+
+bool Vertex::HasNorm(){
+  return hasNorm;
 }
 
 Vertex::Vertex(const Vertex& rhs){
   pos = rhs.pos;
   norm = rhs.norm;
+  hasNorm = rhs.hasNorm;
 }
 
 Vertex Vertex::clone(){
-  return Vertex(pos,norm);
+  if(hasNorm){
+    return Vertex(pos,norm);
+  }
+  else{
+    return Vertex(pos);
+  }
 }
 
 void Vertex::flip(){

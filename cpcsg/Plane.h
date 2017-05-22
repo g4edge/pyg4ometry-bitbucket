@@ -19,8 +19,10 @@ class Plane {
 		    std::vector<Polygon*> &coplanarBack,
 		    std::vector<Polygon*> &front,
 		    std::vector<Polygon*> &back);
+  Vector normal();
+  double par();
  private:
-  Vector normal;
+  Vector norm;
   double w;
   enum PolyType {INIT = -1,COPLANAR=0,FRONT,BACK,SPANNING};
 };

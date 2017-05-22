@@ -4,7 +4,7 @@
 Polygon::Polygon(const std::vector<Vertex>& _vertices, void* _shared){
   vertices = _vertices;
   shared = _shared;
-  plane = Plane::fromPoints(vertices[0].pos,vertices[1].pos,vertices[2].pos);
+  plane = Plane::fromPoints(vertices[0].position(),vertices[1].position(),vertices[2].position());
 }
 
 unsigned int Polygon::size(){
