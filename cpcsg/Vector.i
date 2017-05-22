@@ -36,5 +36,9 @@
   double __setitem__(int i, double d) {
     return $self->operator[](i) = d;
   }
+
+  Vector __neg__() {
+    return Vector(0,0,0)-*$self;
+  }
 };
 

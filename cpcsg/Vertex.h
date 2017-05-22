@@ -16,5 +16,4 @@ class Vertex {
   Vector norm;
 };
 
-
 #endif

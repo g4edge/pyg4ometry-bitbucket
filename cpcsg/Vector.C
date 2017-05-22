@@ -46,9 +46,9 @@ Vector Vector::clone() const
   return Vector(_x,_y,_z);
 }
 
-Vector Vector::negated() const
+Vector Vector::negated() const 
 {
-  return Vector(-_x,-_y,-_z);
+  return Vector(0,0,0)-(*this);
 }
 
 Vector Vector::plus(const Vector &rhs) const
