@@ -1,34 +1,38 @@
-all : _Vector.so _Vertex.so
-
-
-csg.so : Vector.o Vertex.o Polygon.o Plane.o Solids.o
+all : _Vector.so _Vertex.so _Polygon.so _Plane.so _CSG.so _Solids.so 
+csg.so : Vector.o Vertex.o Polygon.o Plane.o CSG.o Solids.o
 	g++ -shared -o csg.so $? -L/opt/local/lib/ -lpython2.7
 
-_BSPNode.so : BSPNode.o BSPNode_wrap.o
-	g++ -shared BSPNode_wrap.o -L/opt/local/lib/ -lpython2.7 -o $@
+_Solids.so : Solids_wrap.o csg.so
+	g++ -shared Solids_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
 
-_CSG.so : CSG.o CSG_wrap.o
+_BSPNode.so : BSPNode_wrap.o csg.so
+	g++ -shared BSPNode_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
+
+_CSG.so : CSG_wrap.o csg.so
 	g++ -shared CSG_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
 
-_Plane.so : Plane.o Plane_wrap.o _Polygon.so
+_Plane.so : Plane_wrap.o csg.so
 	g++ -shared Plane_wrap.o ./csg.so  -L/opt/local/lib/ -lpython2.7 -o $@
 
-_Polygon.so : Polygon.o Polygon_wrap.o
+_Polygon.so : Polygon_wrap.o csg.so
 	g++ -shared Polygon_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
 
-_Vertex.so : Vertex.o Vertex_wrap.o
+_Vertex.so : Vertex_wrap.o csg.so
 	g++ -shared Vertex_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
 
-_Vector.so : Vector_wrap.o
+_Vector.so : Vector_wrap.o csg.so
 	g++ -shared Vector_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
 
 %.o : %.C
-	g++ -O2 -fPIC -c $< -I./
+	g++ -std=c++11 -O2 -fPIC -c $< -I./
+
+%.o : %.c
+	g++ -std=c++11 -O2 -fPIC -c $< -I./
 
 %.o : %.cxx
-	g++ -O2 -fPIC -c $< -I/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/
+	g++ -std=c++11 -O2 -fPIC -c $< -I/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/
 
-%_wrap.cxx : %.i
+%_wrap.cxx : %.i %.h
 	swig -c++ -python -shadow $<
 
 clean :
