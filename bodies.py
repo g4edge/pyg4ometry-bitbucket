@@ -141,6 +141,9 @@ class RPP(_BodyBase):
 
         return centre
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         return vector.Three(0,0,0)
 
@@ -190,6 +193,9 @@ class BOX(_BodyBase):
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         pass
 
@@ -231,6 +237,9 @@ class SPH(_BodyBase):
                               self.parameters.v_y,
                               self.parameters.v_z)
         return centre
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -295,6 +304,9 @@ class RCC(_BodyBase):
                                  self.parameters.h_y,
                                  self.parameters.h_z)
         return face_centre + 0.5 * direction
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         # Choose the cylinder face pointing in the +z direction to
@@ -406,6 +418,9 @@ class REC(_BodyBase):
 
         return vector.Three(centre_x, centre_y, centre_z)
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         # Perform 2 rotations:
         # First to get the faces pointing in the correct direction.
@@ -442,6 +457,9 @@ class REC(_BodyBase):
 
         angles = _trf.matrix2tbxyz(resulting_matrix)
         return vector.Three(*angles)
+
+    def get_rotation_matrix(self):
+        pass
 
     # def get_rotation(self):
     #     # vector starts out at [0,-
@@ -528,6 +546,9 @@ class TRC(_BodyBase):
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         # At the start, the major face is pointing at +z toward the
@@ -629,6 +650,9 @@ class WED(_BodyBase):
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         pass
 
@@ -662,6 +686,9 @@ class RAW(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
+        pass
+
+    def get_rotation_matrix(self):
         pass
 
     def get_rotation(self):
@@ -699,6 +726,9 @@ class ARB(_BodyBase):
     def get_coordinates_of_centre(self):
         pass
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         pass
 
@@ -733,6 +763,9 @@ class XYP(_BodyBase, _InfiniteSolid):
         centre_y = 0.0
         centre_z = self.parameters.v_z - (self.scale * 0.5)
         return vector.Three(centre_x, centre_y, centre_z)
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -775,6 +808,9 @@ class XZP(_BodyBase, _InfiniteSolid):
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         return vector.Three(0,0,0)
 
@@ -815,6 +851,9 @@ class YZP(_BodyBase, _InfiniteSolid):
         centre_y = 0.0
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -883,6 +922,9 @@ class PLA(_BodyBase, _InfiniteSolid):
                   - (0.5 * self.scale * self.perpendicular.unit))
         return centre
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
@@ -936,6 +978,9 @@ class XCC(_BodyBase, _InfiniteSolid):
     def get_coordinates_of_centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         return vector.Three(0.0, 0.5 * _pi, 0.0)
 
@@ -982,6 +1027,9 @@ class YCC(_BodyBase, _InfiniteSolid):
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         return vector.Three(0.5 * _pi, 0.0, 0.0)
@@ -1032,6 +1080,9 @@ class ZCC(_BodyBase, _InfiniteSolid):
         return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
                             0.0)
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         return vector.Three(0.0, 0.0, 0.0)
@@ -1085,6 +1136,9 @@ class XEC(_BodyBase, _InfiniteSolid):
     def get_coordinates_of_centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         return vector.Three(0.0, 0.5 * _pi, 0.0)
 
@@ -1132,6 +1186,9 @@ class YEC(_BodyBase, _InfiniteSolid):
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+
+    def get_rotation_matrix(self):
+        pass
 
     def get_rotation(self):
         return vector.Three(0.5 * _pi, 0.0, 0.0)
@@ -1183,6 +1240,9 @@ class ZEC(_BodyBase, _InfiniteSolid):
                             self.parameters.centre_y,
                             0.0)
 
+    def get_rotation_matrix(self):
+        pass
+
     def get_rotation(self):
         return vector.Three(0.0, 0.0, 0.0)
 
@@ -1222,6 +1282,9 @@ class QUA(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     def get_coordinates_of_centre(self):
+        pass
+
+    def get_rotation_matrix(self):
         pass
 
     def get_rotation(self):
