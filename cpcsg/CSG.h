@@ -14,31 +14,32 @@ class CSG{
   public:
     CSG();
     ~CSG();
-    static CSG* fromPolygons(vector<Polygon*> _polygons); 
+    static CSG* fromPolygons(std::vector<Polygon*> _polygons); 
     CSG* clone(); 
     std::vector<Polygon*> toPolygons();
     CSG* refine();
-    void translate(double disp);
-    void scale(double scale);
-    void rotate(Vector* axis,double angleDeg);
+    void translate(Vector disp);
+    void scale(Vector scale);
+    void rotate(Vector axis,double angleDeg);
     struct VertsAndPolys;
     VertsAndPolys toVerticesAndPolygons();
     void saveVTK(std::string filename);
-    CSG* union(CSG* csg);
+    CSG* Union(CSG* csg);
     CSG* operator+(CSG* csg);
-    CSG* subtract(CSG* csg);
+    CSG* Subtract(CSG* csg);
     CSG* operator-(CSG* csg);
-    CSG* intersect(CSG* csg);
+    CSG* Intersect(CSG* csg);
     CSG* operator*(CSG* csg);
-    CSG* inverse();
+    CSG* Inverse();
 
-    static CSG* cube();
+ /*   static CSG* cube();
     static CSG* sphere();
     static CSG* cylinder();
-    static CSG* cone();
+    static CSG* cone();*/
   
   private:
-    vector<Polygon*> polygons;
+    std::vector<Polygon*> polygons;
+    Vector newVector(Vector v,Vector axis,double angleDeg);
 };
 
 #endif

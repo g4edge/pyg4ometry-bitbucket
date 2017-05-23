@@ -100,7 +100,7 @@ std::vector<Polygon*> BSPNode::allPolygons(){
   return polygons;
 }
 
-void BSPNode::build(std::vector<Polygon*> &_polygons){
+void BSPNode::build(std::vector<Polygon*> _polygons){
   if(_polygons.size() == 0){
     return;
   }

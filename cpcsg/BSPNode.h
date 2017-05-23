@@ -16,7 +16,7 @@ class BSPNode {
     std::vector<Polygon*> clipPolygons(std::vector<Polygon*> &_polygons);
     void clipTo(BSPNode *bsp);
     std::vector<Polygon*> allPolygons();
-    void build(std::vector<Polygon*> &_polygons);
+    void build(std::vector<Polygon*> _polygons);
   private:
     std::vector<Polygon*> polygons;
     BSPNode* front;

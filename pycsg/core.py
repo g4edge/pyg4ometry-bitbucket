@@ -169,7 +169,7 @@ class CSG(object):
         number of vertex indices in the polygon connectivity list
         (count).
         """
-        offset = 1.234567890
+        offset = 1.234567890 #gives unique key
         verts = []
         polys = []
         vertexIndexMap = {}

@@ -22,8 +22,17 @@ Vector Vertex::position(){
   return pos;
 }
 
+void Vertex::position(Vector _pos){
+  pos = _pos;
+}
+
 Vector Vertex::normal(){
   return norm;
+}
+
+void Vertex::normal(Vector _norm){
+  norm = _norm;
+  if(!hasNorm) hasNorm = true;
 }
 
 bool Vertex::HasNorm(){
