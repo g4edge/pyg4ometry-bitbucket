@@ -10,6 +10,14 @@
 #include <vector>
 #include <string>
 
+struct VertsAndPolys;
+
+struct VertsAndPolys{
+  std::vector<Vertex> verts;
+  std::vector<std::vector<unsigned> > polys;
+  int count;
+};
+
 class CSG{
   public:
     CSG();
@@ -21,7 +29,6 @@ class CSG{
     void translate(Vector disp);
     void scale(Vector scale);
     void rotate(Vector axis,double angleDeg);
-    struct VertsAndPolys;
     VertsAndPolys toVerticesAndPolygons();
     void saveVTK(std::string filename);
     CSG* Union(CSG* csg);

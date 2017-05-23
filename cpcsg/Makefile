@@ -1,5 +1,6 @@
-all : _Vector.so _Vertex.so _Polygon.so _Plane.so _CSG.so _Solids.so 
-csg.so : Vector.o Vertex.o Polygon.o Plane.o CSG.o Solids.o
+all : _Vector.so _Vertex.so _Polygon.so _Plane.so _BSPNode.so _CSG.so _Solids.so 
+
+csg.so : Vector.o Vertex.o Polygon.o Plane.o BSPNode.o CSG.o Solids.o 
 	g++ -shared -o csg.so $? -L/opt/local/lib/ -lpython2.7
 
 _Solids.so : Solids_wrap.o csg.so

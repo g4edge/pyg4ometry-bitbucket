@@ -129,13 +129,7 @@ void CSG::rotate(Vector axis,double angleDeg){
   }
 }
 
-struct CSG::VertsAndPolys{
-  std::vector<Vertex> verts;
-  std::vector<std::vector<unsigned> > polys;
-  int count;
-};
-
-CSG::VertsAndPolys CSG::toVerticesAndPolygons(){
+VertsAndPolys CSG::toVerticesAndPolygons(){
   //TO DO investigate potential speed increases with large meshes
   std::vector<std::vector<unsigned> > polys;
   int count = 0;
