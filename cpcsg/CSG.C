@@ -146,15 +146,15 @@ VertsAndPolys CSG::toVerticesAndPolygons(){
       }
 
       for(int k=0;k<unique_verts.size();k++){
-        if(abs(polygons[i]->vertices[j].position().x()-unique_verts[k].position().x()) > diff){
+        if(fabs(polygons[i]->vertices[j].position().x()-unique_verts[k].position().x()) > diff){
           unique_verts.push_back(polygons[i]->vertices[j].position());
           break;
         }
-        if(abs(polygons[i]->vertices[j].position().y()-unique_verts[k].position().y()) > diff){
+        if(fabs(polygons[i]->vertices[j].position().y()-unique_verts[k].position().y()) > diff){
           unique_verts.push_back(polygons[i]->vertices[j].position());
           break;
         }       
-        if(abs(polygons[i]->vertices[j].position().z()-unique_verts[k].position().z()) > diff){
+        if(fabs(polygons[i]->vertices[j].position().z()-unique_verts[k].position().z()) > diff){
           unique_verts.push_back(polygons[i]->vertices[j].position());
           break;
         }
