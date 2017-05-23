@@ -142,7 +142,7 @@ class RPP(_BodyBase):
         return centre
 
     def get_rotation_matrix(self):
-        pass
+        return _np.identity(3)
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -239,7 +239,7 @@ class SPH(_BodyBase):
         return centre
 
     def get_rotation_matrix(self):
-        pass
+        return _np.identity(3)
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -765,7 +765,7 @@ class XYP(_BodyBase, _InfiniteSolid):
         return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        return _np.identity(3)
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -979,7 +979,10 @@ class XCC(_BodyBase, _InfiniteSolid):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        # Rotate pi/2 about the y-axis.
+        return _np.array([[ 0,  0, -1],
+                          [ 0,  1,  0],
+                          [ 1,  0,  0]])
 
     def get_rotation(self):
         return vector.Three(0.0, 0.5 * _pi, 0.0)
@@ -1029,7 +1032,10 @@ class YCC(_BodyBase, _InfiniteSolid):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        # Rotate by pi/2 about the x-axis.
+        return array([[ 1,  0,  0],
+                      [ 0,  0,  1],
+                      [ 0, -1,  0]])
 
     def get_rotation(self):
         return vector.Three(0.5 * _pi, 0.0, 0.0)
@@ -1082,7 +1088,7 @@ class ZCC(_BodyBase, _InfiniteSolid):
                             0.0)
 
     def get_rotation_matrix(self):
-        pass
+        return _np.identity(3)
 
     def get_rotation(self):
         return vector.Three(0.0, 0.0, 0.0)
@@ -1137,7 +1143,10 @@ class XEC(_BodyBase, _InfiniteSolid):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        # Rotate pi/2 about the y-axis.
+        return _np.array([[ 0,  0, -1],
+                          [ 0,  1,  0],
+                          [ 1,  0,  0]])
 
     def get_rotation(self):
         return vector.Three(0.0, 0.5 * _pi, 0.0)
@@ -1188,7 +1197,10 @@ class YEC(_BodyBase, _InfiniteSolid):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        # Rotate by pi/2 about the x-axis.
+        return array([[ 1,  0,  0],
+                      [ 0,  0,  1],
+                      [ 0, -1,  0]])
 
     def get_rotation(self):
         return vector.Three(0.5 * _pi, 0.0, 0.0)
@@ -1241,7 +1253,7 @@ class ZEC(_BodyBase, _InfiniteSolid):
                             0.0)
 
     def get_rotation_matrix(self):
-        pass
+        return _np.identity(3)
 
     def get_rotation(self):
         return vector.Three(0.0, 0.0, 0.0)
