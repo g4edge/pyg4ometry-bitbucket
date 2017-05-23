@@ -5,8 +5,8 @@ from os.path import splitext, basename
 import StringIO
 import bodies
 from collections import OrderedDict
-
-
+from IPython import embed
+import re
 
 def main(argv):
     if len(argv) == 0:
@@ -19,24 +19,15 @@ def main(argv):
     with open(file_path) as f:
         lines = f.read().splitlines()
 
-    lines = filter(lambda line: "DEBUG" in line, lines)
-    lines = map(lambda line: line.split("DEBUG")[1], lines)
-    lines = map(lambda line: line.lstrip(), lines)
+    lines = just_debug_and_error_lines(lines)
 
-    solid_lines = filter(lambda line: line.startswith("solid"), lines)
-    solid_lines = map(lambda line: line.split("solid: ")[1], solid_lines)
-    # Delete duplicate lines as solids are got multiple times...
-    solid_lines = list(OrderedDict.fromkeys(solid_lines))
-
-    boolean_lines = filter(lambda line: line.startswith("boolean"), lines)
-    boolean_lines = map(lambda line: line.split("boolean: ")[1], boolean_lines)
-
-    volume_lines = filter(lambda line: line.startswith("volume"), lines)
-    volume_lines = map(lambda line: line.split("volume: ")[1], volume_lines)
-
-    world_volume_string = filter(lambda line: line.startswith("worldvolume"),
-                                 lines)[0]
-    world_volume_string = world_volume_string.split("worldvolume: ")[1]
+    solid_lines = get_solid_lines(lines)
+    boolean_lines = get_boolean_lines(lines)
+    volume_lines = get_volume_lines(lines)
+    world_volume_string = get_world_volume_line(lines)
+    # Don't actually need to do anything with this because
+    # this will also be in the boolean_lines, albeit not as an error.
+    null_mesh_lines = get_null_mesh_lines(lines)
 
     with open(out_path, 'w') as out:
         write_preamble(out)
@@ -46,6 +37,49 @@ def main(argv):
         write_volumes(volume_lines, out)
         write_postamble(out)
 
+# --------input editing functions--------
+def just_debug_and_error_lines(lines):  # lines is a list of lines (strings)
+    # Remove everything except DEBUG and ERROR lines:
+    lines = filter(lambda line: "DEBUG" in line or "ERROR" in line, lines)
+    # Keep only after the DEBUG and ERROR flag:
+    lines = map(lambda line: re.split("ERROR|DEBUG", line)[1], lines)
+    # Delete leading whitespace:
+    lines = map(lambda line: line.lstrip(), lines)
+    # Delete "Body not instantiated" lines:
+    lines = filter(lambda line: not line.startswith("Body not instantiated"),
+                   lines)
+    return lines
+
+def get_solid_lines(lines):
+    solid_lines = filter(lambda line: line.startswith("solid"), lines)
+    solid_lines = map(lambda line: line.split("solid: ")[1], solid_lines)
+    # Delete duplicate lines as solids are got multiple times...
+    solid_lines = list(OrderedDict.fromkeys(solid_lines))
+    return solid_lines
+
+def get_boolean_lines(lines):
+    boolean_lines = filter(lambda line: line.startswith("boolean"), lines)
+    boolean_lines = map(lambda line: line.split("boolean: ")[1], boolean_lines)
+    return boolean_lines
+
+def get_volume_lines(lines):
+    volume_lines = filter(lambda line: line.startswith("volume"), lines)
+    volume_lines = map(lambda line: line.split("volume: ")[1], volume_lines)
+    return volume_lines
+
+def get_world_volume_line(lines):
+    world_volume_string = filter(lambda line: line.startswith("worldvolume"),
+                                 lines)[0]
+    world_volume_string = world_volume_string.split("worldvolume: ")[1]
+    return world_volume_string
+
+def get_null_mesh_lines(lines):
+    null_mesh_string = filter(lambda line: line.startswith("nullmesh"),
+                              lines)[0]
+    null_mesh_string = null_mesh_string.split("nullmesh: ")[1]
+    return null_mesh_string
+
+# ------Writing functions------
 def write_wv(wv_string, stream):
     wv_list = wv_string.split("; ")
     wv_list = map(lambda ele: ele.split('=')[1], wv_list)

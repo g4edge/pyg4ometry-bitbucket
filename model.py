@@ -260,8 +260,9 @@ class Model(object):
 
     def _null_mesh_handler(self, error):
         solid = error.solid
-        _logger.exception("nullmesh: name=%s; solid1=%s;"
-                          " solid2=%s, tra2=%s", solid.name,
+        solid_type = type(error.solid).__name__
+        _logger.exception("nullmesh: type=%s, name=%s; solid1=%s;"
+                          " solid2=%s; trans=%s", solid_type, solid.name,
                           solid.obj1.name, solid.obj2.name, solid.tra2)
         raise error
 
