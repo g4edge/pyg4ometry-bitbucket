@@ -37,7 +37,7 @@ class Intersection(_SolidBase) :
 
         m1 = self.obj1.pycsgmesh()
         m2 = _copy.deepcopy(self.obj2.pycsgmesh()) # need top copy this mesh as it is transformed
-        m2.rotate(rot[0],rad2deg(rot[1]))
+        m2.rotate(rot[0],-rad2deg(rot[1]))
         m2.translate(tlate)
         self.obj2mesh = m2
 
