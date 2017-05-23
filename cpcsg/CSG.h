@@ -6,23 +6,16 @@
 #include "Plane.h"
 #include "Polygon.h"
 #include "BSPNode.h"
+#include "VertsAndPolys.h"
 
 #include <vector>
 #include <string>
-
-struct VertsAndPolys;
-
-struct VertsAndPolys{
-  std::vector<Vertex> verts;
-  std::vector<std::vector<unsigned> > polys;
-  int count;
-};
 
 class CSG{
   public:
     CSG();
     ~CSG();
-    static CSG* fromPolygons(std::vector<Polygon*> _polygons); 
+    static CSG* fromPolygons(std::vector<Polygon*> _polygons);
     CSG* clone(); 
     std::vector<Polygon*> toPolygons();
     CSG* refine();
