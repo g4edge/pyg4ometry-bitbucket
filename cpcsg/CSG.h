@@ -14,7 +14,7 @@ class CSG{
   public:
     CSG();
     ~CSG();
-    static CSG* fromPolygons(vector<Polygon*> _polygons); 
+    static CSG* fromPolygons(std::vector<Polygon*> _polygons); 
     CSG* clone(); 
     std::vector<Polygon*> toPolygons();
     CSG* refine();
@@ -38,7 +38,7 @@ class CSG{
     static CSG* cone();
   
   private:
-    vector<Polygon*> polygons;
+    std::vector<Polygon*> polygons;
 };
 
 #endif
