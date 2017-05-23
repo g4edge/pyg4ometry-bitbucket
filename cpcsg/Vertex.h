@@ -14,7 +14,9 @@ class Vertex {
   void flip();
   Vertex interpolate(const Vertex& other, double t); 
   Vector position();
+  void position(Vector _pos);
   Vector normal();
+  void normal(Vector _norm);
   bool HasNorm();
  private:
   Vector pos;

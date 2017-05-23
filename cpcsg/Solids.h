@@ -5,5 +5,5 @@
 
 class Solids {
  public:
-  static CSG Box(double dx,double dy,double dz);
+  static CSG* Box(double dx,double dy,double dz);
 };
