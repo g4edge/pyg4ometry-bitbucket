@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc liball_test.a  CMakeFiles/all_test.dir/Plane.C.o CMakeFiles/all_test.dir/Polygon.C.o CMakeFiles/all_test.dir/Vector.C.o CMakeFiles/all_test.dir/Vertex.C.o CMakeFiles/all_test.dir/BSPNode.C.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib liball_test.a

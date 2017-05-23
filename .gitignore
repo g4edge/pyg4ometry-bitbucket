@@ -1,5 +1,10 @@
 *.pyc
+*.so
+*~
+#*#
+.#*
 .DS_Store
 .idea
-cpcsh/*py
+cpcsg/*py
 cpcsg/testbuild/
+test/*gdml
