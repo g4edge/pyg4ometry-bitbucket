@@ -1,5 +1,12 @@
 all : _Vector.so _Vertex.so
 
+
+_BSPNode.so : BSPNode.o BSPNode_wrap.o
+	g++ -shared BSPNode.o BSPNode_wrap.o -L/opt/local/lib/ -lpython2.7 -o $@
+
+_CSG.so : CSG.o CSG_wrap.o
+	g++ -shared CSG.o CSG_wrap.o -L/opt/local/lib/ -lpython2.7 -o $@
+
 _Plane.so : Plane.o Plane_wrap.o _Polygon.so
 	g++ -shared Plane.o Plane_wrap.o ./_Vector.so ./_Vertex.so ./_Polygon.so -L/opt/local/lib/ -lpython2.7 -o $@
 

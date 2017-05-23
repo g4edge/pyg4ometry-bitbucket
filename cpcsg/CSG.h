@@ -36,7 +36,6 @@ class CSG{
     static CSG* sphere();
     static CSG* cylinder();
     static CSG* cone();
-
   
   private:
     vector<Polygon*> polygons;
