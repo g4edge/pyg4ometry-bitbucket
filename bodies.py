@@ -169,42 +169,6 @@ class RPP(_BodyBase):
                                  0.5 * z_length)
 
 
-class BOX(_BodyBase):
-    """
-    BOX: General Rectangular Parallelepiped
-
-    NOT IMPLEMENTED
-    """
-    def __init__(self, name, parameters, expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        super(BOX, self).__init__(name,
-                                  expansion_stack,
-                                  translation_stack,
-                                  transformation_stack)
-        raise BodyNotImplementedError(self)
-        self._set_parameters(parameters)
-
-    def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
-        self.parameters = self._ParametersType(*parameters)
-
-    @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
-        pass
-
-    def get_rotation_matrix(self):
-        pass
-
-    def get_rotation(self):
-        pass
-
-    @_BodyBase._parameters_in_mm
-    @_gdml_logger
-    def get_as_gdml_solid(self):
-        pass
-
-
 class SPH(_BodyBase):
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
@@ -589,153 +553,6 @@ class TRC(_BodyBase):
                                   0.5 * self.length,
                                   0.0,
                                   2*_pi)
-
-
-class ELL(_BodyBase):
-    """
-    ELL: Elippsoid of Revolution
-
-    NOT IMPLEMENTED
-    """
-    def __init__(self, name,
-                 parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        super(ELL, self).__init__(name,
-                                  expansion_stack,
-                                  translation_stack,
-                                  transformation_stack)
-        raise BodyNotImplementedError(self)
-        self._set_parameters(parameters)
-
-
-    def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
-        self.parameters = self._ParametersType(*parameters)
-
-    @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
-        pass
-
-    @_BodyBase._parameters_in_mm
-    @_gdml_logger
-    def get_as_gdml_solid(self):
-        pass
-
-
-class WED(_BodyBase):
-    """
-    WED: Right Angle Wedge
-
-    NOT IMPLEMENTED
-    """
-    def __init__(self, name,
-                 parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        super(WED, self).__init__(name,
-                                  expansion_stack,
-                                  translation_stack,
-                                  transformation_stack)
-        raise BodyNotImplementedError(self)
-        self._set_parameters(parameters)
-
-    def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
-        self.parameters = self._ParametersType(*parameters)
-
-    @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
-        pass
-
-    def get_rotation_matrix(self):
-        pass
-
-    def get_rotation(self):
-        pass
-
-    @_BodyBase._parameters_in_mm
-    @_gdml_logger
-    def get_as_gdml_solid(self):
-        pass
-
-
-class RAW(_BodyBase):
-    """
-    RAW: Right Angle Wedge
-
-    NOT IMPLEMENTED
-    """
-    def __init__(self, name,
-                 parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        super(RAW, self).__init__(name,
-                                  expansion_stack,
-                                  translation_stack,
-                                  transformation_stack)
-        raise BodyNotImplementedError(self)
-        self._set_parameters(parameters)
-
-    def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
-        self.parameters = self._ParametersType(*parameters)
-
-    @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
-        pass
-
-    def get_rotation_matrix(self):
-        pass
-
-    def get_rotation(self):
-        pass
-
-    @_BodyBase._parameters_in_mm
-    @_gdml_logger
-    def get_as_gdml_solid(self):
-        pass
-
-
-class ARB(_BodyBase):
-    """
-    ARB: Abitrary Convex Polyhedron
-
-    NOT IMPLEMENTED
-    """
-    def __init__(self, name,
-                 parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        super(ARB, self).__init__(name,
-                                  expansion_stack,
-                                  translation_stack,
-                                  transformation_stack)
-        raise BodyNotImplementedError(self)
-        self._set_parameters(parameters)
-
-    def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
-        self.parameters = self._ParametersType(*parameters)
-
-    @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
-        pass
-
-    def get_rotation_matrix(self):
-        pass
-
-    def get_rotation(self):
-        pass
-
-    @_BodyBase._parameters_in_mm
-    @_gdml_logger
-    def get_as_gdml_solid(self):
-        pass
 
 
 class XYP(_BodyBase, _InfiniteSolid):
@@ -1270,42 +1087,27 @@ class ZEC(_BodyBase, _InfiniteSolid):
                                            0.5 * self.scale)
 
 
+class BOX(_BodyBase):
+    pass
+
+
 class QUA(_BodyBase):
-    """
-    QUA: Generic Quadric
+    pass
 
-    NOT IMPLEMENTED
-    """
-    def __init__(self, name,
-                 parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
-        super(QUA, self).__init__(name,
-                                  expansion_stack,
-                                  translation_stack,
-                                  transformation_stack)
-        raise BodyNotImplementedError(self)
-        self._set_parameters(parameters)
+class ELL(_BodyBase):
+    pass
 
-    def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", [])
-        self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
-        pass
+class WED(_BodyBase):
+    pass
 
-    def get_rotation_matrix(self):
-        pass
 
-    def get_rotation(self):
-        pass
+class RAW(_BodyBase):
+    pass
 
-    @_BodyBase._parameters_in_mm
-    @_gdml_logger
-    def get_as_gdml_solid(self):
-        pass
+
+class ARB(_BodyBase):
+    pass
 
 
 class Region(object):
