@@ -252,6 +252,13 @@ class RCC(_BodyBase):
                                                          'h_z',
                                                          'radius'])
         self.parameters = self._ParametersType(*parameters)
+        self.face_centre = vector.Three(self.parameters.v_x,
+                                        self.parameters.v_y,
+                                        self.parameters.v_z)
+        self.direction = vector.Three(self.parameters.h_x,
+                                      self.parameters.h_y,
+                                      self.parameters.h_z)
+
         return None
 
     @_BodyBase._parameters_in_mm
@@ -261,13 +268,7 @@ class RCC(_BodyBase):
         MILLIMETRES, as this is used for GDML.
         '''
 
-        face_centre = vector.Three(self.parameters.v_x,
-                                   self.parameters.v_y,
-                                   self.parameters.v_z)
-        direction = vector.Three(self.parameters.h_x,
-                                 self.parameters.h_y,
-                                 self.parameters.h_z)
-        return face_centre + 0.5 * direction
+        return self.face_centre + 0.5 * self.direction
 
     def get_rotation_matrix(self):
         pass
