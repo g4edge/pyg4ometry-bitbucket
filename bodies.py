@@ -271,7 +271,9 @@ class RCC(_BodyBase):
         return self.face_centre + 0.5 * self.direction
 
     def get_rotation_matrix(self):
-        pass
+        initial = [0, 0, 1]
+        final = -self.direction
+        return _trf.matrix_from(initial, final)
 
     def get_rotation(self):
         # Choose the cylinder face pointing in the +z direction to
@@ -513,14 +515,18 @@ class TRC(_BodyBase):
         return self.major_centre + 0.5 * self.major_to_minor
 
     def get_rotation_matrix(self):
-        pass
+        # We choose in the as_gdml_solid method to place the major at
+        # -z, and the major at +z, hence this choice of initial and
+        # final vectors:
+        initial = [0, 0, 1]
+        final = self.major_to_minor
+        return matrix_from(initial, final)
 
     def get_rotation(self):
         # At the start, the major face is pointing at +z toward the
         # minor face
         initial_vector = vector.Three([0,0,1])
-        # We want the major face pointing in the opposite direction to
-        # major_to_minor_vector.
+        # Major to minor is pointing in the direction from -z to +z
         final_vector = self.major_to_minor
 
         angles = vector.tb_angles_from(initial_vector, final_vector)
