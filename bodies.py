@@ -740,7 +740,11 @@ class PLA(_BodyBase, _InfiniteSolid):
         return centre
 
     def get_rotation_matrix(self):
-        pass
+        # Choose the face pointing in the direction of the positive
+        # z-axis to make the face of the plane.
+        initial = [0,0,1]
+        final = self.perpendicular
+        return _trf.matrix_from(initial, final)
 
     def get_rotation(self):
         # Choose the face pointing in the direction of the positive
