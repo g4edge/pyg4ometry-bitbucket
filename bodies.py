@@ -425,14 +425,6 @@ class REC(_BodyBase):
         angles = _trf.matrix2tbxyz(resulting_matrix)
         return vector.Three(*angles)
 
-    def get_rotation_matrix(self):
-        pass
-
-    # def get_rotation(self):
-    #     # vector starts out at [0,-
-    #     start_vector = [1,1,1]
-    #     end_vector =
-
     @_BodyBase._parameters_in_mm
     @_gdml_logger
     def get_as_gdml_solid(self):
