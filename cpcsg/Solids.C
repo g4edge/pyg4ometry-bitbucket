@@ -34,14 +34,14 @@ CSG* Solids::Box(double dx, double dy, double dz) {
   std::vector<Vertex> f4;
   f4.push_back(v3);
   f4.push_back(v4);
-  f4.push_back(v7);
   f4.push_back(v8);
+  f4.push_back(v7);
 
   std::vector<Vertex> f5;
   f5.push_back(v2);
   f5.push_back(v3);
-  f5.push_back(v6);
   f5.push_back(v7);
+  f5.push_back(v6);
 
   std::vector<Vertex> f6;
   f6.push_back(v5);
