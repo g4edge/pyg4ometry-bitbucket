@@ -626,7 +626,7 @@ class XZP(_BodyBase, _InfiniteSolid):
         return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        return _np.matrix(_np.identity(3))
 
     def get_rotation(self):
         return vector.Three(0,0,0)
@@ -670,7 +670,7 @@ class YZP(_BodyBase, _InfiniteSolid):
         return vector.Three(centre_x, centre_y, centre_z)
 
     def get_rotation_matrix(self):
-        pass
+        return _np.matrix(_np.identity(3))
 
     def get_rotation(self):
         return vector.Three(0,0,0)
