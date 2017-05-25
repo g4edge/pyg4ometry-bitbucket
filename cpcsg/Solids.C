@@ -3,15 +3,15 @@
 CSG* Solids::Box(double dx, double dy, double dz) {
   std::vector<Polygon*> polygons;
 
-  Vertex v1 = Vertex(Vector(-1,-1,-1));
-  Vertex v2 = Vertex(Vector(-1, 1,-1));
-  Vertex v3 = Vertex(Vector( 1, 1,-1));
-  Vertex v4 = Vertex(Vector( 1,-1,-1));
+  Vertex v1 = Vertex(Vector(-dx/2,-dy/2,-dz/2));
+  Vertex v2 = Vertex(Vector(-dx/2, dy/2,-dz/2));
+  Vertex v3 = Vertex(Vector( dx/2, dy/2,-dz/2));
+  Vertex v4 = Vertex(Vector( dx/2,-dy/2,-dz/2));
 
-  Vertex v5 = Vertex(Vector(-1,-1, 1));
-  Vertex v6 = Vertex(Vector(-1, 1, 1));
-  Vertex v7 = Vertex(Vector( 1, 1, 1));
-  Vertex v8 = Vertex(Vector( 1,-1, 1));
+  Vertex v5 = Vertex(Vector(-dx/2,-dy/2, dz/2));
+  Vertex v6 = Vertex(Vector(-dx/2, dy/2, dz/2));
+  Vertex v7 = Vertex(Vector( dx/2, dy/2, dz/2));
+  Vertex v8 = Vertex(Vector( dx/2,-dy/2, dz/2));
   
   std::vector<Vertex> f1;
   f1.push_back(v1);
