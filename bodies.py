@@ -512,7 +512,7 @@ class TRC(_BodyBase):
         # final vectors:
         initial = [0, 0, 1]
         final = self.major_to_minor
-        return matrix_from(initial, final)
+        return _trf.matrix_from(initial, final)
 
     def get_rotation(self):
         # At the start, the major face is pointing at +z toward the
