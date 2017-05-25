@@ -482,7 +482,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         if region_solid.operator == '+' or region_solid.operator == '-':
             _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
                           region_name, region_centre,
-                          region_rotation, region_gdml.name)
+                          _trf.matrix2tbxyz(region_rotation), region_gdml.name)
             self.regions[region_name] = bodies.Region(region_name,
                                                       region_gdml,
                                                       position=region_centre,
@@ -593,7 +593,7 @@ class _UnarySolid(object):
         _logger.debug("boolean: type=Subtraction; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, relative_transformation)
+                      other.solid.name, [relative_angles, relative_translation])
 
         return _UnarySolid(output_solid,
                            output_operator,
@@ -617,7 +617,7 @@ class _UnarySolid(object):
         _logger.debug("boolean: type=Intersection; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, relative_translation)
+                      other.solid.name, [relative_angles, relative_translation])
 
         return _UnarySolid(output_solid,
                            output_operator,
@@ -641,7 +641,7 @@ class _UnarySolid(object):
         _logger.debug("boolean: type=Union; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, relative_transformation)
+                      other.solid.name, [relative_angles, relative_translation])
 
         return _UnarySolid(output_solid,
                            output_operator,
@@ -672,7 +672,7 @@ class _UnarySolid(object):
         _logger.debug("boolean: type=Union; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, relative_transformation)
+                      other.solid.name, [relative_angles, relative_translation])
 
         return _UnarySolid(output_solid,
                            output_operator,
