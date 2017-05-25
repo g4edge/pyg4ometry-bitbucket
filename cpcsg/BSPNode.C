@@ -90,14 +90,16 @@ void BSPNode::clipTo(BSPNode *bsp){
 }
 
 std::vector<Polygon*> BSPNode::allPolygons(){
-  std::vector<Polygon*> polygons = this->polygons;
+  std::vector<Polygon*> _polygons = this->polygons;
   if(front){
-    polygons.insert(polygons.end(),front->allPolygons().begin(),front->allPolygons().end());
+    std::vector<Polygon*> _frontpoly = front->allPolygons();
+    _polygons.insert(_polygons.end(),_frontpoly.begin(),_frontpoly.end());
   }
   if(back){
-    polygons.insert(polygons.end(),back->allPolygons().begin(),back->allPolygons().end());
+    std::vector<Polygon*> _backpoly = back->allPolygons();
+    _polygons.insert(_polygons.end(),_backpoly.begin(),_backpoly.end());
   }
-  return polygons;
+  return _polygons;
 }
 
 void BSPNode::build(std::vector<Polygon*> _polygons){
