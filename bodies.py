@@ -1163,7 +1163,7 @@ class Region(object):
         except _pygdml.solid.NullMeshError as error:
             print error.message
             print "Debug:  Viewing consituent solids."
-            self._view_null_mesh(error, first, second)
+            self._view_null_mesh(error, first, second, setclip=False)
 
     def add_to_volume(self, volume):
         """
@@ -1179,7 +1179,7 @@ class Region(object):
                               False,
                               self.material)
 
-    def _view_null_mesh(self, error, first, second):
+    def _view_null_mesh(self, error, first, second, setclip=False):
         solid1 = error.solid.obj1
         solid2 = error.solid.obj2
         tra2 = error.solid.tra2
@@ -1207,7 +1207,8 @@ class Region(object):
         elif first is False and second is False:
             raise RuntimeError("Must select at least one"
                                " of the two solids to view")
-        world_volume.setClip()
+        if setclip is True:
+            world_volume.setClip()
         mesh = world_volume.pycsgmesh()
         viewer = _pygdml.VtkViewer()
         viewer.addSource(mesh)
