@@ -1170,7 +1170,7 @@ class Region(object):
         Basically for adding to a world volume.
 
         """
-        _pygdml.volume.Volume(self.rotation,
+        _pygdml.volume.Volume(_trf.reverse(self.rotation),
                               self.position,
                               self.gdml_solid,
                               self.name,
@@ -1193,7 +1193,7 @@ class Region(object):
             volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
                                      solid1.name, world_volume,
                                      1, False, "G4_NITROUS_OXIDE")
-            volume2 = _pygdml.Volume(tra2[0], tra2[1], solid2,
+            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
                                      solid2.name, world_volume,
                                      1, False, "G4_NITROUS_OXIDE")
         elif first is True and second is not True:
@@ -1201,11 +1201,12 @@ class Region(object):
                                      solid1.name, world_volume,
                                      1, False, "G4_NITROUS_OXIDE")
         elif second is True and first is not True:
-            volume2 = _pygdml.Volume(tra2[0], tra2[1], solid2,
+            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
                                      solid2.name, world_volume,
                                      1, False, "G4_NITROUS_OXIDE")
-        if first is False and second is False:
-            raise RuntimeError("Must select at least one of the two solids to view")
+        elif first is False and second is False:
+            raise RuntimeError("Must select at least one"
+                               " of the two solids to view")
         world_volume.setClip()
         mesh = world_volume.pycsgmesh()
         viewer = _pygdml.VtkViewer()
