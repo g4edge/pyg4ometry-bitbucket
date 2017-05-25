@@ -1,4 +1,8 @@
-all : _Vector.so _Vertex.so _Polygon.so _Plane.so _BSPNode.so _CSG.so _Solids.so _VertsAndPolys.so
+all : _Vector.so _Vertex.so _Polygon.so _Plane.so _BSPNode.so _CSG.so _Solids.so _VertsAndPolys.so boolTest
+
+
+boolTest : csg.so boolTest.o
+	g++ -o $@ boolTest.o ./csg.so
 
 csg.so : Vector.o Vertex.o Polygon.o Plane.o BSPNode.o CSG.o Solids.o 
 	g++ -shared -o csg.so $? -L/opt/local/lib/ -lpython2.7
@@ -28,13 +32,13 @@ _Vector.so : Vector_wrap.o csg.so
 	g++ -shared Vector_wrap.o ./csg.so -L/opt/local/lib/ -lpython2.7 -o $@
 
 %.o : %.C
-	g++ -std=c++11 -O2 -fPIC -c $< -I./
+	g++ -g -std=c++11 -O2 -fPIC -c $< -I./
 
 %.o : %.c
-	g++ -std=c++11 -O2 -fPIC -c $< -I./
+	g++ -g -std=c++11 -O2 -fPIC -c $< -I./
 
 %.o : %.cxx
-	g++ -std=c++11 -O2 -fPIC -c $< -I/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/
+	g++ -g -std=c++11 -O2 -fPIC -c $< -I/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/
 
 %_wrap.cxx : %.i %.h
 	swig -c++ -python -shadow $<

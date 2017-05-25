@@ -105,7 +105,7 @@ void BSPNode::build(std::vector<Polygon*> _polygons){
     return;
   }
   if(!plane){
-    plane = polygons[0]->plane->clone();
+    plane = _polygons[0]->plane->clone();
   }
   polygons.push_back(_polygons[0]);
   std::vector<Polygon*> _front;
