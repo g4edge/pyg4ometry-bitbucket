@@ -9,9 +9,11 @@ import cPickle as _cPickle
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
+from pygdml import transformation as _trf
 
 import pyfluka.bodies as bodies
 import pyfluka.materials as materials
+from pyfluka.vector import Three
 from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
 from pyfluka.Parser.FlukaParserListener import FlukaParserListener
 from pyfluka.Parser.Parse import Parse
@@ -470,9 +472,8 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         region_centre = [region_solid.centre.x,
                          region_solid.centre.y,
                          region_solid.centre.z]
-        region_rotation = [region_solid.rotation.x,
-                           region_solid.rotation.y,
-                           region_solid.rotation.z]
+
+        region_rotation = region_solid.rotation
         region_gdml = region_solid.solid
         region_name = ctx.RegionName().getText()
 
@@ -509,7 +510,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         gdml_solid = body.get_as_gdml_solid()
         body_centre = body.get_coordinates_of_centre()
-        body_rotation = body.get_rotation()
+        body_rotation = body.get_rotation_matrix()
 
         if ctx.Plus():
             return _UnarySolid(gdml_solid, '+', body_centre, body_rotation)
@@ -577,18 +578,22 @@ class _UnarySolid(object):
 
     def _combine_plus_minus(self, other):
         output_name = self._generate_name(other)
-        other_transformation = self._get_transformation(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
+
         output_solid = _pygdml.solid.Subtraction(output_name,
                                                  self.solid,
                                                  other.solid,
-                                                 other_transformation)
+                                                 relative_transformation)
         output_operator = '+'
         output_centre = self.centre
         output_rotation = self.rotation
         _logger.debug("boolean: type=Subtraction; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, other_transformation)
+                      other.solid.name, relative_transformation)
 
         return _UnarySolid(output_solid,
                            output_operator,
@@ -597,18 +602,22 @@ class _UnarySolid(object):
 
     def _combine_plus_plus(self, other):
         output_name = self._generate_name(other)
-        other_transformation = self._get_transformation(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
+
         output_solid = _pygdml.solid.Intersection(output_name,
                                                   self.solid,
                                                   other.solid,
-                                                  other_transformation)
+                                                  relative_transformation)
         output_operator = '+'
         output_centre = self.centre
         output_rotation = self.rotation
         _logger.debug("boolean: type=Intersection; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, other_transformation)
+                      other.solid.name, relative_translation)
 
         return _UnarySolid(output_solid,
                            output_operator,
@@ -617,7 +626,10 @@ class _UnarySolid(object):
 
     def _combine_minus_minus(self, other):
         output_name = self._generate_name(other)
-        other_transformation = self._get_transformation(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
 
         output_operator = '-'
         output_centre = self.centre
@@ -625,11 +637,11 @@ class _UnarySolid(object):
         output_solid = _pygdml.Union(output_name,
                                      self.solid,
                                      other.solid,
-                                     other_transformation)
+                                     relative_transformation)
         _logger.debug("boolean: type=Union; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, other_transformation)
+                      other.solid.name, relative_transformation)
 
         return _UnarySolid(output_solid,
                            output_operator,
@@ -644,7 +656,10 @@ class _UnarySolid(object):
 
         """
         output_name = self._generate_name(other)
-        other_transformation = self._get_transformation(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
 
         output_operator = '+'
         output_centre = self.centre
@@ -653,37 +668,31 @@ class _UnarySolid(object):
         output_solid = _pygdml.Union(output_name,
                                      self.solid,
                                      other.solid,
-                                     other_transformation)
+                                     relative_transformation)
         _logger.debug("boolean: type=Union; name=%s; "
                       "solid1=%s; solid2=%s; trans=%s",
                       output_name, self.solid.name,
-                      other.solid.name, other_transformation)
+                      other.solid.name, relative_transformation)
 
         return _UnarySolid(output_solid,
                            output_operator,
                            output_centre,
                            output_rotation)
 
-    def _get_transformation(self, other):
-        # other_transformation is the transformation applied to the
-        # second volume w.r.t the first, which is situated at (0,0,0)
-        # without rotation when peforming the boolean operation.
-        offset_x = other.centre.x - self.centre.x
-        offset_y = other.centre.y - self.centre.y
-        offset_z = other.centre.z - self.centre.z
+    def _get_relative_translation(self, other):
+        # In a boolean rotation, the first solid is centred on zero,
+        # so to get the correct offset, subtract from the second the first.
+        return Three(other.centre.x - self.centre.x,
+                     other.centre.y - self.centre.y,
+                     other.centre.z - self.centre.z)
 
-        offset_x_rotation = other.rotation.x - self.rotation.x
-        offset_y_rotation = other.rotation.y - self.rotation.y
-        offset_z_rotation = other.rotation.z - self.rotation.z
-
-        other_translation = [offset_x, offset_y, offset_z]
-        other_rotation = [offset_x_rotation,
-                          offset_y_rotation,
-                          offset_z_rotation]
-
-        other_transformation = [other_rotation, other_translation]
-
-        return other_transformation
+    def _get_relative_rotation(self, other):
+        # The first solid is unrotated in a boolean operation, so it
+        # is in effect rotated by its inverse.  We apply this same
+        # rotation to the second solid to get the correct relative
+        # rotation.
+        relative_rot_matrix = self.rotation.T.dot(other.rotation)
+        return _trf.matrix2tbxyz(relative_rot_matrix)
 
     def _generate_name(self, other):
         name = str(_uuid4())
