@@ -1170,7 +1170,13 @@ class Region(object):
         Basically for adding to a world volume.
 
         """
-        _pygdml.volume.Volume(_trf.reverse(self.rotation),
+        # Convert the matrix to TB xyz:
+        rotation_angles = _trf.matrix2tbxyz(self.rotation)
+        # Up to this point all rotations are active, which is OK
+        # because so are boolean rotations.  However, volume rotations
+        # are passive, so reverse the rotation:
+        rotation_angles = _trf.reverse(rotation_angles)
+        _pygdml.volume.Volume(rotation_angles,
                               self.position,
                               self.gdml_solid,
                               self.name,
