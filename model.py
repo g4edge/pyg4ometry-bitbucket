@@ -209,8 +209,16 @@ class Model(object):
     def _write_test_gmad(self, gdml_path):
         gmad_path = _path.splitext(gdml_path)[0] + ".gmad"
         with open(gmad_path, 'w') as gmad:
-            gmad.write("test_component: element, l=10.*m, geometry=\"gdml:%s\","
-                       " outerDiameter=2.1*m;\n" % gdml_path)
+            # Extent of the bounding box in the transverse directions:
+            bounding_x = self._world_volume.currentVolume.pX / 1000.
+            bounding_y = self._world_volume.currentVolume.pY / 1000.
+            diameter = 2 * max(bounding_x, bounding_y)
+            length = 2 * self._world_volume.currentVolume.pZ / 1000.
+
+            gmad.write("test_component: element, l={}*m, geometry=\"gdml:{}\","
+                       " outerDiameter={}*m;\n".format(length,
+                                                       gdml_path,
+                                                       diameter))
             gmad.write('\n')
             gmad.write("component : line = (test_component);\n")
             gmad.write('\n')
