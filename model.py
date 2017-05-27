@@ -106,7 +106,7 @@ class Model(object):
         out.add(self._world_volume)
         out.write(out_path)
 
-        if make_gmad == True:
+        if make_gmad is True:
             self._write_test_gmad(out_path)
 
     def view(self, region_names=None, setclip=True):
