@@ -242,23 +242,26 @@ class Model(object):
             regions = self.regions
         elif isinstance(regions, basestring):
             regions = [regions]
-        output = {key:[] for key in ["good_regions", "bad_regions",
-                                     "bad_subs", "bad_ints"]}
+        # good regions, bad regions, bad subtractions, bad
+        # intersections, IndexErrors.
+        output = {key:[] for key in ["good", "bad", "subs", "ints", "index"]}
         number_of_regions = len(regions)
         start = _time.time()
         for index, region_name in enumerate(regions):
             try:
                 self._generate_mesh(region_name)
-                output["good_regions"].append(region_name)
+                output["good"].append(region_name)
             except _pygdml.solid.NullMeshError as error:
-                output["bad_regions"].append(region_name)
-                if isinstance(error.solid, _pygdml.solid.Intersection):
-                    output["bad_ints"].append(region_name)
-                elif isinstance(error.solid, _pygdml.solid.Subtraction):
-                    output["bad_subs"].append(region_name)
+                output["bad"].append(region_name)
+                if isinstance(error.solid, _pygdml.solid.Subtraction):
+                    output["subs"].append(region_name)
+                elif isinstance(error.solid, _pygdml.solid.Intersection):
+                    output["ints"].append(region_name)
+            except IndexError:
+                output["index"].append(region_name)
             print "Tested {0}/{1}.".format(index + 1, number_of_regions)
             print ("Succeded: {0}.  Failed: {1}.".format(
-                len(output["good_regions"]), len(output["bad_regions"])))
+                len(output["good"]), len(output["bad"])))
 
         end = _time.time()
         print (end - start)/60.0, "minutes elipsed since test begun."
