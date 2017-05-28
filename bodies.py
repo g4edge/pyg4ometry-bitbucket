@@ -1237,17 +1237,20 @@ class Region(object):
                 walk_tree(solid.obj2)
         walk_tree(self.gdml_solid)
 
-    def solids(self):
+    def solids(self, booleans=True):
         """
         return a dictionary of the atomic solids (i.e. no boolean solids)
         making up this region.
 
+        If booleans is True, then write the boolean solids as well.
         """
         solids = dict()
         def dump_iter(solid):
             if isinstance(solid, (_pygdml.solid.Intersection,
                                   _pygdml.solid.Subtraction,
                                   _pygdml.solid.Union)):
+                if booleans is True:
+                    solids[solid.name] = solid
                 dump_iter(solid.obj1)
                 dump_iter(solid.obj2)
             else:
