@@ -1220,6 +1220,24 @@ class Region(object):
         viewer.addSource(mesh)
         viewer.view()
 
+    def edit_solid(self, name, **parameters):
+        """
+        Walk the gdml_solid tree and update the named solid with the
+        parameter, value pairs defined in parameters.
+
+        """
+        def walk_tree(solid):
+            if solid.name == name:
+                for key, value in parameters.iteritems():
+                    old_value = getattr(solid, key)
+                    setattr(solid, key, value)
+            if isinstance(solid, (_pygdml.solid.Intersection,
+                                  _pygdml.solid.Subtraction,
+                                  _pygdml.solid.Union)):
+                walk_tree(solid.obj1)
+                walk_tree(solid.obj2)
+        walk_tree(self.gdml_solid)
+
     def solids(self):
         """
         return a dictionary of the atomic solids (i.e. no boolean solids)
