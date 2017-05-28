@@ -261,7 +261,7 @@ class Model(object):
             except IndexError:
                 output["index"].append(region_name)
             print "Tested {0}/{1}.".format(index + 1, number_of_regions)
-            print ("Succeded: {}.  Failed: {} ({}% ).".format(
+            print ("Succeded: {}.  Failed: {} ({}%).".format(
                 len(output["good"]),
                 len(output["bad"]),
                 (100. * len(output["good"])
