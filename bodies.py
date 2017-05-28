@@ -258,8 +258,7 @@ class RCC(_BodyBase):
         self.direction = vector.Three(self.parameters.h_x,
                                       self.parameters.h_y,
                                       self.parameters.h_z)
-
-        return None
+        self.length = _np.linalg.norm(self.direction)
 
     @_BodyBase._parameters_in_mm
     def centre(self):
