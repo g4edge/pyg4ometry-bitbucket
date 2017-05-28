@@ -248,6 +248,7 @@ class Model(object):
         number_of_regions = len(regions)
         start = _time.time()
         for index, region_name in enumerate(regions):
+            print "... Testing Region: %s" % region_name
             try:
                 self._generate_mesh(region_name)
                 output["good"].append(region_name)
@@ -260,8 +261,12 @@ class Model(object):
             except IndexError:
                 output["index"].append(region_name)
             print "Tested {0}/{1}.".format(index + 1, number_of_regions)
-            print ("Succeded: {0}.  Failed: {1}.".format(
-                len(output["good"]), len(output["bad"])))
+            print ("Succeded: {}.  Failed: {} ({}% ).".format(
+                len(output["good"]),
+                len(output["bad"]),
+                (100. * len(output["good"])
+                 / (len(output["good"])
+                    + len(output["bad"])))))
 
         end = _time.time()
         print (end - start)/60.0, "minutes elipsed since test begun."
