@@ -11,7 +11,7 @@ import antlr4 as _antlr4
 import pygdml as _pygdml
 from pygdml import transformation as _trf
 
-import pyfluka.bodies as bodies
+import pyfluka.bodies
 import pyfluka.materials as materials
 from pyfluka.vector import Three
 from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
@@ -180,9 +180,10 @@ class Model(object):
         # Print result, with alignment.
         print "Bodies used in region definitions:"
         for body, count in body_and_count:
-            body_description = (body
-                                + " - "
-                                + bodies.code_meanings[body]).ljust(60, '.')
+            body_description = (
+                body
+                + " - "
+                + pyfluka.bodies.code_meanings[body]).ljust(60, '.')
             print body_description + str(count)
 
     def _materials_from_tree(self):
@@ -428,7 +429,7 @@ class _FlukaBodyListener(FlukaParserListener):
         body_name = ctx.ID().getText()
         body_type = ctx.BodyCode().getText()
         body_parameters = self._get_floats(ctx)
-        body_constructor = getattr(bodies, body_type)
+        body_constructor = getattr(pyfluka.bodies, body_type)
         # Try and construct the body, if it's not implemented then add
         # it to the list of omitted bodies.
         try:
@@ -438,7 +439,7 @@ class _FlukaBodyListener(FlukaParserListener):
                                     self._translat_stack,
                                     self._expansion_stack)
             self.bodies[body_name] = body
-        except bodies.BodyNotImplementedError:
+        except pyfluka.bodies.BodyNotImplementedError:
             _warnings.simplefilter('once', UserWarning)
             _warnings.warn(("\nBody type %s not supported.  All bodies"
                             " of this type will be omitted.  If bodies"
@@ -540,8 +541,8 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         body_type = type(body).__name__
 
         # If an infinite body:
-        if isinstance(body, bodies._InfiniteSolid):
             scale = self._region_scale_map[self.region_name] * 10.
+        if isinstance(body, pyfluka.bodies._InfiniteSolid):
             # Infinite bodies are factories for themselves, allowing
             # for dynamic infinite scale for a common underlying body.
             body = body(scale)
