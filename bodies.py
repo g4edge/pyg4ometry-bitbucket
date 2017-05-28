@@ -1220,7 +1220,7 @@ class Region(object):
         viewer.addSource(mesh)
         viewer.view()
 
-    def atomic_solids(self):
+    def solids(self):
         """
         return a dictionary of the atomic solids (i.e. no boolean solids)
         making up this region.
