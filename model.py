@@ -271,8 +271,9 @@ class Model(object):
         end = _time.time()
         print (end - start)/60.0, "minutes elipsed since test begun."
 
-        if pickle is True:
-            with open("./{}_diag.pickle".format(self._filename), 'w') as f:
+        if pickle:
+            with open("./{}_diag.pickle".format(
+                    self._filename + pickle), 'w') as f:
                 _cPickle.dump(output, f)
         return output
 
