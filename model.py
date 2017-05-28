@@ -277,6 +277,29 @@ class Model(object):
                 _cPickle.dump(output, f)
         return output
 
+    def view_debug(self, region=None, do_all=False):
+        """
+        If region name is specified then view that in debug mode, else
+        attempt to mesh each region in turn and view the first null
+        mesh in debug mode, and then exits.  If do_all is not False
+        then will not exit after the first null mesh, and will instead
+        try to view all regions in turn.
+
+        """
+        if region is not None:
+            self.regions[region].view_debug()
+            return
+
+        for region in self.regions.itervalues():
+            try:
+                region.gdml_solid.pycsgmesh()
+            except _pygdml.solid.NullMeshError:
+                print "Failed mesh @ region: {}.".format(region.name)
+                print "Viewing region in debug mode ..."
+                region.view_debug()
+                if do_all is False:
+                    break
+
     def _null_mesh_handler(self, error):
         solid = error.solid
         solid_type = type(error.solid).__name__
