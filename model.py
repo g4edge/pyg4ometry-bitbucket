@@ -525,7 +525,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
                           body_type, scale)
 
         gdml_solid = body.get_as_gdml_solid()
-        body_centre = body.get_coordinates_of_centre()
+        body_centre = body.centre()
         body_rotation = body.get_rotation_matrix()
 
         if ctx.Plus():

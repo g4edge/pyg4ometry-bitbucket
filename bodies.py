@@ -127,7 +127,7 @@ class RPP(_BodyBase):
         return None
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         '''
         Return the coordinates of the centre of the Rectangular
         Parallelepiped (cuboid).
@@ -192,7 +192,7 @@ class SPH(_BodyBase):
         return None
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         '''
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
@@ -262,7 +262,7 @@ class RCC(_BodyBase):
         return None
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         '''
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
@@ -375,7 +375,7 @@ class REC(_BodyBase):
 
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         centre_x = (self.parameters.face_centre_x
                     + self.parameters.to_other_face_x * 0.5)
         centre_y = (self.parameters.face_centre_y
@@ -503,7 +503,7 @@ class TRC(_BodyBase):
         return None
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
 
     def get_rotation_matrix(self):
@@ -574,7 +574,7 @@ class XYP(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         centre_x = 0.0
         centre_y = 0.0
         centre_z = self.parameters.v_z - (self.scale * 0.5)
@@ -618,7 +618,7 @@ class XZP(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self.scale * 0.5)
         centre_z = 0.0
@@ -662,7 +662,7 @@ class YZP(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         centre_x = self.parameters.v_x - (self.scale * 0.5)
         centre_y = 0.0
         centre_z = 0.0
@@ -731,7 +731,7 @@ class PLA(_BodyBase, _InfiniteSolid):
                                            self.parameters.z_position])
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         # This is the centre of the underlying gdml solid (i.e. won't
         # be on the surface, but set backwards by half length scale's amount.
         centre = (self.surface_point
@@ -795,7 +795,7 @@ class XCC(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
@@ -848,7 +848,7 @@ class YCC(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
@@ -902,7 +902,7 @@ class ZCC(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
                             0.0)
@@ -959,7 +959,7 @@ class XEC(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
@@ -1013,7 +1013,7 @@ class YEC(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
     def get_rotation_matrix(self):
@@ -1067,7 +1067,7 @@ class ZEC(_BodyBase, _InfiniteSolid):
         self.parameters = self._ParametersType(*parameters)
 
     @_BodyBase._parameters_in_mm
-    def get_coordinates_of_centre(self):
+    def centre(self):
         return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
                             0.0)
