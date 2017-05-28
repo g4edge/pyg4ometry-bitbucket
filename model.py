@@ -228,14 +228,14 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
 
-    def test_regions(self, pickle=False, regions=None):
+    def test_regions(self, pickle=None, regions=None):
         """
         Method for individually meshing each region and returning
         dictionary of lists of good regions, bad regions, bad
         intersections, and bad subtractions.
 
-        If pickle, then the returned dictionary will also be written
-        to file.
+        If a string is supplied for pickle, then the resulting dictionary will
+        be written to file.
 
         """
         if regions is None:
