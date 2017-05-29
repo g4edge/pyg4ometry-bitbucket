@@ -143,8 +143,6 @@ class RPP(_BodyBase):
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
 
-    def get_rotation(self):
-        return vector.Three(0,0,0)
 
     def extent(self):
         return max([self.parameters.x_max - self.parameters.x_min,
@@ -201,9 +199,6 @@ class SPH(_BodyBase):
 
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
-
-    def get_rotation(self):
-        return vector.Three(0,0,0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -268,22 +263,6 @@ class RCC(_BodyBase):
         initial = [0, 0, 1]
         final = -self.direction
         return _trf.matrix_from(initial, final)
-
-    def get_rotation(self):
-        # Choose the cylinder face pointing in the +z direction to
-        # become the face with coordinates (v_x, v_y, v_z), and point in the
-        # direction -(h_x, h_y, h_z).
-        initial_vector = vector.Three([0.0, 0.0, 1.0])
-        # Negate the vector as I want it facing outwards to match the above.
-        final_vector = -vector.Three(self.parameters.h_x,
-                                     self.parameters.h_y,
-                                     self.parameters.h_z)
-        angles = vector.tb_angles_from(initial_vector, final_vector)
-        # Assert that the matrix does indeed take map the initial
-        # vector to the final vector.
-        assert (_trf.tbxyz2matrix(angles).dot(initial_vector)
-                .view(vector.Three).reshape(3).parallel_to(final_vector))
-        return vector.Three(*angles)
 
     def extent(self):
         centre_max = max(abs(vector.Three(self.parameters.v_x,
@@ -380,43 +359,6 @@ class REC(_BodyBase):
     def get_rotation_matrix(self):
         pass
 
-    def get_rotation(self):
-        # Perform 2 rotations:
-        # First to get the faces pointing in the correct direction.
-        # Second to get the major axis pointing in the correct direction.
-        # The minor axis will then also be pointing in the correct direction.
-
-        # The unrotated EllipticalTube initially lies parallel to the
-        # z-axis.
-        # Choose the face pointing in the -z direction to become
-        # face_centre.  This will point in the direction
-        # anti-parallel to_other_face.
-        start_face = _np.array([0, 0, +1])
-        # Negate the vector as I want it facing outwards.
-        end_face = _np.array([self.parameters.to_other_face_x,
-                              self.parameters.to_other_face_y,
-                              self.parameters.to_other_face_z])
-        # The matrix rotating the starting face to parallel to the desired.
-        start_to_end_face = vector.rot_matrix_between_vectors(start_face,
-                                                              end_face)
-        # The major-axis starts in the positive y direction.
-        start_major = _np.array([0, 1, 0])
-        # The major-axis after being rotated by the above matrix.
-        middle_major = start_to_end_face.dot(start_major)
-        # The output of "dot" is a matrix, so convert back to an array.
-        middle_major = _np.squeeze(_np.asarray(middle_major))
-        # The desired final vector points in the semi_major direction
-        end_major = _np.array([self.parameters.semi_major_x,
-                               self.parameters.semi_major_y,
-                               self.parameters.semi_major_z])
-        middle_to_end_major = vector.rot_matrix_between_vectors(middle_major,
-                                                                end_major)
-
-        resulting_matrix = middle_to_end_major.dot(start_to_end_face)
-
-        angles = _trf.matrix2tbxyz(resulting_matrix)
-        return vector.Three(*angles)
-
     @_gdml_logger
     def gdml_solid(self):
         # EllipticalTube is defined in terms of half-lengths in x, y,
@@ -504,20 +446,6 @@ class TRC(_BodyBase):
         final = self.major_to_minor
         return _trf.matrix_from(initial, final)
 
-    def get_rotation(self):
-        # At the start, the major face is pointing at +z toward the
-        # minor face
-        initial_vector = vector.Three([0,0,1])
-        # Major to minor is pointing in the direction from -z to +z
-        final_vector = self.major_to_minor
-
-        angles = vector.tb_angles_from(initial_vector, final_vector)
-        # Assert that the matrix does indeed take map the initial
-        # vector to the final vector.
-        assert (_trf.tbxyz2matrix(angles).dot(initial_vector)
-                .view(vector.Three).reshape(3).parallel_to(final_vector))
-        return vector.Three(*angles)
-
     def extent(self):
         length = _np.linalg.norm([self.parameters.major_to_minor_x,
                                   self.parameters.major_to_minor_y,
@@ -571,9 +499,6 @@ class XYP(_BodyBase, _InfiniteSolid):
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
 
-    def get_rotation(self):
-        return vector.Three(0,0,0)
-
     def extent(self):
         return abs(self.parameters.v_z)
 
@@ -613,9 +538,6 @@ class XZP(_BodyBase, _InfiniteSolid):
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
 
-    def get_rotation(self):
-        return vector.Three(0,0,0)
-
     def extent(self):
         return abs(self.parameters.v_y)
 
@@ -654,9 +576,6 @@ class YZP(_BodyBase, _InfiniteSolid):
 
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
-
-    def get_rotation(self):
-        return vector.Three(0,0,0)
 
     def extent(self):
         return abs(self.parameters.v_x)
@@ -727,14 +646,6 @@ class PLA(_BodyBase, _InfiniteSolid):
         final = self.perpendicular
         return _trf.matrix_from(initial, final)
 
-    def get_rotation(self):
-        # Choose the face pointing in the direction of the positive
-        # z-axis to make the face of the plane.
-        initial_vector = vector.Three([0,0,1])
-        final_vector = self.perpendicular
-        angles = vector.tb_angles_from(initial_vector, final_vector)
-        return vector.Three(*angles)
-
     def extent(self):
         return max(abs(self.parameters.x_position),
                    abs(self.parameters.y_position),
@@ -784,9 +695,6 @@ class XCC(_BodyBase, _InfiniteSolid):
                            [ 0,  1,  0],
                            [ 1,  0,  0]])
 
-    def get_rotation(self):
-        return vector.Three(0.0, 0.5 * _pi, 0.0)
-
     def extent(self):
         return max(map(abs, self.parameters))
 
@@ -835,9 +743,6 @@ class YCC(_BodyBase, _InfiniteSolid):
                            [ 0,  0,  1],
                            [ 0, -1,  0]])
 
-    def get_rotation(self):
-        return vector.Three(0.5 * _pi, 0.0, 0.0)
-
     def extent(self):
         return max(map(abs, self.parameters))
 
@@ -885,9 +790,6 @@ class ZCC(_BodyBase, _InfiniteSolid):
 
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
-
-    def get_rotation(self):
-        return vector.Three(0.0, 0.0, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -942,9 +844,6 @@ class XEC(_BodyBase, _InfiniteSolid):
                            [ 0,  1,  0],
                            [ 1,  0,  0]])
 
-    def get_rotation(self):
-        return vector.Three(0.0, 0.5 * _pi, 0.0)
-
     def extent(self):
         return max(map(abs, self.parameters))
 
@@ -994,9 +893,6 @@ class YEC(_BodyBase, _InfiniteSolid):
                            [ 0,  0,  1],
                            [ 0, -1,  0]])
 
-    def get_rotation(self):
-        return vector.Three(0.5 * _pi, 0.0, 0.0)
-
     def extent(self):
         return max(map(abs, self.parameters))
 
@@ -1044,9 +940,6 @@ class ZEC(_BodyBase, _InfiniteSolid):
 
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
-
-    def get_rotation(self):
-        return vector.Three(0.0, 0.0, 0.0)
 
     def extent(self):
         return max(map(abs, self.parameters))
