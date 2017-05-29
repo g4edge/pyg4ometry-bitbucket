@@ -8,7 +8,6 @@ class PhysicalVolume :
     imeshed = 0
 
     def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1], debug= False) :
-    def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1], debug= False) :
         self.rotation      = rotation
         self.position      = position
         self.logicalVolume = logicalVolume
