@@ -81,6 +81,27 @@ class _BodyBase(object):
 
         return wrapped
 
+    def add_to_volume(self, volume):
+        """
+        Basically for adding to a world volume.
+
+        """
+        solid = self.get_as_gdml_solid()
+        # Convert the matrix to TB xyz:
+        rotation_angles = _trf.matrix2tbxyz(self.get_rotation_matrix())
+        # Up to this point all rotations are active, which is OK
+        # because so are boolean rotations.  However, volume rotations
+        # are passive, so reverse the rotation:
+        rotation_angles = _trf.reverse(rotation_angles)
+        _pygdml.volume.Volume(rotation_angles,
+                              self.centre(),
+                              self.get_as_gdml_solid(),
+                              self.name,
+                              volume,
+                              1,
+                              False,
+                              "G4_Galactic")
+
 
 class _InfiniteSolid(object):
     # Infinite bodies are factories for themselves, allowing

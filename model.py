@@ -309,6 +309,18 @@ class Model(object):
                           solid.obj1.name, solid.obj2.name, solid.tra2)
         raise error
 
+    def view_bodies(self, bodies):
+        if isinstance(bodies, basestring):
+            bodies = [bodies]
+        world_volume = self._gdml_world_volume()
+        for body in bodies:
+            print body
+            self.bodies[body].add_to_volume(world_volume)
+        world_mesh = world_volume.pycsgmesh()
+        viewer = _pygdml.VtkViewer()
+        viewer.addSource(world_mesh)
+        viewer.view()
+
 
 
 class _FlukaMaterialGetter(FlukaParserListener):
