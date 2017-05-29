@@ -8,8 +8,8 @@ import numpy as _np
 import sys as _sys
 
 class Sphere(_SolidBase) :
-    #def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 16, nstack = 8) :
-    def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice=4, nstack=4):
+    def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 8, nstack = 8) :
+    #def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice=4, nstack=4):
         """
         Constructs a section of a spherical shell. 
 
@@ -45,7 +45,6 @@ class Sphere(_SolidBase) :
         self.basicmesh()
         self.csgmesh()
 
-        print 'shpere mesh',self.name
         return self.mesh
         
     def basicmesh(self) :
