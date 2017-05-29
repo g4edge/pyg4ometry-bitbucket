@@ -44,7 +44,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     ellipsoidSolid9    = _g4.solid.Ellipsoid("ellipsoid_solid9", 40., 60., 100., -50., 50.)
     ellipsoidLogical9  = _g4.LogicalVolume(ellipsoidSolid9,'G4_Cu','ellipsoidLogical9')
     ellipsoidPhysical9 = _g4.PhysicalVolume([0,0,0],[200,200,0],ellipsoidLogical9,'ellipsoidPhysical9',worldLogical)
-    
+
+    # clip the world logical volume
+    worldLogical.setClip();
+
     # register the world volume
     _g4.registry.setWorld('worldLogical')
     

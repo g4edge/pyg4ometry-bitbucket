@@ -44,7 +44,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     polyconeSolid9    = _g4.solid.Polycone("polycone_solid9", _np.pi/4., 3*_np.pi/2, [5*5,5*7,5*9,5*11,5*25,5*27,5*29,5*31,5*35], [0,0,0,0,0,0,0,0,0], [0,5*10,5*10,5*5,5*5,5*10,5*10,5*2,5*2])
     polyconeLogical9  = _g4.LogicalVolume(polyconeSolid9,'G4_Cu','polyconeLogical9')
     polyconePhysical9 = _g4.PhysicalVolume([0,0,0],[200,200,0],polyconeLogical9,'polyconePhysical9',worldLogical)
-    
+
+    # clip the world logical volume
+    worldLogical.setClip();
+
     # register the world volume
     _g4.registry.setWorld('worldLogical')
     

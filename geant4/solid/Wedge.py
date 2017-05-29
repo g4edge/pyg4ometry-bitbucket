@@ -23,8 +23,8 @@ class Wedge(_SolidBase) :
 
     def pycsgmesh(self):
 
-        if self.mesh : 
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         d = self.pDz
 

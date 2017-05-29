@@ -44,7 +44,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     torusSolid9    = _g4.solid.Torus("torus_solid9", 0., 30., 50, _np.pi, _np.pi/4, nslice=16, nstack=8)
     torusLogical9  = _g4.LogicalVolume(torusSolid9,'G4_Cu','torusLogical9')
     torusPhysical9 = _g4.PhysicalVolume([0,0,0],[200,200,0],torusLogical9,'torusPhysical9',worldLogical)
-    
+
+    # clip the world logical volume
+    worldLogical.setClip();
+
     # register the world volume
     _g4.registry.setWorld('worldLogical')
     

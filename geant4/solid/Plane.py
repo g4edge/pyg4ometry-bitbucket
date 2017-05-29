@@ -16,8 +16,8 @@ class Plane(_SolidBase) : # point on plane is on z-axis
         pass
 
     def pycsgmesh(self):
-        if self.mesh :
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         d = self.pDz
         c = _CSG.cube(radius=[10*d,10*d,d])

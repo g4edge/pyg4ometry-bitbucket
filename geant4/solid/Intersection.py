@@ -29,8 +29,8 @@ class Intersection(_SolidBase) :
               '' \
               ' ',self.name, self.obj1.name, self.obj2.name
 
-        if self.mesh : 
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         rot   = tbxyz(self.tra2[0])
         tlate = self.tra2[1]

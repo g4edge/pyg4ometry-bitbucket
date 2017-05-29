@@ -36,8 +36,8 @@ class CutTubs(_SolidBase) :
         pass
 
     def pycsgmesh(self):
-        if self.mesh :
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         self.basicmesh()
         if self.pLowNorm != [0,0,-1] or self.pHighNorm != [0,0,1] :

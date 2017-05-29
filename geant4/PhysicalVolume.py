@@ -28,8 +28,8 @@ class PhysicalVolume :
         if self.debug :
             print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
 
-        if self.mesh :
-            return self.mesh
+        #if self.mesh :
+        #    return self.mesh
 
         # see if the volume should be skipped
         try :
@@ -94,7 +94,7 @@ def recursize_map_rottrans(nlist,trans,rot,scale = [1,1,1]):
     '''Function to apply transformation (rot then trans) to nested list of meshes (nlist)'''
     for i in range(len(nlist)) :
         if isinstance(nlist[i],list) :
-            map_nlist(nlist[i],trans,rot,scale)
+            recursize_map_rottrans(nlist[i],trans,rot,scale)
         else :
             nlist[i].scale(scale)
             nlist[i].rotate(rot[0],rad2deg(rot[1]))
@@ -108,4 +108,4 @@ def recursive_map_size(nlist) :
         if isinstance(nlist[i],list) :
             recursive_map_size(nlist[i])
         else :
-            print 'polygons, vertices', nlist[i].polygonCount(), nlist[i].vertexCount()
+            print 'PhysicalVolume.recursize_map_size : polygons, vertices', nlist[i].polygonCount(), nlist[i].vertexCount()

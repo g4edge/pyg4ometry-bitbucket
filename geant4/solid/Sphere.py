@@ -39,8 +39,8 @@ class Sphere(_SolidBase) :
         return 'Sphere : '+self.name+' '+str(self.pRmin)+' '+str(self.pRmax)+' '+str(self.pSPhi)+' '+str(self.pDPhi)+' '+str(self.pSTheta)+' '+str(self.pDTheta)+' '+str(self.nslice)+' '+str(self.nstack)
     
     def pycsgmesh(self):
-        if self.mesh :
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         self.basicmesh()
         self.csgmesh()

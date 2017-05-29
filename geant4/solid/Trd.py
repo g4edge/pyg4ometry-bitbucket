@@ -29,8 +29,8 @@ class Trd(_SolidBase) :
         _registry.addSolid(self)
 
     def pycsgmesh(self) :
-        if self.mesh :
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         self.basicmesh()
         self.csgmesh()

@@ -24,9 +24,12 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     boxLogical4  = _g4.LogicalVolume(boxSolid4,'G4_Cu','boxLogical4')
     boxPhysical4 = _g4.PhysicalVolume([0,0,0],[0,-200,0],boxLogical4,'boxPhysical4',worldLogical)
 
+    # clip the world logical volume
+    worldLogical.setClip();
+
     # register the world volume
     _g4.registry.setWorld('worldLogical')
-    
+
     m = worldLogical.pycsgmesh()
     
     if vtkViewer : 

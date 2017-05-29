@@ -22,6 +22,9 @@ def PhysicalVolume() :
     pv2 = _g4.PhysicalVolume([_np.pi/8,0,0],[0,0,0]  ,slv,'pv2',lv,[1,1,1])
     pv3 = _g4.PhysicalVolume([_np.pi/4,0,0],[0, 50,0],slv,'pv3',lv,[1,1,1])
 
+    # clip the world logical volume
+    lw.setClip();
+
     # register the world volume
     _g4.registry.setWorld('wor')
 

@@ -20,15 +20,15 @@ class Box(_SolidBase) :
         self.pZ = pZ
         self.type = 'Box'
         self.mesh = None
-        if name != '' : 
+        if name != '' :
             _registry.addSolid(self)
 
     def __repr__(self):
         return 'Box : '+self.name+' '+str(self.pX)+' '+str(self.pY)+' '+str(self.pZ)
 
     def pycsgmesh(self) :
-        if self.mesh : 
-            return self.mesh
+#        if self.mesh :
+#            return self.mesh
 
         self.mesh = _CSG.cube(center=[0,0,0], radius=[float(self.pX),float(self.pY),float(self.pZ)])
         return self.mesh

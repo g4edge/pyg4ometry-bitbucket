@@ -44,7 +44,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     trdSolid9    = _g4.solid.Trd("trd_solid9", 30, 10, 40, 15, 60)
     trdLogical9  = _g4.LogicalVolume(trdSolid9,'G4_Cu','trdLogical9')
     trdPhysical9 = _g4.PhysicalVolume([0,0,0],[200,200,0],trdLogical9,'trdPhysical9',worldLogical)
-    
+
+    # clip the world logical volume
+    worldLogical.setClip();
+
     # register the world volume
     _g4.registry.setWorld('worldLogical')
     

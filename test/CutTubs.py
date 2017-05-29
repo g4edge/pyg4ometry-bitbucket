@@ -47,6 +47,8 @@ def pycsgmeshTest(vtkViewer=True, gdmlWriter=True):
     cutTubsLogical9 = _g4.LogicalVolume(cutTubsSolid9, 'G4_Cu', 'cutTubsLogical9')
     cutTubsPhysical9 = _g4.PhysicalVolume([0, 0, 0], [200, 200, 0], cutTubsLogical9, 'cutTubsPhysical9', worldLogical)
 
+    # clip the world logical volume
+    worldLogical.setClip();
 
     # register the world volume
     _g4.registry.setWorld('worldLogical')

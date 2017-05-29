@@ -44,7 +44,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     polyhedraSolid9    = _g4.solid.Polyhedra("polyhedra_solid9", 0*_np.pi/4., 2*_np.pi, 5, 7, [0, 5*5,5*8,5*13,5*30,5*32,5*35], [0,0,0,0,0,0,0,0,0], [0,5*15,5*15,5*4,5*4,5*10,5*10])
     polyhedraLogical9  = _g4.LogicalVolume(polyhedraSolid9,'G4_Cu','polyhedraLogical9')
     polyhedraPhysical9 = _g4.PhysicalVolume([0,0,0],[200,200,0],polyhedraLogical9,'polyhedraPhysical9',worldLogical)
-    
+
+    # clip the world logical volume
+    worldLogical.setClip();
+
     # register the world volume
     _g4.registry.setWorld('worldLogical')
     

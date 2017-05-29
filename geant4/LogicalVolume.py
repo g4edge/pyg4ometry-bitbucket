@@ -1,4 +1,9 @@
+from pygeometry.geant4 import solid as _solid
 from pygeometry.geant4.Registry import registry as _registry
+from pygeometry.pycsg.geom import Vector as _Vector
+from matplotlib.cbook import flatten as _flatten
+import numpy as _np
+
 import sys as _sys
 
 class LogicalVolume :
@@ -18,14 +23,13 @@ class LogicalVolume :
         return 'Logical volume : '+self.name+' '+str(self.solid)+' '+str(self.material)
     
     def pycsgmesh(self) :
-
         # count the logical volumes meshed
         LogicalVolume.imeshed = LogicalVolume.imeshed + 1
         if self.debug :
             print 'LogiacalVolume mesh count',LogicalVolume.imeshed
 
-        if self.mesh :
-            return self.mesh
+        #if self.mesh :
+        #    return self.mesh
 
         # see if the volume should be skipped
         try :
@@ -61,6 +65,41 @@ class LogicalVolume :
     def add(self, physicalVolume) :
         self.daughterVolumes.append(physicalVolume)
 
+    def getSize(self):
+        self.pycsgmesh();
+        extent = _np.array(mesh_extent(self.mesh[1:]))
+
+        # size and centre
+        self.size = extent[1] - extent[0]
+        self.centre = extent[1] - self.size/2.0
+
+        return [self.size, self.centre]
+
+    def setClip(self):
+        [size, centre] = self.getSize()
+        self.setSize(size)
+        self.setCentre(centre)
+
+    def setSize(self, size):
+        # if a box
+        if isinstance(self.solid,_solid.Box) :
+            self.solid.pX = size[0] / 2.
+            self.solid.pY = size[1] / 2.
+            self.solid.pZ = size[2] / 2.
+        elif isinstance(self.solid,_solid.Subtraction) :
+            self.solid.obj1.pX = size[0] / 2.
+            self.solid.obj1.pY = size[1] / 2.
+            self.solid.obj1.pZ = size[2] / 2.
+
+    def setCentre(self,centre):
+        self.centre = centre
+        for dv in self.daughterVolumes:
+            dv.position = list(-_np.array(self.centre) + _np.array(dv.position))
+
+        # Move the beam pipe if a subtraction solid
+        if isinstance(self.solid, _solid.Subtraction):
+            self.solid.tra2[1] = self.solid.tra2[1] - _np.array(self.centre)
+
     def gdmlWrite(self, gw, prepend) :
         we = gw.doc.createElement('volume')
         we.setAttribute('name',prepend+'_'+self.name+'_lv')
@@ -80,3 +119,29 @@ class LogicalVolume :
             we.appendChild(dve)
 
         gw.structure.appendChild(we)
+
+def mesh_extent(nlist) :
+    '''Function to determine extent of an tree of meshes'''
+
+    vMin = _Vector([1e50,1e50,1e50])
+    vMax = _Vector([-1e50,-1e50,-1e50])
+
+    for m in _flatten(nlist) :
+        polys = m.toPolygons()
+        for p in polys :
+            for vert in p.vertices :
+                v = vert.pos
+                if v[0] < vMin[0] :
+                    vMin[0] = v[0]
+                if v[1] < vMin[1] :
+                    vMin[1] = v[1]
+                if v[2] < vMin[2] :
+                    vMin[2] = v[2]
+                if v[0] > vMax[0] :
+                    vMax[0] = v[0]
+                if v[1] > vMax[1] :
+                    vMax[1] = v[1]
+                if v[2] > vMax[2] :
+                    vMax[2] = v[2]
+
+    return [vMin,vMax]

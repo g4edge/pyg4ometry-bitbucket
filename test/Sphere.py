@@ -10,7 +10,7 @@ import gc as _gc
 def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     _g4.registry.clear()
     
-    worldSolid      = _g4.solid.Box('worldBox',250,250,100)
+    worldSolid      = _g4.solid.Box('worldBox',500,500,500)
     worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
     sphereSolid1    = _g4.solid.Sphere('sphere1',0,50,0,_np.pi,0,_np.pi*2)
@@ -36,6 +36,9 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     sphereSolid6    = _g4.solid.Sphere('sphere6',25,50,0,_np.pi,0,_np.pi*2./3)
     sphereLogical6  = _g4.LogicalVolume(sphereSolid6,'G4_Cu','sphereLogical6')
     spherePhysical6 = _g4.PhysicalVolume([0,0,0],[0,200,0],sphereLogical6,'spherePhysical6',worldLogical)
+
+    # clip the world logical volume
+    worldLogical.setClip();
 
     # register the world volume
     _g4.registry.setWorld('worldLogical')
