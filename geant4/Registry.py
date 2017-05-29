@@ -122,11 +122,11 @@ class Registry :
         self.parameterisedVolumeDict.clear()
         self.parameterDict.clear()
 
-        self.logicalVolumeList.clear()
+        self.logicalVolumeList = []
         self.solidTypeCountDict.clear()
         self.solidUsageCountDict.clear()
         self.logicalVolumeUsageCountDict.clear()
-        self.logicalVolumeMeshSkip.clear()
+        self.logicalVolumeMeshSkip = []
 
 registry = Registry()
 
