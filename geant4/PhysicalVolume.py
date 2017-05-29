@@ -7,7 +7,8 @@ class PhysicalVolume :
 
     imeshed = 0
 
-    def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1]) :
+    def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1], debug= False) :
+    def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1], debug= False) :
         self.rotation      = rotation
         self.position      = position
         self.logicalVolume = logicalVolume
@@ -16,6 +17,7 @@ class PhysicalVolume :
         self.mesh          = None
         self.motherVolume.add(self)
         self.scale         = scale
+        self.debug         = debug
         _registry.addPhysicalVolume(self)
 
     def __repr__(self) : 
@@ -24,7 +26,8 @@ class PhysicalVolume :
     def pycsgmesh(self) :
 
         PhysicalVolume.imeshed = PhysicalVolume.imeshed + 1
-        print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
+        if self.debug :
+            print 'PhysicalVolume mesh count',PhysicalVolume.imeshed
 
         if self.mesh :
             return self.mesh
@@ -32,7 +35,8 @@ class PhysicalVolume :
         # see if the volume should be skipped
         try :
             _registry.logicalVolumeMeshSkip.index(self.logicalVolume.name)
-            print "Physical volume skipping ---------------------------------------- ",self.name
+            if self.debug:
+                print "Physical volume skipping ---------------------------------------- ",self.name
             return []
         except ValueError :
             if self.position == [0,0,0] and self.rotation == [0,0,0] :
@@ -45,9 +49,12 @@ class PhysicalVolume :
                     self.logicalVolume.mesh = None
 
         # loop over daughter meshes
-        map_nlist(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
+        recursize_map_rottrans(self.mesh,list(self.position),tbxyz(list(self.rotation)),list(self.scale))
 
-        print 'physical mesh', self.name
+        if self.debug :
+            print 'physical mesh', self.name
+
+        recursive_map_size(self.mesh)
         return self.mesh
 
     def gdmlWrite(self, gw, prepend) : 
@@ -84,7 +91,7 @@ class PhysicalVolume :
 
         return pv
                            
-def map_nlist(nlist,trans,rot,scale = [1,1,1]):
+def recursize_map_rottrans(nlist,trans,rot,scale = [1,1,1]):
     '''Function to apply transformation (rot then trans) to nested list of meshes (nlist)'''
     for i in range(len(nlist)) :
         if isinstance(nlist[i],list) :
@@ -93,3 +100,13 @@ def map_nlist(nlist,trans,rot,scale = [1,1,1]):
             nlist[i].scale(scale)
             nlist[i].rotate(rot[0],rad2deg(rot[1]))
             nlist[i].translate(trans)
+
+def recursive_map_size(nlist) :
+    '''Recursive application of .polygonCount() and .vertexCount() to meshlist
+    :argument nlist
+    '''
+    for i in range(len(nlist)) :
+        if isinstance(nlist[i],list) :
+            recursive_map_size(nlist[i])
+        else :
+            print 'polygons, vertices', nlist[i].polygonCount(), nlist[i].vertexCount()
