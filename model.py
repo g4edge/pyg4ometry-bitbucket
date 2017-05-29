@@ -243,9 +243,9 @@ class Model(object):
             regions = self.regions
         elif isinstance(regions, basestring):
             regions = [regions]
-        # good regions, bad regions, bad subtractions, bad
-        # intersections, IndexErrors.
-        output = {key:[] for key in ["good", "bad", "subs", "ints", "index"]}
+        # good regions, bad regions, bad subtractions, bad intersections
+        output = {key:[] for key in ["good", "bad", "subs", "ints"]}
+        output["scale"] = self._region_scale_map
         number_of_regions = len(regions)
         start = _time.time()
         for index, region_name in enumerate(regions):
@@ -259,9 +259,6 @@ class Model(object):
                     output["subs"].append(region_name)
                 elif isinstance(error.solid, _pygdml.solid.Intersection):
                     output["ints"].append(region_name)
-            except IndexError:
-                output["bad"].append(region_name)
-                output["index"].append(region_name)
             print "Tested {0}/{1}.".format(index + 1, number_of_regions)
             print ("Succeded: {}.  Failed: {} ({:.2%}).".format(
                 len(output["good"]),
