@@ -145,7 +145,10 @@ class RPP(_BodyBase):
 
 
     def extent(self):
-        return max([self.parameters.x_max - self.parameters.x_min,
+        return max([abs(self.parameters.x_min), abs(self.parameters.x_max),
+                    abs(self.parameters.y_min), abs(self.parameters.y_max),
+                    abs(self.parameters.z_min), abs(self.parameters.z_max),
+                    self.parameters.x_max - self.parameters.x_min,
                     self.parameters.y_max - self.parameters.y_min,
                     self.parameters.z_max - self.parameters.z_min])
 
