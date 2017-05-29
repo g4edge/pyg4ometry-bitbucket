@@ -504,6 +504,7 @@ class _FlukaBodyListener(FlukaParserListener):
         '''
         float_strings = [i.getText() for i in ctx.Float()]
         floats = map(float, float_strings)
+        floats = map(lambda x: 10 * x, floats)
         return floats
 
     def exitGeocards(self, ctx):

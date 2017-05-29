@@ -8,6 +8,13 @@ import pygdml as _pygdml
 from pygdml import transformation as _trf
 import vector
 
+"""
+
+A collection of classes for representing Fluka regions and Fluka bodies.
+
+Note:  All units are in millimetres, c.f. centimetres in Fluka.
+
+"""
 
 def _gdml_logger(f):
     # Logging the construction of the gdml solids.
@@ -52,34 +59,6 @@ class _BodyBase(object):
 
     def set_transformation_definitions(self, something):
         pass
-
-    @staticmethod
-    def _parameters_in_mm(func):
-        '''
-        Chances parameter units to millimetres local only to the
-        function "func".
-        Tuples are supposed to be immutable, but this saves a
-        dependency.
-        '''
-        def wrapped(self):
-            mm = 10.0
-            fields = self.parameters._fields
-            parameters_in_mm = [i * mm for i in self.parameters]
-            # Redefine the named tuple so the returned object is the same shape
-            parameters_type = namedtuple("Parameters", fields)
-            self.parameters = parameters_type(*parameters_in_mm)
-            if hasattr(self, "scale"):
-                self.scale *= mm
-            # Call function
-            output = func(self)
-            # Put the coordinates back to cm.
-            parameters_in_cm = [i * 1/mm for i in self.parameters]
-            self.parameters = parameters_type(*parameters_in_cm)
-            if hasattr(self, "scale"):
-                self.scale /= mm
-            return output
-
-        return wrapped
 
     def add_to_volume(self, volume):
         """
@@ -147,7 +126,6 @@ class RPP(_BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         '''
         Return the coordinates of the centre of the Rectangular
@@ -174,7 +152,6 @@ class RPP(_BodyBase):
                     self.parameters.z_max - self.parameters.z_min])
 
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         '''
@@ -212,7 +189,6 @@ class SPH(_BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         '''
         Returns the coordinates of the centre of the sphere in
@@ -232,7 +208,6 @@ class SPH(_BodyBase):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         '''
@@ -281,7 +256,6 @@ class RCC(_BodyBase):
                                       self.parameters.h_z)
         self.length = _np.linalg.norm(self.direction)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         '''
         Returns the coordinates of the centre of the sphere in
@@ -320,7 +294,6 @@ class RCC(_BodyBase):
                                   self.parameters.h_z])
         return centre_max + length
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
         length = _np.linalg.norm([self.parameters.h_x,
                                   self.parameters.h_y,
@@ -394,7 +367,6 @@ class REC(_BodyBase):
         self.parameters = self._ParametersType(*parameters)
 
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         centre_x = (self.parameters.face_centre_x
                     + self.parameters.to_other_face_x * 0.5)
@@ -445,7 +417,6 @@ class REC(_BodyBase):
         angles = _trf.matrix2tbxyz(resulting_matrix)
         return vector.Three(*angles)
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         # EllipticalTube is defined in terms of half-lengths in x, y,
@@ -522,7 +493,6 @@ class TRC(_BodyBase):
         self.parameters = self._ParametersType(*parameters)
         return None
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
 
@@ -559,7 +529,6 @@ class TRC(_BodyBase):
                    self.parameters.minor_radius,
                    self.parameters.major_radius)
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         # The first face of pygdml.Cons is located at -z, and the
@@ -593,7 +562,6 @@ class XYP(_BodyBase, _InfiniteSolid):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         centre_x = 0.0
         centre_y = 0.0
@@ -609,7 +577,6 @@ class XYP(_BodyBase, _InfiniteSolid):
     def extent(self):
         return abs(self.parameters.v_z)
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -637,7 +604,6 @@ class XZP(_BodyBase, _InfiniteSolid):
         self._ParametersType = namedtuple("Parameters", ['v_y'])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self.scale * 0.5)
@@ -653,7 +619,6 @@ class XZP(_BodyBase, _InfiniteSolid):
     def extent(self):
         return abs(self.parameters.v_y)
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -681,7 +646,6 @@ class YZP(_BodyBase, _InfiniteSolid):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         centre_x = self.parameters.v_x - (self.scale * 0.5)
         centre_y = 0.0
@@ -697,7 +661,6 @@ class YZP(_BodyBase, _InfiniteSolid):
     def extent(self):
         return abs(self.parameters.v_x)
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -750,7 +713,6 @@ class PLA(_BodyBase, _InfiniteSolid):
                                            self.parameters.y_position,
                                            self.parameters.z_position])
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         # This is the centre of the underlying gdml solid (i.e. won't
         # be on the surface, but set backwards by half length scale's amount.
@@ -778,7 +740,6 @@ class PLA(_BodyBase, _InfiniteSolid):
                    abs(self.parameters.y_position),
                    abs(self.parameters.z_position))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
@@ -814,7 +775,6 @@ class XCC(_BodyBase, _InfiniteSolid):
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
@@ -830,7 +790,6 @@ class XCC(_BodyBase, _InfiniteSolid):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
@@ -867,7 +826,6 @@ class YCC(_BodyBase, _InfiniteSolid):
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
@@ -883,7 +841,6 @@ class YCC(_BodyBase, _InfiniteSolid):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
@@ -921,7 +878,6 @@ class ZCC(_BodyBase, _InfiniteSolid):
                                                          "radius"])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
@@ -936,7 +892,6 @@ class ZCC(_BodyBase, _InfiniteSolid):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
@@ -978,7 +933,6 @@ class XEC(_BodyBase, _InfiniteSolid):
                                                          "semi_axis_z"])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
@@ -994,7 +948,6 @@ class XEC(_BodyBase, _InfiniteSolid):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
@@ -1032,7 +985,6 @@ class YEC(_BodyBase, _InfiniteSolid):
                                                          "semi_axis_x"])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
@@ -1048,7 +1000,6 @@ class YEC(_BodyBase, _InfiniteSolid):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
@@ -1086,7 +1037,6 @@ class ZEC(_BodyBase, _InfiniteSolid):
                                                          "semi_axis_y"])
         self.parameters = self._ParametersType(*parameters)
 
-    @_BodyBase._parameters_in_mm
     def centre(self):
         return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
@@ -1101,7 +1051,6 @@ class ZEC(_BodyBase, _InfiniteSolid):
     def extent(self):
         return max(map(abs, self.parameters))
 
-    @_BodyBase._parameters_in_mm
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
