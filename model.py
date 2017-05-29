@@ -260,6 +260,7 @@ class Model(object):
                 elif isinstance(error.solid, _pygdml.solid.Intersection):
                     output["ints"].append(region_name)
             except IndexError:
+                output["bad"].append(region_name)
                 output["index"].append(region_name)
             print "Tested {0}/{1}.".format(index + 1, number_of_regions)
             print ("Succeded: {}.  Failed: {} ({:.2%}).".format(
