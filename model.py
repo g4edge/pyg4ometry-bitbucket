@@ -561,7 +561,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             _logger.debug("infinite solid:  type=%s; scale=%s",
                           body_type, scale)
 
-        gdml_solid = body.get_as_gdml_solid()
+        gdml_solid = body.gdml_solid()
         body_centre = body.centre()
         body_rotation = body.get_rotation_matrix()
 

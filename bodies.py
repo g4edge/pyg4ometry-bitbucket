@@ -86,7 +86,7 @@ class _BodyBase(object):
         Basically for adding to a world volume.
 
         """
-        solid = self.get_as_gdml_solid()
+        solid = self.gdml_solid()
         # Convert the matrix to TB xyz:
         rotation_angles = _trf.matrix2tbxyz(self.get_rotation_matrix())
         # Up to this point all rotations are active, which is OK
@@ -95,7 +95,7 @@ class _BodyBase(object):
         rotation_angles = _trf.reverse(rotation_angles)
         _pygdml.volume.Volume(rotation_angles,
                               self.centre(),
-                              self.get_as_gdml_solid(),
+                              self.gdml_solid(),
                               self.name,
                               volume,
                               1,
@@ -176,7 +176,7 @@ class RPP(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         '''
         Construct a pygdml Box from this body definition
         '''
@@ -234,7 +234,7 @@ class SPH(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         '''
         Construct a pgydml orb (full, solid sphere) solid.
         '''
@@ -322,11 +322,11 @@ class RCC(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
         length = _np.linalg.norm([self.parameters.h_x,
                                   self.parameters.h_y,
                                   self.parameters.h_z])
 
+    def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
                                  length * 0.5,
@@ -447,7 +447,7 @@ class REC(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         # EllipticalTube is defined in terms of half-lengths in x, y,
         # and z.  Choose semi_major to start in the positive y direction.
         semi_minor = _np.linalg.norm([self.parameters.semi_minor_x,
@@ -561,7 +561,7 @@ class TRC(_BodyBase):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         # The first face of pygdml.Cons is located at -z, and the
         # second at +z.  Here choose to put the major face at -z.
         return _pygdml.solid.Cons(self.name,
@@ -611,7 +611,7 @@ class XYP(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
@@ -655,7 +655,7 @@ class XZP(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
@@ -699,7 +699,7 @@ class YZP(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
@@ -780,7 +780,7 @@ class PLA(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                 0.5 * self.scale,
                                 0.5 * self.scale,
@@ -832,7 +832,7 @@ class XCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
                                  self.scale * 0.5,
@@ -885,7 +885,7 @@ class YCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
                                  0.0,
                                  self.parameters.radius,
@@ -938,7 +938,7 @@ class ZCC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
                                   0.0,
                                   self.parameters.radius,
@@ -996,7 +996,7 @@ class XEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_z,
                                            self.parameters.semi_axis_y,
@@ -1050,7 +1050,7 @@ class YEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_x,
                                            self.parameters.semi_axis_z,
@@ -1103,7 +1103,7 @@ class ZEC(_BodyBase, _InfiniteSolid):
 
     @_BodyBase._parameters_in_mm
     @_gdml_logger
-    def get_as_gdml_solid(self):
+    def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                            self.parameters.semi_axis_x,
                                            self.parameters.semi_axis_y,
