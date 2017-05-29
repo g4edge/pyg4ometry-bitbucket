@@ -764,3 +764,8 @@ class _UnarySolid(object):
         name = str(_uuid4())
         name = name.replace("-","")
         return "a" + name
+
+def load_pickle(path):
+    with open(path, 'r') as f:
+        o = _cPickle.load(f)
+    return o
