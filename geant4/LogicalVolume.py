@@ -5,12 +5,13 @@ class LogicalVolume :
 
     imeshed = 0
 
-    def __init__(self, solid, material, name) :
+    def __init__(self, solid, material, name, debug= False) :
         self.solid           = solid
         self.material        = material
         self.name            = name
         self.daughterVolumes = [] 
         self.mesh            = None
+        self.debug           = debug
         _registry.addLogicalVolume(self)
 
     def __repr__(self) : 
@@ -20,7 +21,8 @@ class LogicalVolume :
 
         # count the logical volumes meshed
         LogicalVolume.imeshed = LogicalVolume.imeshed + 1
-        print 'LogicalVolume mesh count',LogicalVolume.imeshed
+        if self.debug :
+            print 'LogiacalVolume mesh count',LogicalVolume.imeshed
 
         if self.mesh :
             return self.mesh
@@ -28,7 +30,8 @@ class LogicalVolume :
         # see if the volume should be skipped
         try :
             _registry.logicalVolumeMeshSkip.index(self.name)
-            print "Logical volume skipping ---------------------------------------- ",self.name
+            if self.debug :
+                print "Logical volume skipping ---------------------------------------- ",self.name
             return []
         except ValueError :
             pass
@@ -51,7 +54,8 @@ class LogicalVolume :
             self.mesh[0].colour    = [1,0,0]
             self.mesh[0].logical   = True
 
-        print 'logical mesh', self.name
+        if self.debug :
+            print 'logical mesh', self.name
         return self.mesh
 
     def add(self, physicalVolume) :
