@@ -267,7 +267,7 @@ class Model(object):
                 len(output["bad"]),
                 (len(output["good"])
                  / (len(output["good"])
-                    + len(output["bad"])))))
+                    + float(len(output["bad"]))))))
 
         end = _time.time()
         print (end - start)/60.0, "minutes elipsed since test begun."
