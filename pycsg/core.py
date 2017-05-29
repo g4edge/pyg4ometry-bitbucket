@@ -72,6 +72,18 @@ class CSG(object):
     def toPolygons(self):
         return self.polygons
 
+    def polygonCount(self):
+        '''Return number of polygons in CSG solid'''
+        return len(self.polygons)
+
+    def vertexCount(self):
+        '''Return number of verticies in CSG solid'''
+        vCount = 0
+        for p in self.polygons :
+            vCount += len(p.vertices)
+
+        return vCount
+
     def refine(self):
         """
         Return a refined CSG. To each polygon, a middle point is added to each edge and to the center 
