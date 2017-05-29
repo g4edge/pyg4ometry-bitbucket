@@ -3,7 +3,7 @@ from pygeometry.pycsg.core import CSG as _CSG
 from pygeometry.geant4.Registry import registry as _registry
 
 class Box(_SolidBase) :
-    """
+    '''
     Constructs a box. 
     
     Inputs:
@@ -11,7 +11,7 @@ class Box(_SolidBase) :
         pX:     float, half-length along x
         pY:     float, half-length along y
         pZ:     float, half-length along z
-    """
+    '''
 
     def __init__(self, name = '', pX = 0.0, pY = 0.0, pZ = 0.0) :
         self.name = name
@@ -41,10 +41,3 @@ class Box(_SolidBase) :
         oe.setAttribute('y','2*'+str(self.pY))
         oe.setAttribute('z','2*'+str(self.pZ))
         gw.solids.appendChild(oe)
-        
-    def gdmlRead(self, gdmlReader) :
-
-        # do reading
-
-        # register solid
-        _registry.addSolid(self)
