@@ -449,7 +449,7 @@ class _FlukaBodyListener(FlukaParserListener):
                                     self._translat_stack,
                                     self._expansion_stack)
             self.bodies[body_name] = body
-        except pyfluka.bodies.BodyNotImplementedError:
+        except TypeError:
             _warnings.simplefilter('once', UserWarning)
             _warnings.warn(("\nBody type %s not supported.  All bodies"
                             " of this type will be omitted.  If bodies"

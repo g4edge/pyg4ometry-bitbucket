@@ -1,3 +1,4 @@
+import abc as _abc
 from collections import namedtuple
 import logging as _logging
 import math as _math
@@ -39,11 +40,12 @@ def _gdml_logger(f):
     return wrapped
 
 
-class _BodyBase(object):
+class Body(object):
     '''
     A class representing a body as defined in Fluka.
     get_body_as_gdml_solid() returns the body as a pygdml.solid
     '''
+    __metaclass__ = _abc.ABCMeta
 
     def __init__(self,
                  name,
@@ -56,6 +58,23 @@ class _BodyBase(object):
         self._translation_stack = translation_stack
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
+
+    @_abc.abstractmethod
+    def centre(self):
+        pass
+
+    @_abc.abstractmethod
+    def get_rotation_matrix(self):
+        pass
+
+    @_abc.abstractmethod
+    def extent(self):
+        pass
+
+    @_abc.abstractmethod
+    @_gdml_logger
+    def gdml_solid(self):
+        pass
 
     def set_transformation_definitions(self, something):
         pass
@@ -94,7 +113,7 @@ class _InfiniteSolid(object):
         out.scale = scale
         return out
 
-class RPP(_BodyBase):
+class RPP(Body):
     '''
     An RPP is a rectangular parallelpiped (a cuboid).
     '''
@@ -168,7 +187,7 @@ class RPP(_BodyBase):
                                  0.5 * z_length)
 
 
-class SPH(_BodyBase):
+class SPH(Body):
     def __init__(self, name, parameters, expansion_stack,
                  translation_stack,
                  transformation_stack):
@@ -214,7 +233,7 @@ class SPH(_BodyBase):
         return _pygdml.solid.Orb(self.name, self.parameters.radius)
 
 
-class RCC(_BodyBase):
+class RCC(Body):
     '''
     Right-angled Circular Cylinder
 
@@ -289,7 +308,7 @@ class RCC(_BodyBase):
                                  2*_pi)
 
 
-class REC(_BodyBase):
+class REC(Body):
     """
     NOT IMPLEMENTED
 
@@ -384,7 +403,7 @@ class REC(_BodyBase):
                                             length * 0.5)
 
 
-class TRC(_BodyBase):
+class TRC(Body):
     """
     Truncated Right-angled Cone.
 
@@ -474,7 +493,7 @@ class TRC(_BodyBase):
                                   2*_pi)
 
 
-class XYP(_BodyBase, _InfiniteSolid):
+class XYP(Body, _InfiniteSolid):
     '''
     Infinite plane perpendicular to the z-axis.
     '''
@@ -513,7 +532,7 @@ class XYP(_BodyBase, _InfiniteSolid):
                                 0.5 * self.scale)
 
 
-class XZP(_BodyBase, _InfiniteSolid):
+class XZP(Body, _InfiniteSolid):
     '''
     Infinite plane perpendicular to the y-axis.
     '''
@@ -552,7 +571,7 @@ class XZP(_BodyBase, _InfiniteSolid):
                                 0.5 * self.scale)
 
 
-class YZP(_BodyBase, _InfiniteSolid):
+class YZP(Body, _InfiniteSolid):
     '''
     Infinite plane perpendicular to the x-axis.
     '''
@@ -591,7 +610,7 @@ class YZP(_BodyBase, _InfiniteSolid):
                                 0.5 * self.scale)
 
 
-class PLA(_BodyBase, _InfiniteSolid):
+class PLA(Body, _InfiniteSolid):
     """
     Generic infinite half-space.
 
@@ -662,7 +681,7 @@ class PLA(_BodyBase, _InfiniteSolid):
                                 0.5 * self.scale)
 
 
-class XCC(_BodyBase, _InfiniteSolid):
+class XCC(Body, _InfiniteSolid):
     """
     Infinite circular cylinder parallel to x-axis
 
@@ -710,7 +729,7 @@ class XCC(_BodyBase, _InfiniteSolid):
                                  2*_pi)
 
 
-class YCC(_BodyBase, _InfiniteSolid):
+class YCC(Body, _InfiniteSolid):
     """
     Infinite circular cylinder parallel to y-axis
 
@@ -759,7 +778,7 @@ class YCC(_BodyBase, _InfiniteSolid):
                                  2*_pi)
 
 
-class ZCC(_BodyBase, _InfiniteSolid):
+class ZCC(Body, _InfiniteSolid):
     """
     Infinite circular cylinder parallel to z-axis
 
@@ -807,7 +826,7 @@ class ZCC(_BodyBase, _InfiniteSolid):
                                   2*_pi)
 
 
-class XEC(_BodyBase, _InfiniteSolid):
+class XEC(Body, _InfiniteSolid):
     """
     An infinite elliptical cylinder parallel to the x-axis.
 
@@ -858,7 +877,7 @@ class XEC(_BodyBase, _InfiniteSolid):
                                            0.5 * self.scale)
 
 
-class YEC(_BodyBase, _InfiniteSolid):
+class YEC(Body, _InfiniteSolid):
     """
     An infinite elliptical cylinder parallel to the y-axis.
 
@@ -907,7 +926,7 @@ class YEC(_BodyBase, _InfiniteSolid):
                                            0.5 * self.scale)
 
 
-class ZEC(_BodyBase, _InfiniteSolid):
+class ZEC(Body, _InfiniteSolid):
     """
     An infinite elliptical cylinder parallel to the z-axis.
 
@@ -955,26 +974,26 @@ class ZEC(_BodyBase, _InfiniteSolid):
                                            0.5 * self.scale)
 
 
-class BOX(_BodyBase):
+class BOX(Body):
     pass
 
 
-class QUA(_BodyBase):
+class QUA(Body):
     pass
 
-class ELL(_BodyBase):
-    pass
-
-
-class WED(_BodyBase):
+class ELL(Body):
     pass
 
 
-class RAW(_BodyBase):
+class WED(Body):
     pass
 
 
-class ARB(_BodyBase):
+class RAW(Body):
+    pass
+
+
+class ARB(Body):
     pass
 
 
@@ -1123,18 +1142,6 @@ class Region(object):
                 solids[solid.name] = solid
         dump_iter(self.gdml_solid)
         return solids
-
-
-class BodyNotImplementedError(Exception):
-    def __init__(self, body):
-        body_name = body.name
-        body_type = type(body).__name__
-        self.message = ("Body \"{}\" cannot be constructed.  Body type "
-                        "\"{}\" is not supported!").format(body_name,
-                                                           body_type)
-        super(Exception, self).__init__(self.message)
-        logger = _logging.getLogger("pyfluka.bodies.%s" % type(self).__name__)
-        logger.exception("Body not instantiated: %s; type=%s", body_name, body_type)
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
