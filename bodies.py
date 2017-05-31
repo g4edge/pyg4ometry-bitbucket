@@ -290,20 +290,13 @@ class RCC(Body):
         centre_max = max(abs(vector.Three(self.parameters.v_x,
                                           self.parameters.v_y,
                                           self.parameters.v_z)))
-        length = _np.linalg.norm([self.parameters.h_x,
-                                  self.parameters.h_y,
-                                  self.parameters.h_z])
-        return centre_max + length
+        return centre_max + self.length
 
     @_gdml_logger
-        length = _np.linalg.norm([self.parameters.h_x,
-                                  self.parameters.h_y,
-                                  self.parameters.h_z])
-
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                  self.parameters.radius,
-                                 length * 0.5,
+                                 self.length * 0.5,
                                  0.0,
                                  2*_pi)
 
