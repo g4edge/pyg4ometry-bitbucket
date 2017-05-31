@@ -196,28 +196,24 @@ class SPH(Body):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
-
         self._set_parameters(parameters)
 
     def _set_parameters(self, parameters):
-        # A named tuple for representing the geometry parameters associated with
-        # the object.
         self._ParametersType = namedtuple("Parameters", ['v_x',
                                                          'v_y',
                                                          'v_z',
                                                          'radius'])
         self.parameters = self._ParametersType(*parameters)
-        return None
 
     def centre(self):
-        '''
+        """
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
-        '''
-        centre = vector.Three(self.parameters.v_x,
-                              self.parameters.v_y,
-                              self.parameters.v_z)
-        return centre
+
+        """
+        return vector.Three(self.parameters.v_x,
+                            self.parameters.v_y,
+                            self.parameters.v_z)
 
     def get_rotation_matrix(self):
         return _np.matrix(_np.identity(3))
@@ -227,9 +223,10 @@ class SPH(Body):
 
     @_gdml_logger
     def gdml_solid(self):
-        '''
-        Construct a pgydml orb (full, solid sphere) solid.
-        '''
+        """
+        Construct a solid, whole, GDML sphere from this.
+
+        """
         return _pygdml.solid.Orb(self.name, self.parameters.radius)
 
 
