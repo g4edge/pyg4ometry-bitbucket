@@ -761,9 +761,19 @@ class _UnarySolid(object):
         return _trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
 
     def _generate_name(self, other):
-        name = str(_uuid4())
-        name = name.replace("-","")
-        return "a" + name
+        """
+        Generate an output  name given the two solids.  Keeps sane
+        names for sufficiently short output, but returns a
+        universally unique identifier for longer names.  This is
+        required as  concatenating names becomes very expensive for
+        sufficiently complicated geometries.
+
+        """
+        if len(self.solid.name) + len(other.solid.name) < 36:
+            return self.solid.name + "_" +  other.solid.name
+        else:
+            # GDML name has to start with a letter so append an "a".
+            return "a" + str(_uuid4())
 
 def load_pickle(path):
     with open(path, 'r') as f:
