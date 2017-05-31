@@ -109,14 +109,14 @@ class Model(object):
         if make_gmad is True:
             self._write_test_gmad(out_path)
 
-    def view(self, region_names=None, setclip=True):
+    def view(self, regions=None, setclip=True):
         """
         View the mesh for this model.
 
         Parameters
         ----------
 
-        region_names: A name or list of names of regions to be
+        regions: A name or list of names of regions to be
         viewed.  By default, all regions will be viewed.
 
         setclip: If True, will  clip the bounding box to the extent
@@ -125,7 +125,7 @@ class Model(object):
         default, the bounding box will be clipped.
 
         """
-        world_mesh = self._generate_mesh(region_names, setclip=setclip)
+        world_mesh = self._generate_mesh(regions, setclip=setclip)
         viewer = _pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
