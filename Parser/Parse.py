@@ -5,26 +5,15 @@ import antlr4 as _antlr4
 from FlukaLexer import FlukaLexer
 from FlukaParser import FlukaParser
 
-def PreProcessFile(filein):
-    # Can use cpp preprocessor with a bit of  prepreprocessing.
-    p1 = _sp.Popen(['sed', 's/^#if/& defined/g', filein], stdout=_sp.PIPE)
-    p2 = _sp.Popen(['sed', 's/^#elif/& defined/g'], stdin=p1.stdout,
-                   stdout=_sp.PIPE)
-    p1.stdout.close()
-    p3 = _sp.Popen(['cpp', '-E' , '-P'], stdin=p2.stdout, stdout=_sp.PIPE)
+def Parse(path):
+    if not _path.exists(path):
+        raise IOError("File not found: %s" % path)
 
-    processed_model_string = p3.stdout.read()
-
-    return processed_model_string
-
-def Parse(input):
-    if not _path.exists(input):
-        raise IOError("File not found: %s" % input)
-    # Preprocess input:
-    processed_string = PreProcessFile(input)
+    with open(path, 'r') as f:
+        file_string = f.read()
 
     # Create _ANTLR4 char stream from processed model string
-    istream = _antlr4.InputStream(processed_string)
+    istream = _antlr4.InputStream(file_string)
 
     # Tokenise character stream
     lexed_input = FlukaLexer(istream)
