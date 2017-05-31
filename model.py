@@ -267,8 +267,9 @@ class Model(object):
                  / (len(output["good"])
                     + float(len(output["bad"]))))))
 
-        end = _time.time()
-        print (end - start)/60.0, "minutes elipsed since test begun."
+        duration = (_time.time() - start) / 60.0
+        print duration, "minutes since test begun."
+        output['time'] = duration
 
         if pickle:
             with open("./{}_diag.pickle".format(
