@@ -8,7 +8,7 @@ ZCC seconcyl 0.0 0.0 7.50
 XZP thirdplane -5.0
 XZP fourthplane -20.
 END
-tunnel     5 | +firstplane -seconplane +firstcyl -seconcyl -thirdplane
+tunnel     5 | +firstplane -seconplane -thirdplane +firstcyl -seconcyl
 	     | +thirdplane -fourthplane +firstcyl
 END
 GEOEND
