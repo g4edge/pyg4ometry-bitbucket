@@ -26,13 +26,13 @@ BSPNode::~BSPNode(){
 BSPNode* BSPNode::clone(){
   BSPNode* node = new BSPNode();
   if(plane){
-    node->plane = this->plane;
+    node->plane = this->plane->clone();
   }
   if(front){
-    node->front = this->front;
+    node->front = this->front->clone();
   }
   if(back){
-    node->back = this->back;
+    node->back = this->back->clone();
   }
   if(polygons.size() > 0){
     std::vector<Polygon*> npolygons;
@@ -75,6 +75,12 @@ std::vector<Polygon*> BSPNode::clipPolygons(std::vector<Polygon*> &_polygons){
   if(back){
     _back = back->clipPolygons(_back);
   }
+  else{
+    /*for(int i=0;i<_back.size();i++){
+      delete _back[i];
+    }*/
+    _back.clear();
+  }
   _front.insert(_front.end(),_back.begin(),_back.end());
   return _front;
 }
@@ -107,7 +113,7 @@ void BSPNode::build(std::vector<Polygon*> _polygons){
     return;
   }
   if(!plane){
-    plane = _polygons[0]->plane->clone();
+    plane = _polygons[0]->GetPlane()->clone();
   }
   polygons.push_back(_polygons[0]);
   std::vector<Polygon*> _front;

@@ -9,23 +9,27 @@ class Vector {
   Vector(double x, double y, double z);
   Vector(const Vector &v);
   
-  ~Vector();
   double x() const;
   double y() const;
   double z() const;
 
   Vector  clone() const;  
-  Vector  negated() const;
+  void    negated();
   Vector  plus(const Vector &rhs) const;
   Vector  operator+(const Vector &rhs) const;
+  Vector& operator+=(const Vector &rhs);
   Vector  minus(const Vector &rhs) const;
   Vector  operator-(const Vector &rhs) const;
+  Vector& operator-=(const Vector &rhs);
   Vector  times(double a) const;
   Vector  operator*(double a) const;
+  Vector& operator*=(double a);
   Vector  divideBy(double a) const ;
   Vector  operator/(double a) const;
+  Vector& operator/=(double a);
   double  dot(const Vector &rhs) const;
   Vector  scale(const Vector &rhs) const;
+  void    scale(Vector* rhs);
   Vector  lerp(const Vector &rhs, double t) const;
   double  length() const;
   Vector  unit() const;
