@@ -117,9 +117,9 @@ class RPP(Body):
     '''
     An RPP is a rectangular parallelpiped (a cuboid).
     '''
-    def __init__(self, name, parameters, expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+    def __init__(self, name, parameters, expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(RPP, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -188,9 +188,9 @@ class RPP(Body):
 
 
 class SPH(Body):
-    def __init__(self, name, parameters, expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+    def __init__(self, name, parameters, expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
 
         super(SPH, self).__init__(name,
                                   expansion_stack,
@@ -244,9 +244,9 @@ class RCC(Body):
 
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(RCC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -332,9 +332,9 @@ class REC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(REC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -419,9 +419,9 @@ class TRC(Body):
 
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(TRC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -489,9 +489,9 @@ class XYP(Body, _InfiniteSolid):
     '''
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(XYP, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -528,9 +528,9 @@ class XZP(Body, _InfiniteSolid):
     '''
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(XZP, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -567,9 +567,9 @@ class YZP(Body, _InfiniteSolid):
     '''
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(YZP, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -620,9 +620,9 @@ class PLA(Body, _InfiniteSolid):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(PLA, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -683,9 +683,9 @@ class XCC(Body, _InfiniteSolid):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(XCC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -731,9 +731,9 @@ class YCC(Body, _InfiniteSolid):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(YCC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -780,9 +780,9 @@ class ZCC(Body, _InfiniteSolid):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(ZCC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -831,9 +831,9 @@ class XEC(Body, _InfiniteSolid):
 
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(XEC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -880,9 +880,9 @@ class YEC(Body, _InfiniteSolid):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(YEC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
@@ -929,9 +929,9 @@ class ZEC(Body, _InfiniteSolid):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack,
-                 translation_stack,
-                 transformation_stack):
+                 expansion_stack=None,
+                 translation_stack=None,
+                 transformation_stack=None):
         super(ZEC, self).__init__(name,
                                   expansion_stack,
                                   translation_stack,
