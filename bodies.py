@@ -64,10 +64,6 @@ class Body(object):
         pass
 
     @_abc.abstractmethod
-    def get_rotation_matrix(self):
-        pass
-
-    @_abc.abstractmethod
     def extent(self):
         pass
 
@@ -86,7 +82,7 @@ class Body(object):
         """
         solid = self.gdml_solid()
         # Convert the matrix to TB xyz:
-        rotation_angles = _trf.matrix2tbxyz(self.get_rotation_matrix())
+        rotation_angles = _trf.matrix2tbxyz(self.rotation)
         # Up to this point all rotations are active, which is OK
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
@@ -126,6 +122,7 @@ class RPP(Body):
                                   transformation_stack)
 
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
         if (self.parameters.x_min > self.parameters.x_max or
             self.parameters.y_min > self.parameters.y_max or
@@ -159,9 +156,8 @@ class RPP(Body):
 
         return centre
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
-
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return max([abs(self.parameters.x_min), abs(self.parameters.x_max),
@@ -197,6 +193,7 @@ class SPH(Body):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
@@ -215,8 +212,8 @@ class SPH(Body):
                             self.parameters.v_y,
                             self.parameters.v_z)
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -252,6 +249,7 @@ class RCC(Body):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
@@ -278,10 +276,10 @@ class RCC(Body):
 
         return self.face_centre + 0.5 * self.direction
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         initial = [0, 0, 1]
         final = -self.direction
-        return _trf.matrix_from(initial, final)
+        self.rotation = _trf.matrix_from(initial, final)
 
     def extent(self):
         centre_max = max(abs(vector.Three(self.parameters.v_x,
@@ -341,6 +339,7 @@ class REC(Body):
                                   transformation_stack)
         raise BodyNotImplementedError(self)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["face_centre_x",
@@ -368,7 +367,7 @@ class REC(Body):
 
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         pass
 
     @_gdml_logger
@@ -434,6 +433,7 @@ class TRC(Body):
                                             self.parameters.major_to_minor_y,
                                             self.parameters.major_to_minor_z])
         self.length = self.major_to_minor.length
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['centre_major_x',
@@ -450,13 +450,13 @@ class TRC(Body):
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         # We choose in the as_gdml_solid method to place the major at
         # -z, and the major at +z, hence this choice of initial and
         # final vectors:
         initial = [0, 0, 1]
         final = self.major_to_minor
-        return _trf.matrix_from(initial, final)
+        self.rotation = _trf.matrix_from(initial, final)
 
     def extent(self):
         length = _np.linalg.norm([self.parameters.major_to_minor_x,
@@ -497,6 +497,7 @@ class XYP(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
@@ -508,8 +509,8 @@ class XYP(Body, _InfiniteSolid):
         centre_z = self.parameters.v_z - (self.scale * 0.5)
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return abs(self.parameters.v_z)
@@ -536,6 +537,7 @@ class XZP(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_y'])
@@ -547,8 +549,8 @@ class XZP(Body, _InfiniteSolid):
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return abs(self.parameters.v_y)
@@ -575,6 +577,7 @@ class YZP(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
@@ -586,8 +589,8 @@ class YZP(Body, _InfiniteSolid):
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return abs(self.parameters.v_x)
@@ -628,6 +631,7 @@ class PLA(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["x_direction",
@@ -651,12 +655,12 @@ class PLA(Body, _InfiniteSolid):
                   - (0.5 * self.scale * self.perpendicular.unit))
         return centre
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
         initial = [0,0,1]
         final = self.perpendicular
-        return _trf.matrix_from(initial, final)
+        self.rotation =  _trf.matrix_from(initial, final)
 
     def extent(self):
         return max(abs(self.parameters.x_position),
@@ -691,6 +695,7 @@ class XCC(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -701,11 +706,11 @@ class XCC(Body, _InfiniteSolid):
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         # Rotate pi/2 about the y-axis.
-        return _np.matrix([[ 0,  0, -1],
-                           [ 0,  1,  0],
-                           [ 1,  0,  0]])
+        self.rotation = _np.matrix([[ 0,  0, -1],
+                                    [ 0,  1,  0],
+                                    [ 1,  0,  0]])
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -739,6 +744,7 @@ class YCC(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -749,11 +755,11 @@ class YCC(Body, _InfiniteSolid):
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         # Rotate by pi/2 about the x-axis.
-        return _np.matrix([[ 1,  0,  0],
-                           [ 0,  0,  1],
-                           [ 0, -1,  0]])
+        self.rotation = _np.matrix([[ 1,  0,  0],
+                                    [ 0,  0,  1],
+                                    [ 0, -1,  0]])
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -788,6 +794,7 @@ class ZCC(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -800,8 +807,8 @@ class ZCC(Body, _InfiniteSolid):
                             self.parameters.centre_y,
                             0.0)
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -839,6 +846,7 @@ class XEC(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -850,11 +858,11 @@ class XEC(Body, _InfiniteSolid):
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         # Rotate pi/2 about the y-axis.
-        return _np.matrix([[ 0,  0, -1],
-                           [ 0,  1,  0],
-                           [ 1,  0,  0]])
+        self.rotation = _np.matrix([[ 0,  0, -1],
+                                    [ 0,  1,  0],
+                                    [ 1,  0,  0]])
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -888,6 +896,7 @@ class YEC(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -899,11 +908,11 @@ class YEC(Body, _InfiniteSolid):
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
-    def get_rotation_matrix(self):
+    def _set_rotation_matrix(self, transformation_stack):
         # Rotate by pi/2 about the x-axis.
-        return _np.matrix([[ 1,  0,  0],
-                           [ 0,  0,  1],
-                           [ 0, -1,  0]])
+        self.rotation = _np.matrix([[ 1,  0,  0],
+                                    [ 0,  0,  1],
+                                    [ 0, -1,  0]])
 
     def extent(self):
         return max(map(abs, self.parameters))
@@ -937,6 +946,7 @@ class ZEC(Body, _InfiniteSolid):
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation_stack)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -950,8 +960,8 @@ class ZEC(Body, _InfiniteSolid):
                             self.parameters.centre_y,
                             0.0)
 
-    def get_rotation_matrix(self):
-        return _np.matrix(_np.identity(3))
+    def _set_rotation_matrix(self, transformation_stack):
+        self.rotation = _np.matrix(_np.identity(3))
 
     def extent(self):
         return max(map(abs, self.parameters))

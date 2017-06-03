@@ -562,7 +562,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
 
         gdml_solid = body.gdml_solid()
         body_centre = body.centre()
-        body_rotation = body.get_rotation_matrix()
+        body_rotation = body.rotation
 
         if ctx.Plus():
             return _UnarySolid(gdml_solid, '+', body_centre, body_rotation)
