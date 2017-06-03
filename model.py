@@ -534,10 +534,11 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
                           region_name, region_centre,
                           _trf.matrix2tbxyz(region_rotation), region_gdml.name)
-            self.regions[region_name] = bodies.Region(region_name,
-                                                      region_gdml,
-                                                      position=region_centre,
-                                                      rotation=region_rotation)
+            self.regions[region_name] = pyfluka.bodies.Region(
+                region_name,
+                region_gdml,
+                position=region_centre,
+                rotation=region_rotation)
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
