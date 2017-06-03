@@ -552,7 +552,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         body_type = type(body).__name__
 
         # If an infinite body:
-            scale = self._region_scale_map[self.region_name] * 10.
+        scale = self._region_scale_map[self.region_name] * 10.
         if isinstance(body, pyfluka.bodies._InfiniteSolid):
             # Infinite bodies are factories for themselves, allowing
             # for dynamic infinite scale for a common underlying body.
