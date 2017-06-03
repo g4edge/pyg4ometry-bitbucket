@@ -473,9 +473,7 @@ class _FlukaBodyListener(FlukaParserListener):
 
         # For logging purposes.  If body hasn't yet been recorded as
         # used, then record its name and type.
-        if body_name in self.unique_body_names:
-            return None
-        else:
+        if body_name not in self.unique_body_names:
             self.unique_body_names.add(body_name)
             body_type = type(self.bodies[body_name]).__name__
             self.used_bodies_by_type.append(body_type)
