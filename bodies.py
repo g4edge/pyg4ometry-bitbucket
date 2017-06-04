@@ -337,9 +337,10 @@ class REC(Body):
                                   expansion_stack,
                                   translation_stack,
                                   transformation_stack)
-        raise BodyNotImplementedError(self)
+
         self._set_parameters(parameters)
         self._set_rotation_matrix(transformation_stack)
+        raise NotImplementedError
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["face_centre_x",
