@@ -13,8 +13,8 @@ class PhysicalVolume :
         self.logicalVolume = logicalVolume
         self.name          = name 
         self.motherVolume  = motherVolume
-        self.mesh          = None
         self.motherVolume.add(self)
+        self.mesh          = None
         self.scale         = scale
         self.debug         = debug
         _registry.addPhysicalVolume(self)
