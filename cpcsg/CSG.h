@@ -19,9 +19,9 @@ class CSG{
     CSG* clone(); 
     std::vector<Polygon*> toPolygons();
     CSG* refine();
-    void translate(Vector disp);
-    void scale(Vector scale);
-    void rotate(Vector axis,double angleDeg);
+    void translate(Vector* disp);
+    void scale(Vector* scale);
+    void rotate(Vector* axis,double angleDeg);
     VertsAndPolys toVerticesAndPolygons();
     void saveVTK(std::string filename);
     CSG* Union(CSG* csg);
@@ -39,7 +39,7 @@ class CSG{
   
   private:
     std::vector<Polygon*> polygons;
-    Vector newVector(Vector v,Vector axis,double angleDeg);
+    Vector* newVector(Vector *v,Vector *axis,double angleDeg);
 };
 
 #endif

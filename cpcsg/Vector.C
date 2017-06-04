@@ -22,10 +22,6 @@ Vector::Vector(const Vector &v)
   _z = v._z;
 }
 
-Vector::~Vector() 
-{
-}
-
 double Vector::x() const
 {
   return _x;
@@ -46,9 +42,11 @@ Vector Vector::clone() const
   return Vector(_x,_y,_z);
 }
 
-Vector Vector::negated() const 
+void Vector::negated()
 {
-  return Vector(0,0,0)-(*this);
+  _x = -_x;
+  _y = -_y;
+  _z = -_z;
 }
 
 Vector Vector::plus(const Vector &rhs) const
@@ -61,6 +59,14 @@ Vector Vector::operator+(const Vector &rhs) const
   return this->plus(rhs);
 }
 
+Vector& Vector::operator+=(const Vector &rhs)
+{
+  this->_x = this->_x + rhs._x;
+  this->_y = this->_y + rhs._y;
+  this->_z = this->_z + rhs._z;
+  return *this;
+}
+
 Vector Vector::minus(const Vector &rhs) const
 {
   return Vector(_x-rhs._x, _y-rhs._y, _z-rhs._z);
@@ -69,6 +75,14 @@ Vector Vector::minus(const Vector &rhs) const
 Vector Vector::operator-(const Vector &rhs) const
 {
   return this->minus(rhs);
+}
+
+Vector& Vector::operator-=(const Vector &rhs)
+{
+  _x -= rhs._x;
+  _y -= rhs._y;
+  _z -= rhs._z;
+  return *this;
 }
 
 Vector Vector::times(double a) const
@@ -81,6 +95,14 @@ Vector Vector::operator*(double a) const
   return this->times(a);
 }
 
+Vector& Vector::operator*=(double a)
+{
+  _x *= a;
+  _y *= a;
+  _z *= a;
+  return *this;
+}
+
 Vector  Vector::divideBy(double a) const 
 {
   return Vector(_x/a,_y/a,_z/a);
@@ -91,6 +113,14 @@ Vector  Vector::operator/(double a) const
   return this->divideBy(a);
 }
 
+Vector& Vector::operator/=(double a)
+{
+  _x /= a;
+  _y /= a;
+  _z /= a;
+  return *this;
+}
+
 double Vector::dot(const Vector &rhs) const 
 {
   return _x*rhs.x() + _y*rhs.y() + _z*rhs.z();
@@ -99,6 +129,12 @@ double Vector::dot(const Vector &rhs) const
 Vector Vector::scale(const Vector &rhs) const
 {
   return Vector(_x*rhs.x(), _y*rhs.y(), _z*rhs.z());
+}
+
+void Vector::scale(Vector *rhs){
+  _x *= rhs->x();
+  _y *= rhs->y();
+  _z *= rhs->z();
 }
 
 Vector Vector::lerp(const Vector &a, double t) const

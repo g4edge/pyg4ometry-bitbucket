@@ -3,51 +3,51 @@
 CSG* Solids::Box(double dx, double dy, double dz) {
   std::vector<Polygon*> polygons;
 
-  Vertex v1 = Vertex(Vector(-dx/2,-dy/2,-dz/2));
-  Vertex v2 = Vertex(Vector(-dx/2, dy/2,-dz/2));
-  Vertex v3 = Vertex(Vector( dx/2, dy/2,-dz/2));
-  Vertex v4 = Vertex(Vector( dx/2,-dy/2,-dz/2));
+  Vertex* v1 = new Vertex(new Vector(-dx/2,-dy/2,-dz/2));
+  Vertex* v2 = new Vertex(new Vector(-dx/2, dy/2,-dz/2));
+  Vertex* v3 = new Vertex(new Vector( dx/2, dy/2,-dz/2));
+  Vertex* v4 = new Vertex(new Vector( dx/2,-dy/2,-dz/2));
 
-  Vertex v5 = Vertex(Vector(-dx/2,-dy/2, dz/2));
-  Vertex v6 = Vertex(Vector(-dx/2, dy/2, dz/2));
-  Vertex v7 = Vertex(Vector( dx/2, dy/2, dz/2));
-  Vertex v8 = Vertex(Vector( dx/2,-dy/2, dz/2));
+  Vertex* v5 = new Vertex(new Vector(-dx/2,-dy/2, dz/2));
+  Vertex* v6 = new Vertex(new Vector(-dx/2, dy/2, dz/2));
+  Vertex* v7 = new Vertex(new Vector( dx/2, dy/2, dz/2));
+  Vertex* v8 = new Vertex(new Vector( dx/2,-dy/2, dz/2));
   
-  std::vector<Vertex> f1;
+  std::vector<Vertex*> f1;
   f1.push_back(v1);
-  f1.push_back(v2);
-  f1.push_back(v6);
   f1.push_back(v5);
+  f1.push_back(v6);
+  f1.push_back(v2);
 
-  std::vector<Vertex> f2;
+  std::vector<Vertex*> f2;
   f2.push_back(v1);
   f2.push_back(v4);
   f2.push_back(v8);
   f2.push_back(v5);
 
-  std::vector<Vertex> f3;
+  std::vector<Vertex*> f3;
   f3.push_back(v1);
   f3.push_back(v2);
   f3.push_back(v3);
   f3.push_back(v4);
 
-  std::vector<Vertex> f4;
+  std::vector<Vertex*> f4;
   f4.push_back(v3);
-  f4.push_back(v4);
-  f4.push_back(v8);
   f4.push_back(v7);
+  f4.push_back(v8);
+  f4.push_back(v4);
 
-  std::vector<Vertex> f5;
+  std::vector<Vertex*> f5;
   f5.push_back(v2);
-  f5.push_back(v3);
-  f5.push_back(v7);
   f5.push_back(v6);
+  f5.push_back(v7);
+  f5.push_back(v3);
 
-  std::vector<Vertex> f6;
+  std::vector<Vertex*> f6;
   f6.push_back(v5);
-  f6.push_back(v6);
-  f6.push_back(v7);
   f6.push_back(v8);
+  f6.push_back(v7);
+  f6.push_back(v6);
 
   Polygon *p1 = new Polygon(f1,NULL);
   Polygon *p2 = new Polygon(f2,NULL);

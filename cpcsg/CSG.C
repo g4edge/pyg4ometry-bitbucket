@@ -36,38 +36,38 @@ std::vector<Polygon*> CSG::toPolygons(){
 CSG* CSG::refine(){
   CSG* newCSG = new CSG();
   for(unsigned i=0;i<this->polygons.size();i++){
-    std::vector<Vertex> verts = polygons[i]->vertices;
-    unsigned numVerts = verts.size();
+    std::vector<Vertex*> verts = polygons[i]->GetVertices();
+    unsigned numVerts = polygons[i]->size();
     if(numVerts == 0){
       continue;
     }
-    Vector midPos(0.0,0.0,0.0);
-    for(int j=0;j<verts.size();j++){
-      midPos = midPos + verts[j].position();
+    Vector * midPos = new Vector(0.0,0.0,0.0);
+    for(int j=0;j<numVerts;j++){
+      (*midPos) += (*verts[j]->position());
     }
-    midPos = midPos / double(numVerts);
-    Vertex midVert;
-    Vector midNormal;
-    if(verts[0].HasNorm()){
-      midNormal = (polygons[i]->plane)->normal();
-      midVert = Vertex(midPos,midNormal);
+    (*midPos) /= double(numVerts);
+    Vertex* midVert;
+    Vector* midNormal;
+    if(verts[0]->normal()){
+      midNormal = (polygons[i]->GetPlane())->normal();
+      midVert = new Vertex(midPos,midNormal);
     } 
     else{
-      midVert = Vertex(midPos, midNormal);
+      midVert = new Vertex(midPos);
     }
-    std::vector<Vertex> newVerts = verts;
+    std::vector<Vertex*> newVerts = verts;
     for(int j=0;j<numVerts;j++){
-      newVerts.push_back(verts[j].interpolate(verts[(i+1)%numVerts],0.5));
+      newVerts.push_back(verts[j]->interpolate(verts[(i+1)%numVerts],0.5));
     }
     newVerts.push_back(midVert);
-    std::vector<Vertex> vs(4);
+    std::vector<Vertex*> vs(4);
     vs[0] = newVerts[0];
     vs[1] = newVerts[numVerts];
     vs[2] = newVerts[2*numVerts];
     vs[3] = newVerts[2*numVerts-1];
     
-    Polygon* newPoly = new Polygon(vs,polygons[i]->shared);
-    newPoly->plane = polygons[i]->plane;
+    Polygon* newPoly = new Polygon(vs,polygons[i]->GetShared());
+    newPoly->SetPlane(polygons[i]->GetPlane());
     newCSG->polygons.push_back(newPoly);
 
     for(int j=1;j<numVerts;j++){
@@ -75,7 +75,7 @@ CSG* CSG::refine(){
       vs[1] = newVerts[numVerts+j];
       vs[2] = newVerts[2*numVerts];
       vs[3] = newVerts[numVerts+j-1];
-      newPoly = new Polygon(vs,polygons[i]->shared);
+      newPoly = new Polygon(vs,polygons[i]->GetShared());
       newCSG->polygons.push_back(newPoly);
     }
     
@@ -83,29 +83,29 @@ CSG* CSG::refine(){
   return newCSG;
 }
 
-void CSG::translate(Vector disp){
+void CSG::translate(Vector* disp){
   for(int i=0;i<polygons.size();i++){
-    for(int j=0;j<polygons[i]->vertices.size();j++){
-      polygons[i]->vertices[j].position(polygons[i]->vertices[j].position().plus(disp));  
+    for(int j=0;j<polygons[i]->size();j++){
+      (*polygons[i]->GetVertex(j)->position()) += (*disp);
     }
   }
 }
 
-void CSG::scale(Vector scale){
+void CSG::scale(Vector* scale){
   for(int i=0;i<polygons.size();i++){
     for(int j=0;j<polygons[i]->vertices.size();j++){
-      polygons[i]->vertices[j].position(polygons[i]->vertices[j].position().scale(scale));  
+      polygons[i]->GetVertex(j)->position()->scale(scale);
     }
   }
 }
 
-Vector CSG::newVector(Vector v,Vector axis,double angleDeg){
+Vector* CSG::newVector(Vector* v,Vector* axis,double angleDeg){
   double cosAngle = cos(M_PI*angleDeg/180.);
   double sinAngle = sin(M_PI*angleDeg/180.);
-  Vector ax = axis.unit();
+  Vector ax = axis->unit();
 
-  double vA = v.dot(ax);
-  Vector vPerp = v.minus(ax.times(vA));
+  double vA = v->dot(ax);
+  Vector vPerp = v->minus(ax.times(vA));
   double vPerpLen = vPerp.length();
   if(vPerpLen == 0){
     //Vector is parallel to axis, no need to rotate
@@ -115,15 +115,15 @@ Vector CSG::newVector(Vector v,Vector axis,double angleDeg){
   Vector u2 = u1.cross(ax);
   double vCosA = vPerpLen*cosAngle;
   double vSinA = vPerpLen*sinAngle;
-  return ax.times(vA).plus(u1.times(vCosA).plus(u2.times(vSinA)));
+  return new Vector(ax.times(vA).plus(u1.times(vCosA).plus(u2.times(vSinA))));
 }
 
-void CSG::rotate(Vector axis,double angleDeg){
+void CSG::rotate(Vector* axis,double angleDeg){
   for(int i=0;i<polygons.size();i++){
     for(int j=0;j<polygons[i]->vertices.size();j++){
-      polygons[i]->vertices[j].position(newVector(polygons[i]->vertices[j].position(),axis,angleDeg));
-      if(polygons[i]->vertices[j].normal().length() > 0){
-        polygons[i]->vertices[j].normal(newVector(polygons[i]->vertices[j].normal(),axis,angleDeg));
+      polygons[i]->vertices[j]->position(newVector(polygons[i]->vertices[j]->position(),axis,angleDeg));
+      if(polygons[i]->vertices[j]->normal()->length() > 0){
+        polygons[i]->vertices[j]->normal(newVector(polygons[i]->vertices[j]->normal(),axis,angleDeg));
       }
     }
   }
@@ -134,33 +134,33 @@ VertsAndPolys CSG::toVerticesAndPolygons(){
   std::vector<std::vector<unsigned> > polys;
   int count = 0;
 
-  std::vector<Vertex> unique_verts;
+  std::vector<Vertex*> unique_verts;
 
   double diff = 1.0E-10;
   for(int i=0;i<polygons.size();i++){
-    std::vector<unsigned> cell; 
+    std::vector<unsigned> cell(polygons[i]->vertices.size()); 
     for(int j=0;j<polygons[i]->vertices.size();j++){
 
       if(unique_verts.size() == 0){
-        unique_verts.push_back(polygons[i]->vertices[j].position());
+        unique_verts.push_back(polygons[i]->vertices[j]);
       }
 
       for(int k=0;k<unique_verts.size();k++){
-        if(fabs(polygons[i]->vertices[j].position().x()-unique_verts[k].position().x()) > diff){
-          unique_verts.push_back(polygons[i]->vertices[j].position());
+        if(fabs(polygons[i]->vertices[j]->position()->x()-unique_verts[k]->position()->x()) > diff){
+          unique_verts.push_back(polygons[i]->vertices[j]);
           break;
         }
-        if(fabs(polygons[i]->vertices[j].position().y()-unique_verts[k].position().y()) > diff){
-          unique_verts.push_back(polygons[i]->vertices[j].position());
+        if(fabs(polygons[i]->vertices[j]->position()->y()-unique_verts[k]->position()->y()) > diff){
+          unique_verts.push_back(polygons[i]->vertices[j]);
           break;
         }       
-        if(fabs(polygons[i]->vertices[j].position().z()-unique_verts[k].position().z()) > diff){
-          unique_verts.push_back(polygons[i]->vertices[j].position());
+        if(fabs(polygons[i]->vertices[j]->position()->z()-unique_verts[k]->position()->z()) > diff){
+          unique_verts.push_back(polygons[i]->vertices[j]);
           break;
         }
       }
       unsigned index = unique_verts.size()-1;
-      cell.push_back(index);
+      cell[j] = index;
       count++;
 
     }
@@ -184,7 +184,7 @@ void CSG::saveVTK(std::string filename){
   VertsAndPolys vandps = this->toVerticesAndPolygons();
   f << "POINTS " << vandps.verts.size() << " float" << std::endl;
   for(int i=0;i<vandps.verts.size();i++){
-    f << vandps.verts[i].position().x() << " " << vandps.verts[i].position().y()<< " " << vandps.verts[i].position().z() << std::endl;
+    f << vandps.verts[i]->position()->x() << " " << vandps.verts[i]->position()->y()<< " " << vandps.verts[i]->position()->z() << std::endl;
   }
   int numCells = vandps.polys.size();
   f << "POLYGONS " << numCells << " " << vandps.count+numCells << std::endl;
