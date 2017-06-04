@@ -290,10 +290,10 @@ class RCC(Body):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
-                                 self.parameters.radius,
-                                 self.length * 0.5,
-                                 0.0,
-                                 2*_pi)
+                                  self.parameters.radius,
+                                  self.length * 0.5,
+                                  0.0,
+                                  2*_pi)
 
 
 class REC(Body):
@@ -519,9 +519,9 @@ class XYP(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                0.5 * self.scale,
-                                0.5 * self.scale,
-                                0.5 * self.scale)
+                                 0.5 * self.scale,
+                                 0.5 * self.scale,
+                                 0.5 * self.scale)
 
 
 class XZP(Body, _InfiniteSolid):
@@ -559,9 +559,9 @@ class XZP(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                0.5 * self.scale,
-                                0.5 * self.scale,
-                                0.5 * self.scale)
+                                 0.5 * self.scale,
+                                 0.5 * self.scale,
+                                 0.5 * self.scale)
 
 
 class YZP(Body, _InfiniteSolid):
@@ -599,9 +599,9 @@ class YZP(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                0.5 * self.scale,
-                                0.5 * self.scale,
-                                0.5 * self.scale)
+                                 0.5 * self.scale,
+                                 0.5 * self.scale,
+                                 0.5 * self.scale)
 
 
 class PLA(Body, _InfiniteSolid):
@@ -671,9 +671,9 @@ class PLA(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                0.5 * self.scale,
-                                0.5 * self.scale,
-                                0.5 * self.scale)
+                                 0.5 * self.scale,
+                                 0.5 * self.scale,
+                                 0.5 * self.scale)
 
 
 class XCC(Body, _InfiniteSolid):
@@ -719,10 +719,10 @@ class XCC(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
-                                 self.parameters.radius,
-                                 self.scale * 0.5,
-                                 0.0,
-                                 2*_pi)
+                                  self.parameters.radius,
+                                  self.scale * 0.5,
+                                  0.0,
+                                  2*_pi)
 
 
 class YCC(Body, _InfiniteSolid):
@@ -768,11 +768,11 @@ class YCC(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
-                                 0.0,
-                                 self.parameters.radius,
-                                 self.scale * 0.5,
-                                 0.0,
-                                 2*_pi)
+                                  0.0,
+                                  self.parameters.radius,
+                                  self.scale * 0.5,
+                                  0.0,
+                                  2*_pi)
 
 
 class ZCC(Body, _InfiniteSolid):
@@ -871,9 +871,9 @@ class XEC(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
-                                           self.parameters.semi_axis_z,
-                                           self.parameters.semi_axis_y,
-                                           0.5 * self.scale)
+                                            self.parameters.semi_axis_z,
+                                            self.parameters.semi_axis_y,
+                                            0.5 * self.scale)
 
 
 class YEC(Body, _InfiniteSolid):
@@ -921,9 +921,9 @@ class YEC(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
-                                           self.parameters.semi_axis_x,
-                                           self.parameters.semi_axis_z,
-                                           0.5 * self.scale)
+                                            self.parameters.semi_axis_x,
+                                            self.parameters.semi_axis_z,
+                                            0.5 * self.scale)
 
 
 class ZEC(Body, _InfiniteSolid):
@@ -970,9 +970,9 @@ class ZEC(Body, _InfiniteSolid):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
-                                           self.parameters.semi_axis_x,
-                                           self.parameters.semi_axis_y,
-                                           0.5 * self.scale)
+                                            self.parameters.semi_axis_x,
+                                            self.parameters.semi_axis_y,
+                                            0.5 * self.scale)
 
 
 class BOX(Body):
@@ -1025,8 +1025,8 @@ class Region(object):
         """
         w = _pygdml.solid.Box("world", 10000, 10000, 10000)
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
 
         self.add_to_volume(world_volume)
         world_volume.setClip()
@@ -1038,8 +1038,8 @@ class Region(object):
     def view_debug(self, first=None, second=None):
         w = _pygdml.solid.Box("world", 10000, 10000, 10000)
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
         self.add_to_volume(world_volume)
         try:
             world_volume.setClip()
