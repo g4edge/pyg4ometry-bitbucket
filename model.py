@@ -465,7 +465,7 @@ class _FlukaBodyListener(FlukaParserListener):
         body_name = ctx.ID().getText()
         try:
             self.max_scale = max(self.max_scale,
-                                 abs(self.bodies[body_name].extent()))
+                                 abs(self.bodies[body_name].crude_extent()))
         except KeyError:
             raise KeyError(("Undefined body \"{}\""
                             " in region: \"{}\"!".format(body_name,

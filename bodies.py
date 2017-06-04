@@ -64,7 +64,7 @@ class Body(object):
         pass
 
     @_abc.abstractmethod
-    def extent(self):
+    def crude_extent(self):
         pass
 
     @_abc.abstractmethod
@@ -159,7 +159,7 @@ class RPP(Body):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return max([abs(self.parameters.x_min), abs(self.parameters.x_max),
                     abs(self.parameters.y_min), abs(self.parameters.y_max),
                     abs(self.parameters.z_min), abs(self.parameters.z_max),
@@ -215,7 +215,7 @@ class SPH(Body):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
@@ -281,7 +281,7 @@ class RCC(Body):
         final = -self.direction
         self.rotation = _trf.matrix_from(initial, final)
 
-    def extent(self):
+    def crude_extent(self):
         centre_max = max(abs(vector.Three(self.parameters.v_x,
                                           self.parameters.v_y,
                                           self.parameters.v_z)))
@@ -458,7 +458,7 @@ class TRC(Body):
         final = self.major_to_minor
         self.rotation = _trf.matrix_from(initial, final)
 
-    def extent(self):
+    def crude_extent(self):
         length = _np.linalg.norm([self.parameters.major_to_minor_x,
                                   self.parameters.major_to_minor_y,
                                   self.parameters.major_to_minor_z])
@@ -512,7 +512,7 @@ class XYP(Body, _InfiniteSolid):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return abs(self.parameters.v_z)
 
     @_gdml_logger
@@ -552,7 +552,7 @@ class XZP(Body, _InfiniteSolid):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return abs(self.parameters.v_y)
 
     @_gdml_logger
@@ -592,7 +592,7 @@ class YZP(Body, _InfiniteSolid):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return abs(self.parameters.v_x)
 
     @_gdml_logger
@@ -662,7 +662,7 @@ class PLA(Body, _InfiniteSolid):
         final = self.perpendicular
         self.rotation =  _trf.matrix_from(initial, final)
 
-    def extent(self):
+    def crude_extent(self):
         return max(abs(self.parameters.x_position),
                    abs(self.parameters.y_position),
                    abs(self.parameters.z_position))
@@ -712,7 +712,7 @@ class XCC(Body, _InfiniteSolid):
                                     [ 0,  1,  0],
                                     [ 1,  0,  0]])
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
@@ -761,7 +761,7 @@ class YCC(Body, _InfiniteSolid):
                                     [ 0,  0,  1],
                                     [ 0, -1,  0]])
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
@@ -810,7 +810,7 @@ class ZCC(Body, _InfiniteSolid):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
@@ -864,7 +864,7 @@ class XEC(Body, _InfiniteSolid):
                                     [ 0,  1,  0],
                                     [ 1,  0,  0]])
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
@@ -914,7 +914,7 @@ class YEC(Body, _InfiniteSolid):
                                     [ 0,  0,  1],
                                     [ 0, -1,  0]])
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
@@ -963,7 +963,7 @@ class ZEC(Body, _InfiniteSolid):
     def _set_rotation_matrix(self, transformation_stack):
         self.rotation = _np.matrix(_np.identity(3))
 
-    def extent(self):
+    def crude_extent(self):
         return max(map(abs, self.parameters))
 
     @_gdml_logger
