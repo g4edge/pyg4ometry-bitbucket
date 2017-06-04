@@ -51,7 +51,7 @@ class LogicalVolume :
             for dv in self.daughterVolumes :
                 dvMesh = dv.pycsgmesh() 
                 daughterMeshes.append(dvMesh)
-                self.mesh = [self.solid.pycsgmesh(),daughterMeshes]
+            self.mesh = [self.solid.pycsgmesh(),daughterMeshes]
 
             self.mesh[0].alpha     = 0.5
             self.mesh[0].wireframe = False
