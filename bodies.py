@@ -484,7 +484,7 @@ class TRC(Body):
                                   2*_pi)
 
 
-class XYP(Body, _InfiniteSolid):
+class XYP(Body, InfiniteBody):
     '''
     Infinite plane perpendicular to the z-axis.
     '''
@@ -524,7 +524,7 @@ class XYP(Body, _InfiniteSolid):
                                  0.5 * self.scale)
 
 
-class XZP(Body, _InfiniteSolid):
+class XZP(Body, InfiniteBody):
     '''
     Infinite plane perpendicular to the y-axis.
     '''
@@ -564,7 +564,7 @@ class XZP(Body, _InfiniteSolid):
                                  0.5 * self.scale)
 
 
-class YZP(Body, _InfiniteSolid):
+class YZP(Body, InfiniteBody):
     '''
     Infinite plane perpendicular to the x-axis.
     '''
@@ -604,7 +604,7 @@ class YZP(Body, _InfiniteSolid):
                                  0.5 * self.scale)
 
 
-class PLA(Body, _InfiniteSolid):
+class PLA(Body, InfiniteBody):
     """
     Generic infinite half-space.
 
@@ -676,7 +676,7 @@ class PLA(Body, _InfiniteSolid):
                                  0.5 * self.scale)
 
 
-class XCC(Body, _InfiniteSolid):
+class XCC(Body, InfiniteBody):
     """
     Infinite circular cylinder parallel to x-axis
 
@@ -725,7 +725,7 @@ class XCC(Body, _InfiniteSolid):
                                   2*_pi)
 
 
-class YCC(Body, _InfiniteSolid):
+class YCC(Body, InfiniteBody):
     """
     Infinite circular cylinder parallel to y-axis
 
@@ -775,7 +775,7 @@ class YCC(Body, _InfiniteSolid):
                                   2*_pi)
 
 
-class ZCC(Body, _InfiniteSolid):
+class ZCC(Body, InfiniteBody):
     """
     Infinite circular cylinder parallel to z-axis
 
@@ -824,7 +824,7 @@ class ZCC(Body, _InfiniteSolid):
                                   2*_pi)
 
 
-class XEC(Body, _InfiniteSolid):
+class XEC(Body, InfiniteBody):
     """
     An infinite elliptical cylinder parallel to the x-axis.
 
@@ -876,7 +876,7 @@ class XEC(Body, _InfiniteSolid):
                                             0.5 * self.scale)
 
 
-class YEC(Body, _InfiniteSolid):
+class YEC(Body, InfiniteBody):
     """
     An infinite elliptical cylinder parallel to the y-axis.
 
@@ -926,7 +926,7 @@ class YEC(Body, _InfiniteSolid):
                                             0.5 * self.scale)
 
 
-class ZEC(Body, _InfiniteSolid):
+class ZEC(Body, InfiniteBody):
     """
     An infinite elliptical cylinder parallel to the z-axis.
 
