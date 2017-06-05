@@ -97,7 +97,7 @@ class Body(object):
                               "G4_Galactic")
 
 
-class _InfiniteSolid(object):
+class InfiniteBody(object):
     # Infinite bodies are factories for themselves, allowing
     # for dynamic infinite scale for a common underlying body.
     # This is useful because an infinite body maybe used multiple
