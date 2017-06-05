@@ -96,18 +96,21 @@ class Body(object):
                               False,
                               "G4_Galactic")
 
-
-class InfiniteBody(object):
-    # Infinite bodies are factories for themselves, allowing
-    # for dynamic infinite scale for a common underlying body.
-    # This is useful because an infinite body maybe used multiple
-    # times, but in one usecase may need to be much bigger than in
-    # another.  This essentially allows for multiple bodies from a
-    # single Fluka definition.
     def __call__(self, scale):
+        """
+        Return this instance bounded or extented according to the
+        parameter "scale".
+
+        bound can be either a length scale (number) or a mesh.
+
+        """
         out = self
         out.scale = scale
         return out
+
+
+class InfiniteBody(object):
+    pass
 
 class RPP(Body):
     '''
