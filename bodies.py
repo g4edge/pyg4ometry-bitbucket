@@ -1144,6 +1144,84 @@ class Region(object):
         dump_iter(self.gdml_solid)
         return solids
 
+
+class Zone(object):
+    """
+    Class representing a Zone (subregion delimited by '|'), i.e. a
+    tract of space to be unioned with zero or more other zones.  A
+    Zone may also have sub-zones (which in this implementation are
+    simply nested Zone instances.
+
+    Parameters
+    ----------
+
+    pairs: tuples of the form (operator, Body) or (operator, SubZone),
+           where operator is a string of the form '+' or '-'.
+
+    """
+
+    def __init__(self, *pairs):
+        self.contains = []
+        self.excludes = []
+        for operator, body in pairs:
+            self._add(operator, body)
+
+    def _add(self, operator, body):
+        """
+        Add a body or SubZone to this region.
+
+        """
+        if not isinstance(body, (Body, Zone)):
+            raise TypeError("Unknown body type: {}".format(type(body)))
+
+        if operator == '+':
+            self.contains.append(body)
+        elif operator == '-':
+            self.excludes.append(body)
+        else:
+            raise TypeError("Unknown operator: {}".format(operator))
+
+    def __repr__(self):
+        contains_bodies = ' '.join([('+{}').format(space.name)
+                                    for space in self.contains if
+                                    isinstance(space, Body)])
+        excludes_bodies = ' '.join([('-{}').format(space.name)
+                                    for space in self.excludes if
+                                    isinstance(space, Body)])
+        contains_zones = ' '.join(['+({})'.format(repr(space))
+                                   for space in self.contains if
+                                   isinstance(space, Zone)])
+        excludes_zones = ' '.join(['-({})'.format(repr(space))
+                                   for space in self.excludes if
+                                   isinstance(space, Zone)])
+        return "{} {}{}{}".format(contains_bodies,
+                                 excludes_bodies,
+                                 contains_zones,
+                                 excludes_zones)
+
+    def crude_extent(self):
+        extent = 0.0
+        for body in self.contains + self.excludes:
+            extent = max(extent, body.crude_extent())
+        return extent
+
+    def _accumulate_intersections(self, first, second):
+        pass
+
+    def gdml_solid(self):
+        for body in self.contains:
+            if isinstance(body, pyfluka.bodies.InfiniteBody):
+                body = body(scale)
+                gdml_solid = body.gdml_solid()
+                body_centre = body.centre()
+                body_rotation = body.rotation
+            elif isinstance(body, pyfluka.bodies.Body):
+                gdml_solid = body.gdml_solid()
+                body_centre = body.centre()
+                body_rotation = body.rotation
+            elif isinstance(body, pyfluka.bodies.Zone):
+                pass
+
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
     "BOX": "General Rectangular Parallelepiped",
