@@ -1222,6 +1222,21 @@ class Zone(object):
             elif isinstance(body, pyfluka.bodies.Zone):
                 pass
 
+
+class Boolean(Body):
+    def __init__(self, name, solid, centre, rotation):
+        self.name = name
+        self.solid = solid
+        self.centre = centre
+        self.rotation = rotation
+
+    def gdml_solid(self):
+        return self.solid
+
+    def centre(self):
+        return self.centre
+
+
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
     "BOX": "General Rectangular Parallelepiped",
