@@ -106,6 +106,25 @@ class Body(object):
         out._scale = float(scale)
         return out
 
+    def _get_extent(self):
+        mesh = gdml_solid().pycsgmesh()
+        extent = _pygdml.volume.pycsg_extent([mesh])
+        _MeshInfo = namedtuple("_MeshInfo",
+                               ['centre',
+                                'x_min', 'y_min', 'z_min',
+                                'x_max', 'y_max', 'z_max',
+                                'x_length', 'y_length', 'z_length'])
+        extent = pycsg_extent([mesh])
+        lower = extent[0]
+        upper = extent[1]
+        size = upper - lower
+        centre = upper - size / 2
+        return _MeshInfo(centre,
+                         lower.x, lower.y, lower.z
+                         upper.x, upper.y, upper.z,
+                         size.x, size,y, size.z)
+
+
 
 class InfiniteBody(object):
     pass
