@@ -101,11 +101,9 @@ class Body(object):
         Return this instance bounded or extented according to the
         parameter "scale".
 
-        bound can be either a length scale (number) or a mesh.
-
         """
         out = self
-        out.scale = scale
+        out._scale = float(scale)
         return out
 
 
@@ -510,7 +508,7 @@ class XYP(Body, InfiniteBody):
     def centre(self):
         centre_x = 0.0
         centre_y = 0.0
-        centre_z = self.parameters.v_z - (self.scale * 0.5)
+        centre_z = self.parameters.v_z - (self._scale * 0.5)
         return vector.Three(centre_x, centre_y, centre_z)
 
     def _set_rotation_matrix(self, transformation_stack):
@@ -522,9 +520,9 @@ class XYP(Body, InfiniteBody):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale)
+                                 0.5 * self._scale,
+                                 0.5 * self._scale,
+                                 0.5 * self._scale)
 
 
 class XZP(Body, InfiniteBody):
@@ -549,7 +547,7 @@ class XZP(Body, InfiniteBody):
 
     def centre(self):
         centre_x = 0.0
-        centre_y = self.parameters.v_y - (self.scale * 0.5)
+        centre_y = self.parameters.v_y - (self._scale * 0.5)
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
 
@@ -562,9 +560,9 @@ class XZP(Body, InfiniteBody):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale)
+                                 0.5 * self._scale,
+                                 0.5 * self._scale,
+                                 0.5 * self._scale)
 
 
 class YZP(Body, InfiniteBody):
@@ -588,7 +586,7 @@ class YZP(Body, InfiniteBody):
         self.parameters = self._ParametersType(*parameters)
 
     def centre(self):
-        centre_x = self.parameters.v_x - (self.scale * 0.5)
+        centre_x = self.parameters.v_x - (self._scale * 0.5)
         centre_y = 0.0
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
@@ -602,9 +600,9 @@ class YZP(Body, InfiniteBody):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale)
+                                 0.5 * self._scale,
+                                 0.5 * self._scale,
+                                 0.5 * self._scale)
 
 
 class PLA(Body, InfiniteBody):
@@ -656,7 +654,7 @@ class PLA(Body, InfiniteBody):
         # This is the centre of the underlying gdml solid (i.e. won't
         # be on the surface, but set backwards by half length scale's amount.
         centre = (self.surface_point
-                  - (0.5 * self.scale * self.perpendicular.unit))
+                  - (0.5 * self._scale * self.perpendicular.unit))
         return centre
 
     def _set_rotation_matrix(self, transformation_stack):
@@ -674,9 +672,9 @@ class PLA(Body, InfiniteBody):
     @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale,
-                                 0.5 * self.scale)
+                                 0.5 * self._scale,
+                                 0.5 * self._scale,
+                                 0.5 * self._scale)
 
 
 class XCC(Body, InfiniteBody):
@@ -723,7 +721,7 @@ class XCC(Body, InfiniteBody):
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                   self.parameters.radius,
-                                  self.scale * 0.5,
+                                  self._scale * 0.5,
                                   0.0,
                                   2*_pi)
 
@@ -773,7 +771,7 @@ class YCC(Body, InfiniteBody):
         return _pygdml.solid.Tubs(self.name,
                                   0.0,
                                   self.parameters.radius,
-                                  self.scale * 0.5,
+                                  self._scale * 0.5,
                                   0.0,
                                   2*_pi)
 
@@ -822,7 +820,7 @@ class ZCC(Body, InfiniteBody):
         return _pygdml.solid.Tubs(self.name,
                                   0.0,
                                   self.parameters.radius,
-                                  self.scale * 0.5,
+                                  self._scale * 0.5,
                                   0.0,
                                   2*_pi)
 
@@ -876,7 +874,7 @@ class XEC(Body, InfiniteBody):
         return _pygdml.solid.EllipticalTube(self.name,
                                             self.parameters.semi_axis_z,
                                             self.parameters.semi_axis_y,
-                                            0.5 * self.scale)
+                                            0.5 * self._scale)
 
 
 class YEC(Body, InfiniteBody):
@@ -926,7 +924,7 @@ class YEC(Body, InfiniteBody):
         return _pygdml.solid.EllipticalTube(self.name,
                                             self.parameters.semi_axis_x,
                                             self.parameters.semi_axis_z,
-                                            0.5 * self.scale)
+                                            0.5 * self._scale)
 
 
 class ZEC(Body, InfiniteBody):
@@ -975,7 +973,7 @@ class ZEC(Body, InfiniteBody):
         return _pygdml.solid.EllipticalTube(self.name,
                                             self.parameters.semi_axis_x,
                                             self.parameters.semi_axis_y,
-                                            0.5 * self.scale)
+                                            0.5 * self._scale)
 
 
 class BOX(Body):
