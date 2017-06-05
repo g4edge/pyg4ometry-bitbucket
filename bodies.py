@@ -1,4 +1,3 @@
-import abc as _abc
 from collections import namedtuple
 import logging as _logging
 import math as _math
@@ -45,7 +44,6 @@ class Body(object):
     A class representing a body as defined in Fluka.
     get_body_as_gdml_solid() returns the body as a pygdml.solid
     '''
-    __metaclass__ = _abc.ABCMeta
 
     def __init__(self,
                  name,
@@ -59,15 +57,12 @@ class Body(object):
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
 
-    @_abc.abstractmethod
     def centre(self):
         pass
 
-    @_abc.abstractmethod
     def crude_extent(self):
         pass
 
-    @_abc.abstractmethod
     @_gdml_logger
     def gdml_solid(self):
         pass
