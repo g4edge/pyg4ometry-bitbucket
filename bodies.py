@@ -57,7 +57,19 @@ class Body(object):
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
 
+    def view(self, setclip=True):
+        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
 
+        self.add_to_volume(world_volume)
+        if setclip is True:
+            world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
+        viewer = _pygdml.VtkViewer()
+        viewer.addSource(mesh)
+        viewer.view()
 
     def add_to_volume(self, volume):
         """
