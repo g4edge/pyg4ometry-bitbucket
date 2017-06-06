@@ -1337,9 +1337,9 @@ class Zone(Body):
         self.contains = []
         self.excludes = []
         for operator, body in pairs:
-            self._add(operator, body)
+            self._add_space(operator, body)
 
-    def _add(self, operator, body):
+    def _add_space(self, operator, body):
         """
         Add a body or SubZone to this region.
 
