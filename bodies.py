@@ -121,6 +121,27 @@ class Body(object):
                          upper.x, upper.y, upper.z,
                          size.x, size,y, size.z)
 
+    def intersect(self, other):
+        """
+        Intersect this solid with another solid.
+
+        """
+        return self + other
+
+    def subtract(self, other):
+        """
+        Subtract from this solid another solid.
+
+        """
+        return self - other
+
+    def union(self, other):
+        """
+        Boolean union of this solid with another solid.
+
+        """
+        return self | other
+
     def __add__(self, other):
         """
         Perform the intersection of this solid with another.
