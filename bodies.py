@@ -3,6 +3,7 @@ import logging as _logging
 import math as _math
 import numpy as _np
 from numpy import pi as _pi
+from uuid import uuid4 as _uuid4
 
 import pygdml as _pygdml
 from pygdml import transformation as _trf
@@ -120,6 +121,49 @@ class Body(object):
                          upper.x, upper.y, upper.z,
                          size.x, size,y, size.z)
 
+    def _get_relative_rot_matrix(self, other):
+        return self.rotation.T.dot(other.rotation)
+
+    def _get_relative_translation(self, other):
+        # In a boolean rotation, the first solid is centred on zero,
+        # so to get the correct offset, subtract from the second the
+        # first, and then rotate this offset with the rotation matrix.
+        offset_vector =  vector.Three((other.centre().x - self.centre().x),
+                                      (other.centre().y - self.centre().y),
+                                      (other.centre().z - self.centre().z))
+        mat = self.rotation.T
+        offset_vector = mat.dot(offset_vector).view(vector.Three)
+        try:
+            x = offset_vector[0][0]
+            y = offset_vector[0][1]
+            z = offset_vector[0][2]
+        except IndexError:
+            x = offset_vector.x
+            y = offset_vector.y
+            z = offset_vector.z
+        return vector.Three(x,y,z)
+
+    def _get_relative_rotation(self, other):
+        # The first solid is unrotated in a boolean operation, so it
+        # is in effect rotated by its inverse.  We apply this same
+        # rotation to the second solid to get the correct relative
+        # rotation.
+        return _trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
+
+    def _generate_name(self, other):
+        """
+        Generate an output  name given the two solids.  Keeps sane
+        names for sufficiently short output, but returns a
+        universally unique identifier for longer names.  This is
+        required as names will rapidly becoming massive for complex
+        geometries, resulting in a massive output file.
+
+        """
+        if len(self.name) + len(other.name) < 36:
+            return self.name + "_" +  other.name
+        else:
+            # GDML name has to start with a letter so append an "a".
+            return "a" + str(_uuid4())
 
 
 class InfiniteBody(object):
