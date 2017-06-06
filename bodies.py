@@ -117,7 +117,7 @@ class Body(object):
         size = upper - lower
         centre = upper - size / 2
         return _MeshInfo(centre,
-                         lower.x, lower.y, lower.z
+                         lower.x, lower.y, lower.z,
                          upper.x, upper.y, upper.z,
                          size.x, size,y, size.z)
 
