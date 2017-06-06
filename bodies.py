@@ -1286,16 +1286,15 @@ class Zone(object):
 class Boolean(Body):
     def __init__(self, name, solid, centre, rotation):
         self.name = name
-        self.solid = solid
-        self.centre = centre
+        self._solid = solid
+        self._centre = centre
         self.rotation = rotation
 
     def gdml_solid(self):
-        return self.solid
+        return self._solid
 
     def centre(self):
-        return self.centre
-
+        return self._centre
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
