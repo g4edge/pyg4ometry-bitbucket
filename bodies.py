@@ -1319,7 +1319,7 @@ class Region(object):
         return solids
 
 
-class Zone(Body):
+class Zone(object):
     """
     Class representing a Zone (subregion delimited by '|'), i.e. a
     tract of space to be unioned with zero or more other zones.  A
