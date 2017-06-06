@@ -1381,19 +1381,23 @@ class Zone(Body):
     def _accumulate_intersections(self, first, second):
         pass
 
-    def gdml_solid(self):
-        for body in self.contains:
-            if isinstance(body, pyfluka.bodies.InfiniteBody):
-                body = body(scale)
-                gdml_solid = body.gdml_solid()
-                body_centre = body.centre()
-                body_rotation = body.rotation
-            elif isinstance(body, pyfluka.bodies.Body):
-                gdml_solid = body.gdml_solid()
-                body_centre = body.centre()
-                body_rotation = body.rotation
-            elif isinstance(body, pyfluka.bodies.Zone):
-                pass
+    def _crude_gdml(self):
+        """
+        Get the gdml of this Zone.
+
+        """
+        # Map the crude extents to the solids:
+        crude_extent = self.crude_extent() * 2.0
+        contains = map(lambda body: body(crude_extent), self.contains)
+        excludes = map(lambda body: body(crude_extent), self.excludes)
+
+        # Accumulate the intersections and subtractions:
+        intersection = reduce(add, self.contains)
+        subtraction = reduce(sub, self.excludes, intersection)
+        return subtraction
+
+    def gdml_solid(self, optimize=True):
+        return self._crude_gdml()
 
 
 class Boolean(Body):
