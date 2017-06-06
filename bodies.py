@@ -1382,9 +1382,21 @@ class Zone(object):
     def _accumulate_intersections(self, first, second):
         pass
 
-    def _crude_gdml(self):
+    def view(self):
+        self._crude_boolean().view()
+
+    def evaluate(self, optimise=False):
         """
-        Get the gdml of this Zone.
+        Evaluate the zone, returning a Boolean instance with the
+        appropriate optimisations, if any.
+
+        """
+        if optimise is False:
+            return self._crude_boolean()
+
+    def _crude_boolean(self):
+        """
+        Get the Boolean of this Zone.
 
         """
         # Map the crude extents to the solids:
@@ -1392,13 +1404,10 @@ class Zone(object):
         contains = map(lambda body: body(crude_extent), self.contains)
         excludes = map(lambda body: body(crude_extent), self.excludes)
 
-        # Accumulate the intersections and subtractions:
-        intersection = reduce(add, self.contains)
-        subtraction = reduce(sub, self.excludes, intersection)
-        return subtraction
-
-    def gdml_solid(self, optimize=True):
-        return self._crude_gdml()
+        # Accumulate the intersections and subtractions and return:
+        boolean_from_ints = reduce(add, self.contains)
+        with_subs = reduce(sub, self.excludes, boolean_from_ints)
+        return with_subs
 
 
 class Boolean(Body):
