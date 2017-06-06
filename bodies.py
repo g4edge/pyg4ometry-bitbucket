@@ -121,6 +121,79 @@ class Body(object):
                          upper.x, upper.y, upper.z,
                          size.x, size,y, size.z)
 
+    def __add__(self, other):
+        """
+        Perform the intersection of this solid with another.
+
+        """
+        output_name = self._generate_name(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
+
+        output_solid = _pygdml.solid.Intersection(output_name,
+                                                  self.gdml_solid(),
+                                                  other.gdml_solid(),
+                                                  relative_transformation)
+        output_centre = self.centre()
+        output_rotation = self.rotation
+        # _logger.debug("boolean: type=Intersection; name=%s; "
+        #               "solid1=%s; solid2=%s; trans=%s",
+        #               output_name, self.solid.name,
+        #               other.solid.name, [relative_angles, relative_translation])
+
+        return Boolean(output_name,
+                       output_solid,
+                       output_centre,
+                       output_rotation)
+    def __sub__(self, other):
+        output_name = self._generate_name(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
+
+        output_solid = _pygdml.solid.Subtraction(output_name,
+                                                 self.gdml_solid(),
+                                                 other.gdml_solid(),
+                                                 relative_transformation)
+        output_centre = self.centre()
+        output_rotation = self.rotation
+        # _logger.debug("boolean: type=Subtraction; name=%s; "
+        #               "solid1=%s; solid2=%s; trans=%s",
+        #               output_name, self.solid.name,
+        #               other.solid.name, [relative_angles, relative_translation])
+
+        return Boolean(output_name,
+                       output_solid,
+                       output_centre,
+                       output_rotation)
+
+    def __or__(self, other):
+        output_name = self._generate_name(other)
+
+        relative_translation = self._get_relative_translation(other)
+        relative_angles = self._get_relative_rotation(other)
+        relative_transformation = [relative_angles, relative_translation]
+
+        output_centre = self.centre()
+        output_rotation = self.rotation
+
+        output_solid = _pygdml.Union(output_name,
+                                     self.gdml_solid(),
+                                     other.gdml_solid(),
+                                     relative_transformation)
+        # _logger.debug("boolean: type=Union; name=%s; "
+        #               "solid1=%s; solid2=%s; trans=%s",
+        #               output_name, self.solid.name,
+        #               other.solid.name, [relative_angles, relative_translation])
+
+        return Boolean(output_name,
+                       output_solid,
+                       output_centre,
+                       output_rotation)
+
     def _get_relative_rot_matrix(self, other):
         return self.rotation.T.dot(other.rotation)
 
