@@ -4,6 +4,7 @@ import math as _math
 import numpy as _np
 from numpy import pi as _pi
 from uuid import uuid4 as _uuid4
+from operator import add, sub, or_
 
 import pygdml as _pygdml
 from pygdml import transformation as _trf
