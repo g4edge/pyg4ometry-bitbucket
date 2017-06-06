@@ -796,12 +796,17 @@ class PLA(Body, InfiniteBody):
                                                          "y_position",
                                                          "z_position"])
         self.parameters = self._ParametersType(*parameters)
-        self.perpendicular = vector.Three([self.parameters.x_direction,
-                                           self.parameters.y_direction,
-                                           self.parameters.z_direction])
+
+        # Normalise the perpendicular vector:
+        perpendicular = vector.Three([self.parameters.x_direction,
+                                      self.parameters.y_direction,
+                                      self.parameters.z_direction])
+        self.perpendicular = (perpendicular
+                              / _np.linalg.norm(perpendicular))
         self.surface_point = vector.Three([self.parameters.x_position,
                                            self.parameters.y_position,
                                            self.parameters.z_position])
+        self.surface_point = self._closest_point([0,0,0])
 
     def centre(self):
         # This is the centre of the underlying gdml solid (i.e. won't
@@ -818,9 +823,23 @@ class PLA(Body, InfiniteBody):
         self.rotation =  _trf.matrix_from(initial, final)
 
     def crude_extent(self):
-        return max(abs(self.parameters.x_position),
-                   abs(self.parameters.y_position),
-                   abs(self.parameters.z_position))
+        return max(abs(self.surface_point.x),
+                   abs(self.surface_point.y),
+                   abs(self.surface_point.z))
+
+    def _closest_point(self, point):
+        """
+        Return the point on the plane closest to the point provided.
+
+        """
+        # perpendicular distance from the point to the plane
+        distance = _np.dot((self.surface_point - point),
+                           self.perpendicular)
+        closest_point = point + distance * self.perpendicular
+        assert (abs(_np.dot(self.perpendicular,
+                        closest_point - self.surface_point)) < 1e-6), (
+                            "Point isn't on the plane!")
+        return closest_point
 
     @_gdml_logger
     def gdml_solid(self):
