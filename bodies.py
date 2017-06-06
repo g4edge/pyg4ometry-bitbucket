@@ -1179,19 +1179,16 @@ class Region(object):
     placement and rotation in the world volume, and a material.
 
     """
-    # Encapsulating a region in this way allows individual regions to
-    # be picked and
-    def __init__(self, name, gdml_solid,
-                 material="G4_Galactic",
-                 position=[0, 0, 0],
-                 rotation=[0, 0, 0]):
+    def __init__(self, name, zones, material="G4_Galactic"):
         self.name = name
-        self.gdml_solid = gdml_solid
         self.material = material
-        self.position = position
-        self.rotation = rotation
+        if isinstance(zones, list):
+            self.zones = dict(zip(range(len(zones)),
+                                  zones))
+        else:
+            raise TypeError("Unkown zones type: {}".format(type(zones)))
 
-    def view(self):
+    def view(self, zones=None):
         """
         View this single region.  If a null mesh is encountered, try
         the view_debug method to see the problematic boolean operation.
@@ -1201,30 +1198,31 @@ class Region(object):
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
-
-        self.add_to_volume(world_volume)
+        solid = self._zone_unions(zones)
+        solid.add_to_volume(world_volume)
         world_volume.setClip()
         mesh = world_volume.pycsgmesh()
         viewer = _pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
 
-    def view_debug(self, first=None, second=None):
-        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
-        self.add_to_volume(world_volume)
-        try:
-            world_volume.setClip()
-            mesh = world_volume.pycsgmesh()
-            print "Mesh was successful."
-        except _pygdml.solid.NullMeshError as error:
-            print error.message
-            print "Debug:  Viewing consituent solids."
-            self._view_null_mesh(error, first, second, setclip=False)
+    def _zone_unions(self, zones):
+        zones = self._select_zones(zones)
+        # Get the boolean solids from the zones:
+        booleans = [zone.evaluate() for zone in zones]
+        solid = reduce(or_, booleans)
+        return solid
 
-    def add_to_volume(self, volume):
+    def _select_zones(self, zones):
+        if zones is None:
+            zones = self.zones.values()
+        elif isinstance(zones, list):
+            zones = [self.zones[key] for key in zones.keys()]
+        else:
+            raise TypeError("Unknown zone selection type: ".format(type(zones)))
+        return zones
+
+    def add_to_volume(self, volume, zones=None):
         """
         Basically for adding to a world volume.
 
@@ -1243,80 +1241,6 @@ class Region(object):
                               1,
                               False,
                               self.material)
-
-    def _view_null_mesh(self, error, first, second, setclip=False):
-        solid1 = error.solid.obj1
-        solid2 = error.solid.obj2
-        tra2 = error.solid.tra2
-
-        world_box = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
-        if (first is None and second is None
-            or first is True and second is True):
-            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                                     solid1.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
-            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
-                                     solid2.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
-        elif first is True and second is not True:
-            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                                     solid1.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
-        elif second is True and first is not True:
-            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
-                                     solid2.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
-        elif first is False and second is False:
-            raise RuntimeError("Must select at least one"
-                               " of the two solids to view")
-        if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
-        viewer = _pygdml.VtkViewer()
-        viewer.addSource(mesh)
-        viewer.view()
-
-    def edit_solid(self, name, **parameters):
-        """
-        Walk the gdml_solid tree and update the named solid with the
-        parameter, value pairs defined in parameters.
-
-        """
-        def walk_tree(solid):
-            if solid.name == name:
-                for key, value in parameters.iteritems():
-                    old_value = getattr(solid, key)
-                    setattr(solid, key, value)
-            if isinstance(solid, (_pygdml.solid.Intersection,
-                                  _pygdml.solid.Subtraction,
-                                  _pygdml.solid.Union)):
-                walk_tree(solid.obj1)
-                walk_tree(solid.obj2)
-        walk_tree(self.gdml_solid)
-
-    def solids(self, booleans=True):
-        """
-        return a dictionary of the atomic solids (i.e. no boolean solids)
-        making up this region.
-
-        If booleans is True, then write the boolean solids as well.
-        """
-        solids = dict()
-        def dump_iter(solid):
-            if isinstance(solid, (_pygdml.solid.Intersection,
-                                  _pygdml.solid.Subtraction,
-                                  _pygdml.solid.Union)):
-                if booleans is True:
-                    solids[solid.name] = solid
-                dump_iter(solid.obj1)
-                dump_iter(solid.obj2)
-            else:
-                solids[solid.name] = solid
-        dump_iter(self.gdml_solid)
-        return solids
 
 
 class Zone(object):
