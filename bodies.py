@@ -57,18 +57,7 @@ class Body(object):
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
 
-    def centre(self):
-        pass
 
-    def crude_extent(self):
-        pass
-
-    @_gdml_logger
-    def gdml_solid(self):
-        pass
-
-    def set_transformation_definitions(self, something):
-        pass
 
     def add_to_volume(self, volume):
         """
