@@ -228,7 +228,6 @@ class Model(object):
             regions = [regions]
         # good regions, bad regions, bad subtractions, bad intersections
         output = {key:[] for key in ["good", "bad", "subs", "ints"]}
-        output["scale"] = self._region_scale_map
         number_of_regions = len(regions)
         start = _time.time()
         for index, region_name in enumerate(regions):
