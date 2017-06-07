@@ -58,8 +58,7 @@ class Model(object):
 
         """
         visitor = _FlukaRegionVisitor(self.bodies,
-                                      self.materials,
-                                      self._region_scale_map)
+                                      self.materials)
         visitor.visit(self.tree)
         return visitor.regions
 
@@ -488,11 +487,10 @@ class _FlukaBodyListener(FlukaParserListener):
 
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
-    def __init__(self, bodies, materials, _region_scale_map):
+    def __init__(self, bodies, materials):
         self.bodies = bodies
         self.regions = dict()
         self.materials = materials
-        self._region_scale_map = _region_scale_map
 
     def visitSimpleRegion(self, ctx):
         # Simple in the sense that it consists of no unions of Zones.
