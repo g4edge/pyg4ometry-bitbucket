@@ -539,7 +539,11 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
     def visitUnaryAndSubZone(self, ctx):
         sub_zone = self.visit(ctx.subZone())
         expr = self.visit(ctx.expr())
-        embed()
+        # If expr is already a list, append to it rather than building
+        # up a series of nested lists.  This is to keep it flat, with
+        # the only nesting occuring in Zones.
+        if isinstance(expr, list):
+            return [sub_zone] + expr
         return [sub_zone, expr]
 
     def visitMultipleUnion(self, ctx):
