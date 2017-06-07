@@ -330,8 +330,7 @@ class _FlukaBodyListener(FlukaParserListener):
             body = body_constructor(body_name,
                                     body_parameters,
                                     self._transform_stack,
-                                    self._translat_stack,
-                                    self._expansion_stack)
+                                    self._translat_stack)
             self.bodies[body_name] = body
         except NotImplementedError:
             _warnings.simplefilter('once', UserWarning)
