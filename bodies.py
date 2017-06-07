@@ -1198,7 +1198,7 @@ class Region(object):
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
-        solid = self._zone_unions(zones)
+        solid = self._union_zones(zones)
         solid.add_to_volume(world_volume)
         world_volume.setClip()
         mesh = world_volume.pycsgmesh()
@@ -1206,7 +1206,7 @@ class Region(object):
         viewer.addSource(mesh)
         viewer.view()
 
-    def _zone_unions(self, zones):
+    def _union_zones(self, zones):
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
         booleans = [zone.evaluate() for zone in zones]
