@@ -1072,29 +1072,6 @@ class ZEC(Body, InfiniteBody):
                                             0.5 * self._scale)
 
 
-class BOX(Body):
-    pass
-
-
-class QUA(Body):
-    pass
-
-class ELL(Body):
-    pass
-
-
-class WED(Body):
-    pass
-
-
-class RAW(Body):
-    pass
-
-
-class ARB(Body):
-    pass
-
-
 class Region(object):
     """
     Class used for interfacing a Fluka region with a GDML volume.
