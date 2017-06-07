@@ -32,7 +32,6 @@ class Model(object):
         self._filename = filename
         # get the syntax tree.
         self.tree = Parse(filename)
-        self.materials = self._materials_from_tree()
         self.bodies, self._body_freq_map = self._bodies_from_tree()
         self.regions = self._regions_from_tree()
         # Initialiser the world volume:
@@ -44,8 +43,7 @@ class Model(object):
         initialiser and then never called again.
 
         """
-        visitor = _FlukaRegionVisitor(self.bodies,
-                                      self.materials)
+        visitor = _FlukaRegionVisitor(self.bodies)
         visitor.visit(self.tree)
         return visitor.regions
 
@@ -168,13 +166,6 @@ class Model(object):
                 + " - "
                 + pyfluka.bodies.code_meanings[body]).ljust(60, '.')
             print body_description + str(count)
-
-    def _materials_from_tree(self):
-        # This gets the materials and maps them to their region (volumes)
-        material_listener = _FlukaMaterialGetter()
-        walker = _antlr4.ParseTreeWalker()
-        walker.walk(material_listener, self.tree)
-        return material_listener.region_material_map
 
     def _bodies_from_tree(self):
         """
@@ -300,86 +291,6 @@ class Model(object):
 
 
 
-class _FlukaMaterialGetter(FlukaParserListener):
-    # This class gets the materials as pygdml.materials instances.
-    # Or perhaps as pyfluka.materials Material instances (???)
-
-    def __init__(self):
-        self.materials = materials.fluka_g4_material_map
-        self.region_material_map = dict()
-
-        self._Card = _namedtuple("Card", ["keyword", "one",
-                                          "two", "three",
-                                          "four", "five",
-                                          "six", "sdum"])
-
-    def enterSimpleMaterial(self, ctx):
-        material_card = self._cards_from_rule(ctx)
-
-    def enterCompoundMaterial(self, ctx):
-        cards = self._cards_from_rule(ctx)
-
-    def _cards_from_rule(self, ctx):
-        # Get the tokens in a fixed format.
-        # Loop over all the tokens in the context:
-        tokens = []
-        # tokens = [ctx.getChild(i) for i in range(ctx.getChildCount)]
-        def get_tokens_iter(ctx):
-            if type(ctx) is _antlr4.tree.Tree.TerminalNodeImpl:
-                # and type(ctx.getPayload()) is _antlr4.Token):
-                tokens.append(ctx.getPayload())
-            else:
-                for child in ctx.getChildren():
-                    get_tokens_iter(child)
-        get_tokens_iter(ctx)
-        return self._card_factory(tokens)
-
-    def _card_factory(self, tokens):
-        # tokens should be a list of tokens
-        # Sort in order:
-        tokens.sort(key=lambda token: token.start)
-        # Get unique line numbers
-        lines = set([token.line for token in tokens])
-
-        # Separate the tokens by their lines, starting from first line.
-        tokens_by_line = []
-        for line_number in lines:
-            # Nest list of tokens by line.
-            tokens_in_line = [token for token in tokens
-                              if token.line == line_number]
-            tokens_by_line.append(tokens_in_line)
-
-        cards = []
-        self.is_fixed = True
-        if self.is_fixed:
-            for line in tokens_by_line:
-                # Set variables to None before defining a new card instance.
-                (keyword, one, two, three, four, five, six, sdum) = 8 * [None]
-                for token in line:
-                    if token.column < 10:
-                        keyword = token.text
-                    elif token.column < 20:
-                        one = token.text
-                    elif token.column < 30:
-                        two = token.text
-                    elif token.column < 40:
-                        three = token.text
-                    elif token.column < 50:
-                        four = token.text
-                    elif token.column < 60:
-                        five = token.text
-                    elif token.column < 70:
-                        six = token.text
-                    elif token.column < 80:
-                        sdum = token.text
-
-                cards.append(self._Card(keyword, one,
-                                        two, three,
-                                        four, five,
-                                        six, sdum))
-
-
-
 class _FlukaBodyListener(FlukaParserListener):
     """
     This class is for getting simple, declarative  information about
@@ -468,10 +379,9 @@ class _FlukaBodyListener(FlukaParserListener):
 
 
 class _FlukaRegionVisitor(FlukaParserVisitor):
-    def __init__(self, bodies, materials):
+    def __init__(self, bodies):
         self.bodies = bodies
         self.regions = dict()
-        self.materials = materials
 
     def visitSimpleRegion(self, ctx):
         # Simple in the sense that it consists of no unions of Zones.
