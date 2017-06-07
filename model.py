@@ -528,6 +528,10 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
             return [sub_zone] + expr
         return [sub_zone, expr]
 
+    def visitSingleUnion(self, ctx):
+        zone = [(self.visit(ctx.zone()))]
+        return zone
+
     def visitMultipleUnion(self, ctx):
         # Get the zones:
         zones = [self.visit(zone) for zone in ctx.zone()]
