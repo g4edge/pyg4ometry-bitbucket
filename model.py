@@ -323,17 +323,17 @@ class _FlukaBodyListener(FlukaParserListener):
         # Apply any expansions:
         body_parameters = self.apply_expansions(body_parameters)
 
-        body_constructor = getattr(pyfluka.bodies, body_type)
         # Try and construct the body, if it's not implemented then add
         # it to the list of omitted bodies.
         try:
+            body_constructor = getattr(pyfluka.bodies, body_type)
             body = body_constructor(body_name,
                                     body_parameters,
                                     self._transform_stack,
                                     self._translat_stack,
                                     self._current_expansion)
             self.bodies[body_name] = body
-        except NotImplementedError:
+        except AttributeError, NotImplementedError:
             _warnings.simplefilter('once', UserWarning)
             _warnings.warn(("\nBody type %s not supported.  All bodies"
                             " of this type will be omitted.  If bodies"
