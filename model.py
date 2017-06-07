@@ -269,11 +269,6 @@ class Model(object):
                 if do_all is False:
                     break
 
-    def _null_mesh_handler(self, error):
-        solid = error.solid
-        solid_type = type(error.solid).__name__
-        raise error
-
     def view_bodies(self, bodies):
         if isinstance(bodies, basestring):
             bodies = [bodies]
