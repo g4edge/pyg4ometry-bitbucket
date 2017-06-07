@@ -2,7 +2,6 @@ from collections import namedtuple as _namedtuple
 from collections import Counter as _Counter
 import os.path as _path
 import warnings as _warnings
-from uuid import uuid4 as _uuid4
 import time as _time
 import cPickle as _cPickle
 
