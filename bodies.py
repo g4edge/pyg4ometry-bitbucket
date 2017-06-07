@@ -1296,7 +1296,7 @@ class Zone(object):
 
         """
         if scale is None:
-            scale = self.crude_extent() * 2.0
+            scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
         contains = []
         for body in self.contains:
