@@ -13,7 +13,7 @@ import vector
 
 """
 
-A collection of classes for representing Fluka regions and Fluka bodies.
+A collection of classes for representing Fluka regions, zones, and bodies.
 
 Note:  All units are in millimetres, c.f. centimetres in Fluka.
 
