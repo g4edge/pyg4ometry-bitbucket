@@ -1365,9 +1365,12 @@ class Zone(object):
                 excludes.append(body._crude_boolean(scale))
 
         # Accumulate the intersections and subtractions and return:
-        boolean_from_ints = reduce(add, contains)
-        with_subs = reduce(sub, excludes, boolean_from_ints)
-        return with_subs
+        if len(self.contains) != 0:
+            boolean_from_ints = reduce(add, contains)
+            out = reduce(sub, excludes, boolean_from_ints)
+        else:
+            out = reduce(sub, excludes)
+        return out
 
 
 class Boolean(Body):
