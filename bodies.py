@@ -26,12 +26,10 @@ class Body(object):
 
     def __init__(self,
                  name,
-                 expansion_stack,
                  translation_stack,
                  transformation_stack):
 
         self.name = name
-        self._expansion_stack = expansion_stack
         self._translation_stack = translation_stack
         self._transformation_stack = transformation_stack
         # Named tuple constructor for later use.
@@ -236,11 +234,10 @@ class RPP(Body):
     '''
     An RPP is a rectangular parallelpiped (a cuboid).
     '''
-    def __init__(self, name, parameters, expansion_stack=None,
+    def __init__(self, name, parameters,
                  translation_stack=None,
                  transformation_stack=None):
         super(RPP, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
 
@@ -306,12 +303,11 @@ class RPP(Body):
 
 
 class SPH(Body):
-    def __init__(self, name, parameters, expansion_stack=None,
+    def __init__(self, name, parameters,
                  translation_stack=None,
                  transformation_stack=None):
 
         super(SPH, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -362,11 +358,9 @@ class RCC(Body):
 
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(RCC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -450,11 +444,9 @@ class REC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(REC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
 
@@ -538,11 +530,9 @@ class TRC(Body):
 
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(TRC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -608,11 +598,9 @@ class XYP(Body, InfiniteBody):
     '''
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(XYP, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -647,11 +635,9 @@ class XZP(Body, InfiniteBody):
     '''
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(XZP, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -686,11 +672,9 @@ class YZP(Body, InfiniteBody):
     '''
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(YZP, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -739,11 +723,9 @@ class PLA(Body, InfiniteBody):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(PLA, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -821,11 +803,9 @@ class XCC(Body, InfiniteBody):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(XCC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -869,11 +849,9 @@ class YCC(Body, InfiniteBody):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(YCC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -918,11 +896,9 @@ class ZCC(Body, InfiniteBody):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(ZCC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -969,11 +945,9 @@ class XEC(Body, InfiniteBody):
 
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(XEC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -1018,11 +992,9 @@ class YEC(Body, InfiniteBody):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(YEC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)
@@ -1067,11 +1039,9 @@ class ZEC(Body, InfiniteBody):
     """
     def __init__(self, name,
                  parameters,
-                 expansion_stack=None,
                  translation_stack=None,
                  transformation_stack=None):
         super(ZEC, self).__init__(name,
-                                  expansion_stack,
                                   translation_stack,
                                   transformation_stack)
         self._set_parameters(parameters)

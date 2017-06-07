@@ -4,6 +4,7 @@ import os.path as _path
 import warnings as _warnings
 import time as _time
 import cPickle as _cPickle
+from operator import mul as _mul
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
@@ -319,6 +320,9 @@ class _FlukaBodyListener(FlukaParserListener):
         body_name = ctx.ID().getText()
         body_type = ctx.BodyCode().getText()
         body_parameters = self._get_floats(ctx)
+        # Apply any expansions:
+        body_parameters = self.apply_expansions(body_parameters)
+
         body_constructor = getattr(pyfluka.bodies, body_type)
         # Try and construct the body, if it's not implemented then add
         # it to the list of omitted bodies.
@@ -356,10 +360,17 @@ class _FlukaBodyListener(FlukaParserListener):
         self._translat_stack.pop()
 
     def enterExpansion(self, ctx):
-        self._expansion_stack.append(ctx.Float().getText())
+        self._expansion_stack.append(float(ctx.Float().getText()))
 
     def exitExpansion(self, ctx):
         self._expansion_stack.pop()
+
+    def apply_expansions(self, parameters):
+        if self._expansion_stack:
+            factor = reduce(_mul, self._expansion_stack)
+            return map(lambda x: factor * x, parameters)
+        else:
+            return parameters
 
     def _get_floats(self, ctx):
         '''
