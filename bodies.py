@@ -1213,6 +1213,27 @@ class Region(object):
         viewer.addSource(mesh)
         viewer.view()
 
+    def add_to_volume(self, volume, zones=None):
+        """
+        Basically for adding to a world volume.
+
+        """
+        boolean = self._union_zones(zones)
+        # Convert the matrix to TB xyz:
+        rotation_angles = _trf.matrix2tbxyz(boolean.rotation)
+        # Up to this point all rotations are active, which is OK
+        # because so are boolean rotations.  However, volume rotations
+        # are passive, so reverse the rotation:
+        rotation_angles = _trf.reverse(rotation_angles)
+        _pygdml.volume.Volume(rotation_angles,
+                              boolean.centre(),
+                              boolean.gdml_solid(),
+                              self.name,
+                              volume,
+                              1,
+                              False,
+                              self.material)
+
     def _union_zones(self, zones):
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
@@ -1228,26 +1249,6 @@ class Region(object):
         else:
             raise TypeError("Unknown zone selection type: ".format(type(zones)))
         return zones
-
-    def add_to_volume(self, volume, zones=None):
-        """
-        Basically for adding to a world volume.
-
-        """
-        # Convert the matrix to TB xyz:
-        rotation_angles = _trf.matrix2tbxyz(self.rotation)
-        # Up to this point all rotations are active, which is OK
-        # because so are boolean rotations.  However, volume rotations
-        # are passive, so reverse the rotation:
-        rotation_angles = _trf.reverse(rotation_angles)
-        _pygdml.volume.Volume(rotation_angles,
-                              self.position,
-                              self.gdml_solid,
-                              self.name,
-                              volume,
-                              1,
-                              False,
-                              self.material)
 
 
 class Zone(object):
