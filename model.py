@@ -1,6 +1,5 @@
 from collections import namedtuple as _namedtuple
 from collections import Counter as _Counter
-import logging as _logging
 import os.path as _path
 import warnings as _warnings
 from uuid import uuid4 as _uuid4
@@ -18,7 +17,6 @@ from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
 from pyfluka.Parser.FlukaParserListener import FlukaParserListener
 from pyfluka.Parser.Parse import Parse
 
-_logger = _logging.getLogger(__name__)
 class Model(object):
     """
     Class for loading Fluka model geometry, viewing its mesh, and
@@ -33,16 +31,6 @@ class Model(object):
 
     def __init__(self, filename):
         self._filename = filename
-        _logger.info("creating pyfluka model from file %s",
-                     _path.basename(filename))
-        _logging.basicConfig(level=_logging.DEBUG,
-                             format='%(name)-20s %(levelname)-8s %(message)s',
-                             datefmt='%m-%d %H:%M',
-                             filename=_path.basename(
-                                 (_path.splitext(self._filename)[0])
-                                 + ".log"),
-                             filemode='w')
-
         # get the syntax tree.
         self.tree = Parse(filename)
         self.materials = self._materials_from_tree()
@@ -68,7 +56,6 @@ class Model(object):
 
         """
         world_size = 1e5
-        _logger.debug("worldvolume: name=world; dimensions=%s", world_size)
         world_box = _pygdml.solid.Box("world", world_size, world_size, world_size)
         return _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
                               None, 1, False, "G4_Galactic")
@@ -299,9 +286,6 @@ class Model(object):
     def _null_mesh_handler(self, error):
         solid = error.solid
         solid_type = type(error.solid).__name__
-        _logger.exception("nullmesh: type=%s, name=%s; solid1=%s;"
-                          " solid2=%s; trans=%s", solid_type, solid.name,
-                          solid.obj1.name, solid.obj2.name, solid.tra2)
         raise error
 
     def view_bodies(self, bodies):
@@ -447,7 +431,6 @@ class _FlukaBodyListener(FlukaParserListener):
 
     def enterUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
-        # For logging purposes.  If body hasn't yet been recorded as
         # used, then record its name and type.
         if body_name not in self.unique_body_names:
             self.unique_body_names.add(body_name)

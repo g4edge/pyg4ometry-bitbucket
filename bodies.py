@@ -1,5 +1,4 @@
 from collections import namedtuple
-import logging as _logging
 import math as _math
 import numpy as _np
 from numpy import pi as _pi
@@ -18,29 +17,6 @@ A collection of classes for representing Fluka regions, zones, and bodies.
 Note:  All units are in millimetres, c.f. centimetres in Fluka.
 
 """
-
-def _gdml_logger(f):
-    # Logging the construction of the gdml solids.
-    def wrapped(self):
-        # Parameters for the gdml solids that are used here in bodies.
-        gdml_parameters = {"Box": ["pX", "pY", "pZ"],
-                           "Orb": ["pRMax"],
-                           "Tubs": ["pRMin", "pRMax", "pDz", "pSPhi", "pDPhi"],
-                           "Cons": ["pRmin1", "pRmax1", "pRmin2",
-                                    "pRmax2", "pDz", "pSPhi", "pDPhi"],
-                           "EllipticalTube": ["pDx", "pDy", "pDz"]}
-        solid = f(self)
-        solid_type = type(solid).__name__
-        parameters =  [getattr(solid, parameter)
-                   for parameter in gdml_parameters[solid_type]]
-        logger = _logging.getLogger("pyfluka.bodies.%s" % type(self).__name__)
-        logger.debug("solid: type=%s; name=%s; rest=%s",
-                     solid_type,
-                     solid.name,
-                     parameters)
-        return solid
-    return wrapped
-
 
 class Body(object):
     '''
@@ -164,10 +140,6 @@ class Body(object):
                                                   relative_transformation)
         output_centre = self.centre()
         output_rotation = self.rotation
-        # _logger.debug("boolean: type=Intersection; name=%s; "
-        #               "solid1=%s; solid2=%s; trans=%s",
-        #               output_name, self.solid.name,
-        #               other.solid.name, [relative_angles, relative_translation])
 
         return Boolean(output_name,
                        output_solid,
@@ -187,11 +159,6 @@ class Body(object):
                                                  relative_transformation)
         output_centre = self.centre()
         output_rotation = self.rotation
-        # _logger.debug("boolean: type=Subtraction; name=%s; "
-        #               "solid1=%s; solid2=%s; trans=%s",
-        #               output_name, self.solid.name,
-        #               other.solid.name, [relative_angles, relative_translation])
-
         return Boolean(output_name,
                        output_solid,
                        output_centre,
@@ -211,10 +178,6 @@ class Body(object):
                                      self.gdml_solid(),
                                      other.gdml_solid(),
                                      relative_transformation)
-        # _logger.debug("boolean: type=Union; name=%s; "
-        #               "solid1=%s; solid2=%s; trans=%s",
-        #               output_name, self.solid.name,
-        #               other.solid.name, [relative_angles, relative_translation])
 
         return Boolean(output_name,
                        output_solid,
@@ -328,7 +291,6 @@ class RPP(Body):
                     self.parameters.z_max - self.parameters.z_min])
 
 
-    @_gdml_logger
     def gdml_solid(self):
         '''
         Construct a pygdml Box from this body definition
@@ -378,7 +340,6 @@ class SPH(Body):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         """
         Construct a solid, whole, GDML sphere from this.
@@ -447,7 +408,6 @@ class RCC(Body):
                                           self.parameters.v_z)))
         return centre_max + self.length
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                   self.parameters.radius,
@@ -531,7 +491,6 @@ class REC(Body):
     def _set_rotation_matrix(self, transformation_stack):
         pass
 
-    @_gdml_logger
     def gdml_solid(self):
         # EllipticalTube is defined in terms of half-lengths in x, y,
         # and z.  Choose semi_major to start in the positive y direction.
@@ -630,7 +589,6 @@ class TRC(Body):
                    self.parameters.minor_radius,
                    self.parameters.major_radius)
 
-    @_gdml_logger
     def gdml_solid(self):
         # The first face of pygdml.Cons is located at -z, and the
         # second at +z.  Here choose to put the major face at -z.
@@ -676,7 +634,6 @@ class XYP(Body, InfiniteBody):
     def crude_extent(self):
         return abs(self.parameters.v_z)
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
@@ -716,7 +673,6 @@ class XZP(Body, InfiniteBody):
     def crude_extent(self):
         return abs(self.parameters.v_y)
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
@@ -756,7 +712,6 @@ class YZP(Body, InfiniteBody):
     def crude_extent(self):
         return abs(self.parameters.v_x)
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
@@ -847,7 +802,6 @@ class PLA(Body, InfiniteBody):
                             "Point isn't on the plane!")
         return closest_point
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
@@ -895,7 +849,6 @@ class XCC(Body, InfiniteBody):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                   self.parameters.radius,
@@ -944,7 +897,6 @@ class YCC(Body, InfiniteBody):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
                                   0.0,
@@ -993,7 +945,6 @@ class ZCC(Body, InfiniteBody):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name,
                                   0.0,
@@ -1047,7 +998,6 @@ class XEC(Body, InfiniteBody):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                             self.parameters.semi_axis_z,
@@ -1097,7 +1047,6 @@ class YEC(Body, InfiniteBody):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                             self.parameters.semi_axis_x,
@@ -1146,7 +1095,6 @@ class ZEC(Body, InfiniteBody):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    @_gdml_logger
     def gdml_solid(self):
         return _pygdml.solid.EllipticalTube(self.name,
                                             self.parameters.semi_axis_x,
