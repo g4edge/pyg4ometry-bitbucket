@@ -100,27 +100,27 @@ RegionName
 
 // Geometry directives:
 StartExpansion
-    : '$' {self.column == 1}? 'start_expansion'
+    : '$' {self.column == 1}? 'Start_expansion'
     ;
 
 StartTranslat
-    :  '$' {self.column == 1}? 'start_translat'
+    :  '$' {self.column == 1}? 'Start_translat'
     ;
 
 StartTransform
-    : '$' {self.column == 1}? 'start_transform'
+    : '$' {self.column == 1}? 'Start_transform'
     ;
 
 EndExpansion
-    : '$' {self.column == 1}? 'end_expansion'
+    : '$' {self.column == 1}? 'End_expansion'
     ;
 
 EndTranslat
-    : '$' {self.column == 1}? 'end_translat'
+    : '$' {self.column == 1}? 'End_translat'
     ;
 
 EndTransform
-    :'$' {self.column == 1}? 'end_transform'
+    :'$' {self.column == 1}? 'End_transform'
     ;
 
 GeoInteger
