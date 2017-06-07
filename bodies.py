@@ -172,6 +172,7 @@ class Body(object):
                        output_solid,
                        output_centre,
                        output_rotation)
+
     def __sub__(self, other):
         output_name = self._generate_name(other)
 
