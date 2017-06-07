@@ -101,7 +101,10 @@ class Body(object):
 
         """
         out = self
-        out._scale = float(scale)
+        if isinstance(scale, (float, int)):
+            out._scale = float(scale)
+        elif isinstance(scale, Boolean):
+            pass
         return out
 
     def _get_extent(self):
