@@ -1259,16 +1259,22 @@ class Zone(object):
     Parameters
     ----------
 
-    pairs: tuples of the form (operator, Body) or (operator, SubZone),
-           where operator is a string of the form '+' or '-'.
+    pairs: list of tuplestuples of the form (operator, Body) or
+           (operator, SubZone), where operator is a string of the form
+           '+' or '-'.
 
     """
 
-    def __init__(self, *pairs):
+    def __init__(self, pairs):
         self.contains = []
         self.excludes = []
-        for operator, body in pairs:
-            self._add_space(operator, body)
+        if isinstance(pairs, tuple):
+            self._add_space(pairs[0], pairs[1])
+        elif isinstance(pairs, list):
+            for operator, body in pairs:
+                self._add_space(operator, body)
+        elif isinstance(pairs, Zone):
+            raise Exception('lul')
 
     def _add_space(self, operator, body):
         """
