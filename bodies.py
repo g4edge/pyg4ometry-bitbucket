@@ -5,6 +5,7 @@ import numpy as _np
 from numpy import pi as _pi
 from uuid import uuid4 as _uuid4
 from operator import add, sub, or_
+from copy import copy as _copy
 
 import pygdml as _pygdml
 from pygdml import transformation as _trf
@@ -100,7 +101,7 @@ class Body(object):
         parameter "scale".
 
         """
-        out = self
+        out = _copy(self)
         if isinstance(scale, (float, int)):
             out._scale = float(scale)
         elif isinstance(scale, Boolean):
