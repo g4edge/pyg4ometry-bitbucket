@@ -1331,19 +1331,41 @@ class Zone(object):
         if optimise is False:
             return self._crude_boolean()
 
-    def _crude_boolean(self):
+    def _scale(self, scale):
+        contains = []
+        excludes = []
+        for body in self.contains:
+            if isinstance(body, Zone):
+                contains.append(zone._scale(scale))
+            elif isinstance(body, Body):
+                exludes.append(body(scale))
+        return zone
+
+    def _crude_boolean(self, scale=None):
         """
         Get the Boolean of this Zone.
 
         """
+        if scale is None:
+            scale = self.crude_extent() * 2.0
         # Map the crude extents to the solids:
-        crude_extent = self.crude_extent() * 2.0
-        contains = map(lambda body: body(crude_extent), self.contains)
-        excludes = map(lambda body: body(crude_extent), self.excludes)
+        contains = []
+        for body in self.contains:
+            if isinstance(body, Body):
+                contains.append(body(scale))
+            elif isinstance(body, Zone):
+                contains.append(body._crude_boolean(scale))
+
+        excludes = []
+        for body in self.excludes:
+            if isinstance(body, Body):
+                excludes.append(body(scale))
+            elif isinstance(body, Zone):
+                excludes.append(body._crude_boolean(scale))
 
         # Accumulate the intersections and subtractions and return:
-        boolean_from_ints = reduce(add, self.contains)
-        with_subs = reduce(sub, self.excludes, boolean_from_ints)
+        boolean_from_ints = reduce(add, contains)
+        with_subs = reduce(sub, excludes, boolean_from_ints)
         return with_subs
 
 
