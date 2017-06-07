@@ -311,7 +311,7 @@ class _FlukaBodyListener(FlukaParserListener):
         self.used_bodies_by_type = list()
 
         self._transform_stack = []
-        self._translat_stack = []
+        self._current_translat = None
         self._current_expansion = None
 
     def enterBodyDefSpaceDelim(self, ctx):
@@ -330,8 +330,7 @@ class _FlukaBodyListener(FlukaParserListener):
             body = body_constructor(body_name,
                                     body_parameters,
                                     self._transform_stack,
-                                    self._translat_stack,
-                                    self._current_expansion)
+                                    self._current_translat)
             self.bodies[body_name] = body
         except AttributeError, NotImplementedError:
             _warnings.simplefilter('once', UserWarning)
@@ -351,13 +350,11 @@ class _FlukaBodyListener(FlukaParserListener):
             self.used_bodies_by_type.append(body_type)
 
     def enterTranslat(self, ctx):
-        # ctx.Float() returns an array of 3 terminal nodes.
-        # These correspond to the 3-vector that forms the translation.
         translation = self._get_floats(ctx)
-        self._translat_stack.append(translation)
+        self._current_translat = pyfluka.vector.Three(translation)
 
     def exitTranslat(self, ctx):
-        self._translat_stack.pop()
+        self._current_translat = None
 
     def enterExpansion(self, ctx):
         self._current_expansion = float(ctx.Float().getText())
