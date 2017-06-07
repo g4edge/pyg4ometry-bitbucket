@@ -312,7 +312,7 @@ class _FlukaBodyListener(FlukaParserListener):
 
         self._transform_stack = []
         self._translat_stack = []
-        self._expansion_stack = []
+        self._current_expansion = None
 
     def enterBodyDefSpaceDelim(self, ctx):
         # This is where we get the body definitions and instantiate
@@ -330,7 +330,8 @@ class _FlukaBodyListener(FlukaParserListener):
             body = body_constructor(body_name,
                                     body_parameters,
                                     self._transform_stack,
-                                    self._translat_stack)
+                                    self._translat_stack,
+                                    self._current_expansion)
             self.bodies[body_name] = body
         except NotImplementedError:
             _warnings.simplefilter('once', UserWarning)
@@ -359,14 +360,14 @@ class _FlukaBodyListener(FlukaParserListener):
         self._translat_stack.pop()
 
     def enterExpansion(self, ctx):
-        self._expansion_stack.append(float(ctx.Float().getText()))
+        self._current_expansion = float(ctx.Float().getText())
 
     def exitExpansion(self, ctx):
-        self._expansion_stack.pop()
+        self._current_expansion = None
 
     def apply_expansions(self, parameters):
-        if self._expansion_stack:
-            factor = reduce(_mul, self._expansion_stack)
+        factor = self._current_expansion
+        if factor is not None:
             return map(lambda x: factor * x, parameters)
         else:
             return parameters
