@@ -1,18 +1,14 @@
-from collections import namedtuple as _namedtuple
 from collections import Counter as _Counter
 import os.path as _path
 import warnings as _warnings
 import time as _time
 import cPickle as _cPickle
-from operator import mul as _mul
 
 import antlr4 as _antlr4
 import pygdml as _pygdml
-from pygdml import transformation as _trf
 
 import pyfluka.bodies
-import pyfluka.materials as materials
-from pyfluka.vector import Three
+import pyfluka.vector
 from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
 from pyfluka.Parser.FlukaParserListener import FlukaParserListener
 from pyfluka.Parser.Parse import Parse
