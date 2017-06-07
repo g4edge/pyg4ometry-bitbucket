@@ -1245,7 +1245,7 @@ class Region(object):
         if zones is None:
             zones = self.zones.values()
         elif isinstance(zones, list):
-            zones = [self.zones[key] for key in zones.keys()]
+            zones = [self.zones[key] for key in zones]
         else:
             raise TypeError("Unknown zone selection type: ".format(type(zones)))
         return zones
