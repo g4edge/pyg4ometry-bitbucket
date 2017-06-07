@@ -388,7 +388,6 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         # Build a zone from the list of bodies or single body:
         zone = pyfluka.bodies.Zone(region_defn)
         region_name = ctx.RegionName().getText()
-        region = pyfluka.bodies.Region(region_name, zone)
         self.regions[region_name] = pyfluka.bodies.Region(region_name, zone)
 
     def visitComplexRegion(self, ctx):
