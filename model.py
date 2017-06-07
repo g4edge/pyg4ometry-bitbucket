@@ -504,7 +504,14 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
     def visitComplexRegion(self, ctx):
         # Complex in the sense that it consists of the union of
         # multiple zones.
-        pass
+
+        # Get the list of tuples of operators and bodies/zones
+        region_defn = self.visitChildren(ctx)
+        # Construct zones out of these:
+        zones = [pyfluka.bodies.Zone(defn) for defn in region_defn]
+        region_name = ctx.RegionName().getText()
+        region = pyfluka.bodies.Region(region_name, zones)
+        self.regions[region_name] = region
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
