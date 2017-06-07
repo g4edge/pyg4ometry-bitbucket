@@ -250,14 +250,9 @@ class RPP(Body):
 
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['x_min',
-                                                         'x_max',
-                                                         'y_min',
-                                                         'y_max',
-                                                         'z_min',
-                                                         'z_max'])
-        self.parameters = self._ParametersType(*parameters)
-        return None
+        parameter_names =  ['x_min', 'x_max', 'y_min',
+                            'y_max', 'z_min', 'z_max']
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         '''
@@ -311,11 +306,8 @@ class SPH(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['v_x',
-                                                         'v_y',
-                                                         'v_z',
-                                                         'radius'])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names =  ['v_x', 'v_y', 'v_z', 'radius']
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         """
@@ -364,14 +356,9 @@ class RCC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['v_x',
-                                                         'v_y',
-                                                         'v_z',
-                                                         'h_x',
-                                                         'h_y',
-                                                         'h_z',
-                                                         'radius'])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ['v_x', 'v_y', 'v_z', 'h_x', 'h_y', 'h_z', 'radius']
+        self.parameters = Parameters(zip(parameter_names, parameters))
+
         self.face_centre = vector.Three(self.parameters.v_x,
                                         self.parameters.v_y,
                                         self.parameters.v_z)
@@ -452,20 +439,12 @@ class REC(Body):
         raise NotImplementedError
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["face_centre_x",
-                                                         "face_centre_y",
-                                                         "face_centre_z",
-                                                         "to_other_face_x",
-                                                         "to_other_face_y",
-                                                         "to_other_face_z",
-                                                         "semi_minor_x",
-                                                         "semi_minor_y",
-                                                         "semi_minor_z",
-                                                         "semi_major_x",
-                                                         "semi_major_y",
-                                                         "semi_major_z"])
-        self.parameters = self._ParametersType(*parameters)
-
+        parameter_names = [
+            "face_centre_x", "face_centre_y", "face_centre_z",
+            "to_other_face_x", "to_other_face_y", "to_other_face_z",
+            "semi_minor_x", "semi_minor_y", "semi_minor_z",
+            "semi_major_x", "semi_major_y", "semi_major_z"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         centre_x = (self.parameters.face_centre_x
@@ -543,16 +522,15 @@ class TRC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['centre_major_x',
-                                                         'centre_major_y',
-                                                         'centre_major_z',
-                                                         'major_to_minor_x',
-                                                         'major_to_minor_y',
-                                                         'major_to_minor_z',
-                                                         'major_radius',
-                                                         'minor_radius'])
-        self.parameters = self._ParametersType(*parameters)
-        return None
+        parameter_names = ['centre_major_x',
+                           'centre_major_y',
+                           'centre_major_z',
+                           'major_to_minor_x',
+                           'major_to_minor_y',
+                           'major_to_minor_z',
+                           'major_radius',
+                           'minor_radius']
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
@@ -604,8 +582,8 @@ class XYP(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['v_z'])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ['v_z']
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         centre_x = 0.0
@@ -641,8 +619,8 @@ class XZP(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['v_y'])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ['v_y']
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         centre_x = 0.0
@@ -678,8 +656,8 @@ class YZP(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ['v_x'])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ['v_x']
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         centre_x = self.parameters.v_x - (self._scale * 0.5)
@@ -729,13 +707,10 @@ class PLA(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["x_direction",
-                                                         "y_direction",
-                                                         "z_direction",
-                                                         "x_position",
-                                                         "y_position",
-                                                         "z_position"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["x_direction", "y_direction", "z_direction",
+                           "x_position", "y_position", "z_position"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
+
 
         # Normalise the perpendicular vector:
         perpendicular = vector.Three([self.parameters.x_direction,
@@ -809,10 +784,8 @@ class XCC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_y",
-                                                         "centre_z",
-                                                         "radius"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["centre_y", "centre_z", "radius"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
@@ -855,10 +828,8 @@ class YCC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_z",
-                                                         "centre_x",
-                                                         "radius"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["centre_z", "centre_x", "radius"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
@@ -902,10 +873,8 @@ class ZCC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_x",
-                                                         "centre_y",
-                                                         "radius"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["centre_x", "centre_y", "radius"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return vector.Three(self.parameters.centre_x,
@@ -951,11 +920,9 @@ class XEC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_y",
-                                                         "centre_z",
-                                                         "semi_axis_y",
-                                                         "semi_axis_z"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["centre_y", "centre_z",
+                           "semi_axis_y", "semi_axis_z"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
@@ -998,14 +965,14 @@ class YEC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_z",
-                                                         "centre_x",
-                                                         "semi_axis_z",
-                                                         "semi_axis_x"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["centre_z", "centre_x",
+                           "semi_axis_z", "semi_axis_x"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
-        return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+        return vector.Three(self.parameters.centre_x,
+                            0.0,
+                            self.parameters.centre_z)
 
     def _set_rotation_matrix(self, transformation):
         # Rotate by pi/2 about the x-axis.
@@ -1045,11 +1012,9 @@ class ZEC(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        self._ParametersType = namedtuple("Parameters", ["centre_x",
-                                                         "centre_y",
-                                                         "semi_axis_x",
-                                                         "semi_axis_y"])
-        self.parameters = self._ParametersType(*parameters)
+        parameter_names = ["centre_x", "centre_y",
+                           "semi_axis_x", "semi_axis_y"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return vector.Three(self.parameters.centre_x,
@@ -1277,6 +1242,22 @@ class Boolean(Body):
 
     def centre(self):
         return self._centre
+
+
+class Parameters(object):
+    # Kind of rubbishy class but sufficient for what it's used for (a
+    # very rudimentary mutable record-type class)
+    def __init__(self, parameters):
+        self._fields = []
+        for parameter, value in parameters:
+            setattr(self, parameter, value)
+            self._fields.append(parameter)
+
+    def __repr__(self):
+        out_string = ', '.join(['{}={}'.format(parameter,
+                                               getattr(self, parameter))
+                                for parameter in self._fields])
+        return "Parameters:({})".format(out_string)
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
