@@ -112,12 +112,21 @@ class FlukaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FlukaParser#region.
-    def enterRegion(self, ctx):
+    # Enter a parse tree produced by FlukaParser#simpleRegion.
+    def enterSimpleRegion(self, ctx):
         pass
 
-    # Exit a parse tree produced by FlukaParser#region.
-    def exitRegion(self, ctx):
+    # Exit a parse tree produced by FlukaParser#simpleRegion.
+    def exitSimpleRegion(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by FlukaParser#complexRegion.
+    def enterComplexRegion(self, ctx):
+        pass
+
+    # Exit a parse tree produced by FlukaParser#complexRegion.
+    def exitComplexRegion(self, ctx):
         pass
 
 

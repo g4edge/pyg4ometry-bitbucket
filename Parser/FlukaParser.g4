@@ -73,8 +73,8 @@ body
     ;
 
 region
-    : RegionName Integer zone
-    | RegionName Integer zoneUnion
+    : RegionName Integer zone         # simpleRegion
+    | RegionName Integer zoneUnion    # complexRegion
     ;
 
 zoneUnion

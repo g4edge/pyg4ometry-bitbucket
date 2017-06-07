@@ -1059,37 +1059,72 @@ class FlukaParser ( Parser ):
             super(FlukaParser.RegionContext, self).__init__(parent, invokingState)
             self.parser = parser
 
-        def RegionName(self):
-            return self.getToken(FlukaParser.RegionName, 0)
-
-        def Integer(self):
-            return self.getToken(FlukaParser.Integer, 0)
-
-        def zone(self):
-            return self.getTypedRuleContext(FlukaParser.ZoneContext,0)
-
-
-        def zoneUnion(self):
-            return self.getTypedRuleContext(FlukaParser.ZoneUnionContext,0)
-
 
         def getRuleIndex(self):
             return FlukaParser.RULE_region
 
+     
+        def copyFrom(self, ctx):
+            super(FlukaParser.RegionContext, self).copyFrom(ctx)
+
+
+
+    class ComplexRegionContext(RegionContext):
+
+        def __init__(self, parser, ctx): # actually a FlukaParser.RegionContext)
+            super(FlukaParser.ComplexRegionContext, self).__init__(parser)
+            self.copyFrom(ctx)
+
+        def RegionName(self):
+            return self.getToken(FlukaParser.RegionName, 0)
+        def Integer(self):
+            return self.getToken(FlukaParser.Integer, 0)
+        def zoneUnion(self):
+            return self.getTypedRuleContext(FlukaParser.ZoneUnionContext,0)
+
+
         def enterRule(self, listener):
-            if hasattr(listener, "enterRegion"):
-                listener.enterRegion(self)
+            if hasattr(listener, "enterComplexRegion"):
+                listener.enterComplexRegion(self)
 
         def exitRule(self, listener):
-            if hasattr(listener, "exitRegion"):
-                listener.exitRegion(self)
+            if hasattr(listener, "exitComplexRegion"):
+                listener.exitComplexRegion(self)
 
         def accept(self, visitor):
-            if hasattr(visitor, "visitRegion"):
-                return visitor.visitRegion(self)
+            if hasattr(visitor, "visitComplexRegion"):
+                return visitor.visitComplexRegion(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class SimpleRegionContext(RegionContext):
+
+        def __init__(self, parser, ctx): # actually a FlukaParser.RegionContext)
+            super(FlukaParser.SimpleRegionContext, self).__init__(parser)
+            self.copyFrom(ctx)
+
+        def RegionName(self):
+            return self.getToken(FlukaParser.RegionName, 0)
+        def Integer(self):
+            return self.getToken(FlukaParser.Integer, 0)
+        def zone(self):
+            return self.getTypedRuleContext(FlukaParser.ZoneContext,0)
+
+
+        def enterRule(self, listener):
+            if hasattr(listener, "enterSimpleRegion"):
+                listener.enterSimpleRegion(self)
+
+        def exitRule(self, listener):
+            if hasattr(listener, "exitSimpleRegion"):
+                listener.exitSimpleRegion(self)
+
+        def accept(self, visitor):
+            if hasattr(visitor, "visitSimpleRegion"):
+                return visitor.visitSimpleRegion(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1102,6 +1137,7 @@ class FlukaParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
             if la_ == 1:
+                localctx = FlukaParser.SimpleRegionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 115
                 self.match(FlukaParser.RegionName)
@@ -1112,6 +1148,7 @@ class FlukaParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = FlukaParser.ComplexRegionContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 118
                 self.match(FlukaParser.RegionName)

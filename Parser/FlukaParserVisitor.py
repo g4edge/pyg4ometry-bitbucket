@@ -65,8 +65,13 @@ class FlukaParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by FlukaParser#region.
-    def visitRegion(self, ctx):
+    # Visit a parse tree produced by FlukaParser#simpleRegion.
+    def visitSimpleRegion(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by FlukaParser#complexRegion.
+    def visitComplexRegion(self, ctx):
         return self.visitChildren(ctx)
 
 

@@ -494,82 +494,62 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         self.materials = materials
         self._region_scale_map = _region_scale_map
 
-    def visitRegion(self, ctx):
-        self.region_name = ctx.RegionName().getText()
-        region_solid = self.visitChildren(ctx)
-        region_centre = [region_solid.centre.x,
-                         region_solid.centre.y,
-                         region_solid.centre.z]
-
-        region_rotation = region_solid.rotation
-        region_gdml = region_solid.solid
+    def visitSimpleRegion(self, ctx):
+        # Simple in the sense that it consists of no unions of Zones.
+        region_defn = self.visitChildren(ctx)
+        # Build a zone from the list of bodies or single body:
+        zone = pyfluka.bodies.Zone(region_defn)
         region_name = ctx.RegionName().getText()
+        region = pyfluka.bodies.Region(region_name, zone)
+        self.regions[region_name] = pyfluka.bodies.Region(region_name, zone)
 
-        # This allows us to plot subtractions without something to
-        # subtract from.  Useful for looking at all the solids.
-        if region_solid.operator == '+' or region_solid.operator == '-':
-            _logger.debug("volume: name=%s; position=%s; rotation=%s; solid=%s",
-                          region_name, region_centre,
-                          _trf.matrix2tbxyz(region_rotation), region_gdml.name)
-            self.regions[region_name] = pyfluka.bodies.Region(
-                region_name,
-                region_gdml,
-                position=region_centre,
-                rotation=region_rotation)
+    def visitComplexRegion(self, ctx):
+        # Complex in the sense that it consists of the union of
+        # multiple zones.
+        pass
 
     def visitUnaryAndBoolean(self, ctx):
         left_solid = self.visit(ctx.unaryExpression())
         right_solid = self.visit(ctx.expr())
-        return left_solid.combine(right_solid)
+
+        # If both are tuples (i.e. operator, body/zone pairs):
+        if (isinstance(left_solid, tuple)
+            and isinstance(right_solid, tuple)):
+            return [left_solid, right_solid]
+        elif (isinstance(left_solid, tuple)
+              and isinstance(right_solid, list)):
+            right_solid.append(left_solid)
+            return right_solid
+        else:
+            raise RuntimeError("dunno what's going on here")
 
     def visitUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
-
         body = self.bodies[body_name]
-        body_type = type(body).__name__
-
-        # If an infinite body:
-        scale = self._region_scale_map[self.region_name] * 10.
-        if isinstance(body, pyfluka.bodies.InfiniteBody):
-            # Infinite bodies are factories for themselves, allowing
-            # for dynamic infinite scale for a common underlying body.
-            body = body(scale)
-            _logger.debug("infinite solid:  type=%s; scale=%s",
-                          body_type, scale)
-
-        gdml_solid = body.gdml_solid()
-        body_centre = body.centre()
-        body_rotation = body.rotation
-
         if ctx.Plus():
-            return _UnarySolid(gdml_solid, '+', body_centre, body_rotation)
-        else:
-            return _UnarySolid(gdml_solid, '-', body_centre, body_rotation)
+            return  ('+', body)
+        elif ctx.Minus():
+            return ('-', body)
 
     def visitUnaryAndSubZone(self, ctx):
-        first = self.visit(ctx.subZone())
-        second = self.visit(ctx.expr())
-        return first.combine(second)
+        sub_zone = self.visit(ctx.subZone())
+        expr = self.visit(ctx.expr())
+        embed()
+        return [sub_zone, expr]
 
     def visitMultipleUnion(self, ctx):
         # Get the zones:
         zones = [self.visit(zone) for zone in ctx.zone()]
-        union_of_zones = reduce(lambda first, second:
-                                first.union(second), zones)
-        return union_of_zones
+        return zones
 
     def visitSubZone(self, ctx):
         if ctx.Plus():
             operator = '+'
         elif ctx.Minus():
             operator = '-'
-        solid = self.visit(ctx.expr())
-        return _UnarySolid(solid.solid,
-                               operator,
-                               solid.centre,
-                               solid.rotation)
-
-
+        solids = self.visit(ctx.expr())
+        zone = pyfluka.bodies.Zone(solids)
+        return (operator, zone)
 
 def load_pickle(path):
     with open(path, 'r') as f:
