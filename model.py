@@ -46,9 +46,7 @@ class Model(object):
         # get the syntax tree.
         self.tree = Parse(filename)
         self.materials = self._materials_from_tree()
-        (self.bodies,
-         self._region_scale_map,
-         self._body_freq_map) = self._bodies_from_tree()
+        self.bodies, self._body_freq_map = self._bodies_from_tree()
         self.regions = self._regions_from_tree()
         # Initialiser the world volume:
         self._world_volume = self._gdml_world_volume()
@@ -70,7 +68,7 @@ class Model(object):
         This method insantiates the world volume.
 
         """
-        world_size = max(self._region_scale_map.values()) * 5.0
+        world_size = 1e5
         _logger.debug("worldvolume: name=world; dimensions=%s", world_size)
         world_box = _pygdml.solid.Box("world", world_size, world_size, world_size)
         return _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
@@ -203,9 +201,8 @@ class Model(object):
         walker = _antlr4.ParseTreeWalker()
         walker.walk(body_listener, self.tree)
         body_freq_map = body_listener.body_freq_map
-        region_max_scale_map = body_listener.region_max_scale_map
         bodies = body_listener.bodies
-        return bodies, region_max_scale_map, body_freq_map
+        return bodies, body_freq_map
 
     def _write_test_gmad(self, gdml_path):
         gmad_path = _path.splitext(gdml_path)[0] + ".gmad"
@@ -424,16 +421,6 @@ class _FlukaBodyListener(FlukaParserListener):
         self._translat_stack = []
         self._expansion_stack = []
 
-    def enterRegion(self, ctx):
-        # These two are transient attributes which record the current
-        # region name and the corresponding max_scale.
-        self.region_name = ctx.RegionName().getText()
-        self.max_scale = 0.0
-
-    def exitRegion(self, ctx):
-        # As we exit the region, record the max_scale for this region.
-        self.region_max_scale_map[self.region_name] = self.max_scale
-
     def enterBodyDefSpaceDelim(self, ctx):
         # This is where we get the body definitions and instantiate
         # them with the relevant pyfuka.bodies classes.
@@ -460,17 +447,7 @@ class _FlukaBodyListener(FlukaParserListener):
             self.omitted_bodies.append((body_name, body_type))
 
     def enterUnaryExpression(self, ctx):
-        # Here we assign max_scale the current body's extent if it's
-        # larger than the previous max_scale.
         body_name = ctx.ID().getText()
-        try:
-            self.max_scale = max(self.max_scale,
-                                 abs(self.bodies[body_name].crude_extent()))
-        except KeyError:
-            raise KeyError(("Undefined body \"{}\""
-                            " in region: \"{}\"!".format(body_name,
-                                                         self.region_name)))
-
         # For logging purposes.  If body hasn't yet been recorded as
         # used, then record its name and type.
         if body_name not in self.unique_body_names:
