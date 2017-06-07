@@ -26,12 +26,12 @@ class Body(object):
 
     def __init__(self,
                  name,
-                 translation_stack,
-                 transformation_stack):
+                 translation,
+                 transformation):
 
         self.name = name
-        self._translation_stack = translation_stack
-        self._transformation_stack = transformation_stack
+        self._translation = translation
+        self._transformation = transformation
         # Named tuple constructor for later use.
 
     def view(self, setclip=True):
@@ -232,14 +232,14 @@ class RPP(Body):
     An RPP is a rectangular parallelpiped (a cuboid).
     '''
     def __init__(self, name, parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(RPP, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
 
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
         if (self.parameters.x_min > self.parameters.x_max or
             self.parameters.y_min > self.parameters.y_max or
@@ -273,7 +273,7 @@ class RPP(Body):
 
         return centre
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
@@ -301,14 +301,14 @@ class RPP(Body):
 
 class SPH(Body):
     def __init__(self, name, parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
 
         super(SPH, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
@@ -327,7 +327,7 @@ class SPH(Body):
                             self.parameters.v_y,
                             self.parameters.v_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
@@ -355,13 +355,13 @@ class RCC(Body):
 
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(RCC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x',
@@ -388,7 +388,7 @@ class RCC(Body):
 
         return self.face_centre + 0.5 * self.direction
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         initial = [0, 0, 1]
         final = -self.direction
         self.rotation = _trf.matrix_from(initial, final)
@@ -441,14 +441,14 @@ class REC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(REC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
 
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
         raise NotImplementedError
 
     def _set_parameters(self, parameters):
@@ -477,7 +477,7 @@ class REC(Body):
 
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         pass
 
     def gdml_solid(self):
@@ -527,11 +527,11 @@ class TRC(Body):
 
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(TRC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
         self.major_centre = vector.Three([self.parameters.centre_major_x,
                                           self.parameters.centre_major_y,
@@ -540,7 +540,7 @@ class TRC(Body):
                                             self.parameters.major_to_minor_y,
                                             self.parameters.major_to_minor_z])
         self.length = self.major_to_minor.length
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['centre_major_x',
@@ -557,7 +557,7 @@ class TRC(Body):
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         # We choose in the as_gdml_solid method to place the major at
         # -z, and the major at +z, hence this choice of initial and
         # final vectors:
@@ -595,13 +595,13 @@ class XYP(Body):
     '''
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(XYP, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_z'])
@@ -613,7 +613,7 @@ class XYP(Body):
         centre_z = self.parameters.v_z - (self._scale * 0.5)
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
@@ -632,13 +632,13 @@ class XZP(Body):
     '''
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(XZP, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_y'])
@@ -650,7 +650,7 @@ class XZP(Body):
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
@@ -669,13 +669,13 @@ class YZP(Body):
     '''
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(YZP, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ['v_x'])
@@ -687,7 +687,7 @@ class YZP(Body):
         centre_z = 0.0
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
@@ -720,13 +720,13 @@ class PLA(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(PLA, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["x_direction",
@@ -755,7 +755,7 @@ class PLA(Body):
                   - (0.5 * self._scale * self.perpendicular.unit))
         return centre
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
         initial = [0,0,1]
@@ -800,13 +800,13 @@ class XCC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(XCC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -817,7 +817,7 @@ class XCC(Body):
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         # Rotate pi/2 about the y-axis.
         self.rotation = _np.matrix([[ 0,  0, -1],
                                     [ 0,  1,  0],
@@ -846,13 +846,13 @@ class YCC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(YCC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -863,7 +863,7 @@ class YCC(Body):
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         # Rotate by pi/2 about the x-axis.
         self.rotation = _np.matrix([[ 1,  0,  0],
                                     [ 0,  0,  1],
@@ -893,13 +893,13 @@ class ZCC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(ZCC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -912,7 +912,7 @@ class ZCC(Body):
                             self.parameters.centre_y,
                             0.0)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
@@ -942,13 +942,13 @@ class XEC(Body):
 
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(XEC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_y",
@@ -960,7 +960,7 @@ class XEC(Body):
     def centre(self):
         return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         # Rotate pi/2 about the y-axis.
         self.rotation = _np.matrix([[ 0,  0, -1],
                                     [ 0,  1,  0],
@@ -989,13 +989,13 @@ class YEC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(YEC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_z",
@@ -1007,7 +1007,7 @@ class YEC(Body):
     def centre(self):
         return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         # Rotate by pi/2 about the x-axis.
         self.rotation = _np.matrix([[ 1,  0,  0],
                                     [ 0,  0,  1],
@@ -1036,13 +1036,13 @@ class ZEC(Body):
     """
     def __init__(self, name,
                  parameters,
-                 translation_stack=None,
-                 transformation_stack=None):
+                 translation=None,
+                 transformation=None):
         super(ZEC, self).__init__(name,
-                                  translation_stack,
-                                  transformation_stack)
+                                  translation,
+                                  transformation)
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation_stack)
+        self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
         self._ParametersType = namedtuple("Parameters", ["centre_x",
@@ -1056,7 +1056,7 @@ class ZEC(Body):
                             self.parameters.centre_y,
                             0.0)
 
-    def _set_rotation_matrix(self, transformation_stack):
+    def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
 
     def crude_extent(self):
