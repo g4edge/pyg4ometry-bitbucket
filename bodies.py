@@ -1054,7 +1054,7 @@ class Region(object):
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
-        solid = self._union_zones(zones)
+        solid = self.evaluate(zones)
         solid.add_to_volume(world_volume)
         if setclip is True:
             world_volume.setClip()
@@ -1068,7 +1068,7 @@ class Region(object):
         Basically for adding to a world volume.
 
         """
-        boolean = self._union_zones(zones)
+        boolean = self.evaluate(zones)
         # Convert the matrix to TB xyz:
         rotation_angles = _trf.matrix2tbxyz(boolean.rotation)
         # Up to this point all rotations are active, which is OK
@@ -1084,12 +1084,12 @@ class Region(object):
                               False,
                               self.material)
 
-    def _union_zones(self, zones):
+    def evaluate(self, zones):
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
         booleans = [zone.evaluate() for zone in zones]
-        solid = reduce(or_, booleans)
-        return solid
+        out_boolean = reduce(or_, booleans)
+        return out_boolean
 
     def _select_zones(self, zones):
         if zones is None:
@@ -1101,7 +1101,7 @@ class Region(object):
         return zones
 
     def extent(self, zones=None):
-        boolean = self._union_zones(zones)
+        boolean = self.evaluate(zones)
         return boolean._get_extent()
 
 
