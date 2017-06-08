@@ -1170,8 +1170,8 @@ class Zone(object):
     def _accumulate_intersections(self, first, second):
         pass
 
-    def view(self):
-        self._crude_boolean().view()
+    def view(self, setclip=True):
+        self._crude_boolean().view(setclip=setclip)
 
     def evaluate(self, optimise=False):
         """
