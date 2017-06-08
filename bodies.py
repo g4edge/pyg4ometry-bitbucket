@@ -597,6 +597,8 @@ class XYP(Body):
         return abs(self.parameters.v_z)
 
     def gdml_solid(self):
+        # We choose the box face pointing in the +z direction to form
+        # the plane face.
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
                                  0.5 * self._scale,
@@ -634,6 +636,8 @@ class XZP(Body):
         return abs(self.parameters.v_y)
 
     def gdml_solid(self):
+        # We choose the box face pointing in the +y direction to form
+        # the plane face.
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
                                  0.5 * self._scale,
@@ -671,6 +675,8 @@ class YZP(Body):
         return abs(self.parameters.v_x)
 
     def gdml_solid(self):
+        # We choose the box face pointing in the +x direction to form
+        # the plane face.
         return _pygdml.solid.Box(self.name,
                                  0.5 * self._scale,
                                  0.5 * self._scale,
