@@ -83,8 +83,15 @@ class Body(object):
         return out
 
     def _get_extent(self):
-        mesh = self.gdml_solid().pycsgmesh()
-        extent = _pygdml.volume.pycsg_extent([mesh])
+        # Construct a world volume to place the solid in to be meshed.
+        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
+        self.add_to_volume(world_volume)
+        mesh = world_volume.pycsgmesh()
+        extent = _pygdml.volume.pycsg_extent(mesh)
+
         _MeshInfo = namedtuple("_MeshInfo", ['centre', 'min', 'max', 'length'])
         lower = extent[0]
         upper = extent[1]
