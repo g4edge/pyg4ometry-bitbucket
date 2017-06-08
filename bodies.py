@@ -1259,6 +1259,11 @@ class Parameters(object):
                                 for parameter in self._fields])
         return "Parameters:({})".format(out_string)
 
+    def __iter__(self):
+        for field_name in self._fields:
+            yield getattr(self, field_name)
+
+
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
     "BOX": "General Rectangular Parallelepiped",
