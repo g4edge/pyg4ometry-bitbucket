@@ -1044,7 +1044,7 @@ class Region(object):
         else:
             raise TypeError("Unkown zones type: {}".format(type(zones)))
 
-    def view(self, zones=None):
+    def view(self, zones=None, setclip=True):
         """
         View this single region.  If a null mesh is encountered, try
         the view_debug method to see the problematic boolean operation.
@@ -1056,7 +1056,8 @@ class Region(object):
                                       1, False, "G4_NITROUS_OXIDE")
         solid = self._union_zones(zones)
         solid.add_to_volume(world_volume)
-        world_volume.setClip()
+        if setclip is True:
+            world_volume.setClip()
         mesh = world_volume.pycsgmesh()
         viewer = _pygdml.VtkViewer()
         viewer.addSource(mesh)
