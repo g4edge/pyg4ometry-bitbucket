@@ -1100,6 +1100,10 @@ class Region(object):
             raise TypeError("Unknown zone selection type: ".format(type(zones)))
         return zones
 
+    def extent(self, zones=None):
+        boolean = self._union_zones(zones)
+        return boolean._get_extent()
+
 
 class Zone(object):
     """
@@ -1221,6 +1225,10 @@ class Zone(object):
         else:
             out = reduce(sub, excludes)
         return out
+
+    def extent(self):
+        boolean = self.evaluate()
+        return boolean._get_extent()
 
 
 class Boolean(Body):
