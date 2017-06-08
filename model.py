@@ -323,7 +323,7 @@ class _FlukaBodyListener(FlukaParserListener):
                                     self._transform_stack,
                                     self._current_translat)
             self.bodies[body_name] = body
-        except AttributeError, NotImplementedError:
+        except (AttributeError, NotImplementedError):
             _warnings.simplefilter('once', UserWarning)
             _warnings.warn(("\nBody type %s not supported.  All bodies"
                             " of this type will be omitted.  If bodies"
