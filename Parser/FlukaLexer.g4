@@ -1,82 +1,24 @@
 lexer grammar FlukaLexer;
 
-tokens{Integer,
-    Float,
-    ID,
-    Delim
-}
-
-// This is the default mode.
+Whitespace
+    : [ \t]
+	->skip
+    ;
 
 InLineComment
     : '!' ~[\r\n]*
 	-> skip
     ;
 
-Whitespace
-    : [ \t]
-	->skip
-    ;
-
-// Currently skipping preprocessor directives.
+// Skip preprocessor directives.
 LineComment
     : ('*'|'#') {self.column == 1}? ~[\r\n]*
 	-> skip
     ;
 
-GeoBegin
-    : 'G' {self.column == 1}? 'EOBEGIN' ~[\r\n]*
-	-> pushMode(geometry)
-    ;
-
-Material
-    : 'M' {self.column == 1}? 'ATERIAL'
-    ;
-
-Compound
-    : 'C' {self.column == 1}? 'OMPOUND'
-    ;
-
-Keyword
-    : [A-Za-z] {self.column == 1}? [A-Za-z0-9_-]+
-    ;
-
-ID
-    : [A-Za-z@] {self.column != 1}? [A-Za-z0-9_-]*
-    ;
-
 Newline
     : '\r'? '\n'
-	-> skip
-    ;
-
-Integer
-    : '-'? Digit+
-    ;
-
-Float
-    : ('+' | '-'?)
-	( // (1.3 | 1. | 1E5 | 1.E5 | 0041E5 | 1.14E+04
-	    Digit+ '.'? Digit* 'E'? ('+'|'-')? Digit*
-	|
-	    '.' Digit+  // .123
-	)
-    ;
-
-fragment
-Digit
-    : [0-9]
-    ;
-
-Delim : [,:;/]
-	-> skip
-    ;
-
-mode geometry;
-
-GeoEnd
-    : 'G' {self.column == 1}? 'EOEND'
-	-> popMode
+	-> channel(HIDDEN)
     ;
 
 End
@@ -95,8 +37,6 @@ Lattice
 RegionName
     : [A-Za-z] {self.column == 1}? [A-Za-z0-9_]+
     ;
-// $Start_expansion takes precedence over $Start_translat, which in turn takes
-// precedence over $Start_transform.  Leave this until the visitor to resolve (?)
 
 // Geometry directives:
 StartExpansion
@@ -123,57 +63,32 @@ EndTransform
     :'$' {self.column == 1}? 'End_transform'
     ;
 
-GeoInteger
-    : '-'? GeoDigit+ ->type(Integer)
+Integer
+    : '-'? Digit+
     ;
 
-GeoFloat
+Float
     : ('+' | '-'?)
 	( // (1.3 | 1. | 1E5 | 1.E5 | 0041E5 | 1.14E+04
-	    GeoDigit+ '.'? GeoDigit* 'E'? ('+'|'-')? GeoDigit*
+	    Digit+ '.'? Digit* 'E'? ('+'|'-')? Digit*
 	|
-	    '.' GeoDigit+  // .123
+	    '.' Digit+  // .123
 	)
-	-> type(Float)
     ;
 
 fragment
-GeoDigit
+Digit
     : [0-9]
     ;
 
-
-GeoNewline
-    : '\r'? '\n'
-	-> channel(HIDDEN)
-    ;
-
-GeoWhitespace
-    : [ \t]
-	->skip
-// 	->channel(HIDDEN)
-    ;
-
 // A GeoID does not start at the beginning of the line.
-GeoID
+ID
     : [A-Za-z] {self.column != 1}? [A-Za-z0-9_-]*
-	-> type(ID)
     ;
 
-GeoInLineComment
-    : '!' ~[\r\n]*
-	-> skip
-    ;
-
-// Currently skip preprocessor directives.
-GeoLineComment
-    : ('*'|'#') {self.column == 1}? ~[\r\n]*
-	-> skip
-    ;
-
-GeoDelim
+Delim
     : [,:;/]
-	-> type(Delim)
+	-> skip
     ;
 
 Plus : '+' ;

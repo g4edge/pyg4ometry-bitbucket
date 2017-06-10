@@ -7,86 +7,53 @@ from io import StringIO
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3")
-        buf.write(u"\"\u00c8\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7")
+        buf.write(u"\31\u008a\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7")
         buf.write(u"\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t")
-        buf.write(u"\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22")
-        buf.write(u"\4\23\t\23\4\24\t\24\4\25\t\25\3\2\6\2,\n\2\r\2\16\2")
-        buf.write(u"-\3\3\3\3\3\3\3\3\3\3\3\3\5\3\66\n\3\3\4\3\4\3\4\6\4")
-        buf.write(u";\n\4\r\4\16\4<\5\4?\n\4\3\5\3\5\6\5C\n\5\r\5\16\5D\3")
-        buf.write(u"\6\3\6\6\6I\n\6\r\6\16\6J\3\7\3\7\7\7O\n\7\f\7\16\7R")
-        buf.write(u"\13\7\3\b\3\b\7\bV\n\b\f\b\16\bY\13\b\3\t\3\t\3\t\6\t")
-        buf.write(u"^\n\t\r\t\16\t_\3\n\3\n\3\n\3\n\6\nf\n\n\r\n\16\ng\3")
-        buf.write(u"\n\3\n\3\n\5\nm\n\n\7\no\n\n\f\n\16\nr\13\n\5\nt\n\n")
-        buf.write(u"\3\13\3\13\3\13\3\13\3\13\3\13\5\13|\n\13\3\f\3\f\3\f")
-        buf.write(u"\3\f\6\f\u0082\n\f\r\f\16\f\u0083\3\f\3\f\5\f\u0088\n")
-        buf.write(u"\f\3\r\3\r\5\r\u008c\n\r\3\16\3\16\3\16\3\16\3\16\3\16")
-        buf.write(u"\3\16\3\16\5\16\u0096\n\16\3\17\3\17\3\17\3\17\3\17\3")
-        buf.write(u"\20\3\20\3\20\3\21\3\21\3\21\5\21\u00a3\n\21\3\22\3\22")
-        buf.write(u"\3\22\6\22\u00a8\n\22\r\22\16\22\u00a9\3\22\3\22\3\23")
-        buf.write(u"\3\23\3\23\3\23\3\23\6\23\u00b3\n\23\r\23\16\23\u00b4")
-        buf.write(u"\3\23\3\23\3\24\3\24\3\24\6\24\u00bc\n\24\r\24\16\24")
-        buf.write(u"\u00bd\3\24\3\24\3\25\3\25\6\25\u00c4\n\25\r\25\16\25")
-        buf.write(u"\u00c5\3\25\2\2\26\2\4\6\b\n\f\16\20\22\24\26\30\32\34")
-        buf.write(u"\36 \"$&(\2\6\3\2\3\5\4\2\3\3\5\5\3\2\4\5\3\2\36\37\u00d1")
-        buf.write(u"\2+\3\2\2\2\4\65\3\2\2\2\6>\3\2\2\2\b@\3\2\2\2\nF\3\2")
-        buf.write(u"\2\2\fL\3\2\2\2\16S\3\2\2\2\20]\3\2\2\2\22s\3\2\2\2\24")
-        buf.write(u"{\3\2\2\2\26\u0087\3\2\2\2\30\u008b\3\2\2\2\32\u0095")
-        buf.write(u"\3\2\2\2\34\u0097\3\2\2\2\36\u009c\3\2\2\2 \u00a2\3\2")
-        buf.write(u"\2\2\"\u00a4\3\2\2\2$\u00ad\3\2\2\2&\u00b8\3\2\2\2(\u00c1")
-        buf.write(u"\3\2\2\2*,\5\4\3\2+*\3\2\2\2,-\3\2\2\2-+\3\2\2\2-.\3")
-        buf.write(u"\2\2\2.\3\3\2\2\2/\66\5\6\4\2\60\61\5\f\7\2\61\62\5\20")
-        buf.write(u"\t\2\62\63\7\17\2\2\63\66\3\2\2\2\64\66\5\16\b\2\65/")
-        buf.write(u"\3\2\2\2\65\60\3\2\2\2\65\64\3\2\2\2\66\5\3\2\2\2\67")
-        buf.write(u"?\5\b\5\28:\5\b\5\29;\5\n\6\2:9\3\2\2\2;<\3\2\2\2<:\3")
-        buf.write(u"\2\2\2<=\3\2\2\2=?\3\2\2\2>\67\3\2\2\2>8\3\2\2\2?\7\3")
-        buf.write(u"\2\2\2@B\7\13\2\2AC\t\2\2\2BA\3\2\2\2CD\3\2\2\2DB\3\2")
-        buf.write(u"\2\2DE\3\2\2\2E\t\3\2\2\2FH\7\f\2\2GI\t\2\2\2HG\3\2\2")
-        buf.write(u"\2IJ\3\2\2\2JH\3\2\2\2JK\3\2\2\2K\13\3\2\2\2LP\7\n\2")
-        buf.write(u"\2MO\t\2\2\2NM\3\2\2\2OR\3\2\2\2PN\3\2\2\2PQ\3\2\2\2")
-        buf.write(u"Q\r\3\2\2\2RP\3\2\2\2SW\7\r\2\2TV\t\2\2\2UT\3\2\2\2V")
-        buf.write(u"Y\3\2\2\2WU\3\2\2\2WX\3\2\2\2X\17\3\2\2\2YW\3\2\2\2Z")
-        buf.write(u"^\5\22\n\2[^\5\24\13\2\\^\5(\25\2]Z\3\2\2\2][\3\2\2\2")
-        buf.write(u"]\\\3\2\2\2^_\3\2\2\2_]\3\2\2\2_`\3\2\2\2`\21\3\2\2\2")
-        buf.write(u"at\5 \21\2bc\7\21\2\2ce\t\3\2\2df\7\4\2\2ed\3\2\2\2f")
-        buf.write(u"g\3\2\2\2ge\3\2\2\2gh\3\2\2\2ht\3\2\2\2ip\7\21\2\2jl")
-        buf.write(u"\7\6\2\2km\t\4\2\2lk\3\2\2\2lm\3\2\2\2mo\3\2\2\2nj\3")
-        buf.write(u"\2\2\2or\3\2\2\2pn\3\2\2\2pq\3\2\2\2qt\3\2\2\2rp\3\2")
-        buf.write(u"\2\2sa\3\2\2\2sb\3\2\2\2si\3\2\2\2t\23\3\2\2\2uv\7\23")
-        buf.write(u"\2\2vw\7\3\2\2w|\5\30\r\2xy\7\23\2\2yz\7\3\2\2z|\5\26")
-        buf.write(u"\f\2{u\3\2\2\2{x\3\2\2\2|\25\3\2\2\2}~\7 \2\2~\u0081")
-        buf.write(u"\5\30\r\2\177\u0080\7 \2\2\u0080\u0082\5\30\r\2\u0081")
-        buf.write(u"\177\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0081\3\2\2\2")
-        buf.write(u"\u0083\u0084\3\2\2\2\u0084\u0088\3\2\2\2\u0085\u0086")
-        buf.write(u"\7 \2\2\u0086\u0088\5\30\r\2\u0087}\3\2\2\2\u0087\u0085")
-        buf.write(u"\3\2\2\2\u0088\27\3\2\2\2\u0089\u008c\5\32\16\2\u008a")
-        buf.write(u"\u008c\5\34\17\2\u008b\u0089\3\2\2\2\u008b\u008a\3\2")
-        buf.write(u"\2\2\u008c\31\3\2\2\2\u008d\u0096\5\36\20\2\u008e\u008f")
-        buf.write(u"\5\36\20\2\u008f\u0090\5\32\16\2\u0090\u0096\3\2\2\2")
-        buf.write(u"\u0091\u0092\5\34\17\2\u0092\u0093\5\32\16\2\u0093\u0096")
-        buf.write(u"\3\2\2\2\u0094\u0096\5\34\17\2\u0095\u008d\3\2\2\2\u0095")
-        buf.write(u"\u008e\3\2\2\2\u0095\u0091\3\2\2\2\u0095\u0094\3\2\2")
-        buf.write(u"\2\u0096\33\3\2\2\2\u0097\u0098\t\5\2\2\u0098\u0099\7")
-        buf.write(u"!\2\2\u0099\u009a\5\32\16\2\u009a\u009b\7\"\2\2\u009b")
-        buf.write(u"\35\3\2\2\2\u009c\u009d\t\5\2\2\u009d\u009e\7\5\2\2\u009e")
-        buf.write(u"\37\3\2\2\2\u009f\u00a3\5\"\22\2\u00a0\u00a3\5$\23\2")
-        buf.write(u"\u00a1\u00a3\5&\24\2\u00a2\u009f\3\2\2\2\u00a2\u00a0")
-        buf.write(u"\3\2\2\2\u00a2\u00a1\3\2\2\2\u00a3!\3\2\2\2\u00a4\u00a5")
-        buf.write(u"\7\24\2\2\u00a5\u00a7\7\4\2\2\u00a6\u00a8\5\22\n\2\u00a7")
-        buf.write(u"\u00a6\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9\u00a7\3\2\2")
-        buf.write(u"\2\u00a9\u00aa\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac")
-        buf.write(u"\7\27\2\2\u00ac#\3\2\2\2\u00ad\u00ae\7\25\2\2\u00ae\u00af")
-        buf.write(u"\7\4\2\2\u00af\u00b0\7\4\2\2\u00b0\u00b2\7\4\2\2\u00b1")
-        buf.write(u"\u00b3\5\22\n\2\u00b2\u00b1\3\2\2\2\u00b3\u00b4\3\2\2")
-        buf.write(u"\2\u00b4\u00b2\3\2\2\2\u00b4\u00b5\3\2\2\2\u00b5\u00b6")
-        buf.write(u"\3\2\2\2\u00b6\u00b7\7\30\2\2\u00b7%\3\2\2\2\u00b8\u00b9")
-        buf.write(u"\7\26\2\2\u00b9\u00bb\t\3\2\2\u00ba\u00bc\5\22\n\2\u00bb")
-        buf.write(u"\u00ba\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd\u00bb\3\2\2")
-        buf.write(u"\2\u00bd\u00be\3\2\2\2\u00be\u00bf\3\2\2\2\u00bf\u00c0")
-        buf.write(u"\7\31\2\2\u00c0\'\3\2\2\2\u00c1\u00c3\7\22\2\2\u00c2")
-        buf.write(u"\u00c4\7\5\2\2\u00c3\u00c2\3\2\2\2\u00c4\u00c5\3\2\2")
-        buf.write(u"\2\u00c5\u00c3\3\2\2\2\u00c5\u00c6\3\2\2\2\u00c6)\3\2")
-        buf.write(u"\2\2\32-\65<>DJPW]_glps{\u0083\u0087\u008b\u0095\u00a2")
-        buf.write(u"\u00a9\u00b4\u00bd\u00c5")
+        buf.write(u"\r\4\16\t\16\3\2\3\2\3\2\6\2 \n\2\r\2\16\2!\3\3\3\3\3")
+        buf.write(u"\3\3\3\6\3(\n\3\r\3\16\3)\3\3\3\3\3\3\5\3/\n\3\7\3\61")
+        buf.write(u"\n\3\f\3\16\3\64\13\3\5\3\66\n\3\3\4\3\4\3\4\3\4\3\4")
+        buf.write(u"\3\4\5\4>\n\4\3\5\3\5\3\5\3\5\6\5D\n\5\r\5\16\5E\3\5")
+        buf.write(u"\3\5\5\5J\n\5\3\6\3\6\5\6N\n\6\3\7\3\7\3\7\3\7\3\7\3")
+        buf.write(u"\7\3\7\3\7\5\7X\n\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3")
+        buf.write(u"\n\3\n\3\n\5\ne\n\n\3\13\3\13\3\13\6\13j\n\13\r\13\16")
+        buf.write(u"\13k\3\13\3\13\3\f\3\f\3\f\3\f\3\f\6\fu\n\f\r\f\16\f")
+        buf.write(u"v\3\f\3\f\3\r\3\r\3\r\6\r~\n\r\r\r\16\r\177\3\r\3\r\3")
+        buf.write(u"\16\3\16\6\16\u0086\n\16\r\16\16\16\u0087\3\16\2\2\17")
+        buf.write(u"\2\4\6\b\n\f\16\20\22\24\26\30\32\2\5\4\2\21\21\23\23")
+        buf.write(u"\3\2\22\23\3\2\25\26\u0091\2\37\3\2\2\2\4\65\3\2\2\2")
+        buf.write(u"\6=\3\2\2\2\bI\3\2\2\2\nM\3\2\2\2\fW\3\2\2\2\16Y\3\2")
+        buf.write(u"\2\2\20^\3\2\2\2\22d\3\2\2\2\24f\3\2\2\2\26o\3\2\2\2")
+        buf.write(u"\30z\3\2\2\2\32\u0083\3\2\2\2\34 \5\4\3\2\35 \5\6\4\2")
+        buf.write(u"\36 \5\32\16\2\37\34\3\2\2\2\37\35\3\2\2\2\37\36\3\2")
+        buf.write(u"\2\2 !\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\"\3\3\2\2\2#\66")
+        buf.write(u"\5\22\n\2$%\7\b\2\2%\'\t\2\2\2&(\7\22\2\2\'&\3\2\2\2")
+        buf.write(u"()\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\66\3\2\2\2+\62\7\b\2")
+        buf.write(u"\2,.\7\24\2\2-/\t\3\2\2.-\3\2\2\2./\3\2\2\2/\61\3\2\2")
+        buf.write(u"\2\60,\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63\3\2")
+        buf.write(u"\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65#\3\2\2\2\65$\3\2")
+        buf.write(u"\2\2\65+\3\2\2\2\66\5\3\2\2\2\678\7\n\2\289\7\21\2\2")
+        buf.write(u"9>\5\n\6\2:;\7\n\2\2;<\7\21\2\2<>\5\b\5\2=\67\3\2\2\2")
+        buf.write(u"=:\3\2\2\2>\7\3\2\2\2?@\7\27\2\2@C\5\n\6\2AB\7\27\2\2")
+        buf.write(u"BD\5\n\6\2CA\3\2\2\2DE\3\2\2\2EC\3\2\2\2EF\3\2\2\2FJ")
+        buf.write(u"\3\2\2\2GH\7\27\2\2HJ\5\n\6\2I?\3\2\2\2IG\3\2\2\2J\t")
+        buf.write(u"\3\2\2\2KN\5\f\7\2LN\5\16\b\2MK\3\2\2\2ML\3\2\2\2N\13")
+        buf.write(u"\3\2\2\2OX\5\20\t\2PQ\5\20\t\2QR\5\f\7\2RX\3\2\2\2ST")
+        buf.write(u"\5\16\b\2TU\5\f\7\2UX\3\2\2\2VX\5\16\b\2WO\3\2\2\2WP")
+        buf.write(u"\3\2\2\2WS\3\2\2\2WV\3\2\2\2X\r\3\2\2\2YZ\t\4\2\2Z[\7")
+        buf.write(u"\30\2\2[\\\5\f\7\2\\]\7\31\2\2]\17\3\2\2\2^_\t\4\2\2")
+        buf.write(u"_`\7\23\2\2`\21\3\2\2\2ae\5\24\13\2be\5\26\f\2ce\5\30")
+        buf.write(u"\r\2da\3\2\2\2db\3\2\2\2dc\3\2\2\2e\23\3\2\2\2fg\7\13")
+        buf.write(u"\2\2gi\7\22\2\2hj\5\4\3\2ih\3\2\2\2jk\3\2\2\2ki\3\2\2")
+        buf.write(u"\2kl\3\2\2\2lm\3\2\2\2mn\7\16\2\2n\25\3\2\2\2op\7\f\2")
+        buf.write(u"\2pq\7\22\2\2qr\7\22\2\2rt\7\22\2\2su\5\4\3\2ts\3\2\2")
+        buf.write(u"\2uv\3\2\2\2vt\3\2\2\2vw\3\2\2\2wx\3\2\2\2xy\7\17\2\2")
+        buf.write(u"y\27\3\2\2\2z{\7\r\2\2{}\t\2\2\2|~\5\4\3\2}|\3\2\2\2")
+        buf.write(u"~\177\3\2\2\2\177}\3\2\2\2\177\u0080\3\2\2\2\u0080\u0081")
+        buf.write(u"\3\2\2\2\u0081\u0082\7\20\2\2\u0082\31\3\2\2\2\u0083")
+        buf.write(u"\u0085\7\t\2\2\u0084\u0086\7\23\2\2\u0085\u0084\3\2\2")
+        buf.write(u"\2\u0086\u0087\3\2\2\2\u0087\u0085\3\2\2\2\u0087\u0088")
+        buf.write(u"\3\2\2\2\u0088\33\3\2\2\2\22\37!).\62\65=EIMWdkv\177")
+        buf.write(u"\u0087")
         return buf.getvalue()
 
 
@@ -104,81 +71,58 @@ class FlukaParser ( Parser ):
                      u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
                      u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
                      u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"'+'", u"'-'", u"'|'", u"'('", u"')'" ]
+                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'+'", u"'-'", 
+                     u"'|'", u"'('", u"')'" ]
 
-    symbolicNames = [ u"<INVALID>", u"Integer", u"Float", u"ID", u"Delim", 
-                      u"InLineComment", u"Whitespace", u"LineComment", u"GeoBegin", 
-                      u"Material", u"Compound", u"Keyword", u"Newline", 
-                      u"GeoEnd", u"End", u"BodyCode", u"Lattice", u"RegionName", 
+    symbolicNames = [ u"<INVALID>", u"Whitespace", u"InLineComment", u"LineComment", 
+                      u"Newline", u"End", u"BodyCode", u"Lattice", u"RegionName", 
                       u"StartExpansion", u"StartTranslat", u"StartTransform", 
                       u"EndExpansion", u"EndTranslat", u"EndTransform", 
-                      u"GeoNewline", u"GeoWhitespace", u"GeoInLineComment", 
-                      u"GeoLineComment", u"Plus", u"Minus", u"Bar", u"LParen", 
-                      u"RParen" ]
+                      u"Integer", u"Float", u"ID", u"Delim", u"Plus", u"Minus", 
+                      u"Bar", u"LParen", u"RParen" ]
 
-    RULE_model = 0
-    RULE_command = 1
-    RULE_material_declr = 2
-    RULE_material = 3
-    RULE_compound = 4
-    RULE_geoBegin = 5
-    RULE_otherKeywords = 6
-    RULE_geocards = 7
-    RULE_body = 8
-    RULE_region = 9
-    RULE_zoneUnion = 10
-    RULE_zone = 11
-    RULE_expr = 12
-    RULE_subZone = 13
-    RULE_unaryExpression = 14
-    RULE_geoDirective = 15
-    RULE_expansion = 16
-    RULE_translat = 17
-    RULE_transform = 18
-    RULE_lattice = 19
+    RULE_geocards = 0
+    RULE_body = 1
+    RULE_region = 2
+    RULE_zoneUnion = 3
+    RULE_zone = 4
+    RULE_expr = 5
+    RULE_subZone = 6
+    RULE_unaryExpression = 7
+    RULE_geoDirective = 8
+    RULE_expansion = 9
+    RULE_translat = 10
+    RULE_transform = 11
+    RULE_lattice = 12
 
-    ruleNames =  [ u"model", u"command", u"material_declr", u"material", 
-                   u"compound", u"geoBegin", u"otherKeywords", u"geocards", 
-                   u"body", u"region", u"zoneUnion", u"zone", u"expr", u"subZone", 
-                   u"unaryExpression", u"geoDirective", u"expansion", u"translat", 
-                   u"transform", u"lattice" ]
+    ruleNames =  [ u"geocards", u"body", u"region", u"zoneUnion", u"zone", 
+                   u"expr", u"subZone", u"unaryExpression", u"geoDirective", 
+                   u"expansion", u"translat", u"transform", u"lattice" ]
 
     EOF = Token.EOF
-    Integer=1
-    Float=2
-    ID=3
-    Delim=4
-    InLineComment=5
-    Whitespace=6
-    LineComment=7
-    GeoBegin=8
-    Material=9
-    Compound=10
-    Keyword=11
-    Newline=12
-    GeoEnd=13
-    End=14
-    BodyCode=15
-    Lattice=16
-    RegionName=17
-    StartExpansion=18
-    StartTranslat=19
-    StartTransform=20
-    EndExpansion=21
-    EndTranslat=22
-    EndTransform=23
-    GeoNewline=24
-    GeoWhitespace=25
-    GeoInLineComment=26
-    GeoLineComment=27
-    Plus=28
-    Minus=29
-    Bar=30
-    LParen=31
-    RParen=32
+    Whitespace=1
+    InLineComment=2
+    LineComment=3
+    Newline=4
+    End=5
+    BodyCode=6
+    Lattice=7
+    RegionName=8
+    StartExpansion=9
+    StartTranslat=10
+    StartTransform=11
+    EndExpansion=12
+    EndTranslat=13
+    EndTransform=14
+    Integer=15
+    Float=16
+    ID=17
+    Delim=18
+    Plus=19
+    Minus=20
+    Bar=21
+    LParen=22
+    RParen=23
 
     def __init__(self, input):
         super(FlukaParser, self).__init__(input)
@@ -187,586 +131,6 @@ class FlukaParser ( Parser ):
         self._predicates = None
 
 
-
-    class ModelContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.ModelContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-        def command(self, i=None):
-            if i is None:
-                return self.getTypedRuleContexts(FlukaParser.CommandContext)
-            else:
-                return self.getTypedRuleContext(FlukaParser.CommandContext,i)
-
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_model
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterModel"):
-                listener.enterModel(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitModel"):
-                listener.exitModel(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitModel"):
-                return visitor.visitModel(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def model(self):
-
-        localctx = FlukaParser.ModelContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 0, self.RULE_model)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 41 
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while True:
-                self.state = 40
-                self.command()
-                self.state = 43 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.GeoBegin) | (1 << FlukaParser.Material) | (1 << FlukaParser.Keyword))) != 0)):
-                    break
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class CommandContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.CommandContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-        def material_declr(self):
-            return self.getTypedRuleContext(FlukaParser.Material_declrContext,0)
-
-
-        def geoBegin(self):
-            return self.getTypedRuleContext(FlukaParser.GeoBeginContext,0)
-
-
-        def geocards(self):
-            return self.getTypedRuleContext(FlukaParser.GeocardsContext,0)
-
-
-        def GeoEnd(self):
-            return self.getToken(FlukaParser.GeoEnd, 0)
-
-        def otherKeywords(self):
-            return self.getTypedRuleContext(FlukaParser.OtherKeywordsContext,0)
-
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_command
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterCommand"):
-                listener.enterCommand(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitCommand"):
-                listener.exitCommand(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitCommand"):
-                return visitor.visitCommand(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def command(self):
-
-        localctx = FlukaParser.CommandContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_command)
-        try:
-            self.state = 51
-            self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [FlukaParser.Material]:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 45
-                self.material_declr()
-                pass
-            elif token in [FlukaParser.GeoBegin]:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 46
-                self.geoBegin()
-                self.state = 47
-                self.geocards()
-                self.state = 48
-                self.match(FlukaParser.GeoEnd)
-                pass
-            elif token in [FlukaParser.Keyword]:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 50
-                self.otherKeywords()
-                pass
-            else:
-                raise NoViableAltException(self)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class Material_declrContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.Material_declrContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_material_declr
-
-     
-        def copyFrom(self, ctx):
-            super(FlukaParser.Material_declrContext, self).copyFrom(ctx)
-
-
-
-    class CompoundMaterialContext(Material_declrContext):
-
-        def __init__(self, parser, ctx): # actually a FlukaParser.Material_declrContext)
-            super(FlukaParser.CompoundMaterialContext, self).__init__(parser)
-            self.copyFrom(ctx)
-
-        def material(self):
-            return self.getTypedRuleContext(FlukaParser.MaterialContext,0)
-
-        def compound(self, i=None):
-            if i is None:
-                return self.getTypedRuleContexts(FlukaParser.CompoundContext)
-            else:
-                return self.getTypedRuleContext(FlukaParser.CompoundContext,i)
-
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterCompoundMaterial"):
-                listener.enterCompoundMaterial(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitCompoundMaterial"):
-                listener.exitCompoundMaterial(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitCompoundMaterial"):
-                return visitor.visitCompoundMaterial(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class SimpleMaterialContext(Material_declrContext):
-
-        def __init__(self, parser, ctx): # actually a FlukaParser.Material_declrContext)
-            super(FlukaParser.SimpleMaterialContext, self).__init__(parser)
-            self.copyFrom(ctx)
-
-        def material(self):
-            return self.getTypedRuleContext(FlukaParser.MaterialContext,0)
-
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterSimpleMaterial"):
-                listener.enterSimpleMaterial(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitSimpleMaterial"):
-                listener.exitSimpleMaterial(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitSimpleMaterial"):
-                return visitor.visitSimpleMaterial(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-    def material_declr(self):
-
-        localctx = FlukaParser.Material_declrContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_material_declr)
-        self._la = 0 # Token type
-        try:
-            self.state = 60
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
-            if la_ == 1:
-                localctx = FlukaParser.SimpleMaterialContext(self, localctx)
-                self.enterOuterAlt(localctx, 1)
-                self.state = 53
-                self.material()
-                pass
-
-            elif la_ == 2:
-                localctx = FlukaParser.CompoundMaterialContext(self, localctx)
-                self.enterOuterAlt(localctx, 2)
-                self.state = 54
-                self.material()
-                self.state = 56 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                while True:
-                    self.state = 55
-                    self.compound()
-                    self.state = 58 
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if not (_la==FlukaParser.Compound):
-                        break
-
-                pass
-
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class MaterialContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.MaterialContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-        def Material(self):
-            return self.getToken(FlukaParser.Material, 0)
-
-        def Float(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Float)
-            else:
-                return self.getToken(FlukaParser.Float, i)
-
-        def Integer(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Integer)
-            else:
-                return self.getToken(FlukaParser.Integer, i)
-
-        def ID(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.ID)
-            else:
-                return self.getToken(FlukaParser.ID, i)
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_material
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterMaterial"):
-                listener.enterMaterial(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitMaterial"):
-                listener.exitMaterial(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitMaterial"):
-                return visitor.visitMaterial(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def material(self):
-
-        localctx = FlukaParser.MaterialContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_material)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 62
-            self.match(FlukaParser.Material)
-            self.state = 64 
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while True:
-                self.state = 63
-                _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0)):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 66 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0)):
-                    break
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class CompoundContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.CompoundContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-        def Compound(self):
-            return self.getToken(FlukaParser.Compound, 0)
-
-        def Float(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Float)
-            else:
-                return self.getToken(FlukaParser.Float, i)
-
-        def Integer(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Integer)
-            else:
-                return self.getToken(FlukaParser.Integer, i)
-
-        def ID(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.ID)
-            else:
-                return self.getToken(FlukaParser.ID, i)
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_compound
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterCompound"):
-                listener.enterCompound(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitCompound"):
-                listener.exitCompound(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitCompound"):
-                return visitor.visitCompound(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def compound(self):
-
-        localctx = FlukaParser.CompoundContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_compound)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 68
-            self.match(FlukaParser.Compound)
-            self.state = 70 
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while True:
-                self.state = 69
-                _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0)):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 72 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0)):
-                    break
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class GeoBeginContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.GeoBeginContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-        def GeoBegin(self):
-            return self.getToken(FlukaParser.GeoBegin, 0)
-
-        def Float(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Float)
-            else:
-                return self.getToken(FlukaParser.Float, i)
-
-        def Integer(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Integer)
-            else:
-                return self.getToken(FlukaParser.Integer, i)
-
-        def ID(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.ID)
-            else:
-                return self.getToken(FlukaParser.ID, i)
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_geoBegin
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterGeoBegin"):
-                listener.enterGeoBegin(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitGeoBegin"):
-                listener.exitGeoBegin(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitGeoBegin"):
-                return visitor.visitGeoBegin(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def geoBegin(self):
-
-        localctx = FlukaParser.GeoBeginContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_geoBegin)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 74
-            self.match(FlukaParser.GeoBegin)
-            self.state = 78
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0):
-                self.state = 75
-                _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0)):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 80
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-    class OtherKeywordsContext(ParserRuleContext):
-
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(FlukaParser.OtherKeywordsContext, self).__init__(parent, invokingState)
-            self.parser = parser
-
-        def Keyword(self):
-            return self.getToken(FlukaParser.Keyword, 0)
-
-        def Float(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Float)
-            else:
-                return self.getToken(FlukaParser.Float, i)
-
-        def Integer(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.Integer)
-            else:
-                return self.getToken(FlukaParser.Integer, i)
-
-        def ID(self, i=None):
-            if i is None:
-                return self.getTokens(FlukaParser.ID)
-            else:
-                return self.getToken(FlukaParser.ID, i)
-
-        def getRuleIndex(self):
-            return FlukaParser.RULE_otherKeywords
-
-        def enterRule(self, listener):
-            if hasattr(listener, "enterOtherKeywords"):
-                listener.enterOtherKeywords(self)
-
-        def exitRule(self, listener):
-            if hasattr(listener, "exitOtherKeywords"):
-                listener.exitOtherKeywords(self)
-
-        def accept(self, visitor):
-            if hasattr(visitor, "visitOtherKeywords"):
-                return visitor.visitOtherKeywords(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def otherKeywords(self):
-
-        localctx = FlukaParser.OtherKeywordsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_otherKeywords)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 81
-            self.match(FlukaParser.Keyword)
-            self.state = 85
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0):
-                self.state = 82
-                _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.Integer) | (1 << FlukaParser.Float) | (1 << FlukaParser.ID))) != 0)):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 87
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
 
     class GeocardsContext(ParserRuleContext):
 
@@ -818,33 +182,33 @@ class FlukaParser ( Parser ):
     def geocards(self):
 
         localctx = FlukaParser.GeocardsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_geocards)
+        self.enterRule(localctx, 0, self.RULE_geocards)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 91 
+            self.state = 29 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 91
+                self.state = 29
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [FlukaParser.BodyCode, FlukaParser.StartExpansion, FlukaParser.StartTranslat, FlukaParser.StartTransform]:
-                    self.state = 88
+                    self.state = 26
                     self.body()
                     pass
                 elif token in [FlukaParser.RegionName]:
-                    self.state = 89
+                    self.state = 27
                     self.region()
                     pass
                 elif token in [FlukaParser.Lattice]:
-                    self.state = 90
+                    self.state = 28
                     self.lattice()
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 93 
+                self.state = 31 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.Lattice) | (1 << FlukaParser.RegionName) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
@@ -975,38 +339,38 @@ class FlukaParser ( Parser ):
     def body(self):
 
         localctx = FlukaParser.BodyContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_body)
+        self.enterRule(localctx, 2, self.RULE_body)
         self._la = 0 # Token type
         try:
-            self.state = 113
+            self.state = 51
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
             if la_ == 1:
                 localctx = FlukaParser.GeometryDirectiveContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 95
+                self.state = 33
                 self.geoDirective()
                 pass
 
             elif la_ == 2:
                 localctx = FlukaParser.BodyDefSpaceDelimContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 96
+                self.state = 34
                 self.match(FlukaParser.BodyCode)
-                self.state = 97
+                self.state = 35
                 _la = self._input.LA(1)
                 if not(_la==FlukaParser.Integer or _la==FlukaParser.ID):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 99 
+                self.state = 37 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 98
+                    self.state = 36
                     self.match(FlukaParser.Float)
-                    self.state = 101 
+                    self.state = 39 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==FlukaParser.Float):
@@ -1017,19 +381,19 @@ class FlukaParser ( Parser ):
             elif la_ == 3:
                 localctx = FlukaParser.BodyDefPunctDelimContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 103
+                self.state = 41
                 self.match(FlukaParser.BodyCode)
-                self.state = 110
+                self.state = 48
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==FlukaParser.Delim:
-                    self.state = 104
+                    self.state = 42
                     self.match(FlukaParser.Delim)
-                    self.state = 106
+                    self.state = 44
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if _la==FlukaParser.Float or _la==FlukaParser.ID:
-                        self.state = 105
+                        self.state = 43
                         _la = self._input.LA(1)
                         if not(_la==FlukaParser.Float or _la==FlukaParser.ID):
                             self._errHandler.recoverInline(self)
@@ -1038,7 +402,7 @@ class FlukaParser ( Parser ):
                             self.consume()
 
 
-                    self.state = 112
+                    self.state = 50
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
@@ -1131,30 +495,30 @@ class FlukaParser ( Parser ):
     def region(self):
 
         localctx = FlukaParser.RegionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_region)
+        self.enterRule(localctx, 4, self.RULE_region)
         try:
-            self.state = 121
+            self.state = 59
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 localctx = FlukaParser.SimpleRegionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 115
+                self.state = 53
                 self.match(FlukaParser.RegionName)
-                self.state = 116
+                self.state = 54
                 self.match(FlukaParser.Integer)
-                self.state = 117
+                self.state = 55
                 self.zone()
                 pass
 
             elif la_ == 2:
                 localctx = FlukaParser.ComplexRegionContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 118
+                self.state = 56
                 self.match(FlukaParser.RegionName)
-                self.state = 119
+                self.state = 57
                 self.match(FlukaParser.Integer)
-                self.state = 120
+                self.state = 58
                 self.zoneUnion()
                 pass
 
@@ -1247,28 +611,28 @@ class FlukaParser ( Parser ):
     def zoneUnion(self):
 
         localctx = FlukaParser.ZoneUnionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_zoneUnion)
+        self.enterRule(localctx, 6, self.RULE_zoneUnion)
         self._la = 0 # Token type
         try:
-            self.state = 133
+            self.state = 71
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
             if la_ == 1:
                 localctx = FlukaParser.MultipleUnionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 123
+                self.state = 61
                 self.match(FlukaParser.Bar)
-                self.state = 124
+                self.state = 62
                 self.zone()
-                self.state = 127 
+                self.state = 65 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 125
+                    self.state = 63
                     self.match(FlukaParser.Bar)
-                    self.state = 126
+                    self.state = 64
                     self.zone()
-                    self.state = 129 
+                    self.state = 67 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==FlukaParser.Bar):
@@ -1279,9 +643,9 @@ class FlukaParser ( Parser ):
             elif la_ == 2:
                 localctx = FlukaParser.SingleUnionContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 131
+                self.state = 69
                 self.match(FlukaParser.Bar)
-                self.state = 132
+                self.state = 70
                 self.zone()
                 pass
 
@@ -1331,20 +695,20 @@ class FlukaParser ( Parser ):
     def zone(self):
 
         localctx = FlukaParser.ZoneContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_zone)
+        self.enterRule(localctx, 8, self.RULE_zone)
         try:
-            self.state = 137
+            self.state = 75
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 135
+                self.state = 73
                 self.expr()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 136
+                self.state = 74
                 self.subZone()
                 pass
 
@@ -1483,40 +847,40 @@ class FlukaParser ( Parser ):
     def expr(self):
 
         localctx = FlukaParser.ExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 24, self.RULE_expr)
+        self.enterRule(localctx, 10, self.RULE_expr)
         try:
-            self.state = 147
+            self.state = 85
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
             if la_ == 1:
                 localctx = FlukaParser.SingleUnaryContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 139
+                self.state = 77
                 self.unaryExpression()
                 pass
 
             elif la_ == 2:
                 localctx = FlukaParser.UnaryAndBooleanContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 140
+                self.state = 78
                 self.unaryExpression()
-                self.state = 141
+                self.state = 79
                 self.expr()
                 pass
 
             elif la_ == 3:
                 localctx = FlukaParser.UnaryAndSubZoneContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 143
+                self.state = 81
                 self.subZone()
-                self.state = 144
+                self.state = 82
                 self.expr()
                 pass
 
             elif la_ == 4:
                 localctx = FlukaParser.OneSubZoneContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 146
+                self.state = 84
                 self.subZone()
                 pass
 
@@ -1574,22 +938,22 @@ class FlukaParser ( Parser ):
     def subZone(self):
 
         localctx = FlukaParser.SubZoneContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_subZone)
+        self.enterRule(localctx, 12, self.RULE_subZone)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 149
+            self.state = 87
             _la = self._input.LA(1)
             if not(_la==FlukaParser.Plus or _la==FlukaParser.Minus):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 150
+            self.state = 88
             self.match(FlukaParser.LParen)
-            self.state = 151
+            self.state = 89
             self.expr()
-            self.state = 152
+            self.state = 90
             self.match(FlukaParser.RParen)
         except RecognitionException as re:
             localctx.exception = re
@@ -1637,18 +1001,18 @@ class FlukaParser ( Parser ):
     def unaryExpression(self):
 
         localctx = FlukaParser.UnaryExpressionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_unaryExpression)
+        self.enterRule(localctx, 14, self.RULE_unaryExpression)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 154
+            self.state = 92
             _la = self._input.LA(1)
             if not(_la==FlukaParser.Plus or _la==FlukaParser.Minus):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 155
+            self.state = 93
             self.match(FlukaParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -1699,24 +1063,24 @@ class FlukaParser ( Parser ):
     def geoDirective(self):
 
         localctx = FlukaParser.GeoDirectiveContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 30, self.RULE_geoDirective)
+        self.enterRule(localctx, 16, self.RULE_geoDirective)
         try:
-            self.state = 160
+            self.state = 98
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [FlukaParser.StartExpansion]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 157
+                self.state = 95
                 self.expansion()
                 pass
             elif token in [FlukaParser.StartTranslat]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 158
+                self.state = 96
                 self.translat()
                 pass
             elif token in [FlukaParser.StartTransform]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 159
+                self.state = 97
                 self.transform()
                 pass
             else:
@@ -1775,27 +1139,27 @@ class FlukaParser ( Parser ):
     def expansion(self):
 
         localctx = FlukaParser.ExpansionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 32, self.RULE_expansion)
+        self.enterRule(localctx, 18, self.RULE_expansion)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 162
+            self.state = 100
             self.match(FlukaParser.StartExpansion)
-            self.state = 163
+            self.state = 101
             self.match(FlukaParser.Float)
-            self.state = 165 
+            self.state = 103 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 164
+                self.state = 102
                 self.body()
-                self.state = 167 
+                self.state = 105 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
                     break
 
-            self.state = 169
+            self.state = 107
             self.match(FlukaParser.EndExpansion)
         except RecognitionException as re:
             localctx.exception = re
@@ -1853,31 +1217,31 @@ class FlukaParser ( Parser ):
     def translat(self):
 
         localctx = FlukaParser.TranslatContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_translat)
+        self.enterRule(localctx, 20, self.RULE_translat)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 171
+            self.state = 109
             self.match(FlukaParser.StartTranslat)
-            self.state = 172
+            self.state = 110
             self.match(FlukaParser.Float)
-            self.state = 173
+            self.state = 111
             self.match(FlukaParser.Float)
-            self.state = 174
+            self.state = 112
             self.match(FlukaParser.Float)
-            self.state = 176 
+            self.state = 114 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 175
+                self.state = 113
                 self.body()
-                self.state = 178 
+                self.state = 116 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
                     break
 
-            self.state = 180
+            self.state = 118
             self.match(FlukaParser.EndTranslat)
         except RecognitionException as re:
             localctx.exception = re
@@ -1935,32 +1299,32 @@ class FlukaParser ( Parser ):
     def transform(self):
 
         localctx = FlukaParser.TransformContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_transform)
+        self.enterRule(localctx, 22, self.RULE_transform)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 182
+            self.state = 120
             self.match(FlukaParser.StartTransform)
-            self.state = 183
+            self.state = 121
             _la = self._input.LA(1)
             if not(_la==FlukaParser.Integer or _la==FlukaParser.ID):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 185 
+            self.state = 123 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 184
+                self.state = 122
                 self.body()
-                self.state = 187 
+                self.state = 125 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
                     break
 
-            self.state = 189
+            self.state = 127
             self.match(FlukaParser.EndTransform)
         except RecognitionException as re:
             localctx.exception = re
@@ -2008,19 +1372,19 @@ class FlukaParser ( Parser ):
     def lattice(self):
 
         localctx = FlukaParser.LatticeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 38, self.RULE_lattice)
+        self.enterRule(localctx, 24, self.RULE_lattice)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 191
+            self.state = 129
             self.match(FlukaParser.Lattice)
-            self.state = 193 
+            self.state = 131 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 192
+                self.state = 130
                 self.match(FlukaParser.ID)
-                self.state = 195 
+                self.state = 133 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==FlukaParser.ID):

@@ -29,7 +29,7 @@ def Parse(path):
     parser = FlukaParser(tokens)
 
     # Create syntax tree
-    tree = parser.model()
+    tree = parser.geocards()
 
     return tree
 
@@ -48,12 +48,19 @@ def _separate_geometry(lines):
                        if line.startswith("GEOBEGIN")).next()
     geo_end_index = (i for i, line in enumerate(lines)
                      if line.startswith("GEOEND")).next()
-    # slice and return
-    before_geometry = lines[:geo_begin_index]
-    geometry = lines[geo_begin_index:geo_end_index + 1]
-    after_geometry = lines[geo_end_index + 1:]
-    not_geometry = before_geometry + after_geometry
 
+    # Check if line after geobegin is a body definition, if not then
+    # it is part of the GEOBEGIN card, and move begin_index onwards one.
+    for body_type in _body_types:
+        if lines[geo_begin_index + 1].startswith(body_type):
+            break
+    else: # no break
+        geo_begin_index += 1
+
+    before_geometry = lines[:geo_begin_index + 1]
+    geometry = lines[geo_begin_index + 1:geo_end_index]
+    after_geometry = lines[geo_end_index:]
+    not_geometry = before_geometry + after_geometry
     return not_geometry, geometry
 
 def VisitModel(tree):
@@ -62,3 +69,8 @@ def VisitModel(tree):
         pass
 
     visitor = FlukaTreeVisitor()
+
+_body_types = ["ARB", "BOX", "ELL", "PLA", "QUA", "RAW",
+               "RCC", "REC", "RPP", "SPH", "TRC", "WED",
+               "XCC", "XEC", "XYP", "XZP", "YCC", "YEC",
+               "YZP", "ZCC", "ZEC"]

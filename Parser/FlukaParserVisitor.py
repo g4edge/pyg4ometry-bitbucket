@@ -5,46 +5,6 @@ from antlr4 import *
 
 class FlukaParserVisitor(ParseTreeVisitor):
 
-    # Visit a parse tree produced by FlukaParser#model.
-    def visitModel(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#command.
-    def visitCommand(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#SimpleMaterial.
-    def visitSimpleMaterial(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#CompoundMaterial.
-    def visitCompoundMaterial(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#material.
-    def visitMaterial(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#compound.
-    def visitCompound(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#geoBegin.
-    def visitGeoBegin(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by FlukaParser#otherKeywords.
-    def visitOtherKeywords(self, ctx):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by FlukaParser#geocards.
     def visitGeocards(self, ctx):
         return self.visitChildren(ctx)
