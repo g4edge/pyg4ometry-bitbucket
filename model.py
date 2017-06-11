@@ -54,7 +54,8 @@ class Model(object):
         return _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
                               None, 1, False, "G4_Galactic")
 
-    def write_to_gdml(self, region_names=None, out_path=None, make_gmad=False):
+    def write_to_gdml(self, region_names=None, out_path=None,
+                      make_gmad=False, optimise=True):
         """
         Convert the region to GDML.  Default output file name is
         "./" + basename + ".gdml".
@@ -72,7 +73,7 @@ class Model(object):
         references to corresponding the GDML file.
 
         """
-        self._generate_mesh(region_names)
+        self._generate_mesh(region_names, setclip=True, optimise=True)
         if out_path is None:
             out_path = ("./"
                         + _path.basename(_path.splitext(self._filename)[0])
@@ -87,7 +88,7 @@ class Model(object):
         if make_gmad is True:
             self._write_test_gmad(out_path)
 
-    def view(self, regions=None, setclip=True):
+    def view(self, regions=None, setclip=True, optimise=False):
         """
         View the mesh for this model.
 
@@ -103,19 +104,21 @@ class Model(object):
         default, the bounding box will be clipped.
 
         """
-        world_mesh = self._generate_mesh(regions, setclip=setclip)
+        world_mesh = self._generate_mesh(regions,
+                                         setclip=setclip,
+                                         optimise=optimise)
         viewer = _pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
-    def _generate_mesh(self, region_names, setclip=True):
+    def _generate_mesh(self, region_names, setclip, optimise):
         """
         This function has the side effect of recreating the world
         volume if the region_names requested are different to the ones
         already assigned to it and returns the relevant mesh.
 
         """
-        self._compose_world_volume(region_names)
+        self._compose_world_volume(region_names, optimise=optimise)
         start = _time.time()
         try:
             if setclip:
@@ -127,7 +130,7 @@ class Model(object):
         print "Time spent meshing world:", (end - start)/60.0, "minutes."
         return world_mesh
 
-    def _compose_world_volume(self, region_names):
+    def _compose_world_volume(self, region_names, optimise):
         """
         Add the region or regions in region_names to the world volume,
         only if not already added.
@@ -145,7 +148,8 @@ class Model(object):
                                       in self._world_volume.daughterVolumes])):
             self._world_volume = self._gdml_world_volume()
             for region_name in list(region_names):
-                self.regions[region_name].add_to_volume(self._world_volume)
+                self.regions[region_name].add_to_volume(self._world_volume,
+                                                        optimise=optimise)
 
     def report_body_count(self):
         """

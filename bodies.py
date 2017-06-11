@@ -48,6 +48,9 @@ class Body(object):
         viewer.addSource(mesh)
         viewer.view()
 
+    def _apply_crude_scale(self, scale):
+        self._scale = scale
+
     def add_to_volume(self, volume):
         """
         Basically for adding to a world volume.
@@ -77,9 +80,10 @@ class Body(object):
         """
         out = _copy(self)
         if isinstance(scale, (float, int)):
-            out._scale = float(scale)
+            out._apply_crude_scale(scale)
         elif isinstance(scale, Boolean):
-            pass
+            extent = self._get_overlap(scale)
+            out._apply_extent(extent)
         return out
 
     def _get_extent(self):
@@ -98,6 +102,16 @@ class Body(object):
         size = upper - lower
         centre = upper - size / 2
         return _MeshInfo(centre, lower, upper, size)
+
+    def _get_overlap(self, other):
+        """
+        Get the overlap of this solid with another, calculate the
+        extent of the mesh, and return this.
+
+        """
+        intersection = self + other
+        extent = intersection._get_extent()
+        return extent
 
     def intersect(self, other):
         """
@@ -579,16 +593,33 @@ class XYP(Body):
                                   transformation)
         self._set_parameters(parameters)
         self._set_rotation_matrix(transformation)
+        self._offset = vector.Three(0, 0, 0)
 
     def _set_parameters(self, parameters):
         parameter_names = ['v_z']
         self.parameters = Parameters(zip(parameter_names, parameters))
 
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale_x = scale
+        self._scale_y = scale
+        self._scale_z = scale
+
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(extent.centre.x,
+                                    extent.centre.y,
+                                    0.0)
+        self._scale_x = extent.length.x * 1.1
+        self._scale_y = extent.length.y * 1.1
+        self._scale_z = extent.length.z * 1.1
+
     def centre(self):
+        # Choose the face at
         centre_x = 0.0
         centre_y = 0.0
-        centre_z = self.parameters.v_z - (self._scale * 0.5)
-        return vector.Three(centre_x, centre_y, centre_z)
+        centre_z = self.parameters.v_z - (self._scale_z * 0.5)
+        return (self._offset
+                + vector.Three(centre_x, centre_y, centre_z))
 
     def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
@@ -600,9 +631,9 @@ class XYP(Body):
         # We choose the box face pointing in the +z direction to form
         # the plane face.
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale)
+                                 0.5 * self._scale_x,
+                                 0.5 * self._scale_y,
+                                 0.5 * self._scale_z)
 
 
 class XZP(Body):
@@ -623,11 +654,26 @@ class XZP(Body):
         parameter_names = ['v_y']
         self.parameters = Parameters(zip(parameter_names, parameters))
 
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale_x = scale
+        self._scale_y = scale
+        self._scale_z = scale
+
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(extent.centre.x,
+                                    0.0,
+                                    extent.centre.z)
+        self._scale_x = extent.length.x * 1.1
+        self._scale_y = extent.length.y * 1.1
+        self._scale_z = extent.length.z * 1.1
+
     def centre(self):
         centre_x = 0.0
-        centre_y = self.parameters.v_y - (self._scale * 0.5)
+        centre_y = self.parameters.v_y - (self._scale_y * 0.5)
         centre_z = 0.0
-        return vector.Three(centre_x, centre_y, centre_z)
+        return (self._offset
+                + vector.Three(centre_x, centre_y, centre_z))
 
     def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
@@ -639,9 +685,9 @@ class XZP(Body):
         # We choose the box face pointing in the +y direction to form
         # the plane face.
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale)
+                                 0.5 * self._scale_x,
+                                 0.5 * self._scale_y,
+                                 0.5 * self._scale_z)
 
 
 class YZP(Body):
@@ -662,11 +708,26 @@ class YZP(Body):
         parameter_names = ['v_x']
         self.parameters = Parameters(zip(parameter_names, parameters))
 
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale_x = scale
+        self._scale_y = scale
+        self._scale_z = scale
+
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(0.0,
+                                    extent.centre.y,
+                                    extent.centre.z)
+        self._scale_x = extent.length.x * 1.1
+        self._scale_y = extent.length.y * 1.1
+        self._scale_z = extent.length.z * 1.1
+
     def centre(self):
-        centre_x = self.parameters.v_x - (self._scale * 0.5)
+        centre_x = self.parameters.v_x - (self._scale_x * 0.5)
         centre_y = 0.0
         centre_z = 0.0
-        return vector.Three(centre_x, centre_y, centre_z)
+        return (self._offset
+                + vector.Three(centre_x, centre_y, centre_z))
 
     def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
@@ -678,9 +739,9 @@ class YZP(Body):
         # We choose the box face pointing in the +x direction to form
         # the plane face.
         return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale)
+                                 0.5 * self._scale_x,
+                                 0.5 * self._scale_y,
+                                 0.5 * self._scale_z)
 
 
 class PLA(Body):
@@ -1067,7 +1128,7 @@ class Region(object):
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
-        solid = self.evaluate(zones)
+        solid = self.evaluate(zones, optimise=False)
         solid.add_to_volume(world_volume)
         if setclip is True:
             world_volume.setClip()
@@ -1076,12 +1137,12 @@ class Region(object):
         viewer.addSource(mesh)
         viewer.view()
 
-    def add_to_volume(self, volume, zones=None):
+    def add_to_volume(self, volume, zones=None, optimise=True):
         """
         Basically for adding to a world volume.
 
         """
-        boolean = self.evaluate(zones)
+        boolean = self.evaluate(zones, optimise=optimise)
         # Convert the matrix to TB xyz:
         rotation_angles = _trf.matrix2tbxyz(boolean.rotation)
         # Up to this point all rotations are active, which is OK
@@ -1100,7 +1161,7 @@ class Region(object):
     def evaluate(self, zones=None, optimise=True):
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
-        booleans = [zone.evaluate() for zone in zones]
+        booleans = [zone.evaluate(optimise=optimise) for zone in zones]
         out_boolean = reduce(or_, booleans)
         return out_boolean
 
@@ -1188,7 +1249,7 @@ class Zone(object):
         pass
 
     def view(self, setclip=True):
-        self._crude_boolean().view(setclip=setclip)
+        self._boolean(optimise=False).view(setclip=setclip)
 
     def evaluate(self, optimise=False):
         """
@@ -1196,8 +1257,7 @@ class Zone(object):
         appropriate optimisations, if any.
 
         """
-        if optimise is False:
-            return self._crude_boolean()
+        return self._boolean(optimise=optimise)
 
     def _scale(self, scale):
         contains = []
@@ -1209,35 +1269,50 @@ class Zone(object):
                 exludes.append(body(scale))
         return zone
 
-    def _crude_boolean(self, scale=None):
+    def _boolean(self, optimise=False):
         """
         Get the Boolean of this Zone.
 
+        If optimise if false, then make all solids big enough with no
+        concern for the resulting GDML.  Faster, useful when just after
+        visualiation, and necessary for a first pass before any optimisation.
         """
-        if scale is None:
-            scale = self.crude_extent() * 10.
+        scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
-        contains = []
-        for body in self.contains:
-            if isinstance(body, Body):
-                contains.append(body(scale))
-            elif isinstance(body, Zone):
-                contains.append(body._crude_boolean(scale))
-
-        excludes = []
-        for body in self.excludes:
-            if isinstance(body, Body):
-                excludes.append(body(scale))
-            elif isinstance(body, Zone):
-                excludes.append(body._crude_boolean(scale))
+        scaled_contains = self._map_extents(self.contains, extent=scale)
+        scaled_excludes = self._map_extents(self.excludes, extent=scale)
 
         # Accumulate the intersections and subtractions and return:
-        if len(self.contains) != 0:
-            boolean_from_ints = reduce(add, contains)
-            out = reduce(sub, excludes, boolean_from_ints)
+        if len(scaled_contains) != 0:
+            boolean_from_ints = reduce(add, scaled_contains)
+            out = reduce(sub, scaled_excludes, boolean_from_ints)
         else:
-            out = reduce(sub, excludes)
+            out = reduce(sub, scaled_excludes)
+
+        if optimise is False:
+            return out
+
+        # Rescale the bodies and zones with the resulting mesh:
+        scaled_contains = self._map_extents(scaled_contains, extent=out)
+        boolean_from_ints = reduce(add, scaled_contains)
+        scaled_excludes = self._map_extents(scaled_excludes,
+                                            extent=boolean_from_ints)
+        # Accumulate the intersections and subtractions and return:
+        if len(scaled_contains) != 0:
+            boolean_from_ints = reduce(add, scaled_contains)
+            out = reduce(sub, scaled_excludes, boolean_from_ints)
+        else:
+            out = reduce(sub, scaled_excludes)
         return out
+
+    def _map_extents(self, bodies, extent=None):
+        scaled_bodies = []
+        for body in bodies:
+            if isinstance(body, Body):
+                scaled_bodies.append(body(extent))
+            elif isinstance(body, Zone):
+                scaled_bodies.append(body._crude_boolean(extent))
+        return scaled_bodies
 
     def extent(self):
         boolean = self.evaluate()
