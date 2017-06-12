@@ -81,9 +81,11 @@ class Body(object):
         out = _copy(self)
         if isinstance(scale, (float, int)):
             out._apply_crude_scale(scale)
-        elif isinstance(scale, Boolean):
+        elif isinstance(scale, Body):
             extent = self._get_overlap(scale)
             out._apply_extent(extent)
+        else:
+            raise TypeError("Unknown scale type: {}".format(type(scale)))
         return out
 
     def _get_extent(self):
