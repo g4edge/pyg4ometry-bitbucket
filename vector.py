@@ -60,3 +60,27 @@ class Three(_np.ndarray):
 
         """
         return _np.linalg.norm(self)
+
+def point_on_line_closest_to_point(point, point_on_line, direction):
+    """
+    Line is defined in terms of two vectors:  a point on the line and
+    the direction of the line.
+
+    point is the point with which the distance to the line is to be
+    minimised.
+
+    """
+    # Algorithm pinched from:
+
+    # Get another point on the line:
+    p0 = point
+    p1 = point_on_line
+    a = direction
+
+    # In the name of rapidity, implementation pinched from:
+    # https://math.stackexchange.com/questions/13176/how-to-find-a-point-on-a-line-closest-to-another-given-point
+    t = ((- a.x * (p1.x - p0.x) - a.y * (p1.y - p0.y) - a.z * (p1.z - p0.z))
+         / (a.x * a.x + a.y * a.y + a.z * a.z))
+    pt = p1 + t * a
+
+    return pt

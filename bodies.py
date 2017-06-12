@@ -367,6 +367,7 @@ class RCC(Body):
                                   transformation)
         self._set_parameters(parameters)
         self._set_rotation_matrix(transformation)
+        self._offset = vector.Three(0, 0, 0)
 
     def _set_parameters(self, parameters):
         parameter_names = ['v_x', 'v_y', 'v_z', 'h_x', 'h_y', 'h_z', 'radius']
@@ -379,6 +380,37 @@ class RCC(Body):
                                       self.parameters.h_y,
                                       self.parameters.h_z)
         self.length = _np.linalg.norm(self.direction)
+        self._scale = self.length
+
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale = self.length
+
+    def _apply_extent(self, extent):
+        # Max possible length of a solid for the given extents:
+        max_length = _np.linalg.norm([extent.length.x,
+                                      extent.length.y,
+                                      extent.length.z])
+        # If the length is possibly smaller than the length of the
+        # resulting solid, then just return the length and position unchanged.
+        if self.length < max_length:
+            self._offset = vector.Three(0, 0, 0)
+            self._scale = self.length
+        # Else shorten and reposition the cylinder.
+        else:
+            # If the RCC is much longer than the maximum possible extent, I want
+            # to minimise the length and centre the RCC on the point
+            # closest to the centre of the mesh (while maintaining the
+            # orientation of the cylinder).  The two subtractions
+            # are to cancel with the terms in the RCC.centre method,
+            # leaving just the point on the line closest to the cetnre.
+            self._offset = (vector.point_on_line_closest_to_point(
+                extent.centre,
+                self.face_centre,
+                self.direction)
+                            - self.face_centre
+                            - 0.5 * self.direction)
+            self._scale = max_length * 1.1
 
     def centre(self):
         '''
@@ -386,7 +418,9 @@ class RCC(Body):
         MILLIMETRES, as this is used for GDML.
         '''
 
-        return self.face_centre + 0.5 * self.direction
+        return (self._offset
+                + self.face_centre
+                + (0.5 * self.direction))
 
     def _set_rotation_matrix(self, transformation):
         initial = [0, 0, 1]
@@ -402,7 +436,7 @@ class RCC(Body):
     def gdml_solid(self):
         return _pygdml.solid.Tubs(self.name, 0.0,
                                   self.parameters.radius,
-                                  self.length * 0.5,
+                                  self._scale * 0.5,
                                   0.0,
                                   2*_pi)
 
