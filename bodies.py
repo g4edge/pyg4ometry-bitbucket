@@ -895,6 +895,16 @@ class YCC(Body):
         self._set_parameters(parameters)
         self._set_rotation_matrix(transformation)
 
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale = scale
+
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(0.0,
+                                    extent.centre.y,
+                                    0.0)
+        self._scale = extent.length.y * 1.1
+
     def _set_parameters(self, parameters):
         parameter_names = ["centre_z", "centre_x", "radius"]
         self.parameters = Parameters(zip(parameter_names, parameters))
