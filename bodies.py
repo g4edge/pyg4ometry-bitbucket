@@ -966,6 +966,16 @@ class ZCC(Body):
         parameter_names = ["centre_x", "centre_y", "radius"]
         self.parameters = Parameters(zip(parameter_names, parameters))
 
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale = scale
+
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(0.0,
+                                    0.0,
+                                    extent.centre.z)
+        self._scale = extent.length.z * 1.1
+
     def centre(self):
         return vector.Three(self.parameters.centre_x,
                             self.parameters.centre_y,
