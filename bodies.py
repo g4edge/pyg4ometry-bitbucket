@@ -854,7 +854,9 @@ class XCC(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
-        return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
+        return vector.Three(0.0,
+                            self.parameters.centre_y,
+                            self.parameters.centre_z)
 
     def _set_rotation_matrix(self, transformation):
         # Rotate pi/2 about the y-axis.
@@ -898,7 +900,9 @@ class YCC(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
-        return vector.Three(self.parameters.centre_x, 0.0, self.parameters.centre_z)
+        return vector.Three(self.parameters.centre_x,
+                            0.0,
+                            self.parameters.centre_z)
 
     def _set_rotation_matrix(self, transformation):
         # Rotate by pi/2 about the x-axis.
@@ -991,7 +995,9 @@ class XEC(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
-        return vector.Three(0.0, self.parameters.centre_y, self.parameters.centre_z)
+        return vector.Three(0.0,
+                            self.parameters.centre_y,
+                            self.parameters.centre_z)
 
     def _set_rotation_matrix(self, transformation):
         # Rotate pi/2 about the y-axis.
