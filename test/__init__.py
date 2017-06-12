@@ -11,6 +11,9 @@ import Ellipsoid
 import Cons
 import Wedge
 import Para
-
+import Trap
+import Orb
+import EllipticalTube
+import ExtrudedSolid
 
 

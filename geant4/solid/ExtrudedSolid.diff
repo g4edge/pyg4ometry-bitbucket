@@ -1,0 +1,503 @@
+diff --git a/geant4/solid/EllipticalTube.py b/geant4/solid/EllipticalTube.py
+new file mode 100644
+index 0000000..d78100a
+--- /dev/null
++++ b/geant4/solid/EllipticalTube.py
+@@ -0,0 +1,105 @@
++from SolidBase import SolidBase as _SolidBase
++from pygeometry.pycsg.core import CSG as _CSG
++from pygeometry.pycsg.geom import Vector as _Vector
++from pygeometry.pycsg.geom import Vertex as _Vertex
++from pygeometry.pycsg.geom import Polygon as _Polygon
++from pygeometry.geant4.Registry import registry as _registry
++from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
++import numpy as _np
++
++class EllipticalTube(_SolidBase) :
++    def __init__(self, name, pDx, pDy, pDz, nslice=16, nstack=16) :
++        """
++        Constructs a tube of elliptical cross-section. 
++
++        Inputs:
++          name: string, name of the volume
++          pDx:  float, half-length in x
++          pDy:  float, half-length in y
++          pDz:  float, half-length in z    
++        """
++        self.type   = 'ellipticaltube'
++        self.name   = name
++        self.pDx    = pDx
++        self.pDy    = pDy
++        self.pDz    = pDz
++        self.nslice = nslice
++        self.nstack = nstack
++
++    def pycsgmesh(self):
++        polygons = []
++
++        sz      = -self.pDz
++        dz      = 2*self.pDz/self.nstack
++        dTheta  = 2*_np.pi/self.nslice
++        stacks  = self.nstack
++        slices  = self.nslice 
++
++        def appendVertex(vertices, theta, z, dx=self.pDx, dy=self.pDy, norm=[]):
++            c = _Vector([0,0,0])
++            x = dx*_np.cos(theta)
++            y = dy*_np.sin(theta)
++            
++            d = _Vector(
++                x,
++                y,
++                z)
++            
++            if not norm:
++                n = d
++            else:
++                n = _Vector(norm)
++            vertices.append(_Vertex(c.plus(d), d))
++
++
++        for j0 in range(slices):
++            j1 = j0 + 0.5
++            j2 = j0 + 1
++            for i0 in range(stacks):
++                i1 = i0 + 0.5
++                i2 = i0 + 1
++                verticesN = []
++                appendVertex(verticesN, i1 * dTheta, j1 * dz + sz)
++                appendVertex(verticesN, i2 * dTheta, j2 * dz + sz)
++                appendVertex(verticesN, i0 * dTheta, j2 * dz + sz)
++                polygons.append(_Polygon(verticesN))
++                verticesS = []
++                appendVertex(verticesS, i1 * dTheta, j1 * dz + sz)
++                appendVertex(verticesS, i0 * dTheta, j0 * dz + sz)
++                appendVertex(verticesS, i2 * dTheta, j0 * dz + sz)
++                polygons.append(_Polygon(verticesS))
++                verticesW = []
++                appendVertex(verticesW, i1 * dTheta, j1 * dz + sz)
++                appendVertex(verticesW, i0 * dTheta, j2 * dz + sz)
++                appendVertex(verticesW, i0 * dTheta, j0 * dz + sz)
++                polygons.append(_Polygon(verticesW))
++                verticesE = []
++                appendVertex(verticesE, i1 * dTheta, j1 * dz + sz)
++                appendVertex(verticesE, i2 * dTheta, j0 * dz + sz)
++                appendVertex(verticesE, i2 * dTheta, j2 * dz + sz)
++                polygons.append(_Polygon(verticesE))
++
++        for i0 in range(0, slices):
++            i1 = i0 + 1
++            
++            vertices = []
++            
++            appendVertex(vertices, i0 * dTheta, sz, norm=[0,0,1])
++            appendVertex(vertices, 0, sz, dx = 0, dy = 0, norm=[0,0,1])
++            appendVertex(vertices, i1 * dTheta, sz, norm=[0,0,1])
++            polygons.append(_Polygon(vertices))
++
++            vertices = []
++            appendVertex(vertices, i1 * dTheta, stacks * dz + sz, norm=[0,0,-1])
++            appendVertex(vertices, 0, slices*dz + sz, dx = 0, dy = 0, norm=[0,0,-1])
++            appendVertex(vertices, i0 * dTheta, stacks * dz + sz, norm=[0,0,-1])
++            polygons.append(_Polygon(vertices))
++            
++        self.mesh  = _CSG.fromPolygons(polygons)
++    
++        return self.mesh
++    
++
++
++    def gdml(selfs):
++        pass
+diff --git a/geant4/solid/Orb.py b/geant4/solid/Orb.py
+new file mode 100644
+index 0000000..de74a07
+--- /dev/null
++++ b/geant4/solid/Orb.py
+@@ -0,0 +1,30 @@
++from SolidBase import SolidBase as _SolidBase
++from pygeometry.pycsg.core import CSG as _CSG
++from pygeometry.pycsg.geom import Vector as _Vector
++from pygeometry.pycsg.geom import Vertex as _Vertex
++from pygeometry.pycsg.geom import Polygon as _Polygon
++from pygeometry.geant4.Registry import registry as _registry
++from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
++import numpy as _np
++
++class Orb(_SolidBase):
++    def __init__(self, name, pRMax):
++
++        """
++        Constructs a solid sphere. 
++    
++        Inputs:
++           name:     string, name of the volume
++           pRMax:    float, outer radius
++        """   
++        self.type = 'orb'
++        self.name = name
++        self.pRMax = pRMax
++
++    def pycsgmesh(self):
++        self.mesh = _CSG.sphere(center=[0,0,0], radius=self.pRMax)
++        return self.mesh
++
++    
++    def gdml(selfs):
++        pass
+diff --git a/geant4/solid/Trap.py b/geant4/solid/Trap.py
+new file mode 100644
+index 0000000..438de92
+--- /dev/null
++++ b/geant4/solid/Trap.py
+@@ -0,0 +1,167 @@
++from SolidBase import SolidBase as _SolidBase
++from pygeometry.pycsg.core import CSG as _CSG
++from pygeometry.pycsg.geom import Vector as _Vector
++from pygeometry.pycsg.geom import Vertex as _Vertex
++from pygeometry.pycsg.geom import Polygon as _Polygon
++from pygeometry.geant4.Registry import registry as _registry
++from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
++import numpy as _np
++
++
++class Trap(_SolidBase) :
++    def __init__(self, name, pDz, pTheta, pDPhi, pDy1, pDx1, pDx2, pAlp1, pDy2, pDx3, pDx4, pAlp2) :
++        """
++        Constructs a general trapezoid. 
++
++        Inputs:
++          name:   string, name of the volume
++          pDz:    float, half length along z
++          pTheta: float, polar angle of the line joining the centres of the faces at -/+pDz
++          pPhi:   float, azimuthal angle of the line joining the centres of the faces at -/+pDz
++          pDy1:   float, half-length at -pDz
++          pDx1:   float, half length along x of the side at y=-pDy1
++          pDx2:   float, half length along x of the side at y=+pDy1
++          pAlp1:  float, angle wrt the y axis from the centre of the side (lower endcap)
++          pDy2:   float, half-length at +pDz
++          pDx3:   float, halg-length of the side at y=-pDy2 of the face at +pDz
++          pDx4:   float, halg-length of the side at y=+pDy2 of the face at +pDz
++
++          pAlp2:  float, angle wrt the y axis from the centre of the side (upper endcap)
++        """
++
++        self.type    = "trap"
++        self.name    = name
++        self.pDz     = pDz
++        self.pTheta  = pTheta
++        self.pDPhi   = pDPhi
++        self.pDy1    = pDy1
++        self.pDx1    = pDx1
++        self.pDx2    = pDx2
++        self.pAlp1   = pAlp1
++        self.pDy2    = pDy2
++        self.pDx3    = pDx3
++        self.pDx4    = pDx4
++        self.pAlp2   = pAlp2
++
++    def pycsgmesh(self):
++
++        def listSub(lista, listb):
++            result = [a_i - b_i for a_i, b_i in zip(lista, listb)]
++            return result
++    
++        def listAdd(lista, listb):
++            result = [a_i + b_i for a_i, b_i in zip(lista, listb)]
++            return result
++
++        hlZ  = self.pDz
++        
++        X1   = self.pDx1 #at -pDz
++        X2   = self.pDx2
++        Y1   = self.pDy1 #at -pDz
++        
++        Y2   = self.pDy2        
++        X3   = self.pDx3
++        X4   = self.pDx4
++        
++        dX  = 2*_np.sin(self.pTheta)*self.pDz 
++        dY  = 2*_np.sin(self.pDPhi)*self.pDz
++        
++        poly0 = [[-X2,-Y1,-hlZ],[-X1,Y1,-hlZ],[X1,Y1,-hlZ],[X2,-Y1,-hlZ]]
++        poly1 = [[-X3,-Y2,hlZ],[-X4,Y2,hlZ],[X4,Y2,hlZ],[X3,-Y2,hlZ]]
++        
++        A0=0.0
++        A1=0.0
++        
++        #Accumulate signed area of top and bottom face quadrilaterals
++        for j in range(len(poly0)-1):
++            i0  = j
++            i1  = i0 + 1
++            A0 += (1./2.)*(poly0[i0][0]*poly0[i1][1]-poly0[i1][0]*poly0[i0][1])
++            A1 += (1./2.)*(poly1[i0][0]*poly1[i1][1]-poly1[i1][0]*poly1[i0][1])
++            
++        Xc0 = 0.0
++        Yc0 = 0.0
++        Xc1 = 0.0
++        Yc1 = 0.0
++            
++        #Obtain centroids of top and bottom quadrilaterals
++        for j in range(len(poly0)-1):
++            i0 = j
++            i1 = i0+1
++            Xc0   += (1/(6*A0))*(poly0[i0][0]+poly0[i1][0])*(poly0[i0][0]*poly0[i1][1]-poly0[i1][0]*poly0[i0][1])
++            Yc0   += (1/(6*A0))*(poly0[i0][1]+poly0[i1][1])*(poly0[i0][0]*poly0[i1][1]-poly0[i1][0]*poly0[i0][1])
++            Xc1   += (1/(6*A1))*(poly1[i0][0]+poly1[i1][0])*(poly1[i0][0]*poly1[i1][1]-poly1[i1][0]*poly1[i0][1])
++            Yc1   += (1/(6*A1))*(poly1[i0][1]+poly1[i1][1])*(poly1[i0][0]*poly1[i1][1]-poly1[i1][0]*poly1[i0][1])
++            
++        C0  = [Xc0, Yc0, 0]
++        C1  = [Xc1, Yc1, 0]
++
++        #Center in X-Y plane
++        poly0  = [listSub(vert, C0) for vert in poly0]
++        poly1  = [listSub(vert, C1) for vert in poly1]
++
++        
++        #Slant faces
++        for i in range(len(poly0)):
++            vert = poly0[i]
++            y    = vert[1]
++            z    = vert[2]
++            x = vert[0] + y*_np.tan(self.pAlp1)
++                
++            poly0[i] = [x,y,z]
++
++        for i in range(len(poly1)):
++            vert = poly1[i]
++            y    = vert[1]
++            z    = vert[2]
++            x = vert[0] + y*_np.tan(self.pAlp2)
++                
++            poly1[i] = [x,y,z]
++
++        #Translate to orginal coordinates
++        poly0  = [listAdd(vert, C0) for vert in poly0]
++        poly1  = [listAdd(vert, C1) for vert in poly1]
++
++        dXY    = [dX/2, dY/2, 0]
++        poly1  = [listAdd(vert, dXY) for vert in poly1]
++        poly0  = [listSub(vert, dXY) for vert in poly0]
++
++        polygons = []
++            
++        #Top face
++        polygons.extend([_Polygon([_Vertex(_Vector(poly1[3][0], poly1[3][1], poly1[3][2]), None),
++                                   _Vertex(_Vector(poly1[2][0], poly1[2][1], poly1[2][2]), None),
++                                   _Vertex(_Vector(poly1[1][0], poly1[1][1], poly1[1][2]), None),
++                                   _Vertex(_Vector(poly1[0][0], poly1[0][1], poly1[0][2]), None)])])
++
++        #Bottom face
++        polygons.extend([_Polygon([_Vertex(_Vector(poly0[0][0], poly0[0][1], poly0[0][2]), None),
++                                   _Vertex(_Vector(poly0[1][0], poly0[1][1], poly0[1][2]), None),
++                                   _Vertex(_Vector(poly0[2][0], poly0[2][1], poly0[2][2]), None),
++                                   _Vertex(_Vector(poly0[3][0], poly0[3][1], poly0[3][2]), None)])])
++        
++        #Side faces
++        polygons.extend([_Polygon([_Vertex(_Vector(poly1[1][0], poly1[1][1], poly1[1][2]), None),
++                                   _Vertex(_Vector(poly0[1][0], poly0[1][1], poly0[1][2]), None),
++                                   _Vertex(_Vector(poly0[0][0], poly0[0][1], poly0[0][2]), None),
++                                   _Vertex(_Vector(poly1[0][0], poly1[0][1], poly1[0][2]), None)])])
++        polygons.extend([_Polygon([_Vertex(_Vector(poly1[2][0], poly1[2][1], poly1[2][2]), None),
++                                   _Vertex(_Vector(poly0[2][0], poly0[2][1], poly0[2][2]), None),
++                                   _Vertex(_Vector(poly0[1][0], poly0[1][1], poly0[1][2]), None),
++                                   _Vertex(_Vector(poly1[1][0], poly1[1][1], poly1[1][2]), None)])])        
++        polygons.extend([_Polygon([_Vertex(_Vector(poly1[3][0], poly1[3][1], poly1[3][2]), None),
++                                   _Vertex(_Vector(poly0[3][0], poly0[3][1], poly0[3][2]), None),
++                                   _Vertex(_Vector(poly0[2][0], poly0[2][1], poly0[2][2]), None),
++                                   _Vertex(_Vector(poly1[2][0], poly1[2][1], poly1[2][2]), None)])])
++        polygons.extend([_Polygon([_Vertex(_Vector(poly1[0][0], poly1[0][1], poly1[0][2]), None),
++                                   _Vertex(_Vector(poly0[0][0], poly0[0][1], poly0[0][2]), None),
++                                   _Vertex(_Vector(poly0[3][0], poly0[3][1], poly0[3][2]), None),
++                                   _Vertex(_Vector(poly1[3][0], poly1[3][1], poly1[3][2]), None)])])
++
++
++        self.mesh  = _CSG.fromPolygons(polygons)
++        
++        return self.mesh
++
++    def gdml(selfs):
++        pass
+diff --git a/geant4/solid/__init__.py b/geant4/solid/__init__.py
+index 32aafe0..6b97e5a 100644
+--- a/geant4/solid/__init__.py
++++ b/geant4/solid/__init__.py
+@@ -16,5 +16,9 @@ from Intersection import *
+ from Subtraction  import *
+ from OpticalSurface import *
+ from Para         import *
++from Trap         import *
++from Orb          import *
++from EllipticalTube import *
++from ExtrudedSolid import *
+ 
+ 
+diff --git a/test/EllipticalTube.py b/test/EllipticalTube.py
+new file mode 100644
+index 0000000..7d6bf97
+--- /dev/null
++++ b/test/EllipticalTube.py
+@@ -0,0 +1,32 @@
++import pygeometry.geant4 as _g4
++import pygeometry.vtk as _vtk
++import pygeometry.gdml as _gdml
++
++def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
++    _g4.registry.clear()
++
++    worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
++    worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
++
++    ellipticaltubeSolid1    = _g4.solid.EllipticalTube('ellipticaltube1',10,20,30,16,16)
++    ellipticaltubeLogical1  = _g4.LogicalVolume(ellipticaltubeSolid1,'G4_Cu','ellipticaltubeLogical1')
++    ellipticaltubePhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], ellipticaltubeLogical1,'ellipticaltubePhysical1',worldLogical)
++
++    # clip the world logical volume
++    worldLogical.setClip();
++
++    # register the world volume
++    _g4.registry.setWorld('worldLogical')
++    
++    m = worldLogical.pycsgmesh()
++    
++    if vtkViewer : 
++        v = _vtk.Viewer()
++        v.addPycsgMeshList(m)
++        v.view();
++
++    # write gdml
++    if gdmlWriter : 
++        w = _gdml.Writer()
++        w.addDetector(_g4.registry)
++        w.write('./EllipticalTube.gdml')
+diff --git a/test/ExtrudedSolid.py b/test/ExtrudedSolid.py
+new file mode 100644
+index 0000000..d77713b
+--- /dev/null
++++ b/test/ExtrudedSolid.py
+@@ -0,0 +1,34 @@
++import pygeometry.geant4 as _g4
++import pygeometry.vtk as _vtk
++import pygeometry.gdml as _gdml
++
++def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
++    _g4.registry.clear()
++
++    worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
++    worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
++
++    extrudedsolidSolid1    = _g4.solid.ExtrudedSolid('extrudedsolid1',
++                                                     [[-30,-30],[-30,30],[30,30],[30,-30],[15,-30],[15,15],[-15,15],[-15,-30]],
++                                                     [[-60,[0,30],0.8],[-15,[0,-30],1.],[10,[0,0],0.6],[60,[0,30],1.2]])
++    extrudedsolidLogical1  = _g4.LogicalVolume(extrudedsolidSolid1,'G4_Cu','extrudedsolidLogical1')
++    extrudedsolidPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], extrudedsolidLogical1,'extrudedsolidPhysical1',worldLogical)
++
++    # clip the world logical volume
++    worldLogical.setClip();
++
++    # register the world volume
++    _g4.registry.setWorld('worldLogical')
++    
++    m = worldLogical.pycsgmesh()
++    
++    if vtkViewer : 
++        v = _vtk.Viewer()
++        v.addPycsgMeshList(m)
++        v.view();
++
++    # write gdml
++    if gdmlWriter : 
++        w = _gdml.Writer()
++        w.addDetector(_g4.registry)
++        w.write('./ExtrudedSolid.gdml')
+diff --git a/test/Orb.py b/test/Orb.py
+new file mode 100644
+index 0000000..96666dd
+--- /dev/null
++++ b/test/Orb.py
+@@ -0,0 +1,32 @@
++import pygeometry.geant4 as _g4
++import pygeometry.vtk as _vtk
++import pygeometry.gdml as _gdml
++
++def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
++    _g4.registry.clear()
++
++    worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
++    worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
++
++    orbSolid1    = _g4.solid.Orb('orb1',80)
++    orbLogical1  = _g4.LogicalVolume(orbSolid1,'G4_Cu','orbLogical1')
++    orbPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], orbLogical1,'orbPhysical1',worldLogical)
++
++    # clip the world logical volume
++    worldLogical.setClip();
++
++    # register the world volume
++    _g4.registry.setWorld('worldLogical')
++    
++    m = worldLogical.pycsgmesh()
++    
++    if vtkViewer : 
++        v = _vtk.Viewer()
++        v.addPycsgMeshList(m)
++        v.view();
++
++    # write gdml
++    if gdmlWriter : 
++        w = _gdml.Writer()
++        w.addDetector(_g4.registry)
++        w.write('./Orb.gdml')
+diff --git a/test/Trap.py b/test/Trap.py
+new file mode 100644
+index 0000000..26a857d
+--- /dev/null
++++ b/test/Trap.py
+@@ -0,0 +1,32 @@
++import pygeometry.geant4 as _g4
++import pygeometry.vtk as _vtk
++import pygeometry.gdml as _gdml
++
++def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
++    _g4.registry.clear()
++
++    worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
++    worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
++
++    trapSolid1    = _g4.solid.Trap('trap1',60,0.4,0.1,40,30,40,0.2,30,14,40,0.2)
++    trapLogical1  = _g4.LogicalVolume(trapSolid1,'G4_Cu','trapLogical1')
++    trapPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], trapLogical1,'trapPhysical1',worldLogical)
++
++    # clip the world logical volume
++    worldLogical.setClip();
++
++    # register the world volume
++    _g4.registry.setWorld('worldLogical')
++    
++    m = worldLogical.pycsgmesh()
++    
++    if vtkViewer : 
++        v = _vtk.Viewer()
++        v.addPycsgMeshList(m)
++        v.view();
++
++    # write gdml
++    if gdmlWriter : 
++        w = _gdml.Writer()
++        w.addDetector(_g4.registry)
++        w.write('./Trap.gdml')
+diff --git a/test/__init__.py b/test/__init__.py
+index c92b0a8..a4f4f35 100644
+--- a/test/__init__.py
++++ b/test/__init__.py
+@@ -11,6 +11,9 @@ import Ellipsoid
+ import Cons
+ import Wedge
+ import Para
+-
++import Trap
++import Orb
++import EllipticalTube
++import ExtrudedSolid
+ 
+ 

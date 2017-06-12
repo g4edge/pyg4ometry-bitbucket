@@ -16,5 +16,9 @@ from Intersection import *
 from Subtraction  import *
 from OpticalSurface import *
 from Para         import *
+from Trap         import *
+from Orb          import *
+from EllipticalTube import *
+from ExtrudedSolid import *
 
 
