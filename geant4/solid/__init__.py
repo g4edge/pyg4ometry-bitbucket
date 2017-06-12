@@ -15,5 +15,6 @@ from Union        import *
 from Intersection import *
 from Subtraction  import *
 from OpticalSurface import *
+from Para         import *
 
 

@@ -9,6 +9,8 @@ import Polyhedra
 import Trd
 import Ellipsoid
 import Cons
+import Wedge
+import Para
 
 
 
