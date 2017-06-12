@@ -1191,7 +1191,7 @@ class Region(object):
         else:
             raise TypeError("Unkown zones type: {}".format(type(zones)))
 
-    def view(self, zones=None, setclip=True):
+    def view(self, zones=None, setclip=True, optimise=False):
         """
         View this single region.  If a null mesh is encountered, try
         the view_debug method to see the problematic boolean operation.
@@ -1201,7 +1201,7 @@ class Region(object):
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
-        solid = self.evaluate(zones, optimise=False)
+        solid = self.evaluate(zones, optimise=optimise)
         solid.add_to_volume(world_volume)
         if setclip is True:
             world_volume.setClip()
