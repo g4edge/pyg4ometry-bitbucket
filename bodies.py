@@ -1407,6 +1407,55 @@ class Boolean(Body):
     def centre(self):
         return self._centre
 
+    def view_debug(self, first=None, second=None):
+        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
+        self.add_to_volume(world_volume)
+        try:
+            world_volume.pycsgmesh()
+            print "Mesh was successful."
+        except _pygdml.solid.NullMeshError as error:
+            print error.message
+            print "Debug:  Viewing consituent solids."
+            self._view_null_mesh(error, first, second, setclip=False)
+
+    def _view_null_mesh(self, error, first, second, setclip=False):
+        solid1 = error.solid.obj1
+        solid2 = error.solid.obj2
+        tra2 = error.solid.tra2
+
+        world_box = _pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                                      "world-volume", None,
+                                      1, False, "G4_NITROUS_OXIDE")
+        if (first is None and second is None
+            or first is True and second is True):
+            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                                     solid1.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
+                                     solid2.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+        elif first is True and second is not True:
+            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                                     solid1.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+        elif second is True and first is not True:
+            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
+                                     solid2.name, world_volume,
+                                     1, False, "G4_NITROUS_OXIDE")
+        elif first is False and second is False:
+            raise RuntimeError("Must select at least one"
+                               " of the two solids to view")
+        if setclip is True:
+            world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
+        viewer = _pygdml.VtkViewer()
+        viewer.addSource(mesh)
+        viewer.view()
+
 
 class Parameters(object):
     # Kind of rubbishy class but sufficient for what it's used for (a
