@@ -79,15 +79,14 @@ class Body(object):
         parameter "scale".
 
         """
-        out = _copy(self)
         if isinstance(scale, (float, int)):
-            out._apply_crude_scale(scale)
+            self._apply_crude_scale(scale)
         elif isinstance(scale, Body):
             extent = self._get_overlap(scale)
-            out._apply_extent(extent)
+            self._apply_extent(extent)
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
-        return out
+        return self
 
     def __call__(self, scale):
         return self.resize(scale)
@@ -1352,40 +1351,40 @@ class Zone(object):
         """
         scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
-        scaled_contains = self._map_extents(self.contains, extent=scale)
-        scaled_excludes = self._map_extents(self.excludes, extent=scale)
+        self._map_extent_2_bodies(self.contains, scale)
+        self._map_extent_2_bodies(self.excludes, scale)
 
         # Accumulate the intersections and subtractions and return:
-        if len(scaled_contains) != 0:
-            boolean_from_ints = reduce(add, scaled_contains)
-            out = reduce(sub, scaled_excludes, boolean_from_ints)
+        if len(self.contains) != 0:
+            boolean_from_ints = reduce(add, self.contains)
+            out = reduce(sub, self.excludes, boolean_from_ints)
         else:
-            out = reduce(sub, scaled_excludes)
+            raise RuntimeError("1This shouldn't happen!")
+            # out = reduce(sub, self.excludes)
 
         if optimise is False:
             return out
 
         # Rescale the bodies and zones with the resulting mesh:
-        scaled_contains = self._map_extents(scaled_contains, extent=out)
-        boolean_from_ints = reduce(add, scaled_contains)
-        scaled_excludes = self._map_extents(scaled_excludes,
-                                            extent=boolean_from_ints)
+        self._map_extent_2_bodies(self.contains, out)
+        boolean_from_ints = reduce(add, self.contains)
+        self._map_extent_2_bodies(self.excludes, boolean_from_ints)
         # Accumulate the intersections and subtractions and return:
-        if len(scaled_contains) != 0:
-            boolean_from_ints = reduce(add, scaled_contains)
-            out = reduce(sub, scaled_excludes, boolean_from_ints)
+        if len(self.contains) != 0:
+            boolean_from_ints = reduce(add, self.contains)
+            out = reduce(sub, self.excludes, boolean_from_ints)
         else:
-            out = reduce(sub, scaled_excludes)
+            raise RuntimeError("2This shouldn't happen!")
+            # out = reduce(sub, excludes)
         return out
 
-    def _map_extents(self, bodies, extent=None):
-        scaled_bodies = []
+    def _map_extent_2_bodies(self, bodies, extent):
         for body in bodies:
             if isinstance(body, Body):
-                scaled_bodies.append(body(extent))
+                body.resize(extent)
             elif isinstance(body, Zone):
-                scaled_bodies.append(body._crude_boolean(extent))
-        return scaled_bodies
+                body._map_extent_2_bodies(body.contains, extent)
+                body._map_extent_2_bodies(body.excludes, extent)
 
     def extent(self):
         boolean = self.evaluate()
