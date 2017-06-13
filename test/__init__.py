@@ -15,5 +15,11 @@ import Trap
 import Orb
 import EllipticalTube
 import ExtrudedSolid
-
+import EllipticalCone
+import Paraboloid
+import Hype
+import Tet
+import TwistedBox
+import TwistedTrap
+import Intersection
 

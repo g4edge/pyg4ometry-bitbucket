@@ -10,7 +10,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     trapSolid1    = _g4.solid.Trap('trap1',60,0.4,0.1,40,30,40,0.2,30,14,40,0.2)
     trapLogical1  = _g4.LogicalVolume(trapSolid1,'G4_Cu','trapLogical1')
-    trapPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], trapLogical1,'trapPhysical1',worldLogical)
+    trapPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], trapLogical1,'trapPhysical1',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

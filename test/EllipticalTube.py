@@ -10,7 +10,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     ellipticaltubeSolid1    = _g4.solid.EllipticalTube('ellipticaltube1',10,20,30,16,16)
     ellipticaltubeLogical1  = _g4.LogicalVolume(ellipticaltubeSolid1,'G4_Cu','ellipticaltubeLogical1')
-    ellipticaltubePhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], ellipticaltubeLogical1,'ellipticaltubePhysical1',worldLogical)
+    ellipticaltubePhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], ellipticaltubeLogical1,'ellipticaltubePhysical1',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

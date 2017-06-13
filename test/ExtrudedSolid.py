@@ -12,7 +12,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
                                                      [[-30,-30],[-30,30],[30,30],[30,-30],[15,-30],[15,15],[-15,15],[-15,-30]],
                                                      [[-60,[0,30],0.8],[-15,[0,-30],1.],[10,[0,0],0.6],[60,[0,30],1.2]])
     extrudedsolidLogical1  = _g4.LogicalVolume(extrudedsolidSolid1,'G4_Cu','extrudedsolidLogical1')
-    extrudedsolidPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], extrudedsolidLogical1,'extrudedsolidPhysical1',worldLogical)
+    extrudedsolidPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], extrudedsolidLogical1,'extrudedsolidPhysical1',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

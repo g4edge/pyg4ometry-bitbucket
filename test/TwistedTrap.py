@@ -8,9 +8,9 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
     worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
-    paraSolid1    = _g4.solid.Para('para1',25,50,75,12,15,10)
-    paraLogical1  = _g4.LogicalVolume(paraSolid1,'G4_Cu','paraLogical1')
-    paraPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraLogical1,'paraPhysical1',worldLogical)
+    twistedTrapSolid1    = _g4.solid.TwistedTrap('twistedTrap1',0.5,60,0.3,0.08,40,30,40,16,10,14,0.16)
+    twistedTrapLogical1  = _g4.LogicalVolume(twistedTrapSolid1,'G4_Cu','twistedTrapLogical1')
+    twistedTrapPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], twistedTrapLogical1,'twistedTrapPhysical1',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();
@@ -29,4 +29,4 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     if gdmlWriter : 
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
-        w.write('./Para.gdml')
+        w.write('./TwistedTrap.gdml')

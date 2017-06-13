@@ -10,7 +10,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     orbSolid1    = _g4.solid.Orb('orb1',80)
     orbLogical1  = _g4.LogicalVolume(orbSolid1,'G4_Cu','orbLogical1')
-    orbPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], orbLogical1,'orbPhysical1',worldLogical)
+    orbPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], orbLogical1,'orbPhysical1',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

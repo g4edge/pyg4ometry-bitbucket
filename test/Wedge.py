@@ -8,9 +8,9 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
     worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
-    paraSolid1    = _g4.solid.Para('para1',25,50,75,12,15,10)
-    paraLogical1  = _g4.LogicalVolume(paraSolid1,'G4_Cu','paraLogical1')
-    paraPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraLogical1,'paraPhysical1',worldLogical)
+    wedgeSolid1    = _g4.solid.Wedge('wedge1',25,0,1.5,10)
+    wedgeLogical1  = _g4.LogicalVolume(wedgeSolid1,'G4_Cu','wedgeLogical1')
+    wedgePhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], wedgeLogical1,'wedgePhysical1',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();
@@ -29,4 +29,4 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     if gdmlWriter : 
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
-        w.write('./Para.gdml')
+        w.write('./Cons.gdml')
