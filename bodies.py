@@ -72,7 +72,8 @@ class Body(object):
                               False,
                               "G4_Galactic")
 
-    def __call__(self, scale):
+
+    def resize(self, scale):
         """
         Return this instance bounded or extented according to the
         parameter "scale".
@@ -87,6 +88,9 @@ class Body(object):
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
         return out
+
+    def __call__(self, scale):
+        return self.resize(scale)
 
     def _get_extent(self):
         # Construct a world volume to place the solid in to be meshed.
