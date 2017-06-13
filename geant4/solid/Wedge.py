@@ -59,7 +59,6 @@ class Wedge(_SolidBase) :
         self.mesh = _CSG.fromPolygons(polygons)
 
         return self.mesh
-
-    def gdml(self) :
+ 
+    def gdmlWrite(self, gw, prepend):
         pass
-

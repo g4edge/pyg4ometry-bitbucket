@@ -34,6 +34,11 @@ class Sphere(_SolidBase) :
         self.nstack  = nstack
         self.mesh    = None
         _registry.addSolid(self)
+        self.checkParameters()
+
+    def checkParameters(self):
+        if self.pRmin > self.pRmax:
+            raise ValueError("Inner radius must be less than outer radius.")
 
     def __repr__(self):
         return 'Sphere : '+self.name+' '+str(self.pRmin)+' '+str(self.pRmax)+' '+str(self.pSPhi)+' '+str(self.pDPhi)+' '+str(self.pSTheta)+' '+str(self.pDTheta)+' '+str(self.nslice)+' '+str(self.nstack)
