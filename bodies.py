@@ -1338,16 +1338,6 @@ class Zone(object):
         """
         return self._boolean(optimise=optimise)
 
-    def _scale(self, scale):
-        contains = []
-        excludes = []
-        for body in self.contains:
-            if isinstance(body, Zone):
-                contains.append(zone._scale(scale))
-            elif isinstance(body, Body):
-                exludes.append(body(scale))
-        return zone
-
     def _boolean(self, optimise=False):
         """
         Get the Boolean of this Zone.
