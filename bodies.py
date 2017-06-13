@@ -1281,6 +1281,10 @@ class Zone(object):
         elif isinstance(pairs, Zone):
             raise Exception('lul')
 
+        if not self.contains:
+            raise TypeError("Zone must always contain at least"
+                            " one body or subzone!!!")
+
     def _add_space(self, operator, body):
         """
         Add a body or SubZone to this region.
