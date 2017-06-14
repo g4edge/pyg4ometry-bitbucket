@@ -1347,16 +1347,12 @@ class Zone(object):
         appropriate optimisations, if any.
 
         """
-        return self._boolean(optimise=optimise)
+        if optimise:
+            return self.optimised_boolean()
+        else:
+            return self._crude_boolean()
 
-    def _boolean(self, optimise=False):
-        """
-        Get the Boolean of this Zone.
-
-        If optimise if false, then make all solids big enough with no
-        concern for the resulting GDML.  Faster, useful when just after
-        visualiation, and necessary for a first pass before any optimisation.
-        """
+    def _crude_boolean(self):
         scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
         self._map_extent_2_bodies(self.contains, scale)
@@ -1369,10 +1365,10 @@ class Zone(object):
         else:
             raise RuntimeError("1This shouldn't happen!")
             # out = reduce(sub, self.excludes)
+        return out
 
-        if optimise is False:
-            return out
-
+    def _optimised_boolean(self):
+        out = self._crude_boolean()
         # Rescale the bodies and zones with the resulting mesh:
         self._map_extent_2_bodies(self.contains, out)
         boolean_from_ints = reduce(add, self.contains)
