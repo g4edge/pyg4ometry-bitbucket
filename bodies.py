@@ -1281,8 +1281,8 @@ class Zone(object):
         elif isinstance(pairs, list):
             for operator, body in pairs:
                 self._add_space(operator, body)
-        elif isinstance(pairs, Zone):
-            raise Exception('lul')
+        else:
+            raise TypeError("Unknown pairs type: {}".format(type(pairs)))
 
         if not self.contains:
             raise TypeError("Zone must always contain at least"
