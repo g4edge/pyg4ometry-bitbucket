@@ -118,25 +118,31 @@ class Body(object):
         extent = intersection._get_extent()
         return extent
 
-    def intersect(self, other):
+    def intersect(self, other=None):
         """
         Intersect this solid with another solid.
 
         """
+        if other is None:
+            return self
         return self + other
 
-    def subtract(self, other):
+    def subtract(self, other=None):
         """
         Subtract from this solid another solid.
 
         """
+        if other is None:
+            return self
         return self - other
 
-    def union(self, other):
+    def union(self, other=None):
         """
         Boolean union of this solid with another solid.
 
         """
+        if other is None:
+            return self
         return self | other
 
     def __add__(self, other):
