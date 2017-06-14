@@ -285,7 +285,26 @@ class Model(object):
         viewer.addSource(world_mesh)
         viewer.view()
 
+    def survey(self, pickle=False):
+        """
+        Perform a survey of this model's geometry.  This consists of
+        meshing every region and individual zone and storing their
+        extents, lengths, and centres.  As Fluka regions need not be
+        contiguous, this can be useful for selecting and omitting
+        geometry based on position.
 
+        """
+        regions = dict()
+        for region_name, region in self.regions.iteritems():
+            regions[region_name] = region.extent()
+            for zone_no, zone in region.zones.iteitems():
+                regions["{}_{}".format(region_name, zone_no)] = (
+                    region.extent())
+
+        if pickle is True:
+            with open("./{}_survey.pickle".format(self._filename), 'w') as f:
+                      _cPickle.dump(regions, f)
+        return regions
 
 class _FlukaBodyListener(FlukaParserListener):
     """
