@@ -74,7 +74,7 @@ class Model(object):
         references to corresponding the GDML file.
 
         """
-        self._generate_mesh(region_names, setclip=True, optimise=True)
+        self._generate_mesh(region_names, setclip=True, optimise=optimise)
         if out_path is None:
             out_path = ("./"
                         + _path.basename(_path.splitext(self._filename)[0])
