@@ -244,7 +244,7 @@ class Model(object):
 
         if pickle:
             with open("./{}_diag.pickle".format(
-                    self._filename + pickle), 'w') as f:
+                self._filename + pickle), 'w') as f:
                 _cPickle.dump(output, f)
         return output
 
@@ -301,8 +301,10 @@ class Model(object):
 
         if pickle is True:
             with open("./{}_survey.pickle".format(self._filename), 'w') as f:
-                      _cPickle.dump(regions, f)
+                _cPickle.dump(regions, f)
         return regions
+
+
 
 class _FlukaBodyListener(FlukaParserListener):
     """
