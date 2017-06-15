@@ -478,6 +478,6 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         return (operator, zone)
 
 def load_pickle(path):
-    with open(path, 'r') as f:
-        o = _cPickle.load(f)
-    return o
+    with open(path, 'r') as file_object:
+        unpickled = _cPickle.load(file_object)
+    return unpickled
