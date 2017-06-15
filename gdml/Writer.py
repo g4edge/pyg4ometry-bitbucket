@@ -32,9 +32,9 @@ class Writer :
         # loop over materials 
 
         # loop over solids 
-        for solidId in registry.solidDict.keys() :
+        for solidId in registry.solidDict.keys():
             solid = registry.solidDict[solidId]
-            solid.gdmlWrite(self,self.prepend)
+            self.writeSolid(solid)
 
         # loop over logical volumes 
         for logicalName in registry.logicalVolumeList  :
@@ -71,4 +71,100 @@ class Writer :
         pass
 
     def checkPhysicalVolumeName(Self, physicalVolumeName) :
+        pass
+
+    def writeSolid(self, solid):
+        """
+        Dispatch to correct member function based on type string in SolidBase.
+        """
+        try:
+            func = getattr(self, 'write'+solid.type) # get the member function
+            func(solid) # call it with the solid instance as an argument
+        except AttributeError:
+            raise ValueError("No such solid "+solid.type)
+
+    def writeBox(self, instance):
+        oe = self.doc.createElement('box')
+        oe.setAttribute('name', self.prepend+'_'+instance.name)
+        oe.setAttribute('lunit','mm')
+        oe.setAttribute('x','2*'+str(instance.pX))
+        oe.setAttribute('y','2*'+str(instance.pY))
+        oe.setAttribute('z','2*'+str(instance.pZ))
+        self.solids.appendChild(oe)
+
+    def writeCons(self, instance):
+        oe = self.doc.createElement('cons')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('ax', str(instance.pRmin))
+        oe.setAttribute('ay', str(instance.pRmax))
+        oe.setAttribute('az', str(instance.pDPhi))
+        self.solids.appendChild(oe)
+
+    def writeCutTubs(self, instance):
+        pass
+
+    def writeEllipsoid(self, instance):
+        pass
+
+    def writeEllipticalCone(self, instance):
+        pass
+
+    def writeEllipticalTube(self, instance):
+        pass
+
+    def writeExtrudedSolid(self, instance):
+        pass
+
+    def writeHype(self, instance):
+        pass
+
+    def writeIntersection(self, instance):
+        pass
+
+    def writeOpticalSurface(self, instance):
+        pass
+
+    def writeOrb(self, instance):
+        pass
+
+    def writePara(self, instance):
+        pass
+
+    def writeParaboloid(self, instance):
+        pass
+    
+    def writePolycone(self, instance):
+        pass
+
+    def writePolyhedra(self, instance):
+        pass
+
+    def writeSphere(self, instance):
+        pass
+
+    def writeSubtraction(self, instance):
+        pass
+
+    def writeTet(self, instance):
+        pass
+
+    def writeTorus(self, instance):
+        pass
+
+    def writeTrap(self, instance):
+        pass
+
+    def writeTrd(self, instance):
+        pass
+
+    def writeTubs(self, instance):
+        pass
+
+    def writeTwistedBox(self, instance):
+        pass
+
+    def writeTwistedTrap(self, instance):
+        pass
+
+    def writeUnion(self, instance):
         pass
