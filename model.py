@@ -121,12 +121,9 @@ class Model(object):
         """
         self._compose_world_volume(region_names, optimise=optimise)
         start = _time.time()
-        try:
-            if setclip:
-                self._world_volume.setClip()
-            world_mesh = self._world_volume.pycsgmesh()
-        except _pygdml.solid.NullMeshError as error:
-            self._null_mesh_handler(error)
+        if setclip:
+            self._world_volume.setClip()
+        world_mesh = self._world_volume.pycsgmesh()
         end = _time.time()
         print "Time spent meshing world:", (end - start)/60.0, "minutes."
         return world_mesh
