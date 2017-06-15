@@ -380,7 +380,7 @@ class _FlukaBodyListener(FlukaParserListener):
     def apply_expansions(self, parameters):
         factor = self._current_expansion
         if factor is not None:
-            return map(lambda x: factor * x, parameters)
+            return [factor * x for x in parameters]
         else:
             return parameters
 
@@ -391,7 +391,7 @@ class _FlukaBodyListener(FlukaParserListener):
         '''
         float_strings = [i.getText() for i in ctx.Float()]
         floats = map(float, float_strings)
-        floats = map(lambda x: 10 * x, floats)
+        floats = [10 * x for x in floats]
         return floats
 
     def exitGeocards(self, ctx):
