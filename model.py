@@ -7,7 +7,7 @@ import cPickle as _cPickle
 import antlr4 as _antlr4
 import pygdml as _pygdml
 
-import pyfluka.bodies
+import pyfluka.geometry
 import pyfluka.vector
 from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
 from pyfluka.Parser.FlukaParserListener import FlukaParserListener
@@ -163,7 +163,7 @@ class Model(object):
             body_description = (
                 body
                 + " - "
-                + pyfluka.bodies.code_meanings[body]).ljust(60, '.')
+                + pyfluka.geometry.code_meanings[body]).ljust(60, '.')
             print body_description + str(count)
 
     def _bodies_from_tree(self):
@@ -340,7 +340,7 @@ class _FlukaBodyListener(FlukaParserListener):
         # Try and construct the body, if it's not implemented then add
         # it to the list of omitted bodies.
         try:
-            body_constructor = getattr(pyfluka.bodies, body_type)
+            body_constructor = getattr(pyfluka.geometry, body_type)
             body = body_constructor(body_name,
                                     body_parameters,
                                     self._transform_stack,
@@ -409,9 +409,9 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         # Simple in the sense that it consists of no unions of Zones.
         region_defn = self.visitChildren(ctx)
         # Build a zone from the list of bodies or single body:
-        zone = pyfluka.bodies.Zone(region_defn)
+        zone = pyfluka.geometry.Zone(region_defn)
         region_name = ctx.RegionName().getText()
-        self.regions[region_name] = pyfluka.bodies.Region(region_name, zone)
+        self.regions[region_name] = pyfluka.geometry.Region(region_name, zone)
 
     def visitComplexRegion(self, ctx):
         # Complex in the sense that it consists of the union of
@@ -420,9 +420,9 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         # Get the list of tuples of operators and bodies/zones
         region_defn = self.visitChildren(ctx)
         # Construct zones out of these:
-        zones = [pyfluka.bodies.Zone(defn) for defn in region_defn]
+        zones = [pyfluka.geometry.Zone(defn) for defn in region_defn]
         region_name = ctx.RegionName().getText()
-        region = pyfluka.bodies.Region(region_name, zones)
+        region = pyfluka.geometry.Region(region_name, zones)
         self.regions[region_name] = region
 
     def visitUnaryAndBoolean(self, ctx):
@@ -473,7 +473,7 @@ class _FlukaRegionVisitor(FlukaParserVisitor):
         elif ctx.Minus():
             operator = '-'
         solids = self.visit(ctx.expr())
-        zone = pyfluka.bodies.Zone(solids)
+        zone = pyfluka.geometry.Zone(solids)
         return (operator, zone)
 
 def load_pickle(path):

@@ -1,7 +1,7 @@
 from Reader import Reader
 from CSG import *
 import model
-import bodies
+import geometry
 import Parser
 import materials
 import vector
