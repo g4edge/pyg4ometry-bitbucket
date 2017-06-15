@@ -21,5 +21,5 @@ import Hype
 import Tet
 import TwistedBox
 import TwistedTrap
-import Intersection
+#import Intersection
 
