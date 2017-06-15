@@ -295,9 +295,9 @@ class Model(object):
         regions = dict()
         for region_name, region in self.regions.iteritems():
             regions[region_name] = region.extent()
-            for zone_no, zone in region.zones.iteitems():
+            for zone_no, zone in region.zones.iteritems():
                 regions["{}_{}".format(region_name, zone_no)] = (
-                    region.extent())
+                    zone.extent())
 
         if pickle is True:
             with open("./{}_survey.pickle".format(self._filename), 'w') as f:
