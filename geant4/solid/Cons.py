@@ -35,10 +35,6 @@ class Cons(_SolidBase):
         _registry.addSolid(self)
 
     def pycsgmesh(self):
-
-#        if self.mesh :
-#            return self.mesh
-
         self.basicmesh()
         self.csgmesh()
 
@@ -96,15 +92,3 @@ class Cons(_SolidBase):
             self.mesh = self.mesh.intersect(pWedge).subtract(pBotCut).subtract(pTopCut)
 
         return self.mesh
-
-
-    def gdmlWrite(self, gw, prepend):
-        print "Solid Cons not written out: not suported by writer yet"
-        """
-        oe = gw.doc.createElement('cons')
-        oe.setAttribute('name', prepend + '_' + self.name)
-        oe.setAttribute('ax', str(self.pRmin))
-        oe.setAttribute('ay', str(self.pRmax))
-        oe.setAttribute('az', str(self.pDPhi))
-        gw.solids.appendChild(oe)
-        """

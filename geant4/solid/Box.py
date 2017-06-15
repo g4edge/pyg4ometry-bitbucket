@@ -26,18 +26,6 @@ class Box(_SolidBase) :
     def __repr__(self):
         return 'Box : '+self.name+' '+str(self.pX)+' '+str(self.pY)+' '+str(self.pZ)
 
-    def pycsgmesh(self) :
-#        if self.mesh :
-#            return self.mesh
-
+    def pycsgmesh(self):
         self.mesh = _CSG.cube(center=[0,0,0], radius=[float(self.pX),float(self.pY),float(self.pZ)])
         return self.mesh
-
-    def gdmlWrite(self, gw, prepend):
-        oe = gw.doc.createElement('box')
-        oe.setAttribute('name',prepend+'_'+self.name)
-        oe.setAttribute('lunit','mm')
-        oe.setAttribute('x','2*'+str(self.pX))
-        oe.setAttribute('y','2*'+str(self.pY))
-        oe.setAttribute('z','2*'+str(self.pZ))
-        gw.solids.appendChild(oe)
