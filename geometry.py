@@ -50,6 +50,9 @@ class Body(object):
     def _apply_crude_scale(self, scale):
         self._scale = scale
 
+    def _apply_extent(self, extent):
+        pass
+
     def add_to_volume(self, volume):
         """
         Basically for adding to a world volume.
