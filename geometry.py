@@ -93,7 +93,7 @@ class Body(object):
     def __call__(self, scale):
         return self.resize(scale)
 
-    def _get_extent(self):
+    def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
         w = _pygdml.solid.Box("world", 10000, 10000, 10000)
         world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
@@ -117,7 +117,7 @@ class Body(object):
 
         """
         intersection = self + other
-        extent = intersection._get_extent()
+        extent = intersection._extent()
         return extent
 
     def intersect(self, other=None):
@@ -1262,7 +1262,7 @@ class Region(object):
 
     def extent(self, zones=None):
         boolean = self.evaluate(zones)
-        return boolean._get_extent()
+        return boolean._extent()
 
 
 class Zone(object):
@@ -1406,7 +1406,7 @@ class Zone(object):
 
     def extent(self):
         boolean = self.evaluate()
-        return boolean._get_extent()
+        return boolean._extent()
 
 
 class Boolean(Body):
