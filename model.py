@@ -320,7 +320,7 @@ class _FlukaBodyListener(FlukaParserListener):
         self.bodies = dict()
 
         self.omitted_bodies = list()
-        self.region_max_scale_map = dict()
+        self.body_freq_map = dict()
         self.unique_body_names = set()
         self.used_bodies_by_type = list()
 
