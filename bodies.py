@@ -1353,7 +1353,7 @@ class Zone(object):
 
         """
         if optimise:
-            return self.optimised_boolean()
+            return self._optimised_boolean()
         else:
             return self._crude_boolean()
 
@@ -1363,14 +1363,7 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, scale)
         self._map_extent_2_bodies(self.excludes, scale)
 
-        # Accumulate the intersections and subtractions and return:
-        if len(self.contains) != 0:
-            boolean_from_ints = reduce(add, self.contains)
-            out = reduce(sub, self.excludes, boolean_from_ints)
-        else:
-            raise RuntimeError("1This shouldn't happen!")
-            # out = reduce(sub, self.excludes)
-        return out
+        return self._evaluate()
 
     def _optimised_boolean(self):
         out = self._crude_boolean()
@@ -1378,14 +1371,8 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, out)
         boolean_from_ints = reduce(add, self.contains)
         self._map_extent_2_bodies(self.excludes, boolean_from_ints)
-        # Accumulate the intersections and subtractions and return:
-        if len(self.contains) != 0:
-            boolean_from_ints = reduce(add, self.contains)
-            out = reduce(sub, self.excludes, boolean_from_ints)
-        else:
-            raise RuntimeError("2This shouldn't happen!")
-            # out = reduce(sub, excludes)
-        return out
+
+        return self._evaluate()
 
     def _map_extent_2_bodies(self, bodies, extent):
         for body in bodies:
@@ -1394,6 +1381,25 @@ class Zone(object):
             elif isinstance(body, Zone):
                 body._map_extent_2_bodies(body.contains, extent)
                 body._map_extent_2_bodies(body.excludes, extent)
+
+    def _evaluate(self):
+        # This is where the bodies and subzones are condensed to a
+        # single Boolean and returned.  Calling this function is
+        # dependent on the extents/scales being set for this zones's
+        # bodies and subzones, hence why it is hidden.
+        accumulated = None # An intersection with None is just self..
+        for body in self.contains:
+            if isinstance(body, Body):
+                accumulated = body.intersect(accumulated)
+            elif isinstance(body, Zone):
+                accumulated = body._evaluate().intersect(accumulated)
+
+        for body in self.excludes:
+            if isinstance(body, Body):
+                accumulated = accumulated.subtract(body)
+            elif isinstance(body, Zone):
+                accumulated = accumulated.subtract(body._evaluate())
+        return accumulated
 
     def extent(self):
         boolean = self.evaluate()
