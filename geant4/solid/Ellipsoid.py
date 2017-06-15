@@ -21,7 +21,7 @@ class Ellipsoid(_SolidBase) :
           pzBottomCut: float, z-position of bottom cut plane
           pzTopCut:    float, z-position of top cut plane
         """
-        self.type        = 'ellipsoid'
+        self.type        = 'Ellipsoid'
         self.name        = name
         self.pxSemiAxis  = pxSemiAxis
         self.pySemiAxis  = pySemiAxis
