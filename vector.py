@@ -61,6 +61,15 @@ class Three(_np.ndarray):
         """
         return _np.linalg.norm(self)
 
+    def __eq__(self, other):
+        return (self.x == other.x
+                and self.y == other.y
+                and self.z == other.z)
+
+    def __neq__(self, other):
+        return not self == other
+
+
 def point_on_line_closest_to_point(point, point_on_line, direction):
     """
     Line is defined in terms of two vectors:  a point on the line and
