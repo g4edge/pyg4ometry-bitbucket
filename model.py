@@ -32,7 +32,7 @@ class Model(object):
         self.bodies, self._body_freq_map = self._bodies_from_tree()
         self.regions = self._regions_from_tree()
         # Initialiser the world volume:
-        self._world_volume = self._gdml_world_volume()
+        self._world_volume = Model._gdml_world_volume()
 
     def _regions_from_tree(self):
         """
@@ -44,7 +44,8 @@ class Model(object):
         visitor.visit(self.tree)
         return visitor.regions
 
-    def _gdml_world_volume(self):
+    @staticmethod
+    def _gdml_world_volume():
         """
         This method insantiates the world volume.
 
@@ -146,7 +147,7 @@ class Model(object):
         if (set(region_names) != set([volume.name
                                       for volume
                                       in self._world_volume.daughterVolumes])):
-            self._world_volume = self._gdml_world_volume()
+            self._world_volume = Model._gdml_world_volume()
             for region_name in list(region_names):
                 self.regions[region_name].add_to_volume(self._world_volume,
                                                         optimise=optimise)
@@ -276,7 +277,7 @@ class Model(object):
     def view_bodies(self, bodies):
         if isinstance(bodies, basestring):
             bodies = [bodies]
-        world_volume = self._gdml_world_volume()
+        world_volume = Model._gdml_world_volume()
         for body in bodies:
             print body
             self.bodies[body].add_to_volume(world_volume)
