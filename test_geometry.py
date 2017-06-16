@@ -27,13 +27,82 @@ class TestTRC(unittest.TestCase):
     pass
 
 class TestXCC(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "XCC.inp")
+
+    def test_crude_rescale(self):
+        region = self.model.regions['min']
+        boolean = region.evaluate(optimise=False)
+        extent = boolean._extent()
+        self.assertEqual(extent.centre, vector.Three(10000., 10000., 10000.))
+        self.assertEqual(extent.length, vector.Three(400., 300., 300.))
+
+    def test_rescaled_mesh(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+        self.assertEqual(unopt_extent, opt_extent)
+
+    def test_minimisation(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+
+        areless = []
+        for opt_solid, unopt_solid in zip(
+                opt.gdml_primitives(),
+                unopt.gdml_primitives()):
+            areless.append(solid_less_than(opt_solid, unopt_solid))
+        self.assertTrue(any(areless))
+
 
 class TestXEC(unittest.TestCase):
     pass
 
 class TestXYP(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "XYP.inp")
+
+    def test_crude_rescale(self):
+        region = self.model.regions['min']
+        boolean = region.evaluate(optimise=False)
+        extent = boolean._extent()
+        self.assertEqual(extent.centre, vector.Three(10000., 10000., 10000.))
+        self.assertEqual(extent.length, vector.Three(400., 400., 200.))
+
+    def test_rescaled_mesh(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+        self.assertEqual(unopt_extent, opt_extent)
+
+    def test_minimisation(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+
+        areless = []
+        for opt_solid, unopt_solid in zip(
+                opt.gdml_primitives(),
+                unopt.gdml_primitives()):
+            areless.append(solid_less_than(opt_solid, unopt_solid))
+        self.assertTrue(any(areless))
 
 class TestXZP(unittest.TestCase):
     def setUp(self):
@@ -77,16 +146,120 @@ class PLAMinimisation(unittest.TestCase):
     pass
 
 class TestYCC(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "YCC.inp")
+
+    def test_crude_rescale(self):
+        region = self.model.regions['min']
+        boolean = region.evaluate(optimise=False)
+        extent = boolean._extent()
+        self.assertEqual(extent.centre, vector.Three(10000., 10000., 10000.))
+        self.assertEqual(extent.length, vector.Three(300., 400., 300.))
+
+    def test_rescaled_mesh(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+        self.assertEqual(unopt_extent, opt_extent)
+
+    def test_minimisation(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+
+        areless = []
+        for opt_solid, unopt_solid in zip(
+                opt.gdml_primitives(),
+                unopt.gdml_primitives()):
+            areless.append(solid_less_than(opt_solid, unopt_solid))
+        self.assertTrue(any(areless))
+
 
 class TestYEC(unittest.TestCase):
     pass
 
 class TestYZP(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "YZP.inp")
+
+    def test_crude_rescale(self):
+        region = self.model.regions['min']
+        boolean = region.evaluate(optimise=False)
+        extent = boolean._extent()
+        self.assertEqual(extent.centre, vector.Three(10000., 10000., 10000.))
+        self.assertEqual(extent.length, vector.Three(200., 400., 400.))
+
+    def test_rescaled_mesh(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+        self.assertEqual(unopt_extent, opt_extent)
+
+    def test_minimisation(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+
+        areless = []
+        for opt_solid, unopt_solid in zip(
+                opt.gdml_primitives(),
+                unopt.gdml_primitives()):
+            areless.append(solid_less_than(opt_solid, unopt_solid))
+        self.assertTrue(any(areless))
 
 class TestZCC(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "ZCC.inp")
+
+    def test_crude_rescale(self):
+        region = self.model.regions['min']
+        boolean = region.evaluate(optimise=False)
+        extent = boolean._extent()
+        self.assertEqual(extent.centre, vector.Three(10000., 10000., 10000.))
+        self.assertEqual(extent.length, vector.Three(300., 300., 400.))
+
+    def test_rescaled_mesh(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+        self.assertEqual(unopt_extent, opt_extent)
+
+    def test_minimisation(self):
+        region = self.model.regions['min']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+
+        areless = []
+        for opt_solid, unopt_solid in zip(
+                opt.gdml_primitives(),
+                unopt.gdml_primitives()):
+            areless.append(solid_less_than(opt_solid, unopt_solid))
+        self.assertTrue(any(areless))
+
 
 class TestZEC(unittest.TestCase):
     pass
