@@ -1471,6 +1471,20 @@ class Boolean(Body):
         viewer.addSource(mesh)
         viewer.view()
 
+    def gdml_primitives(self):
+        # quick and dirty..  revisit this at a later date.
+        primitives = []
+        def primitive_iter(solid):
+            if isinstance(solid, (_pygdml.solid.Intersection,
+                                  _pygdml.solid.Subtraction,
+                                  _pygdml.solid.Union)):
+                primitives.append(primitive_iter(solid.obj1))
+                primitives.append(primitive_iter(solid.obj2))
+            else:
+                primitives.append(solid)
+        primitive_iter(self.gdml_solid())
+        return [primitive for primitive in primitives
+                if primitive is not None]
 
 class Parameters(object):
     # Kind of rubbishy class but sufficient for what it's used for (a
