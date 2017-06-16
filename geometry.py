@@ -1405,7 +1405,7 @@ class Zone(object):
         return accumulated
 
     def extent(self):
-        boolean = self.evaluate()
+        boolean = self.evaluate(optimise=False)
         return boolean._extent()
 
 
