@@ -19,10 +19,12 @@ class Sphere(_SolidBase) :
           pRmax:   float, outer radius of the shell
           pSPhi:   float, starting phi angle in radians
           pSTheta: float, starting theta angle in radians
-          pDPhi:   float, total phi angle in radians
-          pDTheta: float, total theta angle in radians
+          pDPhi:   float, total phi angle in radians 0 to 2 pi
+          pDTheta: float, total theta angle in radians 0 to pi
+
+        Phi & Theta are the usual spherical coodrinates.
         """
-        self.type    = 'sphere'
+        self.type    = 'Sphere'
         self.name    = name
         self.pRmin   = pRmin
         self.pRmax   = pRmax
@@ -39,6 +41,10 @@ class Sphere(_SolidBase) :
     def checkParameters(self):
         if self.pRmin > self.pRmax:
             raise ValueError("Inner radius must be less than outer radius.")
+        if self.pDTheta > _np.pi:
+            raise ValueError("pDTheta must be less than pi")
+        if self.pDPhi > _np.pi*2:
+            raise ValueError("pDPhi must be less than 2 pi")
 
     def __repr__(self):
         return 'Sphere : '+self.name+' '+str(self.pRmin)+' '+str(self.pRmax)+' '+str(self.pSPhi)+' '+str(self.pDPhi)+' '+str(self.pSTheta)+' '+str(self.pDTheta)+' '+str(self.nslice)+' '+str(self.nstack)
