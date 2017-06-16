@@ -243,8 +243,7 @@ class Model(object):
         output['time'] = duration
 
         if pickle:
-            with open("./{}_diag.pickle".format(
-                self._filename + pickle), 'w') as f:
+            with open("./{}_diag.pickle".format(self._filename), 'w') as f:
                 _cPickle.dump(output, f)
         return output
 
