@@ -43,6 +43,3 @@ class TwistedTrap(_SolidBase) :
     def pycsgmesh(self):
         print 'Mesh not yet completed.'
         pass
-
-    def gdml(selfs):
-        pass

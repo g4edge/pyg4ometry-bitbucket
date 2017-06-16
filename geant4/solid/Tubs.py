@@ -69,13 +69,4 @@ class Tubs(_SolidBase) :
 
         return self.mesh
 
-    def gdmlWrite(self, gw, prepend):
-        oe = gw.doc.createElement("tube")
-        oe.setAttribute('name',prepend+'_'+self.name)
-        oe.setAttribute('rmin',str(self.pRMin))
-        oe.setAttribute('rmax',str(self.pRMax))
-        oe.setAttribute('z',   str(2*self.pDz))
-        oe.setAttribute('startphi',str(self.pSPhi))
-        oe.setAttribute('deltaphi',str(self.pDPhi))
-        gw.solids.appendChild(oe)
-            
+

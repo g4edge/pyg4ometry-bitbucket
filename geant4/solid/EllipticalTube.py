@@ -99,7 +99,3 @@ class EllipticalTube(_SolidBase) :
     
         return self.mesh
     
-
-
-    def gdml(selfs):
-        pass

@@ -120,7 +120,3 @@ class Polycone(_SolidBase) :
         return self.mesh
         
 
-    def gdmlWrite(self, gw, prepend):
-        #oe = gw.doc.createElement('polycone')
-        #oe.setAttribute('name', prepend + '_' + self.name)
-        print "Solid Polyhedra not written out: not supported in writer yet!"

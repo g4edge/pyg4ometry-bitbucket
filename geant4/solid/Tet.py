@@ -44,6 +44,3 @@ class Tet(_SolidBase) :
                                        _Polygon([vert_base[0], vert_ancr, vert_base[2]], None)])
 
         return self.mesh
-
-    def gdml(self):
-        pass

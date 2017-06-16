@@ -66,14 +66,3 @@ class ExtrudedSolid(_SolidBase):
     def csgmesh(self):
         return self.mesh
 
-
-    def gdmlWrite(self, gw, prepend):
-        print "Solid Extruded Solid not written out: not suported by writer yet"
-        """
-        oe = gw.doc.createElement('cons')
-        oe.setAttribute('name', prepend + '_' + self.name)
-        oe.setAttribute('ax', str(self.pRmin))
-        oe.setAttribute('ay', str(self.pRmax))
-        oe.setAttribute('az', str(self.pDPhi))
-        gw.solids.appendChild(oe)
-        """

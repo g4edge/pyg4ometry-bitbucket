@@ -124,12 +124,3 @@ class Torus(_SolidBase) :
         return self.mesh
 
 
-    def gdmlWrite(self, gw, prepend):
-        oe = gw.doc.createElement('torus')
-        oe.setAttribute('name', prepend + '_' + self.name)
-        oe.setAttribute('rmin',str(self.pRmin))
-        oe.setAttribute('rmax',str(self.pRmax))
-        oe.setAttribute('rtor',str(self.pRtor))
-        oe.setAttribute('deltaphi',str(self.pDPhi))
-        oe.setAttribute('startphi',str(self.pSPhi))
-        gw.solids.appendChild(oe)

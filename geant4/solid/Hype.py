@@ -116,6 +116,3 @@ class Hype(_SolidBase) :
             self.mesh = meshinout[0]
         
         return self.mesh
-
-    def gdml(selfs):
-        pass

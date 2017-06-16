@@ -67,13 +67,3 @@ class Trd(_SolidBase) :
 
     def csgmesh(self):
         return self.mesh
-
-    def gdmlWrite(self, gw, prepend):
-        oe = gw.doc.createElement("trd")
-        oe.setAttribute('name',prepend + '_' + self.name)
-        oe.setAttribute('x1',str(2*self.pX1))
-        oe.setAttribute('x2',str(2*self.pX2))
-        oe.setAttribute('y1',str(2*self.pY1))
-        oe.setAttribute('y2',str(2*self.pY2))
-        oe.setAttribute('z',str(2*self.pZ))
-        gw.solids.appendChild(oe)

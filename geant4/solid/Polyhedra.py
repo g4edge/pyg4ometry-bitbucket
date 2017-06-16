@@ -53,11 +53,3 @@ class Polyhedra(_SolidBase) :
 
     def csgmesh(self):
         return self.mesh
-
-    def gdmlWrite(self, gw, prepend):
-        #oe = gw.doc.createElement('polyhedra')
-        #oe.setAttribute('name', prepend + '_' + self.name)
-        print "Solid Polyhedra not written out: not supported in writer yet!"
-
-
-    

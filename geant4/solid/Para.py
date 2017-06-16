@@ -70,6 +70,3 @@ class Para(_SolidBase):
 
         return self.mesh
 
-
-    def gdml(selfs):
-        pass

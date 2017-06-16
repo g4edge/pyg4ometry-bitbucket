@@ -51,38 +51,5 @@ class Intersection(_SolidBase) :
 
         print 'intersection mesh ', self.name
         return self.mesh
-
-    def gdmlWrite(self,w) :
-        oe  = w.doc.createElement('intersection')
-        oe.setAttribute('name',self.name)
-        cfe = w.doc.createElement('first')
-        cfe.setAttribute('ref',self.obj1.name)
-        w.solids.appendChild(cfe)
-        
-        cse = doc.createElement('second')
-        cse.setAttribute('ref',self.obj2.name)
-        w.solids.appendChild(cse)
-
-        csce = doc.createElement('positionref')
-        csce.setAttribute('ref',self.name+'_sol2_pos')
-        oe.appendChild(csce)
-        
-        csce1 = doc.createElement('rotationref')
-        csce1.setAttribute('ref', self.name + '_sol2_rot')
-        oe.appendChild(csce1)
-        
-        p = doc.createElement('position')
-        p.setAttribute('name',cs.name+'_sol2_pos')
-        p.setAttribute('x',str(cs.tra2[1][0]))
-        p.setAttribute('y',str(cs.tra2[1][1]))
-        p.setAttribute('z',str(cs.tra2[1][2]))
-        de.appendChild(p)
-        
-        r = self.doc.createElement('rotation')
-        r.setAttribute('name',cs.name + '_sol2_rot')
-        r.setAttribute('x', str(cs.tra2[0][0]))
-        r.setAttribute('y', str(cs.tra2[0][1]))
-        r.setAttribute('z', str(cs.tra2[0][2]))
-        de.appendChild(r)
         
 

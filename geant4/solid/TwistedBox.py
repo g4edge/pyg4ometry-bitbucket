@@ -83,6 +83,3 @@ class TwistedBox(_SolidBase) :
             self.mesh = self.mesh.refine()
             
         return self.mesh
-
-    def gdml(selfs):
-        pass
