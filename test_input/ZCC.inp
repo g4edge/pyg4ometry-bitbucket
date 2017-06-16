@@ -1,13 +1,12 @@
 TITLE
-Test file for ZCC (infinite cylinder parallel 2 z-axis)
-GEOBEGIN               1.0E-04                           1.0          COMBNAME
-    0    0                   MC-CAD
-* ZCC parameters: Centre_x, Centre_y, radius
-ZCC mycyll             5.0        50.0   1.0
+wooo a title
+GEOBEGIN                                                              COMBNAME
+    0    0
+SPH sph  1000. 1000. 1000. 20.
+ZCC zcc1 +1000. +1000. 15.
+ZCC zcc2 +1000. +1000. 5.
 END
-MahThi     5 +mycyll
+min      5 +sph +zcc1 ! -zcc2
 END
 GEOEND
-* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+..
-MATERIAL         6.0                 1.8                              GRAPHITE
-ASSIGNMA    GRAPHITE    MahThi
+ASSIGNMA        IRON   cubeinf
