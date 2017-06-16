@@ -66,7 +66,7 @@ class Three(_np.ndarray):
                 and self.y == other.y
                 and self.z == other.z)
 
-    def __neq__(self, other):
+    def __ne__(self, other):
         return not self == other
 
 
