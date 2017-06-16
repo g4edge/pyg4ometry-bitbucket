@@ -19,10 +19,12 @@ class Sphere(_SolidBase) :
           pRmax:   float, outer radius of the shell
           pSPhi:   float, starting phi angle in radians
           pSTheta: float, starting theta angle in radians
-          pDPhi:   float, total phi angle in radians
-          pDTheta: float, total theta angle in radians
+          pDPhi:   float, total phi angle in radians 0 to 2 pi
+          pDTheta: float, total theta angle in radians 0 to pi
+
+        Phi & Theta are the usual spherical coodrinates.
         """
-        self.type    = 'sphere'
+        self.type    = 'Sphere'
         self.name    = name
         self.pRmin   = pRmin
         self.pRmax   = pRmax
@@ -39,6 +41,10 @@ class Sphere(_SolidBase) :
     def checkParameters(self):
         if self.pRmin > self.pRmax:
             raise ValueError("Inner radius must be less than outer radius.")
+        if self.pDTheta > _np.pi:
+            raise ValueError("pDTheta must be less than pi")
+        if self.pDPhi > _np.pi*2:
+            raise ValueError("pDPhi must be less than 2 pi")
 
     def __repr__(self):
         return 'Sphere : '+self.name+' '+str(self.pRmin)+' '+str(self.pRmax)+' '+str(self.pSPhi)+' '+str(self.pDPhi)+' '+str(self.pSTheta)+' '+str(self.pDTheta)+' '+str(self.nslice)+' '+str(self.nstack)
@@ -58,9 +64,9 @@ class Sphere(_SolidBase) :
         def appendVertex(vertices, theta, phi, r):
             if r > 0:
                 d = _Vector(
-                    _np.cos(theta) * _np.sin(phi),
-                    _np.cos(phi),
-                    _np.sin(theta) * _np.sin(phi))
+                    _np.cos(theta) * _np.sin(phi),                          
+                    _np.sin(theta) * _np.sin(phi),
+                    _np.cos(phi))                         
                 vertices.append(_Vertex(c.plus(d.times(r)), None))
 
             else:
@@ -187,13 +193,3 @@ class Sphere(_SolidBase) :
             mesh_inner   = _CSG.sphere(radius=self.pRmin, slices=self.nslice, stacks=self.nstack)
             self.mesh   = self.mesh.subtract(mesh_inner)        
 
-    def gdmlWrite(self,gw,prepend):
-        oe = gw.doc.createElement('sphere')
-        oe.setAttribute('name',prepend+'_'+self.name)
-        oe.setAttribute('rmin',str(self.pRmin))
-        oe.setAttribute('rmax',str(self.pRmax))
-        oe.setAttribute('deltaphi',str(self.pDPhi))
-        oe.setAttribute('startphi',str(self.pSPhi))
-        oe.setAttribute('starttheta',str(self.pSTheta))
-        oe.setAttribute('deltatheta',str(self.pDTheta))        
-        gw.solids.appendChild(oe)
