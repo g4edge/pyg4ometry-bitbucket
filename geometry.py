@@ -104,8 +104,8 @@ class Body(object):
         extent = _pygdml.volume.pycsg_extent(mesh)
 
         _MeshInfo = namedtuple("_MeshInfo", ['centre', 'min', 'max', 'length'])
-        lower = extent[0]
-        upper = extent[1]
+        lower = vector.Three(extent[0].x, extent[0].y, extent[0].z)
+        upper = vector.Three(extent[1].x, extent[1].y, extent[1].z)
         size = upper - lower
         centre = upper - size / 2
         return _MeshInfo(centre, lower, upper, size)
