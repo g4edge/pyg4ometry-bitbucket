@@ -1,13 +1,25 @@
 TITLE
-rcc title
-GEOBEGIN               1.0E-04                           1.0          COMBNAME
-    0    0                   MC-CAD
-*               face_x face_y face_z  x_dir   y_dir  z_dir   radius
-RCC mycyl       0.0     0.0      .0    -10.0     10.    10.      1.0
+wooo a title
+GEOBEGIN                                                              COMBNAME
+    0    0
+* No faces inside the sphere (effectively infinite), both faces inside the sphere
+* one face inside the sphere, and the other face inside the sphere
+!
+RCC rcc_none  0.0  0.0 0.0    10000. 10000. 10000. 5.
+RCC rcc_both  997.5  997.5 997.5     5. 5. 5.   5.0
+RCC rcc_1     1000.0  1000.0  1000.0     1000. -1000.  1000.0  5.0
+RCC rcc_2  2000.0  0000.0  2000.0     -1000.0 +1000.0  -1000.0  5.0
+SPH sph  1000.   1000.   1000.  15.
 END
-MahThi     5 +mycyl
+! An effectively infinite RCC (i.e. much larger than what it is intersecting with)
+! "None" in the sense that neither face lies within the sphere.
+none      5 +sph +rcc_none
+! The first face (denoted by the first 3 coordinates in the RCC definition) lies within the RCC
+both        5 +sph +rcc_both
+! The other face (denoted by the face vector + length vector in the RCC definition) lies within the RCC
+first      5 +sph +rcc_1
+! Both cylinder faces inside the body
+second       5 +sph +rcc_2
 END
 GEOEND
-* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....+..
-MATERIAL         6.0                 1.8                              GRAPHITE
-ASSIGNMA    GRAPHITE    MahThi
+ASSIGNMA        IRON   cubeinf
