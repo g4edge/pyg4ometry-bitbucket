@@ -245,7 +245,7 @@ solid `csg`. Neither this solid nor the solid `csg` are modified.::
          |       |
          +-------+
 */
-  BSPNode* a = new BSPNode(this->clone()->polygons);
+  BSPNode* a = new BSPNode((this->clone())->polygons);
   BSPNode* b = new BSPNode((csg->clone())->polygons);
   a->invert();
   a->clipTo(b);

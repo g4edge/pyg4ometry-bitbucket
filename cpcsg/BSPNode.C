@@ -76,9 +76,9 @@ std::vector<Polygon*> BSPNode::clipPolygons(std::vector<Polygon*> &_polygons){
     _back = back->clipPolygons(_back);
   }
   else{
-    /*for(int i=0;i<_back.size();i++){
+    for(int i=0;i<_back.size();i++){
       delete _back[i];
-    }*/
+    }
     _back.clear();
   }
   _front.insert(_front.end(),_back.begin(),_back.end());

@@ -11,24 +11,31 @@ int main() {
   double x = 200.;
   double y = 200.;
   double z = 10.;
-  CSG *b = Solids::Box(x,y,z);
+  //CSG *b = Solids::Box(x,y,z);
+  CSG *b = Solids::Cone(100,50,32);
+  b->translate(new Vector(0.0,0.0,-20.0));
   double epsilon = 0.1;
 
-  CSG *sub_cub = Solids::Box(x-epsilon,z-epsilon,z);
-  sub_cub->translate(new Vector(0.0,-50.0/*(z/2.)-(y/2.)-20*/,epsilon));
-  Vector* v = new Vector(0.0,20.0,0.0);
-  for(int i=0;i<5;i++){
-    sub_cub->translate(v);
+  /*CSG *sub_cub = Solids::Box(x-epsilon,z-epsilon,z);
+  sub_cub->translate(new Vector(0.0,-100.0,epsilon));
+  for(int i=0;i<20;i++){
+    Vector* v = new Vector(0.0,10.0,0.0);
     b = b->Subtract(sub_cub);
+    sub_cub->translate(v);
   }
   sub_cub = Solids::Box(z-epsilon,y-epsilon,z);
 
-  sub_cub->translate(new Vector(-50.0/*(z/2.)-(x/2.)-20*/,0.0,epsilon));
-  for(int i=0;i<5;i++){
-    Vector* v = new Vector(20.0,0.0,0.0);
-    sub_cub->translate(v);
+  sub_cub->translate(new Vector(-100.0,0.0,epsilon));
+  for(int i=0;i<20;i++){
+    Vector* v = new Vector(10.0,0.0,0.0);
     b = b->Subtract(sub_cub); 
-  }
-  
+    sub_cub->translate(v);
+  }*/
+
+  CSG* sphere = Solids::Sphere(50);
+
+  b = b->Union(sphere);
+  //b->refine(); 
   b->saveVTK("b.vtk");
+  sphere->saveVTK("sphere.vtk");
 }

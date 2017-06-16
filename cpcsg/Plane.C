@@ -97,7 +97,7 @@ void Plane::splitPolygon(Polygon* polygon,
           b.push_back(vi);
         }
       }
-      if(((int) ti | (int) tj) == SPANNING){
+      if(((int) ti | (int) tj) == int(SPANNING)){
         double t = (w - norm->dot(*vi->position())) / norm->dot((vj->position())->minus(*vi->position()));
         Vertex* v = vi->interpolate(vj,t);
         f.push_back(v);
