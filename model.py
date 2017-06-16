@@ -222,7 +222,7 @@ class Model(object):
         for index, region_name in enumerate(regions):
             print "... Testing Region: %s" % region_name
             try:
-                self._generate_mesh(region_name)
+                self._generate_mesh(region_name, setclip=False, optimise=False)
                 output["good"].append(region_name)
             except _pygdml.solid.NullMeshError as error:
                 output["bad"].append(region_name)
