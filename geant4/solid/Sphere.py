@@ -64,9 +64,9 @@ class Sphere(_SolidBase) :
         def appendVertex(vertices, theta, phi, r):
             if r > 0:
                 d = _Vector(
-                    _np.cos(theta) * _np.sin(phi),
-                    _np.cos(phi),
-                    _np.sin(theta) * _np.sin(phi))
+                    _np.cos(theta) * _np.sin(phi),                          
+                    _np.sin(theta) * _np.sin(phi),
+                    _np.cos(phi))                         
                 vertices.append(_Vertex(c.plus(d.times(r)), None))
 
             else:
@@ -193,13 +193,3 @@ class Sphere(_SolidBase) :
             mesh_inner   = _CSG.sphere(radius=self.pRmin, slices=self.nslice, stacks=self.nstack)
             self.mesh   = self.mesh.subtract(mesh_inner)        
 
-    def gdmlWrite(self,gw,prepend):
-        oe = gw.doc.createElement('sphere')
-        oe.setAttribute('name',prepend+'_'+self.name)
-        oe.setAttribute('rmin',str(self.pRmin))
-        oe.setAttribute('rmax',str(self.pRmax))
-        oe.setAttribute('deltaphi',str(self.pDPhi))
-        oe.setAttribute('startphi',str(self.pSPhi))
-        oe.setAttribute('starttheta',str(self.pSTheta))
-        oe.setAttribute('deltatheta',str(self.pDTheta))        
-        gw.solids.appendChild(oe)
