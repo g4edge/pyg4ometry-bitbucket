@@ -1,11 +1,13 @@
-from collections import Counter as _Counter
-import os.path as _path
-import warnings as _warnings
-import time as _time
-import cPickle as _cPickle
+""" Collection of classes for extracting information from a Fluka model. """
 
-import antlr4 as _antlr4
-import pygdml as _pygdml
+import collections
+import os.path
+import time
+import cPickle
+import warnings
+
+import antlr4
+import pygdml
 
 import pyfluka.geometry
 import pyfluka.vector
@@ -19,7 +21,7 @@ class Model(object):
     writing to GDML.
 
     Parameters
-    ---------
+    ----------
 
     filename:  path to Fluka input file
 
@@ -35,8 +37,7 @@ class Model(object):
         self._world_volume = Model._gdml_world_volume()
 
     def _regions_from_tree(self):
-        """
-        Get the region definitions from the tree.  Called in the
+        """Get the region definitions from the tree.  Called in the
         initialiser and then never called again.
 
         """
@@ -46,43 +47,41 @@ class Model(object):
 
     @staticmethod
     def _gdml_world_volume():
-        """
-        This method insantiates the world volume.
-
-        """
+        """ This method insantiates the world volume. """
         world_size = 1e5
-        world_box = _pygdml.solid.Box("world", world_size, world_size, world_size)
-        return _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
-                              None, 1, False, "G4_Galactic")
+        world_box = pygdml.solid.Box("world", world_size, world_size, world_size)
+        return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
+                             None, 1, False, "G4_Galactic")
 
     def write_to_gdml(self, region_names=None, out_path=None,
                       make_gmad=False, optimise=True):
-        """
-        Convert the region to GDML.  Default output file name is
-        "./" + basename + ".gdml".
+        """Convert the region to GDML.
 
         Parameters
-        ---------
+        ----------
 
-        region_names: A name or list of names of regions to be
+        - region_names: A name or list of names of regions to be
         converted to GDML.  By default, all regions will be converted.
 
-        out_path: Output path for file to be written to.  By default
-        will make a name based on the model filename.
+        - out_path: Output path for file to be written to.  By default
+        output file name is "./" + basename + ".gdml".
 
-        make_gmad: Generate a skeleton GMAD file pre-filled with
+        - make_gmad: Generate a skeleton GMAD file pre-filled with
         references to corresponding the GDML file.
+
+        - optimise: Optimise the output GDML by trimming large body
+          definitions.  By default the geometry will be optimised.
 
         """
         self._generate_mesh(region_names, setclip=True, optimise=optimise)
         if out_path is None:
             out_path = ("./"
-                        + _path.basename(_path.splitext(self._filename)[0])
+                        + os.path.basename(os.path.splitext(self._filename)[0])
                         + ".gdml")
-        elif _path.splitext(out_path)[1] != "gdml":
-            out_path = _path.splitext(out_path)[0] + ".gdml"
+        elif os.path.splitext(out_path)[1] != "gdml":
+            out_path = os.path.splitext(out_path)[0] + ".gdml"
 
-        out = _pygdml.Gdml()
+        out = pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
 
@@ -90,48 +89,42 @@ class Model(object):
             self._write_test_gmad(out_path)
 
     def view(self, regions=None, setclip=True, optimise=False):
-        """
-        View the mesh for this model.
+        """View the mesh for this model.
 
         Parameters
         ----------
 
-        regions: A name or list of names of regions to be
-        viewed.  By default, all regions will be viewed.
+        - regions: A name or list of names of regions to be viewed.
+        By default, all regions will be viewed.
 
-        setclip: If True, will  clip the bounding box to the extent
-        of the geometry.  This is useful for checking placements and
-        as an optimisation--the mesh will only be generated once.  By
-        default, the bounding box will be clipped.
+        - setclip: If True, will clip the bounding box to the extent
+        of the geometry.  Setting it to False is useful for checking
+        placements and as an optimisation--the mesh will only be
+        generated once.  By default, the bounding box will be clipped.
 
         """
         world_mesh = self._generate_mesh(regions,
                                          setclip=setclip,
                                          optimise=optimise)
-        viewer = _pygdml.VtkViewer()
+        viewer = pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
     def _generate_mesh(self, region_names, setclip, optimise):
-        """
-        This function has the side effect of recreating the world
-        volume if the region_names requested are different to the ones
-        already assigned to it and returns the relevant mesh.
+        """This function has the side effect of recreating the world volume if
+        the region_names requested are different to the ones already
+        assigned to it and returns the relevant mesh.
 
         """
         self._compose_world_volume(region_names, optimise=optimise)
-        start = _time.time()
         if setclip:
             self._world_volume.setClip()
         world_mesh = self._world_volume.pycsgmesh()
-        end = _time.time()
-        print "Time spent meshing world:", (end - start)/60.0, "minutes."
         return world_mesh
 
     def _compose_world_volume(self, region_names, optimise):
-        """
-        Add the region or regions in region_names to the world volume,
-        only if not already added.
+        """Add the region or regions in region_names to the world volume, only
+        if not already added.
 
         """
         if region_names is None:
@@ -150,10 +143,9 @@ class Model(object):
                                                         optimise=optimise)
 
     def report_body_count(self):
-        """
-        Prints the frequency of bodies in order and by type that are used
-        in region definitions.  Bodies which are defined but not used
-        are not included in this count.
+        """Prints a count of all unique bodies by type which are used in
+        region defintions.
+
         """
         body_and_count = self._body_freq_map.items()
         body_and_count.sort(key=lambda i: i[1], reverse=True)
@@ -167,20 +159,23 @@ class Model(object):
             print body_description + str(count)
 
     def _bodies_from_tree(self):
-        """
-        return a tuple of bodies, region scale, and a count of bodies
-        by type.
+        """Return a tuple of bodies, region scale, and a count of bodies by
+        type.
 
         """
         body_listener = FlukaBodyListener()
-        walker = _antlr4.ParseTreeWalker()
+        walker = antlr4.ParseTreeWalker()
         walker.walk(body_listener, self.tree)
         body_freq_map = body_listener.body_freq_map
         bodies = body_listener.bodies
         return bodies, body_freq_map
 
     def _write_test_gmad(self, gdml_path):
-        gmad_path = _path.splitext(gdml_path)[0] + ".gmad"
+        """Write a simple gmad file corresponding corresponding to the input
+        file's geometry with the correct GDML component length.
+
+        """
+        gmad_path = os.path.splitext(gdml_path)[0] + ".gmad"
         with open(gmad_path, 'w') as gmad:
             # Extent of the bounding box in the transverse directions:
             bounding_x = self._world_volume.currentVolume.pX / 1000.
@@ -202,10 +197,9 @@ class Model(object):
             gmad.write("use, period=component;\n")
 
     def test_regions(self, pickle=None, regions=None):
-        """
-        Method for individually meshing each region and returning
-        dictionary of lists of good regions, bad regions, bad
-        intersections, and bad subtractions.
+        """Individually mesh each region and return dictionary of lists of
+        good regions, bad regions, bad intersections, and bad
+        subtractions.
 
         If a string is supplied for pickle, then the resulting dictionary will
         be written to file.
@@ -218,17 +212,17 @@ class Model(object):
         # good regions, bad regions, bad subtractions, bad intersections
         output = {key:[] for key in ["good", "bad", "subs", "ints"]}
         number_of_regions = len(regions)
-        start = _time.time()
+        start = time.time()
         for index, region_name in enumerate(regions):
             print "... Testing Region: %s" % region_name
             try:
                 self._generate_mesh(region_name, setclip=False, optimise=False)
                 output["good"].append(region_name)
-            except _pygdml.solid.NullMeshError as error:
+            except pygdml.solid.NullMeshError as error:
                 output["bad"].append(region_name)
-                if isinstance(error.solid, _pygdml.solid.Subtraction):
+                if isinstance(error.solid, pygdml.solid.Subtraction):
                     output["subs"].append(region_name)
-                elif isinstance(error.solid, _pygdml.solid.Intersection):
+                elif isinstance(error.solid, pygdml.solid.Intersection):
                     output["ints"].append(region_name)
             print "Tested {0}/{1}.".format(index + 1, number_of_regions)
             print ("Succeded: {}.  Failed: {} ({:.2%}).".format(
@@ -238,20 +232,20 @@ class Model(object):
                  / (len(output["good"])
                     + float(len(output["bad"]))))))
 
-        duration = (_time.time() - start) / 60.0
+        duration = (time.time() - start) / 60.0
         print duration, "minutes since test begun."
         output['time'] = duration
 
         if pickle:
-            with open("./{}_diag.pickle".format(self._filename), 'w') as f:
-                _cPickle.dump(output, f)
+            pickle_name = "./{}_diag.pickle".format(self._filename)
+            with open(pickle_name, 'w') as pickle_file:
+                cPickle.dump(output, pickle_file)
         return output
 
     def view_debug(self, region=None, do_all=False):
-        """
-        If region name is specified then view that in debug mode, else
+        """If region name is specified then view that in debug mode, else
         attempt to mesh each region in turn and view the first null
-        mesh in debug mode, and then exits.  If do_all is not False
+        mesh in debug mode, and then exit.  If do_all is not False
         then will not exit after the first null mesh, and will instead
         try to view all regions in turn.
 
@@ -263,7 +257,7 @@ class Model(object):
         for region in self.regions.itervalues():
             try:
                 region.gdml_solid.pycsgmesh()
-            except _pygdml.solid.NullMeshError:
+            except pygdml.solid.NullMeshError:
                 print "Failed mesh @ region: {}.".format(region.name)
                 print "Viewing region in debug mode ..."
                 region.view_debug()
@@ -278,13 +272,12 @@ class Model(object):
             print body
             self.bodies[body].add_to_volume(world_volume)
         world_mesh = world_volume.pycsgmesh()
-        viewer = _pygdml.VtkViewer()
+        viewer = pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
     def survey(self, pickle=False):
-        """
-        Perform a survey of this model's geometry.  This consists of
+        """Perform a survey of this model's geometry.  This consists of
         meshing every region and individual zone and storing their
         extents, lengths, and centres.  As Fluka regions need not be
         contiguous, this can be useful for selecting and omitting
@@ -298,19 +291,18 @@ class Model(object):
                 regions["{}_{}".format(region_name, zone_no)] = zone.extent()
 
         if pickle is True:
-            with open("./{}_survey.pickle".format(self._filename), 'w') as f:
-                _cPickle.dump(regions, f)
+            pickle_name = "./{}_survey.pickle".format(self._filename)
+            with open(pickle_name, 'w') as pickle_file:
+                cPickle.dump(regions, pickle_file)
         return regions
 
 
-
 class FlukaBodyListener(FlukaParserListener):
     """
     This class is for getting simple, declarative  information about
     the geometry model.  In no particular order:
 
     - Body definitions, including surrounding geometry directives
-    - Region "scale" for use in defining infinite cylinders and planes.
     - Stats like names and frequencies for body types and regions.
 
     """
@@ -331,7 +323,7 @@ class FlukaBodyListener(FlukaParserListener):
         # them with the relevant pyfuka.bodies classes.
         body_name = ctx.ID().getText()
         body_type = ctx.BodyCode().getText()
-        body_parameters = self._get_floats(ctx)
+        body_parameters = FlukaBodyListener._get_floats(ctx)
         # Apply any expansions:
         body_parameters = self.apply_expansions(body_parameters)
 
@@ -345,12 +337,12 @@ class FlukaBodyListener(FlukaParserListener):
                                     self._current_translat)
             self.bodies[body_name] = body
         except (AttributeError, NotImplementedError):
-            _warnings.simplefilter('once', UserWarning)
-            _warnings.warn(("\nBody type %s not supported.  All bodies"
-                            " of this type will be omitted.  If bodies"
-                            " of this type are used in regions, the"
-                            " conversion will fail.") % body_type,
-                           UserWarning)
+            warnings.simplefilter('once', UserWarning)
+            warnings.warn(("\nBody type %s not supported.  All bodies"
+                           " of this type will be omitted.  If bodies"
+                           " of this type are used in regions, the"
+                           " conversion will fail.") % body_type,
+                          UserWarning)
             self.omitted_bodies.append((body_name, body_type))
 
     def enterUnaryExpression(self, ctx):
@@ -362,7 +354,7 @@ class FlukaBodyListener(FlukaParserListener):
             self.used_bodies_by_type.append(body_type)
 
     def enterTranslat(self, ctx):
-        translation = self._get_floats(ctx)
+        translation = FlukaBodyListener._get_floats(ctx)
         self._current_translat = pyfluka.vector.Three(translation)
 
     def exitTranslat(self, ctx):
@@ -375,13 +367,18 @@ class FlukaBodyListener(FlukaParserListener):
         self._current_expansion = None
 
     def apply_expansions(self, parameters):
+        """
+        Method for applying the current expansion to the parameters.
+
+        """
         factor = self._current_expansion
         if factor is not None:
             return [factor * x for x in parameters]
         else:
             return parameters
 
-    def _get_floats(self, ctx):
+    @staticmethod
+    def _get_floats(ctx):
         '''
         Gets the Float tokens associated with the rule and returns
         them as an array of python floats.
@@ -393,12 +390,18 @@ class FlukaBodyListener(FlukaParserListener):
 
     def exitGeocards(self, ctx):
         # When we've finished walking the geometry, count the bodies.
-        self.body_freq_map = _Counter(self.used_bodies_by_type)
+        self.body_freq_map = collections.Counter(self.used_bodies_by_type)
         del self.used_bodies_by_type
 
 
-
 class FlukaRegionVisitor(FlukaParserVisitor):
+    """
+    A visitor class for accumulating the region definitions.  The body
+    instances are provided at instatiation, and then these are used
+    when traversing the tree to build up a dictionary of region name
+    and pyfluka.geometry.Region instances.
+
+    """
     def __init__(self, bodies):
         self.bodies = bodies
         self.regions = dict()
@@ -429,7 +432,7 @@ class FlukaRegionVisitor(FlukaParserVisitor):
 
         # If both are tuples (i.e. operator, body/zone pairs):
         if (isinstance(left_solid, tuple)
-            and isinstance(right_solid, tuple)):
+                and isinstance(right_solid, tuple)):
             return [left_solid, right_solid]
         elif (isinstance(left_solid, tuple)
               and isinstance(right_solid, list)):
@@ -475,6 +478,10 @@ class FlukaRegionVisitor(FlukaParserVisitor):
         return (operator, zone)
 
 def load_pickle(path):
+    """
+    Convenience function for loading pickle files.
+
+    """
     with open(path, 'r') as file_object:
-        unpickled = _cPickle.load(file_object)
+        unpickled = cPickle.load(file_object)
     return unpickled

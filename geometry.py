@@ -1,3 +1,9 @@
+""" A collection of classes for representing Fluka regions, zones, and bodies.
+
+Note:  All units are in millimetres, c.f. centimetres in Fluka.
+
+"""
+
 from collections import namedtuple
 import math as _math
 import numpy as _np
@@ -9,19 +15,12 @@ import pygdml as _pygdml
 from pygdml import transformation as _trf
 import vector
 
-"""
-
-A collection of classes for representing Fluka regions, zones, and bodies.
-
-Note:  All units are in millimetres, c.f. centimetres in Fluka.
-
-"""
 
 class Body(object):
-    '''
-    A class representing a body as defined in Fluka.
+    """A class representing a body as defined in Fluka.
     get_body_as_gdml_solid() returns the body as a pygdml.solid
-    '''
+
+    """
 
     def __init__(self,
                  name,
@@ -54,8 +53,7 @@ class Body(object):
         pass
 
     def add_to_volume(self, volume):
-        """
-        Basically for adding to a world volume.
+        """Basically for adding to a world volume.
 
         """
         solid = self.gdml_solid()
@@ -76,8 +74,7 @@ class Body(object):
 
 
     def resize(self, scale):
-        """
-        Return this instance bounded or extented according to the
+        """Return this instance bounded or extented according to the
         parameter "scale".
 
         """
@@ -148,8 +145,7 @@ class Body(object):
         return self | other
 
     def __add__(self, other):
-        """
-        Perform the intersection of this solid with another.
+        """Perform the intersection of this solid with another.
 
         """
         output_name = self._generate_name(other)
@@ -254,9 +250,9 @@ class Body(object):
 
 
 class RPP(Body):
-    '''
+    """
     An RPP is a rectangular parallelpiped (a cuboid).
-    '''
+    """
     def __init__(self, name, parameters,
                  translation=None,
                  transformation=None):
@@ -281,10 +277,10 @@ class RPP(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
-        '''
+        """
         Return the coordinates of the centre of the Rectangular
         Parallelepiped (cuboid).
-        '''
+        """
 
         centre_x = 0.5 * (self.parameters.x_max + self.parameters.x_min)
         centre_y = 0.5 * (self.parameters.y_max + self.parameters.y_min)
@@ -307,9 +303,9 @@ class RPP(Body):
 
 
     def gdml_solid(self):
-        '''
+        """
         Construct a pygdml Box from this body definition
-        '''
+        """
         x_length = abs(self.parameters.x_max - self.parameters.x_min)
         y_length = abs(self.parameters.y_max - self.parameters.y_min)
         z_length = abs(self.parameters.z_max - self.parameters.z_min)
@@ -360,7 +356,7 @@ class SPH(Body):
 
 
 class RCC(Body):
-    '''
+    """
     Right-angled Circular Cylinder
 
     Parameters:
@@ -369,7 +365,7 @@ class RCC(Body):
     h_(x,y,z) = components of vector pointing in the direction of the
     other plane face, with magnitude equal to the cylinder length.
     radius    = cylinder radius
-    '''
+    """
 
     def __init__(self, name,
                  parameters,
@@ -426,10 +422,10 @@ class RCC(Body):
             self._scale = max_length * 1.1
 
     def centre(self):
-        '''
+        """
         Returns the coordinates of the centre of the sphere in
         MILLIMETRES, as this is used for GDML.
-        '''
+        """
 
         return (self._offset
                 + self.face_centre
@@ -628,9 +624,9 @@ class TRC(Body):
 
 
 class XYP(Body):
-    '''
+    """
     Infinite plane perpendicular to the z-axis.
-    '''
+    """
     def __init__(self, name,
                  parameters,
                  translation=None,
@@ -684,9 +680,9 @@ class XYP(Body):
 
 
 class XZP(Body):
-    '''
+    """
     Infinite plane perpendicular to the y-axis.
-    '''
+    """
     def __init__(self, name,
                  parameters,
                  translation=None,
@@ -738,9 +734,7 @@ class XZP(Body):
 
 
 class YZP(Body):
-    '''
-    Infinite plane perpendicular to the x-axis.
-    '''
+    """ Infinite plane perpendicular to the x-axis. """
     def __init__(self, name,
                  parameters,
                  translation=None,
