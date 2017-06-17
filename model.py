@@ -208,7 +208,7 @@ class Model(object):
         if regions is None:
             regions = self.regions
         elif isinstance(regions, basestring):
-            regions = [regions]
+            regions = {regions: self.regions[regions]}
         # good regions, bad regions, bad subtractions, bad intersections
         output = {key:[] for key in ["good", "bad", "subs", "ints"]}
         number_of_regions = len(regions)
