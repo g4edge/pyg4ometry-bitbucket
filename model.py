@@ -264,18 +264,6 @@ class Model(object):
                 if do_all is False:
                     break
 
-    def view_bodies(self, bodies):
-        if isinstance(bodies, basestring):
-            bodies = [bodies]
-        world_volume = Model._gdml_world_volume()
-        for body in bodies:
-            print body
-            self.bodies[body].add_to_volume(world_volume)
-        world_mesh = world_volume.pycsgmesh()
-        viewer = pygdml.VtkViewer()
-        viewer.addSource(world_mesh)
-        viewer.view()
-
     def survey(self, pickle=False):
         """Perform a survey of this model's geometry.  This consists of
         meshing every region and individual zone and storing their
