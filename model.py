@@ -40,7 +40,7 @@ class Model(object):
         initialiser and then never called again.
 
         """
-        visitor = _FlukaRegionVisitor(self.bodies)
+        visitor = FlukaRegionVisitor(self.bodies)
         visitor.visit(self.tree)
         return visitor.regions
 
@@ -172,7 +172,7 @@ class Model(object):
         by type.
 
         """
-        body_listener = _FlukaBodyListener()
+        body_listener = FlukaBodyListener()
         walker = _antlr4.ParseTreeWalker()
         walker.walk(body_listener, self.tree)
         body_freq_map = body_listener.body_freq_map
@@ -304,7 +304,7 @@ class Model(object):
 
 
 
-class _FlukaBodyListener(FlukaParserListener):
+class FlukaBodyListener(FlukaParserListener):
     """
     This class is for getting simple, declarative  information about
     the geometry model.  In no particular order:
@@ -398,7 +398,7 @@ class _FlukaBodyListener(FlukaParserListener):
 
 
 
-class _FlukaRegionVisitor(FlukaParserVisitor):
+class FlukaRegionVisitor(FlukaParserVisitor):
     def __init__(self, bodies):
         self.bodies = bodies
         self.regions = dict()

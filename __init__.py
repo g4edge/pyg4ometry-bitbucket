@@ -1,6 +1,6 @@
 from Reader import Reader
 from CSG import *
-import model
+from .model import Model
 import geometry
 import Parser
 import materials

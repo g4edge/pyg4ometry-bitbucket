@@ -5,6 +5,6 @@ $ pip install antlr4-python2-runtime
 Usage:
 
 >>> import pyfluka
->>> a = pyfluka.model.Model("pyfluka/tests/tunnel_cross_section.inp")
+>>> a = pyfluka.Model("pyfluka/tests/tunnel_cross_section.inp")
 >>> a.view_mesh()
 >>> a.write_to_gdml("./my/output/path.gdml")
