@@ -7,7 +7,7 @@ class Tubs : public SolidBase{
   Tubs(std::string name,double _pRmin,double _pRmax,double _pDz,double _pSPhi,double _pDPhi):
     SolidBase(name,"Tubs"), pRmin(_pRmin), pRmax(_pRmax), pDz(_pDz), pSPhi(_pSPhi), pDPhi(_pDPhi)
   {
-    SetMesh(CSG::ConstructTubs(pRmin, pRmax, pDz, pSPhi, pDPhi);
+    SetMesh(CSGMesh::ConstructTubs(pRmin, pRmax, pDz, pSPhi, pDPhi);
     const double pRmin, pRmax, pDz, pSPhi, pDPhi;
   }
 };
