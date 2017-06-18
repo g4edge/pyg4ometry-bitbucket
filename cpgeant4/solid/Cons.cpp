@@ -65,10 +65,10 @@ CSG* CSGMesh::ConstructCons( pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pD
   CSG* mesh;
   if(H2 != 0.){
     CSG* sInner = Solids::Cone(new Vector(0.,0.,-factor*pDz),new Vector(0.0,0.0,h2-factor*pDz),r1);
-    mesh = basicmesh->subtract(sInner)->intersect(pWedge)->subtract(pBotCut)->subtract(pTopCut);
+    mesh = basicmesh->Subtract(sInner)->Intersect(pWedge)->Subtract(pBotCut)->Subtract(pTopCut);
   }
   else{
-    mesh = basicmesh->intersect(pWedge)->subtract(pBotCut)->subtract(pTopCut); 
+    mesh = basicmesh->Intersect(pWedge)->Subtract(pBotCut)->Subtract(pTopCut); 
   }
   return mesh;
 }
