@@ -2,6 +2,9 @@ from pygeometry.geant4 import solid as _solid
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.pycsg.geom import Vector as _Vector
 from matplotlib.cbook import flatten as _flatten
+from pygeometry.geant4.Parameter import Parameter as _Parameter
+from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
+
 import numpy as _np
 
 import sys as _sys
@@ -91,10 +94,20 @@ class LogicalVolume :
             self.solid.obj1.pY = size[1] / 2.
             self.solid.obj1.pZ = size[2] / 2.
 
+        sizeParameter = _ParameterVector("GDML_Size",[_Parameter("GDML_Size_position_x",size[0]),
+                                                      _Parameter("GDML_Size_position_y",size[1]),
+                                                      _Parameter("GDML_Size_position_z",size[2])])
+
     def setCentre(self,centre):
         self.centre = centre
+        centreParameter = _ParameterVector("GDML_Centre",[_Parameter("GDML_Centre_position_x",centre[0]),
+                                                          _Parameter("GDML_Centre_position_y",centre[1]),
+                                                          _Parameter("GDML_Centre_position_z",centre[2])])
         for dv in self.daughterVolumes:
-            dv.position = list(-_np.array(self.centre) + _np.array(dv.position))
+            dv.position = _ParameterVector(dv.name+"_position",
+                                            [_Parameter(dv.name+"_position_x",dv.position[0]),
+                                             _Parameter(dv.name+"_position_y",dv.position[1]),
+                                             _Parameter(dv.name+"_position_z",dv.position[2])],True)-centreParameter
 
         # Move the beam pipe if a subtraction solid
         if isinstance(self.solid, _solid.Subtraction):

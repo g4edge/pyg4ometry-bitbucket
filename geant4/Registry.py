@@ -17,7 +17,6 @@ class Registry :
         self.logicalVolumeUsageCountDict  = {}               # named logical usage in physical
         self.logicalVolumeMeshSkip        = []               # meshes to skip because they are inefficient
 
-
     def addDefinition(self, definition) :    
         self.definitionDict[definition.name] = definition
 
@@ -76,7 +75,7 @@ class Registry :
         try :
             self.volumeTypeCountDict["parametrisedVolume"] += 1
         except KeyError:
-            self.volumtTypeCountDict["parametrisedVolume"] = 1
+            self.volumeTypeCountDict["parametrisedVolume"] = 1
 
 
     def addParameter(self, parameter):
@@ -88,18 +87,9 @@ class Registry :
         self.orderLogicalVolumes(worldName)
         self.logicalVolumeList.append(worldName)
 
-    def volumeTree(self, lvName):
-        lv = self.logicalVolumeDict[lvName]
-
-    def solidTree(self, solidName):
-        solid = self.solidDict[solidName]
-
-        if solid.type == 'union' or solid.type == 'intersecton' or solid.type == 'subtraction' :
-            solidTree(solid.obj1.name)
-            solidTree(solid.obj2.name)
-
-
     def orderLogicalVolumes(self, lvName) :
+        '''Need to have a ordered list from most basic (solid) object upto physical/logical volumes for writing to
+        GDML. GDML needs to have the solids/booleans/volumes defined in order'''
 
         lv = self.logicalVolumeDict[lvName]
         
@@ -110,8 +100,21 @@ class Registry :
             except ValueError: 
                 self.orderLogicalVolumes(dlvName)
                 self.logicalVolumeList.append(dlvName)
-                    
+
+    def volumeTree(self, lvName):
+        '''Not sure what this method is used for'''
+        lv = self.logicalVolumeDict[lvName]
+
+    def solidTree(self, solidName):
+        '''Not sure what this method is used for'''
+        solid = self.solidDict[solidName]
+
+        if solid.type == 'union' or solid.type == 'intersecton' or solid.type == 'subtraction' :
+            solidTree(solid.obj1.name)
+            solidTree(solid.obj2.name)
+
     def clear(self) :
+        '''Empty all internal structures'''
         self.defineDict.clear()
         self.materialDict.clear()
         self.solidDict.clear()

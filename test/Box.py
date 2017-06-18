@@ -8,9 +8,13 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldSolid      = _g4.solid.Box('worldBox',250,250,100)
     worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
-    boxSolid1    = _g4.solid.Box('box1',25,25,25)
+    bsize        = _g4.Parameter("BOXSIZE",25)
+    boffset      = _g4.Parameter("BOXOFFSET_X",-200)
+    boffsetVec   = _g4.ParameterVector("BOXOFFSET",[boffset,boffset,0.0])
+
+    boxSolid1    = _g4.solid.Box('box1',2*bsize,2*bsize,2*bsize)
     boxLogical1  = _g4.LogicalVolume(boxSolid1,'G4_Cu','boxLogical1')
-    boxPhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0],boxLogical1,'boxPhysical1',worldLogical)
+    boxPhysical1 = _g4.PhysicalVolume([0,0,0],boffsetVec,boxLogical1,'boxPhysical1',worldLogical)
 
     boxSolid2    = _g4.solid.Box('box2',25,25,75)
     boxLogical2  = _g4.LogicalVolume(boxSolid2,'G4_Cu','boxLogical2')
@@ -30,8 +34,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     # register the world volume
     _g4.registry.setWorld('worldLogical')
 
+    # mesh the geometry
     m = worldLogical.pycsgmesh()
-    
+
+    # view the geometry
     if vtkViewer : 
         v = _vtk.Viewer()
         v.addPycsgMeshList(m)

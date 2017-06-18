@@ -1,6 +1,9 @@
 from pygeometry.geant4.Registry import registry as _registry
 import copy as _copy
 from pygeometry.transformation import *
+from pygeometry.geant4.Parameter import Parameter as _Parameter
+from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
+
 import sys as _sys
 
 class PhysicalVolume :
@@ -38,7 +41,7 @@ class PhysicalVolume :
                 print "Physical volume skipping ---------------------------------------- ",self.name
             return []
         except ValueError :
-            if self.position == [0,0,0] and self.rotation == [0,0,0] :
+            if list(self.position) == [0,0,0] and list(self.rotation) == [0,0,0] :
                 self.mesh = self.logicalVolume.pycsgmesh()
             else :
                 self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
@@ -65,12 +68,19 @@ class PhysicalVolume :
         pv.appendChild(vr)
 
         # phys vol translation
-        tlatee = gw.doc.createElement('position')
-        tlatee.setAttribute('name',prepend+'_'+self.name+'_pos')
-        tlatee.setAttribute('x',str(self.position[0]))
-        tlatee.setAttribute('y',str(self.position[1]))
-        tlatee.setAttribute('z',str(self.position[2]))
-        pv.appendChild(tlatee)
+        if isinstance(self.position,_ParameterVector) :
+            tlatee = gw.doc.createElement('positionref')
+            tlatee.setAttribute('ref',str(self.position))
+            pv.appendChild(tlatee)
+        else :
+            tlatee = gw.doc.createElement('position')
+            tlatee.setAttribute('name',prepend+'_'+self.name+'_pos')
+            tlatee.setAttribute('x',str(self.position[0]))
+            tlatee.setAttribute('y',str(self.position[1]))
+            tlatee.setAttribute('z',str(self.position[2]))
+            pv.appendChild(tlatee)
+
+
 
         # phys vol rotation
         rote   = gw.doc.createElement('rotation')

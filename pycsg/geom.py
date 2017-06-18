@@ -49,7 +49,7 @@ class Vector(object):
     
     def plus(self, a):
         """ Add. """
-        return Vector(self.x+a.x, self.y+a.y, self.z+a.z)
+        return Vector(self.x+float(a.x), self.y+float(a.y), self.z+float(a.z))
 
     def __add__(self, a):
         return self.plus(a)

@@ -1,5 +1,7 @@
 from xml.dom import minidom as _minidom
 from xml.dom import getDOMImplementation
+from pygeometry.geant4.Parameter import Parameter as _Parameter
+from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
 
 class Writer :
     def __init__(self, prepend = 'PREPEND') :
@@ -28,6 +30,11 @@ class Writer :
         # loop over defines 
         for define in registry.defineDict :
             pass
+
+        # loop over parameters
+        for paramId in registry.parameterDict.keys() :
+            param = registry.parameterDict[paramId]
+            self.writeParameter(param)
 
         # loop over materials 
 
@@ -72,6 +79,21 @@ class Writer :
 
     def checkPhysicalVolumeName(Self, physicalVolumeName) :
         pass
+
+    def writeParameter(self, param):
+        if isinstance(param,_Parameter) :
+            oe = self.doc.createElement('variable')
+            oe.setAttribute('name', param.name)
+            oe.setAttribute('value',str(float(param)))
+            self.defines.appendChild(oe)
+        elif isinstance(param,_ParameterVector) :
+            oe = self.doc.createElement('position')
+            oe.setAttribute('name', param.name)
+            oe.setAttribute('unit','mm')
+            oe.setAttribute('x',str(param[0]))
+            oe.setAttribute('y',str(param[1]))
+            oe.setAttribute('z',str(param[2]))
+            self.defines.appendChild(oe)
 
     def writeSolid(self, solid):
         """
