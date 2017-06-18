@@ -2,6 +2,7 @@
 #include <Solids.h>
 #include <SolidBase.h>
 #include <Vector.h>
+#include <Wedge.h>
 
 class Cons: public SolidBase{
   public:
@@ -42,4 +43,32 @@ CSG* CSGMesh::ConstructCons( pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pD
 
   CSG* basicmesh = Solids::Cone(new Vector(0.0,0.0,-factor*pDz),new Vector(0.0,0.0,h1-factor),R1);
 
+
+  double wrmax = 3.0*(pRmax1+pRmax2); // ensure radius for intersection wedge is much bigger than solid
+  double wzlength = 3.0*pDz;
+
+  CSG* pWedge; 
+  if( pDPhi != 2.0*M_PI ){
+    Wedge* wedge = new Wedge("wedge_temp",wrmax,pSPhi,pSPhi+pDPhi,wzlength);
+    pWedge = wedge->GetMesh();
+  }
+  else{
+    pWedge = Solids::Cylinder(5.*pDz,5.*R1);
+  }
+
+  Plane* TopCutPlane = new Plane("pTopCut_temp",new Vector(0.0,0.0,1.0),pDz,wzlength);
+  CSG* pTopCut = TopCutPlane->GetMesh();
+
+  Plane* BotCutPlane = new Plane("pBotCut_temp",new Vector(0.0,0.0,-1.0),-pDz,wzlength);
+  CSG* pBotCut = BotCutPlane->GetMesh();
+
+  CSG* mesh;
+  if(H2 != 0.){
+    CSG* sInner = Solids::Cone(new Vector(0.,0.,-factor*pDz),new Vector(0.0,0.0,h2-factor*pDz),r1);
+    mesh = basicmesh->subtract(sInner)->intersect(pWedge)->subtract(pBotCut)->subtract(pTopCut);
+  }
+  else{
+    mesh = basicmesh->intersect(pWedge)->subtract(pBotCut)->subtract(pTopCut); 
+  }
+  return mesh;
 }
