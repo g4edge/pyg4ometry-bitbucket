@@ -7,4 +7,5 @@ namespace CSGMesh{
   CSG* ConstructWedge(double pRMax,double pSPhi,double pDPhi,double halfzlength);
   CSG* ConstructPlane(Vector* normal,double dist,double zlength);
   CSG* ConstructTubs(double pRmin,double pRmax,double pDz,double pSPhi,double pDPhi);
+  CSG* ConstructCutTubs(double pRmin,double pRmax,double pDz,double pSPhi,double pDPhi,Vector* pLowNorm,Vector* pHighNorm);
 };
