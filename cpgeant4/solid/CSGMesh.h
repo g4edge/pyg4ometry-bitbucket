@@ -1,3 +1,5 @@
+#ifndef __CSG_MESH_H__
+#define __CSG_MESH_H__
 #include "CSG.h"
 #include "Vector.h"
 
@@ -11,3 +13,5 @@ namespace CSGMesh{
   CSG* ConstructTrap(double pDz, double pTheta, double pDPhi, double pDy1, double pDx1, double pDx2, double pAlp1, double pDy2, double pDx3, double pDx4, double pAlp2);
   CSG* ConstructTwistedBox(double twistedangle, double pDx, double pDy, double pDz, int refine);
 };
+
+#endif

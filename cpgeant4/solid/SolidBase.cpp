@@ -8,10 +8,10 @@ SolidBase::~SolidBase(){
   delete mesh;
 }
 
-SolidBase::SetMesh(CSG* _mesh){
+void SolidBase::SetMesh(CSG* _mesh){
   mesh = _mesh;
 }
 
-SolidBase::GetMesh(){
+CSG* SolidBase::GetMesh(){
   return mesh;
 }

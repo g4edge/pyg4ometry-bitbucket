@@ -1,3 +1,5 @@
+#ifndef __SOLIDS__
+#define __SOLIDS__
 #include "CSG.h"
 #include "Polygon.h"
 #include "Vertex.h"
@@ -11,3 +13,4 @@ class Solids {
   static CSG* Cone(double dz,double r,int slices = 16);
   static CSG* Cone(Vector* start,Vector* end,double r,int slices = 16);
 };
+#endif

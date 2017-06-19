@@ -1,3 +1,5 @@
+#ifndef __SOLID_BASE_H__
+#define __SOLID_BASE_H__
 #include <string>
 #include <CSG.h>
 
@@ -6,10 +8,12 @@ class SolidBase{
   public:
     SolidBase(std::string _name,std::string _type);
     virtual ~SolidBase();
-    SetMesh(CSG* _mesh);
+    void SetMesh(CSG* _mesh);
     CSG* GetMesh();
   private:
-    std::name;
-    std::type;
+    std::string name;
+    std::string type;
     CSG* mesh;
 };
+
+#endif

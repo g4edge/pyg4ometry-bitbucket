@@ -1,16 +1,4 @@
-#include <CSGMesh.h>
-#include <Solids.h>
-#include <SolidBase.h>
-
-class Tubs : public SolidBase{
-  public:
-  Tubs(std::string name,double _pRmin,double _pRmax,double _pDz,double _pSPhi,double _pDPhi):
-    SolidBase(name,"Tubs"), pRmin(_pRmin), pRmax(_pRmax), pDz(_pDz), pSPhi(_pSPhi), pDPhi(_pDPhi)
-  {
-    SetMesh(CSGMesh::ConstructTubs(pRmin, pRmax, pDz, pSPhi, pDPhi);
-    const double pRmin, pRmax, pDz, pSPhi, pDPhi;
-  }
-};
+#include "Tubs.h"
 
 CSG* CSGMesh::ConstructTubs(double pRmin,double pRmax,double pDz,double pSPhi,double pDPhi){
   CSG* basicmesh = Solids::Cylinder(pDz,pRmax);
@@ -32,7 +20,7 @@ CSG* CSGMesh::ConstructTubs(double pRmin,double pRmax,double pDz,double pSPhi,do
   }
   CSG* mesh;
   if(pRmin != 0.0){
-    CSG* sInner = Solid::Cylinder(pDz,pRmin);
+    CSG* sInner = Solids::Cylinder(pDz,pRmin);
     mesh = basicmesh->Subtract(sInner)->Subtract(pWedge->Inverse());
   }
   else{
