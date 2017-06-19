@@ -21,7 +21,7 @@ class Polycone(_SolidBase) :
           pRInr : list, inner radii of surface at each z-plane
           pROut : list, outer radii of surface at each z-plane 
         """
-        self.type    = 'polycone'
+        self.type    = 'Polycone'
         self.name    = name
         self.pSPhi   = pSPhi
         self.pDPhi   = pDPhi
@@ -32,10 +32,7 @@ class Polycone(_SolidBase) :
         self.mesh = None
         _registry.addSolid(self)
 
-
-    def pycsgmesh(self) :
-#        if self.mesh :
-#            return self.mesh
+    def pycsgmesh(self):
 
         self.basicmesh()
         self.csgmesh()
