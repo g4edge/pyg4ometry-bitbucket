@@ -9,24 +9,28 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
     bsize        = _g4.Parameter("BOXSIZE",25)
-    boffset      = _g4.Parameter("BOXOFFSET_X",-200)
-    boffsetVec   = _g4.ParameterVector("BOXOFFSET",[boffset,boffset,0.0])
+    boffset      = _g4.Parameter("BOXOFFSET",200)
+    zero         = _g4.Parameter("ZERO",0)
 
     boxSolid1    = _g4.solid.Box('box1',2*bsize,2*bsize,2*bsize)
     boxLogical1  = _g4.LogicalVolume(boxSolid1,'G4_Cu','boxLogical1')
-    boxPhysical1 = _g4.PhysicalVolume([0,0,0],boffsetVec,boxLogical1,'boxPhysical1',worldLogical)
+    boxPosition1 = _g4.ParameterVector("boxPosition1",[-boffset,-boffset,zero])
+    boxPhysical1 = _g4.PhysicalVolume([0,0,0],boxPosition1,boxLogical1,'boxPhysical1',worldLogical)
 
-    boxSolid2    = _g4.solid.Box('box2',25,25,75)
+    boxSolid2    = _g4.solid.Box('box2',bsize,bsize,3*bsize)
     boxLogical2  = _g4.LogicalVolume(boxSolid2,'G4_Cu','boxLogical2')
-    boxPhysical2 = _g4.PhysicalVolume([0,0,0],[-200,0,0],boxLogical2,'boxPhysical2',worldLogical)
+    boxPosition2 = _g4.ParameterVector("boxPosition2",[-boffset,zero,zero])
+    boxPhysical2 = _g4.PhysicalVolume([0,0,0],boxPosition2,boxLogical2,'boxPhysical2',worldLogical)
 
-    boxSolid3    = _g4.solid.Box('box3',25,75,25)
+    boxSolid3    = _g4.solid.Box('box3',bsize,3*bsize,bsize)
     boxLogical3  = _g4.LogicalVolume(boxSolid3,'G4_Cu','boxLogical3')
-    boxPhysical3 = _g4.PhysicalVolume([0,0,0],[-200,200,0],boxLogical3,'boxPhysical3',worldLogical)
+    boxPosition3 = _g4.ParameterVector("boxPosition3",[-boffset,boffset,zero])
+    boxPhysical3 = _g4.PhysicalVolume([0,0,0],boxPosition3,boxLogical3,'boxPhysical3',worldLogical)
 
-    boxSolid4    = _g4.solid.Box('box4',75,25,25)
+    boxSolid4    = _g4.solid.Box('box4',3*bsize,bsize,bsize)
     boxLogical4  = _g4.LogicalVolume(boxSolid4,'G4_Cu','boxLogical4')
-    boxPhysical4 = _g4.PhysicalVolume([0,0,0],[0,-200,0],boxLogical4,'boxPhysical4',worldLogical)
+    boxPosition4 = _g4.ParameterVector("boxPosition4",[zero,-boffset,zero])
+    boxPhysical4 = _g4.PhysicalVolume([0,0,0],boxPosition4,boxLogical4,'boxPhysical4',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();
