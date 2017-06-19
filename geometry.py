@@ -396,6 +396,7 @@ class RCC(Body):
         self._scale = self.length
 
     def _apply_extent(self, extent):
+        return
         # Max possible length of a solid for the given extents:
         max_length = _np.linalg.norm([extent.length.x,
                                       extent.length.y,

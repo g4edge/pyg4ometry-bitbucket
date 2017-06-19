@@ -5,21 +5,21 @@ GEOBEGIN                                                              COMBNAME
 * No faces inside the sphere (effectively infinite), both faces inside the sphere
 * one face inside the sphere, and the other face inside the sphere
 !
-RCC rcc_none  0.0  0.0 0.0    10000. 10000. 10000. 5.
-RCC rcc_both  997.5  997.5 997.5     5. 5. 5.   5.0
-RCC rcc_1     1000.0  1000.0  1000.0     1000. -1000.  1000.0  5.0
-RCC rcc_2  2000.0  0000.0  2000.0     -1000.0 +1000.0  -1000.0  5.0
-SPH sph  1000.   1000.   1000.  15.
+RCC rcc_none   0.0  1000. 1000.     5000. 0. 0.  5.
+RCC rcc_both   990. 1000. 1000.       20. 0. 0.  5.
+RCC rcc_1     1000. 1000. 1000.     1000. 0. 0.  5.
+RCC rcc_2     1000. 2000. 1000.    -1000. 0. 0.  5.
+! Thin sheet in the perpendicular to the x axis, 50cm thick.
+RPP box +975. +1025. -10000. +10000. -10000. +10000.
 END
-! An effectively infinite RCC (i.e. much larger than what it is intersecting with)
-! "None" in the sense that neither face lies within the sphere.
-none      5 +sph +rcc_none
-! The first face (denoted by the first 3 coordinates in the RCC definition) lies within the RCC
-both        5 +sph +rcc_both
-! The other face (denoted by the face vector + length vector in the RCC definition) lies within the RCC
-first      5 +sph +rcc_1
-! Both cylinder faces inside the body
-second       5 +sph +rcc_2
+! No faces lie within or on the resulting volume
+! Both cylinder faces on the resulting volume
+! one lies on the resulting volume
+! The other face lies on the resulting volume
+none      5 +box +rcc_none
+both      5 +box +rcc_both
+one       5 +box +rcc_1
+other     5 +box +rcc_2
 END
 GEOEND
 ASSIGNMA        IRON   cubeinf
