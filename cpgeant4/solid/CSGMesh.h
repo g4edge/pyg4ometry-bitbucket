@@ -9,4 +9,5 @@ namespace CSGMesh{
   CSG* ConstructTubs(double pRmin,double pRmax,double pDz,double pSPhi,double pDPhi);
   CSG* ConstructCutTubs(double pRmin,double pRmax,double pDz,double pSPhi,double pDPhi,Vector* pLowNorm,Vector* pHighNorm);
   CSG* ConstructTrap(double pDz, double pTheta, double pDPhi, double pDy1, double pDx1, double pDx2, double pAlp1, double pDy2, double pDx3, double pDx4, double pAlp2);
+  CSG* ConstructTwistedBox(double twistedangle, double pDx, double pDy, double pDz, int refine);
 };

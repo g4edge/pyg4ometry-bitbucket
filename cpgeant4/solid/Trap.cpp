@@ -7,7 +7,7 @@
 
 class Trap : public SolidBase{
   public:
-  Trap(std:: string name, double _pDz, double _pTheta, double _pDPhi, double _pDy1, double _pDx1, double _pDx2, double _pAlp1, double _pDy2, double _pDx3, double _pDx4, double _pAlp2):
+  Trap(std::string name, double _pDz, double _pTheta, double _pDPhi, double _pDy1, double _pDx1, double _pDx2, double _pAlp1, double _pDy2, double _pDx3, double _pDx4, double _pAlp2):
     SolidBase(name,"Trap"), pDz(_pDz), pTheta(_pTheta), pDPhi(_pDPhi), pDy1(_pDy1), pDx1(_pDx1), pDx2(_pDx2), pAlp1(_pAlp1), pDy2(_pDy2), pDx3(_pDx3), pDx4(_pDx4), pAlp2(_pAlp2)
   {
   SetMesh(CSGMesh::ConstructTrap());
