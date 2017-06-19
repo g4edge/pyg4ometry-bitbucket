@@ -20,7 +20,7 @@ class CutTubs(_SolidBase) :
         pHighNorm: list, normal vector of the cut plane at +pDz
     """
     def __init__(self, name, pRMin, pRMax, pDz, pSPhi, pDPhi, pLowNorm, pHighNorm) :
-        self.type      = 'cuttubs'
+        self.type      = 'Cuttubs'
         self.name      = name
         self.pRMin     = pRMin
         self.pRMax     = pRMax

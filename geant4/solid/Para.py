@@ -28,7 +28,7 @@ class Para(_SolidBase):
           pPhi:   float, azimuthal angle of the line joining the centres of the faces at -dx and +dz in z
         """
 
-        self.type     = 'para'
+        self.type     = 'Para'
         self.name   = name
         self.pX     = pDx
         self.pY     = pDy

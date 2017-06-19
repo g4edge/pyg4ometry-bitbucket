@@ -17,7 +17,7 @@ class Orb(_SolidBase):
            name:     string, name of the volume
            pRMax:    float, outer radius
         """   
-        self.type = 'orb'
+        self.type = 'Orb'
         self.name = name
         self.pRMax = pRMax
 

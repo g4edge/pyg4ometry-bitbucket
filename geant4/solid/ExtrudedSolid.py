@@ -16,7 +16,7 @@ class ExtrudedSolid(_SolidBase):
         pPoligon = [[x1,y1],[x2,y2],[x3,v3]] - vertices of polygon in clockwise order
         zSlices  = [[z1,[offsx1, offsy1],scale1],[z2,[offsx2, offsy2],scale2]]
         """
-        self.type     = 'extrudedsolid'
+        self.type     = 'ExtrudedSolid'
         self.name     = name
         self.zpos     = [zslice[0] for zslice in pZslices]
         self.x_offs   = [zslice[1][0] for zslice in pZslices]

@@ -18,7 +18,7 @@ class EllipticalTube(_SolidBase) :
           pDy:  float, half-length in y
           pDz:  float, half-length in z    
         """
-        self.type   = 'ellipticaltube'
+        self.type   = 'EllipticalTube'
         self.name   = name
         self.pDx    = pDx
         self.pDy    = pDy

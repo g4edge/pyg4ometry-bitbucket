@@ -20,7 +20,7 @@ class EllipticalCone(_SolidBase) :
           pzTopCut:   float, z-position of upper
         """
         
-        self.type       = 'ellipticalcone'
+        self.type       = 'EllipticalCone'
         self.name       = name
         self.pxSemiAxis = pxSemiAxis
         self.pySemiAxis = pySemiAxis
