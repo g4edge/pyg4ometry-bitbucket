@@ -10,7 +10,19 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     paraSolid1    = _g4.solid.Para('para1',25,50,75,12,15,10)
     paraLogical1  = _g4.LogicalVolume(paraSolid1,'G4_Cu','paraLogical1')
-    paraPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraLogical1,'paraPhysical1',worldLogical)
+    paraPhysical1 = _g4.PhysicalVolume([0,0,0],[200,200,0], paraLogical1,'paraPhysical1',worldLogical)
+
+    paraSolid2    = _g4.solid.Para('para2',35,45,65,16,12,6)
+    paraLogical2  = _g4.LogicalVolume(paraSolid2,'G4_Cu','paraLogical2')
+    paraPhysical2 = _g4.PhysicalVolume([0,0,0],[200,0,0], paraLogical2,'paraPhysical2',worldLogical)
+
+    paraSolid3    = _g4.solid.Para('para3',30,50,60,13,12,4)
+    paraLogical3  = _g4.LogicalVolume(paraSolid1,'G4_Cu','paraLogical3')
+    paraPhysical3 = _g4.PhysicalVolume([0,0,0],[0,200,0], paraLogical3,'paraPhysical3',worldLogical)
+
+    paraSolid4    = _g4.solid.Para('para4',25,50,90,8,17,10)
+    paraLogical4  = _g4.LogicalVolume(paraSolid4,'G4_Cu','paraLogical4')
+    paraPhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraLogical4,'paraPhysical4',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

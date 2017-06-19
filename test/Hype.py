@@ -10,8 +10,20 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     
     hypeSolid1    = _g4.solid.Hype('hype1',20,30,0.7,0.7,50)
     hypeLogical1  = _g4.LogicalVolume(hypeSolid1,'G4_Cu','hypeLogical1')
-    hypePhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], hypeLogical1,'hypePhysical1',worldLogical)
+    hypePhysical1 = _g4.PhysicalVolume([0,0,0],[200,200,0], hypeLogical1,'hypePhysical1',worldLogical)
 
+    hypeSolid2    = _g4.solid.Hype('hype2',20,30,0.7,0.7,50)
+    hypeLogical2  = _g4.LogicalVolume(hypeSolid2,'G4_Cu','hypeLogical2')
+    hypePhysical2 = _g4.PhysicalVolume([0,0,0],[200,0,0], hypeLogical2,'hypePhysical2',worldLogical)
+
+    hypeSolid3    = _g4.solid.Hype('hype3',20,30,0.7,0.7,50)
+    hypeLogical3  = _g4.LogicalVolume(hypeSolid3,'G4_Cu','hypeLogical3')
+    hypePhysical3 = _g4.PhysicalVolume([0,0,0],[0,200,0], hypeLogical3,'hypePhysical3',worldLogical)
+
+    hypeSolid4    = _g4.solid.Hype('hype4',20,30,0.7,0.7,50)
+    hypeLogical4  = _g4.LogicalVolume(hypeSolid4,'G4_Cu','hypeLogical4')
+    hypePhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], hypeLogical4,'hypePhysical4',worldLogical)
+    
     # clip the world logical volume
     worldLogical.setClip();
 

@@ -8,9 +8,41 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
     worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
-    ellipticalconeSolid1    = _g4.solid.EllipticalCone('ellipticalcone1',0.8, 1.6,30,15)
+    ellipticalconeSolid1    = _g4.solid.EllipticalCone('ellipticalcone1',8, 16,300,150)
     ellipticalconeLogical1  = _g4.LogicalVolume(ellipticalconeSolid1,'G4_Cu','ellipticalconeLogical1')
-    ellipticalconePhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], ellipticalconeLogical1,'ellipticalconePhysical1',worldLogical)
+    ellipticalconePhysical1 = _g4.PhysicalVolume([0,0,0],[-200,200,0], ellipticalconeLogical1,'ellipticalconePhysical1',worldLogical)
+
+    ellipticalconeSolid2    = _g4.solid.EllipticalCone('ellipticalcone2',12, 20,250,105)
+    ellipticalconeLogical2  = _g4.LogicalVolume(ellipticalconeSolid2,'G4_Cu','ellipticalconeLogical2')
+    ellipticalconePhysical2 = _g4.PhysicalVolume([0,0,0],[0,200,0], ellipticalconeLogical2,'ellipticalconePhysical2',worldLogical)
+
+    ellipticalconeSolid3    = _g4.solid.EllipticalCone('ellipticalcone3',30, 16,140,120)
+    ellipticalconeLogical3  = _g4.LogicalVolume(ellipticalconeSolid3,'G4_Cu','ellipticalconeLogical3')
+    ellipticalconePhysical3 = _g4.PhysicalVolume([0,0,0],[200,200,0], ellipticalconeLogical3,'ellipticalconePhysical3',worldLogical)
+
+    ellipticalconeSolid4    = _g4.solid.EllipticalCone('ellipticalcone4',4, 9,300,70)
+    ellipticalconeLogical4  = _g4.LogicalVolume(ellipticalconeSolid4,'G4_Cu','ellipticalconeLogical4')
+    ellipticalconePhysical4 = _g4.PhysicalVolume([0,0,0],[-200,0,0], ellipticalconeLogical4,'ellipticalconePhysical4',worldLogical)
+
+    ellipticalconeSolid5    = _g4.solid.EllipticalCone('ellipticalcone5',12, 16,300,170)
+    ellipticalconeLogical5  = _g4.LogicalVolume(ellipticalconeSolid5,'G4_Cu','ellipticalconeLogical5')
+    ellipticalconePhysical5 = _g4.PhysicalVolume([0,0,0],[0,0,0], ellipticalconeLogical5,'ellipticalconePhysical5',worldLogical)
+
+    ellipticalconeSolid6    = _g4.solid.EllipticalCone('ellipticalcone6',0.8, 1.6,300,150)
+    ellipticalconeLogical6  = _g4.LogicalVolume(ellipticalconeSolid6,'G4_Cu','ellipticalconeLogical6')
+    ellipticalconePhysical6 = _g4.PhysicalVolume([0,0,0],[200,0,0], ellipticalconeLogical6,'ellipticalconePhysical1',worldLogical)
+
+    ellipticalconeSolid7    = _g4.solid.EllipticalCone('ellipticalcone7',8, 16,400,150)
+    ellipticalconeLogical7  = _g4.LogicalVolume(ellipticalconeSolid7,'G4_Cu','ellipticalconeLogical7')
+    ellipticalconePhysical7 = _g4.PhysicalVolume([0,0,0],[-200,-200,0], ellipticalconeLogical7,'ellipticalconePhysical7',worldLogical)
+
+    ellipticalconeSolid8    = _g4.solid.EllipticalCone('ellipticalcone8',8.5, 16.4,300,100)
+    ellipticalconeLogical8  = _g4.LogicalVolume(ellipticalconeSolid8,'G4_Cu','ellipticalconeLogical8')
+    ellipticalconePhysical8 = _g4.PhysicalVolume([0,0,0],[0,-200,0], ellipticalconeLogical8,'ellipticalconePhysical8',worldLogical)
+
+    ellipticalconeSolid9    = _g4.solid.EllipticalCone('ellipticalcone9',8, 16,300,100)
+    ellipticalconeLogical9  = _g4.LogicalVolume(ellipticalconeSolid9,'G4_Cu','ellipticalconeLogical9')
+    ellipticalconePhysical9 = _g4.PhysicalVolume([0,0,0],[200,-200,0], ellipticalconeLogical9,'ellipticalconePhysical9',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

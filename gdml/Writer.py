@@ -137,11 +137,17 @@ class Writer :
         pass
 
     def writeEllipticalTube(self, instance):
-        pass
+        oe = self.doc.createElement('EllipticalTube')
+        oe.setAttribute('name', self.prepend+'_'+instance.name)
+        oe.setAttribute('lunit','mm')
+        oe.setAttribute('Dx', '2*'+str(instance.pDx))
+        oe.setAttribute('Dy', '2*'+str(instance.pDy))
+        oe.setAttribute('Dz', '2*'+str(instance.pDz))
+        self.solids.appendChild(oe)
 
     def writeExtrudedSolid(self, instance):
         #TBC
-        oe = self.doc.createElement('cons')
+        oe = self.doc.createElement('extrudedsolid')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
         oe.setAttribute('ax', str(instance.pRmin))
         oe.setAttribute('ay', str(instance.pRmax))
@@ -188,7 +194,10 @@ class Writer :
         pass
 
     def writeOrb(self, instance):
-        pass
+        oe = self.doc.creatElement('Orb')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('rmax', str(instance.pRmax))
+        self.solids.appendChild(oe)
 
     def writePara(self, instance):
         pass
