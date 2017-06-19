@@ -1,18 +1,4 @@
-#include "CSGMesh.h"
-#include "Solids.h"
-#include "SolidBase.h"
-#include <cmath>
-
-class TwistedBox : public SolidBase{
-  public:
-  TwistedBox(std::string name,double _twistedangle, double _pDx, double _pDy, double _pDz, int _refine):
-    SolidBase(name,"twistedbox"), twistedangle(_twistedangle),  pDx(_pDx),  pDy(_pDy),  pDz(_pDz), refine(_refine)
-  {
-  SetMesh(CSGMesh::ConstructTwistedBox(twistedangle,  pDx,  pDy,  pDz,refine));
-  }
-  const double twistedangle, pDx, pDy, pDz;
-  const int refine;
-};
+#include "TwistedBox.h"
 
 CSG* CSGMesh::ConstructTwistedBox(double twistedangle, double pDx, double pDy, double pDz, int refine){
   std::vector<std::vector<double> > vert_crd_up(4,std::vector<double>(3));

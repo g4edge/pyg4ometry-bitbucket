@@ -1,20 +1,4 @@
-#include "CSGMesh.h"
-#include "Solids.h"
-#include "SolidBase.h"
-#include "Vector.h"
-#include "Wedge.h"
-#include "G4Plane.h"
-#include <cmath>
-
-class Cons: public SolidBase{
-  public:
-  Cons(std::string name, double _pRmin1, double  _pRmax1,  double _pRmin2, double _pRmax2,  double _pDz,  double _pSPhi,  double _pDPhi):
-    SolidBase(name,"Cons"), pRmin1(_pRmin1),  pRmax1(_pRmax1),  pRmin2(_pRmin2), pRmax2(_pRmax2),  pDz(_pDz),  pSPhi(_pSPhi),  pDPhi(_pDPhi)
-  {
-    SetMesh(CSGMesh::ConstructCons( pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pDPhi));
-  }
-  const double pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pDPhi;
-};
+#include "Cons.h"
 
 CSG* CSGMesh::ConstructCons(double pRmin1,double pRmax1,double pRmin2,double pRmax2,double pDz,double pSPhi,double pDPhi){
   double R1,r1,R2,r2;
