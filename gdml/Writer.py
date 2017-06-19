@@ -3,7 +3,7 @@ from xml.dom import getDOMImplementation
 from pygeometry.geant4.Parameter import Parameter as _Parameter
 from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
 
-class Writer :
+class Writer(object):
     def __init__(self, prepend = 'PREPEND') :
         self.prepend = prepend
 
@@ -77,7 +77,7 @@ class Writer :
     def checkLogicalVolumeName(self, logicalVolumeName) :
         pass
 
-    def checkPhysicalVolumeName(Self, physicalVolumeName) :
+    def checkPhysicalVolumeName(self, physicalVolumeName):
         pass
 
     def writeParameter(self, param):
@@ -194,9 +194,9 @@ class Writer :
         pass
 
     def writeOrb(self, instance):
-        oe = self.doc.creatElement('Orb')
+        oe = self.doc.createElement('orb')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
-        oe.setAttribute('rmax', str(instance.pRmax))
+        oe.setAttribute('rmax', str(instance.pRMax))
         self.solids.appendChild(oe)
 
     def writePara(self, instance):
