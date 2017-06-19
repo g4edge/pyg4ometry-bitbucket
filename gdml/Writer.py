@@ -119,7 +119,7 @@ class Writer :
 
     def writeExtrudedSolid(self, instance):
         #TBC
-        oe = self.doc.createElement('cons')
+        oe = self.doc.createElement('extrudedsolid')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
         oe.setAttribute('ax', str(instance.pRmin))
         oe.setAttribute('ay', str(instance.pRmax))

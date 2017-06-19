@@ -64,9 +64,9 @@ class Sphere(_SolidBase) :
         def appendVertex(vertices, theta, phi, r):
             if r > 0:
                 d = _Vector(
-                    _np.cos(theta) * _np.sin(phi),                          
-                    _np.sin(theta) * _np.sin(phi),
-                    _np.cos(phi))                         
+                    _np.cos(phi) * _np.sin(theta),                          
+                    _np.sin(phi) * _np.sin(theta),
+                    _np.cos(theta))                         
                 vertices.append(_Vertex(c.plus(d.times(r)), None))
 
             else:
