@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import unittest
 import pyfluka
 from pyfluka import vector
