@@ -201,12 +201,16 @@ std::vector<Vector*> point_con(Vector* axisX,Vector* axisY,Vector* axisZ,Vector*
   return vpos_norm;
 }
 
-CSG* Solids::Cone(double dz,double r,int slices){
+CSG* Solids::Cone(double dz,double r,int slices){ 
   //Vector* s = new Vector(0.0,-dz/2.0,0.0);
   //Vector* e = new Vector(0.0,dz/2.0,0.0);
   Vector* s = new Vector(0.0,0.0,-dz/2.0);
   Vector* e = new Vector(0.0,0.0,dz/2.0); //May need to change back to Y for geant4 interpretation
+  return Solids::Cone(s,e,r,slices);
+}
 
+
+CSG* Solids::Cone(Vector* s, Vector* e,double r,int slices){
   Vector* ray = new Vector(e->minus((*s)));
 
   Vector* axisZ = new Vector(ray->unit());

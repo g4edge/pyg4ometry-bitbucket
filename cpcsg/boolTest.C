@@ -12,8 +12,8 @@ int main() {
   double y = 200.;
   double z = 10.;
   //CSG *b = Solids::Box(x,y,z);
-  CSG *b = Solids::Cone(100,50,32);
-  b->translate(new Vector(0.0,0.0,-20.0));
+  CSG *b = Solids::Sphere(100);
+  //b->translate(new Vector(0.0,0.0,-20.0));
   double epsilon = 0.1;
 
   /*CSG *sub_cub = Solids::Box(x-epsilon,z-epsilon,z);
@@ -33,8 +33,10 @@ int main() {
   }*/
 
   CSG* sphere = Solids::Sphere(50);
-
-  b = b->Union(sphere);
+  CSG* box = Solids::Box(200,200,200);
+  box->translate(new Vector(0.0,0.0,25));
+  b = b->Subtract(sphere);
+  b = b->Subtract(box);
   //b->refine(); 
   b->saveVTK("b.vtk");
   sphere->saveVTK("sphere.vtk");
