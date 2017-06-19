@@ -85,18 +85,22 @@ class LogicalVolume :
 
     def setSize(self, size):
         # if a box
+
+        sizeParameter = _ParameterVector("GDML_Size",[_Parameter("GDML_Size_position_x",size[0]),
+                                                      _Parameter("GDML_Size_position_y",size[1]),
+                                                      _Parameter("GDML_Size_position_z",size[2])])
+
+
         if isinstance(self.solid,_solid.Box) :
-            self.solid.pX = size[0] / 2.
-            self.solid.pY = size[1] / 2.
-            self.solid.pZ = size[2] / 2.
+            self.solid.pX = sizeParameter[0] / 2.
+            self.solid.pY = sizeParameter[1] / 2.
+            self.solid.pZ = sizeParameter[2] / 2.
         elif isinstance(self.solid,_solid.Subtraction) :
             self.solid.obj1.pX = size[0] / 2.
             self.solid.obj1.pY = size[1] / 2.
             self.solid.obj1.pZ = size[2] / 2.
 
-        sizeParameter = _ParameterVector("GDML_Size",[_Parameter("GDML_Size_position_x",size[0]),
-                                                      _Parameter("GDML_Size_position_y",size[1]),
-                                                      _Parameter("GDML_Size_position_z",size[2])])
+
 
     def setCentre(self,centre):
         self.centre = centre
@@ -104,10 +108,16 @@ class LogicalVolume :
                                                           _Parameter("GDML_Centre_position_y",centre[1]),
                                                           _Parameter("GDML_Centre_position_z",centre[2])])
         for dv in self.daughterVolumes:
-            dv.position = _ParameterVector(dv.name+"_position",
-                                            [_Parameter(dv.name+"_position_x",dv.position[0]),
-                                             _Parameter(dv.name+"_position_y",dv.position[1]),
-                                             _Parameter(dv.name+"_position_z",dv.position[2])],True)-centreParameter
+            if isinstance(dv.position,_ParameterVector) :
+                dv.position = _ParameterVector(dv.name+"_position",
+                                        [dv.position[0]-centreParameter[0],
+                                         dv.position[1]-centreParameter[1],
+                                         dv.position[2]-centreParameter[2]],True)
+            else :
+                dv.position = _ParameterVector(dv.name+"_position",
+                                        [_Parameter(dv.name+"_position_x",dv.position[0])-centreParameter[0],
+                                         _Parameter(dv.name+"_position_y",dv.position[1])-centreParameter[1],
+                                         _Parameter(dv.name+"_position_z",dv.position[2])-centreParameter[2]],True)
 
         # Move the beam pipe if a subtraction solid
         if isinstance(self.solid, _solid.Subtraction):

@@ -4,11 +4,10 @@ class Parameter(object) :
     def __init__(self, name, value, addRegistry = True) :
         self.name  = name
         self.value = value
-
         if addRegistry :
             _registry.addParameter(self)
 
-    def __repr__(self) : 
+    def __repr__(self) :
         return self.name
 
     def str(self) :
@@ -34,3 +33,6 @@ class Parameter(object) :
 
     def __div__(self, other):
         return Parameter(str(self) + '/' + str(other), float(self) / float(other),False)
+
+    def __neg__(self):
+        return Parameter("-"+str(self), -float(self),False)
