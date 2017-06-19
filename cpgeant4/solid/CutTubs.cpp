@@ -6,7 +6,7 @@
 class CutTubs : public SolidBase{
   public:
   CutTubs(std:: string name,double _pRmin,double _pRmax,double _pDz,double _pSPhi,double _pDPhi,double _pLowNorm,double _pHighNorm):
-    SolidBase(name,"CutTubs"),pRmin(_pRmin), pRmax(_pRmax), pDz(_pDz), pSPhi(_pSPhi), pDPhi(_pDPhi), pLowNorm(_pLowNorm), pHighNorm(_pHighNorm);
+    SolidBase(name,"Cuttubs"),pRmin(_pRmin), pRmax(_pRmax), pDz(_pDz), pSPhi(_pSPhi), pDPhi(_pDPhi), pLowNorm(_pLowNorm), pHighNorm(_pHighNorm);
   {
     SetMesh(CSGMesh::ConstructCutTubs(pRmin, pRmax, pDz, pSPhi, pDPhi, pLowNorm, pHighNorm));
   } 
