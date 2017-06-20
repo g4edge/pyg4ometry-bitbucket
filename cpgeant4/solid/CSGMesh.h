@@ -23,6 +23,8 @@ namespace CSGMesh{
   CSG* ConstructTrd(double x1,double x2,double y1,double y2,double z);
   CSG* ConstructEllipsoid(double pxSemiAxis,double pySemiAxis,double pzSemiAxis,double pzBottomCut,double pzTopCut,int nslice,int nstack);
   void EllipsoidAppendVertex(std::vector<Vertex*>& vertices,double pxSemiAxis,double pySemiAxis,double pzSemiAxis,double u,double v);
+  CSG* ConstructHype(double innerRadius,double outerRadius,double innerStereo,double outerStereo,double halfLenZ,int nslice,int nstack);
+  void HypeAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double r,double stereo);
 };
 
 struct ZSection{
