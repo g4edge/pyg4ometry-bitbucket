@@ -105,6 +105,3 @@ class EllipticalCone(_SolidBase) :
         self.mesh  = _CSG.fromPolygons(polygons)
 
         return self.mesh
-
-    def gdml(selfs):
-        pass

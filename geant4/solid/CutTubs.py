@@ -56,6 +56,3 @@ class CutTubs(_SolidBase) :
         if self.pLowNorm != [0,0,-1] :
             pLow  = _Plane("pLow_temp", self.pLowNorm, -self.pDz, zlength).pycsgmesh()
             self.mesh = self.mesh.subtract(pLow)
-
-    def gdmlWrite(self, gw, prepend):
-        pass
