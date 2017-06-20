@@ -20,6 +20,7 @@ namespace CSGMesh{
   CSG* ConstructTet(Vector* anchor,Vector* p2,Vector* p3,Vector* p4,bool degeneracyFlag);
   CSG* ConstructTorus(double pRmin,double  pRmax,double  pRtor,double  pSPhi,double  pDPhi,int nslice,int nstack);
   void TorusAppendVertex(std::vector<Vertex*>& vertices,double theta,double phi,double r,double pRtor);
+  CSG* ConstructTrd(double x1,double x2,double y1,double y2,double z);
 };
 
 struct ZSection{
