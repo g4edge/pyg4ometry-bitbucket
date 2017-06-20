@@ -20,7 +20,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     paraLogical3  = _g4.LogicalVolume(paraSolid1,'G4_Cu','paraLogical3')
     paraPhysical3 = _g4.PhysicalVolume([0,0,0],[0,200,0], paraLogical3,'paraPhysical3',worldLogical)
 
-    paraSolid4    = _g4.solid.Para('para4',25,50,90,8,17,10)
+    paraSolid4    = _g4.solid.Para('para4',25,50,70,8,17,10)
     paraLogical4  = _g4.LogicalVolume(paraSolid4,'G4_Cu','paraLogical4')
     paraPhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraLogical4,'paraPhysical4',worldLogical)
 

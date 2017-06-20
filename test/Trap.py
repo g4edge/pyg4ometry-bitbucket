@@ -1,6 +1,7 @@
 import pygeometry.geant4 as _g4
 import pygeometry.vtk as _vtk
 import pygeometry.gdml as _gdml
+import numpy as _np
 
 def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     _g4.registry.clear()
@@ -8,7 +9,14 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldSolid   = _g4.solid.Box('worldBox', 250,250,100)
     worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
-    trapSolid1    = _g4.solid.Trap('trap1',60,0.4,0.1,40,30,40,0.2,30,14,40,0.2)
+    trapSolid1    = _g4.solid.Trap('trap1',
+                                   60,
+                                   _np.pi/9., 5*_np.pi/180.,
+                                   40, 30, 40,
+                                   _np.pi/18.,
+                                   16, 10, 14,
+                                   _np.pi/18.)
+    
     trapLogical1  = _g4.LogicalVolume(trapSolid1,'G4_Cu','trapLogical1')
     trapPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], trapLogical1,'trapPhysical1',worldLogical)
 

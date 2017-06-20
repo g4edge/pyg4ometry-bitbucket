@@ -10,7 +10,19 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     paraboloidSolid1    = _g4.solid.Paraboloid('paraboloid1',20,20,35)
     paraboloidLogical1  = _g4.LogicalVolume(paraboloidSolid1,'G4_Cu','paraboloidLogical1')
-    paraboloidPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraboloidLogical1,'paraboloidPhysical1',worldLogical)
+    paraboloidPhysical1 = _g4.PhysicalVolume([0,0,0],[200,200,0], paraboloidLogical1,'paraboloidPhysical1',worldLogical)
+
+    paraboloidSolid2    = _g4.solid.Paraboloid('paraboloid2',50,0,35)
+    paraboloidLogical2  = _g4.LogicalVolume(paraboloidSolid2,'G4_Cu','paraboloidLogical2')
+    paraboloidPhysical2 = _g4.PhysicalVolume([0,0,0],[200,0,0], paraboloidLogical2,'paraboloidPhysical2',worldLogical)
+
+    paraboloidSolid3    = _g4.solid.Paraboloid('paraboloid3',40,30,50)
+    paraboloidLogical3  = _g4.LogicalVolume(paraboloidSolid3,'G4_Cu','paraboloidLogical3')
+    paraboloidPhysical3 = _g4.PhysicalVolume([0,0,0],[0,200,0], paraboloidLogical3,'paraboloidPhysical3',worldLogical)
+
+    paraboloidSolid4    = _g4.solid.Paraboloid('paraboloid4',50,20,60)
+    paraboloidLogical4  = _g4.LogicalVolume(paraboloidSolid4,'G4_Cu','paraboloidLogical4')
+    paraboloidPhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], paraboloidLogical4,'paraboloidPhysical4',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();

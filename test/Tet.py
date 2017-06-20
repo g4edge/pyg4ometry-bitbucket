@@ -10,7 +10,19 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     
     tetSolid1 = _g4.solid.Tet('tet1',[0,0,17],[0,8,0],[8,-8,0],[-8,-8,0])
     tetLogical1  = _g4.LogicalVolume(tetSolid1,'G4_Cu','tetLogical1')
-    tetPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], tetLogical1,'tetPhysical1',worldLogical)
+    tetPhysical1 = _g4.PhysicalVolume([0,0,0],[20,20,0], tetLogical1,'tetPhysical1',worldLogical)
+
+    tetSolid2 = _g4.solid.Tet('tet2',[0,0,17.3],[0,2*8.2,-5.8],[-1.41,-0.8,-0.58],[1.41,-0.8,-0.58])
+    tetLogical2  = _g4.LogicalVolume(tetSolid2,'G4_Cu','tetLogical2')
+    tetPhysical2 = _g4.PhysicalVolume([0,0,0],[20,0,0], tetLogical2,'tetPhysical2',worldLogical)
+
+    tetSolid3 = _g4.solid.Tet('tet3',[0,0,0],[0,10,0],[10,0,0],[0,0,10])
+    tetLogical3  = _g4.LogicalVolume(tetSolid3,'G4_Cu','tetLogical3')
+    tetPhysical3 = _g4.PhysicalVolume([0,0,0],[0,20,0], tetLogical3,'tetPhysical3',worldLogical)
+
+    tetSolid4 = _g4.solid.Tet('tet4',[0,0,6],[0,9,0],[0,-8,0],[-8,-8,0])
+    tetLogical4  = _g4.LogicalVolume(tetSolid4,'G4_Cu','tetLogical4')
+    tetPhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], tetLogical1,'tetPhysical4',worldLogical)
 
     # clip the world logical volume
     worldLogical.setClip();
