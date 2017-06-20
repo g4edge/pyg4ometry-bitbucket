@@ -3,6 +3,8 @@
 #include "CSG.h"
 #include "Vector.h"
 
+struct ZSection;
+
 namespace CSGMesh{
   CSG* ConstructBox(double px,double py,double pz);
   CSG* ConstructCons(double pRmin1, double pRmax1, double pRmin2,double pRmax2, double pDz, double pSPhi, double pDPhi);
@@ -12,6 +14,14 @@ namespace CSGMesh{
   CSG* ConstructCutTubs(double pRmin,double pRmax,double pDz,double pSPhi,double pDPhi,Vector* pLowNorm,Vector* pHighNorm);
   CSG* ConstructTrap(double pDz, double pTheta, double pDPhi, double pDy1, double pDx1, double pDx2, double pAlp1, double pDy2, double pDx3, double pDx4, double pAlp2);
   CSG* ConstructTwistedBox(double twistedangle, double pDx, double pDy, double pDz, int refine);
+  CSG* ConstructExtrudedSolid(std::vector<Vector*> pPolygon,std::vector<ZSection> pZslices);
 };
 
+struct ZSection{
+  ZSection(double _z,Vector* _offset,double _scale):
+      z(_z),offset(_offset),scale(_scale) {}
+  double z;
+  Vector* offset;
+  double scale;
+};
 #endif
