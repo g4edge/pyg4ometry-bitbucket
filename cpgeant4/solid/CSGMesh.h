@@ -26,6 +26,7 @@ namespace CSGMesh{
   CSG* ConstructHype(double innerRadius,double outerRadius,double innerStereo,double outerStereo,double halfLenZ,int nslice,int nstack);
   void HypeAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double r,double stereo);
   CSG* ConstructOrb(double pRmax);
+  CSG* ConstructPara(double pDx,double pDy,double pDz,double pAlpha,double pTheta,double pPhi);
 };
 
 struct ZSection{
