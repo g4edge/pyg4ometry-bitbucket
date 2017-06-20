@@ -29,7 +29,7 @@ class Trap(_SolidBase) :
           pAlp2:  float, angle wrt the y axis from the centre of the side (upper endcap)
         """
 
-        self.type    = "trap"
+        self.type    = "Trap"
         self.name    = name
         self.pDz     = pDz
         self.pTheta  = pTheta

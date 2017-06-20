@@ -18,7 +18,7 @@ class Paraboloid(_SolidBase) :
           pR1:  float, radius at -Dz
           pR2:  float, radius at +Dz (R2 > R1)   
         """
-        self.type   = 'paraboloid'
+        self.type   = 'Paraboloid'
         self.name   = name
         self.pDz    = pDz
         self.pR1    = pR1

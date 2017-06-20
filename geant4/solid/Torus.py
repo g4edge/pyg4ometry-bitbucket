@@ -21,7 +21,7 @@ class Torus(_SolidBase) :
           pSphi:  float, start phi angle
           pDPhi:  float, delta angle
         """
-        self.type    = 'torus'
+        self.type    = 'Torus'
         self.name    = name
         self.pRmin   = pRmin
         self.pRmax   = pRmax

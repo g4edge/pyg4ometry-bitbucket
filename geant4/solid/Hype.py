@@ -21,7 +21,7 @@ class Hype(_SolidBase) :
           outerStereo: float, outer stereo angle
           halfLenZ:    float, half length along z
         """
-        self.type        = 'hype'
+        self.type        = 'Hype'
         self.name        = name
         self.innerRadius = innerRadius
         self.outerRadius = outerRadius

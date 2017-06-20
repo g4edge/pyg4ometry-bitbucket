@@ -18,7 +18,7 @@ class Trd(_SolidBase) :
         dz:    float, half-length along the z axis
     """
     def __init__(self, name, pDx1, pDx2, pDy1, pDy2, pDz) :
-        self.type   = 'trd'
+        self.type   = 'Trd'
         self.name   = name
         self.pX1    = pDx1
         self.pX2    = pDx2

@@ -21,7 +21,7 @@ class Tet(_SolidBase) :
           p4:             list, point 4
           degeneracyFlag: bool, indicates degeneracy of points
         """
-        self.type    = 'tet'
+        self.type    = 'Tet'
         self.name    = name
         self.anchor  = anchor
         self.p2      = p2

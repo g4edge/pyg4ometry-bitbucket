@@ -21,7 +21,7 @@ class TwistedBox(_SolidBase) :
           refine:       int, number of steps to iteratively smoothen the mesh
                              by doubling the number of vertices at every step
         """
-        self.type = 'twistedbox'
+        self.type = 'TwistedBox'
         self.name = name
         self.twistedAngle = twistedangle
         self.pDx    = pDx
