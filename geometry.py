@@ -103,7 +103,7 @@ class Body(object):
         mesh = world_volume.pycsgmesh()
         extent = _pygdml.volume.pycsg_extent(mesh)
 
-        _MeshInfo = namedtuple("_MeshInfo", ['centre', 'min', 'max', 'length'])
+        _MeshInfo = namedtuple("_MeshInfo", ['min', 'max', 'centre', 'size'])
         lower = vector.Three(extent[0].x, extent[0].y, extent[0].z)
         upper = vector.Three(extent[1].x, extent[1].y, extent[1].z)
         size = upper - lower
@@ -401,9 +401,9 @@ class RCC(Body):
     def _apply_extent(self, extent):
         return
         # Max possible length of a solid for the given extents:
-        max_length = _np.linalg.norm([extent.length.x,
-                                      extent.length.y,
-                                      extent.length.z])
+        max_length = _np.linalg.norm([extent.size.x,
+                                      extent.size.y,
+                                      extent.size.z])
         # If the length is possibly smaller than the length of the
         # resulting solid, then just return the length and position unchanged.
         if self.length < max_length:
@@ -656,9 +656,9 @@ class XYP(Body):
         self._offset = vector.Three(extent.centre.x,
                                     extent.centre.y,
                                     0.0)
-        self._scale_x = extent.length.x * MINTOL
-        self._scale_y = extent.length.y * MINTOL
-        self._scale_z = extent.length.z * MINTOL
+        self._scale_x = extent.size.x * MINTOL
+        self._scale_y = extent.size.y * MINTOL
+        self._scale_z = extent.size.z * MINTOL
 
     def centre(self):
         # Choose the face at
@@ -711,9 +711,9 @@ class XZP(Body):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     extent.centre.z)
-        self._scale_x = extent.length.x * MINTOL
-        self._scale_y = extent.length.y * MINTOL
-        self._scale_z = extent.length.z * MINTOL
+        self._scale_x = extent.size.x * MINTOL
+        self._scale_y = extent.size.y * MINTOL
+        self._scale_z = extent.size.z * MINTOL
 
     def centre(self):
         centre_x = 0.0
@@ -763,9 +763,9 @@ class YZP(Body):
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     extent.centre.z)
-        self._scale_x = extent.length.x * MINTOL
-        self._scale_y = extent.length.y * MINTOL
-        self._scale_z = extent.length.z * MINTOL
+        self._scale_x = extent.size.x * MINTOL
+        self._scale_y = extent.size.y * MINTOL
+        self._scale_z = extent.size.z * MINTOL
 
     def centre(self):
         centre_x = self.parameters.v_x - (self._scale_x * 0.5)
@@ -902,7 +902,7 @@ class XCC(Body):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     0.0)
-        self._scale = extent.length.x * MINTOL
+        self._scale = extent.size.x * MINTOL
 
     def _set_parameters(self, parameters):
         parameter_names = ["centre_y", "centre_z", "radius"]
@@ -959,7 +959,7 @@ class YCC(Body):
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     0.0)
-        self._scale = extent.length.y * MINTOL
+        self._scale = extent.size.y * MINTOL
 
     def _set_parameters(self, parameters):
         parameter_names = ["centre_z", "centre_x", "radius"]
@@ -1021,7 +1021,7 @@ class ZCC(Body):
         self._offset = vector.Three(0.0,
                                     0.0,
                                     extent.centre.z)
-        self._scale = extent.length.z * MINTOL
+        self._scale = extent.size.z * MINTOL
 
     def centre(self):
         return (self._offset
