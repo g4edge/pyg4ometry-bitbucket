@@ -25,12 +25,6 @@ class Paraboloid(_SolidBase) :
         self.pR2    = pR2
         self.nstack = nstack
         self.nslice = nslice
-        self.checkParameters()
-
-    def checkParameters(self):
-        if self.pR2 < self.pR1:
-            raise ValueError("R2 must be greater than R1")
-
         _registry.addSolid(self)        
     
     def pycsgmesh(self):

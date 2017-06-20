@@ -14,8 +14,8 @@ class EllipticalCone(_SolidBase) :
 
         Inputs:
           name:       string, name of the volume
-          pxSemiAxis: float, semiaxis in x
-          pySemiAxis: float, semiaxis in y
+          pxSemiAxis: float, semiaxis in x (fraction of zMax)
+          pySemiAxis: float, semiaxis in y (fraction of zMax)
           zMax:       float, height of cone
           pzTopCut:   float, z-position of upper
         """
@@ -32,9 +32,8 @@ class EllipticalCone(_SolidBase) :
         self.checkParameters()
 
     def checkParameters(self):
-        if self.zMax < self.pzTopCut:
+        if self.pzTopCut <= 0 or self.pzTopCut > self.zMax:
             raise ValueError("zMax must be greater than pzTopCut")
-
         
     def pycsgmesh(self):
         polygons = []
