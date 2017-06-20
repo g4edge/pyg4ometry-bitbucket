@@ -17,6 +17,7 @@ namespace CSGMesh{
   CSG* ConstructExtrudedSolid(std::vector<Vector*> pPolygon,std::vector<ZSection> pZslices);
   CSG* ConstructSphere(double pRmin,double pRmax,double pSPhi,double pDPhi,double pSTheta,double pDTheta,int nslice, int nstack);
   void SphereAppendVertex(std::vector<Vertex*>& vertices,double theta,double phi,double r);
+  CSG* ConstructTet(Vector* anchor,Vector* p2,Vector* p3,Vector* p4,bool degeneracyFlag);
 };
 
 struct ZSection{
