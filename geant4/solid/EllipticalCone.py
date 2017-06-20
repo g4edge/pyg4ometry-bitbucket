@@ -42,9 +42,13 @@ class EllipticalCone(_SolidBase) :
         dz      = self.zMax/self.nstack
         dTheta  = 2*_np.pi/self.nslice
         stacks  = self.nstack
-        slices  = self.nslice 
+        slices  = self.nslice
 
-        def appendVertex(vertices, theta, z, dx=self.pxSemiAxis,dy=self.pySemiAxis, norm=[]):
+        # semix and semiy are fractions of zmax - calculate absolute numbers
+        dxabs = self.pxSemiAxis * self.zMax
+        dyabs = self.pySemiAxis * self.zMax
+
+        def appendVertex(vertices, theta, z, dx=dxabs, dy=dyabs, norm=[]):
             c = _Vector([0,0,0])
             x = dx*(((self.zMax - z)/self.zMax)*_np.cos(theta)) #generate points on an ellipse
             y = dy*(((self.zMax - z)/self.zMax)*_np.sin(theta))
