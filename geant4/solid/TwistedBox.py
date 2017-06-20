@@ -28,6 +28,7 @@ class TwistedBox(_SolidBase) :
         self.pDy    = pDy
         self.pDz    = pDz
         self.refine = refine
+        _registry.addSolid(self)                
 
     def pycsgmesh(self):
         vert_crd_up = [[-self.pDx, -self.pDy, self.pDz],[self.pDx, -self.pDy, self.pDz],[self.pDx, self.pDy, self.pDz],[-self.pDx, self.pDy, self.pDz]]

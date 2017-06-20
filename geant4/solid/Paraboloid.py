@@ -31,6 +31,8 @@ class Paraboloid(_SolidBase) :
         if self.pR2 < self.pR1:
             raise ValueError("R2 must be greater than R1")
 
+        _registry.addSolid(self)        
+    
     def pycsgmesh(self):
         polygons = []
         

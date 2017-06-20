@@ -40,6 +40,7 @@ class Para(_SolidBase):
         self.dx_z   = +self.pZ*_sin(self.pTheta) #changes sign as the z component
         self.dy     = self.pZ*_sin(self.pPhi)
         self.dz     = self.pZ-self.pZ*_cos(pPhi)
+        _registry.addSolid(self)        
 
     def pycsgmesh(self) :
         self.mesh  = _CSG.fromPolygons([_Polygon([_Vertex(_Vector(-self.pX-self.dx_y-self.dx_z,-self.pY-self.dy,-self.pZ+self.dz), None),

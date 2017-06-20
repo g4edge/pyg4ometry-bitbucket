@@ -28,6 +28,7 @@ class Tet(_SolidBase) :
         self.p3      = p3
         self.p4      = p4
         self.degen   = degeneracyFlag
+        _registry.addSolid(self)                
 
 
     def pycsgmesh(self):

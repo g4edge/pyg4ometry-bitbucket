@@ -20,6 +20,7 @@ class Orb(_SolidBase):
         self.type = 'Orb'
         self.name = name
         self.pRMax = pRMax
+        _registry.addSolid(self)
 
     def pycsgmesh(self):
         self.mesh = _CSG.sphere(center=[0,0,0], radius=self.pRMax)

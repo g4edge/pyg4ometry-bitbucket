@@ -30,6 +30,7 @@ class Hype(_SolidBase) :
         self.halfLenZ    = halfLenZ
         self.nslice      = nslice
         self.nstack      = nstack
+        _registry.addSolid(self)        
 
     def checkParameters(self):
         if self.innerRadius > self.outerRadius:

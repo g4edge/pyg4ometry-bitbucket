@@ -25,6 +25,7 @@ class EllipticalTube(_SolidBase) :
         self.pDz    = pDz
         self.nslice = nslice
         self.nstack = nstack
+        _registry.addSolid(self)
 
     def pycsgmesh(self):
         polygons = []

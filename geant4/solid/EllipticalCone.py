@@ -28,6 +28,7 @@ class EllipticalCone(_SolidBase) :
         self.pzTopCut   = pzTopCut
         self.nslice     = nslice
         self.nstack     = nslice
+        _registry.addSolid(self)
         self.checkParameters()
 
     def checkParameters(self):

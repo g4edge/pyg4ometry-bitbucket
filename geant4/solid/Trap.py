@@ -42,6 +42,7 @@ class Trap(_SolidBase) :
         self.pDx3    = pDx3
         self.pDx4    = pDx4
         self.pAlp2   = pAlp2
+        _registry.addSolid(self)        
 
     def pycsgmesh(self):
 
