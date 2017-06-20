@@ -18,6 +18,8 @@ namespace CSGMesh{
   CSG* ConstructSphere(double pRmin,double pRmax,double pSPhi,double pDPhi,double pSTheta,double pDTheta,int nslice, int nstack);
   void SphereAppendVertex(std::vector<Vertex*>& vertices,double theta,double phi,double r);
   CSG* ConstructTet(Vector* anchor,Vector* p2,Vector* p3,Vector* p4,bool degeneracyFlag);
+  CSG* ConstructTorus(double pRmin,double  pRmax,double  pRtor,double  pSPhi,double  pDPhi,int nslice,int nstack);
+  void TorusAppendVertex(std::vector<Vertex*>& vertices,double theta,double phi,double r,double pRtor);
 };
 
 struct ZSection{

@@ -6,7 +6,7 @@
 
 class Tet : public SolidBase{
 public:
-  Tet(std:: string name,Vector* _anchor,Vector* _p2,Vector* _p3,Vector* _p4,bool _degeneracyFlag = false):
+  Tet(std::string name,Vector* _anchor,Vector* _p2,Vector* _p3,Vector* _p4,bool _degeneracyFlag = false):
       SolidBase(name,"Tet"), degeneracyFlag(_degeneracyFlag)
   {
     anchor = _anchor;
