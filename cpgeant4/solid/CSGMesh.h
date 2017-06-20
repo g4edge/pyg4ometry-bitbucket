@@ -25,6 +25,7 @@ namespace CSGMesh{
   void EllipsoidAppendVertex(std::vector<Vertex*>& vertices,double pxSemiAxis,double pySemiAxis,double pzSemiAxis,double u,double v);
   CSG* ConstructHype(double innerRadius,double outerRadius,double innerStereo,double outerStereo,double halfLenZ,int nslice,int nstack);
   void HypeAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double r,double stereo);
+  CSG* ConstructOrb(double pRmax);
 };
 
 struct ZSection{
