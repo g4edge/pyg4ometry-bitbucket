@@ -62,8 +62,29 @@ class Writer(object):
         f.write(xmlString)
         f.close()
 
-    def writeGmadTester(self, filenameGmad):
+    def writeGmadTester(self, filenameGmad, writeDefaultLattice=False, zLength=100):
         self.filenameGmad = filenameGmad
+
+        if writeDefaultLattice:
+            self.writeDefaultLattice()
+
+        s = 'e1: element, geometry="gdml:'
+        s += str(self.filename)
+        s += '", l=' + str(zLength) + '*cm;\n'
+        s += 'include lattice.gmad;\n'
+        f = open(self.filenameGmad, 'w')
+        f.write(s)
+        f.close()
+
+    def writeDefaultLattice(self, filename='lattice.gmad'):
+        s =  'l1: line = (e1);\n'
+        s += 'use,period=l1;\n'
+        s += 'sample, all;\n'
+        s += 'beam, particle="e-",\n'
+        s += 'energy=250.0*GeV;\n'
+        f = open(filename, 'w')
+        f.write(s)
+        f.close()
 
     def checkDefineName(self, defineName) :
         pass
@@ -115,47 +136,102 @@ class Writer(object):
         self.solids.appendChild(oe)
 
     def writeCons(self, instance):
-        oe = self.doc.createElement('cons')
+        oe = self.doc.createElement('cone')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
-        oe.setAttribute('ax', str(instance.pRmin))
-        oe.setAttribute('ay', str(instance.pRmax))
-        oe.setAttribute('az', str(instance.pDPhi))
+        oe.setAttribute('rmin1', str(instance.pRmin1))
+        oe.setAttribute('rmax1', str(instance.pRmax1))
+        oe.setAttribute('rmin2', str(instance.pRmin2))
+        oe.setAttribute('rmax2', str(instance.pRmax2))
+        oe.setAttribute('z', str(instance.pDz))
+        oe.setAttribute('startphi', str(instance.pSPhi))
+        oe.setAttribute('deltaphi', str(instance.pDPhi))        
         self.solids.appendChild(oe)
 
     def writeCutTubs(self, instance):
-        pass
-
+        oe = self.doc.createElement('cutTube')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('z', '2*'+str(instance.pDz))
+        oe.setAttribute('rmin', str(instance.pRMin))
+        oe.setAttribute('rmax', str(instance.pRMax))
+        oe.setAttribute('startphi', str(instance.pSPhi))
+        oe.setAttribute('deltaphi', str(instance.pDPhi))
+        oe.setAttribute('lowX', str(instance.pLowNorm[0]))
+        oe.setAttribute('lowY', str(instance.pLowNorm[1]))
+        oe.setAttribute('lowZ', str(instance.pLowNorm[2]))
+        oe.setAttribute('highX', str(instance.pHighNorm[0]))
+        oe.setAttribute('highY', str(instance.pHighNorm[1]))
+        oe.setAttribute('highZ', str(instance.pHighNorm[2]))
+        self.solids.appendChild(oe)
+        
+        
     def writeEllipsoid(self, instance):
         oe = self.doc.createElement('ellipsoid')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
-        oe.setAttribute('ax', str(instance.pRmin))
-        oe.setAttribute('ay', str(instance.pRmax))
-        oe.setAttribute('az', str(instance.pDPhi))
+        oe.setAttribute('ax', str(instance.pxSemiAxis))
+        oe.setAttribute('by', str(instance.pySemiAxis))
+        oe.setAttribute('cz', str(instance.pzSemiAxis))
+        oe.setAttribute('zcut1', str(instance.pzBottomCut))
+        oe.setAttribute('zcut2', str(instance.pzTopCut))
         self.solids.appendChild(oe)
 
     def writeEllipticalCone(self, instance):
-        pass
-
-    def writeEllipticalTube(self, instance):
-        oe = self.doc.createElement('EllipticalTube')
-        oe.setAttribute('name', self.prepend+'_'+instance.name)
-        oe.setAttribute('lunit','mm')
-        oe.setAttribute('Dx', '2*'+str(instance.pDx))
-        oe.setAttribute('Dy', '2*'+str(instance.pDy))
-        oe.setAttribute('Dz', '2*'+str(instance.pDz))
+        oe = self.doc.createElement('elcone')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('dx', str(instance.pxSemiAxis))
+        oe.setAttribute('dy', str(instance.pySemiAxis))
+        oe.setAttribute('zmax', str(instance.zMax))
+        oe.setAttribute('zcut', str(instance.pzTopCut))
         self.solids.appendChild(oe)
 
+    def writeEllipticalTube(self, instance):
+        oe = self.doc.createElement('eltube')
+        oe.setAttribute('name', self.prepend+'_'+instance.name)
+        oe.setAttribute('dx', '2*'+str(instance.pDx))
+        oe.setAttribute('dy', '2*'+str(instance.pDy))
+        oe.setAttribute('dz', '2*'+str(instance.pDz))
+        self.solids.appendChild(oe)
+
+    def createTwoDimVertex(self, x, y):
+        td = self.doc.createElement('twoDimVertex')
+        td.setAttribute('x', str(x))
+        td.setAttribute('y', str(y))
+        return td
+
+    def createSection(self, zOrder, zPosition, xOffset, yOffset, scalingFactor):
+        s = self.doc.createElement('section')
+        s.setAttribute('zOrder', str(zOrder))
+        s.setAttribute('zPosition', str(zPosition))
+        s.setAttribute('xOffset', str(xOffset))
+        s.setAttribute('yOffset', str(yOffset))
+        s.setAttribute('scalingFactor', str(scalingFactor))
+        return s
+        
     def writeExtrudedSolid(self, instance):
-        #TBC
-        oe = self.doc.createElement('extrudedsolid')
+        oe = self.doc.createElement('xtru')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
-        oe.setAttribute('ax', str(instance.pRmin))
-        oe.setAttribute('ay', str(instance.pRmax))
-        oe.setAttribute('az', str(instance.pDPhi))
+
+        for vertex in instance.vertices:
+            v = self.createTwoDimVertex(vertex[0], vertex[1])
+            oe.appendChild(v)
+
+        i = instance
+        n = 1
+        for z,x,y,s in zip(i.zpos,i.x_offs, i.y_offs, i.scale):
+            s = self.createSection(n, z, x, y, s)
+            n += 1
+            oe.appendChild(s)
+
         self.solids.appendChild(oe) 
 
     def writeHype(self, instance):
-        pass
+        oe = self.doc.createElement('hype')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('rmin', str(instance.innerRadius))
+        oe.setAttribute('rmax', str(instance.outerRadius))
+        oe.setAttribute('z', '2*'+str(instance.halfLenZ))
+        oe.setAttribute('ihst', str(instance.innerStereo))
+        oe.setAttribute('outst', str(instance.outerStereo))
+        self.solids.appendChild(oe)         
 
     def writeIntersection(self, instance):
         oe  = self.doc.createElement('intersection')
@@ -196,14 +272,27 @@ class Writer(object):
     def writeOrb(self, instance):
         oe = self.doc.createElement('orb')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
-        oe.setAttribute('rmax', str(instance.pRMax))
+        oe.setAttribute('r', str(instance.pRMax))
         self.solids.appendChild(oe)
 
-    def writePara(self, instance):
-        pass
+    def writePara(self, instance):      
+        oe = self.doc.createElement('para')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('x', str(instance.pX))
+        oe.setAttribute('y', str(instance.pY))
+        oe.setAttribute('z', str(instance.pZ))
+        oe.setAttribute('alpha', str(instance.pAlpha))
+        oe.setAttribute('theta', str(instance.pTheta))
+        oe.setAttribute('phi', str(instance.pPhi))
+        self.solids.appendChild(oe)
 
     def writeParaboloid(self, instance):
-        pass
+        oe = self.doc.createElement('paraboloid')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('rlo', str(instance.pR1))
+        oe.setAttribute('rhi', str(instance.pR2))
+        oe.setAttribute('dz', str(instance.pDz))        
+        self.solids.appendChild(oe)
     
     def writePolycone(self, instance):
         #TBC
@@ -231,8 +320,14 @@ class Writer(object):
         pass
 
     def writeTet(self, instance):
-        pass
-
+        oe = self.doc.createElement('tet')
+        oe.setAttribute('name',self.prepend+'_'+instance.name)
+        oe.setAttribute('vertex1',str(instance.anchor))
+        oe.setAttribute('vertex2',str(instance.p2))
+        oe.setAttribute('vertex3',str(instance.p3))
+        oe.setAttribute('vertex4',str(instance.p4))
+        self.solids.appendChild(oe)        
+        
     def writeTorus(self, instance):
         oe = self.doc.createElement('torus')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
@@ -244,7 +339,20 @@ class Writer(object):
         self.solids.appendChild(oe)
 
     def writeTrap(self, instance):
-        pass
+        oe = self.doc.createElement('trap')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('z','2*'+str(instance.pDz))
+        oe.setAttribute('theta',str(instance.pTheta))
+        oe.setAttribute('phi',str(instance.pDPhi))
+        oe.setAttribute('y1','2*'+str(instance.pDy1))
+        oe.setAttribute('x1','2*'+str(instance.pDx1))
+        oe.setAttribute('x2','2*'+str(instance.pDx2))
+        oe.setAttribute('alpha1',str(instance.pAlp1))
+        oe.setAttribute('y2','2*'+str(instance.pDy2))
+        oe.setAttribute('x3','2*'+str(instance.pDx3))
+        oe.setAttribute('x4','2*'+str(instance.pDx4))
+        oe.setAttribute('alpha2',str(instance.pAlp2))
+        self.solids.appendChild(oe)        
 
     def writeTrd(self, instance):
         oe = self.doc.createElement("trd")
@@ -267,7 +375,13 @@ class Writer(object):
         self.solids.appendChild(oe)
 
     def writeTwistedBox(self, instance):
-        pass
+        oe = self.doc.createElement("twistedbox")
+        oe.setAttribute('name',self.prepend+'_'+instance.name)
+        oe.setAttribute('PhiTwist',str(instance.twistedAngle))
+        oe.setAttribute('x',str(instance.pDx))
+        oe.setAttribute('y',str(instance.pDy))
+        oe.setAttribute('z',str(instance.pDz))
+        self.solids.appendChild(oe)        
 
     def writeTwistedTrap(self, instance):
         pass

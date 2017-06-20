@@ -62,3 +62,4 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
         w.write('./EllipticalCone.gdml')
+        w.writeGmadTester('EllipticalCone.gmad')        

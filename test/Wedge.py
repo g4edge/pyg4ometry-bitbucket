@@ -29,4 +29,5 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     if gdmlWriter : 
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
-        w.write('./Cons.gdml')
+        w.write('./Wedge.gdml')
+        w.writeGmadTester('Wedge.gmad')
