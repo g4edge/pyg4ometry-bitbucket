@@ -15,6 +15,9 @@ import pygdml as _pygdml
 from pygdml import transformation as _trf
 import vector
 
+# Tolerance when minimising solids.  In this case:  5% longer than the
+# resulting mesh.
+MINTOL = 1.05
 
 class Body(object):
     """A class representing a body as defined in Fluka.
@@ -420,7 +423,7 @@ class RCC(Body):
                 self.direction)
                             - self.face_centre
                             - 0.5 * self.direction)
-            self._scale = max_length * 1.1
+            self._scale = max_length * MINTOL
 
     def centre(self):
         """
@@ -653,9 +656,9 @@ class XYP(Body):
         self._offset = vector.Three(extent.centre.x,
                                     extent.centre.y,
                                     0.0)
-        self._scale_x = extent.length.x * 1.1
-        self._scale_y = extent.length.y * 1.1
-        self._scale_z = extent.length.z * 1.1
+        self._scale_x = extent.length.x * MINTOL
+        self._scale_y = extent.length.y * MINTOL
+        self._scale_z = extent.length.z * MINTOL
 
     def centre(self):
         # Choose the face at
@@ -708,9 +711,9 @@ class XZP(Body):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     extent.centre.z)
-        self._scale_x = extent.length.x * 1.1
-        self._scale_y = extent.length.y * 1.1
-        self._scale_z = extent.length.z * 1.1
+        self._scale_x = extent.length.x * MINTOL
+        self._scale_y = extent.length.y * MINTOL
+        self._scale_z = extent.length.z * MINTOL
 
     def centre(self):
         centre_x = 0.0
@@ -760,9 +763,9 @@ class YZP(Body):
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     extent.centre.z)
-        self._scale_x = extent.length.x * 1.1
-        self._scale_y = extent.length.y * 1.1
-        self._scale_z = extent.length.z * 1.1
+        self._scale_x = extent.length.x * MINTOL
+        self._scale_y = extent.length.y * MINTOL
+        self._scale_z = extent.length.z * MINTOL
 
     def centre(self):
         centre_x = self.parameters.v_x - (self._scale_x * 0.5)
@@ -899,7 +902,7 @@ class XCC(Body):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     0.0)
-        self._scale = extent.length.x * 1.1
+        self._scale = extent.length.x * MINTOL
 
     def _set_parameters(self, parameters):
         parameter_names = ["centre_y", "centre_z", "radius"]
@@ -956,7 +959,7 @@ class YCC(Body):
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     0.0)
-        self._scale = extent.length.y * 1.1
+        self._scale = extent.length.y * MINTOL
 
     def _set_parameters(self, parameters):
         parameter_names = ["centre_z", "centre_x", "radius"]
@@ -1018,7 +1021,7 @@ class ZCC(Body):
         self._offset = vector.Three(0.0,
                                     0.0,
                                     extent.centre.z)
-        self._scale = extent.length.z * 1.1
+        self._scale = extent.length.z * MINTOL
 
     def centre(self):
         return (self._offset
