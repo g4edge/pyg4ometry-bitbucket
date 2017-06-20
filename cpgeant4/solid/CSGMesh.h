@@ -21,6 +21,8 @@ namespace CSGMesh{
   CSG* ConstructTorus(double pRmin,double  pRmax,double  pRtor,double  pSPhi,double  pDPhi,int nslice,int nstack);
   void TorusAppendVertex(std::vector<Vertex*>& vertices,double theta,double phi,double r,double pRtor);
   CSG* ConstructTrd(double x1,double x2,double y1,double y2,double z);
+  CSG* ConstructEllipsoid(double pxSemiAxis,double pySemiAxis,double pzSemiAxis,double pzBottomCut,double pzTopCut,int nslice,int nstack);
+  void EllipsoidAppendVertex(std::vector<Vertex*>& vertices,double pxSemiAxis,double pySemiAxis,double pzSemiAxis,double u,double v);
 };
 
 struct ZSection{
