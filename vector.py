@@ -18,7 +18,7 @@ class Three(_np.ndarray):
         return self[0]
 
     @x.setter
-    def y(self, value):
+    def x(self, value):
         self[0] = value
 
     @property
@@ -27,7 +27,7 @@ class Three(_np.ndarray):
 
     @y.setter
     def y(self, value):
-        self[0] = value
+        self[1] = value
 
     @property
     def z(self):
@@ -35,7 +35,7 @@ class Three(_np.ndarray):
 
     @z.setter
     def z(self, value):
-        self[0] = value
+        self[2] = value
 
     def parallel_to(self, other, tolerance=1e-10):
         """
