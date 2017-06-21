@@ -44,7 +44,8 @@ class PhysicalVolume :
             if list(self.position) == [0,0,0] and list(self.rotation) == [0,0,0] :
                 self.mesh = self.logicalVolume.pycsgmesh()
             else :
-                self.mesh = _copy.deepcopy(self.logicalVolume.pycsgmesh())
+                lvmesh = self.logicalVolume.pycsgmesh()
+                self.mesh = _copy.deepcopy(lvmesh)
 
                 # Mesh is only placed once remove the logical mesh as it will not be used again
                 if _registry.logicalVolumeUsageCountDict[self.logicalVolume.name] == 1 :
