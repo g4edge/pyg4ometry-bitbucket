@@ -9,7 +9,12 @@ import numpy as _np
 
 
 class Trap(_SolidBase) :
-    def __init__(self, name, pDz, pTheta, pDPhi, pDy1, pDx1, pDx2, pAlp1, pDy2, pDx3, pDx4, pAlp2) :
+    def __init__(self, name, pDz,
+                 pTheta, pDPhi,
+                 pDy1, pDx1,
+                 pDx2, pAlp1,
+                 pDy2, pDx3,
+                 pDx4, pAlp2) :
         """
         Constructs a general trapezoid. 
 

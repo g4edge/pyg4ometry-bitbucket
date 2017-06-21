@@ -29,7 +29,7 @@ class LogicalVolume :
         # count the logical volumes meshed
         LogicalVolume.imeshed = LogicalVolume.imeshed + 1
         if self.debug :
-            print 'LogiacalVolume mesh count',LogicalVolume.imeshed
+            print 'LogicalVolume mesh count',LogicalVolume.imeshed
 
         #if self.mesh :
         #    return self.mesh
