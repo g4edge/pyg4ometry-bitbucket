@@ -319,13 +319,31 @@ class Writer(object):
     def writeSubtraction(self, instance):
         pass
 
+    def createPosition(self,name, x, y, z):
+        p = self.doc.createElement('position')
+        p.setAttribute('name',str(name))
+        p.setAttribute('x', str(x))
+        p.setAttribute('y', str(y))
+        p.setAttribute('z', str(z))
+        return p
+
     def writeTet(self, instance):
+        j = instance
         oe = self.doc.createElement('tet')
-        oe.setAttribute('name',self.prepend+'_'+instance.name)
-        oe.setAttribute('vertex1',str(instance.anchor))
-        oe.setAttribute('vertex2',str(instance.p2))
-        oe.setAttribute('vertex3',str(instance.p3))
-        oe.setAttribute('vertex4',str(instance.p4))
+        uniqueName = self.prepend+'_'+instance.name
+        oe.setAttribute('name', uniqueName)
+        v1 = self.createPosition(uniqueName + '_v1', j.anchor[0], j.anchor[1], j.anchor[2])
+        self.defines.appendChild(v1)
+        v2 = self.createPosition(uniqueName + '_v2', j.p2[0], j.p2[1], j.p2[2])
+        self.defines.appendChild(v2)
+        v3 = self.createPosition(uniqueName + '_v3', j.p3[0], j.p3[1], j.p3[2])
+        self.defines.appendChild(v3)
+        v4 = self.createPosition(uniqueName + '_v4', j.p4[0], j.p4[1], j.p4[2])        
+        self.defines.appendChild(v4)        
+        oe.setAttribute('vertex1', uniqueName + '_v1')
+        oe.setAttribute('vertex2', uniqueName + '_v2')
+        oe.setAttribute('vertex3', uniqueName + '_v3')
+        oe.setAttribute('vertex4', uniqueName + '_v4')
         self.solids.appendChild(oe)        
         
     def writeTorus(self, instance):
