@@ -348,6 +348,21 @@ class TestZCC(unittest.TestCase):
 class TestZEC(unittest.TestCase):
     pass
 
+
+class CustomAssertions(object):
+    def assertExtentEqualOrClose(self, first, second):
+        if not first.is_close_to(second):
+            msg = "Extents not Equal!\n"
+            for v in ['lower', 'upper']: # upper and lower vectors
+                for comp in ['x', 'y', 'z']: # components of vector
+                    first_comp = getattr(getattr(first, v), comp)
+                    sec_comp = getattr(getattr(second, v), comp)
+                    if first_comp != sec_comp:
+                        msg += "{}.{}: {} != {}\n".format(
+                            v, comp, first_comp, sec_comp)
+            raise self.failureException(msg)
+
+
 def solid_less_than(solid1, solid2):
     try:
         return (solid1.pX < solid2.pX
@@ -362,7 +377,6 @@ def solid_less_than(solid1, solid2):
         pass
 
     return None
-
 
 if __name__ == '__main__':
     unittest.main()
