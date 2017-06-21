@@ -31,6 +31,7 @@ namespace CSGMesh{
   void ParaboloidAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double k1,double k2);
   CSG* ConstructPolycone(double pSPhi,double pDPhi,std::vector<double> pZpl,std::vector<double> pRMin,std::vector<double> pRMax,int nslice);
   void PolyconeAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double r);
+  CSG* ConstructPolyhedra(double phiStart, double phiTotal,int numSide,int numZPlanes,std::vector<double> zPlane,std::vector<double> rInner,std::vector<double> rOuter);
 };
 
 struct ZSection{
