@@ -229,7 +229,7 @@ class Writer(object):
         oe.setAttribute('rmin', str(instance.innerRadius))
         oe.setAttribute('rmax', str(instance.outerRadius))
         oe.setAttribute('z', '2*'+str(instance.halfLenZ))
-        oe.setAttribute('ihst', str(instance.innerStereo))
+        oe.setAttribute('inst', str(instance.innerStereo))
         oe.setAttribute('outst', str(instance.outerStereo))
         self.solids.appendChild(oe)         
 
