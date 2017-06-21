@@ -1232,7 +1232,7 @@ class Region(object):
                               False,
                               self.material)
 
-    def evaluate(self, zones=None, optimise=True):
+    def evaluate(self, zones=None, optimise=False):
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
         booleans = [zone.evaluate(optimise=optimise) for zone in zones]
