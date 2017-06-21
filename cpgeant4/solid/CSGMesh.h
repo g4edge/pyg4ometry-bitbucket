@@ -34,6 +34,9 @@ namespace CSGMesh{
   CSG* ConstructPolyhedra(double phiStart, double phiTotal,int numSide,int numZPlanes,std::vector<double> zPlane,std::vector<double> rInner,std::vector<double> rOuter);
   CSG* ConstructEllipticalCone(double pxSemiAxis,double pySemiAxis,double zMax,double pzTopCut,int nslice,int nstack);
   void EllipticalConeAppendVertex(std::vector<Vertex*> vertices,double theta,double z,double dx,double dy,Vector* norm,double zMax);
+  CSG* ConstructEllipticalTube(double pDx,double pDy,double pDz,int nslice,int nstack);
+  void EllipticalTubeAppendVertex(std::vector<Vertex*> vertices,double theta,double z,double dx,double dy,Vector* norm);
+
 };
 
 struct ZSection{
