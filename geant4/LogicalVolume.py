@@ -74,7 +74,7 @@ class LogicalVolume :
 
         # size and centre
         self.size = extent[1] - extent[0]
-        self.centre = extent[1] - self.size/2.0
+        self.centre = (_Vector(extent[0]) + _Vector(extent[1]))*0.5
 
         return [self.size, self.centre]
 
