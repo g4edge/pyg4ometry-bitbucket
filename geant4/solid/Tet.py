@@ -8,6 +8,8 @@ from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
 from pygeometry.geant4.solid.Plane import Plane as _Plane
 import numpy as _np
 
+from copy import deepcopy as _dc
+
 class Tet(_SolidBase) :
     def __init__(self, name, anchor, p2, p3, p4, degeneracyFlag = False) :
         """
@@ -38,10 +40,9 @@ class Tet(_SolidBase) :
         
         for i in range(len(base)):
             vert_base.append(_Vertex(_Vector(base[i][0],base[i][1],base[i][2]), None))
-
-        self.mesh = _CSG.fromPolygons([_Polygon([vert_base[2], vert_base[1], vert_base[0]], None),
-                                       _Polygon([vert_base[1], vert_ancr, vert_base[0]], None),
-                                       _Polygon([vert_base[2], vert_ancr, vert_base[1]], None),
-                                       _Polygon([vert_base[0], vert_ancr, vert_base[2]], None)])
+        self.mesh = _CSG.fromPolygons([_Polygon([_dc(vert_base[2]), _dc(vert_base[1]), _dc(vert_base[0])], None),
+                                       _Polygon([_dc(vert_base[1]), _dc(vert_ancr), _dc(vert_base[0])], None),
+                                       _Polygon([_dc(vert_base[2]), _dc(vert_ancr), _dc(vert_base[1])], None),
+                                       _Polygon([_dc(vert_base[0]), _dc(vert_ancr), _dc(vert_base[2])], None)])
 
         return self.mesh
