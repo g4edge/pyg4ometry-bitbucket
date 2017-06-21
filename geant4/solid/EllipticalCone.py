@@ -60,7 +60,7 @@ class EllipticalCone(_SolidBase) :
                 n = d
             else:
                 n = _Vector(norm)
-            vertices.append(_Vertex(c.plus(d), d))
+            vertices.append(_Vertex(c.plus(d), n))
 
 
         for j0 in range(slices):
