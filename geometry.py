@@ -100,15 +100,7 @@ class Body(object):
                                       "world-volume", None,
                                       1, False, "G4_NITROUS_OXIDE")
         self.add_to_volume(world_volume)
-        mesh = world_volume.pycsgmesh()
-        extent = _pygdml.volume.pycsg_extent(mesh)
-
-        _MeshInfo = namedtuple("_MeshInfo", ['min', 'max', 'centre', 'size'])
-        lower = vector.Three(extent[0].x, extent[0].y, extent[0].z)
-        upper = vector.Three(extent[1].x, extent[1].y, extent[1].z)
-        size = upper - lower
-        centre = upper - size / 2
-        return _MeshInfo(centre, lower, upper, size)
+        return Extent.from_wv(world_volume)
 
     def _get_overlap(self, other):
         """
@@ -1503,6 +1495,47 @@ class Parameters(object):
         for field_name in self._fields:
             yield getattr(self, field_name)
 
+
+class Extent(object):
+    def __init__(self, lower, upper):
+        try:
+            lower.x
+            self.lower = lower
+        except AttributeError:
+            self.lower = vector.Three(lower)
+        try:
+            upper.x
+            self.upper = upper
+        except AttributeError:
+            self.upper = vector.Three(upper)
+        try:
+            size = upper - lower
+            centre = upper - 0.5 * size
+        except TypeError:
+            size = [upper[i] - lower[i] for i, _ in enumerate(upper)]
+            centre =  [upper[i] - 0.5 * size[i] for i, _ in enumerate(upper)]
+        self.size = size
+        self.centre = centre
+
+    @classmethod
+    def from_wv(cls, wv):
+        """Construct an Extent object from a pygdml (world) volume instance. """
+        mesh = wv.pycsgmesh()
+        extent =  _pygdml.volume.pycsg_extent(mesh)
+        lower = vector.Three(extent[0].x, extent[0].y, extent[0].z)
+        upper = vector.Three(extent[1].x, extent[1].y, extent[1].z)
+        size = upper - lower
+        centre = upper - size / 2
+        return cls(lower, upper)
+
+    def is_close_to(self, other):
+        return bool((_np.isclose(self.lower, other.lower).all()
+                     and _np.isclose(self.upper, other.upper).all()))
+
+    def __repr__(self):
+        return ("Extent: Lower({lower.x}, {lower.y}, {lower.z}),"
+                " Upper({upper.x}, {upper.y}, {upper.z})".format(
+                    upper=self.upper, lower=self.lower))
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
