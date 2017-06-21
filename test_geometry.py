@@ -1,6 +1,7 @@
 import unittest
 import pyfluka
 from pyfluka import vector
+from pyfluka import geometry
 import numpy as np
 from math import pi
 import os.path as _path
@@ -8,6 +9,20 @@ import pygdml
 import collections
 
 INP_PATH = _path.dirname(_path.abspath(__file__)) + "/test_input/"
+
+class CustomAssertions(object):
+    def assertExtentEqualOrClose(self, first, second):
+        if not first.is_close_to(second):
+            msg = "Extents not Equal!\n"
+            for v in ['lower', 'upper']: # upper and lower vectors
+                for comp in ['x', 'y', 'z']: # components of vector
+                    first_comp = getattr(getattr(first, v), comp)
+                    sec_comp = getattr(getattr(second, v), comp)
+                    if first_comp != sec_comp:
+                        msg += "{}.{}: {} != {}\n".format(
+                            v, comp, first_comp, sec_comp)
+            raise self.failureException(msg)
+
 
 class TestPLA(unittest.TestCase):
     pass
@@ -101,8 +116,43 @@ for name, param, centre in params:
 class TestREC(unittest.TestCase):
     pass
 
-class TestRPP(unittest.TestCase):
-    pass
+class TestRPP(unittest.TestCase, CustomAssertions):
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "RPP.inp")
+
+    def test_crude_rescale(self):
+        region = self.model.regions['massive']
+        boolean = region.evaluate(optimise=False)
+        extent = boolean._extent()
+        self.assertExtentEqualOrClose(extent,
+                                      geometry.Extent([-750., -5000., -500],
+                                                      [1000., +1000., +500.]))
+    def test_rescaled_mesh(self):
+        region = self.model.regions['massive']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+        self.assertExtentEqualOrClose(unopt_extent, opt_extent)
+
+    def test_minimisation(self):
+        region = self.model.regions['massive']
+
+        unopt = region.evaluate(optimise=False)
+        opt = region.evaluate(optimise=True)
+
+        unopt_extent = unopt._extent()
+        opt_extent = opt._extent()
+
+        areless = []
+        for opt_solid, unopt_solid in zip(
+                opt.gdml_primitives(),
+                unopt.gdml_primitives()):
+            areless.append(solid_less_than(opt_solid, unopt_solid))
+        self.assertTrue(any(areless))
+
 
 class TestSPH(unittest.TestCase):
     pass
@@ -347,20 +397,6 @@ class TestZCC(unittest.TestCase):
 
 class TestZEC(unittest.TestCase):
     pass
-
-
-class CustomAssertions(object):
-    def assertExtentEqualOrClose(self, first, second):
-        if not first.is_close_to(second):
-            msg = "Extents not Equal!\n"
-            for v in ['lower', 'upper']: # upper and lower vectors
-                for comp in ['x', 'y', 'z']: # components of vector
-                    first_comp = getattr(getattr(first, v), comp)
-                    sec_comp = getattr(getattr(second, v), comp)
-                    if first_comp != sec_comp:
-                        msg += "{}.{}: {} != {}\n".format(
-                            v, comp, first_comp, sec_comp)
-            raise self.failureException(msg)
 
 
 def solid_less_than(solid1, solid2):
