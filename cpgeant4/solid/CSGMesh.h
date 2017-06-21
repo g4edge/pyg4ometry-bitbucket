@@ -32,6 +32,8 @@ namespace CSGMesh{
   CSG* ConstructPolycone(double pSPhi,double pDPhi,std::vector<double> pZpl,std::vector<double> pRMin,std::vector<double> pRMax,int nslice);
   void PolyconeAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double r);
   CSG* ConstructPolyhedra(double phiStart, double phiTotal,int numSide,int numZPlanes,std::vector<double> zPlane,std::vector<double> rInner,std::vector<double> rOuter);
+  CSG* ConstructEllipticalCone(double pxSemiAxis,double pySemiAxis,double zMax,double pzTopCut,int nslice,int nstack);
+  void EllipticalConeAppendVertex(std::vector<Vertex*> vertices,double theta,double z,double dx,double dy,Vector* norm,double zMax);
 };
 
 struct ZSection{
