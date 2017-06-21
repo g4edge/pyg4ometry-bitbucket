@@ -29,6 +29,8 @@ namespace CSGMesh{
   CSG* ConstructPara(double pDx,double pDy,double pDz,double pAlpha,double pTheta,double pPhi);
   CSG* ConstructParaboloid(double pDz,double pR1,double pR2,int nstack,int nslice);
   void ParaboloidAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double k1,double k2);
+  CSG* ConstructPolycone(double pSPhi,double pDPhi,std::vector<double> pZpl,std::vector<double> pRMin,std::vector<double> pRMax,int nslice);
+  void PolyconeAppendVertex(std::vector<Vertex*>& vertices,double theta,double z,double r);
 };
 
 struct ZSection{
