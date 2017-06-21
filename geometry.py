@@ -270,20 +270,38 @@ class RPP(Body):
         parameter_names =  ['x_min', 'x_max', 'y_min',
                             'y_max', 'z_min', 'z_max']
         self.parameters = Parameters(zip(parameter_names, parameters))
+        # Hidden versions of these parameters which can be reassigned
+        self._x_min = self.parameters.x_min
+        self._x_max = self.parameters.x_max
+        self._y_min = self.parameters.y_min
+        self._y_max = self.parameters.y_max
+        self._z_min = self.parameters.z_min
+        self._z_max = self.parameters.z_max
+
+    def _apply_extent(self, extent):
+        if self._x_min < MINTOL * extent.lower.x:
+            self._x_min = MINTOL * extent.lower.x
+        if self._x_max > MINTOL * extent.upper.x:
+            self._x_max = MINTOL * extent.upper.x
+        if self._y_min < MINTOL * extent.lower.y:
+            self._y_min = MINTOL * extent.lower.y
+        if self._y_max > MINTOL * extent.upper.y:
+            self._y_max = MINTOL * extent.upper.y
+        if self._z_min < MINTOL * extent.lower.z:
+            self._z_min = MINTOL * extent.lower.z
+        if self._z_max > MINTOL * extent.upper.z:
+            self._z_max = MINTOL * extent.upper.z
 
     def centre(self):
         """
         Return the coordinates of the centre of the Rectangular
         Parallelepiped (cuboid).
+
         """
 
-        centre_x = 0.5 * (self.parameters.x_max + self.parameters.x_min)
-        centre_y = 0.5 * (self.parameters.y_max + self.parameters.y_min)
-        centre_z = 0.5 * (self.parameters.z_max + self.parameters.z_min)
-
-        centre = vector.Three(centre_x, centre_y, centre_z)
-
-        return centre
+        return 0.5 * vector.Three(self._x_min + self._x_max,
+                                  self._y_min + self._y_max,
+                                  self._z_min + self._z_max)
 
     def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
@@ -301,9 +319,9 @@ class RPP(Body):
         """
         Construct a pygdml Box from this body definition
         """
-        x_length = abs(self.parameters.x_max - self.parameters.x_min)
-        y_length = abs(self.parameters.y_max - self.parameters.y_min)
-        z_length = abs(self.parameters.z_max - self.parameters.z_min)
+        x_length = self._x_max - self._x_min
+        y_length = self._y_max - self._y_min
+        z_length = self._z_max - self._z_min
 
         return _pygdml.solid.Box(self.name,
                                  0.5 * x_length,
