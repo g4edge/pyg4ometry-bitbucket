@@ -32,8 +32,8 @@ class Tet(_SolidBase) :
 
 
     def pycsgmesh(self):
-        vert_ancr = _Vertex(_Vector(self.anchor[0], self.anchor[1], self.anchor[2]), None)
-        base      = [self.p2, self.p3, self.p4]
+        vert_ancr = _Vertex(_Vector(self.p4[0], self.p4[1], self.p4[2]), None)
+        base      = [self.anchor, self.p2, self.p3]
         vert_base = []
         
         for i in range(len(base)):
