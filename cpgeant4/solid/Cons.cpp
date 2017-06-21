@@ -1,20 +1,6 @@
-#include <CSGMesh.h>
-#include <Solids.h>
-#include <SolidBase.h>
-#include <Vector.h>
-#include <Wedge.h>
+#include "Cons.h"
 
-class Cons: public SolidBase{
-  public:
-  Cons(std::string name, _pRmin1,  _pRmax1,  _pRmin2, _pRmax2,  _pDz,  _pSPhi,  _pDPhi):
-    SolidBase(name,"Cons"), pRmin1(_pRmin1),  pRmax1(_pRmax1),  pRmin2(_pRmin2), pRmax2(_pRmax2),  pDz(_pDz),  pSPhi(_pSPhi),  pDPhi(_pDPhi);
-  {
-    SetMesh(CSGMesh::ConstructCons( pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pDPhi));
-  }
-  const double pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pDPhi;
-};
-
-CSG* CSGMesh::ConstructCons( pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pDPhi){
+CSG* CSGMesh::ConstructCons(double pRmin1,double pRmax1,double pRmin2,double pRmax2,double pDz,double pSPhi,double pDPhi){
   double R1,r1,R2,r2;
   double factor;
   if(pRmax1 < pRmax2){
@@ -49,17 +35,17 @@ CSG* CSGMesh::ConstructCons( pRmin1,  pRmax1,  pRmin2, pRmax2,  pDz,  pSPhi,  pD
 
   CSG* pWedge; 
   if( pDPhi != 2.0*M_PI ){
-    Wedge* wedge = new Wedge("wedge_temp",wrmax,pSPhi,pSPhi+pDPhi,wzlength);
+    SolidBase* wedge = new Wedge("wedge_temp",wrmax,pSPhi,pSPhi+pDPhi,wzlength);
     pWedge = wedge->GetMesh();
   }
   else{
     pWedge = Solids::Cylinder(5.*pDz,5.*R1);
   }
 
-  Plane* TopCutPlane = new Plane("pTopCut_temp",new Vector(0.0,0.0,1.0),pDz,wzlength);
+  G4Plane* TopCutPlane = new G4Plane("pTopCut_temp",new Vector(0.0,0.0,1.0),pDz,wzlength);
   CSG* pTopCut = TopCutPlane->GetMesh();
 
-  Plane* BotCutPlane = new Plane("pBotCut_temp",new Vector(0.0,0.0,-1.0),-pDz,wzlength);
+  G4Plane* BotCutPlane = new G4Plane("pBotCut_temp",new Vector(0.0,0.0,-1.0),-pDz,wzlength);
   CSG* pBotCut = BotCutPlane->GetMesh();
 
   CSG* mesh;
