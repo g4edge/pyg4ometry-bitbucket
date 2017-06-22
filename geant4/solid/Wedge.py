@@ -5,6 +5,8 @@ from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Polygon as _Polygon
 import numpy as _np
 
+from copy import deepcopy as _dc
+
 class Wedge(_SolidBase) :
 
     def __init__(self, name, pRMax = 1000, pSPhi=0, pDPhi=1.5, halfzlength=10000):
@@ -44,17 +46,17 @@ class Wedge(_SolidBase) :
         for i in range(0,len(x)) :
             if i != len(x)-1 :
                 # top triangle
-                polygons.append(_Polygon([vZero2,p2[i],p2[i+1]]))
+                polygons.append(_Polygon([_dc(vZero2),_dc(p2[i]),_dc(p2[i+1])]))
                 # bottom triangle
-                polygons.append(_Polygon([vZero1,p1[i],p1[i+1]]))
+                polygons.append(_Polygon([_dc(vZero1),_dc(p1[i]),_dc(p1[i+1])]))
                 # end square
-                polygons.append(_Polygon([p1[i],p1[i+1],p2[i+1],p2[i]]))
+                polygons.append(_Polygon([_dc(p1[i]),_dc(p1[i+1]),_dc(p2[i+1]),_dc(p2[i])]))
 
         # first end face
-        polygons.append(_Polygon([vZero1,p1[0],p2[0], vZero2]))
+        polygons.append(_Polygon([_dc(vZero1),_dc(p1[0]),_dc(p2[0]),_dc(vZero2)]))
 
         # last end face
-        polygons.append(_Polygon([vZero1,vZero2,p2[-1],p1[-1]]))
+        polygons.append(_Polygon([_dc(vZero1),_dc(vZero2),_dc(p2[-1]),_dc(p1[-1])]))
 
         self.mesh = _CSG.fromPolygons(polygons)
 
