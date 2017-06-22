@@ -274,7 +274,8 @@ class Model(object):
         for region_name, region in self.regions.iteritems():
             regions[region_name] = region.extent()
             print "Meshing Region: {} ...".format(region_name)
-            # if len(region.zones) > 1
+            if len(region.zones) == 1:
+                continue
             for zone_no, zone in region.zones.iteritems():
                 print "Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                 zone_no)
