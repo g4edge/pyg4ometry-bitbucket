@@ -19,6 +19,9 @@ import vector
 # resulting mesh.
 MINTOL = 1.05
 
+class Null(object):
+    pass
+
 class Body(object):
     """A class representing a body as defined in Fluka.
     get_body_as_gdml_solid() returns the body as a pygdml.solid
@@ -84,8 +87,14 @@ class Body(object):
         if isinstance(scale, (float, int)):
             self._apply_crude_scale(scale)
         elif isinstance(scale, Body):
-            extent = self._get_overlap(scale)
-            self._apply_extent(extent)
+            try:
+                extent = self._get_overlap(scale)
+                self._apply_extent(extent)
+            except _pygdml.NullMeshError:
+                # In this event, there's a body in the zone definition
+                # which serves "no purpose", i.e., it's a subtraction
+                # outside of the resulting solid.  Return Null.
+                return Null()
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
         return self
@@ -112,30 +121,30 @@ class Body(object):
         extent = intersection._extent()
         return extent
 
-    def intersect(self, other=None):
+    def intersect(self, other=Null()):
         """
         Intersect this solid with another solid.
 
         """
-        if other is None:
+        if isinstance(other, Null):
             return self
         return self + other
 
-    def subtract(self, other=None):
+    def subtract(self, other=Null()):
         """
         Subtract from this solid another solid.
 
         """
-        if other is None:
+        if isinstance(other, Null):
             return self
         return self - other
 
-    def union(self, other=None):
+    def union(self, other=Null()):
         """
         Boolean union of this solid with another solid.
 
         """
-        if other is None:
+        if isinstance(other, Null):
             return self
         return self | other
 
@@ -1378,7 +1387,7 @@ class Zone(object):
         # single Boolean and returned.  Calling this function is
         # dependent on the extents/scales being set for this zones's
         # bodies and subzones, hence why it is hidden.
-        accumulated = None # An intersection with None is just self..
+        accumulated = Null() # An intersection with Null() is just self..
         for body in self.contains:
             if isinstance(body, Body):
                 accumulated = body.intersect(accumulated)
