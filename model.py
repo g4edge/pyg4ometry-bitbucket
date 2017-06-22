@@ -282,7 +282,9 @@ class Model(object):
                 regions["{}_{}".format(region_name, zone_no)] = zone.extent()
 
         if pickle is True:
-            pickle_name = "./{}_survey.pickle".format(self._filename)
+            pickle_name = "./{}_survey.pickle".format(
+                os.path.basename(os.path.splitext(self._filename)[0])
+            )
             with open(pickle_name, 'w') as pickle_file:
                 cPickle.dump(regions, pickle_file)
         return regions
