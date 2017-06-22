@@ -20,9 +20,10 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     wedgeSolid3    = _g4.solid.Wedge('wedge3',35,1.5,4.5,10)
     wedgeLogical3  = _g4.LogicalVolume(wedgeSolid3,'G4_Cu','wedgeLogical3')
     wedgePhysical3 = _g4.PhysicalVolume([0,0,0],[0,70,0], wedgeLogical3,'wedgePhysical3',worldLogical)
+    
 
-    wedgeSolid4    = _g4.solid.Wedge('wedge4',15,_np.pi,3.*_np.pi/2.,8)
-    wedgeLogical4  = _g4.LogicalVolume(wedgeSolid1,'G4_Cu','wedgeLogical4')
+    wedgeSolid4    = _g4.solid.Wedge('wedge4',15,0,3.*_np.pi/2.,8)
+    wedgeLogical4  = _g4.LogicalVolume(wedgeSolid4,'G4_Cu','wedgeLogical4')
     wedgePhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], wedgeLogical4,'wedgePhysical4',worldLogical)
     
     # clip the world logical volume
