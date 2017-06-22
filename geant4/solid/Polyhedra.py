@@ -20,7 +20,7 @@ class Polyhedra(_SolidBase) :
           rOuter:     list, tangent distance to outer surface per z plane
           
         """
-        self.type       = 'polyhedra'
+        self.type       = 'Polyhedra'
         self.name       = name
         self.phiStart   = phiStart
         self.phiTotal   = phiTotal
@@ -32,24 +32,17 @@ class Polyhedra(_SolidBase) :
         self.mesh = None
         _registry.addSolid(self)
 
-
     def pycsgmesh(self):
-#        if self.mesh :
-#            return self.mesh
-
         self.basicmesh()
-        self.csgmesh()
-
         return self.mesh
 
     def basicmesh(self):
         fillfrac  = self.phiTotal/(2*_np.pi)
         slices    = (self.numSide)/fillfrac 
         
-        ph        = _Polycone(self.name, self.phiStart, self.phiTotal, self.zPlane, self.rInner, self.rOuter, nslice=int(_np.ceil(slices)))
+        ph        = _Polycone(self.name, self.phiStart, self.phiTotal,
+                              self.zPlane, self.rInner, self.rOuter,
+                              nslice=int(_np.ceil(slices)), register=False)
         self.mesh = ph.pycsgmesh()
 
-        return self.mesh
-
-    def csgmesh(self):
         return self.mesh
