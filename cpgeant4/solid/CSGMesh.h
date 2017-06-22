@@ -37,6 +37,7 @@ namespace CSGMesh{
   CSG* ConstructEllipticalTube(double pDx,double pDy,double pDz,int nslice,int nstack);
   void EllipticalTubeAppendVertex(std::vector<Vertex*> vertices,double theta,double z,double dx,double dy,Vector* norm);
 
+  CSG* ConstructUnion(CSG* mesh1,CSG* mesh2,Vector* anglevec,Vector* transvec);
 };
 
 struct ZSection{

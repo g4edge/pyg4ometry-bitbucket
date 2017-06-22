@@ -15,3 +15,11 @@ void SolidBase::SetMesh(CSG* _mesh){
 CSG* SolidBase::GetMesh(){
   return mesh;
 }
+
+std::string SolidBase::GetName(){
+  return name;
+}
+
+std::string SolidBase::GetType() {
+  return type;
+}

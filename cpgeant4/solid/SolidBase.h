@@ -10,6 +10,8 @@ class SolidBase{
     virtual ~SolidBase();
     void SetMesh(CSG* _mesh);
     CSG* GetMesh();
+    std::string GetName();
+    std::string GetType();
   private:
     std::string name;
     std::string type;
