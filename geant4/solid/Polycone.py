@@ -96,18 +96,20 @@ class Polycone(_SolidBase) :
             i2 = i0 + 1
             vertices_t = []
             vertices_b = []
-            
-            appendVertex(vertices_t, i2 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMin[-1]+offs)
-            appendVertex(vertices_t, i0 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMin[-1]+offs)
-            appendVertex(vertices_t, i0 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMax[-1]+offs)
-            appendVertex(vertices_t, i2 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMax[-1]+offs)        
-            polygons.append(_Polygon(vertices_t))
 
-            appendVertex(vertices_b, i0 * dPhi + self.pSPhi, self.pZpl[0], self.pRMin[0]+offs)
-            appendVertex(vertices_b, i2 * dPhi + self.pSPhi, self.pZpl[0], self.pRMin[0]+offs)
-            appendVertex(vertices_b, i2 * dPhi + self.pSPhi, self.pZpl[0], self.pRMax[0]+offs)
-            appendVertex(vertices_b, i0 * dPhi + self.pSPhi, self.pZpl[0], self.pRMax[0]+offs)        
-            polygons.append(_Polygon(vertices_b))
+            if self.pRMin[-1] or self.pRMax[-1]:
+                appendVertex(vertices_t, i2 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMin[-1]+offs)
+                appendVertex(vertices_t, i0 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMin[-1]+offs)
+                appendVertex(vertices_t, i0 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMax[-1]+offs)
+                appendVertex(vertices_t, i2 * dPhi + self.pSPhi, self.pZpl[-1], self.pRMax[-1]+offs)        
+                polygons.append(_Polygon(_dc(vertices_t)))
+
+            if self.pRMin[0] or self.pRMax[0]:
+                appendVertex(vertices_b, i0 * dPhi + self.pSPhi, self.pZpl[0], self.pRMin[0]+offs)
+                appendVertex(vertices_b, i2 * dPhi + self.pSPhi, self.pZpl[0], self.pRMin[0]+offs)
+                appendVertex(vertices_b, i2 * dPhi + self.pSPhi, self.pZpl[0], self.pRMax[0]+offs)
+                appendVertex(vertices_b, i0 * dPhi + self.pSPhi, self.pZpl[0], self.pRMax[0]+offs)        
+                polygons.append(_Polygon(_dc(vertices_b)))
 
         self.mesh     = _CSG.fromPolygons(polygons)
 
