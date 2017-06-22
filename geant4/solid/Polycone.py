@@ -119,7 +119,7 @@ class Polycone(_SolidBase) :
         
         if self.pDPhi != 2*_np.pi:
             pWedge = _Wedge("wedge_temp",wrmax, self.pSPhi, self.pDPhi+self.pSPhi, wzlength).pycsgmesh()
-            self.mesh = pWedge.intersect(self.mesh)
+            self.mesh = self.mesh.intersect(pWedge)
 
         return self.mesh
         
