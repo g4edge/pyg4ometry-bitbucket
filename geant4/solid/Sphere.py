@@ -6,6 +6,7 @@ from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 import numpy as _np
 import sys as _sys
+from copy import deepcopy as _dc
 
 class Sphere(_SolidBase) :
     def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 8, nstack = 8) :
@@ -100,7 +101,7 @@ class Sphere(_SolidBase) :
                 appendVertex(vertices, i0 * dTheta + sthe, j0 * dPhi + sphi, r)
                 appendVertex(vertices, i1 * dTheta + sthe, j1 * dPhi + sphi, r)
                 appendVertex(vertices, i0 * dTheta + sthe, j1 * dPhi + sphi, r)
-                polygons.append(_Polygon(vertices))
+                polygons.append(_Polygon(_dc(vertices)))
                 
         if topPoleIn:
             j0 = stacks - 1
@@ -115,7 +116,7 @@ class Sphere(_SolidBase) :
                 appendVertex(vertices, i0 * dTheta + sthe, j0 * dPhi + sphi, r)
                 appendVertex(vertices, i1 * dTheta + sthe, j0 * dPhi + sphi, r)
                 appendVertex(vertices, i0 * dTheta + sthe, j1 * dPhi + sphi, r)
-                polygons.append(_Polygon(vertices))
+                polygons.append(_Polygon(_dc(vertices)))
             
         for j0 in range(botPoleIn, stacks - topPoleIn):
             j1 = j0 + 0.5
@@ -132,22 +133,22 @@ class Sphere(_SolidBase) :
                 appendVertex(verticesN, i1 * dTheta + sthe, j1 * dPhi + sphi, r)
                 appendVertex(verticesN, i2 * dTheta + sthe, j2 * dPhi + sphi, r)
                 appendVertex(verticesN, i0 * dTheta + sthe, j2 * dPhi + sphi, r)
-                polygons.append(_Polygon(verticesN))
+                polygons.append(_Polygon(_dc(verticesN)))
                 verticesS = []
                 appendVertex(verticesS, i1 * dTheta + sthe, j1 * dPhi + sphi, r)
                 appendVertex(verticesS, i0 * dTheta + sthe, j0 * dPhi + sphi, r)
                 appendVertex(verticesS, i2 * dTheta + sthe, j0 * dPhi + sphi, r)
-                polygons.append(_Polygon(verticesS))
+                polygons.append(_Polygon(_dc(verticesS)))
                 verticesW = []
                 appendVertex(verticesW, i1 * dTheta + sthe, j1 * dPhi + sphi, r)
                 appendVertex(verticesW, i0 * dTheta + sthe, j2 * dPhi + sphi, r)
                 appendVertex(verticesW, i0 * dTheta + sthe, j0 * dPhi + sphi, r)
-                polygons.append(_Polygon(verticesW))
+                polygons.append(_Polygon(_dc(verticesW)))
                 verticesE = []
                 appendVertex(verticesE, i1 * dTheta + sthe, j1 * dPhi + sphi, r)
                 appendVertex(verticesE, i2 * dTheta + sthe, j0 * dPhi + sphi, r)
                 appendVertex(verticesE, i2 * dTheta + sthe, j2 * dPhi + sphi, r)
-                polygons.append(_Polygon(verticesE))
+                polygons.append(_Polygon(_dc(verticesE)))
 
         for i0 in range(0, slices):
             i1 = i0 + 1
@@ -157,7 +158,7 @@ class Sphere(_SolidBase) :
                 appendVertex(vertices, i1 * dTheta + sthe, stacks * dPhi+sphi, r)
                 appendVertex(vertices, 0.0, 0.0, 0.0)
                 appendVertex(vertices, i0 * dTheta + sthe, stacks * dPhi+sphi, r)
-                polygons.append(_Polygon(vertices))
+                polygons.append(_Polygon(_dc(vertices)))
                 
             vertices = []
             
@@ -165,7 +166,7 @@ class Sphere(_SolidBase) :
                 appendVertex(vertices, i0 * dTheta + sthe, sphi, r)
                 appendVertex(vertices, 0.0, 0.0, 0.0)
                 appendVertex(vertices, i1 * dTheta + sthe, sphi, r)
-                polygons.append(_Polygon(vertices))
+                polygons.append(_Polygon(_dc(vertices)))
 
 
         if self.pDTheta%(2*_np.pi) != 0:
@@ -176,14 +177,14 @@ class Sphere(_SolidBase) :
                 appendVertex(vertices, sthe, j1 * dPhi + sphi, r)
                 appendVertex(vertices, 0.0, 0.0, 0.0)
                 appendVertex(vertices, sthe, j0 * dPhi + sphi, r)
-                polygons.append(_Polygon(vertices))
+                polygons.append(_Polygon(_dc(vertices)))
 
                 vertices = []
 
                 appendVertex(vertices, slices * dTheta + sthe, j0 * dPhi + sphi, r)
                 appendVertex(vertices, 0, 0, 0)
                 appendVertex(vertices, slices * dTheta + sthe, j1 * dPhi + sphi, r)
-                polygons.append(_Polygon(vertices))
+                polygons.append(_Polygon(_dc(vertices)))
 
         
         self.mesh = _CSG.fromPolygons(polygons)
