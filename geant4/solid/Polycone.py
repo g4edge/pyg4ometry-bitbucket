@@ -6,6 +6,7 @@ from pygeometry.pycsg.geom import Polygon as _Polygon
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
 import numpy as _np
+from copy import deepcopy as _dc
 
 
 class Polycone(_SolidBase) :
@@ -88,7 +89,7 @@ class Polycone(_SolidBase) :
                     appendVertex(vertices, k1 * dPhi + self.pSPhi, self.pZpl[j2], r2)
                     appendVertex(vertices, k0 * dPhi + self.pSPhi, self.pZpl[j2], r2)
                     
-                    polygons.append(_Polygon(vertices))
+                    polygons.append(_Polygon(_dc(vertices)))
 
         for i0 in range(slices):
             i1 = i0 + 0.5
