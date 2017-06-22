@@ -1,5 +1,5 @@
-#ifndef __HYPE_H__
-#define __HYPE_H__
+#ifndef HYPE_H
+#define HYPE_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

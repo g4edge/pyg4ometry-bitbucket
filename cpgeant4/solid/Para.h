@@ -1,5 +1,5 @@
-#ifndef __PARA_H__
-#define __PARA_H__
+#ifndef PARA_H
+#define PARA_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

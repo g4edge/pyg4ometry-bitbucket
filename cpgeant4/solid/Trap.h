@@ -1,5 +1,5 @@
-#ifndef __TRAP_H__
-#define __TRAP_H__
+#ifndef TRAP_H
+#define TRAP_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "Vector.h"

@@ -1,5 +1,5 @@
-#ifndef __WEDGE_H__
-#define __WEDGE_H__
+#ifndef WEDGE_H
+#define WEDGE_H
 #include "CSGMesh.h"
 #include "SolidBase.h"
 #include "Vertex.h"

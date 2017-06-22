@@ -1,5 +1,5 @@
-#ifndef __SOLID_BASE_H__
-#define __SOLID_BASE_H__
+#ifndef SOLID_BASE_H
+#define SOLID_BASE_H
 #include <string>
 #include <CSG.h>
 

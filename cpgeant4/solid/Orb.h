@@ -1,5 +1,5 @@
-#ifndef __ORB_H__
-#define __ORB_H__
+#ifndef ORB_H
+#define ORB_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

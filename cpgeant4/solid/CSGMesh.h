@@ -1,5 +1,5 @@
-#ifndef __CSG_MESH_H__
-#define __CSG_MESH_H__
+#ifndef CSG_MESH_H
+#define CSG_MESH_H
 #include "CSG.h"
 #include "Vector.h"
 
