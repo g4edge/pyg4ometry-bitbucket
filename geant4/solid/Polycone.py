@@ -9,7 +9,7 @@ import numpy as _np
 
 
 class Polycone(_SolidBase) :
-    def __init__(self, name, pSPhi, pDPhi, pZpl, pRMin, pRMax, nslice=16) :
+    def __init__(self, name, pSPhi, pDPhi, pZpl, pRMin, pRMax, nslice=16, register=True) :
         """
         Constructs a solid of rotation using an arbitrary 2D surface. 
 
@@ -19,7 +19,10 @@ class Polycone(_SolidBase) :
           pDPhi:  float, total rotation angle in radius
           pZPlns: list, z-positions of planes used 
           pRInr : list, inner radii of surface at each z-plane
-          pROut : list, outer radii of surface at each z-plane 
+          pROut : list, outer radii of surface at each z-plane
+
+          Optional registration as this solid is used as a temporary solid
+          in Polyhedra and needn't be always registered.
         """
         self.type    = 'Polycone'
         self.name    = name
@@ -30,7 +33,8 @@ class Polycone(_SolidBase) :
         self.pRMax   = pRMax
         self.nslice  = nslice
         self.mesh = None
-        _registry.addSolid(self)
+        if register:
+            _registry.addSolid(self)
 
     def pycsgmesh(self):
 
