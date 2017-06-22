@@ -293,16 +293,40 @@ class Writer(object):
         oe.setAttribute('rhi', str(instance.pR2))
         oe.setAttribute('dz', str(instance.pDz))        
         self.solids.appendChild(oe)
+
+    def createzPlane(self, rInner, rOuter, zplane):
+        d = self.doc.createElement('zplane')
+        d.setAttribute('rmin',str(rInner))
+        d.setAttribute('rmax', str(rOuter))
+        d.setAttribute('z', str(zplane))
+        return d
     
     def writePolycone(self, instance):
-        #TBC
-        oe = self.doc.createElement('polycone')
+        oe = self.doc.createElement('polycone')        
         oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('startphi',str(instance.pSPhi))
+        oe.setAttribute('deltaphi',str(instance.pDPhi))
 
+        i = instance
+        for w,x,y in zip(i.pRMin, i.pRMax, i.pZpl):
+            d = self.createzPlane(w,x,y)
+            oe.appendChild(d)
+
+        self.solids.appendChild(oe)
+        
     def writePolyhedra(self, instance):
-        #TBC
         oe = self.doc.createElement('polyhedra')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('startphi',str(instance.phiStart))
+        oe.setAttribute('deltaphi',str(instance.phiTotal))
+        oe.setAttribute('numsides',str(instance.numSide))
+        
+        i = instance
+        for w,x,y in zip(i.rInner, i.rOuter, i.zPlane):
+            d = self.createzPlane(w,x,y)
+            oe.appendChild(d)
+
+        self.solids.appendChild(oe)             
 
     def writeSphere(self, instance):
         oe = self.doc.createElement('sphere')
