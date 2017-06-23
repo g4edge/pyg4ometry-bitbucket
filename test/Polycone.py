@@ -27,6 +27,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     polyconePhysical2 = _g4.PhysicalVolume([0,0,0],[-50,0,0],polyconeLogical2,'polyconePhysical2',worldLogical)
     
     
+    
     #Cylinder example:
     polyconeSolid3    = _g4.solid.Polycone("polycone_solid3", 0, 2*_np.pi,
                                            [5,7,9,11,25,27,29,31,35],
@@ -51,7 +52,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
                                            [5,5,5,5,5,5,5,5,5],
                                            [10,10,10,10,10,10,10,10,10])
     polyconeLogical5  = _g4.LogicalVolume(polyconeSolid5,'G4_Cu','polyconeLogical5')
-    polyconePhysical5 = _g4.PhysicalVolume([0,0,0],[0,0,0],polyconeLogical5,'polyconePhysical5',worldLogical)
+    polyconePhysical5 = _g4.PhysicalVolume([0,0,0],[-50,50,0],polyconeLogical5,'polyconePhysical5',worldLogical)
     
 
     #Polycone cut out of a cylinder:
