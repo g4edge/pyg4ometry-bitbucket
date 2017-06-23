@@ -1317,19 +1317,21 @@ class Zone(object):
                     + zip(no_excludes * ['-'], excludes)))
 
     def __repr__(self):
-        contains_bodies = ' '.join([('+{}').format(space.name)
+        contains_bodies = ' '.join([('+{}[{}]').format(space.name,
+                                                       type(space).__name__)
                                     for space in self.contains if
                                     isinstance(space, Body)])
-        excludes_bodies = ' '.join([('-{}').format(space.name)
+        excludes_bodies = ' '.join([('-{}[{}]').format(space.name,
+                                                       type(space).__name__)
                                     for space in self.excludes if
                                     isinstance(space, Body)])
-        contains_zones = ' '.join(['+({})'.format(repr(space))
+        contains_zones = ' '.join(['\n+({})'.format(repr(space))
                                    for space in self.contains if
                                    isinstance(space, Zone)])
-        excludes_zones = ' '.join(['-({})'.format(repr(space))
+        excludes_zones = ' '.join(['\n-({})'.format(repr(space))
                                    for space in self.excludes if
                                    isinstance(space, Zone)])
-        return "{} {}{}{}".format(contains_bodies,
+        return "{}{}{}{}".format(contains_bodies,
                                  excludes_bodies,
                                  contains_zones,
                                  excludes_zones)
