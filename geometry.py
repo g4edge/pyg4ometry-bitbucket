@@ -936,8 +936,8 @@ class YCC(Body):
 
     parameters:
 
-    centre_x    -- x-coordinate of the centre of the cylinder
     centre_z    -- z-coordinate of the centre of the cylinder
+    centre_x    -- x-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
     def __init__(self, name,
