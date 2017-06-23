@@ -73,7 +73,7 @@ class Model(object):
           definitions.  By default the geometry will be optimised.
 
         """
-        self._generate_mesh(region_names, setclip=True, optimise=optimise)
+        self._generate_mesh(regions, setclip=True, optimise=optimise)
         if out_path is None:
             out_path = ("./"
                         + os.path.basename(os.path.splitext(self._filename)[0])
@@ -122,20 +122,32 @@ class Model(object):
         world_mesh = self._world_volume.pycsgmesh()
         return world_mesh
 
-    def _compose_world_volume(self, region_names, optimise):
+    def _compose_world_volume(self, regions, optimise):
         """Add the region or regions in region_names to the world volume, only
         if not already added.
 
+        If regions is None:  do all regions
+        If regions is a string:  do just that one region
+        If regions is a list of strings:  do those
+        If regions is a dict of region names with zone numbers:  Do
+        those regions but only the zones in the list.
+
         """
-        if region_names is None:
-            region_names = self.regions.keys()
-        # Coerce a string to a single-element list.
-        elif isinstance(region_names, basestring):
-            region_names = [region_names]
-        # if the world volume consists of different regions to the
-        # ones requested, then redo it with the requested volumes.
         self._world_volume = Model._gdml_world_volume()
-        for index, region_name in enumerate(region_names):
+        if regions is None:
+            regions = self.regions.keys()
+        # Coerce a string to a single-element list.
+        elif isinstance(regions, basestring):
+            regions = [regions]
+        elif isinstance(regions, dict):
+            for region_name, zone_nos in regions.iteritems():
+                # print "Adding region {}, zones {}".format(region_name, zone_nos
+                self.regions[region_name].add_to_volume(self._world_volume,
+                                                        optimise=optimise,
+                                                        zones=zone_nos)
+            return None
+
+        for index, region_name in enumerate(regions):
             print "Adding region: \"{}\"  ...".format(region_name)
             self.regions[region_name].add_to_volume(self._world_volume,
                                                     optimise=optimise)
