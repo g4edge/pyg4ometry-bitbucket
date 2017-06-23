@@ -1254,7 +1254,7 @@ class Region(object):
         elif isinstance(zones, list):
             zones = [self.zones[key] for key in zones]
         else:
-            raise TypeError("Unknown zone selection type: ".format(type(zones)))
+            raise TypeError("Unknown zone selection type: {}".format(type(zones)))
         return zones
 
     def extent(self, zones=None):
