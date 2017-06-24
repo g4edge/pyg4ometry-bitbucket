@@ -78,8 +78,7 @@ class Body(object):
                               False,
                               "G4_Galactic")
 
-
-    def resize(self, scale):
+    def _resize(self, scale):
         """Return this instance bounded or extented according to the
         parameter "scale".
 
@@ -100,7 +99,7 @@ class Body(object):
         return self
 
     def __call__(self, scale):
-        return self.resize(scale)
+        return self._resize(scale)
 
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
@@ -1379,7 +1378,7 @@ class Zone(object):
     def _map_extent_2_bodies(self, bodies, extent):
         for body in bodies:
             if isinstance(body, Body):
-                body.resize(extent)
+                body._resize(extent)
             elif isinstance(body, Zone):
                 body._map_extent_2_bodies(body.contains, extent)
                 body._map_extent_2_bodies(body.excludes, extent)
