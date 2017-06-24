@@ -19,9 +19,6 @@ import vector
 # resulting mesh.
 MINTOL = 1.05
 
-class Null(object):
-    pass
-
 class Body(object):
     """A class representing a body as defined in Fluka.
     get_body_as_gdml_solid() returns the body as a pygdml.solid
@@ -120,30 +117,30 @@ class Body(object):
         extent = intersection._extent()
         return extent
 
-    def intersect(self, other=Null()):
+    def intersect(self, other):
         """
         Intersect this solid with another solid.
 
         """
-        if isinstance(other, Null):
+        if other == _NULL:
             return self
         return self + other
 
-    def subtract(self, other=Null()):
+    def subtract(self, other):
         """
         Subtract from this solid another solid.
 
         """
-        if isinstance(other, Null):
+        if other == _NULL:
             return self
         return self - other
 
-    def union(self, other=Null()):
+    def union(self, other):
         """
         Boolean union of this solid with another solid.
 
         """
-        if isinstance(other, Null):
+        if other == _NULL:
             return self
         return self | other
 
@@ -1388,7 +1385,7 @@ class Zone(object):
         # single Boolean and returned.  Calling this function is
         # dependent on the extents/scales being set for this zones's
         # bodies and subzones, hence why it is hidden.
-        accumulated = Null() # An intersection with Null() is just self..
+        accumulated = _NULL # An intersection with _NULL is just self..
         for body in self.contains:
             if isinstance(body, Body):
                 accumulated = body.intersect(accumulated)
@@ -1568,3 +1565,10 @@ code_meanings = {
     "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
     "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
 }
+
+# Module level constant which when intersected with another body
+# returns the other body, when subtracted from another body returns
+# the other body, and when unioned with another body returns the other
+# body.  This is useful for accumulations and not a great deal else.
+_NULL = Body("Null")
+_NULL._is_omittable = True
