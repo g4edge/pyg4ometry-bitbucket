@@ -1,0 +1,22 @@
+TITLE
+wooo a title
+GEOBEGIN                                                              COMBNAME
+    0    0
+YZP redunx +10000.
+YZP yzp1 +1010.
+YZP yzp2 +990.
+!
+XZP reduny +10000.
+XZP xzp1 +1010.
+XZP xzp2 +990.
+!
+XYP redunz +10000.
+XYP xyp1 +1010.
+XYP xyp2 +990.
+END
+yzp 5 +redunx +yzp1 -yzp2
+xzp 5 +reduny +xzp1 -xzp2
+xyp 5 +redunz +xyp1 -xyp2
+END
+GEOEND
+ASSIGNMA        IRON   cubeinf

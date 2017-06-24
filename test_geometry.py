@@ -298,6 +298,39 @@ class TestZCC(unittest.TestCase):
 class TestZEC(unittest.TestCase):
     pass
 
+class TestRemoveRedundantBodies(unittest.TestCase, CustomAssertions):
+    def setUp(self):
+        self.model = pyfluka.model.Model(INP_PATH + "redundant_body.inp")
+
+    def test_remove_redundant_yzp(self):
+        opt_extent = self.model.regions['yzp'] \
+                               .evaluate(optimise=True) \
+                               ._extent()
+        unopt_extent = self.model.regions['yzp'] \
+                                 .evaluate(optimise=False) \
+                                 ._extent()
+        self.assertTrue(opt_extent.lower.x == opt_extent.lower.x)
+        self.assertTrue(opt_extent.upper.x == opt_extent.upper.x)
+
+    def test_remove_redundant_xzp(self):
+        opt_extent = self.model.regions['xzp'] \
+                               .evaluate(optimise=True) \
+                               ._extent()
+        unopt_extent = self.model.regions['yzp'] \
+                                 .evaluate(optimise=False) \
+                                 ._extent()
+        self.assertTrue(opt_extent.lower.y == opt_extent.lower.y)
+        self.assertTrue(opt_extent.upper.y == opt_extent.upper.y)
+
+    def test_remove_redundant_xyp(self):
+        opt_extent = self.model.regions['xyp'] \
+                               .evaluate(optimise=True) \
+                               ._extent()
+        unopt_extent = self.model.regions['yzp'] \
+                                 .evaluate(optimise=False) \
+                                 ._extent()
+        self.assertTrue(opt_extent.lower.z == opt_extent.lower.z)
+        self.assertTrue(opt_extent.upper.z == opt_extent.upper.z)
 
 def solid_less_than(solid1, solid2):
     try:
