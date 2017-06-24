@@ -33,23 +33,23 @@ class TestPLA(unittest.TestCase):
 # One:  One face lies within or on the resulting zone.
 # Other: Other faces lies within or on the resulting zone.
 
-params = [('None', 'none', tubs_extent(50, 500, [0, pi/2, 0],
-                                       [10000., 10000., 10000.])),
-          ('Both', 'both', tubs_extent(50, 200.,
-                                       [0, pi/2, 0],
-                                       [10000., 10000., 10000.])),
-          ('One', 'one', tubs_extent(50., 250., [0, pi/2, 0],
-                                     [11250., 10000., 10000.])),
-          ('Other', 'other', tubs_extent(50., 250., [0, pi/2, 0],
-                                         [11250., 10000., 10000.]))]
+# params = [('None', 'none', tubs_extent(50, 500, [0, pi/2, 0],
+#                                        [10000., 10000., 10000.])),
+#           ('Both', 'both', tubs_extent(50, 200.,
+#                                        [0, pi/2, 0],
+#                                        [10000., 10000., 10000.])),
+#           ('One', 'one', tubs_extent(50., 250., [0, pi/2, 0],
+#                                      [11250., 10000., 10000.])),
+#           ('Other', 'other', tubs_extent(50., 250., [0, pi/2, 0],
+#                                          [11250., 10000., 10000.]))]
 
-for name, param, centre in params:
-    cls_name = "TestRCC{}FacesIn".format(name)
-    globals()[cls_name] = type(cls_name, (TestRCC, unittest.TestCase), {
-        "region_name": param,
-        "centre": 1,
-        "length": 2
-    })
+# for name, param, centre in params:
+#     cls_name = "TestRCC{}FacesIn".format(name)
+#     globals()[cls_name] = type(cls_name, (TestRCC, unittest.TestCase), {
+#         "region_name": param,
+#         "centre": 1,
+#         "length": 2
+#     })
 
 class TestREC(unittest.TestCase):
     pass
