@@ -53,14 +53,14 @@ class Model(object):
         return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
                              None, 1, False, "G4_Galactic")
 
-    def write_to_gdml(self, region_names=None, out_path=None,
-                      make_gmad=False, optimise=True):
+    def write_to_gdml(self, regions=None, out_path=None,
+                      make_gmad=True, optimise=True):
         """Convert the region to GDML.
 
         Parameters
         ----------
 
-        - region_names: A name or list of names of regions to be
+        - regions: A name or list of names of regions to be
         converted to GDML.  By default, all regions will be converted.
 
         - out_path: Output path for file to be written to.  By default
