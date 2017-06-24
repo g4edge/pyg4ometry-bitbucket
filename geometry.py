@@ -43,8 +43,8 @@ class Body(object):
 
     def __init__(self,
                  name,
-                 translation,
-                 transformation):
+                 translation=None,
+                 transformation=None):
 
         self.name = name
         self._translation = translation
