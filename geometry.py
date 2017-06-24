@@ -1273,6 +1273,8 @@ class Region(object):
         boolean = self.evaluate(zones)
         return boolean._extent()
 
+    def __repr__(self):
+        return "{}<Region>".format(self.name)
 
 class Zone(object):
     """
