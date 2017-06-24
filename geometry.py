@@ -264,6 +264,9 @@ class Body(object):
             # GDML name has to start with a letter so append an "a".
             return "a" + str(_uuid4())
 
+    def __repr__(self):
+        return "{}<{}>".format(self.name, type(self).__name__)
+
 
 class RPP(Body):
     """
