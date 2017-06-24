@@ -1558,6 +1558,9 @@ class Extent(object):
                 " Upper({upper.x}, {upper.y}, {upper.z})".format(
                     upper=self.upper, lower=self.lower))
 
+    def __eq__(self, other):
+        return (self.lower == other.lower and self.upper == other.upper)
+
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
     "BOX": "General Rectangular Parallelepiped",
