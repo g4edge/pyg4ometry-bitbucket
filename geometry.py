@@ -69,6 +69,15 @@ class Body(object):
         self._scale = scale
 
     def _apply_extent(self, extent):
+        # Here handle any scaling/offset caclulation when given an
+        # extent instance.  In some cases, an intersection will contribute
+        # nothing to the resulting mesh.  If so, it is necessary to
+        # set the _is_omittable flag to guarantee the correct
+        # resultant solid.  Note: subtractions which
+        # contribute nothing will be caught at _resize upon calling
+        # _get_overlap.  This is because a redundant subtraction will
+        # result in a null mesh, which is not the case with a
+        # redundant intersection.
         pass
 
     def add_to_volume(self, volume):
@@ -103,10 +112,11 @@ class Body(object):
                 extent = self._get_overlap(scale)
                 self._apply_extent(extent)
             except _pygdml.NullMeshError:
-                # In this event, there's a body in the zone definition
-                # which serves "no purpose", i.e., it's a subtraction
-                # outside of the resulting solid.  Return Null.
-                return Null()
+                # In this event, the body is a subtraction which
+                # serves "no purpose", i.e., it's a subtraction
+                # outside of the resulting solid.  set the
+                # _is_omittable flag appropriately.
+                self._is_omittable = True
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
         return self
@@ -1409,13 +1419,15 @@ class Zone(object):
         accumulated = _NULL # An intersection with _NULL is just self..
         for body in self.contains:
             if isinstance(body, Body):
-                accumulated = body.intersect(accumulated)
+                if not body._is_omittable:
+                    accumulated = body.intersect(accumulated)
             elif isinstance(body, Zone):
                 accumulated = body._evaluate().intersect(accumulated)
 
         for body in self.excludes:
             if isinstance(body, Body):
-                accumulated = accumulated.subtract(body)
+                if not body._is_omittable:
+                    accumulated = accumulated.subtract(body)
             elif isinstance(body, Zone):
                 accumulated = accumulated.subtract(body._evaluate())
         return accumulated
