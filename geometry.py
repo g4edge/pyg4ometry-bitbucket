@@ -671,12 +671,17 @@ class XYP(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_crude_scale(self, scale):
+        self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
         self._scale_x = scale
         self._scale_y = scale
         self._scale_z = scale
 
     def _apply_extent(self, extent):
+        if (self.parameters.v_z > extent.upper.z
+            and not _np.isclose(self.parameters.v_z, extent.upper.z)):
+            self._is_omittable = True
+            return
         self._offset = vector.Three(extent.centre.x,
                                     extent.centre.y,
                                     0.0)
@@ -726,12 +731,17 @@ class XZP(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_crude_scale(self, scale):
+        self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
         self._scale_x = scale
         self._scale_y = scale
         self._scale_z = scale
 
     def _apply_extent(self, extent):
+        if (self.parameters.v_y > extent.upper.y
+            and not _np.isclose(self.parameters.v_y, extent.upper.y)):
+            self._is_omittable = True
+            return
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     extent.centre.z)
@@ -778,12 +788,17 @@ class YZP(Body):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_crude_scale(self, scale):
+        self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
         self._scale_x = scale
         self._scale_y = scale
         self._scale_z = scale
 
     def _apply_extent(self, extent):
+        if (self.parameters.v_x > extent.upper.x
+            and not _np.isclose(self.parameters.v_x, extent.upper.x)):
+            self._is_omittable = True
+            return
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     extent.centre.z)
