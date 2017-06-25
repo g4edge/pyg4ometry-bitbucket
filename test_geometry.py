@@ -303,34 +303,52 @@ class TestRemoveRedundantBodies(unittest.TestCase, CustomAssertions):
         self.model = pyfluka.model.Model(INP_PATH + "redundant_body.inp")
 
     def test_remove_redundant_yzp(self):
-        opt_extent = self.model.regions['yzp'] \
-                               .evaluate(optimise=True) \
-                               ._extent()
-        unopt_extent = self.model.regions['yzp'] \
-                                 .evaluate(optimise=False) \
-                                 ._extent()
-        self.assertTrue(opt_extent.lower.x == opt_extent.lower.x)
-        self.assertTrue(opt_extent.upper.x == opt_extent.upper.x)
+        opt = self.model.regions['yzp'].evaluate(optimise=True)
+        unopt =  self.model.regions['yzp'].evaluate(optimise=False)
+
+        opt_extent = opt._extent()
+        unopt_extent = unopt._extent()
+
+        opt_gdml_count = len(opt.gdml_primitives())
+        unopt_gdml_count = len(unopt.gdml_primitives())
+        # Just testing the thickness.  The area of the infinite plane
+        # will not be the same due to changes in the auto-scaling, but
+        # that is OK.
+        self.assertEqual(opt_extent.lower.x, unopt_extent.lower.x)
+        self.assertEqual(opt_extent.upper.x, unopt_extent.upper.x)
+        self.assertLess(opt_gdml_count, unopt_gdml_count)
 
     def test_remove_redundant_xzp(self):
-        opt_extent = self.model.regions['xzp'] \
-                               .evaluate(optimise=True) \
-                               ._extent()
-        unopt_extent = self.model.regions['yzp'] \
-                                 .evaluate(optimise=False) \
-                                 ._extent()
-        self.assertTrue(opt_extent.lower.y == opt_extent.lower.y)
-        self.assertTrue(opt_extent.upper.y == opt_extent.upper.y)
+        opt = self.model.regions['xzp'].evaluate(optimise=True)
+        unopt =  self.model.regions['xzp'].evaluate(optimise=False)
+
+        opt_extent = opt._extent()
+        unopt_extent = unopt._extent()
+
+        opt_gdml_count = len(opt.gdml_primitives())
+        unopt_gdml_count = len(unopt.gdml_primitives())
+        # Just testing the thickness.  The area of the infinite plane
+        # will not be the same due to changes in the auto-scaling, but
+        # that is OK.
+        self.assertEqual(opt_extent.lower.y, unopt_extent.lower.y)
+        self.assertEqual(opt_extent.upper.y, unopt_extent.upper.y)
+        self.assertLess(opt_gdml_count, unopt_gdml_count)
 
     def test_remove_redundant_xyp(self):
-        opt_extent = self.model.regions['xyp'] \
-                               .evaluate(optimise=True) \
-                               ._extent()
-        unopt_extent = self.model.regions['yzp'] \
-                                 .evaluate(optimise=False) \
-                                 ._extent()
-        self.assertTrue(opt_extent.lower.z == opt_extent.lower.z)
-        self.assertTrue(opt_extent.upper.z == opt_extent.upper.z)
+        opt = self.model.regions['xyp'].evaluate(optimise=True)
+        unopt =  self.model.regions['xyp'].evaluate(optimise=False)
+
+        opt_extent = opt._extent()
+        unopt_extent = unopt._extent()
+
+        opt_gdml_count = len(opt.gdml_primitives())
+        unopt_gdml_count = len(unopt.gdml_primitives())
+        # Just testing the thickness.  The area of the infinite plane
+        # will not be the same due to changes in the auto-scaling, but
+        # that is OK.
+        self.assertEqual(opt_extent.lower.z, unopt_extent.lower.z)
+        self.assertEqual(opt_extent.upper.z, unopt_extent.upper.z)
+        self.assertLess(opt_gdml_count, unopt_gdml_count)
 
 def solid_less_than(solid1, solid2):
     try:
