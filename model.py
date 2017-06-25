@@ -317,7 +317,6 @@ class FlukaBodyListener(FlukaParserListener):
     def __init__(self):
         self.bodies = dict()
 
-        self.omitted_bodies = list()
         self.body_freq_map = dict()
         self.unique_body_names = set()
         self.used_bodies_by_type = list()
@@ -335,8 +334,7 @@ class FlukaBodyListener(FlukaParserListener):
         # Apply any expansions:
         body_parameters = self.apply_expansions(body_parameters)
 
-        # Try and construct the body, if it's not implemented then add
-        # it to the list of omitted bodies.
+        # Try and construct the body, if it's not implemented then warn
         try:
             body_constructor = getattr(pyfluka.geometry, body_type)
             body = body_constructor(body_name,
@@ -351,7 +349,6 @@ class FlukaBodyListener(FlukaParserListener):
                            " of this type are used in regions, the"
                            " conversion will fail.") % body_type,
                           UserWarning)
-            self.omitted_bodies.append((body_name, body_type))
 
     def enterUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
