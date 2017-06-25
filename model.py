@@ -166,7 +166,7 @@ class Model(object):
             body_description = (
                 body
                 + " - "
-                + pyfluka.geometry.code_meanings[body]).ljust(60, '.')
+                + pyfluka.geometry.BODY_CODE_DEFINITIONS[body]).ljust(60, '.')
             print(body_description + str(count))
 
     @staticmethod

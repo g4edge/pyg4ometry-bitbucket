@@ -9,6 +9,7 @@ from math import pi
 from operator import add, or_
 import uuid
 import numpy as np
+import collections
 
 import pygdml
 import pygdml.transformation as trf
@@ -18,6 +19,38 @@ from . import vector
 # Tolerance when minimising solids.  In this case:  5% longer than the
 # resulting mesh.
 MINTOL = 1.05
+
+# Intersection/Union/Subtraction identity.
+# Intersecting/unioning/subtracting with this will simply return the
+# other body.  Used for accumulating.
+_IDENTITY_TYPE = collections.namedtuple("_IDENTITY_TYPE", [])
+_IDENTITY = _IDENTITY_TYPE()
+del _IDENTITY_TYPE
+
+BODY_CODE_DEFINITIONS = {
+    "ARB": "Abitrary Convex Polyhedron",
+    "BOX": "General Rectangular Parallelepiped",
+    "ELL": "Elippsoid of Revolution",
+    "PLA": "Generic Infinite Half-space",
+    "QUA": "Generic Quadric",
+    "RAW": "Right Angle Wedge",
+    "RCC": "Right Circular Cylinder",
+    "REC": "Right Ellitpical Cylinder",
+    "RPP": "Rectangular Parallelepiped",
+    "SPH": "Sphere",
+    "TRC": "Truncated Right Angle Cone",
+    "WED": "Right Angle Wedge",
+    "XCC": "Infinite Circular Cylinder parallel to the x-axis",
+    "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
+    "XYP": "Infinite Half-space perpendicular to the z-axis",
+    "XZP": "Infinite Half-space perpendicular to the y-axis",
+    "YCC": "Infinite Circular Cylinder parallel to the y-axis",
+    "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
+    "YZP": "Infinite Half-space perpendicular to the x-axis",
+    "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
+    "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
+}
+
 
 class Body(object):
     """A class representing a body as defined in Fluka.
@@ -148,7 +181,7 @@ class Body(object):
         Intersect this solid with another solid.
 
         """
-        if other == _NULL:
+        if other == _IDENTITY:
             return self
         return self + other
 
@@ -157,7 +190,7 @@ class Body(object):
         Subtract from this solid another solid.
 
         """
-        if other == _NULL:
+        if other == _IDENTITY:
             return self
         return self - other
 
@@ -166,7 +199,7 @@ class Body(object):
         Boolean union of this solid with another solid.
 
         """
-        if other == _NULL:
+        if other == _IDENTITY:
             return self
         return self | other
 
@@ -1478,7 +1511,7 @@ class Zone(object):
         # single Boolean and returned.  Calling this function is
         # dependent on the extents/scales being set for this zones's
         # bodies and subzones, hence why it is hidden.
-        accumulated = _NULL # An intersection with _NULL is just self..
+        accumulated = _IDENTITY # An intersection with _IDENTITY is just self..
         for body in self.contains:
             if isinstance(body, Body):
                 if not body._is_omittable:
@@ -1492,7 +1525,7 @@ class Zone(object):
                     accumulated = accumulated.subtract(body)
             elif isinstance(body, Zone):
                 accumulated = accumulated.subtract(body._evaluate())
-        assert accumulated is not _NULL
+        assert accumulated is not _IDENTITY
         return accumulated
 
     def extent(self):
@@ -1640,34 +1673,3 @@ class Extent(object):
 
     def __eq__(self, other):
         return self.lower == other.lower and self.upper == other.upper
-
-code_meanings = {
-    "ARB": "Abitrary Convex Polyhedron",
-    "BOX": "General Rectangular Parallelepiped",
-    "ELL": "Elippsoid of Revolution",
-    "PLA": "Generic Infinite Half-space",
-    "QUA": "Generic Quadric",
-    "RAW": "Right Angle Wedge",
-    "RCC": "Right Circular Cylinder",
-    "REC": "Right Ellitpical Cylinder",
-    "RPP": "Rectangular Parallelepiped",
-    "SPH": "Sphere",
-    "TRC": "Truncated Right Angle Cone",
-    "WED": "Right Angle Wedge",
-    "XCC": "Infinite Circular Cylinder parallel to the x-axis",
-    "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
-    "XYP": "Infinite Half-space perpendicular to the z-axis",
-    "XZP": "Infinite Half-space perpendicular to the y-axis",
-    "YCC": "Infinite Circular Cylinder parallel to the y-axis",
-    "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
-    "YZP": "Infinite Half-space perpendicular to the x-axis",
-    "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
-    "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
-}
-
-# Module level constant which when intersected with another body
-# returns the other body, when subtracted from another body returns
-# the other body, and when unioned with another body returns the other
-# body.  This is useful for accumulations and not a great deal else.
-_NULL = Body("Null")
-_NULL._is_omittable = True
