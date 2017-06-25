@@ -67,6 +67,7 @@ class Body(object):
         viewer.view()
 
     def _apply_crude_scale(self, scale):
+        self._is_omittable = False
         self._scale = scale
 
     def _apply_extent(self, extent):
