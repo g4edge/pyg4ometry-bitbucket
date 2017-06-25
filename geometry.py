@@ -27,30 +27,6 @@ _IDENTITY_TYPE = collections.namedtuple("_IDENTITY_TYPE", [])
 _IDENTITY = _IDENTITY_TYPE()
 del _IDENTITY_TYPE
 
-BODY_CODE_DEFINITIONS = {
-    "ARB": "Abitrary Convex Polyhedron",
-    "BOX": "General Rectangular Parallelepiped",
-    "ELL": "Elippsoid of Revolution",
-    "PLA": "Generic Infinite Half-space",
-    "QUA": "Generic Quadric",
-    "RAW": "Right Angle Wedge",
-    "RCC": "Right Circular Cylinder",
-    "REC": "Right Ellitpical Cylinder",
-    "RPP": "Rectangular Parallelepiped",
-    "SPH": "Sphere",
-    "TRC": "Truncated Right Angle Cone",
-    "WED": "Right Angle Wedge",
-    "XCC": "Infinite Circular Cylinder parallel to the x-axis",
-    "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
-    "XYP": "Infinite Half-space perpendicular to the z-axis",
-    "XZP": "Infinite Half-space perpendicular to the y-axis",
-    "YCC": "Infinite Circular Cylinder parallel to the y-axis",
-    "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
-    "YZP": "Infinite Half-space perpendicular to the x-axis",
-    "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
-    "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
-}
-
 
 class Body(object):
     """A class representing a body as defined in Fluka.

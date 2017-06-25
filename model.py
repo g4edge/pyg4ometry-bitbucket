@@ -162,11 +162,36 @@ class Model(object):
         body_and_count.sort(key=lambda i: i[1], reverse=True)
         # Print result, with alignment.
         print("Bodies used in region definitions:")
+
+        body_code_definitions = {
+            "ARB": "Abitrary Convex Polyhedron",
+            "BOX": "General Rectangular Parallelepiped",
+            "ELL": "Elippsoid of Revolution",
+            "PLA": "Generic Infinite Half-space",
+            "QUA": "Generic Quadric",
+            "RAW": "Right Angle Wedge",
+            "RCC": "Right Circular Cylinder",
+            "REC": "Right Ellitpical Cylinder",
+            "RPP": "Rectangular Parallelepiped",
+            "SPH": "Sphere",
+            "TRC": "Truncated Right Angle Cone",
+            "WED": "Right Angle Wedge",
+            "XCC": "Infinite Circular Cylinder parallel to the x-axis",
+            "XEC": "Infinite Elliptical Cylinder parallel to the x-axis",
+            "XYP": "Infinite Half-space perpendicular to the z-axis",
+            "XZP": "Infinite Half-space perpendicular to the y-axis",
+            "YCC": "Infinite Circular Cylinder parallel to the y-axis",
+            "YEC": "Infinite Elliptical Cylinder parallel to the y-axis",
+            "YZP": "Infinite Half-space perpendicular to the x-axis",
+            "ZCC": "Infinite Circular Cylinder parallel to the z-axis",
+            "ZEC": "Infinite Elliptical Cylinder parallel to the z-axis"
+        }
+
         for body, count in body_and_count:
             body_description = (
                 body
                 + " - "
-                + pyfluka.geometry.BODY_CODE_DEFINITIONS[body]).ljust(60, '.')
+                + body_code_definitions[body]).ljust(60, '.')
             print(body_description + str(count))
 
     @staticmethod
