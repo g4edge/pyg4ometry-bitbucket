@@ -148,7 +148,7 @@ class Model(object):
                                                         zones=zone_nos)
             return None
 
-        for index, region_name in enumerate(regions):
+        for region_name in regions:
             print("Adding region: \"{}\"  ...".format(region_name))
             self.regions[region_name].add_to_volume(self._world_volume,
                                                     optimise=optimise)
