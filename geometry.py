@@ -4,6 +4,7 @@ Note:  All units are in millimetres, c.f. centimetres in Fluka.
 
 """
 
+from __future__ import print_function
 from collections import namedtuple
 import math as _math
 import numpy as _np
@@ -1473,10 +1474,10 @@ class Boolean(Body):
         self.add_to_volume(world_volume)
         try:
             world_volume.pycsgmesh()
-            print "Mesh was successful."
+            print("Mesh was successful.")
         except _pygdml.solid.NullMeshError as error:
-            print error.message
-            print "Debug:  Viewing consituent solids."
+            print(error.message)
+            print("Debug:  Viewing consituent solids.")
             self._view_null_mesh(error, first, second, setclip=False)
 
     def _view_null_mesh(self, error, first, second, setclip=False):
