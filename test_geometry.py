@@ -350,6 +350,17 @@ class TestRemoveRedundantBodies(unittest.TestCase, CustomAssertions):
         self.assertEqual(opt_extent.upper.z, unopt_extent.upper.z)
         self.assertLess(opt_gdml_count, unopt_gdml_count)
 
+    def test_remove_redundant_RPP(self):
+        opt = self.model.regions['rpp'].evaluate(optimise=True)
+        unopt =  self.model.regions['rpp'].evaluate(optimise=False)
+
+        opt_extent = opt._extent()
+        unopt_extent = unopt._extent()
+
+        self.assertEqual(opt_extent, unopt_extent)
+        self.assertIsInstance(opt, geometry.RPP)
+        self.assertIsInstance(unopt, geometry.Boolean)
+
 def solid_less_than(solid1, solid2):
     try:
         return (solid1.pX < solid2.pX

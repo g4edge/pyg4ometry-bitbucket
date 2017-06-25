@@ -305,6 +305,54 @@ class RPP(Body):
         parameter_names =  ['x_min', 'x_max', 'y_min',
                             'y_max', 'z_min', 'z_max']
         self.parameters = Parameters(zip(parameter_names, parameters))
+        # Hidden versions of these parameters which can be reassigned
+        self._x_min = self.parameters.x_min
+        self._x_max = self.parameters.x_max
+        self._y_min = self.parameters.y_min
+        self._y_max = self.parameters.y_max
+        self._z_min = self.parameters.z_min
+        self._z_max = self.parameters.z_max
+
+    def _apply_extent(self, extent):
+        # Tests to check whether this RPP completely envelops the
+        # extent.  If it does, then we can safely omit it.
+        is_gt_in_x = (self.parameters.x_max > extent.upper.x
+                      and not _np.isclose(self.parameters.x_max,
+                                          extent.upper.x))
+        is_lt_in_x = (self.parameters.x_min < extent.lower.x
+                      and not _np.isclose(self.parameters.x_min,
+                                          extent.lower.x))
+        is_gt_in_y = (self.parameters.y_max > extent.upper.y
+                      and not _np.isclose(self.parameters.y_max,
+                                          extent.upper.y))
+        is_lt_in_y = (self.parameters.y_min < extent.lower.y
+                      and not _np.isclose(self.parameters.y_min,
+                                          extent.lower.y))
+        is_gt_in_z = (self.parameters.z_max > extent.upper.z
+                      and not _np.isclose(self.parameters.z_max,
+                                          extent.upper.z))
+        is_lt_in_z = (self.parameters.z_min < extent.lower.z
+                      and not _np.isclose(self.parameters.z_min,
+                                          extent.lower.z))
+        if (is_gt_in_x and is_lt_in_x
+            and is_gt_in_y and is_lt_in_y
+            and is_gt_in_z and is_lt_in_z):
+
+            self._is_omittable = True
+            return
+
+        if self._x_min < MINTOL * extent.lower.x:
+            self._x_min = MINTOL * extent.lower.x
+        if self._x_max > MINTOL * extent.upper.x:
+            self._x_max = MINTOL * extent.upper.x
+        if self._y_min < MINTOL * extent.lower.y:
+            self._y_min = MINTOL * extent.lower.y
+        if self._y_max > MINTOL * extent.upper.y:
+            self._y_max = MINTOL * extent.upper.y
+        if self._z_min < MINTOL * extent.lower.z:
+            self._z_min = MINTOL * extent.lower.z
+        if self._z_max > MINTOL * extent.upper.z:
+            self._z_max = MINTOL * extent.upper.z
 
     def centre(self):
         """
@@ -313,11 +361,9 @@ class RPP(Body):
 
         """
 
-        return 0.5 * vector.Three(
-            self.parameters.x_min + self.parameters.x_max,
-            self.parameters.y_min + self.parameters.y_max,
-            self.parameters.z_min + self.parameters.z_max
-        )
+        return 0.5 * vector.Three(self._x_min + self._x_max,
+                                  self._y_min + self._y_max,
+                                  self._z_min + self._z_max)
 
     def _set_rotation_matrix(self, transformation):
         self.rotation = _np.matrix(_np.identity(3))
@@ -335,9 +381,9 @@ class RPP(Body):
         """
         Construct a pygdml Box from this body definition
         """
-        x_length = self.parameters.x_max - self.parameters.x_min
-        y_length = self.parameters.y_max - self.parameters.y_min
-        z_length = self.parameters.z_max - self.parameters.z_min
+        x_length = self._x_max - self._x_min
+        y_length = self._y_max - self._y_min
+        z_length = self._z_max - self._z_min
 
         return _pygdml.solid.Box(self.name,
                                  0.5 * x_length,
