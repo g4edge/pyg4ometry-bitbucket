@@ -1446,6 +1446,7 @@ class Zone(object):
                     accumulated = accumulated.subtract(body)
             elif isinstance(body, Zone):
                 accumulated = accumulated.subtract(body._evaluate())
+        assert (accumulated is not _NULL)
         return accumulated
 
     def extent(self):
