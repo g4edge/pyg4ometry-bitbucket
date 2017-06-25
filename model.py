@@ -206,7 +206,7 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
 
-    def test_regions(self, pickle=None, regions=None):
+    def test_regions(self, pickle=None, regions=None, optimise=True):
         """Individually mesh each region and return dictionary of lists of
         good regions, bad regions, bad intersections, and bad
         subtractions.
@@ -226,7 +226,9 @@ class Model(object):
         for index, region_name in enumerate(regions):
             print "... Testing Region: %s" % region_name
             try:
-                self._generate_mesh(region_name, setclip=False, optimise=False)
+                self._generate_mesh(region_name,
+                                    setclip=False,
+                                    optimise=optimise)
                 output["good"].append(region_name)
             except pygdml.solid.NullMeshError as error:
                 output["bad"].append(region_name)
