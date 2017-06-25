@@ -10,8 +10,6 @@ from operator import add, or_
 import uuid
 import numpy as np
 
-
-
 import pygdml
 import pygdml.transformation as trf
 
