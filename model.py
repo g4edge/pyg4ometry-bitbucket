@@ -31,19 +31,19 @@ class Model(object):
     def __init__(self, filename):
         self._filename = filename
         # get the syntax tree.
-        self.tree = Parse(filename)
-        self.bodies, self._body_freq_map = self._bodies_from_tree()
-        self.regions = self._regions_from_tree()
+        tree = Parse(filename)
+        self.bodies, self._body_freq_map = Model._bodies_from_tree(tree)
+        self.regions = self._regions_from_tree(tree)
         # Initialiser the world volume:
         self._world_volume = Model._gdml_world_volume()
 
-    def _regions_from_tree(self):
+    def _regions_from_tree(self, tree):
         """Get the region definitions from the tree.  Called in the
         initialiser and then never called again.
 
         """
         visitor = FlukaRegionVisitor(self.bodies)
-        visitor.visit(self.tree)
+        visitor.visit(tree)
         return visitor.regions
 
     @staticmethod
@@ -169,14 +169,15 @@ class Model(object):
                 + pyfluka.geometry.code_meanings[body]).ljust(60, '.')
             print(body_description + str(count))
 
-    def _bodies_from_tree(self):
+    @staticmethod
+    def _bodies_from_tree(tree):
         """Return a tuple of bodies, region scale, and a count of bodies by
         type.
 
         """
         body_listener = FlukaBodyListener()
         walker = antlr4.ParseTreeWalker()
-        walker.walk(body_listener, self.tree)
+        walker.walk(body_listener, tree)
         body_freq_map = body_listener.body_freq_map
         bodies = body_listener.bodies
         return bodies, body_freq_map
