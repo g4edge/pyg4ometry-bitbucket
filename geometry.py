@@ -5,16 +5,17 @@ Note:  All units are in millimetres, c.f. centimetres in Fluka.
 """
 
 from __future__ import print_function
-from collections import namedtuple
-import math as _math
-import numpy as _np
-from numpy import pi as _pi
-from uuid import uuid4 as _uuid4
-from operator import add, sub, or_
+from math import pi
+from operator import add, or_
+import uuid
+import numpy as np
 
-import pygdml as _pygdml
-from pygdml import transformation as _trf
-import vector
+
+
+import pygdml
+import pygdml.transformation as trf
+
+from . import vector
 
 # Tolerance when minimising solids.  In this case:  5% longer than the
 # resulting mesh.
@@ -53,16 +54,16 @@ class Body(object):
         # Named tuple constructor for later use.
 
     def view(self, setclip=True):
-        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
+        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
 
         self.add_to_volume(world_volume)
         if setclip is True:
             world_volume.setClip()
         mesh = world_volume.pycsgmesh()
-        viewer = _pygdml.VtkViewer()
+        viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
 
@@ -86,21 +87,20 @@ class Body(object):
         """Basically for adding to a world volume.
 
         """
-        solid = self.gdml_solid()
         # Convert the matrix to TB xyz:
-        rotation_angles = _trf.matrix2tbxyz(self.rotation)
+        rotation_angles = trf.matrix2tbxyz(self.rotation)
         # Up to this point all rotations are active, which is OK
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
-        rotation_angles = _trf.reverse(rotation_angles)
-        _pygdml.volume.Volume(rotation_angles,
-                              self.centre(),
-                              self.gdml_solid(),
-                              self.name,
-                              volume,
-                              1,
-                              False,
-                              "G4_Galactic")
+        rotation_angles = trf.reverse(rotation_angles)
+        pygdml.volume.Volume(rotation_angles,
+                             self.centre(),
+                             self.gdml_solid(),
+                             self.name,
+                             volume,
+                             1,
+                             False,
+                             "G4_Galactic")
 
     def _resize(self, scale):
         """Return this instance bounded or extented according to the
@@ -113,7 +113,7 @@ class Body(object):
             try:
                 extent = self._get_overlap(scale)
                 self._apply_extent(extent)
-            except _pygdml.NullMeshError:
+            except pygdml.NullMeshError:
                 # In this event, the body is a subtraction which
                 # serves "no purpose", i.e., it's a subtraction
                 # outside of the resulting solid.  set the
@@ -128,12 +128,12 @@ class Body(object):
 
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
-        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
+        world_solid = pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_solid,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
         self.add_to_volume(world_volume)
-        return Extent.from_wv(world_volume)
+        return Extent.from_world_volume(world_volume)
 
     def _get_overlap(self, other):
         """
@@ -182,10 +182,10 @@ class Body(object):
         relative_angles = self._get_relative_rotation(other)
         relative_transformation = [relative_angles, relative_translation]
 
-        output_solid = _pygdml.solid.Intersection(output_name,
-                                                  self.gdml_solid(),
-                                                  other.gdml_solid(),
-                                                  relative_transformation)
+        output_solid = pygdml.solid.Intersection(output_name,
+                                                 self.gdml_solid(),
+                                                 other.gdml_solid(),
+                                                 relative_transformation)
         output_centre = self.centre()
         output_rotation = self.rotation
 
@@ -201,10 +201,10 @@ class Body(object):
         relative_angles = self._get_relative_rotation(other)
         relative_transformation = [relative_angles, relative_translation]
 
-        output_solid = _pygdml.solid.Subtraction(output_name,
-                                                 self.gdml_solid(),
-                                                 other.gdml_solid(),
-                                                 relative_transformation)
+        output_solid = pygdml.solid.Subtraction(output_name,
+                                                self.gdml_solid(),
+                                                other.gdml_solid(),
+                                                relative_transformation)
         output_centre = self.centre()
         output_rotation = self.rotation
         return Boolean(output_name,
@@ -222,10 +222,10 @@ class Body(object):
         output_centre = self.centre()
         output_rotation = self.rotation
 
-        output_solid = _pygdml.Union(output_name,
-                                     self.gdml_solid(),
-                                     other.gdml_solid(),
-                                     relative_transformation)
+        output_solid = pygdml.Union(output_name,
+                                    self.gdml_solid(),
+                                    other.gdml_solid(),
+                                    relative_transformation)
 
         return Boolean(output_name,
                        output_solid,
@@ -239,9 +239,9 @@ class Body(object):
         # In a boolean rotation, the first solid is centred on zero,
         # so to get the correct offset, subtract from the second the
         # first, and then rotate this offset with the rotation matrix.
-        offset_vector =  vector.Three((other.centre().x - self.centre().x),
-                                      (other.centre().y - self.centre().y),
-                                      (other.centre().z - self.centre().z))
+        offset_vector = vector.Three((other.centre().x - self.centre().x),
+                                     (other.centre().y - self.centre().y),
+                                     (other.centre().z - self.centre().z))
         mat = self.rotation.T
         offset_vector = mat.dot(offset_vector).view(vector.Three)
         try:
@@ -252,14 +252,14 @@ class Body(object):
             x = offset_vector.x
             y = offset_vector.y
             z = offset_vector.z
-        return vector.Three(x,y,z)
+        return vector.Three(x, y, z)
 
     def _get_relative_rotation(self, other):
         # The first solid is unrotated in a boolean operation, so it
         # is in effect rotated by its inverse.  We apply this same
         # rotation to the second solid to get the correct relative
         # rotation.
-        return _trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
+        return trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
 
     def _generate_name(self, other):
         """
@@ -274,7 +274,7 @@ class Body(object):
             return self.name + "_" +  other.name
         else:
             # GDML name has to start with a letter so append an "a".
-            return "a" + str(_uuid4())
+            return "a" + str(uuid.uuid4())
 
     def __repr__(self):
         return "{}<{}>".format(self.name, type(self).__name__)
@@ -294,16 +294,16 @@ class RPP(Body):
         self._set_parameters(parameters)
         self._set_rotation_matrix(transformation)
 
-        if (self.parameters.x_min > self.parameters.x_max or
-            self.parameters.y_min > self.parameters.y_max or
-            self.parameters.z_min > self.parameters.z_max):
+        if (self.parameters.x_min > self.parameters.x_max
+                or self.parameters.y_min > self.parameters.y_max
+                or self.parameters.z_min > self.parameters.z_max):
             raise Warning("This RPP \"" + name + "\" has mins larger than "
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
 
     def _set_parameters(self, parameters):
-        parameter_names =  ['x_min', 'x_max', 'y_min',
-                            'y_max', 'z_min', 'z_max']
+        parameter_names = ['x_min', 'x_max', 'y_min',
+                           'y_max', 'z_min', 'z_max']
         self.parameters = Parameters(zip(parameter_names, parameters))
         # Hidden versions of these parameters which can be reassigned
         self._x_min = self.parameters.x_min
@@ -317,26 +317,26 @@ class RPP(Body):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
         is_gt_in_x = (self.parameters.x_max > extent.upper.x
-                      and not _np.isclose(self.parameters.x_max,
-                                          extent.upper.x))
+                      and not np.isclose(self.parameters.x_max,
+                                         extent.upper.x))
         is_lt_in_x = (self.parameters.x_min < extent.lower.x
-                      and not _np.isclose(self.parameters.x_min,
-                                          extent.lower.x))
+                      and not np.isclose(self.parameters.x_min,
+                                         extent.lower.x))
         is_gt_in_y = (self.parameters.y_max > extent.upper.y
-                      and not _np.isclose(self.parameters.y_max,
-                                          extent.upper.y))
+                      and not np.isclose(self.parameters.y_max,
+                                         extent.upper.y))
         is_lt_in_y = (self.parameters.y_min < extent.lower.y
-                      and not _np.isclose(self.parameters.y_min,
-                                          extent.lower.y))
+                      and not np.isclose(self.parameters.y_min,
+                                         extent.lower.y))
         is_gt_in_z = (self.parameters.z_max > extent.upper.z
-                      and not _np.isclose(self.parameters.z_max,
-                                          extent.upper.z))
+                      and not np.isclose(self.parameters.z_max,
+                                         extent.upper.z))
         is_lt_in_z = (self.parameters.z_min < extent.lower.z
-                      and not _np.isclose(self.parameters.z_min,
-                                          extent.lower.z))
+                      and not np.isclose(self.parameters.z_min,
+                                         extent.lower.z))
         if (is_gt_in_x and is_lt_in_x
-            and is_gt_in_y and is_lt_in_y
-            and is_gt_in_z and is_lt_in_z):
+                and is_gt_in_y and is_lt_in_y
+                and is_gt_in_z and is_lt_in_z):
 
             self._is_omittable = True
             return
@@ -367,7 +367,7 @@ class RPP(Body):
                                   self._z_min + self._z_max)
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return max([abs(self.parameters.x_min), abs(self.parameters.x_max),
@@ -386,10 +386,10 @@ class RPP(Body):
         y_length = self._y_max - self._y_min
         z_length = self._z_max - self._z_min
 
-        return _pygdml.solid.Box(self.name,
-                                 0.5 * x_length,
-                                 0.5 * y_length,
-                                 0.5 * z_length)
+        return pygdml.solid.Box(self.name,
+                                0.5 * x_length,
+                                0.5 * y_length,
+                                0.5 * z_length)
 
 
 class SPH(Body):
@@ -404,7 +404,7 @@ class SPH(Body):
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):
-        parameter_names =  ['v_x', 'v_y', 'v_z', 'radius']
+        parameter_names = ['v_x', 'v_y', 'v_z', 'radius']
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
@@ -418,7 +418,7 @@ class SPH(Body):
                             self.parameters.v_z)
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
@@ -428,7 +428,7 @@ class SPH(Body):
         Construct a solid, whole, GDML sphere from this.
 
         """
-        return _pygdml.solid.Orb(self.name, self.parameters.radius)
+        return pygdml.solid.Orb(self.name, self.parameters.radius)
 
 
 class RCC(Body):
@@ -464,7 +464,7 @@ class RCC(Body):
         self.direction = vector.Three(self.parameters.h_x,
                                       self.parameters.h_y,
                                       self.parameters.h_z)
-        self.length = _np.linalg.norm(self.direction)
+        self.length = np.linalg.norm(self.direction)
         self._scale = self.length
 
     def _apply_crude_scale(self, scale):
@@ -474,9 +474,9 @@ class RCC(Body):
     def _apply_extent(self, extent):
         return
         # Max possible length of a solid for the given extents:
-        max_length = _np.linalg.norm([extent.size.x,
-                                      extent.size.y,
-                                      extent.size.z])
+        max_length = np.linalg.norm([extent.size.x,
+                                     extent.size.y,
+                                     extent.size.z])
         # If the length is possibly smaller than the length of the
         # resulting solid, then just return the length and position unchanged.
         if self.length < max_length:
@@ -511,7 +511,7 @@ class RCC(Body):
     def _set_rotation_matrix(self, transformation):
         initial = [0, 0, 1]
         final = -self.direction
-        self.rotation = _trf.matrix_from(initial, final)
+        self.rotation = trf.matrix_from(initial, final)
 
     def crude_extent(self):
         centre_max = max(abs(vector.Three(self.parameters.v_x,
@@ -520,11 +520,11 @@ class RCC(Body):
         return centre_max + self.length
 
     def gdml_solid(self):
-        return _pygdml.solid.Tubs(self.name, 0.0,
-                                  self.parameters.radius,
-                                  self._scale * 0.5,
-                                  0.0,
-                                  2*_pi)
+        return pygdml.solid.Tubs(self.name, 0.0,
+                                 self.parameters.radius,
+                                 self._scale * 0.5,
+                                 0.0,
+                                 2*pi)
 
 
 class REC(Body):
@@ -595,22 +595,22 @@ class REC(Body):
     def gdml_solid(self):
         # EllipticalTube is defined in terms of half-lengths in x, y,
         # and z.  Choose semi_major to start in the positive y direction.
-        semi_minor = _np.linalg.norm([self.parameters.semi_minor_x,
-                                      self.parameters.semi_minor_y,
-                                      self.parameters.semi_minor_z])
+        semi_minor = np.linalg.norm([self.parameters.semi_minor_x,
+                                     self.parameters.semi_minor_y,
+                                     self.parameters.semi_minor_z])
 
-        semi_major = _np.linalg.norm([self.parameters.semi_major_x,
-                                      self.parameters.semi_major_y,
-                                      self.parameters.semi_major_z])
+        semi_major = np.linalg.norm([self.parameters.semi_major_x,
+                                     self.parameters.semi_major_y,
+                                     self.parameters.semi_major_z])
 
-        length = _np.linalg.norm([self.parameters.to_other_face_x,
-                                  self.parameters.to_other_face_y,
-                                  self.parameters.to_other_face_z])
+        length = np.linalg.norm([self.parameters.to_other_face_x,
+                                 self.parameters.to_other_face_y,
+                                 self.parameters.to_other_face_z])
 
-        return _pygdml.solid.EllipticalTube(self.name,
-                                            semi_minor,
-                                            semi_major,
-                                            length * 0.5)
+        return pygdml.solid.EllipticalTube(self.name,
+                                           semi_minor,
+                                           semi_major,
+                                           length * 0.5)
 
 
 class TRC(Body):
@@ -674,12 +674,12 @@ class TRC(Body):
         # final vectors:
         initial = [0, 0, 1]
         final = self.major_to_minor
-        self.rotation = _trf.matrix_from(initial, final)
+        self.rotation = trf.matrix_from(initial, final)
 
     def crude_extent(self):
-        length = _np.linalg.norm([self.parameters.major_to_minor_x,
-                                  self.parameters.major_to_minor_y,
-                                  self.parameters.major_to_minor_z])
+        length = np.linalg.norm([self.parameters.major_to_minor_x,
+                                 self.parameters.major_to_minor_y,
+                                 self.parameters.major_to_minor_z])
 
         return max(abs(self.parameters.centre_major_x) + length,
                    abs(self.parameters.centre_major_y) + length,
@@ -690,14 +690,14 @@ class TRC(Body):
     def gdml_solid(self):
         # The first face of pygdml.Cons is located at -z, and the
         # second at +z.  Here choose to put the major face at -z.
-        return _pygdml.solid.Cons(self.name,
-                                  0.0,
-                                  self.parameters.major_radius,
-                                  0.0,
-                                  self.parameters.minor_radius,
-                                  0.5 * self.length,
-                                  0.0,
-                                  2*_pi)
+        return pygdml.solid.Cons(self.name,
+                                 0.0,
+                                 self.parameters.major_radius,
+                                 0.0,
+                                 self.parameters.minor_radius,
+                                 0.5 * self.length,
+                                 0.0,
+                                 2*pi)
 
 
 class XYP(Body):
@@ -728,7 +728,7 @@ class XYP(Body):
 
     def _apply_extent(self, extent):
         if (self.parameters.v_z > extent.upper.z
-            and not _np.isclose(self.parameters.v_z, extent.upper.z)):
+                and not np.isclose(self.parameters.v_z, extent.upper.z)):
             self._is_omittable = True
             return
         self._offset = vector.Three(extent.centre.x,
@@ -747,7 +747,7 @@ class XYP(Body):
                 + vector.Three(centre_x, centre_y, centre_z))
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return abs(self.parameters.v_z)
@@ -755,10 +755,10 @@ class XYP(Body):
     def gdml_solid(self):
         # We choose the box face pointing in the +z direction to form
         # the plane face.
-        return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale_x,
-                                 0.5 * self._scale_y,
-                                 0.5 * self._scale_z)
+        return pygdml.solid.Box(self.name,
+                                0.5 * self._scale_x,
+                                0.5 * self._scale_y,
+                                0.5 * self._scale_z)
 
 
 class XZP(Body):
@@ -788,7 +788,7 @@ class XZP(Body):
 
     def _apply_extent(self, extent):
         if (self.parameters.v_y > extent.upper.y
-            and not _np.isclose(self.parameters.v_y, extent.upper.y)):
+                and not np.isclose(self.parameters.v_y, extent.upper.y)):
             self._is_omittable = True
             return
         self._offset = vector.Three(extent.centre.x,
@@ -806,7 +806,7 @@ class XZP(Body):
                 + vector.Three(centre_x, centre_y, centre_z))
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return abs(self.parameters.v_y)
@@ -814,10 +814,10 @@ class XZP(Body):
     def gdml_solid(self):
         # We choose the box face pointing in the +y direction to form
         # the plane face.
-        return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale_x,
-                                 0.5 * self._scale_y,
-                                 0.5 * self._scale_z)
+        return pygdml.solid.Box(self.name,
+                                0.5 * self._scale_x,
+                                0.5 * self._scale_y,
+                                0.5 * self._scale_z)
 
 
 class YZP(Body):
@@ -845,7 +845,7 @@ class YZP(Body):
 
     def _apply_extent(self, extent):
         if (self.parameters.v_x > extent.upper.x
-            and not _np.isclose(self.parameters.v_x, extent.upper.x)):
+                and not np.isclose(self.parameters.v_x, extent.upper.x)):
             self._is_omittable = True
             return
         self._offset = vector.Three(0.0,
@@ -863,7 +863,7 @@ class YZP(Body):
                 + vector.Three(centre_x, centre_y, centre_z))
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return abs(self.parameters.v_x)
@@ -871,10 +871,10 @@ class YZP(Body):
     def gdml_solid(self):
         # We choose the box face pointing in the +x direction to form
         # the plane face.
-        return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale_x,
-                                 0.5 * self._scale_y,
-                                 0.5 * self._scale_z)
+        return pygdml.solid.Box(self.name,
+                                0.5 * self._scale_x,
+                                0.5 * self._scale_y,
+                                0.5 * self._scale_z)
 
 
 class PLA(Body):
@@ -916,11 +916,11 @@ class PLA(Body):
                                       self.parameters.y_direction,
                                       self.parameters.z_direction])
         self.perpendicular = (perpendicular
-                              / _np.linalg.norm(perpendicular))
+                              / np.linalg.norm(perpendicular))
         self.surface_point = vector.Three([self.parameters.x_position,
                                            self.parameters.y_position,
                                            self.parameters.z_position])
-        self.surface_point = self._closest_point([0,0,0])
+        self.surface_point = self._closest_point([0, 0, 0])
 
     def centre(self):
         # This is the centre of the underlying gdml solid (i.e. won't
@@ -932,9 +932,9 @@ class PLA(Body):
     def _set_rotation_matrix(self, transformation):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
-        initial = [0,0,1]
+        initial = [0, 0, 1]
         final = self.perpendicular
-        self.rotation =  _trf.matrix_from(initial, final)
+        self.rotation = trf.matrix_from(initial, final)
 
     def crude_extent(self):
         return max(abs(self.surface_point.x),
@@ -947,19 +947,19 @@ class PLA(Body):
 
         """
         # perpendicular distance from the point to the plane
-        distance = _np.dot((self.surface_point - point),
-                           self.perpendicular)
+        distance = np.dot((self.surface_point - point),
+                          self.perpendicular)
         closest_point = point + distance * self.perpendicular
-        assert (abs(_np.dot(self.perpendicular,
-                        closest_point - self.surface_point)) < 1e-6), (
-                            "Point isn't on the plane!")
+        assert (abs(np.dot(self.perpendicular,
+                           closest_point - self.surface_point)) < 1e-6), (
+                               "Point isn't on the plane!")
         return closest_point
 
     def gdml_solid(self):
-        return _pygdml.solid.Box(self.name,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale,
-                                 0.5 * self._scale)
+        return pygdml.solid.Box(self.name,
+                                0.5 * self._scale,
+                                0.5 * self._scale,
+                                0.5 * self._scale)
 
 
 class XCC(Body):
@@ -1004,19 +1004,19 @@ class XCC(Body):
 
     def _set_rotation_matrix(self, transformation):
         # Rotate pi/2 about the y-axis.
-        self.rotation = _np.matrix([[ 0,  0, -1],
-                                    [ 0,  1,  0],
-                                    [ 1,  0,  0]])
+        self.rotation = np.matrix([[0, 0, -1],
+                                   [0, 1, 0],
+                                   [1, 0, 0]])
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return _pygdml.solid.Tubs(self.name, 0.0,
-                                  self.parameters.radius,
-                                  self._scale * 0.5,
-                                  0.0,
-                                  2*_pi)
+        return pygdml.solid.Tubs(self.name, 0.0,
+                                 self.parameters.radius,
+                                 self._scale * 0.5,
+                                 0.0,
+                                 2*pi)
 
 
 class YCC(Body):
@@ -1061,20 +1061,20 @@ class YCC(Body):
 
     def _set_rotation_matrix(self, transformation):
         # Rotate by pi/2 about the x-axis.
-        self.rotation = _np.matrix([[ 1,  0,  0],
-                                    [ 0,  0,  1],
-                                    [ 0, -1,  0]])
+        self.rotation = np.matrix([[1, 0, 0],
+                                   [0, 0, 1],
+                                   [0, -1, 0]])
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return _pygdml.solid.Tubs(self.name,
-                                  0.0,
-                                  self.parameters.radius,
-                                  self._scale * 0.5,
-                                  0.0,
-                                  2*_pi)
+        return pygdml.solid.Tubs(self.name,
+                                 0.0,
+                                 self.parameters.radius,
+                                 self._scale * 0.5,
+                                 0.0,
+                                 2*pi)
 
 
 class ZCC(Body):
@@ -1118,18 +1118,18 @@ class ZCC(Body):
                                0.0))
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return _pygdml.solid.Tubs(self.name,
-                                  0.0,
-                                  self.parameters.radius,
-                                  self._scale * 0.5,
-                                  0.0,
-                                  2*_pi)
+        return pygdml.solid.Tubs(self.name,
+                                 0.0,
+                                 self.parameters.radius,
+                                 self._scale * 0.5,
+                                 0.0,
+                                 2*pi)
 
 
 class XEC(Body):
@@ -1167,18 +1167,18 @@ class XEC(Body):
 
     def _set_rotation_matrix(self, transformation):
         # Rotate pi/2 about the y-axis.
-        self.rotation = _np.matrix([[ 0,  0, -1],
-                                    [ 0,  1,  0],
-                                    [ 1,  0,  0]])
+        self.rotation = np.matrix([[0, 0, -1],
+                                   [0, 1, 0],
+                                   [1, 0, 0]])
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return _pygdml.solid.EllipticalTube(self.name,
-                                            self.parameters.semi_axis_z,
-                                            self.parameters.semi_axis_y,
-                                            0.5 * self._scale)
+        return pygdml.solid.EllipticalTube(self.name,
+                                           self.parameters.semi_axis_z,
+                                           self.parameters.semi_axis_y,
+                                           0.5 * self._scale)
 
 
 class YEC(Body):
@@ -1214,18 +1214,18 @@ class YEC(Body):
 
     def _set_rotation_matrix(self, transformation):
         # Rotate by pi/2 about the x-axis.
-        self.rotation = _np.matrix([[ 1,  0,  0],
-                                    [ 0,  0,  1],
-                                    [ 0, -1,  0]])
+        self.rotation = np.matrix([[1, 0, 0],
+                                   [0, 0, 1],
+                                   [0, -1, 0]])
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return _pygdml.solid.EllipticalTube(self.name,
-                                            self.parameters.semi_axis_x,
-                                            self.parameters.semi_axis_z,
-                                            0.5 * self._scale)
+        return pygdml.solid.EllipticalTube(self.name,
+                                           self.parameters.semi_axis_x,
+                                           self.parameters.semi_axis_z,
+                                           0.5 * self._scale)
 
 
 class ZEC(Body):
@@ -1260,16 +1260,16 @@ class ZEC(Body):
                             0.0)
 
     def _set_rotation_matrix(self, transformation):
-        self.rotation = _np.matrix(_np.identity(3))
+        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return _pygdml.solid.EllipticalTube(self.name,
-                                            self.parameters.semi_axis_x,
-                                            self.parameters.semi_axis_y,
-                                            0.5 * self._scale)
+        return pygdml.solid.EllipticalTube(self.name,
+                                           self.parameters.semi_axis_x,
+                                           self.parameters.semi_axis_y,
+                                           0.5 * self._scale)
 
 
 class Region(object):
@@ -1285,7 +1285,7 @@ class Region(object):
         if isinstance(zones, list):
             self.zones = dict(zip(range(len(zones)),
                                   zones))
-        elif isinstance (zones, Zone):
+        elif isinstance(zones, Zone):
             self.zones = {0: zones}
         else:
             raise TypeError("Unkown zones type: {}".format(type(zones)))
@@ -1296,16 +1296,16 @@ class Region(object):
         the view_debug method to see the problematic boolean operation.
 
         """
-        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
+        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
         solid = self.evaluate(zones, optimise=optimise)
         solid.add_to_volume(world_volume)
         if setclip is True:
             world_volume.setClip()
         mesh = world_volume.pycsgmesh()
-        viewer = _pygdml.VtkViewer()
+        viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
 
@@ -1316,19 +1316,19 @@ class Region(object):
         """
         boolean = self.evaluate(zones, optimise=optimise)
         # Convert the matrix to TB xyz:
-        rotation_angles = _trf.matrix2tbxyz(boolean.rotation)
+        rotation_angles = trf.matrix2tbxyz(boolean.rotation)
         # Up to this point all rotations are active, which is OK
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
-        rotation_angles = _trf.reverse(rotation_angles)
-        _pygdml.volume.Volume(rotation_angles,
-                              boolean.centre(),
-                              boolean.gdml_solid(),
-                              self.name,
-                              volume,
-                              1,
-                              False,
-                              self.material)
+        rotation_angles = trf.reverse(rotation_angles)
+        pygdml.volume.Volume(rotation_angles,
+                             boolean.centre(),
+                             boolean.gdml_solid(),
+                             self.name,
+                             volume,
+                             1,
+                             False,
+                             self.material)
 
     def evaluate(self, zones=None, optimise=False):
         zones = self._select_zones(zones)
@@ -1494,7 +1494,7 @@ class Zone(object):
                     accumulated = accumulated.subtract(body)
             elif isinstance(body, Zone):
                 accumulated = accumulated.subtract(body._evaluate())
-        assert (accumulated is not _NULL)
+        assert accumulated is not _NULL
         return accumulated
 
     def extent(self):
@@ -1516,15 +1516,15 @@ class Boolean(Body):
         return self._centre
 
     def view_debug(self, first=None, second=None):
-        w = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], w,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
+        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
         self.add_to_volume(world_volume)
         try:
             world_volume.pycsgmesh()
             print("Mesh was successful.")
-        except _pygdml.solid.NullMeshError as error:
+        except pygdml.solid.NullMeshError as error:
             print(error.message)
             print("Debug:  Viewing consituent solids.")
             self._view_null_mesh(error, first, second, setclip=False)
@@ -1534,33 +1534,33 @@ class Boolean(Body):
         solid2 = error.solid.obj2
         tra2 = error.solid.tra2
 
-        world_box = _pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = _pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                                      "world-volume", None,
-                                      1, False, "G4_NITROUS_OXIDE")
+        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
+        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                                     "world-volume", None,
+                                     1, False, "G4_NITROUS_OXIDE")
         if (first is None and second is None
-            or first is True and second is True):
-            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                                     solid1.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
-            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
-                                     solid2.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
+                or first is True and second is True):
+            pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                          solid1.name, world_volume,
+                          1, False, "G4_NITROUS_OXIDE")
+            pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2,
+                          solid2.name, world_volume,
+                          1, False, "G4_NITROUS_OXIDE")
         elif first is True and second is not True:
-            volume1 = _pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                                     solid1.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
+            pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
+                          solid1.name, world_volume,
+                          1, False, "G4_NITROUS_OXIDE")
         elif second is True and first is not True:
-            volume2 = _pygdml.Volume(_trf.reverse(tra2[0]), tra2[1], solid2,
-                                     solid2.name, world_volume,
-                                     1, False, "G4_NITROUS_OXIDE")
+            pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2,
+                          solid2.name, world_volume,
+                          1, False, "G4_NITROUS_OXIDE")
         elif first is False and second is False:
             raise RuntimeError("Must select at least one"
                                " of the two solids to view")
         if setclip is True:
             world_volume.setClip()
         mesh = world_volume.pycsgmesh()
-        viewer = _pygdml.VtkViewer()
+        viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
 
@@ -1568,9 +1568,9 @@ class Boolean(Body):
         # quick and dirty..  revisit this at a later date.
         primitives = []
         def primitive_iter(solid):
-            if isinstance(solid, (_pygdml.solid.Intersection,
-                                  _pygdml.solid.Subtraction,
-                                  _pygdml.solid.Union)):
+            if isinstance(solid, (pygdml.solid.Intersection,
+                                  pygdml.solid.Subtraction,
+                                  pygdml.solid.Union)):
                 primitives.append(primitive_iter(solid.obj1))
                 primitives.append(primitive_iter(solid.obj2))
             else:
@@ -1616,15 +1616,15 @@ class Extent(object):
             centre = upper - 0.5 * size
         except TypeError:
             size = [upper[i] - lower[i] for i, _ in enumerate(upper)]
-            centre =  [upper[i] - 0.5 * size[i] for i, _ in enumerate(upper)]
+            centre = [upper[i] - 0.5 * size[i] for i, _ in enumerate(upper)]
         self.size = size
         self.centre = centre
 
     @classmethod
-    def from_wv(cls, wv):
+    def from_world_volume(cls, world_volume):
         """Construct an Extent object from a pygdml (world) volume instance. """
-        mesh = wv.pycsgmesh()
-        extent =  _pygdml.volume.pycsg_extent(mesh)
+        mesh = world_volume.pycsgmesh()
+        extent = pygdml.volume.pycsg_extent(mesh)
         lower = vector.Three(extent[0].x, extent[0].y, extent[0].z)
         upper = vector.Three(extent[1].x, extent[1].y, extent[1].z)
         size = upper - lower
@@ -1632,8 +1632,8 @@ class Extent(object):
         return cls(lower, upper)
 
     def is_close_to(self, other):
-        return bool((_np.isclose(self.lower, other.lower).all()
-                     and _np.isclose(self.upper, other.upper).all()))
+        return bool((np.isclose(self.lower, other.lower).all()
+                     and np.isclose(self.upper, other.upper).all()))
 
     def __repr__(self):
         return ("Extent: Lower({lower.x}, {lower.y}, {lower.z}),"
@@ -1641,7 +1641,7 @@ class Extent(object):
                     upper=self.upper, lower=self.lower))
 
     def __eq__(self, other):
-        return (self.lower == other.lower and self.upper == other.upper)
+        return self.lower == other.lower and self.upper == other.upper
 
 code_meanings = {
     "ARB": "Abitrary Convex Polyhedron",
