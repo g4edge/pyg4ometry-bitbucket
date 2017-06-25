@@ -322,9 +322,9 @@ class FlukaBodyListener(FlukaParserListener):
         self.unique_body_names = set()
         self.used_bodies_by_type = list()
 
-        self._transform_stack = []
-        self._current_translat = None
-        self._current_expansion = None
+        self.transform_stack = []
+        self.current_translat = None
+        self.current_expansion = None
 
     def enterBodyDefSpaceDelim(self, ctx):
         # This is where we get the body definitions and instantiate
@@ -341,8 +341,8 @@ class FlukaBodyListener(FlukaParserListener):
             body_constructor = getattr(pyfluka.geometry, body_type)
             body = body_constructor(body_name,
                                     body_parameters,
-                                    self._transform_stack,
-                                    self._current_translat)
+                                    self.transform_stack,
+                                    self.current_translat)
             self.bodies[body_name] = body
         except (AttributeError, NotImplementedError):
             warnings.simplefilter('once', UserWarning)
@@ -363,23 +363,23 @@ class FlukaBodyListener(FlukaParserListener):
 
     def enterTranslat(self, ctx):
         translation = FlukaBodyListener._get_floats(ctx)
-        self._current_translat = pyfluka.vector.Three(translation)
+        self.current_translat = pyfluka.vector.Three(translation)
 
     def exitTranslat(self, ctx):
-        self._current_translat = None
+        self.current_translat = None
 
     def enterExpansion(self, ctx):
-        self._current_expansion = float(ctx.Float().getText())
+        self.current_expansion = float(ctx.Float().getText())
 
     def exitExpansion(self, ctx):
-        self._current_expansion = None
+        self.current_expansion = None
 
     def apply_expansions(self, parameters):
         """
         Method for applying the current expansion to the parameters.
 
         """
-        factor = self._current_expansion
+        factor = self.current_expansion
         if factor is not None:
             return [factor * x for x in parameters]
         else:
