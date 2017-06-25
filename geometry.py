@@ -341,6 +341,7 @@ class RPP(Body):
             self._is_omittable = True
             return
 
+        # Then we can't omit it, but maybe we can shrink it:
         if self._x_min < MINTOL * extent.lower.x:
             self._x_min = MINTOL * extent.lower.x
         if self._x_max > MINTOL * extent.upper.x:
