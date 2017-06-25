@@ -1,5 +1,6 @@
 """ Collection of classes for extracting information from a Fluka model. """
 
+from __future__ import division, print_function
 import collections
 import os.path
 import time
@@ -148,7 +149,7 @@ class Model(object):
             return None
 
         for index, region_name in enumerate(regions):
-            print "Adding region: \"{}\"  ...".format(region_name)
+            print("Adding region: \"{}\"  ...".format(region_name))
             self.regions[region_name].add_to_volume(self._world_volume,
                                                     optimise=optimise)
 
@@ -160,13 +161,13 @@ class Model(object):
         body_and_count = self._body_freq_map.items()
         body_and_count.sort(key=lambda i: i[1], reverse=True)
         # Print result, with alignment.
-        print "Bodies used in region definitions:"
+        print("Bodies used in region definitions:")
         for body, count in body_and_count:
             body_description = (
                 body
                 + " - "
                 + pyfluka.geometry.code_meanings[body]).ljust(60, '.')
-            print body_description + str(count)
+            print(body_description + str(count))
 
     def _bodies_from_tree(self):
         """Return a tuple of bodies, region scale, and a count of bodies by
@@ -224,7 +225,7 @@ class Model(object):
         number_of_regions = len(regions)
         start = time.time()
         for index, region_name in enumerate(regions):
-            print "... Testing Region: %s" % region_name
+            print("... Testing Region: %s" % region_name)
             try:
                 self._generate_mesh(region_name,
                                     setclip=False,
@@ -236,16 +237,15 @@ class Model(object):
                     output["subs"].append(region_name)
                 elif isinstance(error.solid, pygdml.solid.Intersection):
                     output["ints"].append(region_name)
-            print "Tested {0}/{1}.".format(index + 1, number_of_regions)
-            print ("Succeded: {}.  Failed: {} ({:.2%}).".format(
+            print("Tested {0}/{1}.".format(index + 1, number_of_regions))
+            print("Succeded: {}.  Failed: {} ({:.2%}).".format(
                 len(output["good"]),
                 len(output["bad"]),
                 (len(output["good"])
-                 / (len(output["good"])
-                    + float(len(output["bad"]))))))
+                 / (len(output["good"]) + len(output["bad"])))))
 
         duration = (time.time() - start) / 60.0
-        print duration, "minutes since test begun."
+        print(duration, "minutes since test begun.")
         output['time'] = duration
 
         if pickle:
@@ -270,8 +270,8 @@ class Model(object):
             try:
                 region.gdml_solid.pycsgmesh()
             except pygdml.solid.NullMeshError:
-                print "Failed mesh @ region: {}.".format(region.name)
-                print "Viewing region in debug mode ..."
+                print("Failed mesh @ region: {}.".format(region.name))
+                print("Viewing region in debug mode ...")
                 region.view_debug()
                 if do_all is False:
                     break
@@ -287,12 +287,12 @@ class Model(object):
         regions = dict()
         for region_name, region in self.regions.iteritems():
             regions[region_name] = region.extent()
-            print "Meshing Region: {} ...".format(region_name)
+            print("Meshing Region: {} ...".format(region_name))
             if len(region.zones) == 1:
                 continue
             for zone_no, zone in region.zones.iteritems():
-                print "Meshing Region: {}, Zone: {} ...".format(region_name,
-                                                                zone_no)
+                print("Meshing Region: {}, Zone: {} ...".format(region_name,
+                                                                zone_no))
                 regions["{}_{}".format(region_name, zone_no)] = zone.extent()
 
         if pickle is True:
