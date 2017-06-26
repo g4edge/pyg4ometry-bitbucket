@@ -7,17 +7,14 @@ import numpy as _np
 
 from copy import deepcopy as _dc
 
-class Wedge(_SolidBase) :
-
+class Wedge(_SolidBase):
     def __init__(self, name, pRMax = 1000, pSPhi=0, pDPhi=1.5, halfzlength=10000):
         self.name  = name
         self.pRMax = pRMax
         self.pSPhi = pSPhi
         self.pDPhi = pDPhi
         self.pDz   = halfzlength
-
         self.nslice = 16
-
         self.mesh = None 
 
     def __repr__(self):
