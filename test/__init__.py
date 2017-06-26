@@ -21,5 +21,7 @@ import Hype
 import Tet
 import TwistedBox
 import TwistedTrap
-#import Intersection
+import Sphere
+import SphereTest
+import SphereTest2
 
