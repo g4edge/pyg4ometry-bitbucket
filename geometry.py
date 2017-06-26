@@ -6,7 +6,6 @@ Note:  All units are in millimetres, c.f. centimetres in Fluka.
 
 from __future__ import print_function
 from math import pi
-from operator import add, or_
 import uuid
 import numpy as np
 import collections
@@ -148,41 +147,17 @@ class Body(object):
         extent of the mesh, and return this.
 
         """
-        intersection = self + other
+        intersection = self.intersect(other)
         extent = intersection._extent()
         return extent
 
     def intersect(self, other):
-        """
-        Intersect this solid with another solid.
-
-        """
-        if other == _IDENTITY:
-            return self
-        return self + other
-
-    def subtract(self, other):
-        """
-        Subtract from this solid another solid.
-
-        """
-        if other == _IDENTITY:
-            return self
-        return self - other
-
-    def union(self, other):
-        """
-        Boolean union of this solid with another solid.
-
-        """
-        if other == _IDENTITY:
-            return self
-        return self | other
-
-    def __add__(self, other):
         """Perform the intersection of this solid with another.
 
         """
+        if other == _IDENTITY:
+            return self
+
         output_name = self._generate_name(other)
 
         relative_translation = self._get_relative_translation(other)
@@ -201,7 +176,10 @@ class Body(object):
                        output_centre,
                        output_rotation)
 
-    def __sub__(self, other):
+    def subtract(self, other):
+        if other == _IDENTITY:
+            return self
+
         output_name = self._generate_name(other)
 
         relative_translation = self._get_relative_translation(other)
@@ -219,7 +197,10 @@ class Body(object):
                        output_centre,
                        output_rotation)
 
-    def __or__(self, other):
+    def union(self, other):
+        if other == _IDENTITY:
+            return self
+
         output_name = self._generate_name(other)
 
         relative_translation = self._get_relative_translation(other)
@@ -1341,7 +1322,11 @@ class Region(object):
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
         booleans = [zone.evaluate(optimise=optimise) for zone in zones]
-        out_boolean = reduce(or_, booleans)
+
+        def accumulate_unions(first, second):
+            return first.union(second)
+        out_boolean = reduce(accumulate_unions, booleans)
+
         return out_boolean
 
     def _select_zones(self, zones):
@@ -1469,7 +1454,11 @@ class Zone(object):
         out = self._crude_boolean()
         # Rescale the bodies and zones with the resulting mesh:
         self._map_extent_2_bodies(self.contains, out)
-        boolean_from_ints = reduce(add, self.contains)
+
+        def accumulate_intersections(first, second):
+            return first.intersect(second)
+        boolean_from_ints = reduce(accumulate_intersections, self.contains)
+
         self._map_extent_2_bodies(self.excludes, boolean_from_ints)
 
         return self._evaluate()
