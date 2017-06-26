@@ -26,4 +26,5 @@ from Hype                import *
 from Tet                 import *
 from TwistedBox          import *
 from TwistedTrap         import *
+from Sphere              import *
 
