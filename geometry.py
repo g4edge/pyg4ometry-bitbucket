@@ -259,9 +259,9 @@ class Body(object):
 
         """
         if len(self.name) + len(other.name) < 36:
-            return self.name + "_" +  other.name
+            return "{}_{}".format(self.name, other.name)
         else:
-            # GDML name has to start with a letter so append an "a".
+            # GDML name has to start with a letter so prepend an "a".
             return "a" + str(uuid.uuid4())
 
     def __repr__(self):
