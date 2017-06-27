@@ -13,7 +13,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldSolid      = _g4.solid.Box('worldBox',500,500,500)
     worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
-    sphereSolid1    = _g4.solid.Sphere('sphere1',0,50,0,_np.pi*2,0,_np.pi)
+    sphereSolid1    = _g4.solid.Sphere('sphere1',40,50,0,_np.pi*2,0,_np.pi*2/3)
     sphereLogical1  = _g4.LogicalVolume(sphereSolid1,'G4_Cu','sphereLogical1')
     spherePhysical1 = _g4.PhysicalVolume([0,0,0],[-200,-200,0],sphereLogical1,'spherePhysical1',worldLogical)
 
@@ -36,6 +36,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     sphereSolid6    = _g4.solid.Sphere('sphere6',25,50,0,_np.pi*2./3.,0,_np.pi)
     sphereLogical6  = _g4.LogicalVolume(sphereSolid6,'G4_Cu','sphereLogical6')
     spherePhysical6 = _g4.PhysicalVolume([0,0,0],[0,200,0],sphereLogical6,'spherePhysical6',worldLogical)
+    
 
     # clip the world logical volume
     worldLogical.setClip();
@@ -55,5 +56,5 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     if gdmlWriter : 
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
-        w.write('./Sphere.gdml')
+        w.write('./SphereTest2.gdml')
         w.writeGmadTester('Sphere.gmad')        

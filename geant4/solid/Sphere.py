@@ -10,8 +10,7 @@ import sys as _sys
 from copy import deepcopy as _dc
 
 class Sphere(_SolidBase) :
-    def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 8, nstack = 8) :
-    #def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice=4, nstack=4):
+    def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta, pDTheta, nslice = 10, nstack = 10) :
         """
         Constructs a section of a spherical shell. 
 
@@ -53,6 +52,7 @@ class Sphere(_SolidBase) :
     
     def pycsgmesh(self):
 
+        #Called as a csgmesh for profiling
         self.csgmesh()
 
         return self.mesh
@@ -70,6 +70,8 @@ class Sphere(_SolidBase) :
             mesh_inner = _CSG.sphere(radius=self.pRmin, slices=self.nslice, stacks=self.nstack)
             self.mesh = self.mesh.subtract(mesh_inner)
 
+            
+        #Theta change: allows for different theta angles, using primtives: cube and cone.
         if thetaFin == _np.pi/2.:
             mesh_box = _CSG.cube(center=[0,0,1.1*self.pRmax], radius=1.1*self.pRmax)
             self.mesh = self.mesh.subtract(mesh_box)
@@ -90,6 +92,8 @@ class Sphere(_SolidBase) :
             mesh_upper2 = _CSG.cone(start=[0,0,2*self.pRmax], end=[0,0,0], radius=2*self.pRmax*_np.tan(self.pSTheta))
             self.mesh = self.mesh.subtract(mesh_upper2)
 
+            
+        #Phi change: allows for different theta angles, using the Wedge solid class
         if phiFin < 2*_np.pi:
             mesh_wedge = _Wedge("wedge_temp", 2*self.pRmax, self.pSPhi, self.pDPhi, 3*self.pRmax).pycsgmesh()
             self.mesh = self.mesh.intersect(mesh_wedge)
