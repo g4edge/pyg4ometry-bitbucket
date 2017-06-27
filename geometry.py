@@ -15,9 +15,10 @@ import pygdml.transformation as trf
 
 from . import vector
 
-# Tolerance when minimising solids.  In this case:  5% longer than the
-# resulting mesh.
-MINTOL = 1.05
+# Fractional tolerance when minimising solids.  In this case, 5%
+# longer than the resulting mesh:
+FRACTOL = 0.05
+MINTOL = FRACTOL + 1
 
 # Intersection/Union/Subtraction identity.
 # Intersecting/unioning/subtracting with this will simply return the
@@ -330,18 +331,31 @@ class RPP(Body):
             return
 
         # Then we can't omit it, but maybe we can shrink it:
-        if self._x_min < MINTOL * extent.lower.x:
-            self._x_min = MINTOL * extent.lower.x
-        if self._x_max > MINTOL * extent.upper.x:
-            self._x_max = MINTOL * extent.upper.x
-        if self._y_min < MINTOL * extent.lower.y:
-            self._y_min = MINTOL * extent.lower.y
-        if self._y_max > MINTOL * extent.upper.y:
-            self._y_max = MINTOL * extent.upper.y
-        if self._z_min < MINTOL * extent.lower.z:
-            self._z_min = MINTOL * extent.lower.z
-        if self._z_max > MINTOL * extent.upper.z:
-            self._z_max = MINTOL * extent.upper.z
+
+        # Calculate the tolerances for lower bounds:
+        x_bound_lower = extent.lower.x - abs(FRACTOL * extent.lower.x)
+        y_bound_lower = extent.lower.y - abs(FRACTOL * extent.lower.y)
+        z_bound_lower = extent.lower.z - abs(FRACTOL * extent.lower.z)
+        # and for the upper bounds:
+        x_bound_upper = extent.upper.x + abs(FRACTOL * extent.upper.x)
+        y_bound_upper = extent.upper.y + abs(FRACTOL * extent.upper.y)
+        z_bound_upper = extent.upper.z + abs(FRACTOL * extent.upper.z)
+
+        # If outside of tolerances, then assign to those tolerances.
+        # Lower bounds:
+        if self._x_min < x_bound_lower:
+            self._x_min = x_bound_lower
+        if self._y_min < y_bound_lower:
+            self._y_min = y_bound_lower
+        if self._z_min < z_bound_lower:
+            self._z_min = z_bound_lower
+        # Upper bounds::
+        if self._x_max > x_bound_upper:
+            self._x_max = x_bound_upper
+        if self._y_max > y_bound_upper:
+            self._y_max = y_bound_upper
+        if self._z_max > z_bound_upper:
+            self._z_max = z_bound_upper
 
     def centre(self):
         """
