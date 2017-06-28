@@ -12,6 +12,11 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     twistedTrapLogical1  = _g4.LogicalVolume(twistedTrapSolid1,'G4_Cu','twistedTrapLogical1')
     twistedTrapPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], twistedTrapLogical1,'twistedTrapPhysical1',worldLogical)
 
+    twistedTrapSolid2    = _g4.solid.TwistedTrap('twistedTrap2',0.5,60,0,0,40,30,40,16,10,14,0)
+    twistedTrapLogical2  = _g4.LogicalVolume(twistedTrapSolid2,'G4_Cu','twistedTrapLogical2')
+    twistedTrapPhysical2 = _g4.PhysicalVolume([0,0,0],[200,200,0], twistedTrapLogical2,'twistedTrapPhysical2',worldLogical)
+    
+    
     # clip the world logical volume
     worldLogical.setClip();
 

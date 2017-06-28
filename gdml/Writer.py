@@ -437,7 +437,20 @@ class Writer(object):
         self.solids.appendChild(oe)
 
     def writeTwistedTrap(self, instance):
-        pass
+        oe = self.doc.createElement("twistedtrap")
+        oe.setAttribute('name',self.prepend+'_'+instance.name)
+        oe.setAttribute('PhiTwist',str(instance.twistedangle))
+        oe.setAttribute('z','2*'+ str(instance.pDz))
+        oe.setAttribute('Theta',str(instance.pTheta))
+        oe.setAttribute('Phi',str(instance.pDPhi))
+        oe.setAttribute('y1','2*'+ str(instance.pDy1))        
+        oe.setAttribute('x1','2*'+ str(instance.pDx1))
+        oe.setAttribute('x2','2*'+ str(instance.pDx2))
+        oe.setAttribute('y2','2*'+ str(instance.pDy2))
+        oe.setAttribute('x3','2*'+ str(instance.pDx3))
+        oe.setAttribute('x4','2*'+ str(instance.pDx4))
+        oe.setAttribute('Alph',str(instance.pAlp))
+        self.solids.appendChild(oe)       
 
     def writeUnion(self, instance):
         oe  = doc.createElement('union')
