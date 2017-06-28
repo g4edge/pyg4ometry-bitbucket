@@ -280,7 +280,7 @@ class Body(object):
             return "a" + str(uuid.uuid4())
 
     def __repr__(self):
-        return "{}<{}>".format(self.name, type(self).__name__)
+        return "<{}: \"{}\">".format(type(self).__name__, self.name)
 
 
 class RPP(Body):
@@ -1371,7 +1371,7 @@ class Region(object):
         return boolean._extent()
 
     def __repr__(self):
-        return "{}<Region>".format(self.name)
+        return "<Region: \"{}\">".format(self.name)
 
 class Zone(object):
     """
@@ -1442,7 +1442,7 @@ class Zone(object):
         excludes_zones = ' '.join(['\n-({})'.format(repr(space))
                                    for space in self.excludes if
                                    isinstance(space, Zone)])
-        return "{}{}{}{}".format(contains_bodies,
+        return "<Zone: {}{}{}{}>".format(contains_bodies,
                                  excludes_bodies,
                                  contains_zones,
                                  excludes_zones)
@@ -1616,7 +1616,7 @@ class Parameters(object):
         out_string = ', '.join(['{}={}'.format(parameter,
                                                getattr(self, parameter))
                                 for parameter in self._fields])
-        return "Parameters:({})".format(out_string)
+        return "<Parameters: ({})>".format(out_string)
 
     def __iter__(self):
         for field_name in self._fields:
@@ -1660,8 +1660,8 @@ class Extent(object):
                      and np.isclose(self.upper, other.upper).all()))
 
     def __repr__(self):
-        return ("Extent: Lower({lower.x}, {lower.y}, {lower.z}),"
-                " Upper({upper.x}, {upper.y}, {upper.z})".format(
+        return ("<Extent: Lower({lower.x}, {lower.y}, {lower.z}),"
+                " Upper({upper.x}, {upper.y}, {upper.z})>".format(
                     upper=self.upper, lower=self.lower))
 
     def __eq__(self, other):
