@@ -80,6 +80,6 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     if gdmlWriter : 
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
-        w.write('./Sphere.gdml')
-        w.writeGmadTester('Sphere.gmad')        
+        w.write('./SphereFullTest.gdml')
+        w.writeGmadTester('SphereFullTest.gmad')        
 
