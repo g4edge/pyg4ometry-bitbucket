@@ -420,9 +420,9 @@ class Writer(object):
         oe = self.doc.createElement("twistedbox")
         oe.setAttribute('name',self.prepend+'_'+instance.name)
         oe.setAttribute('PhiTwist',str(instance.twistedAngle))
-        oe.setAttribute('x',str(instance.pDx))
-        oe.setAttribute('y',str(instance.pDy))
-        oe.setAttribute('z',str(instance.pDz))
+        oe.setAttribute('x','2*'+ str(instance.pDx))
+        oe.setAttribute('y','2*'+ str(instance.pDy))
+        oe.setAttribute('z','2*'+ str(instance.pDz))
         self.solids.appendChild(oe)        
 
     def writeTwistedTrap(self, instance):
