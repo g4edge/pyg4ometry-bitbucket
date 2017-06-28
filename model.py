@@ -329,6 +329,9 @@ class Model(object):
                 cPickle.dump(regions, pickle_file)
         return regions
 
+    def __repr__(self):
+        return "<Model: \"{}\">".format(self._filename)
+
 
 class FlukaBodyListener(FlukaParserListener):
     """
