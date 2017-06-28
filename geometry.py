@@ -173,7 +173,7 @@ class Body(object):
         if other == _IDENTITY:
             return self
 
-        output_name = self._generate_name(other)
+        output_name = self._unique_boolean_name(other)
 
         relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
@@ -195,7 +195,7 @@ class Body(object):
         if other == _IDENTITY:
             return self
 
-        output_name = self._generate_name(other)
+        output_name = self._unique_boolean_name(other)
 
         relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
@@ -216,7 +216,7 @@ class Body(object):
         if other == _IDENTITY:
             return self
 
-        output_name = self._generate_name(other)
+        output_name = self._unique_boolean_name(other)
 
         relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
@@ -264,7 +264,7 @@ class Body(object):
         # rotation.
         return trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
 
-    def _generate_name(self, other):
+    def _unique_boolean_name(self, other):
         """
         Generate an output  name given the two solids.  Keeps sane
         names for sufficiently short output, but returns a
@@ -278,6 +278,16 @@ class Body(object):
         else:
             # GDML name has to start with a letter so prepend an "a".
             return "a" + str(uuid.uuid4())
+
+    def _unique_body_name(self):
+        """Generate a name for a given body.  As a single Fluka body
+        may ultimately map to an arbitrary number of GDML solids, it
+        is necessary that each name is unique.  We try here to
+        maintain the reference to the original name slightly by
+        keeping appending to the original human-readable name.
+
+        """
+        return "{}_{}".format(self.name, uuid.uuid4())
 
     def __repr__(self):
         return "<{}: \"{}\">".format(type(self).__name__, self.name)
@@ -411,7 +421,7 @@ class RPP(Body):
         y_length = self._y_max - self._y_min
         z_length = self._z_max - self._z_min
 
-        return pygdml.solid.Box(self.name,
+        return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * x_length,
                                 0.5 * y_length,
                                 0.5 * z_length)
@@ -453,7 +463,8 @@ class SPH(Body):
         Construct a solid, whole, GDML sphere from this.
 
         """
-        return pygdml.solid.Orb(self.name, self.parameters.radius)
+        return pygdml.solid.Orb(self._unique_body_name(),
+                                self.parameters.radius)
 
 
 class RCC(Body):
@@ -545,7 +556,8 @@ class RCC(Body):
         return centre_max + self.length
 
     def gdml_solid(self):
-        return pygdml.solid.Tubs(self.name, 0.0,
+        return pygdml.solid.Tubs(self._unique_body_name(),
+                                 0.0,
                                  self.parameters.radius,
                                  self._scale * 0.5,
                                  0.0,
@@ -632,7 +644,7 @@ class REC(Body):
                                  self.parameters.to_other_face_y,
                                  self.parameters.to_other_face_z])
 
-        return pygdml.solid.EllipticalTube(self.name,
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
                                            semi_minor,
                                            semi_major,
                                            length * 0.5)
@@ -715,7 +727,7 @@ class TRC(Body):
     def gdml_solid(self):
         # The first face of pygdml.Cons is located at -z, and the
         # second at +z.  Here choose to put the major face at -z.
-        return pygdml.solid.Cons(self.name,
+        return pygdml.solid.Cons(self._unique_body_name(),
                                  0.0,
                                  self.parameters.major_radius,
                                  0.0,
@@ -780,7 +792,7 @@ class XYP(Body):
     def gdml_solid(self):
         # We choose the box face pointing in the +z direction to form
         # the plane face.
-        return pygdml.solid.Box(self.name,
+        return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * self._scale_x,
                                 0.5 * self._scale_y,
                                 0.5 * self._scale_z)
@@ -839,7 +851,7 @@ class XZP(Body):
     def gdml_solid(self):
         # We choose the box face pointing in the +y direction to form
         # the plane face.
-        return pygdml.solid.Box(self.name,
+        return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * self._scale_x,
                                 0.5 * self._scale_y,
                                 0.5 * self._scale_z)
@@ -896,7 +908,7 @@ class YZP(Body):
     def gdml_solid(self):
         # We choose the box face pointing in the +x direction to form
         # the plane face.
-        return pygdml.solid.Box(self.name,
+        return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * self._scale_x,
                                 0.5 * self._scale_y,
                                 0.5 * self._scale_z)
@@ -981,7 +993,7 @@ class PLA(Body):
         return closest_point
 
     def gdml_solid(self):
-        return pygdml.solid.Box(self.name,
+        return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * self._scale,
                                 0.5 * self._scale,
                                 0.5 * self._scale)
@@ -1037,7 +1049,8 @@ class XCC(Body):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return pygdml.solid.Tubs(self.name, 0.0,
+        return pygdml.solid.Tubs(self._unique_body_name(),
+                                 0.0,
                                  self.parameters.radius,
                                  self._scale * 0.5,
                                  0.0,
@@ -1094,7 +1107,7 @@ class YCC(Body):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return pygdml.solid.Tubs(self.name,
+        return pygdml.solid.Tubs(self._unique_body_name(),
                                  0.0,
                                  self.parameters.radius,
                                  self._scale * 0.5,
@@ -1149,7 +1162,7 @@ class ZCC(Body):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return pygdml.solid.Tubs(self.name,
+        return pygdml.solid.Tubs(self._unique_body_name(),
                                  0.0,
                                  self.parameters.radius,
                                  self._scale * 0.5,
@@ -1200,7 +1213,7 @@ class XEC(Body):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return pygdml.solid.EllipticalTube(self.name,
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
                                            self.parameters.semi_axis_z,
                                            self.parameters.semi_axis_y,
                                            0.5 * self._scale)
@@ -1247,7 +1260,7 @@ class YEC(Body):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return pygdml.solid.EllipticalTube(self.name,
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
                                            self.parameters.semi_axis_x,
                                            self.parameters.semi_axis_z,
                                            0.5 * self._scale)
@@ -1291,7 +1304,7 @@ class ZEC(Body):
         return max(map(abs, self.parameters))
 
     def gdml_solid(self):
-        return pygdml.solid.EllipticalTube(self.name,
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
                                            self.parameters.semi_axis_x,
                                            self.parameters.semi_axis_y,
                                            0.5 * self._scale)
