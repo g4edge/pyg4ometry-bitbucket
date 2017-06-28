@@ -63,7 +63,12 @@ class TwistedTrap(_SolidBase, _TwistedSolid) :
         
         bottom = _Layer(pl1,pl2,pl3,pl4, z)
         bottom = bottom.Rotated(-twist*0.5) #overwrite
-        layers.append(bottom)
+        b1 = bottom[0] - 0.5 * float(r)
+        b2 = bottom[1] - 0.5 * float(r)
+        b3 = bottom[2] - 0.5 * float(r)
+        b4 = bottom[3] - 0.5 * float(r)
+        bottom2 = _Layer(b1, b2, b3, b4, z)
+        layers.append(bottom2)
         
         for i in range(nsl):
             pn1 = (pl1 + float(i + 1) * (pu1 - pl1) / nsl) #+ (float(i + 1) * float(dr))
@@ -75,10 +80,11 @@ class TwistedTrap(_SolidBase, _TwistedSolid) :
             n = _Layer(pn1, pn2, pn3, pn4, z)
             angle = -twist*0.5 + float(i + 1) * dtwist
             nr = n.Rotated(angle) # returns rotated copy
-            n1 = nr[0] + float(i + 1) * float(dr)
-            n2 = nr[1] + float(i + 1) * float(dr)
-            n3 = nr[2] + float(i + 1) * float(dr)
-            n4 = nr[3] + float(i + 1) * float(dr)
+            shift = -float(r) * 0.5 + float(i + 1) * float(dr) 
+            n1 = nr[0] + shift #float(i + 1) * float(dr)
+            n2 = nr[1] + shift #float(i + 1) * float(dr)
+            n3 = nr[2] + shift #float(i + 1) * float(dr)
+            n4 = nr[3] + shift #float(i + 1) * float(dr)
             nn = _Layer(n1, n2, n3, n4, z)
             layers.append(nn)
 
