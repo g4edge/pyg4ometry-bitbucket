@@ -117,14 +117,28 @@ class Body(object):
         if isinstance(scale, (float, int)):
             self._apply_crude_scale(scale)
         elif isinstance(scale, Body):
+            # In the try/except after this one, there are two possible
+            # sources of NullMeshError.  We want to catch any possible
+            # problem with meshing the scaling body first, as we
+            # interpret NullMeshErrors in the second try/except as
+            # redundant subtractions.  Mustn't confuse the two.
+            # Assuming that the "crude" version is meshable, this
+            # first try/except should never actually do anything, if
+            # it does, then there's something wrong in this module.
+            try:
+                scale.gdml_solid().pycsgmesh()
+            except pygdml.solid.NullMeshError:
+                msg = "Scaling body \"{}\" is not meshable!".format(scale.name)
+                raise pygdml.solid.NullMeshError(msg)
             try:
                 extent = self._get_overlap(scale)
                 self._apply_extent(extent)
             except pygdml.NullMeshError:
-                # In this event, the body is a subtraction which
-                # serves "no purpose", i.e., it's a subtraction
-                # outside of the resulting solid.  set the
-                # _is_omittable flag appropriately.
+                # In this event, the subtraction is redundant one, so
+                # we can omit it.
+                # Redundant intersections naturally will not raise
+                # NullMeshErrors, and are dealt with in the
+                # _apply_extent methods.
                 self._is_omittable = True
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
