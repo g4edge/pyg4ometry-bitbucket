@@ -425,6 +425,17 @@ class Writer(object):
         oe.setAttribute('z','2*'+ str(instance.pDz))
         self.solids.appendChild(oe)        
 
+    def writeTwistedTrd(self, instance):
+        oe = self.doc.createElement("twistedtrd")
+        oe.setAttribute('name',self.prepend+'_'+instance.name)
+        oe.setAttribute('PhiTwist',str(instance.twistedAngle))
+        oe.setAttribute('x1','2*'+ str(instance.pDx1))
+        oe.setAttribute('x2','2*'+ str(instance.pDx2))
+        oe.setAttribute('y1','2*'+ str(instance.pDy1))
+        oe.setAttribute('y2','2*'+ str(instance.pDy2))
+        oe.setAttribute('z','2*'+ str(instance.pDz))
+        self.solids.appendChild(oe)
+
     def writeTwistedTrap(self, instance):
         pass
 
