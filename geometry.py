@@ -316,6 +316,15 @@ class RPP(Body):
         self._z_min = self.parameters.z_min
         self._z_max = self.parameters.z_max
 
+    def _apply_crude_scale(self, scale):
+        self._is_omittable = False
+        self._x_min = self.parameters.x_min
+        self._x_max = self.parameters.x_max
+        self._y_min = self.parameters.y_min
+        self._y_max = self.parameters.y_max
+        self._z_min = self.parameters.z_min
+        self._z_max = self.parameters.z_max
+
     def _apply_extent(self, extent):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
