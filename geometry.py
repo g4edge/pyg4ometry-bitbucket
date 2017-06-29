@@ -311,7 +311,7 @@ class InfiniteCylinder(Body):
                                  0.0, 2*pi)
 
 
-class InfinitePlane(Body):
+class InfiniteHalfSpace(Body):
     def __init__(self, name, parameters, translation=None, transformation=None):
         self.name = name
         self.translation = translation
@@ -704,8 +704,8 @@ class TRC(Body):
                                  0.0, 2*pi)
 
 
-class XYP(InfinitePlane):
-    """Infinite plane perpendicular to the z-axis."""
+class XYP(InfiniteHalfSpace):
+    """Infinite half space perpendicular to the z-axis."""
     def _set_parameters(self, parameters):
         parameter_names = ['v_z']
         self.parameters = Parameters(zip(parameter_names, parameters))
@@ -731,8 +731,8 @@ class XYP(InfinitePlane):
                 + vector.Three(centre_x, centre_y, centre_z))
 
 
-class XZP(InfinitePlane):
-    """Infinite plane perpendicular to the y-axis."""
+class XZP(InfiniteHalfSpace):
+    """Infinite half space perpendicular to the y-axis."""
     def _set_parameters(self, parameters):
         parameter_names = ['v_y']
         self.parameters = Parameters(zip(parameter_names, parameters))
@@ -757,8 +757,8 @@ class XZP(InfinitePlane):
                 + vector.Three(centre_x, centre_y, centre_z))
 
 
-class YZP(InfinitePlane):
-    """Infinite plane perpendicular to the x-axis."""
+class YZP(InfiniteHalfSpace):
+    """Infinite half space perpendicular to the x-axis."""
     def _set_parameters(self, parameters):
         parameter_names = ['v_x']
         self.parameters = Parameters(zip(parameter_names, parameters))
