@@ -548,7 +548,7 @@ class RCC(Body):
         self.direction = vector.Three(self.parameters.h_x,
                                       self.parameters.h_y,
                                       self.parameters.h_z)
-        self.length = np.linalg.norm(self.direction)
+        self.length = self.direction.length()
         self._scale = self.length
 
     def _apply_crude_scale(self, scale):
