@@ -94,9 +94,7 @@ class Body(object):
         pass
 
     def add_to_volume(self, volume):
-        """Basically for adding to a world volume.
-
-        """
+        """Add this body's solid to a volume."""
         # Convert the matrix to TB xyz:
         rotation_angles = trf.matrix2tbxyz(self.rotation)
         # Up to this point all rotations are active, which is OK
