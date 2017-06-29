@@ -7,8 +7,8 @@ Note:  All units are in millimetres, c.f. centimetres in Fluka.
 from __future__ import print_function
 from math import pi
 import uuid
-import numpy as np
 import collections
+import numpy as np
 
 import pygdml
 import pygdml.transformation as trf
@@ -1466,9 +1466,9 @@ class Zone(object):
                                    for space in self.excludes if
                                    isinstance(space, Zone)])
         return "<Zone: {}{}{}{}>".format(contains_bodies,
-                                 excludes_bodies,
-                                 contains_zones,
-                                 excludes_zones)
+                                         excludes_bodies,
+                                         contains_zones,
+                                         excludes_zones)
 
     def crude_extent(self):
         extent = 0.0
