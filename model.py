@@ -85,6 +85,7 @@ class Model(object):
         out = pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
+        print("Written GDML file: {}".format(out_path))
 
         if make_gmad is True:
             self._write_test_gmad(out_path)
@@ -232,6 +233,7 @@ class Model(object):
                        "X0=0.1*um;\n")
             gmad.write('\n')
             gmad.write("use, period=component;\n")
+            print("Written GMAD file: {}".format(gmad_path))
 
     def test_regions(self, pickle=None, regions=None, optimise=True):
         """Individually mesh each region and return dictionary of lists of
