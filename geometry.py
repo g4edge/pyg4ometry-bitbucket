@@ -287,7 +287,7 @@ class Body(object):
         may ultimately map to an arbitrary number of GDML solids, it
         is necessary that each name is unique.  We try here to
         maintain the reference to the original name slightly by
-        keeping appending to the original human-readable name.
+        appending to the original human-readable name.
 
         """
         return "{}_{}".format(self.name, uuid.uuid4())
