@@ -41,10 +41,7 @@ class Three(_np.ndarray):
         """
         Check if instance is parallel to some other vector, v
         """
-        if _np.linalg.norm(_np.cross(self, other)) < tolerance:
-            return True
-        else:
-            return False
+        return _np.linalg.norm(_np.cross(self, other)) < tolerance
 
     @property
     def unit(self):
