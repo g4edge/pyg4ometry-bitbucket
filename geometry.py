@@ -673,17 +673,16 @@ class REC(Body):
 
 
 class TRC(Body):
-    """
-    Truncated Right-angled Cone.
+    """Truncated Right-angled Cone.
 
     Parameters
     ----------
 
-    centre_major_x : x-coordinate of the centre of the larger face.
-    centre_major_y : y-coordinate of the centre of the larger face.
-    centre_major_z : z-coordinate of the centre of the larger face.
+    centre_major_x: x-coordinate of the centre of the larger face.
+    centre_major_y: y-coordinate of the centre of the larger face.
+    centre_major_z: z-coordinate of the centre of the larger face.
 
-    major_to_minor_x : x_coordinator of the vector pointing from the major
+    major_to_minor_x : x_coordinat of the vector pointing from the major
                        to minor face.
     major_to_minor_y : y_coordinator of the vector pointing from the major
                        to minor face.
@@ -696,14 +695,11 @@ class TRC(Body):
     minor_radius : radius of the smaller face.
     """
     def _set_parameters(self, parameters):
-        parameter_names = ['centre_major_x',
-                           'centre_major_y',
-                           'centre_major_z',
-                           'major_to_minor_x',
-                           'major_to_minor_y',
-                           'major_to_minor_z',
-                           'major_radius',
-                           'minor_radius']
+        parameter_names = [
+            'centre_major_x', 'centre_major_y', 'centre_major_z',
+            'major_to_minor_x', 'major_to_minor_y', 'major_to_minor_z',
+            'major_radius', 'minor_radius'
+        ]
         self.parameters = Parameters(zip(parameter_names, parameters))
         self.major_centre = vector.Three([self.parameters.centre_major_x,
                                           self.parameters.centre_major_y,
@@ -725,13 +721,9 @@ class TRC(Body):
         self.rotation = trf.matrix_from(initial, final)
 
     def crude_extent(self):
-        length = np.linalg.norm([self.parameters.major_to_minor_x,
-                                 self.parameters.major_to_minor_y,
-                                 self.parameters.major_to_minor_z])
-
-        return max(abs(self.parameters.centre_major_x) + length,
-                   abs(self.parameters.centre_major_y) + length,
-                   abs(self.parameters.centre_major_z) + length,
+        return max(abs(self.parameters.centre_major_x) + self.length,
+                   abs(self.parameters.centre_major_y) + self.length,
+                   abs(self.parameters.centre_major_z) + self.length,
                    self.parameters.minor_radius,
                    self.parameters.major_radius)
 
@@ -739,13 +731,10 @@ class TRC(Body):
         # The first face of pygdml.Cons is located at -z, and the
         # second at +z.  Here choose to put the major face at -z.
         return pygdml.solid.Cons(self._unique_body_name(),
-                                 0.0,
-                                 self.parameters.major_radius,
-                                 0.0,
-                                 self.parameters.minor_radius,
+                                 0.0, self.parameters.major_radius,
+                                 0.0, self.parameters.minor_radius,
                                  0.5 * self.length,
-                                 0.0,
-                                 2*pi)
+                                 0.0, 2*pi)
 
 
 class XYP(InfinitePlane):
