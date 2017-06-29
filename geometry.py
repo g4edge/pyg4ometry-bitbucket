@@ -422,6 +422,22 @@ class RPP(Body):
         if self.parameters.z_max > z_bound_upper:
             self._z_max = z_bound_upper
 
+    def _apply_length_safety(self, boolean):
+        if boolean == "intersection":
+            self._x_min -= LENGTHSAFETY
+            self._y_min -= LENGTHSAFETY
+            self._z_min -= LENGTHSAFETY
+            self._x_max -= LENGTHSAFETY
+            self._y_max -= LENGTHSAFETY
+            self._z_max -= LENGTHSAFETY
+        elif boolean == "subtraction":
+            self._x_min += LENGTHSAFETY
+            self._y_min += LENGTHSAFETY
+            self._z_min += LENGTHSAFETY
+            self._x_max += LENGTHSAFETY
+            self._y_max += LENGTHSAFETY
+            self._z_max += LENGTHSAFETY
+
     def centre(self):
         """
         Return the coordinates of the centre of the Rectangular
