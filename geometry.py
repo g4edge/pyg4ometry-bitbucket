@@ -17,11 +17,10 @@ from . import vector
 
 # Fractional tolerance when minimising solids.  Here have chosen this
 # to be 5% for no particular reason.
-FRACTOL = 0.05
-MINTOL = FRACTOL + 1
+SCALING_TOLERANCE = 0.05
 
-LENGTHSAFETY = 1e-6 # 1 nanometre
-DPSAFETY = int((-1 * np.log10(LENGTHSAFETY))) # Decimal places for rounding
+# Minimum length safety between volumes to ensure no overlaps
+LENGTH_SAFETY = 1e-6 # 1 nanometre
 
 # Intersection/Union/Subtraction identity.
 # Intersecting/unioning/subtracting with this will simply return the
@@ -294,9 +293,9 @@ class Body(object):
 class InfiniteCylinder(Body):
     def _apply_length_safety(self, boolean):
         if boolean == "intersection":
-            self._radius -= LENGTHSAFETY
+            self._radius -= LENGTH_SAFETY
         elif boolean == "subtraction":
-            self._radius += LENGTHSAFETY
+            self._radius += LENGTH_SAFETY
 
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
@@ -400,13 +399,13 @@ class RPP(Body):
         # Then we can't omit it, but maybe we can shrink it:
 
         # Calculate the tolerances for lower bounds:
-        x_bound_lower = extent.lower.x - abs(FRACTOL * extent.lower.x)
-        y_bound_lower = extent.lower.y - abs(FRACTOL * extent.lower.y)
-        z_bound_lower = extent.lower.z - abs(FRACTOL * extent.lower.z)
+        x_bound_lower = extent.lower.x - abs(SCALING_TOLERANCE * extent.lower.x)
+        y_bound_lower = extent.lower.y - abs(SCALING_TOLERANCE * extent.lower.y)
+        z_bound_lower = extent.lower.z - abs(SCALING_TOLERANCE * extent.lower.z)
         # and for the upper bounds:
-        x_bound_upper = extent.upper.x + abs(FRACTOL * extent.upper.x)
-        y_bound_upper = extent.upper.y + abs(FRACTOL * extent.upper.y)
-        z_bound_upper = extent.upper.z + abs(FRACTOL * extent.upper.z)
+        x_bound_upper = extent.upper.x + abs(SCALING_TOLERANCE * extent.upper.x)
+        y_bound_upper = extent.upper.y + abs(SCALING_TOLERANCE * extent.upper.y)
+        z_bound_upper = extent.upper.z + abs(SCALING_TOLERANCE * extent.upper.z)
 
         # If outside of tolerances, then assign to those tolerances.
         # Lower bounds:
@@ -426,19 +425,19 @@ class RPP(Body):
 
     def _apply_length_safety(self, boolean):
         if boolean == "intersection":
-            self._x_min -= LENGTHSAFETY
-            self._y_min -= LENGTHSAFETY
-            self._z_min -= LENGTHSAFETY
-            self._x_max -= LENGTHSAFETY
-            self._y_max -= LENGTHSAFETY
-            self._z_max -= LENGTHSAFETY
+            self._x_min -= LENGTH_SAFETY
+            self._y_min -= LENGTH_SAFETY
+            self._z_min -= LENGTH_SAFETY
+            self._x_max -= LENGTH_SAFETY
+            self._y_max -= LENGTH_SAFETY
+            self._z_max -= LENGTH_SAFETY
         elif boolean == "subtraction":
-            self._x_min += LENGTHSAFETY
-            self._y_min += LENGTHSAFETY
-            self._z_min += LENGTHSAFETY
-            self._x_max += LENGTHSAFETY
-            self._y_max += LENGTHSAFETY
-            self._z_max += LENGTHSAFETY
+            self._x_min += LENGTH_SAFETY
+            self._y_min += LENGTH_SAFETY
+            self._z_min += LENGTH_SAFETY
+            self._x_max += LENGTH_SAFETY
+            self._y_max += LENGTH_SAFETY
+            self._z_max += LENGTH_SAFETY
 
     def centre(self):
         """
@@ -561,7 +560,7 @@ class RCC(Body):
                 self.direction)
                             - self.face_centre
                             - 0.5 * self.direction)
-            self._scale = max_length * MINTOL
+            self._scale = max_length * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         """
@@ -763,9 +762,9 @@ class XYP(InfinitePlane):
         self._offset = vector.Three(extent.centre.x,
                                     extent.centre.y,
                                     0.0)
-        self._scale_x = extent.size.x * MINTOL
-        self._scale_y = extent.size.y * MINTOL
-        self._scale_z = extent.size.z * MINTOL
+        self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
+        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
+        self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         # Choose the face at
@@ -790,9 +789,9 @@ class XZP(InfinitePlane):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     extent.centre.z)
-        self._scale_x = extent.size.x * MINTOL
-        self._scale_y = extent.size.y * MINTOL
-        self._scale_z = extent.size.z * MINTOL
+        self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
+        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
+        self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         centre_x = 0.0
@@ -816,9 +815,9 @@ class YZP(InfinitePlane):
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     extent.centre.z)
-        self._scale_x = extent.size.x * MINTOL
-        self._scale_y = extent.size.y * MINTOL
-        self._scale_z = extent.size.z * MINTOL
+        self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
+        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
+        self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         centre_x = self.parameters.v_x - (self._scale_x * 0.5)
@@ -920,7 +919,7 @@ class XCC(InfiniteCylinder):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     0.0)
-        self._scale = extent.size.x * MINTOL
+        self._scale = extent.size.x * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         return (self._offset
@@ -951,7 +950,7 @@ class YCC(InfiniteCylinder):
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0, extent.centre.y, 0.0)
-        self._scale = extent.size.y * MINTOL
+        self._scale = extent.size.y * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         return (self._offset
@@ -984,7 +983,7 @@ class ZCC(InfiniteCylinder):
         self._offset = vector.Three(0.0,
                                     0.0,
                                     extent.centre.z)
-        self._scale = extent.size.z * MINTOL
+        self._scale = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         return (self._offset
@@ -1439,8 +1438,10 @@ class Parameters(object):
 
 class Extent(object):
     def __init__(self, lower, upper):
-        lower = [round(i, DPSAFETY) for i in lower]
-        upper = [round(i, DPSAFETY) for i in upper]
+         # Decimal places for rounding
+        decimal_places = int((-1 * np.log10(LENGTH_SAFETY)))
+        lower = [round(i, decimal_places) for i in lower]
+        upper = [round(i, decimal_places) for i in upper]
         self.lower = vector.Three(lower)
         self.upper = vector.Three(upper)
         self.size = self.upper - self.lower
