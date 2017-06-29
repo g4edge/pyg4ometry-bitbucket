@@ -535,39 +535,7 @@ class RCC(Body):
         self._offset = vector.Three(0, 0, 0)
         self._scale = self.length
 
-    def _apply_extent(self, extent):
-        return
-        # Max possible length of a solid for the given extents:
-        max_length = np.linalg.norm([extent.size.x,
-                                     extent.size.y,
-                                     extent.size.z])
-        # If the length is possibly smaller than the length of the
-        # resulting solid, then just return the length and position unchanged.
-        if self.length < max_length:
-            self._offset = vector.Three(0, 0, 0)
-            self._scale = self.length
-        # Else shorten and reposition the cylinder.
-        else:
-            # If the RCC is much longer than the maximum possible extent, I want
-            # to minimise the length and centre the RCC on the point
-            # closest to the centre of the mesh (while maintaining the
-            # orientation of the cylinder).  The two subtractions
-            # are to cancel with the terms in the RCC.centre method,
-            # leaving just the point on the line closest to the cetnre.
-            self._offset = (vector.point_on_line_closest_to_point(
-                extent.centre,
-                self.face_centre,
-                self.direction)
-                            - self.face_centre
-                            - 0.5 * self.direction)
-            self._scale = max_length * (SCALING_TOLERANCE + 1)
-
     def centre(self):
-        """
-        Returns the coordinates of the centre of the sphere in
-        MILLIMETRES, as this is used for GDML.
-        """
-
         return (self._offset
                 + self.face_centre
                 + (0.5 * self.direction))
