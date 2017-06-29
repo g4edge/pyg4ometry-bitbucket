@@ -736,7 +736,7 @@ class TRC(Body):
         self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
                                             self.parameters.major_to_minor_y,
                                             self.parameters.major_to_minor_z])
-        self.length = self.major_to_minor.length
+        self.length = self.major_to_minor.length()
         self._set_rotation_matrix(transformation)
 
     def _set_parameters(self, parameters):

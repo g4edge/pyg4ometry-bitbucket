@@ -49,7 +49,6 @@ class Three(_np.ndarray):
         """
         return self/_np.linalg.norm(self)
 
-    @property
     def length(self):
         """
         vector length (l2 norm)
