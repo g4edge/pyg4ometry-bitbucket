@@ -294,6 +294,31 @@ class Body(object):
         return "<{}: \"{}\">".format(type(self).__name__, self.name)
 
 
+class InfiniteCylinder(Body):
+    def __init__(self, name, parameters, translation=None, transformation=None):
+        self.name = name
+        self.translation = translation
+        self.transformation = transformation
+        self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation)
+        self._radius = self.parameters.radius
+
+    def _apply_crude_scale(self, scale):
+        self._offset = vector.Three(0, 0, 0)
+        self._scale = scale
+
+    def crude_extent(self):
+        return max(map(abs, self.parameters))
+
+    def gdml_solid(self):
+        return pygdml.solid.Tubs(self._unique_body_name(),
+                                 0.0,
+                                 self._radius,
+                                 self._scale * 0.5,
+                                 0.0,
+                                 2*pi)
+
+
 class RPP(Body):
     """
     An RPP is a rectangular parallelpiped (a cuboid).
@@ -1000,7 +1025,7 @@ class PLA(Body):
                                 0.5 * self._scale)
 
 
-class XCC(Body):
+class XCC(InfiniteCylinder):
     """
     Infinite circular cylinder parallel to x-axis
 
@@ -1010,29 +1035,15 @@ class XCC(Body):
     centre_z    -- z-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(XCC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
-    def _apply_crude_scale(self, scale):
-        self._offset = vector.Three(0, 0, 0)
-        self._scale = scale
+    def _set_parameters(self, parameters):
+        parameter_names = ["centre_y", "centre_z", "radius"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(extent.centre.x,
                                     0.0,
                                     0.0)
         self._scale = extent.size.x * MINTOL
-
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_y", "centre_z", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return (self._offset
@@ -1046,19 +1057,8 @@ class XCC(Body):
                                    [0, 1, 0],
                                    [1, 0, 0]])
 
-    def crude_extent(self):
-        return max(map(abs, self.parameters))
 
-    def gdml_solid(self):
-        return pygdml.solid.Tubs(self._unique_body_name(),
-                                 0.0,
-                                 self.parameters.radius,
-                                 self._scale * 0.5,
-                                 0.0,
-                                 2*pi)
-
-
-class YCC(Body):
+class YCC(InfiniteCylinder):
     """
     Infinite circular cylinder parallel to y-axis
 
@@ -1068,29 +1068,15 @@ class YCC(Body):
     centre_x    -- x-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(YCC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
-    def _apply_crude_scale(self, scale):
-        self._offset = vector.Three(0, 0, 0)
-        self._scale = scale
+    def _set_parameters(self, parameters):
+        parameter_names = ["centre_z", "centre_x", "radius"]
+        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0,
                                     extent.centre.y,
                                     0.0)
         self._scale = extent.size.y * MINTOL
-
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_z", "centre_x", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
         return (self._offset
@@ -1104,19 +1090,9 @@ class YCC(Body):
                                    [0, 0, 1],
                                    [0, -1, 0]])
 
-    def crude_extent(self):
-        return max(map(abs, self.parameters))
-
-    def gdml_solid(self):
-        return pygdml.solid.Tubs(self._unique_body_name(),
-                                 0.0,
-                                 self.parameters.radius,
-                                 self._scale * 0.5,
-                                 0.0,
-                                 2*pi)
 
 
-class ZCC(Body):
+class ZCC(InfiniteCylinder):
     """
     Infinite circular cylinder parallel to z-axis
 
@@ -1126,23 +1102,9 @@ class ZCC(Body):
     centre_y    -- y-coordinate of the centre of the cylinder
     radius -- radius of the cylinder
     """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(ZCC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
     def _set_parameters(self, parameters):
         parameter_names = ["centre_x", "centre_y", "radius"]
         self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def _apply_crude_scale(self, scale):
-        self._offset = vector.Three(0, 0, 0)
-        self._scale = scale
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0,
@@ -1158,17 +1120,6 @@ class ZCC(Body):
 
     def _set_rotation_matrix(self, transformation):
         self.rotation = np.matrix(np.identity(3))
-
-    def crude_extent(self):
-        return max(map(abs, self.parameters))
-
-    def gdml_solid(self):
-        return pygdml.solid.Tubs(self._unique_body_name(),
-                                 0.0,
-                                 self.parameters.radius,
-                                 self._scale * 0.5,
-                                 0.0,
-                                 2*pi)
 
 
 class XEC(Body):
