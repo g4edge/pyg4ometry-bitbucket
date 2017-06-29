@@ -303,6 +303,12 @@ class InfiniteCylinder(Body):
         self._set_rotation_matrix(transformation)
         self._radius = self.parameters.radius
 
+    def _apply_length_safety(self, boolean):
+        if boolean == "intersection":
+            self._radius -= LENGTHSAFETY
+        elif boolean == "subtraction":
+            self._radius += LENGTHSAFETY
+
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
         self._scale = scale
