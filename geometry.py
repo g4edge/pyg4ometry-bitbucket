@@ -341,8 +341,7 @@ class InfinitePlane(Body):
 class RPP(Body):
     """An RPP is a rectangular parallelpiped (a cuboid). """
     def _set_parameters(self, parameters):
-        parameter_names = ['x_min', 'x_max', 'y_min',
-                           'y_max', 'z_min', 'z_max']
+        parameter_names = ['x_min', 'x_max', 'y_min', 'y_max', 'z_min', 'z_max']
         self.parameters = Parameters(zip(parameter_names, parameters))
         # Hidden versions of these parameters which can be reassigned
         self._x_min = self.parameters.x_min
@@ -966,8 +965,7 @@ class XEC(Body):
 
     """
     def _set_parameters(self, parameters):
-        parameter_names = ["centre_y", "centre_z",
-                           "semi_axis_y", "semi_axis_z"]
+        parameter_names = ["centre_y", "centre_z", "semi_axis_y", "semi_axis_z"]
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
@@ -1038,8 +1036,7 @@ class ZEC(Body):
     semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse face.
     """
     def _set_parameters(self, parameters):
-        parameter_names = ["centre_x", "centre_y",
-                           "semi_axis_x", "semi_axis_y"]
+        parameter_names = ["centre_x", "centre_y", "semi_axis_x", "semi_axis_y"]
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
@@ -1171,8 +1168,8 @@ class Zone(object):
             raise TypeError("Unknown pairs type: {}".format(type(pairs)))
 
         if not self.contains:
-            raise TypeError("Zone must always contain at least"
-                            " one body or subzone!!!")
+            raise TypeError(
+                "Zone must always contain at least one body or subzone!!!")
 
     def _add_space(self, operator, body):
         """
