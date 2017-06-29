@@ -324,6 +324,32 @@ class InfiniteCylinder(Body):
                                  0.0,
                                  2*pi)
 
+class InfinitePlane(Body):
+    def __init__(self, name, parameters, translation=None, transformation=None):
+        self.name = name
+        self.translation = translation
+        self.transformation = transformation
+        self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation)
+
+    def _apply_crude_scale(self, scale):
+        self._is_omittable = False
+        self._offset = vector.Three(0, 0, 0)
+        self._scale_x = scale
+        self._scale_y = scale
+        self._scale_z = scale
+
+    def _set_rotation_matrix(self, transformation):
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(max(self.parameters))
+
+    def gdml_solid(self):
+        return pygdml.solid.Box(self._unique_body_name(),
+                                0.5 * self._scale_x,
+                                0.5 * self._scale_y,
+                                0.5 * self._scale_z)
 
 class RPP(Body):
     """
@@ -785,31 +811,11 @@ class TRC(Body):
                                  2*pi)
 
 
-class XYP(Body):
-    """
-    Infinite plane perpendicular to the z-axis.
-    """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(XYP, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-        self._offset = vector.Three(0, 0, 0)
-
+class XYP(InfinitePlane):
+    """Infinite plane perpendicular to the z-axis."""
     def _set_parameters(self, parameters):
         parameter_names = ['v_z']
         self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def _apply_crude_scale(self, scale):
-        self._is_omittable = False
-        self._offset = vector.Three(0, 0, 0)
-        self._scale_x = scale
-        self._scale_y = scale
-        self._scale_z = scale
 
     def _apply_extent(self, extent):
         if (self.parameters.v_z > extent.upper.z
@@ -831,45 +837,12 @@ class XYP(Body):
         return (self._offset
                 + vector.Three(centre_x, centre_y, centre_z))
 
-    def _set_rotation_matrix(self, transformation):
-        self.rotation = np.matrix(np.identity(3))
 
-    def crude_extent(self):
-        return abs(self.parameters.v_z)
-
-    def gdml_solid(self):
-        # We choose the box face pointing in the +z direction to form
-        # the plane face.
-        return pygdml.solid.Box(self._unique_body_name(),
-                                0.5 * self._scale_x,
-                                0.5 * self._scale_y,
-                                0.5 * self._scale_z)
-
-
-class XZP(Body):
-    """
-    Infinite plane perpendicular to the y-axis.
-    """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(XZP, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
+class XZP(InfinitePlane):
+    """Infinite plane perpendicular to the y-axis."""
     def _set_parameters(self, parameters):
         parameter_names = ['v_y']
         self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def _apply_crude_scale(self, scale):
-        self._is_omittable = False
-        self._offset = vector.Three(0, 0, 0)
-        self._scale_x = scale
-        self._scale_y = scale
-        self._scale_z = scale
 
     def _apply_extent(self, extent):
         if (self.parameters.v_y > extent.upper.y
@@ -890,43 +863,12 @@ class XZP(Body):
         return (self._offset
                 + vector.Three(centre_x, centre_y, centre_z))
 
-    def _set_rotation_matrix(self, transformation):
-        self.rotation = np.matrix(np.identity(3))
 
-    def crude_extent(self):
-        return abs(self.parameters.v_y)
-
-    def gdml_solid(self):
-        # We choose the box face pointing in the +y direction to form
-        # the plane face.
-        return pygdml.solid.Box(self._unique_body_name(),
-                                0.5 * self._scale_x,
-                                0.5 * self._scale_y,
-                                0.5 * self._scale_z)
-
-
-class YZP(Body):
-    """ Infinite plane perpendicular to the x-axis. """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(YZP, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
+class YZP(InfinitePlane):
+    """Infinite plane perpendicular to the x-axis."""
     def _set_parameters(self, parameters):
         parameter_names = ['v_x']
         self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def _apply_crude_scale(self, scale):
-        self._is_omittable = False
-        self._offset = vector.Three(0, 0, 0)
-        self._scale_x = scale
-        self._scale_y = scale
-        self._scale_z = scale
 
     def _apply_extent(self, extent):
         if (self.parameters.v_x > extent.upper.x
@@ -946,20 +888,6 @@ class YZP(Body):
         centre_z = 0.0
         return (self._offset
                 + vector.Three(centre_x, centre_y, centre_z))
-
-    def _set_rotation_matrix(self, transformation):
-        self.rotation = np.matrix(np.identity(3))
-
-    def crude_extent(self):
-        return abs(self.parameters.v_x)
-
-    def gdml_solid(self):
-        # We choose the box face pointing in the +x direction to form
-        # the plane face.
-        return pygdml.solid.Box(self._unique_body_name(),
-                                0.5 * self._scale_x,
-                                0.5 * self._scale_y,
-                                0.5 * self._scale_z)
 
 
 class PLA(Body):
