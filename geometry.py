@@ -15,8 +15,8 @@ import pygdml.transformation as trf
 
 from . import vector
 
-# Fractional tolerance when minimising solids.  In this case, 5%
-# longer than the resulting mesh:
+# Fractional tolerance when minimising solids.  Here have chosen this
+# to be 5% for no particular reason.
 FRACTOL = 0.05
 MINTOL = FRACTOL + 1
 
