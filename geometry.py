@@ -53,15 +53,12 @@ class Body(object):
     # _get_overlap is called).
     _is_omittable = False
 
-    def __init__(self,
-                 name,
-                 translation=None,
-                 transformation=None):
-
+    def __init__(self, name, parameters, translation=None, transformation=None):
         self.name = name
-        self._translation = translation
-        self._transformation = transformation
-        # Named tuple constructor for later use.
+        self.translation = translation
+        self.transformation = transformation
+        self._set_parameters(parameters)
+        self._set_rotation_matrix(transformation)
 
     def view(self, setclip=True):
         world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
@@ -295,14 +292,6 @@ class Body(object):
 
 
 class InfiniteCylinder(Body):
-    def __init__(self, name, parameters, translation=None, transformation=None):
-        self.name = name
-        self.translation = translation
-        self.transformation = transformation
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-        self._radius = self.parameters.radius
-
     def _apply_length_safety(self, boolean):
         if boolean == "intersection":
             self._radius -= LENGTHSAFETY
@@ -355,23 +344,6 @@ class RPP(Body):
     """
     An RPP is a rectangular parallelpiped (a cuboid).
     """
-    def __init__(self, name, parameters,
-                 translation=None,
-                 transformation=None):
-        super(RPP, self).__init__(name,
-                                  translation,
-                                  transformation)
-
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
-        if (self.parameters.x_min > self.parameters.x_max
-                or self.parameters.y_min > self.parameters.y_max
-                or self.parameters.z_min > self.parameters.z_max):
-            raise Warning("This RPP \"" + name + "\" has mins larger than "
-                          "its maxes.\n It is ignored in Fluka but "
-                          "won't be ignored here!")
-
     def _set_parameters(self, parameters):
         parameter_names = ['x_min', 'x_max', 'y_min',
                            'y_max', 'z_min', 'z_max']
@@ -383,6 +355,13 @@ class RPP(Body):
         self._y_max = self.parameters.y_max
         self._z_min = self.parameters.z_min
         self._z_max = self.parameters.z_max
+
+        if (self.parameters.x_min > self.parameters.x_max
+                or self.parameters.y_min > self.parameters.y_max
+                or self.parameters.z_min > self.parameters.z_max):
+            raise Warning("This RPP \"" + name + "\" has mins larger than "
+                          "its maxes.\n It is ignored in Fluka but "
+                          "won't be ignored here!")
 
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
@@ -502,16 +481,6 @@ class RPP(Body):
 
 
 class SPH(Body):
-    def __init__(self, name, parameters,
-                 translation=None,
-                 transformation=None):
-
-        super(SPH, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
     def _set_parameters(self, parameters):
         parameter_names = ['v_x', 'v_y', 'v_z', 'radius']
         self.parameters = Parameters(zip(parameter_names, parameters))
@@ -551,19 +520,8 @@ class RCC(Body):
     h_(x,y,z) = components of vector pointing in the direction of the
     other plane face, with magnitude equal to the cylinder length.
     radius    = cylinder radius
+
     """
-
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(RCC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-        self._offset = vector.Three(0, 0, 0)
-
     def _set_parameters(self, parameters):
         parameter_names = ['v_x', 'v_y', 'v_z', 'h_x', 'h_y', 'h_z', 'radius']
         self.parameters = Parameters(zip(parameter_names, parameters))
@@ -576,6 +534,7 @@ class RCC(Body):
                                       self.parameters.h_z)
         self.length = self.direction.length()
         self._scale = self.length
+        self._offset = vector.Three(0, 0, 0)
 
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
@@ -674,12 +633,6 @@ class REC(Body):
                  parameters,
                  translation=None,
                  transformation=None):
-        super(REC, self).__init__(name,
-                                  translation,
-                                  transformation)
-
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
         raise NotImplementedError
 
     def _set_parameters(self, parameters):
@@ -747,24 +700,6 @@ class TRC(Body):
     major_radius : radius of the larger face.
     minor_radius : radius of the smaller face.
     """
-
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(TRC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self.major_centre = vector.Three([self.parameters.centre_major_x,
-                                          self.parameters.centre_major_y,
-                                          self.parameters.centre_major_z])
-        self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
-                                            self.parameters.major_to_minor_y,
-                                            self.parameters.major_to_minor_z])
-        self.length = self.major_to_minor.length()
-        self._set_rotation_matrix(transformation)
-
     def _set_parameters(self, parameters):
         parameter_names = ['centre_major_x',
                            'centre_major_y',
@@ -775,6 +710,13 @@ class TRC(Body):
                            'major_radius',
                            'minor_radius']
         self.parameters = Parameters(zip(parameter_names, parameters))
+        self.major_centre = vector.Three([self.parameters.centre_major_x,
+                                          self.parameters.centre_major_y,
+                                          self.parameters.centre_major_z])
+        self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
+                                            self.parameters.major_to_minor_y,
+                                            self.parameters.major_to_minor_z])
+        self.length = self.major_to_minor.length()
 
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
@@ -908,16 +850,6 @@ class PLA(Body):
     y_position  (Vy) :: y-component of a point anywhere on the plane.
     z_position  (Vz) :: z-component of a point anywhere on the plane.
     """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(PLA, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
     def _set_parameters(self, parameters):
         parameter_names = ["x_direction", "y_direction", "z_direction",
                            "x_position", "y_position", "z_position"]
@@ -988,6 +920,7 @@ class XCC(InfiniteCylinder):
     def _set_parameters(self, parameters):
         parameter_names = ["centre_y", "centre_z", "radius"]
         self.parameters = Parameters(zip(parameter_names, parameters))
+        self._radius = self.parameters.radius
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(extent.centre.x,
@@ -1021,11 +954,10 @@ class YCC(InfiniteCylinder):
     def _set_parameters(self, parameters):
         parameter_names = ["centre_z", "centre_x", "radius"]
         self.parameters = Parameters(zip(parameter_names, parameters))
+        self._radius = self.parameters.radius
 
     def _apply_extent(self, extent):
-        self._offset = vector.Three(0.0,
-                                    extent.centre.y,
-                                    0.0)
+        self._offset = vector.Three(0.0, extent.centre.y, 0.0)
         self._scale = extent.size.y * MINTOL
 
     def centre(self):
@@ -1041,7 +973,6 @@ class YCC(InfiniteCylinder):
                                    [0, -1, 0]])
 
 
-
 class ZCC(InfiniteCylinder):
     """
     Infinite circular cylinder parallel to z-axis
@@ -1055,6 +986,7 @@ class ZCC(InfiniteCylinder):
     def _set_parameters(self, parameters):
         parameter_names = ["centre_x", "centre_y", "radius"]
         self.parameters = Parameters(zip(parameter_names, parameters))
+        self._radius = self.parameters.radius
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0,
@@ -1082,19 +1014,10 @@ class XEC(Body):
     centre_z (Az) - z-coordinate of the centre of the ellipse face.
     semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse
     face.
-    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse face.
+    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse
+    face.
+
     """
-
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(XEC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
     def _set_parameters(self, parameters):
         parameter_names = ["centre_y", "centre_z",
                            "semi_axis_y", "semi_axis_z"]
@@ -1131,20 +1054,10 @@ class YEC(Body):
     centre_x (Ax) - x-coordinate of the centre of the ellipse face.
     semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse face.
     semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
-    """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(YEC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
 
+    """
     def _set_parameters(self, parameters):
-        parameter_names = ["centre_z", "centre_x",
-                           "semi_axis_z", "semi_axis_x"]
+        parameter_names = ["centre_z", "centre_x", "semi_axis_z", "semi_axis_x"]
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def centre(self):
@@ -1179,16 +1092,6 @@ class ZEC(Body):
     semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
     semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse face.
     """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        super(ZEC, self).__init__(name,
-                                  translation,
-                                  transformation)
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
-
     def _set_parameters(self, parameters):
         parameter_names = ["centre_x", "centre_y",
                            "semi_axis_x", "semi_axis_y"]
