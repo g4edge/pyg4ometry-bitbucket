@@ -20,6 +20,9 @@ from . import vector
 FRACTOL = 0.05
 MINTOL = FRACTOL + 1
 
+LENGTHSAFETY = 1e-6 # 1 nanometre
+DPSAFETY = int((-1 * np.log10(LENGTHSAFETY))) # Decimal places for rounding
+
 # Intersection/Union/Subtraction identity.
 # Intersecting/unioning/subtracting with this will simply return the
 # other body.  Used for accumulating.
@@ -1647,24 +1650,12 @@ class Parameters(object):
 
 class Extent(object):
     def __init__(self, lower, upper):
-        try:
-            lower.x
-            self.lower = lower
-        except AttributeError:
-            self.lower = vector.Three(lower)
-        try:
-            upper.x
-            self.upper = upper
-        except AttributeError:
-            self.upper = vector.Three(upper)
-        try:
-            size = upper - lower
-            centre = upper - 0.5 * size
-        except TypeError:
-            size = [upper[i] - lower[i] for i, _ in enumerate(upper)]
-            centre = [upper[i] - 0.5 * size[i] for i, _ in enumerate(upper)]
-        self.size = size
-        self.centre = centre
+        lower = [round(i, DPSAFETY) for i in lower]
+        upper = [round(i, DPSAFETY) for i in upper]
+        self.lower = vector.Three(lower)
+        self.upper = vector.Three(upper)
+        self.size = self.upper - self.lower
+        self.centre = self.upper - 0.5 * self.size
 
     @classmethod
     def from_world_volume(cls, world_volume):
@@ -1673,8 +1664,6 @@ class Extent(object):
         extent = pygdml.volume.pycsg_extent(mesh)
         lower = vector.Three(extent[0].x, extent[0].y, extent[0].z)
         upper = vector.Three(extent[1].x, extent[1].y, extent[1].z)
-        size = upper - lower
-        centre = upper - size / 2
         return cls(lower, upper)
 
     def is_close_to(self, other):
