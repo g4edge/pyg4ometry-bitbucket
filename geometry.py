@@ -1011,7 +1011,7 @@ class PLA(Body):
         # This is the centre of the underlying gdml solid (i.e. won't
         # be on the surface, but set backwards by half length scale's amount.
         centre = (self.surface_point
-                  - (0.5 * self._scale * self.perpendicular.unit))
+                  - (0.5 * self._scale * self.perpendicular.unit()))
         return centre
 
     def _set_rotation_matrix(self, transformation):

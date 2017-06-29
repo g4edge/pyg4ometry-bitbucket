@@ -43,7 +43,6 @@ class Three(_np.ndarray):
         """
         return _np.linalg.norm(_np.cross(self, other)) < tolerance
 
-    @property
     def unit(self):
         """
         Get this as a unit vector.
