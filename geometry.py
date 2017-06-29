@@ -307,11 +307,10 @@ class InfiniteCylinder(Body):
 
     def gdml_solid(self):
         return pygdml.solid.Tubs(self._unique_body_name(),
-                                 0.0,
-                                 self._radius,
+                                 0.0, self._radius,
                                  self._scale * 0.5,
-                                 0.0,
-                                 2*pi)
+                                 0.0, 2*pi)
+
 
 class InfinitePlane(Body):
     def __init__(self, name, parameters, translation=None, transformation=None):
@@ -341,9 +340,7 @@ class InfinitePlane(Body):
                                 0.5 * self._scale_z)
 
 class RPP(Body):
-    """
-    An RPP is a rectangular parallelpiped (a cuboid).
-    """
+    """An RPP is a rectangular parallelpiped (a cuboid). """
     def _set_parameters(self, parameters):
         parameter_names = ['x_min', 'x_max', 'y_min',
                            'y_max', 'z_min', 'z_max']
@@ -511,8 +508,7 @@ class SPH(Body):
 
 
 class RCC(Body):
-    """
-    Right-angled Circular Cylinder
+    """Right-angled Circular Cylinder
 
     Parameters:
     v_(x,y,z) = coordinates of the centre of one of the circular planes
@@ -833,8 +829,7 @@ class YZP(InfinitePlane):
 
 
 class PLA(Body):
-    """
-    Generic infinite half-space.
+    """Generic infinite half-space.
 
     Parameters:
     x_direction (Hx) :: x-component of a vector of arbitrary length
@@ -908,8 +903,7 @@ class PLA(Body):
 
 
 class XCC(InfiniteCylinder):
-    """
-    Infinite circular cylinder parallel to x-axis
+    """Infinite circular cylinder parallel to x-axis
 
     parameters:
 
@@ -942,8 +936,7 @@ class XCC(InfiniteCylinder):
 
 
 class YCC(InfiniteCylinder):
-    """
-    Infinite circular cylinder parallel to y-axis
+    """Infinite circular cylinder parallel to y-axis
 
     parameters:
 
@@ -974,8 +967,7 @@ class YCC(InfiniteCylinder):
 
 
 class ZCC(InfiniteCylinder):
-    """
-    Infinite circular cylinder parallel to z-axis
+    """Infinite circular cylinder parallel to z-axis
 
     parameters:
 
@@ -1005,8 +997,7 @@ class ZCC(InfiniteCylinder):
 
 
 class XEC(Body):
-    """
-    An infinite elliptical cylinder parallel to the x-axis.
+    """An infinite elliptical cylinder parallel to the x-axis.
 
     Parameters:
 
@@ -1045,8 +1036,7 @@ class XEC(Body):
 
 
 class YEC(Body):
-    """
-    An infinite elliptical cylinder parallel to the y-axis.
+    """An infinite elliptical cylinder parallel to the y-axis.
 
     Parameters:
 
@@ -1082,8 +1072,7 @@ class YEC(Body):
 
 
 class ZEC(Body):
-    """
-    An infinite elliptical cylinder parallel to the z-axis.
+    """An infinite elliptical cylinder parallel to the z-axis.
 
     Parameters:
 
@@ -1116,8 +1105,7 @@ class ZEC(Body):
 
 
 class Region(object):
-    """
-    Class used for interfacing a Fluka region with a GDML volume.
+    """Class used for interfacing a Fluka region with a GDML volume.
     This class has the underlying pygdml volume payload, alongside its
     placement and rotation in the world volume, and a material.
 
@@ -1201,8 +1189,7 @@ class Region(object):
         return "<Region: \"{}\">".format(self.name)
 
 class Zone(object):
-    """
-    Class representing a Zone (subregion delimited by '|'), i.e. a
+    """Class representing a Zone (subregion delimited by '|'), i.e. a
     tract of space to be unioned with zero or more other zones.  A
     Zone may also have sub-zones, which in this implementation are
     simply nested Zone instances.
