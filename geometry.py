@@ -494,7 +494,9 @@ class SPH(Body):
         self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        # Maximum possible extent won't be any more than 2 times the
+        # largest parameter.
+        return 2 * max(map(abs, self.parameters))
 
     def gdml_solid(self):
         """
