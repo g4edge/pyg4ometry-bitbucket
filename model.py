@@ -12,9 +12,9 @@ import pygdml
 
 from pyfluka import geometry
 from pyfluka import vector
-from pyfluka.Parser.FlukaParserVisitor import FlukaParserVisitor
-from pyfluka.Parser.FlukaParserListener import FlukaParserListener
-from pyfluka.Parser.Parse import Parse
+import pyfluka.FlukaParserVisitor
+import pyfluka.FlukaParserListener
+import pyfluka.parser
 
 class Model(object):
     """
@@ -31,7 +31,7 @@ class Model(object):
     def __init__(self, filename):
         self._filename = filename
         # get the syntax tree.
-        tree = Parse(filename)
+        tree = pyfluka.parser.parse(filename)
         self.bodies, self._body_freq_map = Model._bodies_from_tree(tree)
         self.regions = self._regions_from_tree(tree)
         # Initialiser the world volume:
@@ -343,7 +343,7 @@ class Model(object):
         return "<Model: \"{}\">".format(self._filename)
 
 
-class FlukaBodyListener(FlukaParserListener):
+class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
     """
     This class is for getting simple, declarative  information about
     the geometry model.  In no particular order:
@@ -438,7 +438,7 @@ class FlukaBodyListener(FlukaParserListener):
         del self.used_bodies_by_type
 
 
-class FlukaRegionVisitor(FlukaParserVisitor):
+class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
     """
     A visitor class for accumulating the region definitions.  The body
     instances are provided at instatiation, and then these are used

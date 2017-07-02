@@ -3,10 +3,10 @@ import os.path
 
 import antlr4
 
-from .FlukaLexer import FlukaLexer
-from .FlukaParser import FlukaParser
+import pyfluka.FlukaLexer
+import pyfluka.FlukaParser
 
-def Parse(path):
+def parse(path):
     """Return the antlr4 syntax tree for the given file."""
     if not os.path.exists(path):
         raise IOError("File not found: %s" % path)
@@ -21,13 +21,13 @@ def Parse(path):
     istream = antlr4.InputStream(''.join(geometry))
 
     # Tokenise character stream
-    lexed_input = FlukaLexer(istream)
+    lexed_input = pyfluka.FlukaLexer.FlukaLexer(istream)
 
     # Create a buffer of tokens from lexer
     tokens = antlr4.CommonTokenStream(lexed_input)
 
     # Create a parser that reads from stream of tokens
-    parser = FlukaParser(tokens)
+    parser = pyfluka.FlukaParser.FlukaParser(tokens)
 
     # Create syntax tree
     tree = parser.geocards()
