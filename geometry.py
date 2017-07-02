@@ -159,59 +159,32 @@ class Body(object):
         extent of the mesh, and return this.
 
         """
-        intersection = self.intersect(other)
+        intersection = self.intersection(other)
         extent = intersection._extent()
         return extent
 
-    def intersect(self, other):
-        """Perform the intersection of this solid with another.
+    def intersection(self, other):
+        return self._do_boolean_op(other, pygdml.solid.Intersection)
 
-        """
-        if other == _IDENTITY:
-            return self
-
-        relative_translation = self._get_relative_translation(other)
-        relative_angles = self._get_relative_rotation(other)
-        relative_transformation = [relative_angles, relative_translation]
-
-        out_name = self._unique_boolean_name(other)
-        out_solid = pygdml.solid.Intersection(
-            out_name, self.gdml_solid(),
-            other.gdml_solid(), relative_transformation)
-        out_centre = self.centre()
-        out_rotation = self.rotation
-        return Boolean(out_name, out_solid, out_centre, out_rotation)
-
-    def subtract(self, other):
-        if other == _IDENTITY:
-            return self
-
-        relative_translation = self._get_relative_translation(other)
-        relative_angles = self._get_relative_rotation(other)
-        relative_transformation = [relative_angles, relative_translation]
-
-        out_name = self._unique_boolean_name(other)
-        out_solid = pygdml.solid.Subtraction(
-            out_name, self.gdml_solid(),
-            other.gdml_solid(), relative_transformation)
-        out_centre = self.centre()
-        out_rotation = self.rotation
-        return Boolean(out_name, out_solid, out_centre, out_rotation)
+    def subtraction(self, other):
+        return self._do_boolean_op(other, pygdml.solid.Subtraction)
 
     def union(self, other):
+        return self._do_boolean_op(other, pygdml.solid.Union)
+
+    def _do_boolean_op(self, other, op):
         if other == _IDENTITY:
             return self
-
-        relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
+        relative_translation = self._get_relative_translation(other)
         relative_transformation = [relative_angles, relative_translation]
         out_name = self._unique_boolean_name(other)
-        out_solid = pygdml.Union(
+        out_solid = op(
             out_name, self.gdml_solid(),
-            other.gdml_solid(), relative_transformation)
+            other.gdml_solid(), relative_transformation
+        )
         out_centre = self.centre()
         out_rotation = self.rotation
-
         return Boolean(out_name, out_solid, out_centre, out_rotation)
 
     def _get_relative_rot_matrix(self, other):
@@ -1231,7 +1204,7 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, out)
 
         def accumulate_intersections(first, second):
-            return first.intersect(second)
+            return first.intersection(second)
         boolean_from_ints = reduce(accumulate_intersections, self.contains)
 
         self._map_extent_2_bodies(self.excludes, boolean_from_ints)
@@ -1255,16 +1228,16 @@ class Zone(object):
         for body in self.contains:
             if isinstance(body, Body):
                 if not body._is_omittable:
-                    accumulated = body.intersect(accumulated)
+                    accumulated = body.intersection(accumulated)
             elif isinstance(body, Zone):
-                accumulated = body._evaluate().intersect(accumulated)
+                accumulated = body._evaluate().intersection(accumulated)
 
         for body in self.excludes:
             if isinstance(body, Body):
                 if not body._is_omittable:
-                    accumulated = accumulated.subtract(body)
+                    accumulated = accumulated.subtraction(body)
             elif isinstance(body, Zone):
-                accumulated = accumulated.subtract(body._evaluate())
+                accumulated = accumulated.subtraction(body._evaluate())
         assert accumulated is not _IDENTITY
         return accumulated
 
