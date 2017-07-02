@@ -17,17 +17,10 @@ import pyfluka.FlukaParserListener
 import pyfluka.parser
 
 class Model(object):
-    """
-    Class for loading Fluka model geometry, viewing its mesh, and
-    writing to GDML.
-
-    Parameters
-    ----------
-
-    filename:  path to Fluka input file
+    """Class for viewing Fluka geometry and converting to GDML.
+    Preprocessing must be done by hand.
 
     """
-
     def __init__(self, filename):
         self._filename = filename
         # get the syntax tree.
