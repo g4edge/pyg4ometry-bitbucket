@@ -13,7 +13,7 @@ import numpy as np
 import pygdml
 import pygdml.transformation as trf
 
-from . import vector
+from pyfluka import vector
 
 # Fractional tolerance when minimising solids.  Here have chosen this
 # to be 5% for no particular reason.
@@ -241,7 +241,7 @@ class Body(object):
     def _get_safety(boolean):
         if boolean is None:
             return 0.0
-        elif (boolean.lower() == "trim"):
+        elif boolean.lower() == "trim":
             return -LENGTH_SAFETY
         elif boolean.lower() == "extend":
             return LENGTH_SAFETY
@@ -379,12 +379,7 @@ class RPP(Body):
             self._z_max = z_bound_upper
 
     def centre(self):
-        """
-        Return the coordinates of the centre of the Rectangular
-        Parallelepiped (cuboid).
-
-        """
-
+        """Centre of the equivalent GDML solid."""
         return 0.5 * vector.Three(self._x_min + self._x_max,
                                   self._y_min + self._y_max,
                                   self._z_min + self._z_max)
@@ -402,7 +397,7 @@ class RPP(Body):
 
 
     def gdml_solid(self, boolean=None):
-        """Construct a pygdml Box from this body."""
+        """Construct the equivalent pygdml Box from this body."""
         safety = Body._get_safety(boolean)
         x_length = self._x_max - self._x_min + safety
         y_length = self._y_max - self._y_min + safety
@@ -666,7 +661,7 @@ class XYP(InfiniteHalfSpace):
         centre_x = 0.0
         centre_y = 0.0
         centre_z = self.parameters.v_z - (self._scale_z * 0.5)
-        return (self._offset + vector.Three(centre_x, centre_y, centre_z))
+        return self._offset + vector.Three(centre_x, centre_y, centre_z)
 
 
 class XZP(InfiniteHalfSpace):
@@ -691,7 +686,7 @@ class XZP(InfiniteHalfSpace):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self._scale_y * 0.5)
         centre_z = 0.0
-        return (self._offset + vector.Three(centre_x, centre_y, centre_z))
+        return self._offset + vector.Three(centre_x, centre_y, centre_z)
 
 
 class YZP(InfiniteHalfSpace):
@@ -716,7 +711,7 @@ class YZP(InfiniteHalfSpace):
         centre_x = self.parameters.v_x - (self._scale_x * 0.5)
         centre_y = 0.0
         centre_z = 0.0
-        return (self._offset + vector.Three(centre_x, centre_y, centre_z))
+        return self._offset + vector.Three(centre_x, centre_y, centre_z)
 
 
 class PLA(Body):
