@@ -159,16 +159,16 @@ class Body(object):
         extent = intersection._extent()
         return extent
 
-    def intersection(self, other):
-        return self._do_boolean_op(other, pygdml.solid.Intersection)
+    def intersection(self, other, safety="trim"):
+        return self._do_boolean_op(other, pygdml.solid.Intersection, safety)
 
-    def subtraction(self, other):
-        return self._do_boolean_op(other, pygdml.solid.Subtraction)
+    def subtraction(self, other, safety="extent"):
+        return self._do_boolean_op(other, pygdml.solid.Subtraction, safety)
 
     def union(self, other):
-        return self._do_boolean_op(other, pygdml.solid.Union)
+        return self._do_boolean_op(other, pygdml.solid.Union, "trim")
 
-    def _do_boolean_op(self, other, op):
+    def _do_boolean_op(self, other, op, safety):
         if other == _IDENTITY:
             return self
         relative_angles = self._get_relative_rotation(other)
@@ -176,8 +176,8 @@ class Body(object):
         relative_transformation = [relative_angles, relative_translation]
         out_name = self._unique_boolean_name(other)
         out_solid = op(
-            out_name, self.gdml_solid(op.__name__),
-            other.gdml_solid(op.__name__), relative_transformation
+            out_name, self.gdml_solid(safety),
+            other.gdml_solid(safety), relative_transformation
         )
         out_centre = self.centre()
         out_rotation = self.rotation
@@ -241,10 +241,9 @@ class Body(object):
     def _get_safety(boolean):
         if boolean is None:
             return 0.0
-        elif (boolean.lower() == "intersection"
-              or boolean.lower() == "union"):
+        elif (boolean.lower() == "trim"):
             return -LENGTH_SAFETY
-        elif boolean.lower() == "subtraction":
+        elif boolean.lower() == "extend":
             return LENGTH_SAFETY
 
     def __repr__(self):
@@ -1183,7 +1182,7 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, scale)
         self._map_extent_2_bodies(self.excludes, scale)
 
-        return self._evaluate()
+        return self._evaluate(0) # Top level zone so subzone_order = 0
 
     def _optimised_boolean(self):
         out = self._crude_boolean()
@@ -1196,7 +1195,7 @@ class Zone(object):
 
         self._map_extent_2_bodies(self.excludes, boolean_from_ints)
 
-        return self._evaluate()
+        return self._evaluate(0) # Top level zone so subzone_order = 0
 
     def _map_extent_2_bodies(self, bodies, extent):
         for body in bodies:
@@ -1206,25 +1205,35 @@ class Zone(object):
                 body._map_extent_2_bodies(body.contains, extent)
                 body._map_extent_2_bodies(body.excludes, extent)
 
-    def _evaluate(self):
-        # This is where the bodies and subzones are condensed to a
-        # single Boolean and returned.  Calling this function is
-        # dependent on the extents/scales being set for this zones's
-        # bodies and subzones, hence why it is hidden.
+    def _evaluate(self, subzone_order):
+        # Intersections on the top level should be trimmed, but
+        # intersections nested with subtracted zones should be
+        # extended.  These two maps and the subzone_order parameter
+        # reflect this fact.
+        if subzone_order % 2 == 0:
+            safety_map = {"intersection": "trim", "subtraction": "extend"}
+        elif subzone_order % 2 == 1:
+            safety_map = {"intersection": "extend", "subtraction": "trim"}
         accumulated = _IDENTITY # An intersection with _IDENTITY is just self..
         for body in self.contains:
             if isinstance(body, Body):
                 if not body._is_omittable:
-                    accumulated = body.intersection(accumulated)
+                    accumulated = body.intersection(accumulated,
+                                                    safety_map['intersection'])
             elif isinstance(body, Zone):
-                accumulated = body._evaluate().intersection(accumulated)
+                evaluated_zone = body._evaluate(subzone_order=subzone_order)
+                accumulated = evaluated_zone.intersection(accumulated)
 
         for body in self.excludes:
             if isinstance(body, Body):
                 if not body._is_omittable:
-                    accumulated = accumulated.subtraction(body)
+                    accumulated = accumulated.subtraction(
+                        body, safety_map['subtraction']
+                    )
             elif isinstance(body, Zone):
-                accumulated = accumulated.subtraction(body._evaluate())
+                accumulated = accumulated.subtraction(
+                    body._evaluate(subzone_order=subzone_order + 1)
+                )
         assert accumulated is not _IDENTITY
         return accumulated
 
