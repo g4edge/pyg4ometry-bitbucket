@@ -1163,9 +1163,6 @@ class Zone(object):
             extent = max(extent, body.crude_extent())
         return extent
 
-    def _accumulate_intersections(self, first, second):
-        pass
-
     def view(self, setclip=True, optimise=False):
         self.evaluate(optimise=optimise).view(setclip=setclip)
 
