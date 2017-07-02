@@ -177,7 +177,7 @@ class Body(object):
         out_name = self._unique_boolean_name(other)
         out_solid = op(
             out_name, self.gdml_solid(op.__name__),
-            other.gdml_solid(), relative_transformation
+            other.gdml_solid(op.__name__), relative_transformation
         )
         out_centre = self.centre()
         out_rotation = self.rotation
@@ -241,7 +241,8 @@ class Body(object):
     def _get_safety(boolean):
         if boolean is None:
             return 0.0
-        elif boolean.lower() == "intersection":
+        elif (boolean.lower() == "intersection"
+              or boolean.lower() == "union"):
             return -LENGTH_SAFETY
         elif boolean.lower() == "subtraction":
             return LENGTH_SAFETY
