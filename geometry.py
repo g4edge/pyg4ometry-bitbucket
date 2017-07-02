@@ -1242,8 +1242,8 @@ class Boolean(Body):
         self._centre = centre
         self.rotation = rotation
 
-    def gdml_solid(self,  **kwargs):
-        # kwargs are here purely to preserve interface with "true" bodies.
+    def gdml_solid(self, *args, **kwargs):
+        # args, kwargs are here purely to preserve interface with "true" bodies.
         return self._solid
 
     def centre(self):
