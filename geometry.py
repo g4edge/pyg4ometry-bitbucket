@@ -1177,7 +1177,7 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, scale)
         self._map_extent_2_bodies(self.excludes, scale)
 
-        return self._evaluate(0) # Top level zone so subzone_order = 0
+        return self._evaluate(None) # Don't trim/extend.  Get the true mesh.
 
     def _optimised_boolean(self):
         out = self._crude_boolean()
@@ -1205,10 +1205,13 @@ class Zone(object):
         # intersections nested with subtracted zones should be
         # extended.  These two maps and the subzone_order parameter
         # reflect this fact.
-        if subzone_order % 2 == 0:
+        if subzone_order is None: # don't do any trimming/extending
+            safety_map = {"intersection": None, "subtraction": None}
+        elif subzone_order % 2 == 0:
             safety_map = {"intersection": "trim", "subtraction": "extend"}
         elif subzone_order % 2 == 1:
             safety_map = {"intersection": "extend", "subtraction": "trim"}
+
         accumulated = _IDENTITY # An intersection with _IDENTITY is just self..
         for body in self.contains:
             if isinstance(body, Body):
@@ -1226,8 +1229,10 @@ class Zone(object):
                         body, safety_map['subtraction']
                     )
             elif isinstance(body, Zone):
+                subzone_order = (None if subzone_order is None
+                                 else subzone_order + 1)
                 accumulated = accumulated.subtraction(
-                    body._evaluate(subzone_order=subzone_order + 1)
+                    body._evaluate(subzone_order=subzone_order)
                 )
         assert accumulated is not _IDENTITY
         return accumulated
