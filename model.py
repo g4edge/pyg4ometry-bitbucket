@@ -48,11 +48,12 @@ class Model(object):
 
     @staticmethod
     def _gdml_world_volume():
-        """ This method insantiates the world volume. """
-        world_size = 1e5
-        world_box = pygdml.solid.Box("world", world_size, world_size, world_size)
-        return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box, "world-volume",
-                             None, 1, False, "G4_Galactic")
+        """This method insantiates the world volume."""
+        world_box = pygdml.solid.Box("world", 1, 1, 1)
+        return pygdml.Volume(
+            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
+            None, 1, False, "G4_Galactic"
+        )
 
     def write_to_gdml(self, regions=None, out_path=None,
                       make_gmad=True, optimise=True):
@@ -120,9 +121,16 @@ class Model(object):
         """
         self._compose_world_volume(region_names, optimise=optimise)
         if setclip:
-            self._world_volume.setClip()
+            self._clip_world_volume()
         world_mesh = self._world_volume.pycsgmesh()
         return world_mesh
+
+    def _clip_world_volume(self):
+        self._world_volume.setClip()
+        safety =  pyfluka.geometry.LENGTH_SAFETY
+        self._world_volume.currentVolume.pX += safety
+        self._world_volume.currentVolume.pY += safety
+        self._world_volume.currentVolume.pZ += safety
 
     def _compose_world_volume(self, regions, optimise):
         """Add the region or regions in region_names to the world volume, only

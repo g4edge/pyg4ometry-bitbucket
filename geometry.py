@@ -176,7 +176,7 @@ class Body(object):
         relative_transformation = [relative_angles, relative_translation]
         out_name = self._unique_boolean_name(other)
         out_solid = op(
-            out_name, self.gdml_solid(),
+            out_name, self.gdml_solid(op.__name__),
             other.gdml_solid(), relative_transformation
         )
         out_centre = self.centre()
@@ -241,9 +241,9 @@ class Body(object):
     def _get_safety(boolean):
         if boolean is None:
             return 0.0
-        elif boolean == "intersection":
+        elif boolean.lower() == "intersection":
             return -LENGTH_SAFETY
-        elif boolean == "subtraction":
+        elif boolean.lower() == "subtraction":
             return LENGTH_SAFETY
 
     def __repr__(self):
@@ -1242,7 +1242,8 @@ class Boolean(Body):
         self._centre = centre
         self.rotation = rotation
 
-    def gdml_solid(self):
+    def gdml_solid(self,  **kwargs):
+        # kwargs are here purely to preserve interface with "true" bodies.
         return self._solid
 
     def centre(self):
