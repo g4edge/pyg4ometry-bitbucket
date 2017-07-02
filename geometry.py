@@ -170,67 +170,49 @@ class Body(object):
         if other == _IDENTITY:
             return self
 
-        output_name = self._unique_boolean_name(other)
-
         relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
         relative_transformation = [relative_angles, relative_translation]
 
-        output_solid = pygdml.solid.Intersection(output_name,
-                                                 self.gdml_solid(),
-                                                 other.gdml_solid(),
-                                                 relative_transformation)
-        output_centre = self.centre()
-        output_rotation = self.rotation
-
-        return Boolean(output_name,
-                       output_solid,
-                       output_centre,
-                       output_rotation)
+        out_name = self._unique_boolean_name(other)
+        out_solid = pygdml.solid.Intersection(
+            out_name, self.gdml_solid(),
+            other.gdml_solid(), relative_transformation)
+        out_centre = self.centre()
+        out_rotation = self.rotation
+        return Boolean(out_name, out_solid, out_centre, out_rotation)
 
     def subtract(self, other):
         if other == _IDENTITY:
             return self
 
-        output_name = self._unique_boolean_name(other)
-
         relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
         relative_transformation = [relative_angles, relative_translation]
 
-        output_solid = pygdml.solid.Subtraction(output_name,
-                                                self.gdml_solid(),
-                                                other.gdml_solid(),
-                                                relative_transformation)
-        output_centre = self.centre()
-        output_rotation = self.rotation
-        return Boolean(output_name,
-                       output_solid,
-                       output_centre,
-                       output_rotation)
+        out_name = self._unique_boolean_name(other)
+        out_solid = pygdml.solid.Subtraction(
+            out_name, self.gdml_solid(),
+            other.gdml_solid(), relative_transformation)
+        out_centre = self.centre()
+        out_rotation = self.rotation
+        return Boolean(out_name, out_solid, out_centre, out_rotation)
 
     def union(self, other):
         if other == _IDENTITY:
             return self
 
-        output_name = self._unique_boolean_name(other)
-
         relative_translation = self._get_relative_translation(other)
         relative_angles = self._get_relative_rotation(other)
         relative_transformation = [relative_angles, relative_translation]
+        out_name = self._unique_boolean_name(other)
+        out_solid = pygdml.Union(
+            out_name, self.gdml_solid(),
+            other.gdml_solid(), relative_transformation)
+        out_centre = self.centre()
+        out_rotation = self.rotation
 
-        output_centre = self.centre()
-        output_rotation = self.rotation
-
-        output_solid = pygdml.Union(output_name,
-                                    self.gdml_solid(),
-                                    other.gdml_solid(),
-                                    relative_transformation)
-
-        return Boolean(output_name,
-                       output_solid,
-                       output_centre,
-                       output_rotation)
+        return Boolean(out_name, out_solid, out_centre, out_rotation)
 
     def _get_relative_rot_matrix(self, other):
         return self.rotation.T.dot(other.rotation)
