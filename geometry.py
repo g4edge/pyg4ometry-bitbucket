@@ -97,14 +97,10 @@ class Body(object):
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
         rotation_angles = trf.reverse(rotation_angles)
-        pygdml.volume.Volume(rotation_angles,
-                             self.centre(),
-                             self.gdml_solid(),
-                             self.name,
-                             volume,
-                             1,
-                             False,
-                             "G4_Galactic")
+        pygdml.volume.Volume(
+            rotation_angles, self.centre(), self.gdml_solid(),
+            self.name, volume, 1, False, "G4_Galactic"
+        )
 
     def _resize(self, scale):
         """Return this instance bounded or extented according to the
@@ -670,8 +666,7 @@ class XYP(InfiniteHalfSpace):
         centre_x = 0.0
         centre_y = 0.0
         centre_z = self.parameters.v_z - (self._scale_z * 0.5)
-        return (self._offset
-                + vector.Three(centre_x, centre_y, centre_z))
+        return (self._offset + vector.Three(centre_x, centre_y, centre_z))
 
 
 class XZP(InfiniteHalfSpace):
@@ -696,8 +691,7 @@ class XZP(InfiniteHalfSpace):
         centre_x = 0.0
         centre_y = self.parameters.v_y - (self._scale_y * 0.5)
         centre_z = 0.0
-        return (self._offset
-                + vector.Three(centre_x, centre_y, centre_z))
+        return (self._offset + vector.Three(centre_x, centre_y, centre_z))
 
 
 class YZP(InfiniteHalfSpace):
@@ -722,8 +716,7 @@ class YZP(InfiniteHalfSpace):
         centre_x = self.parameters.v_x - (self._scale_x * 0.5)
         centre_y = 0.0
         centre_z = 0.0
-        return (self._offset
-                + vector.Three(centre_x, centre_y, centre_z))
+        return (self._offset + vector.Three(centre_x, centre_y, centre_z))
 
 
 class PLA(Body):
@@ -1034,9 +1027,10 @@ class Region(object):
 
         """
         world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
+        world_volume = pygdml.Volume(
+            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
+            None, 1, False, "G4_NITROUS_OXIDE"
+        )
         solid = self.evaluate(zones, optimise=optimise)
         solid.add_to_volume(world_volume)
         if setclip is True:
@@ -1058,14 +1052,10 @@ class Region(object):
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
         rotation_angles = trf.reverse(rotation_angles)
-        pygdml.volume.Volume(rotation_angles,
-                             boolean.centre(),
-                             boolean.gdml_solid(),
-                             self.name,
-                             volume,
-                             1,
-                             False,
-                             self.material)
+        pygdml.volume.Volume(
+            rotation_angles, boolean.centre(), boolean.gdml_solid(),
+            self.name, volume, 1, False, self.material
+        )
 
     def evaluate(self, zones=None, optimise=False):
         zones = self._select_zones(zones)
@@ -1075,7 +1065,6 @@ class Region(object):
         def accumulate_unions(first, second):
             return first.union(second)
         out_boolean = reduce(accumulate_unions, booleans)
-
         return out_boolean
 
     def _select_zones(self, zones):
@@ -1279,25 +1268,30 @@ class Boolean(Body):
         tra2 = error.solid.tra2
 
         world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
+        world_volume = pygdml.Volume(
+            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
+            None, 1, False, "G4_NITROUS_OXIDE"
+        )
         if (first is None and second is None
                 or first is True and second is True):
-            pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                          solid1.name, world_volume,
-                          1, False, "G4_NITROUS_OXIDE")
-            pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2,
-                          solid2.name, world_volume,
-                          1, False, "G4_NITROUS_OXIDE")
+            pygdml.Volume(
+                [0, 0, 0], [0, 0, 0], solid1, solid1.name,
+                world_volume, 1, False, "G4_NITROUS_OXIDE"
+            )
+            pygdml.Volume(
+                trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
+                world_volume, 1, False, "G4_NITROUS_OXIDE"
+            )
         elif first is True and second is not True:
-            pygdml.Volume([0, 0, 0], [0, 0, 0], solid1,
-                          solid1.name, world_volume,
-                          1, False, "G4_NITROUS_OXIDE")
+            pygdml.Volume(
+                [0, 0, 0], [0, 0, 0], solid1, solid1.name,
+                world_volume, 1, False, "G4_NITROUS_OXIDE"
+            )
         elif second is True and first is not True:
-            pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2,
-                          solid2.name, world_volume,
-                          1, False, "G4_NITROUS_OXIDE")
+            pygdml.Volume(
+                trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
+                world_volume, 1, False, "G4_NITROUS_OXIDE"
+            )
         elif first is False and second is False:
             raise RuntimeError("Must select at least one"
                                " of the two solids to view")
