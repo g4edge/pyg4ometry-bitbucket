@@ -120,9 +120,10 @@ class Writer(object):
         """
         Dispatch to correct member function based on type string in SolidBase.
         """
+
         try:
             func = getattr(self, 'write'+solid.type) # get the member function
-            func(solid) # call it with the solid instance as an argument
+            func(solid) # call it with the solid instance as an argument            
         except AttributeError:
             raise ValueError("No such solid "+solid.type)
 
@@ -236,6 +237,7 @@ class Writer(object):
     def writeIntersection(self, instance):
         oe  = self.doc.createElement('intersection')
         oe.setAttribute('name',self.prepend + '_' + instance.name)
+        
         cfe = self.doc.createElement('first')
         cfe.setAttribute('ref',self.prepend + '_' + instance.obj1.name)
         self.solids.appendChild(cfe)
@@ -244,27 +246,27 @@ class Writer(object):
         cse.setAttribute('ref',self.prepend + '_' + instance.obj2.name)
         self.solids.appendChild(cse)
 
-        csce = selfdoc.createElement('positionref')
+        csce = self.doc.createElement('positionref')
         csce.setAttribute('ref',self.prepend + '_' + instance.name+'_sol2_pos')
-        self.oe.appendChild(csce)
+        oe.appendChild(csce)
         
         csce1 = self.doc.createElement('rotationref')
         csce1.setAttribute('ref',self.prepend + '_' + instance.name + '_sol2_rot')
-        self.oe.appendChild(csce1)
+        oe.appendChild(csce1)
         
         p = self.doc.createElement('position')
         p.setAttribute('name',self.prepend + '_' + instance.name+'_sol2_pos')
-        p.setAttribute('x',str(cs.tra2[1][0]))
-        p.setAttribute('y',str(cs.tra2[1][1]))
-        p.setAttribute('z',str(cs.tra2[1][2]))
-        self.de.appendChild(p)
+        p.setAttribute('x',str(instance.tra2[1][0]))
+        p.setAttribute('y',str(instance.tra2[1][1]))
+        p.setAttribute('z',str(instance.tra2[1][2]))
+        oe.appendChild(p)
         
         r = self.doc.createElement('rotation')
         r.setAttribute('name',self.prepend + '_' + instance.name + '_sol2_rot')
-        r.setAttribute('x', str(cs.tra2[0][0]))
-        r.setAttribute('y', str(cs.tra2[0][1]))
-        r.setAttribute('z', str(cs.tra2[0][2]))
-        self.de.appendChild(r)
+        r.setAttribute('x', str(instance.tra2[0][0]))
+        r.setAttribute('y', str(instance.tra2[0][1]))
+        r.setAttribute('z', str(instance.tra2[0][2]))
+        oe.appendChild(r)
 
     def writeOpticalSurface(self, instance):
         pass
@@ -340,8 +342,39 @@ class Writer(object):
         oe.setAttribute('aunit', 'rad')
         self.solids.appendChild(oe)
 
-    def writeSubtraction(self, instance):
-        pass
+    def writeSubtraction(self, instance):    
+        oe  = self.doc.createElement('subtraction')
+        oe.setAttribute('name',self.prepend + '_' + instance.name)
+        
+        cfe = self.doc.createElement('first')
+        cfe.setAttribute('ref',self.prepend + '_' + instance.obj1.name)
+        self.solids.appendChild(cfe)
+        
+        cse = self.doc.createElement('second')
+        cse.setAttribute('ref',self.prepend + '_' + instance.obj2.name)
+        self.solids.appendChild(cse)
+
+        csce = self.doc.createElement('positionref')
+        csce.setAttribute('ref',self.prepend + '_' + instance.name+'_sol2_pos')
+        oe.appendChild(csce)
+        
+        csce1 = self.doc.createElement('rotationref')
+        csce1.setAttribute('ref',self.prepend + '_' + instance.name + '_sol2_rot')
+        oe.appendChild(csce1)
+        
+        p = self.doc.createElement('position')
+        p.setAttribute('name',self.prepend + '_' + instance.name+'_sol2_pos')
+        p.setAttribute('x',str(instance.tra2[1][0]))
+        p.setAttribute('y',str(instance.tra2[1][1]))
+        p.setAttribute('z',str(instance.tra2[1][2]))
+        oe.appendChild(p)
+        
+        r = self.doc.createElement('rotation')
+        r.setAttribute('name',self.prepend + '_' + instance.name + '_sol2_rot')
+        r.setAttribute('x', str(instance.tra2[0][0]))
+        r.setAttribute('y', str(instance.tra2[0][1]))
+        r.setAttribute('z', str(instance.tra2[0][2]))
+        oe.appendChild(r)
 
     def createPosition(self,name, x, y, z):
         p = self.doc.createElement('position')
@@ -453,12 +486,36 @@ class Writer(object):
         self.solids.appendChild(oe)       
 
     def writeUnion(self, instance):
-        oe  = doc.createElement('union')
-        oe.setAttribute('name',self.name)
-        cfe = doc.createElement('first')
-        cfe.setAttribute('ref',self.obj1.name)
-        oe.appendChild(cfe)
+        oe  = self.doc.createElement('union')
+        oe.setAttribute('name',self.prepend + '_' + instance.name)
+        
+        cfe = self.doc.createElement('first')
+        cfe.setAttribute('ref',self.prepend + '_' + instance.obj1.name)
+        self.solids.appendChild(cfe)
         
         cse = self.doc.createElement('second')
-        cse.setAttribute('ref',self.obj2.name)
-        oe.appendChild(cse)
+        cse.setAttribute('ref',self.prepend + '_' + instance.obj2.name)
+        self.solids.appendChild(cse)
+
+        csce = self.doc.createElement('positionref')
+        csce.setAttribute('ref',self.prepend + '_' + instance.name+'_sol2_pos')
+        oe.appendChild(csce)
+        
+        csce1 = self.doc.createElement('rotationref')
+        csce1.setAttribute('ref',self.prepend + '_' + instance.name + '_sol2_rot')
+        oe.appendChild(csce1)
+        
+        p = self.doc.createElement('position')
+        p.setAttribute('name',self.prepend + '_' + instance.name+'_sol2_pos')
+        p.setAttribute('x',str(instance.tra2[1][0]))
+        p.setAttribute('y',str(instance.tra2[1][1]))
+        p.setAttribute('z',str(instance.tra2[1][2]))
+        oe.appendChild(p)
+        
+        r = self.doc.createElement('rotation')
+        r.setAttribute('name',self.prepend + '_' + instance.name + '_sol2_rot')
+        r.setAttribute('x', str(instance.tra2[0][0]))
+        r.setAttribute('y', str(instance.tra2[0][1]))
+        r.setAttribute('z', str(instance.tra2[0][2]))
+        oe.appendChild(r)
+
