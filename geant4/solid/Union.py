@@ -17,7 +17,7 @@ class Union(_SolidBase) :
          = [[a,b,g],[dx,dy,dz]]
     """
     def __init__(self, name, obj1, obj2, tra2):
-        self.type = "boolu"
+        self.type = "Union"
         self.name = name
         self.obj1 = obj1
         self.obj2 = obj2
@@ -30,7 +30,7 @@ class Union(_SolidBase) :
 
     def pycsgmesh(self):
 
-        print 'Union ',self.name, self.obj1.name, self.obj2.name
+        #print 'Union ',self.name, self.obj1.name, self.obj2.name
 
 #        if self.mesh :
 #            return self.mesh
@@ -52,16 +52,7 @@ class Union(_SolidBase) :
         self.obj1.mesh = None
         self.obj2.mesh = None
 
-        print 'union mesh ', self.name
+        #print 'union mesh ', self.name
         return self.mesh
 
-    def gdmlWrite(self,doc, solids) :
-        oe  = doc.createElement('union')
-        oe.setAttribute('name',self.name)
-        cfe = doc.createElement('first')
-        cfe.setAttribute('ref',self.obj1.name)
-        oe.appendChild(cfe)
-        
-        cse = self.doc.createElement('second')
-        cse.setAttribute('ref',self.obj2.name)
-        oe.appendChild(cse)
+   

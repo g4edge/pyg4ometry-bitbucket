@@ -12,7 +12,7 @@ class Intersection(_SolidBase) :
          = [[a,b,g],[dx,dy,dz]]
     """
     def __init__(self, name, obj1, obj2, tra2):
-        self.type = "booli"
+        self.type = "Intersection"
         self.name = name
         self.obj1 = obj1
         self.obj2 = obj2
@@ -25,9 +25,9 @@ class Intersection(_SolidBase) :
 
     def pycsgmesh(self):
 
-        print 'Intersection' \
-              '' \
-              ' ',self.name, self.obj1.name, self.obj2.name
+        #print 'Intersection' \
+        #     '' \
+        #     ' ',self.name, self.obj1.name, self.obj2.name
 
 #        if self.mesh :
 #            return self.mesh
@@ -49,7 +49,7 @@ class Intersection(_SolidBase) :
         self.obj1.mesh = None
         self.obj2.mesh = None
 
-        print 'intersection mesh ', self.name
+        #print 'intersection mesh ', self.name
         return self.mesh
         
 

@@ -18,7 +18,7 @@ class Subtraction(_SolidBase) :
          = [[a,b,g],[dx,dy,dz]]
     """
     def __init__(self,name, obj1, obj2, tra2):
-        self.type = "bools"
+        self.type = "Subtraction"
         self.name = name
         self.obj1 = obj1
         self.obj2 = obj2
@@ -31,7 +31,7 @@ class Subtraction(_SolidBase) :
 
     def pycsgmesh(self):
 
-        print 'Subtraction ',self.name, self.obj1.name, self.obj2.name
+        #print 'Subtraction ',self.name, self.obj1.name, self.obj2.name
 
 #        if self.mesh :
 #            return self.mesh
@@ -53,5 +53,5 @@ class Subtraction(_SolidBase) :
         self.obj1.mesh = None
         self.obj2.mesh = None
 
-        print 'subtraction mesh ', self.name
+        #print 'subtraction mesh ', self.name
         return self.mesh
