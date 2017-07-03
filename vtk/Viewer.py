@@ -9,6 +9,7 @@ def mkVtkIdList(it):
 
 class Viewer :
     def __init__(self):
+        #self.count = 0
         # create a rendering window and renderer
         self.ren = _vtk.vtkRenderer()
         self.renWin = _vtk.vtkRenderWindow()
@@ -109,6 +110,21 @@ class Viewer :
 
         meshActor.SetMapper(meshMapper)
         self.ren.AddActor(meshActor)
+
+
+        
+        #if self.count:
+        #    filename = "test"+str(self.count)+".stl"
+        #    print "filename", filename
+        #
+        #    polySource = triFilter.GetOutputPort()
+        #    # Write the stl file to disk
+        #    stlWriter = _vtk.vtkSTLWriter()
+        #    stlWriter.SetFileName(filename)
+        #    stlWriter.SetInputConnection(polySource)
+        #    stlWriter.Write()
+        #
+        #self.count = self.count + 1
 
 
     def setAxes(self) : 
