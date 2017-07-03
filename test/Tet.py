@@ -29,7 +29,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
                               [5, (5*_np.sqrt(3))/2., 5*_np.sqrt(3)])
     tetLogical3  = _g4.LogicalVolume(tetSolid3,'G4_Cu','tetLogical3')
     tetPhysical3 = _g4.PhysicalVolume([0,0,0],[20, 0,0], tetLogical3,'tetPhysical3',worldLogical)
-
+    
     tetSolid4 = _g4.solid.Tet('tet4',[0,0,0],
                               [5, 5* _np.sqrt(3), 0],
                               [10, 0, 0],

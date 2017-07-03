@@ -10,6 +10,18 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     worldLogical =  _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
 
     trapSolid1    = _g4.solid.Trap('trap1',
+                                   25,
+                                   1, 2,
+                                   37.5, 25, 25,
+                                   1,
+                                   37.5, 25, 25,
+                                   1)
+    
+    trapLogical1  = _g4.LogicalVolume(trapSolid1,'G4_Cu','trapLogical1')
+    trapPhysical1 = _g4.PhysicalVolume([0,0,0],[200,200,0], trapLogical1,'trapPhysical1',worldLogical)
+
+    
+    trapSolid2    = _g4.solid.Trap('trap2',
                                    60,
                                    _np.pi/9., 5*_np.pi/180.,
                                    40, 30, 40,
@@ -17,9 +29,33 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
                                    16, 10, 14,
                                    _np.pi/18.)
     
-    trapLogical1  = _g4.LogicalVolume(trapSolid1,'G4_Cu','trapLogical1')
-    trapPhysical1 = _g4.PhysicalVolume([0,0,0],[0,0,0], trapLogical1,'trapPhysical1',worldLogical)
+    trapLogical2  = _g4.LogicalVolume(trapSolid2,'G4_Cu','trapLogical2')
+    trapPhysical2 = _g4.PhysicalVolume([0,0,0],[200,0,0], trapLogical2,'trapPhysical2',worldLogical)
 
+
+    trapSolid3    = _g4.solid.Trap('trap3',
+                                   60,
+                                   _np.pi/9., 5*_np.pi/180.,
+                                   40, 30, 40,
+                                   _np.pi/18.,
+                                   16, 10, 14,
+                                   _np.pi/18.)
+    
+    trapLogical3  = _g4.LogicalVolume(trapSolid3,'G4_Cu','trapLogical3')
+    trapPhysical3 = _g4.PhysicalVolume([0,0,0],[0,200,0], trapLogical3,'trapPhysical3',worldLogical)
+
+    trapSolid4    = _g4.solid.Trap('trap4',
+                                   60,
+                                   _np.pi/9., 5*_np.pi/180.,
+                                   40, 30, 40,
+                                   _np.pi/18.,
+                                   16, 10, 14,
+                                   _np.pi/18.)
+    
+    trapLogical4  = _g4.LogicalVolume(trapSolid4,'G4_Cu','trapLogical4')
+    trapPhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], trapLogical4,'trapPhysical4',worldLogical)
+    
+    
     # clip the world logical volume
     worldLogical.setClip();
 

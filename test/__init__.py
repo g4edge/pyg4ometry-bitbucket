@@ -22,6 +22,7 @@ import Tet
 import TwistedBox
 import TwistedTrap
 import Sphere
-import SphereTest
-import SphereTest2
+import SphereFullTest
+import SphereExploded
 import TwistedTrd
+import CSG_Mesh
