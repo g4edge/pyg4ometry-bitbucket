@@ -28,8 +28,8 @@ class Trap(_SolidBase) :
           pDx2:   float, half length along x of the side at y=+pDy1
           pAlp1:  float, angle wrt the y axis from the centre of the side (lower endcap)
           pDy2:   float, half-length at +pDz
-          pDx3:   float, halg-length of the side at y=-pDy2 of the face at +pDz
-          pDx4:   float, halg-length of the side at y=+pDy2 of the face at +pDz
+          pDx3:   float, half-length of the side at y=-pDy2 of the face at +pDz
+          pDx4:   float, half-length of the side at y=+pDy2 of the face at +pDz
 
           pAlp2:  float, angle wrt the y axis from the centre of the side (upper endcap)
         """
