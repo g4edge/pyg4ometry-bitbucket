@@ -1180,7 +1180,7 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, scale)
         self._map_extent_2_bodies(self.excludes, scale)
 
-        return self._evaluate(None) # Don't trim/extend.  Get the true mesh.
+        return self._accumulate(None) # Don't trim/extend.  Get the true mesh.
 
     def _optimised_boolean(self):
         out = self._crude_boolean()
@@ -1193,7 +1193,7 @@ class Zone(object):
 
         self._map_extent_2_bodies(self.excludes, boolean_from_ints)
 
-        return self._evaluate(0) # Top level zone so subzone_order = 0
+        return self._accumulate(0) # Top level zone so subzone_order = 0
 
     def _map_extent_2_bodies(self, bodies, extent):
         for body in bodies:
@@ -1203,7 +1203,7 @@ class Zone(object):
                 body._map_extent_2_bodies(body.contains, extent)
                 body._map_extent_2_bodies(body.excludes, extent)
 
-    def _evaluate(self, subzone_order):
+    def _accumulate(self, subzone_order):
         # Intersections on the top level should be trimmed, but
         # intersections nested with subtracted zones should be
         # extended.  These two maps and the subzone_order parameter
@@ -1222,7 +1222,7 @@ class Zone(object):
                     accumulated, safety_map['intersection']
                 )
             elif isinstance(body, Zone):
-                evaluated_zone = body._evaluate(subzone_order=subzone_order)
+                evaluated_zone = body._accumulate(subzone_order=subzone_order)
                 accumulated = evaluated_zone.intersection(accumulated)
 
         for body in self.excludes:
@@ -1235,7 +1235,7 @@ class Zone(object):
                 subzone_order = (None if subzone_order is None
                                  else subzone_order + 1)
                 accumulated = accumulated.subtraction(
-                    body._evaluate(subzone_order=subzone_order)
+                    body._accumulate(subzone_order=subzone_order)
                 )
         assert accumulated is not _IDENTITY
         return accumulated
