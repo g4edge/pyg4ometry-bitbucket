@@ -162,7 +162,7 @@ class Body(object):
     def intersection(self, other, safety="trim"):
         return self._do_boolean_op(other, pygdml.solid.Intersection, safety)
 
-    def subtraction(self, other, safety="extent"):
+    def subtraction(self, other, safety="extend"):
         return self._do_boolean_op(other, pygdml.solid.Subtraction, safety)
 
     def union(self, other):
