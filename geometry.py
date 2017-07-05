@@ -1218,9 +1218,9 @@ class Zone(object):
         accumulated = _IDENTITY # An intersection with _IDENTITY is just self..
         for body in self.contains:
             if isinstance(body, Body):
-                if not body._is_omittable:
-                    accumulated = body.intersection(accumulated,
-                                                    safety_map['intersection'])
+                accumulated = body.intersection(
+                    accumulated, safety_map['intersection']
+                )
             elif isinstance(body, Zone):
                 evaluated_zone = body._evaluate(subzone_order=subzone_order)
                 accumulated = evaluated_zone.intersection(accumulated)
