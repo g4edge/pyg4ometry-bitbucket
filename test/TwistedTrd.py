@@ -21,7 +21,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     twistedTrdLogical3  = _g4.LogicalVolume(twistedTrdSolid3,'G4_Cu','twistedTrdLogical3')
     twistedTrdPhysical3 = _g4.PhysicalVolume([0,0,0],[200,0,0], twistedTrdLogical3,'twistedTrdPhysical3',worldLogical)
 
-    twistedTrdSolid4    = _g4.solid.TwistedTrd('twistedTrd4',-0.5, 50, 20, 50, 20, 60)
+    twistedTrdSolid4    = _g4.solid.TwistedTrd('twistedTrd4',0.5, 50, 20, 50, 20, 60)
     twistedTrdLogical4  = _g4.LogicalVolume(twistedTrdSolid4,'G4_Cu','twistedTrdLogical4')
     twistedTrdPhysical4 = _g4.PhysicalVolume([0,0,0],[0,0,0], twistedTrdLogical4,'twistedTrdPhysical4',worldLogical)
     
