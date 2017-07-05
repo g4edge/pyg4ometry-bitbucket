@@ -10,10 +10,10 @@ from copy import deepcopy as _dc
 class Wedge(_SolidBase):
     def __init__(self, name, pRMax = 1000, pSPhi=0, pDPhi=1.5, halfzlength=10000):
         self.name  = name
-        self.pRMax = pRMax
-        self.pSPhi = pSPhi
-        self.pDPhi = pDPhi
-        self.pDz   = halfzlength
+        self.pRMax = float(pRMax)
+        self.pSPhi = float(pSPhi)
+        self.pDPhi = float(pDPhi)
+        self.pDz   = float(halfzlength)
         self.nslice = 16
         self.mesh = None 
 

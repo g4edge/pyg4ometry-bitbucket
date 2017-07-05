@@ -8,9 +8,9 @@ class Plane(_SolidBase) : # point on plane is on z-axis
     def __init__(self, name, normal, dist, zlength=10000):
         self.name   = name
         self.normal = _Vector(normal).unit()
-        self.dist   = dist
-        self.pDz    = zlength
-        self.mesh   = None
+        self.dist   = float(dist)
+        self.pDz    = float(zlength)
+        self.mesh   = float(None)
 
     def __repr__(self):
         pass
