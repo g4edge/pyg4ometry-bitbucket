@@ -40,27 +40,27 @@ RegionName
 
 // Geometry directives:
 StartExpansion
-    : '$' {self.column == 1}? 'Start_expansion'
+    : '$' {self.column == 1}? [sS] 'tart_expansion'
     ;
 
 StartTranslat
-    :  '$' {self.column == 1}? 'Start_translat'
+    :  '$' {self.column == 1}? [sS] 'tart_translat'
     ;
 
 StartTransform
-    : '$' {self.column == 1}? 'Start_transform'
+    : '$' {self.column == 1}? [sS] 'tart_transform'
     ;
 
 EndExpansion
-    : '$' {self.column == 1}? 'End_expansion'
+    : '$' {self.column == 1}? [eE] 'nd_expansion'
     ;
 
 EndTranslat
-    : '$' {self.column == 1}? 'End_translat'
+    : '$' {self.column == 1}? [eE] 'nd_translat'
     ;
 
 EndTransform
-    :'$' {self.column == 1}? 'End_transform'
+    :'$' {self.column == 1}? [eE] 'nd_transform'
     ;
 
 Integer
