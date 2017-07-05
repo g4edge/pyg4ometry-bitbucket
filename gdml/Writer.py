@@ -105,7 +105,10 @@ class Writer(object):
         if isinstance(param,_Parameter) :
             oe = self.doc.createElement('variable')
             oe.setAttribute('name', param.name)
-            oe.setAttribute('value',str(float(param)))
+            if param.name != param.expr :
+                oe.setAttribute('value',param.expr)
+            else :
+                oe.setAttribute('value',str(float(param)))
             self.defines.appendChild(oe)
         elif isinstance(param,_ParameterVector) :
             oe = self.doc.createElement('position')
