@@ -323,32 +323,35 @@ class RPP(Body):
         self._z_min = self.parameters.z_min
         self._z_max = self.parameters.z_max
 
-    def _apply_extent(self, extent):
+    def _check_omittable(self, extent):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
-        is_gt_in_x = (self.parameters.x_max > extent.upper.x
+        is_gt_in_x = (self.parameters.x_max + 2 * LENGTH_SAFETY > extent.upper.x
                       and not np.isclose(self.parameters.x_max,
                                          extent.upper.x))
-        is_lt_in_x = (self.parameters.x_min < extent.lower.x
+        is_lt_in_x = (self.parameters.x_min - 2 * LENGTH_SAFETY < extent.lower.x
                       and not np.isclose(self.parameters.x_min,
                                          extent.lower.x))
-        is_gt_in_y = (self.parameters.y_max > extent.upper.y
+        is_gt_in_y = (self.parameters.y_max + 2 * LENGTH_SAFETY > extent.upper.y
                       and not np.isclose(self.parameters.y_max,
                                          extent.upper.y))
-        is_lt_in_y = (self.parameters.y_min < extent.lower.y
+        is_lt_in_y = (self.parameters.y_min - 2 * LENGTH_SAFETY < extent.lower.y
                       and not np.isclose(self.parameters.y_min,
                                          extent.lower.y))
-        is_gt_in_z = (self.parameters.z_max > extent.upper.z
+        is_gt_in_z = (self.parameters.z_max + 2 * LENGTH_SAFETY > extent.upper.z
                       and not np.isclose(self.parameters.z_max,
                                          extent.upper.z))
-        is_lt_in_z = (self.parameters.z_min < extent.lower.z
+        is_lt_in_z = (self.parameters.z_min - 2 * LENGTH_SAFETY < extent.lower.z
                       and not np.isclose(self.parameters.z_min,
                                          extent.lower.z))
         if (is_gt_in_x and is_lt_in_x
-                and is_gt_in_y and is_lt_in_y
-                and is_gt_in_z and is_lt_in_z):
+            and is_gt_in_y and is_lt_in_y
+            and is_gt_in_z and is_lt_in_z):
 
-            self._is_omittable = True
+
+    def _apply_extent(self, extent):
+        self._is_omittable = self._check_omittable
+        if self._is_omittable:
             return
 
         # Then we can't omit it, but maybe we can shrink it:
