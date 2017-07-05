@@ -645,7 +645,7 @@ class XYP(InfiniteHalfSpace):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_z > extent.upper.z
+        if (self.parameters.v_z - 2 * LENGTH_SAFETY > extent.upper.z
                 and not np.isclose(self.parameters.v_z, extent.upper.z)):
             self._is_omittable = True
             return
@@ -671,7 +671,7 @@ class XZP(InfiniteHalfSpace):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_y > extent.upper.y
+        if (self.parameters.v_y - 2 * LENGTH_SAFETY > extent.upper.y
                 and not np.isclose(self.parameters.v_y, extent.upper.y)):
             self._is_omittable = True
             return
@@ -696,7 +696,7 @@ class YZP(InfiniteHalfSpace):
         self.parameters = Parameters(zip(parameter_names, parameters))
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_x > extent.upper.x
+        if (self.parameters.v_x - 2 * LENGTH_SAFETY > extent.upper.x
                 and not np.isclose(self.parameters.v_x, extent.upper.x)):
             self._is_omittable = True
             return
