@@ -3,7 +3,13 @@ from pygeometry.geant4.Registry import registry as _registry
 class Parameter(object) :
     def __init__(self, name, value, addRegistry = True) :
         self.name  = name
-        self.value = value
+
+        if isinstance(value,Parameter) :
+            self.value = value.value
+            self.expr  = value.name
+        else :
+            self.value = float(value)
+            self.expr  = name
         if addRegistry :
             _registry.addParameter(self)
 
