@@ -71,7 +71,11 @@ class Writer(object):
         s = 'e1: element, geometry="gdml:'
         s += str(self.filename)
         s += '", l=' + str(zLength) + '*cm;\n'
-        s += 'include lattice.gmad;\n'
+        s += 'l1: line = (e1);\n'
+        s += 'use,period=l1;\n'
+        s += 'sample,all;\n'
+        s += 'beam, particle="e-",\n'
+        s += 'energy=250.0*GeV;\n'        
         f = open(self.filenameGmad, 'w')
         f.write(s)
         f.close()
