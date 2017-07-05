@@ -344,9 +344,9 @@ class RPP(Body):
         is_lt_in_z = (self.parameters.z_min - 2 * LENGTH_SAFETY < extent.lower.z
                       and not np.isclose(self.parameters.z_min,
                                          extent.lower.z))
-        if (is_gt_in_x and is_lt_in_x
-            and is_gt_in_y and is_lt_in_y
-            and is_gt_in_z and is_lt_in_z):
+        return (is_gt_in_x and is_lt_in_x
+                and is_gt_in_y and is_lt_in_y
+                and is_gt_in_z and is_lt_in_z)
 
 
     def _apply_extent(self, extent):
