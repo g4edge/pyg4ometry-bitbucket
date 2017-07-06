@@ -610,7 +610,7 @@ class TRC(Body):
                                             self.parameters.major_to_minor_z])
         self.length = self.major_to_minor.length()
         self.major_radius = self.parameters.major_radius
-        self.minor_radius = self.parameters.major_radius
+        self.minor_radius = self.parameters.minor_radius
 
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
