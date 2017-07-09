@@ -6,7 +6,6 @@ def WriteSTL(fileName, meshes) :
 
     appendFilter = _vtk.vtkAppendPolyData()
 
-    print appendFilter
     for m in meshes:
         if m :
             appendFilter.AddInputConnection(m.GetOutputPort())
