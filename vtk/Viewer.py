@@ -111,22 +111,6 @@ class Viewer :
         meshActor.SetMapper(meshMapper)
         self.ren.AddActor(meshActor)
 
-
-        
-        #if self.count:
-        #    filename = "test"+str(self.count)+".stl"
-        #    print "filename", filename
-        #
-        #    polySource = triFilter.GetOutputPort()
-        #    # Write the stl file to disk
-        #    stlWriter = _vtk.vtkSTLWriter()
-        #    stlWriter.SetFileName(filename)
-        #    stlWriter.SetInputConnection(polySource)
-        #    stlWriter.Write()
-        #
-        #self.count = self.count + 1
-
-
     def setAxes(self) : 
         axes = _vtk.vtkAxesActor()
         axes.SetTotalLength([self.xrange,self.yrange,self.xrange]);
