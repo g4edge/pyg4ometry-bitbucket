@@ -45,24 +45,35 @@ class Tubs(_SolidBase) :
         print 'tubs mesh',self.name
         return self.mesh
 
-    def basicmesh(self) :         
-        self.mesh = _CSG.cylinder(start=[0,0,-self.pDz], end=[0,0,self.pDz],radius=self.pRMax)
+    def basicmesh(self) :
+        pDz   = float(self.pDz)
+        pRMax = float(self.pRMax)
+
+        print pDz, pRMax
+        self.mesh = _CSG.cylinder(start=[0,0,-pDz], end=[0,0,pDz],radius=pRMax)
 
     def csgmesh(self) :
-        wzlength = 3*self.pDz   # set dimensions of wedge to intersect with that are much larger 
-                                # than the dimensions of the solid
-        wrmax    = 3*self.pRMax
 
-        if self.pDPhi == 2*_np.pi :
-            pWedge = _Wedge("wedge_temp", wrmax, self.pSPhi, self.pSPhi+self.pDPhi-0.0001, wzlength).pycsgmesh()
+        pDz   = float(self.pDz)
+        pRMax = float(self.pRMax)
+        pRMin = float(self.pRMin)
+        pSPhi = float(self.pSPhi)
+        pDPhi = float(self.pDPhi)
+
+        wzlength = 3*pDz   # set dimensions of wedge to intersect with that are much larger
+                                # than the dimensions of the solid
+        wrmax    = 3*pRMax
+
+        if pDPhi == 2*_np.pi :
+            pWedge = _Wedge("wedge_temp", wrmax, pSPhi, pSPhi+pDPhi-0.0001, wzlength).pycsgmesh()
         else :
-            pWedge = _Wedge("wedge_temp", wrmax, self.pSPhi, self.pSPhi + self.pDPhi, wzlength).pycsgmesh()
+            pWedge = _Wedge("wedge_temp", wrmax, pSPhi, pSPhi+pDPhi, wzlength).pycsgmesh()
 
         # If a solid cylinder then just return the primitive CSG solid.
-        if not self.pRMin and self.pSPhi == 0.0 and self.pDPhi == 2*_np.pi:
+        if not pRMin and pSPhi == 0.0 and pDPhi == 2*_np.pi:
             return self.mesh
-        if(self.pRMin):
-            sInner = _CSG.cylinder(start=[0,0,-self.pDz], end=[0,0,self.pDz],radius=self.pRMin)
+        if(pRMin):
+            sInner = _CSG.cylinder(start=[0,0,-pDz], end=[0,0,pDz],radius=pRMin)
             self.mesh = self.mesh.subtract(sInner).subtract(pWedge.inverse())
         else:
             self.mesh = self.mesh.subtract(pWedge.inverse())
