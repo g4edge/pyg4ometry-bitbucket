@@ -7,7 +7,7 @@ import gc as _gc
 
 # sb mac profile 14.657, 15.325, 15.522, 15.253, 15.020 (Sphere.csgmesh)
 
-def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
+def pycsgmeshTest(vtkViewer = True, gdmlWriter = True, stlWriter = True) :
     _g4.registry.clear()
 
     worldSolid      = _g4.solid.Box('worldBox',500,500,500)
@@ -32,7 +32,6 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     sphereSolid5    = _g4.solid.Sphere('sphere5',30,50,0,_np.pi*2,0, 0.15*_np.pi)
     sphereLogical5  = _g4.LogicalVolume(sphereSolid5,'G4_Cu','sphereLogical5')
     spherePhysical5 = _g4.PhysicalVolume([0,0,0],[0,0,200],sphereLogical5,'spherePhysical5',worldLogical)
-    
 
     # clip the world logical volume
     worldLogical.setClip();
@@ -41,8 +40,8 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     _g4.registry.setWorld('worldLogical')
     
     m = worldLogical.pycsgmesh()
-    print m
-    
+
+
     if vtkViewer : 
         v = _vtk.Viewer()
         v.addPycsgMeshList(m)
@@ -53,5 +52,11 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
         w = _gdml.Writer()
         w.addDetector(_g4.registry)
         w.write('./SphereExploded.gdml')
-        w.writeGmadTester('SphereExploded.gmad')        
+        w.writeGmadTester('SphereExploded.gmad')
 
+
+    if stlWriter:
+        vtkConverter = _vtk.Convert()
+        vtkPD = vtkConverter.MeshListToPolyData(m)
+        print vtkPD
+        _vtk.WriteSTL("./SphereExploded.stl", vtkPD)
