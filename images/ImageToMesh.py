@@ -56,13 +56,13 @@ class ImageToMesh():
             for i in range(_np.shape(d5)[1]-1):
                 k = i * z
                 l = j * z
-                pol1 = _Polygon([_Vertex(_Vector(k, l, d5[i, j]), None),
-                                 _Vertex(_Vector(k+z, l, d5[i+1, j]), None),
-                                 _Vertex(_Vector(k, l+z, d5[i, j+1]), None)])
+                pol1 = _Polygon([_Vertex(_Vector(k,   l,   d5[i, j]),   None),
+                                 _Vertex(_Vector(k+z, l,   d5[i+1, j]), None),
+                                 _Vertex(_Vector(k,   l+z, d5[i, j+1]), None)])
                 pols.append(pol1)
                 
-                pol2 = _Polygon([_Vertex(_Vector(k, l+z, d5[i, j+1]), None),
-                                 _Vertex(_Vector(k+z, l, d5[i+1, j]), None),
+                pol2 = _Polygon([_Vertex(_Vector(k,   l+z, d5[i, j+1]),   None),
+                                 _Vertex(_Vector(k+z, l,   d5[i+1, j]),   None),
                                  _Vertex(_Vector(k+z, l+z, d5[i+1, j+1]), None)])
                 pols.append(pol2)
                 
