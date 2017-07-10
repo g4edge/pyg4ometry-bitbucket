@@ -5,6 +5,7 @@ from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Vertex as _Vertex
 import pygeometry.vtk as _vtk
 import numpy as _np
+import sys as _sys
 
 class ImageToMesh():
     def __init__(self):
@@ -30,8 +31,6 @@ class ImageToMesh():
         if ylim != None:
             arrays = array[:,ylim[0]:ylim[1]]
 
-        #arrays = array[1500:2000, 1500:2000]
-
         s1 = _np.max(arrays) - _np.min(arrays)
         s2 = 10
         s = s2/s1
@@ -49,7 +48,11 @@ class ImageToMesh():
 
         pols = []
 
+        nrows = _np.shape(d5)[0]
         for j in range(_np.shape(d5)[0]-1):
+            progress = (float(j) / nrows ) *100
+            _sys.stdout.write("Meshing: %d%%     \r" % (progress) )
+            _sys.stdout.flush()
             for i in range(_np.shape(d5)[1]-1):
                 k = i * z
                 l = j * z
