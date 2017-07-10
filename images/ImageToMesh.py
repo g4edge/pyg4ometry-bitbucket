@@ -51,84 +51,85 @@ class ImageToMesh():
         imscale = 500./float(_np.max(size))
         arrays = imresize(array1, float(imscale), mode='F')
 
+        #scaling vertical size to 10mm
         s1 = _np.max(arrays) - _np.min(arrays)
-        s2 = 10
+        s2 = height
         s = s2/s1
-
         d1 = (arrays - _np.min(arrays)) * s
 
-        f = _np.shape(d1)
-
+        #padding array with 0's to make edges of mesh 0
+        f1 = _np.shape(d1)
         d2 = _np.insert(d1, [0]       , 0, axis=1)
-        d3 = _np.insert(d2, [f[1] + 1], 0, axis=1)
+        d3 = _np.insert(d2, [f1[1] + 1], 0, axis=1)
         d4 = _np.insert(d3, [0]       , 0, axis=0)
-        d5 = _np.insert(d4, [f[0] + 1], 0, axis=0)
+        d5 = _np.insert(d4, [f1[0] + 1], 0, axis=0)
 
-        z = length/_np.max(f)
-
+        #scaling horizontal size
+        f2 = _np.shape(d5)
+        xscl = float(length)/float(_np.max(f2))
+        
         pols = []
+        nrows = _np.shape(d5)[1]-1 # for feedback
 
-        nrows = _np.shape(d5)[0]
-        for j in range(_np.shape(d5)[0]-1):
+        #Building upper sufface of mesh        
+        for j in range(_np.shape(d5)[1]-1):
             progress = (float(j) / nrows ) *100
             _sys.stdout.write("Meshing: %d%%     \r" % (progress) )
             _sys.stdout.flush()
-            for i in range(_np.shape(d5)[1]-1):
-                k = i * z
-                l = j * z
-                pol1 = _Polygon([_Vertex(_Vector(k,   l,   d5[i, j]),   None),
-                                 _Vertex(_Vector(k+z, l,   d5[i+1, j]), None),
-                                 _Vertex(_Vector(k,   l+z, d5[i, j+1]), None)])
+            for i in range(_np.shape(d5)[0]-1):
+                
+                k = i * xscl
+                l = j * xscl
+                pol1 = _Polygon([_Vertex(_Vector(k,      l,      d5[i, j]),   None),
+                                 _Vertex(_Vector(k+xscl, l,      d5[i+1, j]), None),
+                                 _Vertex(_Vector(k,      l+xscl, d5[i, j+1]), None)])
                 pols.append(pol1)
                 
-                pol2 = _Polygon([_Vertex(_Vector(k,   l+z, d5[i, j+1]),   None),
-                                 _Vertex(_Vector(k+z, l,   d5[i+1, j]),   None),
-                                 _Vertex(_Vector(k+z, l+z, d5[i+1, j+1]), None)])
+                pol2 = _Polygon([_Vertex(_Vector(k,      l+xscl, d5[i, j+1]),   None),
+                                 _Vertex(_Vector(k+xscl, l,      d5[i+1, j]),   None),
+                                 _Vertex(_Vector(k+xscl, l+xscl, d5[i+1, j+1]), None)])
                 pols.append(pol2)
-                
-        #print pols
 
+        progress = 100
+        _sys.stdout.write("Meshing: %d%%     \r" % (progress) + "\n" )
+        _sys.stdout.flush()
+
+        #Building the mesh for the surfaces, forming a box
+
+        x = _np.shape(d5)[0] * xscl
+        y = _np.shape(d5)[1] * xscl
+    
         pol3 = _Polygon([_Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0, _np.shape(d5)[0], 0), None),
-                         _Vertex(_Vector(0,0,-5), None)])
+                         _Vertex(_Vector(0, y, 0), None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(0,0,-depth), None)])
 
-        pol4 = _Polygon([_Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0, _np.shape(d5)[0], 0), None),
-                         _Vertex(_Vector(0, _np.shape(d5)[0], -5), None)])
-
-        pol5 = _Polygon([_Vertex(_Vector(_np.shape(d5)[1], 0, 0), None),
+        pol4 = _Polygon([_Vertex(_Vector(x, 0, 0), None),
                          _Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0,0,-5), None)])
+                         _Vertex(_Vector(0,0,-depth), None),
+                         _Vertex(_Vector(x, 0, -depth), None)])
 
-        pol6 = _Polygon([_Vertex(_Vector(0,0,-5), None),
-                         _Vertex(_Vector(_np.shape(d5)[1], 0, -5), None),
-                         _Vertex(_Vector(_np.shape(d5)[1], 0, 0), None)])
+        pol5 = _Polygon([_Vertex(_Vector(0, y, 0), None),
+                         _Vertex(_Vector(x, y, 0), None),
+                         _Vertex(_Vector(x, y, -depth), None),
+                         _Vertex(_Vector(0, y, -depth), None)])
 
-        pol7 = _Polygon([_Vertex(_Vector(0, _np.shape(d5)[0], 0), None),
-                         _Vertex(_Vector(_np.shape(d5)[1], _np.shape(d5)[0], 0), None),
-                         _Vertex(_Vector(_np.shape(d5)[1], _np.shape(d5)[0], -5), None)])
+        pol6 = _Polygon([_Vertex(_Vector(x, y, 0), None),
+                         _Vertex(_Vector(x, 0, 0), None),
+                         _Vertex(_Vector(x, 0, -depth), None),
+                         _Vertex(_Vector(x, y, -depth), None)])
 
-        pol8 = _Polygon([_Vertex(_Vector(_np.shape(d5)[1], _np.shape(d5)[0], -5), None),
-                         _Vertex(_Vector(0, _np.shape(d5)[0], -5), None),
-                         _Vertex(_Vector(0, _np.shape(d5)[0], 0), None)])
 
-        pol9 = _Polygon([_Vertex(_Vector(_np.shape(d5)[1], _np.shape(d5)[0], 0), None),
-                         _Vertex(_Vector(_np.shape(d5)[1], 0, 0), None),
-                         _Vertex(_Vector(_np.shape(d5)[1], 0, -5), None)])
-
-        pol10 = _Polygon([_Vertex(_Vector(_np.shape(d5)[1], 0, -5), None),
-                          _Vertex(_Vector(_np.shape(d5)[1], _np.shape(d5)[0], -5), None),
-                          _Vertex(_Vector(_np.shape(d5)[1], _np.shape(d5)[0], 0), None)])
-
+        pol7 = _Polygon([_Vertex(_Vector(0,0,-depth), None),
+                          _Vertex(_Vector(x, 0, -depth), None),
+                          _Vertex(_Vector(x, y, -depth), None),
+                          _Vertex(_Vector(0, y, -depth), None)])
+        
         pols.append(pol3)
         pols.append(pol4)
         pols.append(pol5)
         pols.append(pol6)
         pols.append(pol7)
-        pols.append(pol8)
-        pols.append(pol9)
-        pols.append(pol10)        
-                         
         
         self._mesh = _CSG.fromPolygons(pols)
         self._mesh.alpha     = 0.5
