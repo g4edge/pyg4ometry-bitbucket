@@ -3,6 +3,7 @@ from pygeometry.pycsg.geom import Polygon as _Polygon
 from astropy.io import fits
 from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Vertex as _Vertex
+from scipy.misc import imresize
 import pygeometry.vtk as _vtk
 import numpy as _np
 import sys as _sys
@@ -39,10 +40,16 @@ class ImageToMesh():
         xlim   = list of two values defining upper and lower limit of array inidices in x dimension
         ylim   = list of two values defining upper and lower limit of array inidices in y dimension
         """
+        #slicing array to desired size
+        array1 = array
         if xlim != None:
-            arrays = array[xlim[0]:xlim[1]]
+            array1 = array1[xlim[0]:xlim[1],:]
         if ylim != None:
-            arrays = array[:,ylim[0]:ylim[1]]
+            array1 = array1[:,ylim[0]:ylim[1]]
+        
+        size = _np.shape(array1)
+        imscale = 500./float(_np.max(size))
+        arrays = imresize(array1, float(imscale), mode='F')
 
         s1 = _np.max(arrays) - _np.min(arrays)
         s2 = 10
