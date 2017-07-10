@@ -11,21 +11,34 @@ class ImageToMesh():
     def __init__(self):
         self._mesh = None
 
-    def MakeMeshFromFits(self, filename, length=100, xlim=None, ylim=None):
-        d = self._LoadData(filename)
-        self._MeshFromArray(d, length, xlim, ylim)
+    def MakeMeshFromFits(self, filename, length=100, height=10, depth=5, xlim=None, ylim=None):
+        """
+        Load fits file and then call MeshFromArray.  See MeshFromArray for parameter details.
+        """
+        d = self.LoadData(filename)
+        self.MeshFromArray(d, length, height, depth, xlim, ylim)
         self.Visualise()
 
-    def _LoadData(self, filename):
+    def LoadData(self, filename):
+        """
+        Returns numpy array from fits file.
+        """
         h = fits.open(filename)
         r = h[0]
         q = r.data
         
         return q
 
-    def _MeshFromArray(self, array, length=100, xlim=None, ylim=None):
-
-        arrays = array
+    def MeshFromArray(self, array, length=100, height=10, depth=5, xlim=None, ylim=None):
+        """
+        Takes 2D numpy array, and builds a mesh from the array. Forms a 3D solid.
+        
+        length = in mm of the longest dimension
+        height = in mm, height of mesh from array
+        depth  = in mm, height of baseplate mesh is placed on
+        xlim   = list of two values defining upper and lower limit of array inidices in x dimension
+        ylim   = list of two values defining upper and lower limit of array inidices in y dimension
+        """
         if xlim != None:
             arrays = array[xlim[0]:xlim[1]]
         if ylim != None:
