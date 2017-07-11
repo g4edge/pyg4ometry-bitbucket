@@ -1,12 +1,11 @@
 """Functions for processing and parsing Fluka files."""
 import os.path
+import collections
 
 import antlr4
 
 import pyfluka.FlukaLexer
 import pyfluka.FlukaParser
-
-
 
 
 def get_geometry_ast_and_other_cards(path):
@@ -35,6 +34,9 @@ def get_geometry_ast_and_other_cards(path):
     # Create syntax tree
     tree = parser.geocards()
 
+    # Blindly assume all lines in not_geometry are of fixed format.  Will be OK
+    # for now.
+    not_geometry = map(Card.from_fixed_line, not_geometry)
     return tree, not_geometry
 
 
@@ -70,10 +72,46 @@ def _separate_geometry(lines):
 
     # Create list of equal length of commented lines to preserve line numbers
     commented_before_geometry = len(before_geometry) * ["*\n"]
-    commented_geometry = len(geometry) * ["*\n"]
     commented_after_geometry = len(after_geometry) * ["*\n"]
     # Assemble and return the two sets:
     geometry = commented_before_geometry + geometry + commented_after_geometry
-    not_geometry = before_geometry + commented_geometry + after_geometry
+    not_geometry = before_geometry + after_geometry
 
-    return not_geometry, geometry
+    return _strip_comments(not_geometry), geometry
+
+
+def _strip_comments(lines):
+    return [line for line in lines if not line.startswith('*')]
+
+class Card(collections.namedtuple("Card",
+                                  ["keyword", "what1", "what2", "what3",
+                                   "what4", "what5", "what6", "sdum"])):
+
+    @classmethod
+    def from_fixed_line(cls, line):
+        # Don't know if this is actually necessary but just in case..
+        if len(line) > 80:
+            raise TypeError("Line too long!  Maximum line length is 80.")
+        line = line.rstrip('\n')
+        # column positions are multiples of 10 up to 80 inclusive.
+        positions = [10 * x for x in range(9)]
+        # Split the line into a list of strings according to the positions
+        columns = [line[start:stop]
+                   for start, stop in zip(positions, positions[1:])]
+        # remove trailing/leading whitepace
+        columns = [column.strip() for column in columns]
+        # Empty strings = None
+        columns = [column if column != "" else None for column in columns]
+        columns = [Card._attempt_float_coercion(column) for column in columns]
+        return cls(*columns)
+
+    @classmethod
+    def from_free_line(cls, line, sep=None):
+        pass
+
+    @staticmethod
+    def _attempt_float_coercion(string):
+        try:
+            return float(string)
+        except (ValueError, TypeError):
+            return string
