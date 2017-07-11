@@ -10,3 +10,4 @@ cpcsg/*py
 cpcsg/testbuild/
 test/*gdml
 test/*gmad
+test/*stl
