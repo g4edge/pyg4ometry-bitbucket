@@ -6,7 +6,10 @@ import antlr4
 import pyfluka.FlukaLexer
 import pyfluka.FlukaParser
 
-def parse(path):
+
+
+
+def get_geometry_ast_and_other_cards(path):
     """Return the antlr4 syntax tree for the given file."""
     if not os.path.exists(path):
         raise IOError("File not found: %s" % path)
@@ -14,7 +17,7 @@ def parse(path):
     with open(path, 'r') as fluka_file:
         lines = fluka_file.readlines()
 
-    _, geometry = _separate_geometry(lines)
+    not_geometry, geometry = _separate_geometry(lines)
 
     # Create ANTLR4 char stream from processed model string
     # geometry is a list of strings here, so join as single string.
@@ -32,7 +35,7 @@ def parse(path):
     # Create syntax tree
     tree = parser.geocards()
 
-    return tree
+    return tree, not_geometry
 
 
 def _separate_geometry(lines):

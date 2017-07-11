@@ -24,7 +24,7 @@ class Model(object):
     def __init__(self, filename):
         self._filename = filename
         # get the syntax tree.
-        tree = pyfluka.parser.parse(filename)
+        tree, cards = pyfluka.parser.get_geometry_ast_and_other_cards(filename)
         self.bodies, self._body_freq_map = Model._bodies_from_tree(tree)
         self.regions = self._regions_from_tree(tree)
         # Initialiser the world volume:
