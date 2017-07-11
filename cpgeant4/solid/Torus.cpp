@@ -27,7 +27,7 @@ CSG* CSGMesh::ConstructTorus(double pRmin,double  pRmax,double  pRtor,double  sp
       double j2 = j0 + 1.0;
       for(int i0 = 0;i0 < stacks; i0++){
         double i1 = i0 + 0.5;
-        double i2 = i0 = 1.0;
+        double i2 = i0 + 1.0;
         std::vector<Vertex*> verticesN;
         CSGMesh::TorusAppendVertex(verticesN, i1 * dTheta, j1 * dPhi + sphi, r,pRtor);
         CSGMesh::TorusAppendVertex(verticesN, i2 * dTheta, j2 * dPhi + sphi, r,pRtor);
