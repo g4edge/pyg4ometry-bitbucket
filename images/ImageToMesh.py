@@ -9,18 +9,24 @@ import numpy as _np
 import sys as _sys
 
 class ImageToMesh():
-    def __init__(self):
-        self._mesh = None
+    def __init__(self, filename=None):
+        self.data  = None # array data
+        self._mesh = None # mesh data
+        if filename != None:
+            self.LoadData(filename)
+
+    def LoadData(self, filename):
+        self.data = self._GetFirstImageAsArray(filename)
 
     def MakeMeshFromFits(self, filename, length=100, height=10, depth=5, xlim=None, ylim=None):
         """
         Load fits file and then call MeshFromArray.  See MeshFromArray for parameter details.
         """
-        d = self.LoadData(filename)
-        self.MeshFromArray(d, length, height, depth, xlim, ylim)
+        self.LoadData(filename)
+        self.MeshFromArray(self.data, length, height, depth, xlim, ylim)
         self.Visualise()
-
-    def LoadData(self, filename):
+        
+    def _GetFirstImageAsArray(self, filename):
         """
         Returns numpy array from fits file.
         """
@@ -29,6 +35,15 @@ class ImageToMesh():
         q = r.data
         
         return q
+
+    def ScaleData(self, scale):
+        self.data *= scale
+
+    def MakeMesh(self, length=100, height=10, depth=5, xlim=None, ylim=None):
+        """
+        Make mesh based on self.data.
+        """
+        self.MeshFromArray(self.data)
 
     def MeshFromArray(self, array, length=100, height=10, depth=5, xlim=None, ylim=None):
         """
