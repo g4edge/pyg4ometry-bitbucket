@@ -441,7 +441,7 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
     """
     def __init__(self, bodies):
         self.bodies = bodies
-        self.regions = dict()
+        self.regions = collections.OrderedDict()
 
     def visitSimpleRegion(self, ctx):
         # Simple in the sense that it consists of no unions of Zones.
