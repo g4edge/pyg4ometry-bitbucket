@@ -100,7 +100,7 @@ class Card(collections.namedtuple("Card",
                    for start, stop in zip(positions, positions[1:])]
         # remove trailing/leading whitepace
         columns = [column.strip() for column in columns]
-        # Empty strings = None
+        # Empty strings -> None
         columns = [column if column != "" else None for column in columns]
         columns = [Card._attempt_float_coercion(column) for column in columns]
         return cls(*columns)
@@ -113,5 +113,6 @@ class Card(collections.namedtuple("Card",
     def _attempt_float_coercion(string):
         try:
             return float(string)
+        # (Not a coercable string, not a coercable type)
         except (ValueError, TypeError):
             return string
