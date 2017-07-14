@@ -313,16 +313,14 @@ class Model(object):
         geometry based on position.
 
         """
-        regions = dict()
+        regions = {region_name: {} for region_name in self.regions}
         for region_name, region in self.regions.iteritems():
-            regions[region_name] = region.extent()
-            print("Meshing Region: {} ...".format(region_name))
             if len(region.zones) == 1:
                 continue
             for zone_no, zone in region.zones.iteritems():
                 print("Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                 zone_no))
-                regions["{}_{}".format(region_name, zone_no)] = zone.extent()
+                regions[region_name][zone_no] = zone.extent()
 
         if pickle is True:
             pickle_name = "./{}_survey.pickle".format(
