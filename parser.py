@@ -1,6 +1,7 @@
 """Functions for processing and parsing Fluka files."""
 import os.path
 import collections
+import warnings
 
 import antlr4
 
@@ -108,6 +109,21 @@ class Card(collections.namedtuple("Card",
     @classmethod
     def from_free_line(cls, line, sep=None):
         pass
+
+    def warn_not_supported(self, supported_fields):
+        """User provides an iterable of SUPPORTED fields of the form
+        ["what1", "what2", "sdum"], and warnings will be raised once if
+        there are any fields which are not None which do not feature in fields.
+
+        """
+        for field in self._fields:
+            if (getattr(self, field) is not None
+                    and field not in supported_fields):
+                warnings.simplefilter('once', UserWarning)
+                msg = ("{} not supported for card \"{}\"."
+                       "  This field will be ignored.".format(field.upper(),
+                                                               self.keyword))
+                warnings.warn(msg)
 
     @staticmethod
     def _attempt_float_coercion(string):
