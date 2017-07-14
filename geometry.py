@@ -1010,13 +1010,7 @@ class Region(object):
     def __init__(self, name, zones, material="G4_Galactic"):
         self.name = name
         self.material = material
-        if isinstance(zones, list):
-            self.zones = dict(zip(range(len(zones)),
-                                  zones))
-        elif isinstance(zones, Zone):
-            self.zones = {0: zones}
-        else:
-            raise TypeError("Unkown zones type: {}".format(type(zones)))
+        self.zones = zones
 
     def view(self, zones=None, setclip=True, optimise=False):
         """
