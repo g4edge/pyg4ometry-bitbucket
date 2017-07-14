@@ -315,9 +315,7 @@ class Model(object):
         """
         regions = {region_name: {} for region_name in self.regions}
         for region_name, region in self.regions.iteritems():
-            if len(region.zones) == 1:
-                continue
-            for zone_no, zone in region.zones.iteritems():
+            for zone_no, zone in enumerate(region.zones):
                 print("Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                 zone_no))
                 regions[region_name][zone_no] = zone.extent()
@@ -445,7 +443,7 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         # Simple in the sense that it consists of no unions of Zones.
         region_defn = self.visitChildren(ctx)
         # Build a zone from the list of bodies or single body:
-        zone = geometry.Zone(region_defn)
+        zone = [geometry.Zone(region_defn)]
         region_name = ctx.RegionName().getText()
         self.regions[region_name] = geometry.Region(region_name, zone)
 
