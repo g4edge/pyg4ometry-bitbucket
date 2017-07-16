@@ -35,13 +35,13 @@ class ImageToMesh():
         if filename.endswith(".jpg"):
             self.data = self._JPGToArray(filename)
 
-    def MakeMeshFromFits(self, filename, length=100, height=10, depth=5, xlim=None, ylim=None):
+    def MakeMeshFromFile(self, filename, stlname, length=100, height=10, depth=5, xlim=None, ylim=None):
         """
         Load fits file and then call MeshFromArray.  See MeshFromArray for parameter details.
         """
         self.LoadData(filename)
         self.MeshFromArray(self.data, length, height, depth, xlim, ylim)
-        self.Visualise()
+        self.Visualise(stlname)
         
     def _FITSToArray(self, filename):
         """
@@ -174,9 +174,9 @@ class ImageToMesh():
         self._mesh.wireframe = False
         self._mesh.colour    = [1,1,1]
 
-    def Visualise(self):
+    def Visualise(self, stlname):
         v = _vtk.Viewer()
-        v.addPycsgMeshList([self._mesh])
+        v.addPycsgMeshList([self._mesh], stlname)
         v.view()
 
     def WriteMeshToSTL(self, outputFileName):
