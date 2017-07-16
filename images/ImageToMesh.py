@@ -9,6 +9,18 @@ import numpy as _np
 import sys as _sys
 
 class ImageToMesh():
+    """
+    a = ImageToMesh('filename.fits')
+    a.FilterData('minimum', 4)
+    a.MakeMesh()
+    a.Visualise()
+
+    or
+
+    a = ImageToMesh()
+    a.MakeMeshFromFits('filename.fits', length=100)
+    
+    """
     def __init__(self, filename=None):
         self.data  = None # array data
         self._mesh = None # mesh data
@@ -26,7 +38,7 @@ class ImageToMesh():
         self.MeshFromArray(self.data, length, height, depth, xlim, ylim)
         self.Visualise()
         
-    def _GetFirstImageAsArray(self, filename):
+    def _FITSToArray(self, filename):
         """
         Returns numpy array from fits file.
         """
