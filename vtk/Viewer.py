@@ -9,7 +9,7 @@ def mkVtkIdList(it):
 
 class Viewer :
     def __init__(self):
-        #self.count = 0
+        self.count = 0
         # create a rendering window and renderer
         self.ren = _vtk.vtkRenderer()
         self.renWin = _vtk.vtkRenderWindow()
@@ -26,19 +26,20 @@ class Viewer :
         self.yrange = 0
         self.zrange = 0
 
-    def addPycsgMeshList(self, meshes):
+    def addPycsgMeshList(self, meshes): #, stlname):
         # print 'VtkViewer.addPycsgMeshList>', meshes
         for m in meshes :
             if type(m) == list :
-                self.addPycsgMeshList(m)
+                self.addPycsgMeshList(m) #, stlname)
             else :
-                self.addPycsgMesh(m)
+                self.addPycsgMesh(m) #, stlname)
 
-    def addPycsgMesh(self,m):
-        # print 'VtkViewer.addMesh>',m
+    def addPycsgMesh(self,m): #, stlname):
+        #print 'VtkViewer.addMesh>'
         m.refine()
+        #print 'VtkViewer.addMesh> refined'
         verts, cells, count = m.toVerticesAndPolygons()
-
+        #print 'VtkViewer.addMesh> to vertices'
         meshPD  = _vtk.vtkPolyData()
         points  = _vtk.vtkPoints()
         polys   = _vtk.vtkCellArray()
@@ -55,6 +56,7 @@ class Viewer :
             if(abs(v[2]) > self.zrange) :
                 self.zrange = abs(v[2])
 
+        #print 'VtkViewer.addMesh> size determined'
         for p in cells :
             polys.InsertNextCell(mkVtkIdList(p))
 
@@ -112,21 +114,19 @@ class Viewer :
         self.ren.AddActor(meshActor)
 
 
+        '''
+        filename = stlname + ".stl"
+        print "filename", filename
         
-        #if self.count:
-        #    filename = "test"+str(self.count)+".stl"
-        #    print "filename", filename
-        #
-        #    polySource = triFilter.GetOutputPort()
-        #    # Write the stl file to disk
-        #    stlWriter = _vtk.vtkSTLWriter()
-        #    stlWriter.SetFileName(filename)
-        #    stlWriter.SetInputConnection(polySource)
-        #    stlWriter.Write()
-        #
-        #self.count = self.count + 1
+        polySource = triFilter.GetOutputPort()
+        # Write the stl file to disk
+        stlWriter = _vtk.vtkSTLWriter()
+        stlWriter.SetFileName(filename)
+        stlWriter.SetInputConnection(polySource)
+        stlWriter.Write()
 
-
+        '''
+        
     def setAxes(self) : 
         axes = _vtk.vtkAxesActor()
         axes.SetTotalLength([self.xrange,self.yrange,self.xrange]);
