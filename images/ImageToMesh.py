@@ -59,6 +59,30 @@ class ImageToMesh():
         im = imread(filename, mode='F')
         return im
 
+    def FilterMinimum(self, window=4):
+        self.data = scipy.ndimage.minimum_filter(self.data, size=window)
+
+    def FilterMaximum(self, window=4):
+        self.data = scipy.ndimage.maximum_filter(self.data, size=window)
+
+    def FilterMedian(self, window=4):
+        self.data = scipy.ndimage.median_filter(self.date, size=window)
+        
+    def FilterData(self, ftype, window=4):
+        """
+        Filters data to window size, using a window (kernel) filter.
+
+        ftype  = type of filter  (maximum, minimum, median)
+        window = value of filter (default = 4) 
+        """
+        
+        if ftype == 'minimum':
+            self.FilterMinimum(window)
+        if ftype == 'maximum':
+            self.FilterMaximum(window)
+        if type == median:
+            self.FilterMedian(window)
+        
     def ScaleData(self, scale):
         self.data *= scale
 
