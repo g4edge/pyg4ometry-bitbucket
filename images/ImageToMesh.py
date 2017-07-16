@@ -4,9 +4,11 @@ from astropy.io import fits
 from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Vertex as _Vertex
 from scipy.misc import imresize
+from scipy.misc import imread
 import pygeometry.vtk as _vtk
 import numpy as _np
 import sys as _sys
+import scipy.ndimage
 
 class ImageToMesh():
     """
@@ -28,7 +30,10 @@ class ImageToMesh():
             self.LoadData(filename)
 
     def LoadData(self, filename):
-        self.data = self._GetFirstImageAsArray(filename)
+        if filename.endswith(".fit"):
+            self.data = self._FITSToArray(filename)
+        if filename.endswith(".jpg"):
+            self.data = self._JPGToArray(filename)
 
     def MakeMeshFromFits(self, filename, length=100, height=10, depth=5, xlim=None, ylim=None):
         """
@@ -47,6 +52,12 @@ class ImageToMesh():
         q = r.data
         
         return q
+    def _JPGToArray(self, filename):
+        """
+        Returns numpy array from jpg file.
+        """
+        im = imread(filename, mode='F')
+        return im
 
     def ScaleData(self, scale):
         self.data *= scale
