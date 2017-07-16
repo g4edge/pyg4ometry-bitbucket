@@ -155,38 +155,37 @@ class ImageToMesh():
         progress = 100
         _sys.stdout.write("Meshing: %d%%     \r" % (progress) + "\n" )
         _sys.stdout.flush()
-
+        
         #Building the mesh for the surfaces, forming a box
-
+        
         x = _np.shape(d5)[0] * xscl
         y = _np.shape(d5)[1] * xscl
-    
-        pol3 = _Polygon([_Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0, y, 0), None),
-                         _Vertex(_Vector(0, y, -depth), None),
-                         _Vertex(_Vector(0,0,-depth), None)])
+        
+        pol3 = _Polygon([_Vertex(_Vector(0, 0, 0),      None),
+                         _Vertex(_Vector(0, 0, -depth), None),
+                         _Vertex(_Vector(x, 0, -depth), None),
+                         _Vertex(_Vector(x, 0, 0),      None)])
 
-        pol4 = _Polygon([_Vertex(_Vector(x, 0, 0), None),
-                         _Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0,0,-depth), None),
+        pol4 = _Polygon([_Vertex(_Vector(x, 0, 0),      None),
+                         _Vertex(_Vector(x, 0, -depth), None),
+                         _Vertex(_Vector(x, y, -depth), None),
+                         _Vertex(_Vector(x, y, 0),      None)])
+
+        pol5 = _Polygon([_Vertex(_Vector(x, y, 0),      None),
+                         _Vertex(_Vector(x, y, -depth), None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(0, y, 0),      None)])  
+
+        pol6 = _Polygon([_Vertex(_Vector(0, y, 0),      None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(0, 0, -depth), None),
+                         _Vertex(_Vector(0, 0, 0),      None)])
+
+        pol7 = _Polygon([_Vertex(_Vector(0, 0, -depth), None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(x, y, -depth), None),
                          _Vertex(_Vector(x, 0, -depth), None)])
 
-        pol5 = _Polygon([_Vertex(_Vector(0, y, 0), None),
-                         _Vertex(_Vector(x, y, 0), None),
-                         _Vertex(_Vector(x, y, -depth), None),
-                         _Vertex(_Vector(0, y, -depth), None)])
-
-        pol6 = _Polygon([_Vertex(_Vector(x, y, 0), None),
-                         _Vertex(_Vector(x, 0, 0), None),
-                         _Vertex(_Vector(x, 0, -depth), None),
-                         _Vertex(_Vector(x, y, -depth), None)])
-
-
-        pol7 = _Polygon([_Vertex(_Vector(0,0,-depth), None),
-                          _Vertex(_Vector(x, 0, -depth), None),
-                          _Vertex(_Vector(x, y, -depth), None),
-                          _Vertex(_Vector(0, y, -depth), None)])
-        
         pols.append(pol3)
         pols.append(pol4)
         pols.append(pol5)
