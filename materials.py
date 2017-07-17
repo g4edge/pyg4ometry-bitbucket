@@ -2,6 +2,7 @@ import fluka_material_db
 import pyfluka.parser
 import warnings
 import itertools
+import subprocess
 import re
 
 
