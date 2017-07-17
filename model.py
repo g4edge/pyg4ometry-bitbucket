@@ -15,18 +15,50 @@ import pyfluka.vector
 import pyfluka.FlukaParserVisitor
 import pyfluka.FlukaParserListener
 import pyfluka.parser
+import pyfluka.materials
 
 class Model(object):
     """Class for viewing Fluka geometry and converting to GDML.
     Preprocessing must be done by hand.
 
+    fluka_g4_material_map is the closest thing to a converter for the materials
+    there is here.  Provide a map between the material names as usedin the
+    ASSIGNMA cards and your externally defined materials for use with your GDML,
+    and the volumes will be written out with those materialrefs.
+
+    Note: BLCKHOLE regions are always omitted both in viewing and the final
+    conversion.
+
     """
-    def __init__(self, filename):
+    def __init__(self, filename, fluka_g4_material_map=None):
         self._filename = filename
         # get the syntax tree.
-        tree, cards = pyfluka.parser.get_geometry_ast_and_other_cards(filename)
+        tree, cards = (
+            pyfluka.parser.get_geometry_ast_and_other_cards(filename)
+        )
         self.bodies, self._body_freq_map = Model._bodies_from_tree(tree)
         self.regions = self._regions_from_tree(tree)
+        materials = pyfluka.materials.get_region_material_strings(
+            self.regions.keys(),
+            cards
+        )
+
+        # Assign the materials if provided with a fluka->G4 material map.
+        # Circular dependencies means we can't do this until after the regions
+        # are defined: Material assignments depend on the order in which the
+        # regions are defined, which we get from the region definitions, which
+        # in turn nominally depend on the material assignments.  To get around
+        # this we set the material to G4_Galactic at region initialisation and
+        # then reassign immediately afterwards here.
+        if fluka_g4_material_map:
+            # Always set BLCKHOLE to None.  We always omit regions with material
+            # BLCKHOLE.
+            fluka_g4_material_map["BLCKHOLE"] = None
+            for region_name, region in self.regions.iteritems():
+                fluka_material = materials[region_name]
+                g4_material = fluka_g4_material_map.get(fluka_material, )
+                region.material = g4_material
+
         # Initialiser the world volume:
         self._world_volume = Model._gdml_world_volume()
 
@@ -144,16 +176,22 @@ class Model(object):
             regions = [regions]
         elif isinstance(regions, dict):
             for region_name, zone_nos in regions.iteritems():
-                # print "Adding region {}, zones {}".format(region_name, zone_nos
-                self.regions[region_name].add_to_volume(self._world_volume,
-                                                        optimise=optimise,
-                                                        zones=zone_nos)
+                # print "Adding region {}, zones {}".format(region_name,
+                # zone_nos
+                region = self.regions[region_name]
+                if region.material is None: # omit BLCKHOLE
+                    continue
+                region.add_to_volume(self._world_volume,
+                                     optimise=optimise,
+                                     zones=zone_nos)
             return None
 
         for region_name in regions:
+            region = self.regions[region_name]
+            if region.material is None: # omit BLCKHOLE
+                continue
             print("Adding region: \"{}\"  ...".format(region_name))
-            self.regions[region_name].add_to_volume(self._world_volume,
-                                                    optimise=optimise)
+            region.add_to_volume(self._world_volume, optimise=optimise)
 
     def report_body_count(self):
         """Prints a count of all unique bodies by type which are used in
