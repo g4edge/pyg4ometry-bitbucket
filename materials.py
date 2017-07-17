@@ -1,6 +1,8 @@
 import fluka_material_db
 import pyfluka.parser
 import warnings
+import itertools
+import re
 
 
 FLUKA_G4_MATERIAL_MAP = fluka_material_db.FLUKA_G4_MATERIAL_MAP
@@ -69,5 +71,29 @@ def is_index(column):
         return False
 
 
-def generate_bdsim_materials():
-    pass
+def get_bdsim_materials():
+    """Get the material name strings from the output of calling
+    ``bdsim --materials".  This relies on there being a standard form
+    of this output:
+    - Between the two lines of asterisks there are the
+    defined BDSIM materials.
+    - Everywhere else, anything beginning with "G4_" is a material.
+
+    """
+    output = subprocess.check_output(["bdsim", "--materials"])
+    g4_materials = re.findall('(G4_[A-Za-z0-9]+)', output)
+    output = output.splitlines()
+    # +1 to get past the line starting with '*', and +1 again to get
+    # past the line starting with "Available materials are:"
+    start_bdsim_materials = (i + 2
+                             for i, line in enumerate(output)
+                             if line.startswith('*')).next()
+    # Take materials from the beginning of the BDSIM material
+    # definitions until we reach a line starting with '*', where the
+    # BDSIM material definitions are assumed to end.
+    bdsim_materials = [material
+                       for material
+                       in itertools.takewhile(
+                           lambda line: line.startswith('*') is False,
+                           output[start_bdsim_materials:])]
+    return set(bdsim_materials + g4_materials)
