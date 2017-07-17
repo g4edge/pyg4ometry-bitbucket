@@ -15,6 +15,7 @@ from .model import Model
 from .geometry import (PLA, RCC, RPP, SPH, TRC, XCC, XEC,
                        XYP, XZP, YCC, YEC, YZP, ZCC, ZEC,
                        Region, Zone)
+import materials
 
 __all__ = ['Model',
            "PLA", "RCC", "RPP", "SPH", "TRC", "XCC", "XEC",
