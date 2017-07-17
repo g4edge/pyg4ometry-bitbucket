@@ -56,8 +56,8 @@ class PhysicalVolume :
 
         if self.debug :
             print 'physical mesh', self.name
-
-        recursive_map_size(self.mesh)
+            recursive_map_size(self.mesh)
+        
         return self.mesh
 
     def gdmlWrite(self, gw, prepend) : 
