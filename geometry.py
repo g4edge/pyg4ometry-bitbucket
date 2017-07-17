@@ -1061,7 +1061,7 @@ class Region(object):
 
     def _select_zones(self, zones):
         if zones is None:
-            zones = self.zones.values()
+            zones = self.zones
         elif isinstance(zones, list):
             zones = [self.zones[key] for key in zones]
         else:
