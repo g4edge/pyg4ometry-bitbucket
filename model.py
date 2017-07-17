@@ -10,8 +10,8 @@ import warnings
 import antlr4
 import pygdml
 
-from pyfluka import geometry
-from pyfluka import vector
+import pyfluka.geometry
+import pyfluka.vector
 import pyfluka.FlukaParserVisitor
 import pyfluka.FlukaParserListener
 import pyfluka.parser
@@ -120,7 +120,7 @@ class Model(object):
 
     def _clip_world_volume(self):
         self._world_volume.setClip()
-        safety = geometry.LENGTH_SAFETY
+        safety = pyfluka.geometry.LENGTH_SAFETY
         self._world_volume.currentVolume.pX += safety
         self._world_volume.currentVolume.pY += safety
         self._world_volume.currentVolume.pZ += safety
@@ -363,7 +363,7 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
 
         # Try and construct the body, if it's not implemented then warn
         try:
-            body_constructor = getattr(geometry, body_type)
+            body_constructor = getattr(pyfluka.geometry, body_type)
             body = body_constructor(body_name,
                                     body_parameters,
                                     self.transform_stack,
@@ -387,7 +387,7 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
 
     def enterTranslat(self, ctx):
         translation = FlukaBodyListener._get_floats(ctx)
-        self.current_translat = vector.Three(translation)
+        self.current_translat = pyfluka.vector.Three(translation)
 
     def exitTranslat(self, ctx):
         self.current_translat = None
@@ -443,9 +443,9 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         # Simple in the sense that it consists of no unions of Zones.
         region_defn = self.visitChildren(ctx)
         # Build a zone from the list of bodies or single body:
-        zone = [geometry.Zone(region_defn)]
+        zone = [pyfluka.geometry.Zone(region_defn)]
         region_name = ctx.RegionName().getText()
-        self.regions[region_name] = geometry.Region(region_name, zone)
+        self.regions[region_name] = pyfluka.geometry.Region(region_name, zone)
 
     def visitComplexRegion(self, ctx):
         # Complex in the sense that it consists of the union of
@@ -454,9 +454,9 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         # Get the list of tuples of operators and bodies/zones
         region_defn = self.visitChildren(ctx)
         # Construct zones out of these:
-        zones = [geometry.Zone(defn) for defn in region_defn]
+        zones = [pyfluka.geometry.Zone(defn) for defn in region_defn]
         region_name = ctx.RegionName().getText()
-        region = geometry.Region(region_name, zones)
+        region = pyfluka.geometry.Region(region_name, zones)
         self.regions[region_name] = region
 
     def visitUnaryAndBoolean(self, ctx):
@@ -507,7 +507,7 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         elif ctx.Minus():
             operator = '-'
         solids = self.visit(ctx.expr())
-        zone = geometry.Zone(solids)
+        zone = pyfluka.geometry.Zone(solids)
         return (operator, zone)
 
 def load_pickle(path):
