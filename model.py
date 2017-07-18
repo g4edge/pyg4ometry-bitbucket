@@ -81,7 +81,7 @@ class Model(object):
         )
 
     def write_to_gdml(self, regions=None, out_path=None,
-                      make_gmad=True, optimise=True):
+                      make_gmad=True, optimise=True, lv_subtrahend=None):
         """Convert the region to GDML.
 
         Parameters
@@ -100,7 +100,9 @@ class Model(object):
           definitions.  By default the geometry will be optimised.
 
         """
-        self._generate_mesh(regions, setclip=True, optimise=optimise)
+        self._generate_mesh(regions, setclip=True,
+                            optimise=optimise,
+                            lv_subtrahend=lv_subtrahend)
         if out_path is None:
             out_path = ("./"
                         + os.path.basename(os.path.splitext(self._filename)[0])
@@ -116,7 +118,8 @@ class Model(object):
         if make_gmad is True:
             self._write_test_gmad(out_path)
 
-    def view(self, regions=None, setclip=True, optimise=False):
+    def view(self, regions=None, setclip=True,
+             optimise=False, lv_subtrahend=None):
         """View the mesh for this model.
 
         Parameters
@@ -133,22 +136,41 @@ class Model(object):
         """
         world_mesh = self._generate_mesh(regions,
                                          setclip=setclip,
-                                         optimise=optimise)
+                                         optimise=optimise,
+                                         lv_subtrahend=lv_subtrahend)
         viewer = pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
-    def _generate_mesh(self, region_names, setclip, optimise):
+    def _generate_mesh(self, region_names, setclip, optimise, lv_subtrahend):
         """This function has the side effect of recreating the world volume if
         the region_names requested are different to the ones already
         assigned to it and returns the relevant mesh.
 
         """
         self._compose_world_volume(region_names, optimise=optimise)
-        if setclip:
+        if lv_subtrahend:
+            self._subtract_from_world_volume(lv_subtrahend)
+        elif setclip:
             self._clip_world_volume()
         world_mesh = self._world_volume.pycsgmesh()
         return world_mesh
+
+    def _subtract_from_world_volume(self, subtrahend):
+        # Get the "true" unclipped extent of the solids in the world volume
+        unclipped_extent = pyfluka.geometry.Extent.from_world_volume(
+            self._world_volume)
+        # Record the centre for offsetting the subtraction after.
+        unclipped_centre = unclipped_extent.centre
+        self._clip_world_volume()
+        # Make an RPP out of the clipped bounding box.
+        world_name = self._world_volume.currentVolume.name
+        clipped_extent = pyfluka.geometry.Extent.from_world_volume(
+            self._world_volume)
+        world_rpp = pyfluka.geometry.RPP.from_extent(world_name, clipped_extent)
+        subtraction = world_rpp.subtraction(subtrahend, safety=None,
+                                            other_offset=-unclipped_centre)
+        self._world_volume.currentVolume = subtraction.gdml_solid()
 
     def _clip_world_volume(self):
         self._world_volume.setClip()
