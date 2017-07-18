@@ -1,5 +1,5 @@
-#ifndef __PARABOLOID_H__
-#define __PARABOLOID_H__
+#ifndef PARABOLOID_H
+#define PARABOLOID_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

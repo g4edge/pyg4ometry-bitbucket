@@ -1,5 +1,5 @@
-#ifndef __SOLID_BASE_H__
-#define __SOLID_BASE_H__
+#ifndef SOLID_BASE_H
+#define SOLID_BASE_H
 #include <string>
 #include <CSG.h>
 
@@ -10,6 +10,8 @@ class SolidBase{
     virtual ~SolidBase();
     void SetMesh(CSG* _mesh);
     CSG* GetMesh();
+    std::string GetName();
+    std::string GetType();
   private:
     std::string name;
     std::string type;

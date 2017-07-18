@@ -1,5 +1,5 @@
-#ifndef __CONS_H__
-#define __CONS_H__
+#ifndef CONS_H
+#define CONS_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

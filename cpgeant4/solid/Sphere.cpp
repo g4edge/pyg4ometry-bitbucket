@@ -93,7 +93,7 @@ CSG* CSGMesh::ConstructSphere(double pRmin,double pRmax,double pSPhi,double pDPh
   }
 
   if((pDTheta/(2.*M_PI))-floor(pDTheta/(2.*M_PI)) != 0.0){
-    for(int j0;j0 < nstack;j0++){
+    for(int j0=0;j0 < nstack;j0++){
       int j1 = j0 + 1;
       std::vector<Vertex*> vertices1;
       CSGMesh::SphereAppendVertex(vertices1, pSTheta, j1 * dPhi + pSPhi, r);

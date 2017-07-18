@@ -1,5 +1,5 @@
-#ifndef __G4PLANE_H__
-#define __G4PLANE_H__
+#ifndef G4PLANE_H
+#define G4PLANE_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"
