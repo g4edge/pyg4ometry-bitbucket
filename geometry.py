@@ -321,6 +321,12 @@ class RPP(Body):
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
 
+    @classmethod
+    def from_extent(cls, name, extent):
+        return cls(name, [extent.lower.x, extent.upper.x,
+                          extent.lower.y, extent.upper.y,
+                          extent.lower.z, extent.upper.z])
+
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
         self._x_min = self.parameters.x_min
