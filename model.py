@@ -165,12 +165,16 @@ class Model(object):
         self._clip_world_volume()
         # Make an RPP out of the clipped bounding box.
         world_name = self._world_volume.currentVolume.name
+        # solids magically start having material attributes at the top-level so
+        # we must pass the material correctly to the new subtraction solid.
+        world_material = self._world_volume.currentVolume.material
         clipped_extent = pyfluka.geometry.Extent.from_world_volume(
             self._world_volume)
         world_rpp = pyfluka.geometry.RPP.from_extent(world_name, clipped_extent)
         subtraction = world_rpp.subtraction(subtrahend, safety=None,
                                             other_offset=-unclipped_centre)
         self._world_volume.currentVolume = subtraction.gdml_solid()
+        self._world_volume.currentVolume.material = world_material
 
     def _clip_world_volume(self):
         self._world_volume.setClip()
