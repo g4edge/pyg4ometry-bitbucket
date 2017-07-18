@@ -280,11 +280,13 @@ class Model(object):
         """
         gmad_path = os.path.splitext(gdml_path)[0] + ".gmad"
         with open(gmad_path, 'w') as gmad:
+            extent = pyfluka.geometry.Extent \
+                                     .from_world_volume(self._world_volume)
             # Extent of the bounding box in the transverse directions:
-            bounding_x = self._world_volume.currentVolume.pX / 1000.
-            bounding_y = self._world_volume.currentVolume.pY / 1000.
-            diameter = 2 * max(bounding_x, bounding_y)
-            length = 2 * self._world_volume.currentVolume.pZ / 1000.
+            bounding_x = extent.size.x / 1000
+            bounding_y = extent.size.y / 1000
+            length = extent.size.z / 1000
+            diameter = max(bounding_x, bounding_y)
 
             gmad.write("test_component: element, l={}*m, geometry=\"gdml:{}\","
                        " outerDiameter={}*m;\n".format(length,
