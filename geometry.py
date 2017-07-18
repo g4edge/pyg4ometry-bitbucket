@@ -159,20 +159,27 @@ class Body(object):
         extent = intersection._extent()
         return extent
 
-    def intersection(self, other, safety="trim"):
-        return self._do_boolean_op(other, pygdml.solid.Intersection, safety)
+    def intersection(self, other, safety="trim", other_offset=None):
+        return self._do_boolean_op(other, pygdml.solid.Intersection,
+                                   safety, other_offset)
 
-    def subtraction(self, other, safety="extend"):
-        return self._do_boolean_op(other, pygdml.solid.Subtraction, safety)
+    def subtraction(self, other, safety="extend", other_offset=None):
+        return self._do_boolean_op(other, pygdml.solid.Subtraction,
+                                   safety, other_offset)
 
-    def union(self, other):
-        return self._do_boolean_op(other, pygdml.solid.Union, "trim")
+    def union(self, other, other_offset=None):
+        return self._do_boolean_op(other, pygdml.solid.Union,
+                                   "trim", other_offset)
 
-    def _do_boolean_op(self, other, op, safety):
+    def _do_boolean_op(self, other, op, safety, offset):
         if other == _IDENTITY:
             return self
+        if offset is None:
+            offset = vector.Three(0, 0, 0)
+        else: # Coerce an iterable to a vector
+            offset = vector.Three(offset)
         relative_angles = self._get_relative_rotation(other)
-        relative_translation = self._get_relative_translation(other)
+        relative_translation = self._get_relative_translation(other) + offset
         relative_transformation = [relative_angles, relative_translation]
         out_name = self._unique_boolean_name(other)
         out_solid = op(
