@@ -4,11 +4,25 @@ from astropy.io import fits
 from pygeometry.pycsg.geom import Vector as _Vector
 from pygeometry.pycsg.geom import Vertex as _Vertex
 from scipy.misc import imresize
+from scipy.misc import imread
 import pygeometry.vtk as _vtk
 import numpy as _np
 import sys as _sys
+import scipy.ndimage
 
 class ImageToMesh():
+    """
+    a = ImageToMesh('filename.fits')
+    a.FilterData('minimum', 4)
+    a.MakeMesh()
+    a.Visualise()
+
+    or
+
+    a = ImageToMesh()
+    a.MakeMeshFromFits('filename.fits', length=100)
+    
+    """
     def __init__(self, filename=None):
         self.data  = None # array data
         self._mesh = None # mesh data
@@ -16,17 +30,20 @@ class ImageToMesh():
             self.LoadData(filename)
 
     def LoadData(self, filename):
-        self.data = self._GetFirstImageAsArray(filename)
+        if filename.endswith(".fit"):
+            self.data = self._FITSToArray(filename)
+        if filename.endswith(".jpg"):
+            self.data = self._JPGToArray(filename)
 
-    def MakeMeshFromFits(self, filename, length=100, height=10, depth=5, xlim=None, ylim=None):
+    def MakeMeshFromFile(self, filename, stlname, length=100, height=10, depth=5, xlim=None, ylim=None):
         """
         Load fits file and then call MeshFromArray.  See MeshFromArray for parameter details.
         """
         self.LoadData(filename)
         self.MeshFromArray(self.data, length, height, depth, xlim, ylim)
-        self.Visualise()
+        self.Visualise(stlname)
         
-    def _GetFirstImageAsArray(self, filename):
+    def _FITSToArray(self, filename):
         """
         Returns numpy array from fits file.
         """
@@ -35,7 +52,37 @@ class ImageToMesh():
         q = r.data
         
         return q
+    def _JPGToArray(self, filename):
+        """
+        Returns numpy array from jpg file.
+        """
+        im = imread(filename, mode='F')
+        return im
 
+    def FilterMinimum(self, window=4):
+        self.data = scipy.ndimage.minimum_filter(self.data, size=window)
+
+    def FilterMaximum(self, window=4):
+        self.data = scipy.ndimage.maximum_filter(self.data, size=window)
+
+    def FilterMedian(self, window=4):
+        self.data = scipy.ndimage.median_filter(self.date, size=window)
+        
+    def FilterData(self, ftype, window=4):
+        """
+        Filters data to window size, using a window (kernel) filter.
+
+        ftype  = type of filter  (maximum, minimum, median)
+        window = value of filter (default = 4) 
+        """
+        
+        if ftype == 'minimum':
+            self.FilterMinimum(window)
+        if ftype == 'maximum':
+            self.FilterMaximum(window)
+        if type == median:
+            self.FilterMedian(window)
+        
     def ScaleData(self, scale):
         self.data *= scale
 
@@ -108,38 +155,37 @@ class ImageToMesh():
         progress = 100
         _sys.stdout.write("Meshing: %d%%     \r" % (progress) + "\n" )
         _sys.stdout.flush()
-
+        
         #Building the mesh for the surfaces, forming a box
-
+        
         x = _np.shape(d5)[0] * xscl
         y = _np.shape(d5)[1] * xscl
-    
-        pol3 = _Polygon([_Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0, y, 0), None),
-                         _Vertex(_Vector(0, y, -depth), None),
-                         _Vertex(_Vector(0,0,-depth), None)])
+        
+        pol3 = _Polygon([_Vertex(_Vector(0, 0, 0),      None),
+                         _Vertex(_Vector(0, 0, -depth), None),
+                         _Vertex(_Vector(x, 0, -depth), None),
+                         _Vertex(_Vector(x, 0, 0),      None)])
 
-        pol4 = _Polygon([_Vertex(_Vector(x, 0, 0), None),
-                         _Vertex(_Vector(0,0,0), None),
-                         _Vertex(_Vector(0,0,-depth), None),
+        pol4 = _Polygon([_Vertex(_Vector(x, 0, 0),      None),
+                         _Vertex(_Vector(x, 0, -depth), None),
+                         _Vertex(_Vector(x, y, -depth), None),
+                         _Vertex(_Vector(x, y, 0),      None)])
+
+        pol5 = _Polygon([_Vertex(_Vector(x, y, 0),      None),
+                         _Vertex(_Vector(x, y, -depth), None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(0, y, 0),      None)])  
+
+        pol6 = _Polygon([_Vertex(_Vector(0, y, 0),      None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(0, 0, -depth), None),
+                         _Vertex(_Vector(0, 0, 0),      None)])
+
+        pol7 = _Polygon([_Vertex(_Vector(0, 0, -depth), None),
+                         _Vertex(_Vector(0, y, -depth), None),
+                         _Vertex(_Vector(x, y, -depth), None),
                          _Vertex(_Vector(x, 0, -depth), None)])
 
-        pol5 = _Polygon([_Vertex(_Vector(0, y, 0), None),
-                         _Vertex(_Vector(x, y, 0), None),
-                         _Vertex(_Vector(x, y, -depth), None),
-                         _Vertex(_Vector(0, y, -depth), None)])
-
-        pol6 = _Polygon([_Vertex(_Vector(x, y, 0), None),
-                         _Vertex(_Vector(x, 0, 0), None),
-                         _Vertex(_Vector(x, 0, -depth), None),
-                         _Vertex(_Vector(x, y, -depth), None)])
-
-
-        pol7 = _Polygon([_Vertex(_Vector(0,0,-depth), None),
-                          _Vertex(_Vector(x, 0, -depth), None),
-                          _Vertex(_Vector(x, y, -depth), None),
-                          _Vertex(_Vector(0, y, -depth), None)])
-        
         pols.append(pol3)
         pols.append(pol4)
         pols.append(pol5)
@@ -151,9 +197,9 @@ class ImageToMesh():
         self._mesh.wireframe = False
         self._mesh.colour    = [1,1,1]
 
-    def Visualise(self):
+    def Visualise(self, stlname):
         v = _vtk.Viewer()
-        v.addPycsgMeshList([self._mesh])
+        v.addPycsgMeshList([self._mesh], stlname)
         v.view()
 
     def WriteMeshToSTL(self, outputFileName):

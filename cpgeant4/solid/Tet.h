@@ -1,5 +1,5 @@
-#ifndef __TET_H__
-#define __TET_H__
+#ifndef TET_H
+#define TET_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

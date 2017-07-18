@@ -1,5 +1,5 @@
-#ifndef __TUBS_H__
-#define __TUBS_H__
+#ifndef TUBS_H
+#define TUBS_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

@@ -1,5 +1,5 @@
-#ifndef __ELLIPSOID_H__
-#define __ELLIPSOID_H__
+#ifndef ELLIPSOID_H
+#define ELLIPSOID_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

@@ -28,4 +28,5 @@ from TwistedBox          import *
 from TwistedTrap         import *
 from Sphere              import *
 from TwistedTrd          import *
+from GenericPolycone     import *
 

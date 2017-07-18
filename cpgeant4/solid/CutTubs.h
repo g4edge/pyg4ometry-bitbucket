@@ -1,5 +1,5 @@
-#ifndef __CUT_TUBS_H__
-#define __CUT_TUBS_H__
+#ifndef CUT_TUBS_H
+#define CUT_TUBS_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

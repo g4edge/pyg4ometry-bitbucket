@@ -1,5 +1,5 @@
-#ifndef __TORUS_H__
-#define __TORUS_H__
+#ifndef TORUS_H
+#define TORUS_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

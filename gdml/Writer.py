@@ -229,7 +229,26 @@ class Writer(object):
             n += 1
             oe.appendChild(s)
 
-        self.solids.appendChild(oe) 
+        self.solids.appendChild(oe)
+
+    def createrzPoint(self, r, z):
+        rz = self.doc.createElement('rzpoint')
+        rz.setAttribute('r', str(r))
+        rz.setAttribute('z', str(z))
+        return rz
+
+    def writeGenericPolycone(self, instance):
+        oe = self.doc.createElement('genericPolycone')
+        oe.setAttribute('name', self.prepend + '_' + instance.name)
+        oe.setAttribute('startphi', str(instance.pSPhi))
+        oe.setAttribute('deltaphi', str(instance.pDPhi))
+
+        for r,z in zip(instance.pR, instance.pZ):
+            p = self.createrzPoint(r, z)
+            oe.appendChild(p)
+
+        self.solids.appendChild(oe)
+        
 
     def writeHype(self, instance):
         oe = self.doc.createElement('hype')

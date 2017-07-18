@@ -1,5 +1,5 @@
-#ifndef __SPHERE_H__
-#define __SPHERE_H__
+#ifndef SPHERE_H
+#define SPHERE_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

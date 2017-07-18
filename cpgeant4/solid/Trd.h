@@ -1,5 +1,5 @@
-#ifndef __TRD_H__
-#define __TRD_H__
+#ifndef TRD_H
+#define TRD_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

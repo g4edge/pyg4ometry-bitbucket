@@ -1,12 +1,3 @@
-from SolidBase import SolidBase as _SolidBase
-from pygeometry.pycsg.core import CSG as _CSG
-from pygeometry.pycsg.geom import Vector as _Vector
-from pygeometry.pycsg.geom import Vertex as _Vertex
-from pygeometry.pycsg.geom import Plane as _Plane
-from pygeometry.pycsg.geom import Polygon as _Polygon
-from pygeometry.geant4.Registry import registry as _registry
-from pygeometry.geant4.solid.Wedge import Wedge as _Wedge
-from pygeometry.geant4.solid.Layer import Layer as _Layer
 import numpy as _np
 
 class TwoVector(object):
@@ -62,3 +53,20 @@ class TwoVector(object):
             return TwoVector(self.x / other, self.y / other)
         else:
             raise ValueError("unsupported type " + str(type(other)))
+
+    def __abs__(self):
+        return _np.sqrt((self.x)**2 + (self.y)**2)
+
+    def dot(self, other):
+        if type(other) == TwoVector:
+            return self.x * other.x + self.y * other.y
+        else:
+            raise ValueError("unsupported type" + str(type(other)))
+
+    def cross(self, other):
+        if type(other) == TwoVector:
+            z = self.x * other.y - self.y * other.x
+            return _np.array([0,0,z])
+
+    
+            

@@ -1,5 +1,5 @@
-#ifndef __TWISTED_BOX_H__
-#define __TWISTED_BOX_H__
+#ifndef TWISTED_BOX_H
+#define TWISTED_BOX_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"

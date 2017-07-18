@@ -26,3 +26,4 @@ import SphereFullTest
 import SphereExploded
 import TwistedTrd
 import CSG_Mesh
+import GenericPolycone

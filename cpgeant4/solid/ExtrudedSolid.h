@@ -1,5 +1,5 @@
-#ifndef __EXTRUDED_SOLID_H__
-#define __EXTRUDED_SOLID_H__
+#ifndef EXTRUDED_SOLID_H
+#define EXTRUDED_SOLID_H
 #include "CSGMesh.h"
 #include "Solids.h"
 #include "SolidBase.h"
