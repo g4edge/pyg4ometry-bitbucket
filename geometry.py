@@ -310,7 +310,7 @@ class RPP(Body):
         if (self.parameters.x_min > self.parameters.x_max
                 or self.parameters.y_min > self.parameters.y_max
                 or self.parameters.z_min > self.parameters.z_max):
-            raise Warning("This RPP \"" + name + "\" has mins larger than "
+            raise Warning("This RPP \"" + self.name + "\" has mins larger than "
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
 
