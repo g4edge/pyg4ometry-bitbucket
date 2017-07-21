@@ -45,7 +45,7 @@ def tbxyz(rv) :
     # axis of rotation
     if ang == 0 :
         axi = _np.array([0,0,1])
-    elif ang > 0 and ang < _np.pi :
+    elif ang > 0 and ang <= _np.pi :
         axi = _np.array([float(m[2,1]-m[1,2]),
                          float(m[0,2]-m[2,0]),
                          float(m[1,0]-m[0,1])])
