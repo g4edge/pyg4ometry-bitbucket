@@ -15,6 +15,8 @@ def tbxyz(rv) :
     AT/against the direction of the axis.  This is "left hand rule",
     albeit in a right handed coordinate system.
 
+    rv = list of three angles corresponding to [x, y, z] in radians.
+
     """
     x = rv[0]
     y = rv[1]
