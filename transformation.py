@@ -52,7 +52,7 @@ def tbxyz(rv) :
                          float(m[0,2]-m[2,0]),
                          float(m[1,0]-m[0,1])])
         axi = axi / (2*_np.abs(_np.sin(ang)))
-    else :
+    else : # if ang == pi
         if m[0,0] > m[1,1] and m[0,0] > m[2,2] :
             axi = _np.array([m[0,0]+1,m[0,1],m[0,2]])
         elif m[1,1] > m[0,0] and m[1,1] > m[2,2] :
