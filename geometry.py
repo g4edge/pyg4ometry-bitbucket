@@ -363,7 +363,7 @@ class RPP(Body):
 
 
     def _apply_extent(self, extent):
-        self._is_omittable = self._check_omittable
+        self._is_omittable = self._check_omittable(extent)
         if self._is_omittable:
             return
 
