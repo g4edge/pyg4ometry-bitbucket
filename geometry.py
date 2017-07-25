@@ -220,19 +220,9 @@ class Body(object):
         return trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
 
     def _unique_boolean_name(self, other):
-        """
-        Generate an output  name given the two solids.  Keeps sane
-        names for sufficiently short output, but returns a
-        universally unique identifier for longer names.  This is
-        required as names will rapidly becoming massive for complex
-        geometries, resulting in a massive output file.
-
-        """
-        if len(self.name) + len(other.name) < 36:
-            return "{}_{}".format(self.name, other.name)
-        else:
-            # GDML name has to start with a letter so prepend an "a".
-            return "a" + str(uuid.uuid4())
+        """wrapper for uuid.  Solid names must begin with a letter in
+        Geant4, so we simply prepend with an 'a'."""
+        return "a" + str(uuid.uuid4())
 
     def _unique_body_name(self):
         """Generate a name for a given body.  As a single Fluka body
