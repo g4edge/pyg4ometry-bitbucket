@@ -81,7 +81,7 @@ class Model(object):
         )
 
     def write_to_gdml(self, regions=None, out_path=None,
-                      make_gmad=True, lv_subtrahend=None):
+                      make_gmad=True, bounding_subtrahend=None):
         """Convert the region to GDML.
 
         Parameters
@@ -116,7 +116,7 @@ class Model(object):
             self._write_test_gmad(out_path)
 
     def view(self, regions=None, setclip=True,
-             optimise=False, lv_subtrahend=None):
+             optimise=False, bounding_subtrahend=None):
         """View the mesh for this model.
 
         Parameters
@@ -134,20 +134,21 @@ class Model(object):
         world_mesh = self._generate_mesh(regions,
                                          setclip=setclip,
                                          optimise=optimise,
-                                         lv_subtrahend=lv_subtrahend)
+                                         bounding_subtrahend=bounding_subtrahend)
         viewer = pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
-    def _generate_mesh(self, region_names, setclip, optimise, lv_subtrahend):
+    def _generate_mesh(self, region_names, setclip,
+                       optimise, bounding_subtrahend):
         """This function has the side effect of recreating the world volume if
         the region_names requested are different to the ones already
         assigned to it and returns the relevant mesh.
 
         """
         self._compose_world_volume(region_names, optimise=optimise)
-        if lv_subtrahend:
-            self._subtract_from_world_volume(lv_subtrahend)
+        if bounding_subtrahend:
+            self._subtract_from_world_volume(bounding_subtrahend)
         elif setclip:
             self._clip_world_volume()
         world_mesh = self._world_volume.pycsgmesh()
@@ -321,7 +322,8 @@ class Model(object):
             try:
                 self._generate_mesh(region_name,
                                     setclip=False,
-                                    optimise=optimise)
+                                    optimise=optimise,
+                                    bounding_subtrahend=None)
                 output["good"].append(region_name)
             except pygdml.solid.NullMeshError as error:
                 output["bad"].append(region_name)
