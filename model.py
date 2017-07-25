@@ -182,7 +182,9 @@ class Model(object):
             [-1 * world_solid.pX, world_solid.pX,
              -1 * world_solid.pY, world_solid.pY,
              -1 * world_solid.pZ, world_solid.pZ])
-        subtraction = world_rpp.subtraction(subtrahend, safety=None,
+        # We make the subtraction a bit smaller just to be sure we
+        # don't subract from a placed solid within, so safety='trim'.
+        subtraction = world_rpp.subtraction(subtrahend, safety="trim",
                                             other_offset=other_offset)
         self._world_volume.currentVolume = subtraction.gdml_solid()
         self._world_volume.currentVolume.material = world_material
