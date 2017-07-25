@@ -131,10 +131,9 @@ class Model(object):
         generated once.  By default, the bounding box will be clipped.
 
         """
-        world_mesh = self._generate_mesh(regions,
-                                         setclip=setclip,
-                                         optimise=optimise,
-                                         bounding_subtrahend=bounding_subtrahend)
+        world_mesh = self._generate_mesh(
+            regions, setclip=setclip,
+            optimise=optimise, bounding_subtrahend=bounding_subtrahend)
         viewer = pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
