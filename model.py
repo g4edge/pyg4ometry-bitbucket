@@ -288,13 +288,20 @@ class Model(object):
         """
         gmad_path = os.path.splitext(gdml_path)[0] + ".gmad"
         with open(gmad_path, 'w') as gmad:
-            extent = pyfluka.geometry.Extent \
-                                     .from_world_volume(self._world_volume)
-            # Extent of the bounding box in the transverse directions:
-            bounding_x = extent.size.x / 1000
-            bounding_y = extent.size.y / 1000
-            length = extent.size.z / 1000
-            diameter = max(bounding_x, bounding_y)
+            # If the bounding box is a boolean, then get the extent of
+            # obj1, which is assumed to always be the bounding box.
+            world_solid = self._world_volume.currentVolume
+            if isinstance(world_solid, pygdml.solid.Boolean):
+                assert isinstance(world_solid.obj1, pygdml.solid.Box)
+                bounding_x = world_solid.obj1.pX / 1000.
+                bounding_y = world_solid.obj1.pY / 1000.
+                diameter = 2 * max(bounding_x, bounding_y)
+                length = 2 * world_solid.obj1.pZ / 1000.
+            elif isinstance(world_solid, pygdml.solid.Box):
+                bounding_x = world_solid.pX / 1000.
+                bounding_y = world_solid.pY / 1000.
+                diameter = 2 * max(bounding_x, bounding_y)
+                length = 2 * world_solid.pZ / 1000.
 
             gmad.write("test_component: element, l={}*m, geometry=\"gdml:{}\","
                        " outerDiameter={}*m;\n".format(length,
