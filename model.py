@@ -81,7 +81,7 @@ class Model(object):
         )
 
     def write_to_gdml(self, regions=None, out_path=None,
-                      make_gmad=True, optimise=True, lv_subtrahend=None):
+                      make_gmad=True, lv_subtrahend=None):
         """Convert the region to GDML.
 
         Parameters
@@ -96,13 +96,10 @@ class Model(object):
         - make_gmad: Generate a skeleton GMAD file pre-filled with
         references to corresponding the GDML file.
 
-        - optimise: Optimise the output GDML by trimming large body
-          definitions.  By default the geometry will be optimised.
-
         """
         self._generate_mesh(regions, setclip=True,
-                            optimise=optimise,
-                            lv_subtrahend=lv_subtrahend)
+                            optimise=True,
+                            bounding_subtrahend=bounding_subtrahend)
         if out_path is None:
             out_path = ("./"
                         + os.path.basename(os.path.splitext(self._filename)[0])
