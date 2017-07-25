@@ -27,9 +27,6 @@ class Model(object):
     ASSIGNMA cards and your externally defined materials for use with your GDML,
     and the volumes will be written out with those materialrefs.
 
-    Note: BLCKHOLE regions are always omitted both in viewing and the final
-    conversion.
-
     """
     def __init__(self, filename, fluka_g4_material_map=None):
         self._filename = filename
@@ -242,6 +239,8 @@ class Model(object):
                 # zone_nos
                 region = self.regions[region_name]
                 if region.material is None: # omit BLCKHOLE
+                    print("Omitting BLCKHOLE region \"{}\".".format(
+                        region_name))
                     continue
                 region.add_to_volume(self._world_volume,
                                      optimise=optimise,
@@ -251,6 +250,7 @@ class Model(object):
         for region_name in regions:
             region = self.regions[region_name]
             if region.material is None: # omit BLCKHOLE
+                print("Omitting BLCKHOLE region \"{}\".".format(region_name))
                 continue
             print("Adding region: \"{}\"  ...".format(region_name))
             region.add_to_volume(self._world_volume, optimise=optimise)
