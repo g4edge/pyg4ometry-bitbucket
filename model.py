@@ -57,8 +57,14 @@ class Model(object):
             fluka_g4_material_map["BLCKHOLE"] = None
             for region_name, region in self.regions.iteritems():
                 fluka_material = materials[region_name]
-                g4_material = fluka_g4_material_map.get(fluka_material)
-                region.material = g4_material
+                try:
+                    g4_material = fluka_g4_material_map[fluka_material]
+                    region.material = g4_material
+                except KeyError:
+                    msg = ("Missing material \"{}\"from"
+                           " Fluka->G4 material map!").format(fluka_material)
+                    raise KeyError(msg)
+
         else: # If no material map, we still want to omit BLCKHOLE
             # regions from viewing/conversion.
             msg = ("No Fluka->G4 material map provided.  All converted regions"
