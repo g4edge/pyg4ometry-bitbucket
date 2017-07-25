@@ -24,9 +24,20 @@ def get_region_material_strings(ordered_regions, cards):
         material_name = card.what1
         region_lower = card.what2
         region_upper = card.what3
+        if region_lower not in ordered_regions:
+            msg = ("At least one material is assigned to a region"
+                   " that is not defined.  This is not necessarily a problem.")
+            warnings.warn(msg)
+            continue
+        if region_upper is not None and region_upper not in ordered_regions:
+            msg = ("In ASSIGNMA (material assignment):  Lower bound, \"{}\""
+                   " corresponds to a defined region but upper, \"{}\""
+                   " does not!  This is" " undefined behaviour.").format(
+                       region_lower, region_upper)
+            raise NameError(msg)
+
         # Steps must be ints or None, not merely floats with integer value.
         step = int(card.what4) if card.what4 is not None else None
-
         # Get the start and stop indices.
         # Slicing is exclusive on the upper bound so we have to add 1
         start_index = ordered_regions.index(region_lower)
