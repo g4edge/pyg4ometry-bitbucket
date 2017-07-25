@@ -176,9 +176,12 @@ class Model(object):
         # solids magically start having material attributes at the top-level so
         # we must pass the material correctly to the new subtraction solid.
         world_material = self._world_volume.currentVolume.material
-        clipped_extent = pyfluka.geometry.Extent.from_world_volume(
-            self._world_volume)
-        world_rpp = pyfluka.geometry.RPP.from_extent(world_name, clipped_extent)
+        world_solid = self._world_volume.currentVolume
+        world_rpp = pyfluka.geometry.RPP(
+            world_name,
+            [-1 * world_solid.pX, world_solid.pX,
+             -1 * world_solid.pY, world_solid.pY,
+             -1 * world_solid.pZ, world_solid.pZ])
         subtraction = world_rpp.subtraction(subtrahend, safety=None,
                                             other_offset=other_offset)
         self._world_volume.currentVolume = subtraction.gdml_solid()
