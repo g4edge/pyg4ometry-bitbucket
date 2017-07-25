@@ -59,6 +59,17 @@ class Model(object):
                 fluka_material = materials[region_name]
                 g4_material = fluka_g4_material_map.get(fluka_material)
                 region.material = g4_material
+        else: # If no material map, we still want to omit BLCKHOLE
+            # regions from viewing/conversion.
+            msg = ("No Fluka->G4 material map provided.  All converted regions"
+                   " will be \"G4_Galactic\" by default, but BLCKHOLE regions"
+                   " will still be omitted from both conversion and viewing.")
+            warnings.warn(msg)
+            for region_name, region in self.regions.iteritems():
+                fluka_material = materials.get(region_name, "G4_Galactic")
+                if fluka_material == "BLCKHOLE":
+                    fluka_material = None
+                region.material = fluka_material
 
         # Initialiser the world volume:
         self._world_volume = Model._gdml_world_volume()
