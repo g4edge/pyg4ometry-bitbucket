@@ -57,7 +57,7 @@ class Model(object):
             fluka_g4_material_map["BLCKHOLE"] = None
             for region_name, region in self.regions.iteritems():
                 fluka_material = materials[region_name]
-                g4_material = fluka_g4_material_map.get(fluka_material, )
+                g4_material = fluka_g4_material_map.get(fluka_material)
                 region.material = g4_material
 
         # Initialiser the world volume:
