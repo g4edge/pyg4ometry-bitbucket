@@ -155,11 +155,22 @@ class Model(object):
         return world_mesh
 
     def _subtract_from_world_volume(self, subtrahend):
+        """Nice pyfluka interface for subtracting from bounding boxes
+        in pygdml.  We create an RPP out of the clipped bounding box
+        and then subtract from it the subtrahend, which is defined in
+        the unclipped geometry's coordinate system.
+
+        This works by first getting the "true" centre of
+        the geometry, from the unclipped extent.  As the clipped
+        extent is always centred on zero, and the subtractee is always
+        centred on zero, this gives us the required
+        offset for the subtraction from the bounding RPP."""
         # Get the "true" unclipped extent of the solids in the world volume
         unclipped_extent = pyfluka.geometry.Extent.from_world_volume(
             self._world_volume)
-        # Record the centre for offsetting the subtraction after.
+        # The offset is -1 * the unclipped extent's centre.
         unclipped_centre = unclipped_extent.centre
+        other_offset = -1 * unclipped_centre
         self._clip_world_volume()
         # Make an RPP out of the clipped bounding box.
         world_name = self._world_volume.currentVolume.name
@@ -170,7 +181,7 @@ class Model(object):
             self._world_volume)
         world_rpp = pyfluka.geometry.RPP.from_extent(world_name, clipped_extent)
         subtraction = world_rpp.subtraction(subtrahend, safety=None,
-                                            other_offset=-unclipped_centre)
+                                            other_offset=other_offset)
         self._world_volume.currentVolume = subtraction.gdml_solid()
         self._world_volume.currentVolume.material = world_material
 
