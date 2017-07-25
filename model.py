@@ -1,6 +1,7 @@
 """ Collection of classes for extracting information from a Fluka model. """
 
 from __future__ import division, print_function
+import numpy as np
 import collections
 import os.path
 import time
@@ -177,11 +178,16 @@ class Model(object):
         # we must pass the material correctly to the new subtraction solid.
         world_material = self._world_volume.currentVolume.material
         world_solid = self._world_volume.currentVolume
-        world_rpp = pyfluka.geometry.RPP(
-            world_name,
-            [-1 * world_solid.pX, world_solid.pX,
-             -1 * world_solid.pY, world_solid.pY,
-             -1 * world_solid.pZ, world_solid.pZ])
+
+
+        # Deal with the trailing floating points introduced somewhere
+        # in pygdml that cause the box to be marginally too big:
+        decimal_places = int((-1 * np.log10(pyfluka.geometry.LENGTH_SAFETY)))
+        box_parameters = [-1 * world_solid.pX, world_solid.pX,
+                          -1 * world_solid.pY, world_solid.pY,
+                          -1 * world_solid.pZ, world_solid.pZ]
+        box_parameters = [round(i, decimal_places) for i in box_parameters]
+        world_rpp = pyfluka.geometry.RPP(world_name, box_parameters)
         # We make the subtraction a bit smaller just to be sure we
         # don't subract from a placed solid within, so safety='trim'.
         subtraction = world_rpp.subtraction(subtrahend, safety="trim",
