@@ -69,9 +69,11 @@ class Model(object):
                    " will still be omitted from both conversion and viewing.")
             warnings.warn(msg)
             for region_name, region in self.regions.iteritems():
-                fluka_material = materials.get(region_name, "G4_Galactic")
+                fluka_material = materials.get(region_name)
                 if fluka_material == "BLCKHOLE":
                     fluka_material = None
+                else:
+                    fluka_material = "G4_Galactic"
                 region.material = fluka_material
 
         # Initialiser the world volume:
