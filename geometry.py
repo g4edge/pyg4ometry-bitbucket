@@ -1270,6 +1270,12 @@ class Zone(object):
             elif element.name == body_name:
                 self.excludes.pop(index)
 
+    def __contains__(self, value):
+        # A name of a body:
+        flattened = self._flatten()
+        return (value in [body.name for body in flattened]
+                or value in flattened)
+
     def __iter__(self):
         return iter(self.contains + self.excludes)
 
