@@ -1244,6 +1244,17 @@ class Zone(object):
         boolean = self.evaluate(optimise=False)
         return boolean._extent()
 
+    def _flatten(self):
+        out = []
+        def _flatten_iter():
+            for element in self:
+                if isinstance(element, Zone):
+                    out.extend(element._flatten())
+                else:
+                    out.append(element)
+        _flatten_iter()
+        return out
+
     def remove(self, body_name):
         """Recursively remove a body (by name) from this Zone instance."""
         # remove from contains:
