@@ -162,7 +162,7 @@ class Model(object):
         assigned to it and returns the relevant mesh.
 
         """
-        self._compose_world_volume(region_names, optimise=optimise)
+        self._add_regions_to_world_volume(region_names, optimise=optimise)
         if bounding_subtrahend:
             self._subtract_from_world_volume(bounding_subtrahend)
         elif setclip:
@@ -218,7 +218,7 @@ class Model(object):
         self._world_volume.currentVolume.pY += safety
         self._world_volume.currentVolume.pZ += safety
 
-    def _compose_world_volume(self, regions, optimise):
+    def _add_regions_to_world_volume(self, regions, optimise):
         """Add the region or regions in region_names to the world volume, only
         if not already added.
 
