@@ -441,6 +441,9 @@ class Model(object):
     def __repr__(self):
         return "<Model: \"{}\">".format(self._filename)
 
+    def __iter__(self):
+        return self.regions.itervalues()
+
 
 class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
     """

@@ -1078,6 +1078,9 @@ class Region(object):
     def __repr__(self):
         return "<Region: \"{}\">".format(self.name)
 
+    def __iter__(self):
+        return iter(self.zones)
+
 class Zone(object):
     """Class representing a Zone (subregion delimited by '|'), i.e. a
     tract of space to be unioned with zero or more other zones.  A
@@ -1240,6 +1243,9 @@ class Zone(object):
     def extent(self):
         boolean = self.evaluate(optimise=False)
         return boolean._extent()
+
+    def __iter__(self):
+        return iter(self.contains + self.excludes)
 
 
 class Boolean(Body):
