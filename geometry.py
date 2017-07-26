@@ -1244,6 +1244,21 @@ class Zone(object):
         boolean = self.evaluate(optimise=False)
         return boolean._extent()
 
+    def remove(self, body_name):
+        """Recursively remove a body (by name) from this Zone instance."""
+        # remove from contains:
+        for index, element in enumerate(self.contains):
+            if isinstance(element, Zone):
+                element.remove(body_name)
+            elif element.name == body_name:
+                self.contains.pop(index)
+        # remove from excludes:
+        for index, element in enumerate(self.excludes):
+            if isinstance(element, Zone):
+                element.remove(body_name)
+            elif element.name == body_name:
+                self.excludes.pop(index)
+
     def __iter__(self):
         return iter(self.contains + self.excludes)
 
