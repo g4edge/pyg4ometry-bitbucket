@@ -486,11 +486,11 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
             self.bodies[body_name] = body
         except (AttributeError, NotImplementedError):
             warnings.simplefilter('once', UserWarning)
-            warnings.warn(("\nBody type %s not supported.  All bodies"
-                           " of this type will be omitted.  If bodies"
-                           " of this type are used in regions, the"
-                           " conversion will fail.") % body_type,
-                          UserWarning)
+            msg = ("\nBody type \"{}\" not supported.  All bodies"
+                   " of this type will be omitted.  If bodies"
+                   " of this type are used in regions, the"
+                   " conversion will fail.").format(body_type)
+            warnings.warn(msg)
 
     def enterUnaryExpression(self, ctx):
         body_name = ctx.ID().getText()
