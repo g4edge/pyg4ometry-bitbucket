@@ -64,10 +64,9 @@ class Model(object):
 
         else: # If no material map, we still want to omit BLCKHOLE
             # regions from viewing/conversion.
-            msg = ("No Fluka->G4 material map provided.  All converted regions"
-                   " will be \"G4_Galactic\" by default, but BLCKHOLE regions"
-                   " will still be omitted from both conversion and viewing.")
-            warnings.warn(msg)
+            print("No Fluka->G4 material map provided.  All converted regions"
+                  " will be \"G4_Galactic\" by default, but BLCKHOLE regions"
+                  " will still be omitted from both conversion and viewing.")
             for region_name, region in self.regions.iteritems():
                 fluka_material = materials.get(region_name)
                 if fluka_material == "BLCKHOLE":
