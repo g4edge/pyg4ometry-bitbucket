@@ -1126,14 +1126,6 @@ class Zone(object):
         else:
             raise TypeError("Unknown operator: {}".format(operator))
 
-    @classmethod
-    def from_lists(cls, contains, excludes):
-        no_contains = len(contains)
-        no_excludes = len(excludes)
-
-        return cls((zip(no_contains * ['+'], contains)
-                    + zip(no_excludes * ['-'], excludes)))
-
     def __repr__(self):
         contains_bodies = ' '.join([('+{}[{}]').format(space.name,
                                                        type(space).__name__)
