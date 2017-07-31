@@ -148,9 +148,9 @@ class Model(object):
         if isinstance(bound, pygdml.solid.Subtraction):
             bound = bound.obj1
         msg = ("Bounding box has dimensions (in metres): "
-               "({:.9f}, {:.9f}, {:.9f})\n").format(bound.pX / 1000,
-                                                    bound.pY / 1000,
-                                                    bound.pZ / 1000)
+               "({:.9f}, {:.9f}, {:.9f})\n").format(2 * bound.pX / 1000,
+                                                    2 * bound.pY / 1000,
+                                                    2 * bound.pZ / 1000)
         print(msg)
 
     def view(self, regions=None, setclip=True,
