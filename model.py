@@ -263,9 +263,8 @@ class Model(object):
             regions = [regions]
         elif isinstance(regions, dict):
             for region_name, zone_nos in regions.iteritems():
-                # print "Adding region {}, zones {}".format(region_name,
-                # zone_nos
                 region = self.regions[region_name]
+                print("Adding region: \"{}\"  ...".format(region_name))
                 if region.material is None: # omit BLCKHOLE
                     print("Omitting BLCKHOLE region \"{}\".".format(
                         region_name))
