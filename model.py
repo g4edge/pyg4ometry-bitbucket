@@ -7,6 +7,7 @@ import os.path
 import time
 import cPickle
 import warnings
+import textwrap
 
 import antlr4
 import pygdml
@@ -64,9 +65,12 @@ class Model(object):
 
         else: # If no material map, we still want to omit BLCKHOLE
             # regions from viewing/conversion.
-            print("No Fluka->G4 material map provided.  All converted regions"
-                  " will be \"G4_Galactic\" by default, but BLCKHOLE regions"
-                  " will still be omitted from both conversion and viewing.")
+            msg = '\n'.join(textwrap.wrap(
+                "No Fluka->G4 material map provided.  All converted regions"
+                " will be \"G4_Galactic\" by default, but BLCKHOLE regions"
+                " will still be omitted from both conversion and viewing."))
+            print(msg, '\n')
+
             for region_name, region in self.regions.iteritems():
                 fluka_material = materials.get(region_name)
                 if fluka_material == "BLCKHOLE":
