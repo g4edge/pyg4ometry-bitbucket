@@ -132,6 +132,7 @@ class Model(object):
         elif os.path.splitext(out_path)[1] != "gdml":
             out_path = os.path.splitext(out_path)[0] + ".gdml"
 
+        self._print_bounding_extent()
         out = pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
@@ -139,6 +140,18 @@ class Model(object):
 
         if make_gmad is True:
             self._write_test_gmad(out_path)
+
+    def _print_bounding_extent(self):
+        # When writing, print the extent, because this is useful
+        # information when wanting to place it, which has to be done manually.
+        bound = self._world_volume.currentVolume
+        if isinstance(bound, pygdml.solid.Subtraction):
+            bound = bound.obj1
+        msg = ("Bounding box has dimensions (in metres): "
+               "({:.9f}, {:.9f}, {:.9f})\n").format(bound.pX / 1000,
+                                                    bound.pY / 1000,
+                                                    bound.pZ / 1000)
+        print(msg)
 
     def view(self, regions=None, setclip=True,
              optimise=False, bounding_subtrahend=None):
