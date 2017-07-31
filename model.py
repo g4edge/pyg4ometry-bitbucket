@@ -112,6 +112,11 @@ class Model(object):
         - make_gmad: Generate a skeleton GMAD file pre-filled with
         references to corresponding the GDML file.
 
+        - bounding_subtrahend: Body to be subtracted from the bounding
+          box, e.g. space for a beampipe.  The case where the
+          subtraction affects the bounding box extent is not tested.
+          Maybe it will give you what you expect, but probably not.
+
         """
         self._generate_mesh(regions, setclip=True,
                             optimise=True,
@@ -145,6 +150,11 @@ class Model(object):
         of the geometry.  Setting it to False is useful for checking
         placements and as an optimisation--the mesh will only be
         generated once.  By default, the bounding box will be clipped.
+
+        - bounding_subtrahend: Body to be subtracted from the bounding
+          box, e.g. space for a beampipe.  The case where the
+          subtraction affects the bounding box extent is not tested.
+          Maybe it will give you what you expect, but probably not.
 
         """
         world_mesh = self._generate_mesh(
