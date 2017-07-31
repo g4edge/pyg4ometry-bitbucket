@@ -1065,10 +1065,19 @@ class Region(object):
     def _select_zones(self, zones):
         if zones is None:
             zones = self.zones
-        elif isinstance(zones, list):
-            zones = [self.zones[key] for key in zones]
         else:
-            raise TypeError("Unknown zone selection type: {}".format(type(zones)))
+            try:
+                zones = [self.zones[key] for key in zones]
+                # if no __getitem__, or __iter__, then try using it as a
+                # key directly:
+            except TypeError:
+                try:
+                    zones = self.zones[zones]
+                except TypeError:
+                    msg = ("Unknown type provided "
+                           "for zone selection: {}").format(type(zones)))
+                    raise TypeError(msg)
+
         return zones
 
     def extent(self, zones=None):
