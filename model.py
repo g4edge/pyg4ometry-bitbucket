@@ -102,7 +102,10 @@ class Model(object):
 
     def write_to_gdml(self, regions=None, out_path=None,
                       make_gmad=True, bounding_subtrahend=None):
-        """Convert the region to GDML.
+        """Convert the region to GDML.  Returns the centre (in mm) of the GDML
+                      bounding box in the original Fluka coordinate
+                      system, which can be useful for placing the
+                      geometry.
 
         Parameters
         ----------
@@ -140,6 +143,7 @@ class Model(object):
 
         if make_gmad is True:
             self._write_test_gmad(out_path)
+        return self._world_volume.origin
 
     def _print_bounding_extent(self):
         # When writing, print the extent, because this is useful
