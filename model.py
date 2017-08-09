@@ -1,4 +1,5 @@
-""" Collection of classes for extracting information from a Fluka model. """
+""" Collection of classes for representing, viewing and viewing a
+Fluka model, and converting it GDML. """
 
 from __future__ import division, print_function
 import numpy as np
