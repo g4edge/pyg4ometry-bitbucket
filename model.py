@@ -143,7 +143,21 @@ class Model(object):
 
         if make_gmad is True:
             self._write_test_gmad(out_path)
-        return self._world_volume.origin
+
+        bounding_solid = self._world_volume.currentVolume
+        if isinstance(bounding_solid, pygdml.Box):
+            bounding_box = bounding_solid
+        elif (isinstance(bounding_solid, pygdml.Subtraction)
+              and isinstance(bounding_solid.obj1,
+                             pygdml.Box)):
+            bounding_box = bounding_solid.obj1
+        else:
+            raise RuntimeError(
+                "Unknown bounding box type: {}".format(type(bounding_solid)))
+        info_out = {"origin": self._world_volume.origin,
+                    "extent":
+                    pyfluka.geometry.Extent.from_gdml_box(bounding_box)}
+        return info_out
 
     def _print_bounding_extent(self):
         # When writing, print the extent, because this is useful
