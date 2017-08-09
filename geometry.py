@@ -1395,6 +1395,12 @@ class Extent(object):
         self.centre = self.upper - 0.5 * self.size
 
     @classmethod
+    def from_gdml_box(cls, box):
+        upper = vector.Three(box.pX, box.pY, box.pZ)
+        lower = -1 * upper
+        return cls(lower, upper)
+
+    @classmethod
     def from_world_volume(cls, world_volume):
         """Construct an Extent object from a pygdml (world) volume instance. """
         mesh = world_volume.pycsgmesh()
