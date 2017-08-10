@@ -33,7 +33,7 @@ def Load(filename, interactive=False, verbose=False):
     if _os.path.isfile(filename) and filename[-5:] == ".gdml":
         fname, dpath = _stripFilepath(filename, verbose=verbose)
     else:
-        print filename
+        print "File:", filename
         raise IOError('Missing file or invalid file format, GDML file (.gdml) required')
 
     _os.chdir(dpath)
@@ -76,26 +76,29 @@ def _stripFilepath(filepath, verbose=False):
 
 def Main():
     usage = ''
-    parser = _optparse.OptionParser(usage)
-    parser.add_option('-f','--file',         action='store',     dest="file",   type="string", default="", help="Path to file. File must have extension .gdml")
-    parser.add_option('-i','--interactive',  action='store_true',default=False, help="Interactive mode (Starts after visualiser is closed)")
-    parser.add_option('-v','--verbose',      action='store_true',default=False, help="Print more detailed information")
+    if __name__ == "__main__":
+        parser = _optparse.OptionParser(usage)
+        parser.add_option('-f','--file',         action='store',     dest="file",   type="string", default="", help="Path to file. File must have extension .gdml")
+        parser.add_option('-i','--interactive',  action='store_true',default=False, help="Interactive mode (Starts after visualiser is closed)")
+        parser.add_option('-v','--verbose',      action='store_true',default=False, help="Print more detailed information")
 
-    options,args = parser.parse_args()
+        options,args = parser.parse_args()
 
-    if not options.file:
-        print "No target file. Stop."
-        parser.print_help()
-        return
+        if not options.file:
+            print "No target file. Stop."
+            parser.print_help()
+            return
 
-    if args:
-        print "ERROR when parsing, leftover arguments", args
-        parser.print_help()
-        raise SystemExit
+        if args:
+            print "ERROR when parsing, leftover arguments", args
+            parser.print_help()
+            raise SystemExit
 
-    Load(options.file, options.interactive, options.verbose)
+        Load(options.file, options.interactive, options.verbose)
 
-    return 0
+    else:
+        print "Option parser not availble in interactive mode."
+            
 
 if __name__ == "__main__":
     Main()
