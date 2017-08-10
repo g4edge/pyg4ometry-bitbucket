@@ -10,6 +10,8 @@ Options:
 |interactive | -i         | When enabled an interactive IPython session is launched after |
 |            |            | visualisation window is closed.                               |
 -------------------------------------------------------------------------------------------
+|verbose     | -v         | Print more detailed information                               |
+-------------------------------------------------------------------------------------------
 
 Example: ./load_gdml.py --filename=Par02/Par02FullDetector_geant4parsed.gdml -i
 """
@@ -24,17 +26,13 @@ try:
     import IPython as _ipython
     found_ipython = True
 except:
-    found_ipython = False 
+    found_ipython = False
+    
 
-
-def Load(filename, interactive=False):
-
-    if not filename:
-        print "No file specified. Terminating."
-        return
+def Load(filename, interactive=False, verbose=False):
 
     if _os.path.isfile(filename) and filename[-5:] == ".gdml":
-        fname, dpath = _stripFilepath(filename, verbose=1)
+        fname, dpath = _stripFilepath(filename, verbose=verbose)
     else:
         print filename
         raise IOError('Missing file or invalid file format, GDML file (.gdml) required')
@@ -55,7 +53,7 @@ def Load(filename, interactive=False):
             _ipython.embed()
         else:
             print "No IPython installed, cannot use interactive mode."
-
+            
 
 def _stripFilepath(filepath, verbose=False):
     cwd        = _os.getcwd()
@@ -80,17 +78,25 @@ def _stripFilepath(filepath, verbose=False):
 def Main():
     usage = ''
     parser = _optparse.OptionParser(usage)
-    parser.add_option('-f','--filename',     action='store',     dest="filename",  type="string", default="")
-    parser.add_option('-i','--interactive',  action='store_true',default=False)
+    parser.add_option('-f','--file',         action='store',     dest="file",   type="string", default="", help="Path to file. File must have extension .gdml")
+    parser.add_option('-i','--interactive',  action='store_true',default=False, help="Interactive mode (Starts after visualiser is closed)")
+    parser.add_option('-v','--verbose',      action='store_true',default=False, help="Print more detailed information")
 
     options,args = parser.parse_args()
 
+    if not options.file:
+        print "No target file. Stop."
+        parser.print_help()
+        return
+
     if args:
         print "ERROR when parsing, leftover arguments", args
+        parser.print_help()
         raise SystemExit
 
-    Load(options.filename, options.interactive)
+    Load(options.file, options.interactive, options.verbose)
 
+    return 0
 
 if __name__ == "__main__":
     Main()
