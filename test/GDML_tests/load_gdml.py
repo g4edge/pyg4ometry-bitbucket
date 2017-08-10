@@ -21,7 +21,6 @@ import optparse as _optparse
 import pygeometry.gdml as _gdml
 import pygeometry.geant4 as _geant4
 import pygeometry.vtk as _vtk
-import pkgutil as _pkgutil
 try:
     import IPython as _ipython
     found_ipython = True
