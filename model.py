@@ -390,6 +390,8 @@ class Model(object):
                        "X0=0.1*um;\n")
             gmad.write('\n')
             gmad.write("use, period=component;\n")
+            gmad.write('\n')
+            gmad.write("option, physicsList=\"em FTFP_BERT muon\";\n")
             print("Written GMAD file: {}".format(gmad_path))
 
     def test_regions(self, pickle=None, regions=None, optimise=True):
