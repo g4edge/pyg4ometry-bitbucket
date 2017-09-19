@@ -132,9 +132,12 @@ class Model(object):
           systems than the geometry within.
 
         """
+        # Make the mesh for the given regions.
         self._generate_mesh(regions, setclip=True,
                             optimise=True,
                             bounding_subtrahend=bounding_subtrahend)
+        # If no path to write to provided, then generate one
+        # automatically based on input file name.
         if out_path is None:
             out_path = ("./"
                         + os.path.basename(os.path.splitext(self._filename)[0])
