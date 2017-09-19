@@ -9,6 +9,7 @@ import time
 import cPickle
 import warnings
 import textwrap
+import uuid
 
 import antlr4
 import pygdml
@@ -96,10 +97,9 @@ class Model(object):
     def _gdml_world_volume():
         """This method insantiates the world volume."""
         world_box = pygdml.solid.Box("world", 1, 1, 1)
-        return pygdml.Volume(
-            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
-            None, 1, False, "G4_Galactic"
-        )
+        name = "world_volume_{}".format(uuid.uuid4())
+        return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                             name, None, 1, False, "G4_Galactic")
 
     def write_to_gdml(self, regions=None, out_path=None,
                       make_gmad=True, bounding_subtrahend=None):
