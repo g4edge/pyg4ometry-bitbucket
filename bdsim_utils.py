@@ -1,4 +1,4 @@
-"""Useful functions."""
+"""Useful functions and classes to ease the use of pyfluka with BDSIM."""
 
 import collections
 import warnings
