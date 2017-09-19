@@ -102,7 +102,8 @@ class Model(object):
                              name, None, 1, False, "G4_Galactic")
 
     def write_to_gdml(self, regions=None, out_path=None,
-                      make_gmad=True, bounding_subtrahend=None):
+                      make_gmad=True, bounding_subtrahend=None,
+                      just_bounding_box=False):
         """Convert the region to GDML.  Returns the centre (in mm) of the GDML
                       bounding box in the original Fluka coordinate
                       system, which can be useful for placing the
@@ -125,6 +126,11 @@ class Model(object):
           subtraction affects the bounding box extent is not tested.
           Maybe it will give you what you expect, but probably not.
 
+        - just_bounding_box: Write only the bounding box.  This can be
+          useful for debugging placements, as the box generally has a
+          much higher chance of being visible in other visualisation
+          systems than the geometry within.
+
         """
         self._generate_mesh(regions, setclip=True,
                             optimise=True,
@@ -137,6 +143,8 @@ class Model(object):
             out_path = os.path.splitext(out_path)[0] + ".gdml"
 
         self._print_bounding_extent()
+        if just_bounding_box is True:
+            self._world_volume.daughterVolumes = []
         out = pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
@@ -172,8 +180,8 @@ class Model(object):
                                                     2 * bound.pZ / 1000)
         print(msg)
 
-    def view(self, regions=None, setclip=True,
-             optimise=False, bounding_subtrahend=None):
+    def view(self, regions=None, setclip=True, optimise=False,
+             bounding_subtrahend=None, just_bounding_box=False):
         """View the mesh for this model.
 
         Parameters
@@ -194,17 +202,22 @@ class Model(object):
 
         """
         world_mesh = self._generate_mesh(
-            regions, setclip=setclip,
-            optimise=optimise, bounding_subtrahend=bounding_subtrahend)
+            regions, setclip=setclip, optimise=optimise,
+            bounding_subtrahend=bounding_subtrahend,
+            just_bounding_box=just_bounding_box)
         viewer = pygdml.VtkViewer()
         viewer.addSource(world_mesh)
         viewer.view()
 
     def _generate_mesh(self, region_names, setclip,
-                       optimise, bounding_subtrahend):
+                       optimise, bounding_subtrahend, just_bounding_box=False):
         """This function has the side effect of recreating the world volume if
         the region_names requested are different to the ones already
         assigned to it and returns the relevant mesh.
+
+        just_bounding_box is by default False, because it has no real
+        purpose unless the returned mesh is used, which is only for
+        visualisation.
 
         """
         self._add_regions_to_world_volume(region_names, optimise=optimise)
@@ -213,7 +226,14 @@ class Model(object):
         elif setclip:
             self._clip_world_volume()
         world_mesh = self._world_volume.pycsgmesh()
-        return world_mesh
+        if just_bounding_box is False:
+            return world_mesh
+        elif just_bounding_box is True:
+            # 1st element of list return by pycsgmesh, I believe, is
+            # always the bounding box.  Hopefully always.  I assume
+            # so, anyway.
+            return [world_mesh[0]]
+
 
     def _subtract_from_world_volume(self, subtrahend):
         """Nice pyfluka interface for subtracting from bounding boxes
