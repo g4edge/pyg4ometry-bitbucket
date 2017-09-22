@@ -1198,6 +1198,7 @@ class Zone(object):
     def _map_extent_2_bodies(self, bodies, extent):
         for body in bodies:
             if isinstance(body, Body):
+                body._is_omittable = False
                 body._resize(extent)
             elif isinstance(body, Zone):
                 body._map_extent_2_bodies(body.contains, extent)
