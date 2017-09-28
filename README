@@ -1,6 +1,6 @@
 Make sure to get the python run times via pip:
 
-$ pip install antlr4-python2-runtime
+$ pip install --user antlr4-python2-runtime
 
 Usage:
 
