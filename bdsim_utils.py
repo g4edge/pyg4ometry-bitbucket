@@ -116,7 +116,7 @@ class Lattice(list):
     def get_component_column(self, variable):
         """Returns a list of all the component's attribute according
         to the variable provided."""
-        return [getattr(component, variable) for component in self.components]
+        return [getattr(component, variable) for component in self]
 
     def __repr__(self):
         return "<Lattice: {} components; length = {}m>".format(len(self),
