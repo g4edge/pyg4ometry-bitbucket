@@ -78,6 +78,51 @@ _MISC_VARIABLES = frozenset({"samplerNamesUnique"})
 
 AxisAngle = collections.namedtuple("AxisAngle", ["axis", "angle"])
 
+class Component(collections.namedtuple("Component",
+                                       _COMPONENT_VARS | {"index"})):
+    # Default repr would be too big so redefine to something
+    # human-readable and useful:
+    def __repr__(self):
+        return "<{}: {}, S={}m ...>".format(self.componentName,
+                                            self.componentType,
+                                            self.staS)
+
+class Lattice(list):
+    """Simple class used for inspecting BDSIM rootevent models."""
+    def __init__(self, path):
+        # Load the ROOT model
+        data_loader = ROOT.DataLoader(path)
+        model = data_loader.GetModel()
+        model_tree = data_loader.GetModelTree()
+        model_tree.GetEntry(0)
+        model = model.model
+
+        # Add the miscellaneous variables.
+        for variable in _MISC_VARIABLES:
+            sequence = list(getattr(model, variable))
+            setattr(self, variable, sequence)
+
+        # Give the model a copy of the component variables for convenience.
+        self.component_variables = _COMPONENT_VARS
+
+        # Add the per component variables.
+        for index, _ in enumerate(model.componentName):
+            component_vars = {variable:
+                              _try_coercion(getattr(model, variable)[index])
+                              for variable in _COMPONENT_VARS}
+            self.append(Component(index=index, **component_vars))
+        self.length = self[-1].endS
+
+    def get_component_column(self, variable):
+        """Returns a list of all the component's attribute according
+        to the variable provided."""
+        return [getattr(component, variable) for component in self.components]
+
+    def __repr__(self):
+        return "<Lattice: {} components; length = {}m>".format(len(self),
+                                                               self.length)
+
+
 def _coerce_tvector3(tvector):
     return pyfluka.vector.Three(tvector.X(), tvector.Y(), tvector.Z())
 
@@ -98,42 +143,3 @@ def _try_coercion(var):
         return _coerce_tvector3(var)
     except AttributeError:
         return var
-
-class Component(collections.namedtuple("Component",
-                                       _COMPONENT_VARS | {"index"})):
-    # Default repr would be too big so redefine to something
-    # human-readable and useful:
-    def __repr__(self):
-        return "<{}: {}, S={}m ...>".format(self.componentName,
-                                            self.componentType,
-                                            self.staS)
-
-class Lattice(object):
-    def __init__(self, path):
-        # Load the ROOT model
-        data_loader = ROOT.DataLoader(path)
-        model = data_loader.GetModel()
-        model_tree = data_loader.GetModelTree()
-        model_tree.GetEntry(0)
-        model = model.model
-
-        # Add the miscellaneous variables.
-        for variable in _MISC_VARIABLES:
-            sequence = list(getattr(model, variable))
-            setattr(self, variable, sequence)
-
-        # Give the model a copy of the component variables for convenience.
-        self.component_variables = _COMPONENT_VARS
-
-        # Add the per component variables.
-        self.components = []
-        for index, _ in enumerate(model.componentName):
-            component_vars = {variable:
-                              _try_coercion(getattr(model, variable)[index])
-                              for variable in _COMPONENT_VARS}
-            self.components.append(Component(index=index, **component_vars))
-
-    def get_component_column(self, variable):
-        """Returns a list of all the component's attribute according
-        to the variable provided."""
-        return [getattr(component, variable) for component in self.components]
