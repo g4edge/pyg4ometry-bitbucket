@@ -36,9 +36,9 @@ def get_bdsim_placement(bdsim_point, fluka_point,
     return offset
 
 def get_placement_string(name, filepath, offset, axis, angle):
-    """All units should be in metres..."""
+    """All units should be in millimetres."""
     out = ("{name}: placement,"
-           " x = {offset.x}*m, y = {offset.y}*m, z = {offset.z}*m,"
+           " x = {offset.x}*mm, y = {offset.y}*mm, z = {offset.z}*mm,"
            " geometryFile=\"gdml:{filepath}\", axisAngle=1,"
            " axisX = {axis.x}, axisY = {axis.y}, axisZ = {axis.z},"
            " angle = {angle};")
