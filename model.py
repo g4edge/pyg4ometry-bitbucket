@@ -127,15 +127,18 @@ class Model(object):
           Maybe it will give you what you expect, but probably not.
 
         - just_bounding_box: Write only the bounding box.  This can be
-          useful for debugging placements, as the box generally has a
-          much higher chance of being visible in other visualisation
-          systems than the geometry within.
+          useful when trying to place this as external geometry.  If
+          true, then write just the bounding box.  If a string, then
+          just the bounding box with the single named region placed in
+          it.  If an iterable of names, then place all of those named
+          regions in the bounding box.
 
         """
         # Make the mesh for the given regions.
         self._generate_mesh(regions, setclip=True,
                             optimise=True,
-                            bounding_subtrahend=bounding_subtrahend)
+                            bounding_subtrahend=bounding_subtrahend,
+                            just_bounding_box=just_bounding_box)
         # If no path to write to provided, then generate one
         # automatically based on input file name.
         if out_path is None:
@@ -145,12 +148,10 @@ class Model(object):
         elif os.path.splitext(out_path)[1] != "gdml":
             out_path = os.path.splitext(out_path)[0] + ".gdml"
 
-        self._print_bounding_extent()
-        if just_bounding_box is True:
-            self._world_volume.daughterVolumes = []
         out = pygdml.Gdml()
         out.add(self._world_volume)
         out.write(out_path)
+        self._print_bounding_extent()
         print("Written GDML file: {}".format(out_path))
 
         if make_gmad is True:
@@ -228,14 +229,31 @@ class Model(object):
             self._subtract_from_world_volume(bounding_subtrahend)
         elif setclip:
             self._clip_world_volume()
-        world_mesh = self._world_volume.pycsgmesh()
         if just_bounding_box is False:
-            return world_mesh
+            return self._world_volume.pycsgmesh()
         elif just_bounding_box is True:
             # 1st element of list return by pycsgmesh, I believe, is
             # always the bounding box.  Hopefully always.  I assume
             # so, anyway.
+            world_mesh = self._world_volume.pycsgmesh()
+            self._world_volume.daughterVolumes = []
             return [world_mesh[0]]
+        elif isinstance(just_bounding_box, basestring):
+            self._world_volume.daughterVolumes = (
+                [element for element in
+                 self._world_volume.daughterVolumes
+                 if element.name == just_bounding_box])
+            return self._world_volume.pycsgmesh()
+        else:
+            try:
+                self._world_volume.daughterVolumes = (
+                    [region for region in
+                     self._world_volume.daughterVolumes
+                     if region.name in just_bounding_box])
+                return self._world_volume.pycsgmesh()
+            except TypeError:
+                msg = ("unusable argument for just_bounding_box!")
+                raise TypeError(msg)
 
 
     def _subtract_from_world_volume(self, subtrahend):
