@@ -95,7 +95,7 @@ class Model(object):
 
     @staticmethod
     def _gdml_world_volume():
-        """This method insantiates the world volume."""
+        """This method returns a world volume."""
         world_box = pygdml.solid.Box("world", 1, 1, 1)
         name = "world_volume_{}".format(uuid.uuid4())
         return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
@@ -287,8 +287,8 @@ class Model(object):
         self._world_volume.currentVolume.pZ += safety
 
     def _add_regions_to_world_volume(self, regions, optimise):
-        """Add the region or regions in region_names to the world volume, only
-        if not already added.
+        """Add the region or regions in region_names to the current
+        world volume (self._world_volume).
 
         If regions is None:  do all regions
         If regions is a string:  do just that one region
