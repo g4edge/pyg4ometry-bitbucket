@@ -1,0 +1,10 @@
+$ python setup.py install --user
+
+Make sure also to get [pygdml](https://bitbucket.org/jairhul/pygdml) and make sure it is present somewhere in your PYTHONPATH.
+
+Usage:
+
+>>> import pyfluka
+>>> a = pyfluka.Model("pyfluka/test_input/10.inp")
+>>> a.view_mesh()
+>>> a.write_to_gdml("./my/output/path.gdml")
