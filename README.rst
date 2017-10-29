@@ -2,15 +2,13 @@
 pyfluka
 =======
 
-$ python setup.py install --user
-
-Make sure also to get `pygdml <https://bitbucket.org/jairhul/pygdml>`_
-and make sure it is present somewhere in your PYTHONPATH.
-
+View FLUKA geometry meshes and convert to GDML.
 
 ==========
 Quickstart
 ==========
+
+Get `pygdml <https://bitbucket.org/jairhul/pygdml>`_.
 
 Clone and install this repository::
 
