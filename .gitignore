@@ -5,8 +5,11 @@ FM.pdf
 *.g4e
 tests/*.py
 *.tar.gz
-Parser/*.tokens
 *.log
 *.gdml
 *.gmad
 *.pickle
+build
+dist
+*.tokens
+pyfluka.egg-info
