@@ -82,6 +82,10 @@ AxisAngle = collections.namedtuple("AxisAngle", ["axis", "angle"])
 
 class Component(collections.namedtuple("Component",
                                        _COMPONENT_VARS | {"index"})):
+    """Simple class for representing a component read out of the
+    BDSOutputROOTEventModel tree from BDSIM rootevent output.
+
+    """
     # Default repr would be too big so redefine to something
     # human-readable and useful:
     def __repr__(self):
