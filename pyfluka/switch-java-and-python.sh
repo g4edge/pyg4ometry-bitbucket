@@ -1,3 +1,5 @@
+#!/bin/sh
+
 grep -q 'self.column' *.g4
 if [ "$?" -eq 0 ]
 then
