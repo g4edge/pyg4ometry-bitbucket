@@ -49,10 +49,14 @@ def _separate_geometry(lines):
 
     """
     # Get the two indices of geobegin and geoend
-    geo_begin_index = (i for i, line in enumerate(lines)
-                       if line.startswith("GEOBEGIN")).next()
-    geo_end_index = (i for i, line in enumerate(lines)
-                     if line.startswith("GEOEND")).next()
+    try:
+        geo_begin_index = (i for i, line in enumerate(lines)
+                           if line.startswith("GEOBEGIN")).next()
+        geo_end_index = (i for i, line in enumerate(lines)
+                         if line.startswith("GEOEND")).next()
+    except StopIteration:
+        msg = "GEOBEGIN and/or GEOEND cards not found and/or malformed!"
+        raise IOError(msg)
 
     body_types = ["ARB", "BOX", "ELL", "PLA", "QUA", "RAW",
                   "RCC", "REC", "RPP", "SPH", "TRC", "WED",
