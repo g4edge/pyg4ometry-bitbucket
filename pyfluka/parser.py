@@ -25,12 +25,16 @@ def get_geometry_ast_and_other_cards(path):
 
     # Tokenise character stream
     lexed_input = pyfluka.FlukaLexer.FlukaLexer(istream)
+    lexed_input.removeErrorListeners()
+    lexed_input.addErrorListener(SensitiveErrorListener())
 
     # Create a buffer of tokens from lexer
     tokens = antlr4.CommonTokenStream(lexed_input)
 
     # Create a parser that reads from stream of tokens
     parser = pyfluka.FlukaParser.FlukaParser(tokens)
+    parser.removeErrorListeners()
+    parser.addErrorListener(SensitiveErrorListener())
 
     # Create syntax tree
     tree = parser.geocards()
@@ -136,3 +140,18 @@ class Card(collections.namedtuple("Card",
         # (Not a coercable string, not a coercable type)
         except (ValueError, TypeError):
             return string
+
+
+class SensitiveErrorListener(antlr4.error.ErrorListener.ErrorListener):
+    """ANTLR4 by default is very passive regarding parsing errors, it will
+    just carry on parsing and potentially build a nonsense-tree. This
+    is not ideal as pyfluka has a very convoluted syntax; we want to
+    be very strict about what our parser can and can't do.  For that
+    reason this is a very sensitive error listener, throwing
+    exceptions readily.
+
+    """
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        msg = ("At ({}, {}), Error: {}.  Warning:  The provided line and"
+               " column numbers may be deceptive.").format(line, column, msg)
+        raise antlr4.error.Errors.ParseCancellationException(msg)
