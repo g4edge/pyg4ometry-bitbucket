@@ -33,9 +33,9 @@ javac Fluka*.java;
      include that it will not work.
 
 *** Tokens
-
+    grun Fluka geocards ../tests/test_input/grammar/union_fence_posts_min.inp -tokens
 *** Gui
-
+    grun Fluka geocards ../tests/test_input/grammar/union_fence_posts_min.inp -gui
 ** Useful scripts / misc.
 
 *** Converting the grammar between Python and Java.
@@ -48,3 +48,8 @@ javac Fluka*.java;
     - If you want to add any embedded python to the grammar then you
       will have to edit this script, as it is all hardcoded on a
       case-by-case basis.
+      E.g. getCharPositionInLine (java) --> self.column (python)
+
+    - ./generate_parser.sh should then automatically be able to
+      determine which is the appopriate target for building the
+      lexer + parser.
