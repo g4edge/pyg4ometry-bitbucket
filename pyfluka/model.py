@@ -11,6 +11,7 @@ import cPickle
 import warnings
 import textwrap
 import uuid
+import itertools
 
 import antlr4
 import pygdml
@@ -528,6 +529,49 @@ class Model(object):
             with open(pickle_name, 'w') as pickle_file:
                 cPickle.dump(regions, pickle_file)
         return regions
+
+    def check_overlaps(self):
+        """Checks for overlaps between regions.  Returned is a
+        dictionary with region names and keys, and a dictionary of
+        overlapping regions and the extent of the overlaps.
+
+        """
+        # a dictionary of dictionaries describing the overlaps between regions
+        output = {region.name: {} for region in self}
+        # every combination of names
+        name_pairs = itertools.product(self.regions, self.regions)
+        for first, second in name_pairs:
+            # don't check for overlaps with self, this is a given.
+            if first == second:
+                continue
+            # if x does (doesn't) overlap with y then y does
+            # (doesn't) overlap with x.
+            if first in output[second]:
+                output[first][second] = output[second][first]
+                continue
+            overlap = pyfluka.geometry.get_overlap(self.regions[first],
+                                                   self.regions[second])
+            output[first][second] = overlap
+
+        # Sanitise the output.  keep track of everything whilst doing
+        # the overlap check because it allows for optimisations, but
+        # I want to return the  meaningful output.  use .keys() because I'm
+        # editing the dictionary as I go.  if x overlaps with y, then
+        # an overlap is reported for x with y and y with x.  oh well.
+        for region_name in output.keys():
+            # delete those regions which overlap with nothing
+            if not any(output[region_name].itervalues()):
+                del output[region_name]
+                continue
+            # For regions that do overlap with something, delete
+            # references to regions with which the region does not
+            # overlap.
+            for other_name in output[region_name].keys():
+                overlap = output[region_name][other_name]
+                if overlap is None:
+                    del output[region_name][other_name]
+
+        return output
 
     def __repr__(self):
         return "<Model: \"{}\">".format(self._filename)
