@@ -22,3 +22,11 @@ def test_get_overlap_no_overlap():
     no_overlap1 = model.regions['no_overlap1']
     no_overlap2 = model.regions['no_overlap2']
     assert pyfluka.geometry.get_overlap(no_overlap1, no_overlap2) is None
+
+def test_region_disjoint_zones():
+    path = "../test_input/disjoint_union.inp"
+    model = pyfluka.Model(path)
+    # GIVEN: a region which in which 0 and 1 are not disjoint but 2 is
+    # disjoint with both 0 and 1:
+    region = model.regions['disjoint']
+    assert region.disjoint_zones() == {0: [2], 1: [2], 2: [0, 1]}

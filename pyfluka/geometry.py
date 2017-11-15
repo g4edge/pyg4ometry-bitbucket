@@ -1090,6 +1090,30 @@ class Region(object):
     def __iter__(self):
         return iter(self.zones)
 
+    def disjoint_zones(self):
+        """Returns a dictionary of indices and zones with which that
+        indexed zone is disjoint.  If a zone is disjoint with no other
+        zones then that zone has no entry in the returned dict.  This
+        way, the empty dict corresponds with a region with no disjoint zones.
+
+        """
+        # indices because zones have no names.
+        out = {index: [] for index in range(len(self.zones))}
+        for index, zone in enumerate(self.zones):
+            for other_index, other_zone in enumerate(self.zones):
+                # never disjoint with self.
+                if other_index == index:
+                    continue
+                overlap = get_overlap(zone, other_zone)
+                # If not disjoint:
+                if overlap is not None:
+                    continue
+                out[index].append(other_index)
+        # remove zones which are connected to all other zones.  This
+        # ensures the empty dictionary is for a fully connected region.
+        out = {index: entry for index, entry in out.iteritems() if entry}
+        return out
+
 class Zone(object):
     """Class representing a Zone (subregion delimited by '|'), i.e. a
     tract of space to be unioned with zero or more other zones.  A
