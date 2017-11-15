@@ -1422,3 +1422,18 @@ class Extent(object):
 
     def __eq__(self, other):
         return self.lower == other.lower and self.upper == other.upper
+
+
+def get_overlap(first, second, optimise=True):
+    """Return the extent of any overlapping region between the first
+    and the second Region or Zone instance.  If there are no overlaps,
+    then None is returned.
+
+    """
+
+    first = first.evaluate(optimise=optimise)
+    second = second.evaluate(optimise=optimise)
+    try:
+        return first.intersection(second)._extent()
+    except pygdml.NullMeshError:
+        return None
