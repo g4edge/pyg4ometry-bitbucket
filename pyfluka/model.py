@@ -749,6 +749,16 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         zones = [self.visit(zone) for zone in ctx.zone()]
         return zones
 
+    def visitMultipleUnion2(self, ctx):
+        # This rule exists because of the three ways of expressing a
+        # union:
+        # - | +x +y (union with nothing)
+        # -   +x | +y (infix union operator)
+        # - | +x | +y (infix union operator with leading union op)
+        # The latter two are identical, hence this method simply calling
+        # the other.
+        return self.visitMultipleUnion(ctx)
+
     def visitSubZone(self, ctx):
         if ctx.Plus():
             operator = '+'

@@ -8,53 +8,59 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"\31\u008a\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7")
+        buf.write(u"\31\u0096\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7")
         buf.write(u"\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t")
         buf.write(u"\r\4\16\t\16\3\2\3\2\3\2\6\2 \n\2\r\2\16\2!\3\3\3\3\3")
         buf.write(u"\3\3\3\6\3(\n\3\r\3\16\3)\3\3\3\3\3\3\5\3/\n\3\7\3\61")
         buf.write(u"\n\3\f\3\16\3\64\13\3\5\3\66\n\3\3\4\3\4\3\4\3\4\3\4")
         buf.write(u"\3\4\5\4>\n\4\3\5\3\5\3\5\3\5\6\5D\n\5\r\5\16\5E\3\5")
-        buf.write(u"\3\5\5\5J\n\5\3\6\3\6\5\6N\n\6\3\7\3\7\3\7\3\7\3\7\3")
-        buf.write(u"\7\3\7\3\7\5\7X\n\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3")
-        buf.write(u"\n\3\n\3\n\5\ne\n\n\3\13\3\13\3\13\6\13j\n\13\r\13\16")
-        buf.write(u"\13k\3\13\3\13\3\f\3\f\3\f\3\f\3\f\6\fu\n\f\r\f\16\f")
-        buf.write(u"v\3\f\3\f\3\r\3\r\3\r\6\r~\n\r\r\r\16\r\177\3\r\3\r\3")
-        buf.write(u"\16\3\16\6\16\u0086\n\16\r\16\16\16\u0087\3\16\2\2\17")
-        buf.write(u"\2\4\6\b\n\f\16\20\22\24\26\30\32\2\5\4\2\21\21\23\23")
-        buf.write(u"\3\2\22\23\3\2\25\26\2\u0091\2\37\3\2\2\2\4\65\3\2\2")
-        buf.write(u"\2\6=\3\2\2\2\bI\3\2\2\2\nM\3\2\2\2\fW\3\2\2\2\16Y\3")
-        buf.write(u"\2\2\2\20^\3\2\2\2\22d\3\2\2\2\24f\3\2\2\2\26o\3\2\2")
-        buf.write(u"\2\30z\3\2\2\2\32\u0083\3\2\2\2\34 \5\4\3\2\35 \5\6\4")
-        buf.write(u"\2\36 \5\32\16\2\37\34\3\2\2\2\37\35\3\2\2\2\37\36\3")
-        buf.write(u"\2\2\2 !\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\"\3\3\2\2\2#")
-        buf.write(u"\66\5\22\n\2$%\7\b\2\2%\'\t\2\2\2&(\7\22\2\2\'&\3\2\2")
-        buf.write(u"\2()\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\66\3\2\2\2+\62\7\b")
-        buf.write(u"\2\2,.\7\24\2\2-/\t\3\2\2.-\3\2\2\2./\3\2\2\2/\61\3\2")
-        buf.write(u"\2\2\60,\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63\3")
-        buf.write(u"\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65#\3\2\2\2\65$\3")
-        buf.write(u"\2\2\2\65+\3\2\2\2\66\5\3\2\2\2\678\7\n\2\289\7\21\2")
-        buf.write(u"\29>\5\n\6\2:;\7\n\2\2;<\7\21\2\2<>\5\b\5\2=\67\3\2\2")
-        buf.write(u"\2=:\3\2\2\2>\7\3\2\2\2?@\7\27\2\2@C\5\n\6\2AB\7\27\2")
-        buf.write(u"\2BD\5\n\6\2CA\3\2\2\2DE\3\2\2\2EC\3\2\2\2EF\3\2\2\2")
-        buf.write(u"FJ\3\2\2\2GH\7\27\2\2HJ\5\n\6\2I?\3\2\2\2IG\3\2\2\2J")
-        buf.write(u"\t\3\2\2\2KN\5\f\7\2LN\5\16\b\2MK\3\2\2\2ML\3\2\2\2N")
-        buf.write(u"\13\3\2\2\2OX\5\20\t\2PQ\5\20\t\2QR\5\f\7\2RX\3\2\2\2")
-        buf.write(u"ST\5\16\b\2TU\5\f\7\2UX\3\2\2\2VX\5\16\b\2WO\3\2\2\2")
-        buf.write(u"WP\3\2\2\2WS\3\2\2\2WV\3\2\2\2X\r\3\2\2\2YZ\t\4\2\2Z")
-        buf.write(u"[\7\30\2\2[\\\5\f\7\2\\]\7\31\2\2]\17\3\2\2\2^_\t\4\2")
-        buf.write(u"\2_`\7\23\2\2`\21\3\2\2\2ae\5\24\13\2be\5\26\f\2ce\5")
-        buf.write(u"\30\r\2da\3\2\2\2db\3\2\2\2dc\3\2\2\2e\23\3\2\2\2fg\7")
-        buf.write(u"\13\2\2gi\7\22\2\2hj\5\4\3\2ih\3\2\2\2jk\3\2\2\2ki\3")
-        buf.write(u"\2\2\2kl\3\2\2\2lm\3\2\2\2mn\7\16\2\2n\25\3\2\2\2op\7")
-        buf.write(u"\f\2\2pq\7\22\2\2qr\7\22\2\2rt\7\22\2\2su\5\4\3\2ts\3")
-        buf.write(u"\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3\2\2\2wx\3\2\2\2xy\7\17")
-        buf.write(u"\2\2y\27\3\2\2\2z{\7\r\2\2{}\t\2\2\2|~\5\4\3\2}|\3\2")
-        buf.write(u"\2\2~\177\3\2\2\2\177}\3\2\2\2\177\u0080\3\2\2\2\u0080")
-        buf.write(u"\u0081\3\2\2\2\u0081\u0082\7\20\2\2\u0082\31\3\2\2\2")
-        buf.write(u"\u0083\u0085\7\t\2\2\u0084\u0086\7\23\2\2\u0085\u0084")
-        buf.write(u"\3\2\2\2\u0086\u0087\3\2\2\2\u0087\u0085\3\2\2\2\u0087")
-        buf.write(u"\u0088\3\2\2\2\u0088\33\3\2\2\2\22\37!).\62\65=EIMWd")
-        buf.write(u"kv\177\u0087")
+        buf.write(u"\3\5\3\5\3\5\3\5\3\5\3\5\7\5O\n\5\f\5\16\5R\13\5\3\5")
+        buf.write(u"\3\5\5\5V\n\5\3\6\3\6\5\6Z\n\6\3\7\3\7\3\7\3\7\3\7\3")
+        buf.write(u"\7\3\7\3\7\5\7d\n\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3")
+        buf.write(u"\n\3\n\3\n\5\nq\n\n\3\13\3\13\3\13\6\13v\n\13\r\13\16")
+        buf.write(u"\13w\3\13\3\13\3\f\3\f\3\f\3\f\3\f\6\f\u0081\n\f\r\f")
+        buf.write(u"\16\f\u0082\3\f\3\f\3\r\3\r\3\r\6\r\u008a\n\r\r\r\16")
+        buf.write(u"\r\u008b\3\r\3\r\3\16\3\16\6\16\u0092\n\16\r\16\16\16")
+        buf.write(u"\u0093\3\16\2\2\17\2\4\6\b\n\f\16\20\22\24\26\30\32\2")
+        buf.write(u"\5\4\2\21\21\23\23\3\2\22\23\3\2\25\26\2\u009f\2\37\3")
+        buf.write(u"\2\2\2\4\65\3\2\2\2\6=\3\2\2\2\bU\3\2\2\2\nY\3\2\2\2")
+        buf.write(u"\fc\3\2\2\2\16e\3\2\2\2\20j\3\2\2\2\22p\3\2\2\2\24r\3")
+        buf.write(u"\2\2\2\26{\3\2\2\2\30\u0086\3\2\2\2\32\u008f\3\2\2\2")
+        buf.write(u"\34 \5\4\3\2\35 \5\6\4\2\36 \5\32\16\2\37\34\3\2\2\2")
+        buf.write(u"\37\35\3\2\2\2\37\36\3\2\2\2 !\3\2\2\2!\37\3\2\2\2!\"")
+        buf.write(u"\3\2\2\2\"\3\3\2\2\2#\66\5\22\n\2$%\7\b\2\2%\'\t\2\2")
+        buf.write(u"\2&(\7\22\2\2\'&\3\2\2\2()\3\2\2\2)\'\3\2\2\2)*\3\2\2")
+        buf.write(u"\2*\66\3\2\2\2+\62\7\b\2\2,.\7\24\2\2-/\t\3\2\2.-\3\2")
+        buf.write(u"\2\2./\3\2\2\2/\61\3\2\2\2\60,\3\2\2\2\61\64\3\2\2\2")
+        buf.write(u"\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3\2")
+        buf.write(u"\2\2\65#\3\2\2\2\65$\3\2\2\2\65+\3\2\2\2\66\5\3\2\2\2")
+        buf.write(u"\678\7\n\2\289\7\21\2\29>\5\n\6\2:;\7\n\2\2;<\7\21\2")
+        buf.write(u"\2<>\5\b\5\2=\67\3\2\2\2=:\3\2\2\2>\7\3\2\2\2?@\7\27")
+        buf.write(u"\2\2@C\5\n\6\2AB\7\27\2\2BD\5\n\6\2CA\3\2\2\2DE\3\2\2")
+        buf.write(u"\2EC\3\2\2\2EF\3\2\2\2FV\3\2\2\2GH\7\27\2\2HV\5\n\6\2")
+        buf.write(u"IJ\5\n\6\2JP\7\27\2\2KL\5\n\6\2LM\7\27\2\2MO\3\2\2\2")
+        buf.write(u"NK\3\2\2\2OR\3\2\2\2PN\3\2\2\2PQ\3\2\2\2QS\3\2\2\2RP")
+        buf.write(u"\3\2\2\2ST\5\n\6\2TV\3\2\2\2U?\3\2\2\2UG\3\2\2\2UI\3")
+        buf.write(u"\2\2\2V\t\3\2\2\2WZ\5\f\7\2XZ\5\16\b\2YW\3\2\2\2YX\3")
+        buf.write(u"\2\2\2Z\13\3\2\2\2[d\5\20\t\2\\]\5\20\t\2]^\5\f\7\2^")
+        buf.write(u"d\3\2\2\2_`\5\16\b\2`a\5\f\7\2ad\3\2\2\2bd\5\16\b\2c")
+        buf.write(u"[\3\2\2\2c\\\3\2\2\2c_\3\2\2\2cb\3\2\2\2d\r\3\2\2\2e")
+        buf.write(u"f\t\4\2\2fg\7\30\2\2gh\5\f\7\2hi\7\31\2\2i\17\3\2\2\2")
+        buf.write(u"jk\t\4\2\2kl\7\23\2\2l\21\3\2\2\2mq\5\24\13\2nq\5\26")
+        buf.write(u"\f\2oq\5\30\r\2pm\3\2\2\2pn\3\2\2\2po\3\2\2\2q\23\3\2")
+        buf.write(u"\2\2rs\7\13\2\2su\7\22\2\2tv\5\4\3\2ut\3\2\2\2vw\3\2")
+        buf.write(u"\2\2wu\3\2\2\2wx\3\2\2\2xy\3\2\2\2yz\7\16\2\2z\25\3\2")
+        buf.write(u"\2\2{|\7\f\2\2|}\7\22\2\2}~\7\22\2\2~\u0080\7\22\2\2")
+        buf.write(u"\177\u0081\5\4\3\2\u0080\177\3\2\2\2\u0081\u0082\3\2")
+        buf.write(u"\2\2\u0082\u0080\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0084")
+        buf.write(u"\3\2\2\2\u0084\u0085\7\17\2\2\u0085\27\3\2\2\2\u0086")
+        buf.write(u"\u0087\7\r\2\2\u0087\u0089\t\2\2\2\u0088\u008a\5\4\3")
+        buf.write(u"\2\u0089\u0088\3\2\2\2\u008a\u008b\3\2\2\2\u008b\u0089")
+        buf.write(u"\3\2\2\2\u008b\u008c\3\2\2\2\u008c\u008d\3\2\2\2\u008d")
+        buf.write(u"\u008e\7\20\2\2\u008e\31\3\2\2\2\u008f\u0091\7\t\2\2")
+        buf.write(u"\u0090\u0092\7\23\2\2\u0091\u0090\3\2\2\2\u0092\u0093")
+        buf.write(u"\3\2\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094")
+        buf.write(u"\33\3\2\2\2\23\37!).\62\65=EPUYcpw\u0082\u008b\u0093")
         return buf.getvalue()
 
 
@@ -548,6 +554,39 @@ class FlukaParser ( Parser ):
 
 
 
+    class MultipleUnion2Context(ZoneUnionContext):
+
+        def __init__(self, parser, ctx): # actually a FlukaParser.ZoneUnionContext)
+            super(FlukaParser.MultipleUnion2Context, self).__init__(parser)
+            self.copyFrom(ctx)
+
+        def zone(self, i=None):
+            if i is None:
+                return self.getTypedRuleContexts(FlukaParser.ZoneContext)
+            else:
+                return self.getTypedRuleContext(FlukaParser.ZoneContext,i)
+
+        def Bar(self, i=None):
+            if i is None:
+                return self.getTokens(FlukaParser.Bar)
+            else:
+                return self.getToken(FlukaParser.Bar, i)
+
+        def enterRule(self, listener):
+            if hasattr(listener, "enterMultipleUnion2"):
+                listener.enterMultipleUnion2(self)
+
+        def exitRule(self, listener):
+            if hasattr(listener, "exitMultipleUnion2"):
+                listener.exitMultipleUnion2(self)
+
+        def accept(self, visitor):
+            if hasattr(visitor, "visitMultipleUnion2"):
+                return visitor.visitMultipleUnion2(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class MultipleUnionContext(ZoneUnionContext):
 
         def __init__(self, parser, ctx): # actually a FlukaParser.ZoneUnionContext)
@@ -615,9 +654,9 @@ class FlukaParser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_zoneUnion)
         self._la = 0 # Token type
         try:
-            self.state = 71
+            self.state = 83
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 localctx = FlukaParser.MultipleUnionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
@@ -647,6 +686,30 @@ class FlukaParser ( Parser ):
                 self.state = 69
                 self.match(FlukaParser.Bar)
                 self.state = 70
+                self.zone()
+                pass
+
+            elif la_ == 3:
+                localctx = FlukaParser.MultipleUnion2Context(self, localctx)
+                self.enterOuterAlt(localctx, 3)
+                self.state = 71
+                self.zone()
+                self.state = 72
+                self.match(FlukaParser.Bar)
+                self.state = 78
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,8,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 73
+                        self.zone()
+                        self.state = 74
+                        self.match(FlukaParser.Bar) 
+                    self.state = 80
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,8,self._ctx)
+
+                self.state = 81
                 self.zone()
                 pass
 
@@ -698,18 +761,18 @@ class FlukaParser ( Parser ):
         localctx = FlukaParser.ZoneContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_zone)
         try:
-            self.state = 75
+            self.state = 87
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 73
+                self.state = 85
                 self.expr()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 74
+                self.state = 86
                 self.subZone()
                 pass
 
@@ -850,38 +913,38 @@ class FlukaParser ( Parser ):
         localctx = FlukaParser.ExprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_expr)
         try:
-            self.state = 85
+            self.state = 97
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,11,self._ctx)
             if la_ == 1:
                 localctx = FlukaParser.SingleUnaryContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 77
+                self.state = 89
                 self.unaryExpression()
                 pass
 
             elif la_ == 2:
                 localctx = FlukaParser.UnaryAndBooleanContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 78
+                self.state = 90
                 self.unaryExpression()
-                self.state = 79
+                self.state = 91
                 self.expr()
                 pass
 
             elif la_ == 3:
                 localctx = FlukaParser.UnaryAndSubZoneContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 81
+                self.state = 93
                 self.subZone()
-                self.state = 82
+                self.state = 94
                 self.expr()
                 pass
 
             elif la_ == 4:
                 localctx = FlukaParser.OneSubZoneContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 84
+                self.state = 96
                 self.subZone()
                 pass
 
@@ -943,18 +1006,18 @@ class FlukaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 87
+            self.state = 99
             _la = self._input.LA(1)
             if not(_la==FlukaParser.Plus or _la==FlukaParser.Minus):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 88
+            self.state = 100
             self.match(FlukaParser.LParen)
-            self.state = 89
+            self.state = 101
             self.expr()
-            self.state = 90
+            self.state = 102
             self.match(FlukaParser.RParen)
         except RecognitionException as re:
             localctx.exception = re
@@ -1006,14 +1069,14 @@ class FlukaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 92
+            self.state = 104
             _la = self._input.LA(1)
             if not(_la==FlukaParser.Plus or _la==FlukaParser.Minus):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 93
+            self.state = 105
             self.match(FlukaParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -1066,22 +1129,22 @@ class FlukaParser ( Parser ):
         localctx = FlukaParser.GeoDirectiveContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_geoDirective)
         try:
-            self.state = 98
+            self.state = 110
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [FlukaParser.StartExpansion]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 95
+                self.state = 107
                 self.expansion()
                 pass
             elif token in [FlukaParser.StartTranslat]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 96
+                self.state = 108
                 self.translat()
                 pass
             elif token in [FlukaParser.StartTransform]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 97
+                self.state = 109
                 self.transform()
                 pass
             else:
@@ -1144,23 +1207,23 @@ class FlukaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 100
+            self.state = 112
             self.match(FlukaParser.StartExpansion)
-            self.state = 101
+            self.state = 113
             self.match(FlukaParser.Float)
-            self.state = 103 
+            self.state = 115 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 102
+                self.state = 114
                 self.body()
-                self.state = 105 
+                self.state = 117 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
                     break
 
-            self.state = 107
+            self.state = 119
             self.match(FlukaParser.EndExpansion)
         except RecognitionException as re:
             localctx.exception = re
@@ -1222,27 +1285,27 @@ class FlukaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 109
+            self.state = 121
             self.match(FlukaParser.StartTranslat)
-            self.state = 110
+            self.state = 122
             self.match(FlukaParser.Float)
-            self.state = 111
+            self.state = 123
             self.match(FlukaParser.Float)
-            self.state = 112
+            self.state = 124
             self.match(FlukaParser.Float)
-            self.state = 114 
+            self.state = 126 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 113
+                self.state = 125
                 self.body()
-                self.state = 116 
+                self.state = 128 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
                     break
 
-            self.state = 118
+            self.state = 130
             self.match(FlukaParser.EndTranslat)
         except RecognitionException as re:
             localctx.exception = re
@@ -1304,28 +1367,28 @@ class FlukaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 120
+            self.state = 132
             self.match(FlukaParser.StartTransform)
-            self.state = 121
+            self.state = 133
             _la = self._input.LA(1)
             if not(_la==FlukaParser.Integer or _la==FlukaParser.ID):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 123 
+            self.state = 135 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 122
+                self.state = 134
                 self.body()
-                self.state = 125 
+                self.state = 137 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FlukaParser.BodyCode) | (1 << FlukaParser.StartExpansion) | (1 << FlukaParser.StartTranslat) | (1 << FlukaParser.StartTransform))) != 0)):
                     break
 
-            self.state = 127
+            self.state = 139
             self.match(FlukaParser.EndTransform)
         except RecognitionException as re:
             localctx.exception = re
@@ -1377,15 +1440,15 @@ class FlukaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 129
+            self.state = 141
             self.match(FlukaParser.Lattice)
-            self.state = 131 
+            self.state = 143 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 130
+                self.state = 142
                 self.match(FlukaParser.ID)
-                self.state = 133 
+                self.state = 145 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==FlukaParser.ID):

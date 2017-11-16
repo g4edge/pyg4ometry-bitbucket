@@ -22,8 +22,9 @@ region
     ;
 
 zoneUnion
-    : Bar zone (Bar zone)+ # multipleUnion
-    | Bar zone             # singleUnion
+    : Bar zone (Bar zone)+      # multipleUnion
+    | Bar zone                  # singleUnion
+    | zone Bar (zone Bar)* zone # multipleUnion2
     ;
 
 zone

@@ -45,6 +45,11 @@ class FlukaParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by FlukaParser#multipleUnion2.
+    def visitMultipleUnion2(self, ctx):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by FlukaParser#zone.
     def visitZone(self, ctx):
         return self.visitChildren(ctx)
