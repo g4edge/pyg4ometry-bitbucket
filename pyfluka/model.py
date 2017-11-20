@@ -1,8 +1,7 @@
 """ Collection of classes for representing, viewing and viewing a
 Fluka model, and converting it GDML. """
 
-from __future__ import (absolute_import, print_function,
-                        unicode_literals, division)
+from __future__ import (absolute_import, print_function, division)
 import numpy as np
 import collections
 import os.path

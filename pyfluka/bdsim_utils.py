@@ -1,7 +1,6 @@
 """Useful functions and classes to ease the use of pyfluka with BDSIM."""
 
-from __future__ import (absolute_import, print_function,
-                        unicode_literals, division)
+from __future__ import (absolute_import, print_function, division)
 import collections
 import warnings
 import textwrap
