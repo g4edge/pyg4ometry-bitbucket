@@ -1051,9 +1051,9 @@ class Region(object):
         # are passive, so reverse the rotation:
         rotation_angles = trf.reverse(rotation_angles)
         pygdml.volume.Volume(
-            rotation_angles, boolean.centre(), boolean.gdml_solid(),
-            self.name, volume, 1, False, self.material
-        )
+            rotation_angles, boolean.centre(),
+            boolean.gdml_solid(length_safety="trim"), self.name, volume,
+            1, False, self.material)
 
     def evaluate(self, zones=None, optimise=False):
         zones = self._select_zones(zones)
