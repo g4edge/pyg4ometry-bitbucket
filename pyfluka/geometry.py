@@ -235,13 +235,16 @@ class Body(object):
         return "{}_{}".format(self.name, uuid.uuid4())
 
     @staticmethod
-    def _get_safety(boolean):
+    def _get_safety_addend(choice):
+        # boolean is either a string or None.
         if boolean is None:
             return 0.0
         elif boolean.lower() == "trim":
             return -LENGTH_SAFETY
         elif boolean.lower() == "extend":
             return LENGTH_SAFETY
+        else:
+            raise ValueError("Unrecognised safety choice: {}".format(choice))
 
     def __repr__(self):
         return "<{}: \"{}\">".format(type(self).__name__, self.name)
@@ -255,8 +258,8 @@ class InfiniteCylinder(Body):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Tubs(self._unique_body_name(),
                                  0.0, self._radius + safety,
                                  self._scale * 0.5,
@@ -284,8 +287,8 @@ class InfiniteHalfSpace(Body):
     def crude_extent(self):
         return abs(max(self.parameters))
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * self._scale_x + safety,
                                 0.5 * self._scale_y + safety,
@@ -402,9 +405,9 @@ class RPP(Body):
                     self.parameters.z_max - self.parameters.z_min])
 
 
-    def gdml_solid(self, boolean=None):
+    def gdml_solid(self, length_safety=None):
         """Construct the equivalent pygdml Box from this body."""
-        safety = Body._get_safety(boolean)
+        safety_addend = Body._get_safety_addend(length_safety)
         x_length = self._x_max - self._x_min + safety
         y_length = self._y_max - self._y_min + safety
         z_length = self._z_max - self._z_min + safety
@@ -433,9 +436,9 @@ class SPH(Body):
         # largest parameter.
         return 2 * max(map(abs, self.parameters))
 
-    def gdml_solid(self, boolean=None):
+    def gdml_solid(self, length_safety=None):
         """Construct a solid, whole, GDML sphere from this."""
-        safety = Body._get_safety(boolean)
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Orb(self._unique_body_name(),
                                 self.parameters.radius + safety)
 
@@ -485,8 +488,8 @@ class RCC(Body):
                                           self.parameters.v_z)))
         return centre_max + self.length
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Tubs(self._unique_body_name(),
                                  0.0,
                                  self.radius + safety,
@@ -554,8 +557,8 @@ class REC(Body):
     def _set_rotation_matrix(self, transformation):
         pass
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         # EllipticalTube is defined in terms of half-lengths in x, y,
         # and z.  Choose semi_major to start in the positive y direction.
         semi_minor = np.linalg.norm([self.parameters.semi_minor_x,
@@ -633,8 +636,8 @@ class TRC(Body):
                    self.parameters.minor_radius,
                    self.parameters.major_radius)
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         # The first face of pygdml.Cons is located at -z, and the
         # second at +z.  Here choose to put the major face at -z.
         return pygdml.solid.Cons(self._unique_body_name(),
@@ -787,8 +790,8 @@ class PLA(Body):
                                "Point isn't on the plane!")
         return closest_point
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Box(self._unique_body_name(),
                                 0.5 * self._scale + safety,
                                 0.5 * self._scale + safety,
@@ -920,8 +923,8 @@ class XEC(Body):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.EllipticalTube(
             self._unique_body_name(),
             self.parameters.semi_axis_z + safety,
@@ -959,8 +962,8 @@ class YEC(Body):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.EllipticalTube(
             self._unique_body_name(),
             self.parameters.semi_axis_x + safety,
@@ -994,8 +997,8 @@ class ZEC(Body):
     def crude_extent(self):
         return max(map(abs, self.parameters))
 
-    def gdml_solid(self, boolean=None):
-        safety = Body._get_safety(boolean)
+    def gdml_solid(self, length_safety=None):
+        safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.EllipticalTube(
             self._unique_body_name(),
             self.parameters.semi_axis_x + safety,
