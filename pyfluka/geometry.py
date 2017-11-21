@@ -155,21 +155,21 @@ class Body(object):
         extent of the mesh, and return this.
 
         """
-        intersection = self.intersection(other)
+        intersection = self.intersection(other, safety="trim")
         extent = intersection._extent()
         return extent
 
-    def intersection(self, other, safety="trim", other_offset=None):
+    def intersection(self, other, safety=None, other_offset=None):
         return self._do_boolean_op(other, pygdml.solid.Intersection,
                                    safety, other_offset)
 
-    def subtraction(self, other, safety="extend", other_offset=None):
+    def subtraction(self, other, safety=None, other_offset=None):
         return self._do_boolean_op(other, pygdml.solid.Subtraction,
                                    safety, other_offset)
 
-    def union(self, other, other_offset=None):
+    def union(self, other, safety=None, other_offset=None):
         return self._do_boolean_op(other, pygdml.solid.Union,
-                                   "trim", other_offset)
+                                   safety, other_offset)
 
     def _do_boolean_op(self, other, op, safety, offset):
         if other == _IDENTITY:
@@ -1061,7 +1061,10 @@ class Region(object):
         booleans = [zone.evaluate(optimise=optimise) for zone in zones]
 
         def accumulate_unions(first, second):
-            return first.union(second)
+            # only add automatic length safety if the whole geometry
+            # is optimised.  This is the (hopefully) consistent rule.
+            safety = "trim" if optimise is True else None
+            return first.union(second, safety=safety)
         out_boolean = reduce(accumulate_unions, booleans)
         return out_boolean
 
@@ -1215,7 +1218,7 @@ class Zone(object):
         self._map_extent_2_bodies(self.contains, out)
 
         def accumulate_intersections(first, second):
-            return first.intersection(second)
+            return first.intersection(second, safety="trim")
         boolean_from_ints = reduce(accumulate_intersections, self.contains)
 
         self._map_extent_2_bodies(self.excludes, boolean_from_ints)
@@ -1251,7 +1254,8 @@ class Zone(object):
                 )
             elif isinstance(body, Zone):
                 evaluated_zone = body._accumulate(subzone_order=subzone_order)
-                accumulated = evaluated_zone.intersection(accumulated)
+                accumulated = evaluated_zone.intersection(
+                   accumulated, safety=safety_map['intersection'])
 
         for body in self.excludes:
             if isinstance(body, Body):
@@ -1263,8 +1267,8 @@ class Zone(object):
                 subzone_order = (None if subzone_order is None
                                  else subzone_order + 1)
                 accumulated = accumulated.subtraction(
-                    body._accumulate(subzone_order=subzone_order)
-                )
+                    body._accumulate(subzone_order=subzone_order),
+                    accumulated, safety=safety_map['subtraction'])
         assert accumulated is not _IDENTITY
         return accumulated
 
@@ -1460,6 +1464,6 @@ def get_overlap(first, second, optimise=True):
     first = first.evaluate(optimise=optimise)
     second = second.evaluate(optimise=optimise)
     try:
-        return first.intersection(second)._extent()
+        return first.intersection(second, safety="trim")._extent()
     except pygdml.NullMeshError:
         return None
