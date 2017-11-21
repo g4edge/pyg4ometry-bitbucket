@@ -160,18 +160,31 @@ class Body(object):
         return extent
 
     def intersection(self, other, safety=None, other_offset=None):
+        # Safety is the same for an intersection, either we seek to
+        # shrink both solids or to extend both solids, usually the
+        # desire is to shrink both.
         return self._do_boolean_op(other, pygdml.solid.Intersection,
-                                   safety, other_offset)
+                                   safety, safety, other_offset)
 
     def subtraction(self, other, safety=None, other_offset=None):
+        # Safety is inverted for the first w.r.t the second.  When we
+        # seek to extend the subtrahend, we want to trim the minuend,
+        # and vice versa.t
+        opposite_safety = {None: None,
+                           "extend": "trim",
+                           "trim": "extend"}[safety]
         return self._do_boolean_op(other, pygdml.solid.Subtraction,
-                                   safety, other_offset)
+                                   opposite_safety, safety, other_offset)
 
     def union(self, other, safety=None, other_offset=None):
         return self._do_boolean_op(other, pygdml.solid.Union,
-                                   safety, other_offset)
+                                   safety, safety, other_offset)
 
-    def _do_boolean_op(self, other, op, safety, offset):
+    def _do_boolean_op(self, other, op, safety1, safety2, offset):
+        """ Do the boolean operation of self with other.  op is the boolean
+        operation of choice.  safety1 is the safety of self (either
+        None, "trim", or "extend"), and offset is ???
+        """
         if other == _IDENTITY:
             return self
         if offset is None:
@@ -183,8 +196,8 @@ class Body(object):
         relative_transformation = [relative_angles, relative_translation]
         out_name = self._unique_boolean_name(other)
         out_solid = op(
-            out_name, self.gdml_solid(safety),
-            other.gdml_solid(safety), relative_transformation
+            out_name, self.gdml_solid(safety1),
+            other.gdml_solid(safety2), relative_transformation
         )
         out_centre = self.centre()
         out_rotation = self.rotation
