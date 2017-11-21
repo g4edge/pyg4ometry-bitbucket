@@ -1266,9 +1266,12 @@ class Zone(object):
             elif isinstance(body, Zone):
                 subzone_order = (None if subzone_order is None
                                  else subzone_order + 1)
+                # subtract from accumulated the accumulation of the
+                # Zone instance.
                 accumulated = accumulated.subtraction(
                     body._accumulate(subzone_order=subzone_order),
-                    accumulated, safety=safety_map['subtraction'])
+                    safety=safety_map['subtraction'])
+
         assert accumulated is not _IDENTITY
         return accumulated
 
