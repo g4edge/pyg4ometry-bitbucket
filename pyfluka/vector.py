@@ -58,9 +58,19 @@ class Three(_np.ndarray):
         return _np.linalg.norm(self)
 
     def __eq__(self, other):
-        return (self.x == other.x
-                and self.y == other.y
-                and self.z == other.z)
+        try:
+            return (self.x == other.x
+                    and self.y == other.y
+                    and self.z == other.z)
+        except AttributeError:
+            pass
+        try:
+            return (self.x == other[0]
+                    and self.y == other[1]
+                    and self.z == other[2]
+                    and len(self) == len(other))
+        except AttributeError:
+            return False
 
     def __ne__(self, other):
         return not self == other
