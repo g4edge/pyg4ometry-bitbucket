@@ -30,3 +30,13 @@ def test_region_disjoint_zones():
     # disjoint with both 0 and 1:
     region = model.regions['disjoint']
     assert region.disjoint_zones() == {0: [2], 1: [2], 2: [0, 1]}
+
+# def test_length_safety_for_single_body_region():
+#     path = "../test_input/sphere.inp"
+#     model = pyfluka.Model(path)
+#     # GIVEN: a region which in which 0 and 1 are not disjoint but 2 is
+#     # disjoint with both 0 and 1:
+#     region = model.regions['sphere']
+#     gdml = region.evaluate().gdml_solid()
+#     gdml_trimmed = region.evaluate().gdml_solid(length_safety="trim")
+#     assert gdml.pRMax == gdml_trimmed.pRMax + pyfluka.geometry.LENGTH_SAFETY

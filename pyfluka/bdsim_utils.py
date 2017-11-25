@@ -221,3 +221,119 @@ def _try_coercion(var):
         return _coerce_tvector3(var)
     except AttributeError:
         return var
+
+_G4_EXCEPTION_START = (
+    "-------- WWWW ------- G4Exception-START -------- WWWW -------\n")
+_G4_EXCEPTION_END = (
+    "-------- WWWW -------- G4Exception-END --------- WWWW -------\n")
+
+class G4ExceptionMessage(object):
+    """Given an exception message (list of lines) from G4Exception-START to
+    G4-Exception-END."""
+
+
+    def __init__(self, msg):
+        self.exception = ""
+        self.issuer = ""
+        self.message = ""
+
+        self._set_exception(msg)
+        self._set_issuer(msg)
+        self._set_message(msg)
+
+    def _set_exception(self, msg):
+        for line in msg:
+            if line.startswith("*** G4Exception"):
+                self.exception = line.split(": ")[1].strip()
+
+        G4ExceptionMessage._only_one(msg, "*** G4Exception")
+
+    def _set_issuer(self, msg):
+        for line in msg:
+            if "issued by :" in line:
+                self.issuer = line.split(": ")[1].strip()
+        G4ExceptionMessage._only_one(msg, "issued by :")
+
+    def _set_message(self, msg):
+        start_index = next((i
+                            for i, line in enumerate(msg)
+                            if "issued by :" in line)) + 1
+        message = []
+        for line in msg[start_index:]:
+            if line == _G4_EXCEPTION_END:
+                break
+            message.append(line)
+        else:
+            raise ValueError("No G4Exception-END line found!")
+        self.message = message
+
+    @staticmethod
+    def _only_one(msg, substring):
+        n = len([1 for line in msg if substring in line])
+        if n != 1:
+            raise ValueError("Too many occurences of {}".format(substring))
+
+
+def process_geometry_test(file_in, file_out=None):
+    # Skip until we get to the geometry test
+    seen_geom_test_run_count = 0
+    with open(file_in) as f:
+        for i, line in enumerate(f):
+            if line.startswith("/geometry/test/run"):
+                start_overlaps_line_no = i
+                break
+
+    # Read in the geometry test exceptions and append
+    # G4ExceptionMessage instances to all_exceptions
+    with open(file_in) as f:
+        all_exceptions = []
+        this_exception = []
+        in_exception = False
+        for line in f.readlines()[i:]:
+            # Look for an exception message
+            if line != _G4_EXCEPTION_START and in_exception is False:
+                continue
+            in_exception = True
+            this_exception.append(line)
+            if line == _G4_EXCEPTION_END and in_exception is True:
+                all_exceptions.append(G4ExceptionMessage(this_exception))
+                in_exception = False
+                this_exception = []
+
+    # Split into a dictionary of lists of instances based on issuer
+    issuers = _splitter(all_exceptions, "issuer")
+
+    return [_process_overlap_g4message(message)
+            for message in issuers["G4PVPlacement::CheckOverlaps()"]]
+
+
+def _splitter(iterable, attribute):
+    out = dict()
+    for item in iterable:
+        value = getattr(item, attribute)
+        if value not in out:
+            out[value] = []
+        out[value].append(item)
+
+    return out
+
+def _process_overlap_g4message(msg):
+    if msg.issuer != "G4PVPlacement::CheckOverlaps()":
+        raise ValueError("This exception message is not for an overlap!")
+    first_vol = msg.message[1].split()[-1]
+    amount = float(msg.message[3].split()[-2])
+    unit = msg.message[3].split()[-1]
+
+    if "mother volume" in msg.message[0]:
+        second_vol = "mother"
+        point = list(eval(msg.message[3].split()[4][:-1]))
+        with_mother = True
+    else:
+        second_vol = msg.message[2].split()[1]
+        point = list(eval(msg.message[3].split()[2][:-1]))
+        with_mother = False
+
+    OverlapInfo = collections.namedtuple(
+        "OverlapInfo", ["first", "second", "point",
+                        "amount", "unit", "with_mother"])
+    return OverlapInfo(first_vol, second_vol, point, amount, unit, with_mother)
