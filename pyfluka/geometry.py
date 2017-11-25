@@ -1277,12 +1277,23 @@ class Zone(object):
                         body, safety_map['subtraction']
                     )
             elif isinstance(body, Zone):
-                subzone_order = (None if subzone_order is None
-                                 else subzone_order + 1)
+                # from IPython import embed; embed()
+
+                # If we are doing a subtraction of a subzone, then we
+                # would like to move to the next subzone order by
+                # incrementing the current subzone order.  This in
+                # effect flips the trimming and the extending.  This
+                # is because we  wish to make subtractions solids
+                # larger.  To do this we must extend any intersections
+                # within, where we typically (for "flat" (i.e., no
+                # subzones) geomtries) would instead slightly shrink
+                # an intersection.
+                next_subzone_order = (None if subzone_order is None
+                                      else subzone_order + 1)
                 # subtract from accumulated the accumulation of the
                 # Zone instance.
                 accumulated = accumulated.subtraction(
-                    body._accumulate(subzone_order=subzone_order),
+                    body._accumulate(subzone_order=next_subzone_order),
                     safety=safety_map['subtraction'])
 
         assert accumulated is not _IDENTITY
