@@ -11,4 +11,4 @@ cpcsg/testbuild/
 test/*gdml
 test/*gmad
 test/*stl
-docs/build/
+docs/build*/*
