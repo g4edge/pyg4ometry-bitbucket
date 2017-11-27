@@ -1,3 +1,4 @@
+from pygeometry.exceptions import *
 from pygeometry.geant4 import solid as _solid
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.pycsg.geom import Vector as _Vector
@@ -51,10 +52,13 @@ class LogicalVolume :
 
         else :
             daughterMeshes = []
-            for dv in self.daughterVolumes :
-                dvMesh = dv.pycsgmesh() 
-                daughterMeshes.append(dvMesh)
-            self.mesh = [self.solid.pycsgmesh(),daughterMeshes]
+            for dv in self.daughterVolumes:
+                try:
+                    dvMesh = dv.pycsgmesh() 
+                    daughterMeshes.append(dvMesh)
+                except NullMeshError as nme:
+                    print nme
+                self.mesh = [self.solid.pycsgmesh(),daughterMeshes]
 
             self.mesh[0].alpha     = 0.5
             self.mesh[0].wireframe = False
