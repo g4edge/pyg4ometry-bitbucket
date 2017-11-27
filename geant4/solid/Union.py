@@ -22,7 +22,7 @@ class Union(_SolidBase):
         _registry.addSolid(self)
 
     def __repr__(self):
-        return 'Union : ('+str(self.obj1)+') U ('+str(self.obj2)+')'
+        return 'Union : ('+str(self.obj1)+') with ('+str(self.obj2)+')'
 
     def pycsgmesh(self):
 
@@ -43,7 +43,7 @@ class Union(_SolidBase):
         self.mesh = m1.union(m2)
         if not self.mesh.toPolygons():
             print 'Union null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
-            raise NullMeshError(self.obj1, self.obj2, "union")
+            raise NullMeshError(self.obj1, self.obj2, "Union")
 
         self.obj1.mesh = None
         self.obj2.mesh = None

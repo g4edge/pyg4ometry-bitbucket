@@ -22,7 +22,7 @@ class Intersection(_SolidBase) :
         _registry.addSolid(self)
 
     def __repr__(self):
-        return 'Intersection : ('+str(self.obj1)+') n ('+str(self.obj2)+')'
+        return 'Intersection : ('+str(self.obj1)+') with ('+str(self.obj2)+')'
 
     def pycsgmesh(self):
 
@@ -45,7 +45,7 @@ class Intersection(_SolidBase) :
         self.mesh = m1.intersect(m2)
         if not self.mesh.toPolygons():
             print 'Intersection null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
-            raise NullMeshError(self.obj1, self.obj2, "intersection")
+            raise NullMeshError(self.obj1, self.obj2, "Intersection")
 
         self.obj1.mesh = None
         self.obj2.mesh = None
