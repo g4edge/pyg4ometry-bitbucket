@@ -6,8 +6,9 @@ from xml.dom import minidom as _minidom
 import warnings as _warnings
 from math import pi as _pi
 
-class Reader :
-    def __init__(self, filename) :
+class Reader(object):
+    def __init__(self, filename):
+        super(Reader, self).__init__()
         self.filename = filename
 
         self.constants        = {}

@@ -10,11 +10,10 @@ import numpy as _np
 
 import sys as _sys
 
-class LogicalVolume :
-
+class LogicalVolume(object):
     imeshed = 0
-
-    def __init__(self, solid, material, name, debug= False) :
+    def __init__(self, solid, material, name, debug= False):
+        super(LogicalVolume, self).__init__()
         self.solid           = solid
         self.material        = material
         self.name            = name

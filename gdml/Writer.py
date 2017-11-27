@@ -4,7 +4,8 @@ from pygeometry.geant4.Parameter import Parameter as _Parameter
 from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
 
 class Writer(object):
-    def __init__(self, prepend = 'PREPEND') :
+    def __init__(self, prepend = 'PREPEND'):
+        super(Writer, self).__init__()
         self.prepend = prepend
 
         self.imp = getDOMImplementation()
