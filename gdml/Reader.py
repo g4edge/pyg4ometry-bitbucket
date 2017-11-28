@@ -108,8 +108,24 @@ class Reader(object):
                         keys.append(prm)
                         vals.append(pos)
 
+                    elif(prm == "positionref"):
+                        ref_name = [attr.value for attr in csgsd.attributes.values()][0] #only one parameter - the ref name
+                        pos_keys = ["x", "y", "z"]          #this preserves the dict structure understood by solid building methods
+                        ref_vals  = self.positions[ref_name] #this is already an [x,y,z] list with the correct units
+                        pos = {key: val for (key,val) in zip(pos_keys, ref_vals)}
+                        keys.append("position")
+                        vals.append(pos)
+
+                    elif(prm == "rotationref"):
+                        ref_name = [attr.value for attr in csgsd.attributes.values()][0] #only one parameter - the ref name
+                        rot_keys = ["x", "y", "z"]           #this preserves the dict structure understood by solid building methods
+                        ref_vals  = self.rotations[ref_name] #this is already an [x,y,z] list with the correct units
+                        rot = {key: val for (key,val) in zip(rot_keys, ref_vals)}
+                        keys.append("rotation")
+                        vals.append(rot)
+
                     else:
-                        _warnings.warn("CSG solid parameter '"+prm+"' unknown")
+                        _warnings.warn("CSG solid paramets '"+prm+"' unknown")
 
                 gdml_attributes = {key: val for (key,val) in zip(keys, vals)}
 
