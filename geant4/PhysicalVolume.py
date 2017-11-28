@@ -6,11 +6,10 @@ from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVecto
 
 import sys as _sys
 
-class PhysicalVolume :
-
+class PhysicalVolume(object):
     imeshed = 0
-
-    def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1], debug= False) :
+    def __init__(self, rotation, position, logicalVolume, name, motherVolume, scale = [1,1,1], debug= False):
+        super(PhysicalVolume, self).__init__()
         self.rotation      = rotation
         self.position      = position
         self.logicalVolume = logicalVolume

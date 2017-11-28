@@ -10,7 +10,7 @@ class Plane(_SolidBase) : # point on plane is on z-axis
         self.normal = _Vector(normal).unit()
         self.dist   = float(dist)
         self.pDz    = float(zlength)
-        self.mesh   = float(None)
+        self.mesh   = None
 
     def __repr__(self):
         pass

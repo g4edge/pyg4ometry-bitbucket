@@ -1,12 +1,8 @@
 from SolidBase import SolidBase as _SolidBase
-from pygeometry.pycsg.core import CSG as _CSG
-from pygeometry.pycsg.geom import Vertex as _Vertex
-from pygeometry.pycsg.geom import Vector as _Vector
-from pygeometry.pycsg.geom import Polygon as _Polygon
+from pygeometry.exceptions import *
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.transformation import *
 import copy as _copy
-import sys as _sys
 
 class Subtraction(_SolidBase) :
     """
@@ -47,8 +43,8 @@ class Subtraction(_SolidBase) :
 
         self.mesh = m1.subtract(m2)
         if not self.mesh.toPolygons():
-            print 'Subtraction null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
-            raise NullMeshError(self)
+            #print 'Subtraction null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
+            raise NullMeshError(self.obj1, self.obj2, "Subtraction")
 
         self.obj1.mesh = None
         self.obj2.mesh = None

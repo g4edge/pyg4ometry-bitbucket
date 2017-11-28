@@ -1,14 +1,10 @@
 from SolidBase import SolidBase as _SolidBase
-from pygeometry.pycsg.core import CSG as _CSG
-from pygeometry.pycsg.geom import Vertex as _Vertex
-from pygeometry.pycsg.geom import Vector as _Vector
-from pygeometry.pycsg.geom import Polygon as _Polygon
+from pygeometry.exceptions import *
 from pygeometry.geant4.Registry import registry as _registry
 from pygeometry.transformation import *
 import copy as _copy
-import sys as _sys
 
-class Union(_SolidBase) :
+class Union(_SolidBase):
     """
     name = name
     obj1 = unrotated, untranslated solid
@@ -26,7 +22,7 @@ class Union(_SolidBase) :
         _registry.addSolid(self)
 
     def __repr__(self):
-        return 'Union : ('+str(self.obj1)+') U ('+str(self.obj2)+')'
+        return 'Union : ('+str(self.obj1)+') with ('+str(self.obj2)+')'
 
     def pycsgmesh(self):
 
@@ -47,7 +43,7 @@ class Union(_SolidBase) :
         self.mesh = m1.union(m2)
         if not self.mesh.toPolygons():
             print 'Union null mesh',self.name,self.obj1.name, m1, self.obj2.name, m2
-            raise NullMeshError(self)
+            raise NullMeshError(self.obj1, self.obj2, "Union")
 
         self.obj1.mesh = None
         self.obj2.mesh = None

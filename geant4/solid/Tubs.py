@@ -33,7 +33,7 @@ class Tubs(_SolidBase) :
         _registry.addSolid(self)
         
     def __repr__(self) : 
-        return 'Tubs :'+self.name+' '+str(self.pRMin)+' '+str(self.pRMax)+' '+str(self.pDz)+' '+str(self.pSPhi)+' '+str(self.pDPhi)
+        return 'Tubs : '+self.name+' '+str(self.pRMin)+' '+str(self.pRMax)+' '+str(self.pDz)+' '+str(self.pSPhi)+' '+str(self.pDPhi)
         
     def pycsgmesh(self):
         self.basicmesh()
