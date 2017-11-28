@@ -77,13 +77,19 @@ class Reader :
         pass
 
     def parseSolids(self, xmldoc):
-        solids_list = [] 
+        solids_list = []
         self.xmlsolids = xmldoc.getElementsByTagName("solids")[0]
 
         for sd in self.xmlsolids.childNodes :
             csg_solid_types = ["subtraction", "union", "intersection"]
             ply_solid_types = ["polycone", "polyhedra"]
-            solid_type = sd.tagName
+
+            try :
+                solid_type = sd.tagName
+            except AttributeError :
+                # node is a comment so continue
+                continue
+
             
             if (solid_type in csg_solid_types): #need to inspect child nodes to get all parameters for csg solids
                 keys = sd.attributes.keys()
