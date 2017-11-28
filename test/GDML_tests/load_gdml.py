@@ -52,6 +52,8 @@ def Load(filename, interactive=False, verbose=False):
             _ipython.embed()
         else:
             print "No IPython installed, cannot use interactive mode."
+
+    return meshlist
             
 
 def _stripFilepath(filepath, verbose=False):
@@ -75,8 +77,8 @@ def _stripFilepath(filepath, verbose=False):
     
 
 def Main():
-    usage = ''
     if __name__ == "__main__":
+        usage = ''
         parser = _optparse.OptionParser(usage)
         parser.add_option('-f','--file',         action='store',     dest="file",   type="string", default="", help="Path to file. File must have extension .gdml")
         parser.add_option('-i','--interactive',  action='store_true',default=False, help="Interactive mode (Starts after visualiser is closed)")
