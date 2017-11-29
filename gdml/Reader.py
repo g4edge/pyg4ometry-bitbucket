@@ -125,7 +125,7 @@ class Reader(object):
                         vals.append(rot)
 
                     else:
-                        _warnings.warn("CSG solid paramets '"+prm+"' unknown")
+                        _warnings.warn("CSG solid parameter '"+prm+"' unknown")
 
                 gdml_attributes = {key: val for (key,val) in zip(keys, vals)}
 
