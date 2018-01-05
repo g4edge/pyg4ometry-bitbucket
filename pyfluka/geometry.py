@@ -1260,25 +1260,27 @@ class Zone(object):
             safety_map = {"intersection": "extend", "subtraction": "trim"}
 
         accumulated = _IDENTITY # An intersection with _IDENTITY is just self..
-        for body in self.contains:
+
+        # Remove all bodies which are omittable:
+        filtered_contains = [body for body in self.contains
+                           if not body._is_omittable]
+        filtered_excludes = [body for body in self.excludes
+                           if not body._is_omittable]
+
+        for body in filtered_contains:
             if isinstance(body, Body):
                 accumulated = body.intersection(
-                    accumulated, safety_map['intersection']
-                )
+                    accumulated, safety_map['intersection'])
             elif isinstance(body, Zone):
                 evaluated_zone = body._accumulate(subzone_order=subzone_order)
                 accumulated = evaluated_zone.intersection(
                    accumulated, safety=safety_map['intersection'])
 
-        for body in self.excludes:
+        for body in filtered_excludes:
             if isinstance(body, Body):
-                if not body._is_omittable:
-                    accumulated = accumulated.subtraction(
-                        body, safety_map['subtraction']
-                    )
+                accumulated = accumulated.subtraction(
+                    body, safety_map['subtraction'])
             elif isinstance(body, Zone):
-                # from IPython import embed; embed()
-
                 # If we are doing a subtraction of a subzone, then we
                 # would like to move to the next subzone order by
                 # incrementing the current subzone order.  This in
