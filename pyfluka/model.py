@@ -64,7 +64,7 @@ class Model(object):
                 except KeyError:
                     msg = ("Missing material \"{}\"from"
                            " Fluka->G4 material map!").format(fluka_material)
-                    raise KeyError(msg)
+                    warnings.warn(msg)
 
         else: # If no material map, we still want to omit BLCKHOLE
             # regions from viewing/conversion.
