@@ -1263,9 +1263,11 @@ class Zone(object):
 
         # Remove all bodies which are omittable:
         filtered_contains = [body for body in self.contains
-                           if not body._is_omittable]
+                             if (isinstance(body, Zone)
+                                 or not body._is_omittable)]
         filtered_excludes = [body for body in self.excludes
-                           if not body._is_omittable]
+                             if (isinstance(body, Zone)
+                                 or not body._is_omittable)]
 
         for body in filtered_contains:
             if isinstance(body, Body):
