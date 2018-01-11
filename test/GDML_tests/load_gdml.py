@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 
 """
-This script loads a GDML file and visualises it in PYGEOMETRY
+This script loads a GDML files and visualises them in PYGEOMETRY
 
 Options:
--------------------------------------------------------------------------------------------
-|filename    | --filename | The path to the GDML file to be loaded                        |
--------------------------------------------------------------------------------------------
-|interactive | -i         | When enabled an interactive IPython session is launched after |
-|            |            | visualisation window is closed.                               |
--------------------------------------------------------------------------------------------
-|verbose     | -v         | Print more detailed information                               |
--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+|path        | --path     | The path to be loaded. Can be a file, comma-separated list of files or a directory|
+--------------------------------------------------------------------------------------------------------------
+|interactive | -i         | When enabled an interactive IPython session is launched after                     |
+|            |            | visualisation window is closed.                                                   |
+--------------------------------------------------------------------------------------------------------------
+|verbose     | -v         | Print more detailed information                                                   |
+--------------------------------------------------------------------------------------------------------------
 
-Example: ./load_gdml.py --filename=Par02/Par02FullDetector_geant4parsed.gdml -i
+Example: ./load_gdml.py --path=Par02/Par02FullDetector_geant4parsed.gdml
 """
 
 import os as _os
+import ast as _ast
 import optparse as _optparse
 import pygeometry.gdml as _gdml
 import pygeometry.geant4 as _geant4
@@ -26,25 +27,40 @@ try:
     found_ipython = True
 except:
     found_ipython = False
-    
 
-def Load(filename, interactive=False, verbose=False):
-
-    if _os.path.isfile(filename) and filename[-5:] == ".gdml":
-        fname, dpath = _stripFilepath(filename, verbose=verbose)
-    else:
-        print "File:", filename
-        raise IOError('Missing file or invalid file format, GDML file (.gdml) required')
-
-    _os.chdir(dpath)
-
-    reader   = _gdml.Reader(fname)
+def appendMeshForView(vis=None):
     registry = _geant4.registry
     worldvol = registry.worldVolume
     meshlist = worldvol.pycsgmesh()
-    
-    vis      =  _vtk.Viewer()
+
     vis.addPycsgMeshList(meshlist)
+
+    return meshlist
+
+def load(path, interactive=False, verbose=False, visualiser=None):
+
+    if isinstance(path, list):
+        for fpath in path:
+            load(fpath, interactive=interactive, verbose=verbose, visualiser=visualiser)
+
+    if _os.path.isdir(str(path)):
+        gdmlFiles = [_os.path.abspath(each) for each in _os.listdir(path) if each.endswith('.gdml')]
+        for fpath in gdmlFiles:
+            load(fpath, interactive=interactive, verbose=verbose, visualiser=visualiser)
+
+    elif _os.path.isfile(str(path)):
+        if path[-5:] == ".gdml":
+            reader   = _gdml.Reader(_os.path.abspath(path))
+            appendMeshForView(vis=visualiser)
+        else:
+            print "File:", filename
+            raise IOError('Missing file or invalid file format, GDML file (.gdml) required')
+
+
+def run(path, interactive=False, verbose=False):
+    vis = _vtk.Viewer()
+    load(path, interactive, verbose, visualiser=vis)
+
     vis.view()
 
     if interactive:
@@ -53,40 +69,20 @@ def Load(filename, interactive=False, verbose=False):
         else:
             print "No IPython installed, cannot use interactive mode."
 
-    return meshlist
-            
+def tolist_callback(option, opt, value, parser):
+  setattr(parser.values, option.dest, [val.strip() for val in value.split(',')])
 
-def _stripFilepath(filepath, verbose=False):
-    cwd        = _os.getcwd()
-    path       = filepath.split("/")
-    filename   = path[-1]                         #last element is the filename
-
-    if(path[0]=="/"):                             #when absolute filepath is given
-        dirpath = path[:-1]
-    elif(path[0]=="." and path[1]=="/"):          #when ./ is used to specify current folder
-        path=path[1:]
-        dirpath = cwd+"/".join(path[:-1])
-    else:
-        dirpath = cwd+"/"+"/".join(path[:-1])  #when relative filepath is given
-
-    if verbose:
-        print "Filename: ",filename
-        print "Directory: ",dirpath
-
-    return filename, dirpath
-    
-
-def Main():
+def main():
     if __name__ == "__main__":
         usage = ''
         parser = _optparse.OptionParser(usage)
-        parser.add_option('-f','--file',         action='store',     dest="file",   type="string", default="", help="Path to file. File must have extension .gdml")
+        parser.add_option('-p', '--path', type='string', action='callback', callback=tolist_callback, default="", help="The path to be loaded. Can be a file, comma-separated list of files or a directory. Valid files must have extension .gdml")
         parser.add_option('-i','--interactive',  action='store_true',default=False, help="Interactive mode (Starts after visualiser is closed)")
-        parser.add_option('-v','--verbose',      action='store_true',default=False, help="Print more detailed information")
+        parser.add_option('-v','--verbose',      action='store_true',default=False, help="Print detailed information")
 
         options,args = parser.parse_args()
 
-        if not options.file:
+        if not options.path:
             print "No target file. Stop."
             parser.print_help()
             return
@@ -96,11 +92,11 @@ def Main():
             parser.print_help()
             raise SystemExit
 
-        Load(options.file, options.interactive, options.verbose)
+        run(options.path, options.interactive, options.verbose)
 
     else:
         print "Option parser not availble in interactive mode."
-            
+
 
 if __name__ == "__main__":
-    Main()
+    main()
