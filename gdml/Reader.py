@@ -306,11 +306,11 @@ class Reader(object):
 
     def _eltube(self,**kwargs):
         name  = self._get_var("name", str, "atr", **kwargs)
-        dx    = self._get_var("dx", float, "lgt", **kwargs)
-        dy    = self._get_var("dy", float, "lgt", **kwargs)
-        dz    = self._get_var("dz", float, "lgt", **kwargs)
+        dx    = self._get_var("dx", float, "lgt", **kwargs)/2
+        dy    = self._get_var("dy", float, "lgt", **kwargs)/2
+        dz    = self._get_var("dz", float, "lgt", **kwargs)/2
 
-        csgsolid = _g4.solid.EllipticalTube(name, dx, dy)
+        csgsolid = _g4.solid.EllipticalTube(name, dx, dy, dz)
         return csgsolid
 
     def _trd(self,**kwargs):
