@@ -300,6 +300,15 @@ class Reader(object):
         csgsolid = _g4.solid.Ellipsoid(name, ax, ay, az, bcut, tcut)
         return csgsolid
 
+    def _eltube(self,**kwargs):
+        name  = self._get_var("name", str, "atr", **kwargs)
+        dx    = self._get_var("dx", float, "lgt", **kwargs)
+        dy    = self._get_var("dy", float, "lgt", **kwargs)
+        dz    = self._get_var("dz", float, "lgt", **kwargs)
+
+        csgsolid = _g4.solid.EllipticalTube(name, dx, dy)
+        return csgsolid
+
     def _trd(self,**kwargs):
         name = self._get_var("name", str, "atr",**kwargs)
         x1   = self._get_var("x1", float, "lgt",**kwargs)/2
@@ -509,7 +518,7 @@ class Reader(object):
           Instance of one of the solids supported by pygdml or None
           if the solid is not supported
         """
-        supported_solids = {"box": self._box, "para": self._para, "tube": self._tube, "cone": self._cone, "ellipsoid": self._ellipsoid,
+        supported_solids = {"box": self._box, "para": self._para, "tube": self._tube, "eltube": self._eltube,"cone": self._cone, "ellipsoid": self._ellipsoid,
                             "polyhedra": self._polyhedra, "polycone": self._polycone, "torus": self._torus, "xtru": self._xtru, "cutTube": self._cutTube, 
                             "trd":self._trd, "sphere":self._sphere, "orb": self._orb, "subtraction": self._subtraction,
                              "intersection": self._intersection, "union": self._union, "opticalsurface":self._opticalsurface}
