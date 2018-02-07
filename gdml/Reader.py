@@ -2,6 +2,7 @@ import pygeometry.geant4 as _g4
 import pygeometry.vtk    as _vtk
 #import pygeometry.gdml   as _gdml
 import numpy             as _np
+import re as _re
 from xml.dom import minidom as _minidom
 import warnings as _warnings
 from math import pi as _pi
@@ -16,6 +17,7 @@ class Reader(object):
         self.quantities       = {}
         self.rotations        = {}
         self.matrices         = {}
+        self.variables        = {}
         self.worldVolumeName  = str()
         self.exclude          = [] #parametrized volumes not converted
 
@@ -70,6 +72,8 @@ class Reader(object):
                 self.rotations[name] = self._getCoordinateList(def_attrs)
             elif(define_type == "matrix"):
                 self.matrices[name] = self._getMatrix(def_attrs)
+            elif(define_type == "variable"):
+                self.variables[name] = self._getVariable(def_attrs)
             else:
                 print "Urecognised define: ", define_type
 
@@ -535,7 +539,7 @@ class Reader(object):
             print "Solid "+st+" not supported, abort construction"
 
 
-    def _get_var(self, varname, var_type, param_type, **kwargs):
+    def _get_var(self, varname, var_type, param_type, **kwargs): #TODO: Over time this method turned messy. Consider rewriting from scratch
 
         if(var_type == int):   #inputs are all stings so set defaults to proper type
             default = 0
@@ -553,11 +557,34 @@ class Reader(object):
                 var = var_type(self.quantities[kwargs.get(varname, default)])
             except(KeyError):                               #if attribute value is not found in defined quantities, look in constants
                 try:
-                    var = eval(self.constants[kwargs.get(varname, default)])
-                    #print varname," ",kwargs.get(varname, default)," ",var
+                    var = var_type(eval(self.constants[kwargs.get(varname, default)]))
                 except(KeyError):
-                    _warnings.warn("Variable "+varname+" not found")
-                    var = None
+                    try:
+                        var = var_type(self.variables[kwargs.get(varname, default)]) #if not in constants, look in variables
+                    except(KeyError):
+                        #Here it gets tricky. If not found until now, the value could be an expression with any mix of numbers and defines
+                        try:
+                            expression = self.stringAlgebraicSplit(kwargs.get(varname, default))
+                            expanded = []
+                            for item in expression:
+                                toappend = ""
+                                if item  in "([+-/*]).":
+                                    toappend = item
+                                else:
+                                    try:
+                                        toappend = str(int(item)) #If its a number add it as is.
+                                                                  #Note, the . in a decimal number is split off, all numbers here are ints
+                                    except(ValueError):
+                                        toappend = str(self._get_var("dummy", float, "atr", **{"dummy" : item})) #Recursion using a dummy call
+                                        if not toappend:
+                                            raise KeyError
+                                expanded.append(toappend)
+                            var = eval("".join(expanded))
+
+                        except(KeyError):
+                            #Alas, no value was found for the variable
+                            _warnings.warn("Variable "+varname+" not found")
+                            var = None
 
         #convert units where neccessary
         if var is not default:
@@ -576,6 +603,9 @@ class Reader(object):
 
         return var
 
+    def stringAlgebraicSplit(self, string):
+        return _re.split("([+-/*])", string.replace(" ", ""))
+
     def _getCoordinateList(self, kwargs):
         x = self._get_var("x", float, "atr", **kwargs)
         y = self._get_var("y", float, "atr", **kwargs)
@@ -585,6 +615,10 @@ class Reader(object):
 
     def _getMatrix(self, kwargs):
         return None
+
+    def _getVariable(self, kwargs):
+        val  = self._get_var("value", str, "atr", **kwargs)
+        return val
 
     def _extractNodeData(self, node):
         node_name = node.tagName
