@@ -321,7 +321,27 @@ class Reader(object):
         
         csgsolid = _g4.solid.Torus(name, rmin, rmax, rtor, sphi, dphi)
         return csgsolid
-    
+
+    def _polycone(self,**kwargs):
+        name     = self._get_var("name", str, "atr",**kwargs)
+        sphi     = self._get_var("startphi",float, "ang", **kwargs)
+        dphi     = self._get_var("deltaphi", float, "ang", **kwargs)
+        nzpl     = self._get_var("nzplanes", int, "atr", **kwargs)
+
+        Rmin = []
+        Rmax = []
+        Z    = []
+        for i in range(nzpl):
+            rmin     = self._get_var("rmin_"+str(i), float, "lgt",**kwargs)
+            rmax     = self._get_var("rmax_"+str(i), float, "lgt",**kwargs)
+            z        = self._get_var("z_"+str(i), float, "lgt",**kwargs)
+            Rmin.append(rmin)
+            Rmax.append(rmax)
+            Z.append(z)
+            
+        csgsolid = _g4.solid.Polycone(name, sphi, dphi, Z, Rmin, Rmax)
+        return csgsolid
+
     def _polyhedra(self,**kwargs):
         name     = self._get_var("name", str, "atr",**kwargs)
         sphi     = self._get_var("startphi",float, "ang", **kwargs)
@@ -490,7 +510,7 @@ class Reader(object):
           if the solid is not supported
         """
         supported_solids = {"box": self._box, "para": self._para, "tube": self._tube, "cone": self._cone, "ellipsoid": self._ellipsoid,
-                            "polyhedra": self._polyhedra, "torus": self._torus, "xtru": self._xtru, "cutTube": self._cutTube, 
+                            "polyhedra": self._polyhedra, "polycone": self._polycone, "torus": self._torus, "xtru": self._xtru, "cutTube": self._cutTube, 
                             "trd":self._trd, "sphere":self._sphere, "orb": self._orb, "subtraction": self._subtraction,
                              "intersection": self._intersection, "union": self._union, "opticalsurface":self._opticalsurface}
 
