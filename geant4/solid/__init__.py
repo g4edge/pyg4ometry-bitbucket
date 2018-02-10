@@ -29,4 +29,5 @@ from TwistedTrap         import *
 from Sphere              import *
 from TwistedTrd          import *
 from GenericPolycone     import *
+from TesselatedSolid     import *
 

@@ -26,17 +26,18 @@ class Viewer :
         self.yrange = 0
         self.zrange = 0
 
-    def addPycsgMeshList(self, meshes): #, stlname):
+    def addPycsgMeshList(self, meshes, refine=True): #, stlname):
         # print 'VtkViewer.addPycsgMeshList>', meshes
         for m in meshes :
             if type(m) == list :
-                self.addPycsgMeshList(m) #, stlname)
+                self.addPycsgMeshList(m, refine=refine) #, stlname)
             else :
-                self.addPycsgMesh(m) #, stlname)
+                self.addPycsgMesh(m, refine=refine) #, stlname)
 
-    def addPycsgMesh(self,m): #, stlname):
+    def addPycsgMesh(self,m, refine=True): #, stlname):
         #print 'VtkViewer.addMesh>'
-        m.refine()
+        if refine:
+            m.refine()
         #print 'VtkViewer.addMesh> refined'
         verts, cells, count = m.toVerticesAndPolygons()
         #print 'VtkViewer.addMesh> to vertices'

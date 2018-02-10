@@ -7,3 +7,4 @@ import pycsg
 import vtk
 import test
 import transformation
+import stl
