@@ -404,6 +404,8 @@ class Model(object):
 
         """
         gmad_path = os.path.splitext(gdml_path)[0] + ".gmad"
+        gdml_name = os.path.basename(gdml_path)
+
         with open(gmad_path, 'w') as gmad:
             # If the bounding box is a boolean, then get the extent of
             # obj1, which is assumed to always be the bounding box.
@@ -421,9 +423,9 @@ class Model(object):
                 length = 2 * world_solid.pZ / 1000.
 
             gmad.write("test_component: element, l={!r}*m,"
-                       " geometry=\"gdml:{}\","
+                       " geometry=\"gdml:./{}\","
                        " outerDiameter={}*m;\n".format(length,
-                                                       gdml_path,
+                                                       gdml_name,
                                                        diameter))
             gmad.write('\n')
             gmad.write("component : line = (test_component);\n")
