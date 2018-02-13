@@ -12,6 +12,7 @@ Many features are yet to be implemented or are missing.
    authorship
    installation
    moduledocs
+   issues
 
 
 Indices and tables
