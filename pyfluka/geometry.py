@@ -777,6 +777,13 @@ class PLA(Body):
                   - (0.5 * self._scale * self.perpendicular.unit()))
         return centre
 
+    def _apply_extent(self, extent):
+        self.surface_point = self._closest_point(extent.centre)
+        self._scale = max(extent.size.x * (SCALING_TOLERANCE + 1),
+                          extent.size.y * (SCALING_TOLERANCE + 1),
+                          extent.size.z * (SCALING_TOLERANCE + 1))
+
+
     def _set_rotation_matrix(self, transformation):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
