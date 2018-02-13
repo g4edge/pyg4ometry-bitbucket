@@ -204,6 +204,7 @@ class Model(object):
           box, e.g. space for a beampipe.  The case where the
           subtraction affects the bounding box extent is not tested.
           Maybe it will give you what you expect, but probably not.
+          For now, it is just a single body.
 
         """
         world_mesh = self._generate_mesh(
