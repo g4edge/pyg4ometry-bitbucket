@@ -5,16 +5,10 @@ import collections
 import warnings
 import textwrap
 
-import ROOT
 
 import pygdml.transformation
 import pyfluka.vector
 
-if ROOT.gSystem.Load("librebdsimLib") == -1:
-    msg = ("Cannot find librebdsimLib root library.  Module \"{}\" will"
-           " not be fully functional.").format(__name__)
-    warnings.warn(msg)
-    del msg
 
 def _get_bdsim_rotation(fluka_direction, bdsim_rotation):
     """Get the rotation for placing the external FLUKA geometry with
@@ -119,108 +113,6 @@ def _build_placement_string(name, filepath, offset, axis, angle):
     out = '\n'.join(textwrap.wrap(out))
     return out.format(name=name, filepath=filepath,
                       offset=offset, axis=axis, angle=angle)
-
-# These must be hardcoded, I think, as C++ has no reflection.
-# These are per component variables.
-_COMPONENT_VARS = frozenset({"componentName",
-                             "placementName",
-                             "componentType",
-                             "length",
-                             "staPos",
-                             "midPos",
-                             "endPos",
-                             "staRot",
-                             "midRot",
-                             "endRot",
-                             "staRefPos",
-                             "midRefPos",
-                             "endRefPos",
-                             "staRefRot",
-                             "midRefRot",
-                             "endRefRot",
-                             "staS",
-                             "midS",
-                             "endS",
-                             "beamPipeType",
-                             "beamPipeAper1",
-                             "beamPipeAper2",
-                             "beamPipeAper3",
-                             "beamPipeAper4"})
-
-# These are variables which are not per component.
-_MISC_VARIABLES = frozenset({"samplerNamesUnique"})
-
-AxisAngle = collections.namedtuple("AxisAngle", ["axis", "angle"])
-
-class Component(collections.namedtuple("Component",
-                                       _COMPONENT_VARS | {"index"})):
-    """Simple class for representing a component read out of the
-    BDSOutputROOTEventModel tree from BDSIM rootevent output.
-
-    """
-    # Default repr would be too big so redefine to something
-    # human-readable and useful:
-    def __repr__(self):
-        return "<{}: {}, S={}m ...>".format(self.componentName,
-                                            self.componentType,
-                                            self.staS)
-
-class Lattice(list):
-    """Simple class used for inspecting BDSIM rootevent models."""
-    def __init__(self, path):
-        # Load the ROOT model
-        data_loader = ROOT.DataLoader(path)
-        model = data_loader.GetModel()
-        model_tree = data_loader.GetModelTree()
-        model_tree.GetEntry(0)
-        model = model.model
-
-        # Add the miscellaneous variables.
-        for variable in _MISC_VARIABLES:
-            sequence = list(getattr(model, variable))
-            setattr(self, variable, sequence)
-
-        # Give the model a copy of the component variables for convenience.
-        self.component_variables = _COMPONENT_VARS
-
-        # Add the per component variables.
-        for index, _ in enumerate(model.componentName):
-            component_vars = {variable:
-                              _try_coercion(getattr(model, variable)[index])
-                              for variable in _COMPONENT_VARS}
-            self.append(Component(index=index, **component_vars))
-        self.length = self[-1].endS
-
-    def get_component_column(self, variable):
-        """Returns a list of all the component's attribute according
-        to the variable provided."""
-        return [getattr(component, variable) for component in self]
-
-    def __repr__(self):
-        return "<Lattice: {} components; length = {}m>".format(len(self),
-                                                               self.length)
-
-
-def _coerce_tvector3(tvector):
-    return pyfluka.vector.Three(tvector.X(), tvector.Y(), tvector.Z())
-
-def _coerce_trotation(trotation):
-    angle = ROOT.Double()
-    axis = ROOT.TVector3()
-    trotation.AngleAxis(angle, axis)
-    axis = _coerce_tvector3(axis)
-    angle = float(angle)
-    return AxisAngle(axis, angle)
-
-def _try_coercion(var):
-    try:
-        return _coerce_trotation(var)
-    except AttributeError:
-        pass
-    try:
-        return _coerce_tvector3(var)
-    except AttributeError:
-        return var
 
 _G4_EXCEPTION_START = (
     "-------- WWWW ------- G4Exception-START -------- WWWW -------\n")
