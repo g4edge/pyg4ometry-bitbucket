@@ -436,7 +436,8 @@ class Model(object):
             gmad.write('\n')
             gmad.write("use, period=component;\n")
             gmad.write('\n')
-            gmad.write("option, physicsList=\"em FTFP_BERT muon\";\n")
+            gmad.write("option, physicsList=\"em FTFP_BERT muon\",\n"
+                       "checkOverlaps=1;\n")
             print("Written GMAD file: {}".format(gmad_path))
 
     def test_regions(self, pickle=None, regions=None, optimise=True):
