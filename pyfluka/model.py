@@ -301,10 +301,6 @@ class Model(object):
 
     def _clip_world_volume(self):
         self._world_volume.setClip()
-        safety = pyfluka.geometry.LENGTH_SAFETY
-        self._world_volume.currentVolume.pX += safety
-        self._world_volume.currentVolume.pY += safety
-        self._world_volume.currentVolume.pZ += safety
 
     def _add_regions_to_world_volume(self, regions, optimise):
         """Add the region or regions in region_names to the current
