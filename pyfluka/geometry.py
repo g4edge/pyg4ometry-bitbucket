@@ -9,6 +9,8 @@ from math import pi
 import uuid
 import collections
 import numpy as np
+import networkx as nx
+import itertools
 
 import pygdml
 import pygdml.transformation as trf
@@ -1115,29 +1117,29 @@ class Region(object):
     def __iter__(self):
         return iter(self.zones)
 
-    def disjoint_zones(self):
-        """Returns a dictionary of indices and zones with which that
-        indexed zone is disjoint.  If a zone is disjoint with no other
-        zones then that zone has no entry in the returned dict.  This
-        way, the empty dict corresponds with a region with no disjoint zones.
+    def connected_zones(self):
+        """Returns a generator of sets of connected zones.  If the solid A
+        is connected to B, and B is connected to C, then A is
+        connected to C.  This is useful because Geant4 does not
+        strictly support disjoint unions.
 
         """
-        # indices because zones have no names.
-        out = {index: [] for index in range(len(self.zones))}
-        for index, zone in enumerate(self.zones):
-            for other_index, other_zone in enumerate(self.zones):
-                # never disjoint with self.
-                if other_index == index:
-                    continue
-                overlap = get_overlap(zone, other_zone)
-                # If not disjoint:
-                if overlap is not None:
-                    continue
-                out[index].append(other_index)
-        # remove zones which are connected to all other zones.  This
-        # ensures the empty dictionary is for a fully connected region.
-        out = {index: entry for index, entry in out.iteritems() if entry}
-        return out
+        n_zones = len(self.zones)
+        connected_zone_pairs = []
+
+        # Loop over all combinations of zone numbers within this region
+        for i, j in itertools.product(range(n_zones), range(n_zones)):
+            # Trivially connected to self or tried this combination.
+            if i == j or {i, j} in connected_zone_pairs:
+                continue
+            if get_overlap(self.zones[i], self.zones[j]) is not None:
+                connected_zone_pairs.append({i, j})
+        # Build undirected graph from the unordered pairs
+        g = nx.Graph(connected_zone_pairs)
+        # Add all nodes so that any completely isolated zones are included
+        # in the output.
+        g.add_nodes_from(range(n_zones))
+        return nx.connected_components(g)
 
 class Zone(object):
     """Class representing a Zone (subregion delimited by '|'), i.e. a
