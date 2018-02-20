@@ -574,7 +574,7 @@ class Model(object):
                    for region_name in self.regions}
         for region_name, region in self.regions.iteritems():
             regions[region_name]["connected_zones"] = list(
-                region.connected_zones())
+                region.connected_zones(verbose=True))
             for zone_no, zone in enumerate(region.zones):
                 print("Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                 zone_no))

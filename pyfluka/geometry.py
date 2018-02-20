@@ -1124,7 +1124,7 @@ class Region(object):
     def __iter__(self):
         return iter(self.zones)
 
-    def connected_zones(self):
+    def connected_zones(self, verbose=False):
         """Returns a generator of sets of connected zones.  If the solid A
         is connected to B, and B is connected to C, then A is
         connected to C.  This is useful because Geant4 does not
@@ -1133,12 +1133,17 @@ class Region(object):
         """
         n_zones = len(self.zones)
         connected_zone_pairs = []
-
+        tried = []
+        if verbose:
+            print("Calculating connected zones of region {}.".format(self.name))
         # Loop over all combinations of zone numbers within this region
         for i, j in itertools.product(range(n_zones), range(n_zones)):
             # Trivially connected to self or tried this combination.
-            if i == j or {i, j} in connected_zone_pairs:
+            if i == j or {i, j} in tried:
                 continue
+            tried.append({i, j})
+            if verbose:
+                print("Intersecting zone {} with {}".format(i, j))
             if get_overlap(self.zones[i], self.zones[j]) is not None:
                 connected_zone_pairs.append({i, j})
         # Build undirected graph from the unordered pairs
