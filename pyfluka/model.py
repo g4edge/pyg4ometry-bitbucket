@@ -228,12 +228,17 @@ class Model(object):
 
         """
         self._add_regions_to_world_volume(region_names, optimise=optimise)
+        # If we are subtracting from the world box
         if bounding_subtrahend:
             self._subtract_from_world_volume(bounding_subtrahend)
         elif setclip:
             self._clip_world_volume()
+
+        # Do we want to construct it with the full geometry within or
+        # should be leave some volumes out?
         if just_bounding_box is False:
             return self._world_volume.pycsgmesh()
+        # If it's true then we remove all daughterVolumes within.
         elif just_bounding_box is True:
             # 1st element of list return by pycsgmesh, I believe, is
             # always the bounding box.  Hopefully always.  I assume
@@ -241,12 +246,16 @@ class Model(object):
             world_mesh = self._world_volume.pycsgmesh()
             self._world_volume.daughterVolumes = []
             return [world_mesh[0]]
+        # Else if just_bounding_box is the name of a region, then
+        # remove all daughterVolumes that don't have that name.
         elif isinstance(just_bounding_box, basestring):
             self._world_volume.daughterVolumes = (
                 [element for element in
                  self._world_volume.daughterVolumes
                  if element.name == just_bounding_box])
             return self._world_volume.pycsgmesh()
+        # Else if we have a sequence of region names to keep in the
+        # otherwise empty bounding box.
         else:
             try:
                 self._world_volume.daughterVolumes = (
@@ -315,11 +324,12 @@ class Model(object):
 
         """
         self._world_volume = Model._gdml_world_volume()
-        if regions is None:
+        if regions is None: # add all regions by default.
             regions = self.regions.keys()
-        # Coerce a string to a single-element list.
+        # Else if regions is the name of a single region
         elif isinstance(regions, basestring):
             regions = [regions]
+        # Else if we have a map of region names with lists of zone numbers
         elif isinstance(regions, dict):
             for region_name, zone_nos in regions.iteritems():
                 region = self.regions[region_name]
@@ -332,7 +342,7 @@ class Model(object):
                                      optimise=optimise,
                                      zones=zone_nos)
             return
-
+        # Add said regions
         for region_name in regions:
             region = self.regions[region_name]
             if region.material is None: # omit BLCKHOLE
