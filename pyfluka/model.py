@@ -507,24 +507,25 @@ class Model(object):
                     break
 
     def survey(self, pickle=False):
-        """Perform a survey of this model's geometry.  This consists of
-        meshing every region and individual zone and storing their
-        extents, lengths, and centres.  As Fluka regions need not be
-        contiguous, this can be useful for selecting and omitting
-        geometry based on position.
+        """Gets the extents of every zone and the connected_zones of
+        every region.
 
         """
-        regions = {region_name: {} for region_name in self.regions}
+
+        regions = {region_name: {"extents": {},
+                                 "connected_zones": None}
+                   for region_name in self.regions}
         for region_name, region in self.regions.iteritems():
+            regions[region_name]["connected_zones"] = list(
+                region.connected_zones())
             for zone_no, zone in enumerate(region.zones):
                 print("Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                 zone_no))
-                regions[region_name][zone_no] = zone.extent()
+                regions[region_name]["extents"][zone_no] = zone.extent()
 
         if pickle is True:
             pickle_name = "./{}_survey.pickle".format(
-                os.path.basename(os.path.splitext(self._filename)[0])
-            )
+                os.path.basename(os.path.splitext(self._filename)[0]))
             with open(pickle_name, 'w') as pickle_file:
                 cPickle.dump(regions, pickle_file)
         return regions
