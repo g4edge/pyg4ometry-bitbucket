@@ -2,7 +2,7 @@
 Fluka model, and converting it GDML. """
 
 from __future__ import (absolute_import, print_function, division)
-import numpy as np
+
 import collections
 import os.path
 import time
@@ -12,6 +12,7 @@ import textwrap
 import uuid
 import itertools
 
+import numpy as np
 import antlr4
 import pygdml
 
@@ -330,7 +331,7 @@ class Model(object):
                 region.add_to_volume(self._world_volume,
                                      optimise=optimise,
                                      zones=zone_nos)
-            return None
+            return
 
         for region_name in regions:
             region = self.regions[region_name]
@@ -484,16 +485,16 @@ class Model(object):
                 cPickle.dump(output, pickle_file)
         return output
 
-    def view_debug(self, region=None, do_all=False):
-        """If region name is specified then view that in debug mode, else
+    def view_debug(self, region_name=None, do_all=False):
+        """If region_name  is specified then view that in debug mode, else
         attempt to mesh each region in turn and view the first null
         mesh in debug mode, and then exit.  If do_all is not False
         then will not exit after the first null mesh, and will instead
         try to view all regions in turn.
 
         """
-        if region is not None:
-            self.regions[region].view_debug()
+        if region_name is not None:
+            self.regions[region_name].view_debug()
             return
 
         for region in self.regions.itervalues():
@@ -654,8 +655,7 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         factor = self.current_expansion
         if factor is not None:
             return [factor * x for x in parameters]
-        else:
-            return parameters
+        return parameters
 
     @staticmethod
     def _get_floats(ctx):
@@ -729,6 +729,7 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
             return  ('+', body)
         elif ctx.Minus():
             return ('-', body)
+        return None
 
     def visitUnaryAndSubZone(self, ctx):
         sub_zone = self.visit(ctx.subZone())
