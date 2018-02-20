@@ -429,7 +429,7 @@ class Model(object):
                 length = 2 * world_solid.pZ / 1000.
 
             gmad.write("test_component: element, l={!r}*m,"
-                       " geometry=\"gdml:./{}\","
+                       " geometryFile=\"gdml:./{}\","
                        " outerDiameter={}*m;\n".format(length,
                                                        gdml_name,
                                                        diameter))

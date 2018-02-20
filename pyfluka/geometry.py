@@ -1072,9 +1072,16 @@ class Region(object):
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
         rotation_angles = trf.reverse(rotation_angles)
+        # Give a more informative name when a subset of the zones are
+        # selected to be placed.
+        name = (self.name
+                if zones is None
+                else "{}-Zones-{}".format(self.name,
+                                          "-".join([str(index) for
+                                                    index in zones])))
         pygdml.volume.Volume(
             rotation_angles, boolean.centre(),
-            boolean.gdml_solid(length_safety="trim"), self.name, volume,
+            boolean.gdml_solid(length_safety="trim"), name, volume,
             1, False, self.material)
 
     def evaluate(self, zones=None, optimise=False):
