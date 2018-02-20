@@ -105,7 +105,7 @@ class Model(object):
 
     def write_to_gdml(self, regions=None, out_path=None,
                       make_gmad=True, bounding_subtrahend=None,
-                      just_bounding_box=False):
+                      just_bounding_box=False, survey=None):
         """Convert the region to GDML.  Returns the centre (in mm) of the GDML
                       bounding box in the original Fluka coordinate
                       system, which can be useful for placing the
@@ -135,12 +135,21 @@ class Model(object):
           it.  If an iterable of names, then place all of those named
           regions in the bounding box.
 
+        - survey: Output from Model.survey().  This is used to place regions
+          consisting of disconnected zones as individual volumes.
+          This is desirable as G4 doesn't support unions of
+          disconnected solids.  If True then it will be generated on
+          the fly, which maybe fine for small geometries, but it's likely
+          preferable to compute the survey separately once using the
+          survey method, for the sake of speed.
+
         """
         # Make the mesh for the given regions.
         self._generate_mesh(regions, setclip=True,
                             optimise=True,
                             bounding_subtrahend=bounding_subtrahend,
-                            just_bounding_box=just_bounding_box)
+                            just_bounding_box=just_bounding_box,
+                            survey=survey)
         # If no path to write to provided, then generate one
         # automatically based on input file name.
         if out_path is None:
@@ -217,7 +226,9 @@ class Model(object):
         viewer.view()
 
     def _generate_mesh(self, region_names, setclip,
-                       optimise, bounding_subtrahend, just_bounding_box=False):
+                       optimise, bounding_subtrahend,
+                       just_bounding_box=False,
+                       survey=None):
         """This function has the side effect of recreating the world volume if
         the region_names requested are different to the ones already
         assigned to it and returns the relevant mesh.
@@ -227,7 +238,7 @@ class Model(object):
         visualisation.
 
         """
-        self._add_regions_to_world_volume(region_names, optimise=optimise)
+        self._add_regions_to_world_volume(region_names, optimise, survey)
         # If we are subtracting from the world box
         if bounding_subtrahend:
             self._subtract_from_world_volume(bounding_subtrahend)
@@ -311,15 +322,18 @@ class Model(object):
     def _clip_world_volume(self):
         self._world_volume.setClip()
 
-    def _add_regions_to_world_volume(self, regions, optimise):
+    def _add_regions_to_world_volume(self, regions, optimise, survey=None):
         """Add the region or regions in region_names to the current
         world volume (self._world_volume).
 
         If regions is None:  do all regions
         If regions is a string:  do just that one region
         If regions is a list of strings:  do those
-        If regions is a dict of region names with zone numbers:  Do
+        If regions is a map of region names with zone numbers:  Do
         those regions but only the zones in the list.
+        if a survey (of the form output by Model.survey()) is
+        provided, then it will be used to place disjoint zones within
+        regions as separate volumes, to ensure well-formed G4 geometry.
 
         """
         self._world_volume = Model._gdml_world_volume()
@@ -337,9 +351,30 @@ class Model(object):
                     print("Omitting BLCKHOLE region \"{}\".".format(
                         region_name))
                     continue
-                region.add_to_volume(self._world_volume,
-                                     optimise=optimise,
-                                     zones=zone_nos)
+                if survey is None:
+                    region.add_to_volume(self._world_volume,
+                                         optimise=optimise,
+                                         zones=zone_nos)
+                else:
+                    # If true then we should generate connected_zones
+                    # on the fly for each region, otherwise we should
+                    # use the provided survey.
+                    sets = (region.connected_zones
+                            if survey is True
+                            else survey[region_name]["connected_zones"])
+                    for connected_set in sets:
+                        # Place them as individual regions, but only
+                        # those zones which have also been selected in
+                        # the dictionary
+                        common_sets = connected_set.intersection(zone_nos)
+                        # If the intersection is empty, then we
+                        # should not place anything,
+                        if not common_sets:
+                            continue
+                        region.add_to_volume(self._world_volume,
+                                             optimise=optimise,
+                                             zones=common_sets)
+
             return
         # Add said regions
         for region_name in regions:
@@ -348,7 +383,19 @@ class Model(object):
                 print("Omitting BLCKHOLE region \"{}\".".format(region_name))
                 continue
             print("Adding region: \"{}\"  ...".format(region_name))
-            region.add_to_volume(self._world_volume, optimise=optimise)
+
+            if survey is None:
+                region.add_to_volume(self._world_volume, optimise=optimise)
+            else:
+                # If true then we should generate connected_zones
+                # on the fly for each region, otherwise we should
+                # use the provided survey.
+                sets = (region.connected_zones
+                        if survey is True
+                        else survey[region_name]["connected_zones"])
+                for connected_set in sets:
+                    region.add_to_volume(self._world_volume,
+                                         optimise=optimise, zones=connected_set)
 
     def report_body_count(self):
         """Prints a count of all unique bodies by type which are used in

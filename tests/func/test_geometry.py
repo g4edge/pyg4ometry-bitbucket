@@ -29,6 +29,14 @@ def test_connected_zones():
     region = model.regions['region']
     assert list(region.connected_zones()) == [{0, 1, 2, 3}, {4, 5}, {6}]
 
+def test_write_with_connected_zones_and_zone_map():
+    path = "../test_input/connected_zones.inp"
+    model = pyfluka.Model(path)
+    survey = model.survey()
+    # Specifically testing the scenario where you provide both a zone
+    # dictionary and a survey.
+    model.write_to_gdml(survey=survey, regions={"region": range(6)})
+
 # def test_length_safety_for_single_body_region():
 #     path = "../test_input/sphere.inp"
 #     model = pyfluka.Model(path)
