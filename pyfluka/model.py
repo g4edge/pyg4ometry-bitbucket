@@ -267,7 +267,6 @@ class Model(object):
                 msg = ("unusable argument for just_bounding_box!")
                 raise TypeError(msg)
 
-
     def _subtract_from_world_volume(self, subtrahend):
         """Nice pyfluka interface for subtracting from bounding boxes
         in pygdml.  We create an RPP out of the clipped bounding box
