@@ -27,7 +27,9 @@ class Writer(object):
         self.logicalVolumeList = []
         self.physicalVolumeList= []
 
-    def addDetector(self, registry) : 
+    def addDetector(self, registry) :
+        registry = self.extractDefinesFromTesselatedSolids(registry)
+
         # loop over defines 
         for define in registry.defineDict :
             pass
@@ -62,6 +64,23 @@ class Writer(object):
         xmlString = self.doc.toprettyxml()
         f.write(xmlString)
         f.close()
+
+    def extractDefinesFromTesselatedSolids(self, registry):
+        #Tesselated solids require their veritces to be declared in the defines.
+        #Loop over all tesselated solids and populate the defines dictionary.
+        for solidId in registry.solidDict.keys():
+            solid = registry.solidDict[solidId]
+            if solid.type == "TesselatedSolid":
+                name = solid.name
+                for i in range(len(solid.facet_list)):
+                    facet = solid.facet_list[i][0]
+                    for j in range(len(facet)):
+                        vertex = facet[j]
+                        defname   = "{}_F{}_V{}".format(name, i, j)
+                        defvertex = _ParameterVector(defname, list(vertex))
+                        registry.defineDict[defname] = defvertex
+
+        return registry
 
     def writeGmadTester(self, filenameGmad, writeDefaultLattice=False, zLength=100):
         self.filenameGmad = filenameGmad
@@ -214,7 +233,7 @@ class Writer(object):
         s.setAttribute('yOffset', str(yOffset))
         s.setAttribute('scalingFactor', str(scalingFactor))
         return s
-        
+
     def writeExtrudedSolid(self, instance):
         oe = self.doc.createElement('xtru')
         oe.setAttribute('name', self.prepend + '_' + instance.name)
@@ -231,7 +250,7 @@ class Writer(object):
             oe.appendChild(s)
 
         self.solids.appendChild(oe)
-
+        
     def createrzPoint(self, r, z):
         rz = self.doc.createElement('rzpoint')
         rz.setAttribute('r', str(r))
@@ -249,7 +268,26 @@ class Writer(object):
             oe.appendChild(p)
 
         self.solids.appendChild(oe)
-        
+
+    def createTriangularFacet(self, vertex1, vertex2, vertex3):
+        tf = self.doc.createElement('triangular')
+        tf.setAttribute('vertex1', str(vertex1))
+        tf.setAttribute('vertex2', str(vertex2))
+        tf.setAttribute('vertex3', str(vertex3))
+        tf.setAttribute('type', 'ABSOLUTE')
+        return tf
+
+    def writeTesselatedSolid(self, instance):
+        oe = self.doc.createElement('tessellated')
+        name     = instance.name
+        oe.setAttribute('name', self.prepend + '_' + name)
+
+        for i in range(len(instance.facet_list)):
+            vertices = []
+            for j in range(len(instance.facet_list[i][0])): #Always 3 elements in a facet
+                vertices.append("{}_F{}_V{}".format(name, i, j))
+            oe.appendChild(self.createTriangularFacet(*vertices))
+        self.solids.appendChild(oe)
 
     def writeHype(self, instance):
         oe = self.doc.createElement('hype')
