@@ -5,14 +5,14 @@ import re as _re
 import warnings as _warnings
 
 
-class ReaderSTL(object):
+class Reader(object):
     def __init__(self, filename):
-        super(ReaderSTL, self).__init__()
+        super(Reader, self).__init__()
         self.filename = filename
 
         self.worldVolumeName  = str()
         self.facet_list = []
-        self.num_re = _re.compile(r"[-+]?\d*\.\d+|\d+") #Compile re to match numbers
+        self.num_re = _re.compile(r"^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$") #Compile re to match numbers
 
         # load file
         self.load()
@@ -44,7 +44,6 @@ class ReaderSTL(object):
 
         name = "tess"
         tessSolid = _g4.solid.TesselatedSolid(name, self.facet_list)
-
 
         worldSolid   = _g4.solid.Box('worldBox',10,10,10)
         worldLogical = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
