@@ -101,7 +101,7 @@ class Viewer :
         try : 
             meshActor.GetProperty().SetColor(m.colour)
         except AttributeError : 
-            print 'except'
+            print 'No mesh color selected, use default'
             pass
 
         try :
