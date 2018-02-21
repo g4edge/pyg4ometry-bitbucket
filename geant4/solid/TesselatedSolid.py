@@ -43,18 +43,17 @@ class TesselatedSolid(_SolidBase) :
         return self.mesh
 
     def basicmesh(self) :
-        def xzy2Vertex(xyztup):
+        def xzy2Vertex(xyztup, normal):
             return _Vertex(_Vector(xyztup), None)
 
         polygons = []
         for facet in self.facet_list:
-            v1 = xzy2Vertex(facet[0][0]) #Keep it simple
-            v2 = xzy2Vertex(facet[0][1])
-            v3 = xzy2Vertex(facet[0][2])
-            polygons.append(_Polygon((v1, v2, v3)))
+            v1 = xzy2Vertex(facet[0][0], facet[1]) #Keep it simple
+            v2 = xzy2Vertex(facet[0][1], facet[1])
+            v3 = xzy2Vertex(facet[0][2], facet[1])
+            polygons.append(_Polygon([v1, v2, v3]))
 
         self.mesh  = _CSG.fromPolygons(polygons)
-
         return self.mesh
 
     def csgmesh(self):
