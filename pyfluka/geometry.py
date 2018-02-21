@@ -1134,23 +1134,31 @@ class Region(object):
         n_zones = len(self.zones)
         connected_zone_pairs = []
         tried = []
+        # Build undirected graph, and add nodes corresponding to each zone.
+        g = nx.Graph()
+        g.add_nodes_from(range(n_zones))
+
         if verbose:
             print("Calculating connected zones of region {}.".format(self.name))
+
         # Loop over all combinations of zone numbers within this region
         for i, j in itertools.product(range(n_zones), range(n_zones)):
             # Trivially connected to self or tried this combination.
             if i == j or {i, j} in tried:
                 continue
             tried.append({i, j})
+            # look for a path, if found then continue to next pair of
+            # zones.
+            if nx.has_path(g, i, j):
+                continue
+
+            # add the nodes (does nothing if they already exist)
+            g.add_nodes_from([i, j])
             if verbose:
                 print("Intersecting zone {} with {}".format(i, j))
             if get_overlap(self.zones[i], self.zones[j]) is not None:
                 connected_zone_pairs.append({i, j})
-        # Build undirected graph from the unordered pairs
-        g = nx.Graph(connected_zone_pairs)
-        # Add all nodes so that any completely isolated zones are included
-        # in the output.
-        g.add_nodes_from(range(n_zones))
+                g.add_edge(i, j)
         return nx.connected_components(g)
 
 class Zone(object):
