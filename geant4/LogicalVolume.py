@@ -5,9 +5,9 @@ from pygeometry.pycsg.geom import Vector as _Vector
 from matplotlib.cbook import flatten as _flatten
 from pygeometry.geant4.Parameter import Parameter as _Parameter
 from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
+#from pygeometry.pycsg.core import CSG as _CSG
 
 import numpy as _np
-
 import sys as _sys
 
 class LogicalVolume(object):
@@ -174,6 +174,16 @@ def mesh_extent(nlist) :
 
     return [vMin,vMax]
 
+def getSizeAndCentre(mesh): #TODO: Crude, ugly and duplicates code. Fix
+        extent = mesh_extent([mesh])
+
+        # size and centre
+        #size = extent[1] - extent[0]
+
+        #Note, size here denotes Eucledean distance between the points
+        size = _np.sqrt((extent[1][0]-extent[0][0])**2 + (extent[1][1]-extent[0][1])**2 + (extent[1][2]-extent[0][2])**2)
+        centre = (_Vector(extent[0]) + _Vector(extent[1]))*0.5
+        return(size, centre)
 
 def pycsg_overlap(meshTree, worldVolumeIncluded=True) :
     '''Function to determine if there overlaps of meshes.
@@ -197,7 +207,28 @@ def pycsg_overlap(meshTree, worldVolumeIncluded=True) :
         for j in range(i+1,imesh) :
             m1 = mfl[i]
             m2 = mfl[j]
-            mi = m1.intersect(m2) # mesh intersection
-            mil.append(mi)
 
+            sc1  = getSizeAndCentre(m1) #Get the sizes and the cenres once - O(N) operation
+            sc2  = getSizeAndCentre(m2)
+
+            #All of the solid is bound wihin a sphere with a radius equal to half the distance between its min and max
+            Rsum = sc1[0]/2+sc2[0]/2 #Sum of those raii
+            d    = _np.sqrt((sc2[1][0]-sc1[1][0])**2 + (sc2[1][1]-sc1[1][1])**2 + (sc2[1][2]-sc1[1][2])**2) #distance beween centres
+
+            if Rsum > d: #The solids may overlap - proceed to intersect
+                mi = m1.intersect(m2) # mesh intersection
+                mil.append(mi)
+
+            """
+            Add spheres for visual validation of the algorithm - remember to uncomment thw CSG import if using those
+            bound_sphere1 = _CSG.sphere(center=[sc1[1][0],sc1[1][1],sc1[1][2]], radius=sc1[0]/2)
+            bound_sphere1.colour = (0,0,255)
+            bound_sphere1.alpha  = 0.05
+
+            bound_sphere2 = _CSG.sphere(center=[sc2[1][0],sc2[1][1],sc2[1][2]], radius=sc2[0]/2)
+            bound_sphere2.colour = (0,0,255)
+            bound_sphere2.alpha  = 0.05
+            mil.append(bound_sphere1)
+            mil.append(bound_sphere2)
+            """
     return mil
