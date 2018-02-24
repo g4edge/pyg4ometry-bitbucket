@@ -152,9 +152,6 @@ class Body(object):
             raise TypeError("Unknown scale type: {}".format(type(scale)))
         return self
 
-    def __call__(self, scale):
-        return self._resize(scale)
-
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
         world_solid = pygdml.solid.Box("world", 10000, 10000, 10000)
