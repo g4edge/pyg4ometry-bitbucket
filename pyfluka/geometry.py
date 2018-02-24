@@ -1548,10 +1548,14 @@ def are_extents_overlapping(first, second):
                 or first.upper.z < second.lower.z
                 or first.lower.z > second.upper.z)
 
-def get_overlap(first, second, optimise=True):
+def get_overlap(first, second):
     """Return the extent of any overlapping region between the first
     and the second Region or Zone instance.  If there are no overlaps,
     then None is returned.
+
+    Regions and Zones will be optimised before checking for overlaps.
+    This is slow.  May change in the future as the parity between the
+    meshes of optimised and unoptimised booleans becomes more assured.
 
     """
     # If the bounding boxes do not overlap, then the constituent solids
@@ -1563,9 +1567,9 @@ def get_overlap(first, second, optimise=True):
     # evaluated boolean forms.  otherwise assume they are just Body
     # instances (in general:  Boolean instances).
     if isinstance(first, (Region, Zone)):
-        first = first.evaluate(optimise=optimise)
+        first = first.evaluate(optimise=True)
     if isinstance(second, (Region, Zone)):
-        second = second.evaluate(optimise=optimise)
+        second = second.evaluate(optimise=True)
     try:
         return first.intersection(second, safety="trim")._extent()
     except pygdml.NullMeshError:

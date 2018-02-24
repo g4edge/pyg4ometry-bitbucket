@@ -595,9 +595,14 @@ class Model(object):
         """
         # a dictionary of dictionaries describing the overlaps between regions
         output = {region.name: {} for region in self}
+
+        # Build up a cache of optimised booleans with corresponding extents.
+        # {name: (boolean, extent)}
+        booleans_and_extents = self._get_region_booleans_and_extents(True)
         # every combination of names
         name_pairs = itertools.product(self.regions, self.regions)
         for first, second in name_pairs:
+            print("Checking for an overlap: {}, {}".format(first, second))
             # don't check for overlaps with self, this is a given.
             if first == second:
                 continue
@@ -606,8 +611,20 @@ class Model(object):
             if first in output[second]:
                 output[first][second] = output[second][first]
                 continue
-            overlap = pyfluka.geometry.get_overlap(self.regions[first],
-                                                   self.regions[second])
+
+            # Check if the bounding boxes are overlapping, if they aren't, then
+            # the solids can't be either.
+            if not pyfluka.geometry.are_extents_overlapping(
+                    booleans_and_extents[first][1],
+                    booleans_and_extents[second][1]):
+                output[first][second] = None
+                continue
+
+            # If we made it this far then we must do the intersection.
+            print("Intersecting.")
+            overlap = pyfluka.geometry.get_overlap(
+                booleans_and_extents[first][0],
+                booleans_and_extents[second][0])
             output[first][second] = overlap
 
         # Sanitise the output.  keep track of everything whilst doing
@@ -635,6 +652,15 @@ class Model(object):
 
     def __iter__(self):
         return self.regions.itervalues()
+
+    def _get_region_booleans_and_extents(self, optimise):
+        """Return the meshes and extents of all regions of this model."""
+        out = {}
+        for name, region in self.regions.iteritems():
+            print("Evaluating region {}".format(name))
+            boolean, extent = region.evaluate_with_extent(optimise)
+            out[name] = (boolean, extent)
+        return out
 
 
 class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
