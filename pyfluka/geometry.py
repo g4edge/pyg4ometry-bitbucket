@@ -1529,6 +1529,14 @@ class Extent(object):
     def __eq__(self, other):
         return self.lower == other.lower and self.upper == other.upper
 
+def are_extents_overlapping(first, second):
+    """Check if two Extent instances are overlapping."""
+    return not (first.upper.x < second.lower.x
+                or first.lower.x > second.upper.x
+                or first.upper.y < second.lower.y
+                or first.lower.y > second.upper.y
+                or first.upper.z < second.lower.z
+                or first.lower.z > second.upper.z)
 
 def get_overlap(first, second, optimise=True):
     """Return the extent of any overlapping region between the first
