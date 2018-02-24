@@ -1554,9 +1554,18 @@ def get_overlap(first, second, optimise=True):
     then None is returned.
 
     """
+    # If the bounding boxes do not overlap, then the constituent solids
+    # definitely do not overlap.
+    # If the bounding boxes do overlap then the constituent solids
+    # might overlap.
 
-    first = first.evaluate(optimise=optimise)
-    second = second.evaluate(optimise=optimise)
+    # If we are dealing with any regions or zones, then get their
+    # evaluated boolean forms.  otherwise assume they are just Body
+    # instances (in general:  Boolean instances).
+    if isinstance(first, (Region, Zone)):
+        first = first.evaluate(optimise=optimise)
+    if isinstance(second, (Region, Zone)):
+        second = second.evaluate(optimise=optimise)
     try:
         return first.intersection(second, safety="trim")._extent()
     except pygdml.NullMeshError:
