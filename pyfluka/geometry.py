@@ -1107,6 +1107,11 @@ class Region(object):
         out_boolean = reduce(accumulate_unions, booleans)
         return out_boolean
 
+    def evaluate_with_extent(self, optimise):
+        boolean = self.evaluate(optimise=optimise)
+        extent = boolean._extent()
+        return boolean, extent
+
     def _select_zones(self, zones):
         if zones is None:
             return self.zones
@@ -1244,6 +1249,11 @@ class Zone(object):
 
     def view(self, setclip=True, optimise=False):
         self.evaluate(optimise=optimise).view(setclip=setclip)
+
+    def evaluate_with_extent(self, optimise):
+        boolean = self.evaluate(optimise=optimise)
+        extent = boolean._extent()
+        return boolean, extent
 
     def evaluate(self, optimise=False):
         """
