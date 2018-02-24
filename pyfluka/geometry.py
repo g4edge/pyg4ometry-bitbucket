@@ -31,6 +31,19 @@ _IDENTITY_TYPE = collections.namedtuple("_IDENTITY_TYPE", [])
 _IDENTITY = _IDENTITY_TYPE()
 del _IDENTITY_TYPE
 
+# Where does the meshing actually happen?  This matters because it is
+# the source of all slowdown!
+# 1. Visualisation.
+# 2. Calculating extents, which are used for a multitude of things:
+#   1. Solid minimisation for infinite or or very, very large bodies.
+#      See _apply_extent methods.
+#   2. Overlap checking.  Either via directly meshing the intersection
+#      and checking for a null mesh, or checking whether or not the
+#      bounding boxes overlap (not yet implemented).
+#   3. Surveying.  Different parts of the model can be excluded based
+#      on dimensional cuts in x, y and z.  The extents of the
+#      constituents zones and regions must be found.
+# For this reason it is necessary to cache the mesh.
 
 class Body(object):
     """A class representing a body as defined in Fluka.
@@ -1373,6 +1386,12 @@ class Zone(object):
 
 
 class Boolean(Body):
+    """A Body is a solid with a centre, a rotation and a name.  This
+    is used to represent combinations of bodies, e.g. as a result of
+    evaluating a Region or Zone.  This is a Body which has no real
+    FLUKA analogue, but is useful to form as an intermediary between
+    FLUKA regions/zones and GDML volumes (a solid, plus a
+    position, and a rotation)."""
     def __init__(self, name, solid, centre, rotation):
         self.name = name
         self._solid = solid
