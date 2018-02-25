@@ -1147,14 +1147,15 @@ class Region(object):
 
         """
         n_zones = len(self.zones)
-        connected_zone_pairs = []
         tried = []
         # Build undirected graph, and add nodes corresponding to each zone.
         g = nx.Graph()
         g.add_nodes_from(range(n_zones))
-
-        if verbose:
-            print("Calculating connected zones of region {}.".format(self.name))
+        if n_zones == 1: # return here if there's only one zone.
+            return nx.connected_components(g)
+        # Build up a cache of booleans and extents for each zone.
+        # format: {zone_index: (boolean, extent)}
+        booleans_and_extents = self._get_zone_booleans_and_extents(True)
 
         # Loop over all combinations of zone numbers within this region
         for i, j in itertools.product(range(n_zones), range(n_zones)):
@@ -1162,19 +1163,32 @@ class Region(object):
             if i == j or {i, j} in tried:
                 continue
             tried.append({i, j})
-            # look for a path, if found then continue to next pair of
-            # zones.
+            # Check if the bounding boxes overlap.  Cheaper than intersecting.
+            if not are_extents_overlapping(booleans_and_extents[i][1],
+                                           booleans_and_extents[j][1]):
+                continue
+
+            # Check if a path already exists.  Not sure how often this
+            # arises but should at least occasionally save some time.
             if nx.has_path(g, i, j):
                 continue
 
-            # add the nodes (does nothing if they already exist)
-            g.add_nodes_from([i, j])
+            # Finally: we must do the intersection op.
             if verbose:
                 print("Intersecting zone {} with {}".format(i, j))
-            if get_overlap(self.zones[i], self.zones[j]) is not None:
-                connected_zone_pairs.append({i, j})
+            if get_overlap(booleans_and_extents[i][0],
+                           booleans_and_extents[j][0]) is not None:
                 g.add_edge(i, j)
         return nx.connected_components(g)
+
+    def _get_zone_booleans_and_extents(self, optimise):
+        """Return the meshes and extents of all regions of this model."""
+        out = {}
+        for index, zone in enumerate(self.zones):
+            print("Evaluating zone {}".format(index))
+            boolean, extent = zone.evaluate_with_extent(optimise)
+            out[index] = (boolean, extent)
+        return out
 
 class Zone(object):
     """Class representing a Zone (subregion delimited by '|'), i.e. a
@@ -1352,8 +1366,8 @@ class Zone(object):
         assert accumulated is not _IDENTITY
         return accumulated
 
-    def extent(self):
-        boolean = self.evaluate(optimise=False)
+    def extent(self, optimise=False):
+        boolean = self.evaluate(optimise=optimise)
         return boolean._extent()
 
     def _flatten(self):

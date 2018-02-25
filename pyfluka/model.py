@@ -564,11 +564,7 @@ class Model(object):
                     break
 
     def survey(self, pickle=False):
-        """Gets the extents of every zone and the connected_zones of
-        every region.
-
-        """
-
+        """Extents of every zone and the connected_zones of every region."""
         regions = {region_name: {"extents": {},
                                  "connected_zones": None}
                    for region_name in self.regions}
@@ -578,7 +574,7 @@ class Model(object):
             for zone_no, zone in enumerate(region.zones):
                 print("Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                 zone_no))
-                regions[region_name]["extents"][zone_no] = zone.extent()
+                regions[region_name]["extents"][zone_no] = zone.extent(True)
 
         if pickle is True:
             pickle_name = "./{}_survey.pickle".format(
