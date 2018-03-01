@@ -29,8 +29,8 @@ class TesselatedSolid(_SolidBase) :
         self.mesh        = None
         _registry.addSolid(self)
 
-    def __repr__(selfs):
-        pass
+    def __repr__(self):
+        return self.type
 
     def pycsgmesh(self):
 
