@@ -18,11 +18,11 @@ class ParameterVector(list) :
         return 'param:'+self.name+':'+str(self.value)
 
     def __add__(self,other) :
-        return ParameterVector(str(self)+"+"+str(other),[self[0]+other[0],
+        return ParameterVector('{}+{}'.format(self, other),[self[0]+other[0],
                                                          self[1]+other[1],
                                                          self[2]+other[2]], True)
 
     def __sub__(self, other):
-        return ParameterVector(str(self) + "-" + str(other),[self[0]-other[0],
+        return ParameterVector('{}-{}'.format(self, other),[self[0]-other[0],
                                                              self[1]-other[1],
                                                              self[2]-other[2]], True)
