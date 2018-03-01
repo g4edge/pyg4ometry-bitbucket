@@ -194,6 +194,32 @@ class Reader(object):
                 
                 gdml_attributes = {key: val for (key,val) in zip(keys, vals)}
 
+            elif (solid_type == "tessellated"):     #the extrusion solid is a special case
+                keys = sd.attributes.keys()
+                vals = [attr.value for attr in sd.attributes.values()]
+
+                count_vrt = 0
+                count_pln = 0
+                faces_list = []
+                for polygon_element in sd.childNodes:
+                    tagname = polygon_element.tagName
+                    if(tagname == "triangular" or tagname == "quadrangular"):      #check that its not some other type of child node
+                        vert_keys = polygon_element.attributes.keys()
+                        poly_values = [attr.value for attr in polygon_element.attributes.values() if attr.value != "ABSOLUTE" and attr.value != "RELATIVE" ]
+                        #TODO: Currently can only load vertices defined as ABSOLUTE. Extend in the future to allow loading of vertices defined as RELATIVE
+                        vertices = tuple([tuple(self.positions[key]) for key in poly_values]) #need only the values - the verices of a polygon
+                        normal   = None   #The face normal is not explicitly listed in GDML
+                        faces_list.append((vertices, normal)) #Render all the variables here and only append verctors with numerical values to the faces list.
+                                                              #The rendering of variables here breaks the established pattern, but its much more convenient.
+                                                              #Otherwise need to store and carry over the bulk of strings and render later - wastes memory.
+                    else:
+                        _warnings.warn("Tesselated solid tag '"+tagname+"' unknown")
+
+                keys.append("faces_list")
+                vals.append(faces_list)
+
+                gdml_attributes = {key: val for (key,val) in zip(keys, vals)}
+
             else:
                 keys       = sd.attributes.keys()
                 vals       = [attr.value for attr in sd.attributes.values()]
@@ -403,6 +429,12 @@ class Reader(object):
         csgsolid = _g4.solid.ExtrudedSolid(name, verts, zplanes)
         return csgsolid
 
+    def _tessellated(self, **kwargs):
+        name       = kwargs.get("name")
+        faces_list = kwargs.get("faces_list")
+        solid = _g4.solid.TesselatedSolid(name, faces_list)
+        return solid
+
     def _opticalsurface(self, **kwargs):
         name = kwargs.get("name")
         osfinish = kwargs.get("finish")
@@ -525,7 +557,7 @@ class Reader(object):
         supported_solids = {"box": self._box, "para": self._para, "tube": self._tube, "eltube": self._eltube,"cone": self._cone, "ellipsoid": self._ellipsoid,
                             "polyhedra": self._polyhedra, "polycone": self._polycone, "torus": self._torus, "xtru": self._xtru, "cutTube": self._cutTube, 
                             "trd":self._trd, "sphere":self._sphere, "orb": self._orb, "subtraction": self._subtraction,
-                             "intersection": self._intersection, "union": self._union, "opticalsurface":self._opticalsurface}
+                             "intersection": self._intersection, "union": self._union, "opticalsurface":self._opticalsurface, "tessellated":self._tessellated}
 
         st = solid_type
         if st in supported_solids.keys():
