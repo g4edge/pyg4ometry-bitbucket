@@ -7,7 +7,7 @@ import warnings as _warnings
 import pygeometry.gdml as _gdml
 
 class Reader(object):
-    def __init__(self, filename, solidname="tess", visualise=True, writeGDML=False):
+    def __init__(self, filename, solidname="tess", visualise=True, writeGDML=False, scale=1):
         super(Reader, self).__init__()
         self.filename = filename
 
@@ -15,6 +15,7 @@ class Reader(object):
         self.facet_list = []
         self.num_re = _re.compile(r"^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$") #Compile re to match numbers
 
+        self.scale = float(scale)
         # load file
         self.solid = self.load(solidname, visualise, writeGDML)
 
@@ -22,7 +23,8 @@ class Reader(object):
     def load(self, solidname="tess", visualise=True, writeGDML=False):
         #data  = open(self.filename, "r")
         def extractXYZ(string):
-            return tuple([float(v) for v in string.split() if self.num_re.match(v)])
+            #The scaling here is a bit cheeky, but the scale parameter in GDML seems to be ignored by Geanr4 for Tesselated Solids
+            return tuple([self.scale*float(v) for v in string.split() if self.num_re.match(v)])
 
         with open(self.filename) as f:
             line = f.readline()
