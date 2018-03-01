@@ -7,7 +7,7 @@ import warnings as _warnings
 import pygeometry.gdml as _gdml
 
 class Reader(object):
-    def __init__(self, filename, visualise, writeGDML):
+    def __init__(self, filename, solidname="tess", visualise=True, writeGDML=False):
         super(Reader, self).__init__()
         self.filename = filename
 
@@ -16,9 +16,10 @@ class Reader(object):
         self.num_re = _re.compile(r"^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$") #Compile re to match numbers
 
         # load file
-        self.load(visualise, writeGDML)
+        self.solid = self.load(solidname, visualise, writeGDML)
 
-    def load(self, visualise=True, writeGDML=False):
+    
+    def load(self, solidname="tess", visualise=True, writeGDML=False):
         #data  = open(self.filename, "r")
         def extractXYZ(string):
             return tuple([float(v) for v in string.split() if self.num_re.match(v)])
@@ -43,8 +44,7 @@ class Reader(object):
                 line = f.readline()
                 cnt += 1
 
-        name = "tess"
-        tessSolid = _g4.solid.TesselatedSolid(name, self.facet_list)
+        tessSolid = _g4.solid.TesselatedSolid(str(solidname), self.facet_list)
 
         if visualise or writeGDML:
             worldSolid   = _g4.solid.Box('worldBox',10,10,10)
