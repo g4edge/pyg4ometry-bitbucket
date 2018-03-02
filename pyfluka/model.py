@@ -84,7 +84,7 @@ class Model(object):
                 region.material = fluka_material
 
         # Initialiser the world volume:
-        self._world_volume = Model._gdml_world_volume()
+        self._world_volume = _gdml_world_volume()
 
     def _regions_from_tree(self, tree):
         """Get the region definitions from the tree.  Called in the
@@ -94,14 +94,6 @@ class Model(object):
         visitor = FlukaRegionVisitor(self.bodies)
         visitor.visit(tree)
         return visitor.regions
-
-    @staticmethod
-    def _gdml_world_volume():
-        """This method returns a world volume."""
-        world_box = pygdml.solid.Box("world", 1, 1, 1)
-        name = "world_volume_{}".format(uuid.uuid4())
-        return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                             name, None, 1, False, "G4_Galactic")
 
     def write_to_gdml(self, regions=None, out_path=None,
                       make_gmad=True, bounding_subtrahend=None,
@@ -336,7 +328,7 @@ class Model(object):
         regions as separate volumes, to ensure well-formed G4 geometry.
 
         """
-        self._world_volume = Model._gdml_world_volume()
+        self._world_volume = _gdml_world_volume()
         if regions is None: # add all regions by default.
             regions = self.regions.keys()
         # Else if regions is the name of a single region
@@ -855,3 +847,10 @@ def load_pickle(path):
     with open(path, 'r') as file_object:
         unpickled = cPickle.load(file_object)
     return unpickled
+
+def _gdml_world_volume():
+    """This method returns a world volume."""
+    world_box = pygdml.solid.Box("world", 1, 1, 1)
+    name = "world_volume_{}".format(uuid.uuid4())
+    return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                         name, None, 1, False, "G4_Galactic")
