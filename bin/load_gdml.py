@@ -24,11 +24,11 @@ import pygeometry.geant4 as _geant4
 import pygeometry.vtk as _vtk
 try:
     import IPython as _ipython
-    found_ipython = True
+    _found_ipython = True
 except:
-    found_ipython = False
+    _found_ipython = False
 
-def appendMeshForView(vis=None):
+def _appendMeshForView(vis=None):
     registry = _geant4.registry
     worldvol = registry.worldVolume
     meshlist = worldvol.pycsgmesh()
@@ -37,46 +37,45 @@ def appendMeshForView(vis=None):
 
     return meshlist
 
-def load(path, interactive=False, verbose=False, visualiser=None):
-
+def _loadFiles(path, interactive=False, verbose=False, visualiser=None):
     if isinstance(path, list):
         for fpath in path:
-            load(fpath, interactive=interactive, verbose=verbose, visualiser=visualiser)
+            _loadFiles(fpath, interactive=interactive, verbose=verbose, visualiser=visualiser)
 
     if _os.path.isdir(str(path)):
         gdmlFiles = [_os.path.abspath(each) for each in _os.listdir(path) if each.endswith('.gdml')]
         for fpath in gdmlFiles:
-            load(fpath, interactive=interactive, verbose=verbose, visualiser=visualiser)
+            _loadFiles(fpath, interactive=interactive, verbose=verbose, visualiser=visualiser)
 
     elif _os.path.isfile(str(path)):
         if path[-5:] == ".gdml":
             reader   = _gdml.Reader(_os.path.abspath(path))
-            appendMeshForView(vis=visualiser)
+            _appendMeshForView(vis=visualiser)
         else:
             print "File:", filename
             raise IOError('Missing file or invalid file format, GDML file (.gdml) required')
 
 
-def run(path, interactive=False, verbose=False):
+def load(path, interactive=False, verbose=False):
     vis = _vtk.Viewer()
-    load(path, interactive, verbose, visualiser=vis)
+    _loadFiles(path, interactive, verbose, visualiser=vis)
 
     vis.view()
 
     if interactive:
-        if found_ipython:
+        if _found_ipython:
             _ipython.embed()
         else:
             print "No IPython installed, cannot use interactive mode."
 
-def tolist_callback(option, opt, value, parser):
+def _tolist_callback(option, opt, value, parser):
   setattr(parser.values, option.dest, [val.strip() for val in value.split(',')])
 
-def main():
+def _main():
     if __name__ == "__main__":
         usage = ''
         parser = _optparse.OptionParser(usage)
-        parser.add_option('-p', '--path', type='string', action='callback', callback=tolist_callback, default="", help="The path to be loaded. Can be a file, comma-separated list of files or a directory. Valid files must have extension .gdml")
+        parser.add_option('-p', '--path', type='string', action='callback', callback=_tolist_callback, default="", help="The path to be loaded. Can be a file, comma-separated list of files or a directory. Valid files must have extension .gdml")
         parser.add_option('-i','--interactive',  action='store_true',default=False, help="Interactive mode (Starts after visualiser is closed)")
         parser.add_option('-v','--verbose',      action='store_true',default=False, help="Print detailed information")
 
@@ -92,11 +91,11 @@ def main():
             parser.print_help()
             raise SystemExit
 
-        run(options.path, options.interactive, options.verbose)
+        load(options.path, options.interactive, options.verbose)
 
     else:
         print "Option parser not availble in interactive mode."
 
 
 if __name__ == "__main__":
-    main()
+    _main()
