@@ -167,12 +167,16 @@ class G4ExceptionMessage(object):
 
 def process_geometry_test(file_in, file_out=None):
     # Skip until we get to the geometry test
-    seen_geom_test_run_count = 0
     with open(file_in) as f:
         for i, line in enumerate(f):
+            # If test was called from the vis.mac
             if line.startswith("/geometry/test/run"):
                 start_overlaps_line_no = i
-                break
+            # If test was called from the opengl visualiser prompt
+            elif line.startswith("Running geometry overlaps"):
+                start_overlaps_line_no = i
+            elif line.startswith("Geometry overlaps check completed"):
+                end_overlaps_line_no = i
 
     # Read in the geometry test exceptions and append
     # G4ExceptionMessage instances to all_exceptions
@@ -180,7 +184,7 @@ def process_geometry_test(file_in, file_out=None):
         all_exceptions = []
         this_exception = []
         in_exception = False
-        for line in f.readlines()[i:]:
+        for line in f.readlines()[start_overlaps_line_no:end_overlaps_line_no]:
             # Look for an exception message
             if line != _G4_EXCEPTION_START and in_exception is False:
                 continue
