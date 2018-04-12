@@ -15,5 +15,7 @@ setup(
     author="Stuart D Walker",
     author_email="stuart.walker.2011@live.rhul.ac.uk",
     description='View FLUKA geometry meshes and convert to GDML.',
+    license='GPL3',
     url='https://bitbucket.org/jairhul/pyfluka/',
+    keywords='fluka geometry bdsim particle physics',
 )
