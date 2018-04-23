@@ -290,6 +290,9 @@ class InfiniteCylinder(Body):
                                  self._scale * 0.5,
                                  0.0, 2*pi)
 
+class InfiniteEllipticalCylinder(Body):
+    """Currently just for type checking XEC, YEC, and ZEC.  No functionality."""
+    pass
 
 class InfiniteHalfSpace(Body):
     def __init__(self, name, parameters, translation=None, transformation=None):
@@ -924,7 +927,7 @@ class ZCC(InfiniteCylinder):
         self.rotation = np.matrix(np.identity(3))
 
 
-class XEC(Body):
+class XEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the x-axis.
 
     Parameters:
@@ -965,7 +968,7 @@ class XEC(Body):
         )
 
 
-class YEC(Body):
+class YEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the y-axis.
 
     Parameters:
@@ -1004,7 +1007,7 @@ class YEC(Body):
         )
 
 
-class ZEC(Body):
+class ZEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the z-axis.
 
     Parameters:
