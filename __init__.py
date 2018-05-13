@@ -8,3 +8,4 @@ import vtk
 import test
 import transformation
 import stl
+# import freecad
