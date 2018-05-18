@@ -6,9 +6,12 @@ import pygeometry.geant4 as _g4
 import pygeometry.vtk as _vtk
 import pygeometry.gdml as _gdml
 
-# need to make recursive groups and parts
+# Recursive mesh writing : FINISHED
+# need to make recursive groups and parts : TODO 
+# Groups
+# 
 
-def gdmlTest(mesh) :
+def GdmlTest(mesh) :
     _g4.registry.clear()
     
     worldSolid      = _g4.solid.Box('worldBox',500,500,500)
@@ -32,6 +35,45 @@ def gdmlTest(mesh) :
     v = _vtk.Viewer()
     v.addPycsgMeshList(m)
     v.view();
+
+def MeshListToGdml(fileStub, meshList) :
+    _g4.registry.clear()
+    
+    worldSolid      = _g4.solid.Box('worldBox',1000,1000,1000)
+    worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
+
+    def MeshListToPhysicalVolume(ml) :
+        print 'MeshListToPhysicalVolume>',ml[0][0]
+        for m in ml :             
+            if isinstance(m[1],list) : 
+                MeshListToPhysicalVolume(m[1])
+            else :
+                facetList = MeshToFacetList(m[1])
+
+                ts = _g4.solid.TesselatedSolid(m[0]+"_solid",facetList)
+                tl = _g4.LogicalVolume(ts,'G4_Cu',m[0]+"lv")
+                tp = _g4.PhysicalVolume([0,0,0],[0,0,0],tl,m[0]+"pv",worldLogical)
+
+    MeshListToPhysicalVolume(meshList)
+
+    # clip the world logical volume
+    worldLogical.setClip();
+
+    # register the world volume
+    _g4.registry.setWorld('worldLogical')
+
+    # mesh the geometry
+    m = worldLogical.pycsgmesh()
+
+    v = _vtk.Viewer()
+    v.addPycsgMeshList(m)
+    v.view();    
+
+    w = _gdml.Writer()
+    w.addDetector(_g4.registry)
+    w.write(fileStub+".gdml")
+    w.writeGmadTester(fileStub+".gmad")        
+
 
 def MeshToFacetList(mesh) : 
     topology = mesh.Topology
@@ -124,11 +166,26 @@ def DocumentToGdml() :
         print 'DocumentToGdml> ',rootObject.TypeId,' ', rootObject.Label
 
         # Body object
+        if rootObject.TypeId == 'Part::Feature' : 
+            meshes.append([rootObject.Label,BodyToMesh(rootObject)])
+
+        if rootObject.TypeId == 'Part::Box' : 
+            pass
+        if rootObject.TypeId == 'Part::Cone' : 
+            pass
+        if rootObject.TypeId == 'Part::Sphere' : 
+            pass
+        if rootObject.TypeId == 'Part::Cylinder' :
+            pass
+        if rootObject.TypeId == 'Part::Torus' : 
+            pass
 
         # Group object
 
         # Part object 
         if rootObject.TypeId == 'App::Part' : 
             meshes.append([rootObject.Label,PartToMesh(rootObject)])
-        
+
+    MeshListToGdml(doc.Label,meshes)        
+    
     return meshes

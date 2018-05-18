@@ -8,4 +8,7 @@ import vtk
 import test
 import transformation
 import stl
-# import freecad
+try : 
+    import freecad
+except ImportError :
+    pass
