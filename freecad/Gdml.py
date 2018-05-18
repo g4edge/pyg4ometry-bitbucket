@@ -142,11 +142,18 @@ def PartToMesh(part) :
     
     meshes = []
 
+    placement = part.Placement
+#    pos       = placement.Base
+#    rot       = placement.Rotation.toEuler()
+#    print rot
     # loop over all bodies 
     for obj in part.OutList : 
         print 'PartToMesh> ',obj.Label,' ', obj.TypeId
         if obj.TypeId == 'Part::Feature' or obj.TypeId == 'Part::Box' or obj.TypeId == 'Part::Sphere' or obj.TypeId == 'Part::Cylinder' or obj.TypeId == 'Cone' or obj.TypeId == 'Torus' :
-            meshes.append([obj.Label,BodyToMesh(obj)])
+            mesh = BodyToMesh(obj)
+            mesh.transform(placement.toMatrix())
+            meshes.append([obj.Label,mesh])
+            
 
     return meshes
 
