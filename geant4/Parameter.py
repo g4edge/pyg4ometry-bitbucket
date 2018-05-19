@@ -26,16 +26,16 @@ class Parameter(object) :
         return self.value[i]
 
     def __add__(self, other) :
-        return Parameter('{}+{}'.format(self, other),float(self)+float(other),False)
+        return Parameter('{} + {}'.format(self, other),float(self)+float(other),False)
 
     def __sub__(self, other) :
-        return Parameter('{}-{}'.format(self, other),float(self)-float(other),False)
+        return Parameter('{} - {}'.format(self, other),float(self)-float(other),False)
 
     def __mul__(self, other):
-        return Parameter('{}*{}'.format(self, other), float(self) * float(other),False)
+        return Parameter('{} * {}'.format(self, other), float(self) * float(other),False)
 
     def __div__(self, other):
-        return Parameter('{}/{}'.format(self, other), float(self) / float(other),False)
+        return Parameter('{} / {}'.format(self, other), float(self) / float(other),False)
 
     def __neg__(self):
-        return Parameter('-{}'.format(self), -float(self),False)
+        return Parameter('- {}'.format(self), -float(self),False)
