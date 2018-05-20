@@ -81,12 +81,13 @@ class LogicalVolume(object):
 
         return [self.size, self.centre]
 
-    def setClip(self, tolerance=None):
+    def setClip(self, centre=True, tolerance=None):
         [size, centre] = self.getSize()
         if tolerance != None:
             size += 2*tolerance
         self.setSize(size)
-        self.setCentre(centre)
+        if centre : 
+            self.setCentre(centre)
 
     def setSize(self, size):
         # if a box
