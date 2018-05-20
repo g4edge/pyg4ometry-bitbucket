@@ -36,31 +36,41 @@ def GdmlTest(mesh) :
     v.addPycsgMeshList(m)
     v.view();
 
-def MeshListToGdml(fileStub, meshList) :
+def MeshListToGdml(fileStub, meshList, materialMap = {"default":"G4_Cu"}) :
     _g4.registry.clear()
     
-    worldSolid      = _g4.solid.Box('worldBox',1000,1000,1000)
-    worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic','worldLogical')
+    worldSolid      = _g4.solid.Box(fileStub+"_solid",1000,1000,1000)
+    worldLogical    = _g4.LogicalVolume(worldSolid,'G4_Galactic',fileStub+"_lv")
 
     def MeshListToPhysicalVolume(ml) :
         print 'MeshListToPhysicalVolume>',ml[0][0]
         for m in ml :             
+
             if isinstance(m[1],list) : 
                 MeshListToPhysicalVolume(m[1])
             else :
                 facetList = MeshToFacetList(m[1])
 
-                ts = _g4.solid.TesselatedSolid(m[0]+"_solid",facetList)
-                tl = _g4.LogicalVolume(ts,'G4_Cu',m[0]+"lv")
-                tp = _g4.PhysicalVolume([0,0,0],[0,0,0],tl,m[0]+"pv",worldLogical)
+                # name of mesh/object
+                name = m[0]
+
+                # get material
+                try : 
+                    material = materialMap[name]
+                except KeyError :
+                    material = materialMap["default"]
+
+                ts = _g4.solid.TesselatedSolid(name+"_solid",facetList)    
+                tl = _g4.LogicalVolume(ts,'G4_Cu',name+"_lv")
+                tp = _g4.PhysicalVolume([0,0,0],[0,0,0],tl,name+"_pv",worldLogical)
 
     MeshListToPhysicalVolume(meshList)
 
     # clip the world logical volume
-    worldLogical.setClip();
+    worldLogical.setClip(centre=False);
 
     # register the world volume
-    _g4.registry.setWorld('worldLogical')
+    _g4.registry.setWorld(fileStub+"_lv")
 
     # mesh the geometry
     m = worldLogical.pycsgmesh()
@@ -74,6 +84,8 @@ def MeshListToGdml(fileStub, meshList) :
     w.write(fileStub+".gdml")
     w.writeGmadTester(fileStub+".gmad")        
 
+def MakeMaterialDict(interactive = False) :
+    pass
 
 def MeshToFacetList(mesh) : 
     topology = mesh.Topology
@@ -143,13 +155,12 @@ def PartToMesh(part) :
     meshes = []
 
     placement = part.Placement
-#    pos       = placement.Base
-#    rot       = placement.Rotation.toEuler()
-#    print rot
+
     # loop over all bodies 
     for obj in part.OutList : 
         print 'PartToMesh> ',obj.Label,' ', obj.TypeId
         if obj.TypeId == 'Part::Feature' or obj.TypeId == 'Part::Box' or obj.TypeId == 'Part::Sphere' or obj.TypeId == 'Part::Cylinder' or obj.TypeId == 'Cone' or obj.TypeId == 'Torus' :
+
             mesh = BodyToMesh(obj)
             mesh.transform(placement.toMatrix())
             meshes.append([obj.Label,mesh])
@@ -160,7 +171,7 @@ def PartToMesh(part) :
 def GroupToMesh(group) :
     print 'GroupToMesh'
 
-def DocumentToGdml() :
+def DocumentToGdml(materialMap = {"default":"G4_Cu"}) :
     doc = _FreeCAD.activeDocument()
     
     # get root objects 
@@ -193,6 +204,6 @@ def DocumentToGdml() :
         if rootObject.TypeId == 'App::Part' : 
             meshes.append([rootObject.Label,PartToMesh(rootObject)])
 
-    MeshListToGdml(doc.Label,meshes)        
+    MeshListToGdml(doc.Label,meshes,materialMap)        
     
     return meshes
