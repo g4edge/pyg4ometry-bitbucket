@@ -67,7 +67,7 @@ def MeshListToGdml(fileStub, meshList, materialMap = {"default":"G4_Cu"}) :
     MeshListToPhysicalVolume(meshList)
 
     # clip the world logical volume
-    worldLogical.setClip(centre=False);
+    worldLogical.setClip();
 
     # register the world volume
     _g4.registry.setWorld(fileStub+"_lv")
