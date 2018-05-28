@@ -1,11 +1,11 @@
-from pygeometry.exceptions import *
-from pygeometry.geant4 import solid as _solid
-from pygeometry.geant4.Registry import registry as _registry
-from pygeometry.pycsg.geom import Vector as _Vector
-from matplotlib.cbook import flatten as _flatten
-from pygeometry.geant4.Parameter import Parameter as _Parameter
+from pygeometry.exceptions             import *
+from pygeometry.geant4                 import solid as _solid
+from pygeometry.geant4.Registry        import registry as _registry
+from pygeometry.pycsg.geom             import Vector as _Vector
+from matplotlib.cbook                  import flatten as _flatten
+from pygeometry.geant4.Parameter       import Parameter as _Parameter
 from pygeometry.geant4.ParameterVector import ParameterVector as _ParameterVector
-from pygeometry.pycsg.core import CSG as _CSG
+from pygeometry.pycsg.core             import CSG as _CSG
 
 import numpy as _np
 import sys as _sys
@@ -87,6 +87,7 @@ class LogicalVolume(object):
             size += 2*tolerance
         self.setSize(size)
         if centre : 
+            print 'Not centering'
             self.setCentre(centre)
 
     def setSize(self, size):
