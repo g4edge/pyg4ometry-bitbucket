@@ -1,0 +1,14 @@
+*.pyc
+*.so
+*.o
+*~
+#*#
+.#*
+.DS_Store
+.idea
+cpcsg/*py
+cpcsg/testbuild/
+test/*gdml
+test/*gmad
+test/*stl
+docs/build*/*
