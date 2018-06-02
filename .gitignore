@@ -12,3 +12,17 @@ test/*gdml
 test/*gmad
 test/*stl
 docs/build*/*
+*.class
+*.java
+FM.pdf
+*.g4e
+tests/*.py
+*.tar.gz
+*.log
+*.gdml
+*.gmad
+*.pickle
+build
+dist
+*.tokens
+pyfluka.egg-info
