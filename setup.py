@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyg4ometry",
-    version="0.1.3",
+    version="0.1.4",
     packages=find_packages(exclude=["docs", "tests"]),
 
     # Only tested with version 4.7.
@@ -16,7 +16,7 @@ setup(
 
     author="Stuart D Walker",
     author_email="stuart.walker.2011@live.rhul.ac.uk",
-    description='Geometry for high energy physics',
+    description='Geometry package for high energy physics',
     license='GPL3',
     url='https://bitbucket.org/jairhul/pyg4ometry/',
     keywords='geometry bdsim particle physics accelerators',
