@@ -25,4 +25,4 @@ tests/*.py
 build
 dist
 *.tokens
-pyfluka.egg-info
+pyg4ometry.egg-info
