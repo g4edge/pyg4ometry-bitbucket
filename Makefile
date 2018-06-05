@@ -2,7 +2,7 @@ install:
 	pip install . --user
 
 uninstall:
-	pip uninstall pybdsim
+	pip uninstall pyg4ometry
 
 develop:
 	pip install --editable . --user
