@@ -37,6 +37,15 @@ def test_write_with_connected_zones_and_zone_map():
     # dictionary and a survey.
     model.write_to_gdml(survey=survey, regions={"region": range(6)})
 
+def test_coplanar_union():
+    # pyfluka should correctly separate the union of solids which are
+    # perfectly coplanar, as once you factor in length safety, they
+    # are no longer coplanar.
+    path = "../test_input/coplanar-union.inp"
+    model = pyfluka.Model(path)
+    connected_zones = model.survey()['region']['connected_zones']
+    assert connected_zones == [{0}, {1}]
+
 # def test_length_safety_for_single_body_region():
 #     path = "../test_input/sphere.inp"
 #     model = pyfluka.Model(path)
