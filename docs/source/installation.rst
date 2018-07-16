@@ -12,7 +12,7 @@ Requirements
 Installation
 ------------
 
-To install pyg4ometry, simply run ``make install`` from the root pygeometry
+To install pyg4ometry, simply run ``make install`` from the root pyg4ometry
 directory.::
 
   cd /my/path/to/repositories/
