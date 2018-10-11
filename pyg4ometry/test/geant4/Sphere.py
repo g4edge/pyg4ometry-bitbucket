@@ -43,14 +43,9 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     # register the world volume
     _g4.registry.setWorld('worldLogical')
-    
-    m = worldLogical.pycsgmesh()
-    print m
-    
+
     if vtkViewer : 
-        v = _vis.Viewer()
-        v.addPycsgMeshList(m)
-        v.view();
+        v = _vis.viewWorld()
 
     # write gdml
     if gdmlWriter : 

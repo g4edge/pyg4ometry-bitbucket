@@ -28,11 +28,8 @@ def PhysicalVolume() :
     # register the world volume
     _g4.registry.setWorld('wor')
 
-    # display 
-    m = lw.pycsgmesh()    
-    v = _vis.Viewer()
-    v.addPycsgMeshList(m)
-    v.view()
+    # display
+    v = _vis.viewWorld()
 
     # write gdml
     w = _gdml.Writer()
