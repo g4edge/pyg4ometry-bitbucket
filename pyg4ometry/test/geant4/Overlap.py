@@ -1,5 +1,5 @@
 import pyg4ometry.geant4 as _g4
-import pyg4ometry.vtk as _vtk
+import pyg4ometry.visualisation as _vis
 import pyg4ometry.gdml as _gdml
 import warnings as _warnings
 from matplotlib.cbook import flatten
@@ -24,7 +24,7 @@ def visualise_overlaps(meshlist,  worldVolumeIncluded=True):
         moc.append(me)
 
     # view the geometry
-    v = _vtk.Viewer()
+    v = _vis.Viewer()
     v.addPycsgMeshList(mfl)
     v.addPycsgMeshList(moc)
     v.view();

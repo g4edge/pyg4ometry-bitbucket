@@ -1,5 +1,5 @@
 import pyg4ometry.geant4 as _g4
-import pyg4ometry.vtk as _vtk
+import pyg4ometry.visualisation as _vis
 import pyg4ometry.gdml as _gdml
 import numpy as _np
 import cProfile as _cp
@@ -48,7 +48,7 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     print m
     
     if vtkViewer : 
-        v = _vtk.Viewer()
+        v = _vis.Viewer()
         v.addPycsgMeshList(m)
         v.view();
 
