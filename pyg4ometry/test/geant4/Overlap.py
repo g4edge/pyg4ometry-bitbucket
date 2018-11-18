@@ -1,34 +1,7 @@
 import pyg4ometry.geant4 as _g4
-import pyg4ometry.vtk as _vtk
+import pyg4ometry.visualisation as _vis
 import pyg4ometry.gdml as _gdml
 import warnings as _warnings
-from matplotlib.cbook import flatten
-
-
-def visualise_overlaps(meshlist,  worldVolumeIncluded=True):
-    m = meshlist #shortcut
-
-    #Check for overlaps
-    mo = _g4.pycsg_overlap(m, worldVolumeIncluded=worldVolumeIncluded)
-
-    # change view setttings of meshes
-    mfl = [] # flat mesh list
-    for me in flatten(m) :
-        me.alpha = 0.25
-        mfl.append(me)
-
-    # change view setttings of overlapping meshes
-    moc = [] # flat mesh list
-    for me in flatten(mo) :
-        me.colour = (0,0,255)
-        moc.append(me)
-
-    # view the geometry
-    v = _vtk.Viewer()
-    v.addPycsgMeshList(mfl)
-    v.addPycsgMeshList(moc)
-    v.view();
-
 
 def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     _g4.registry.clear()
@@ -51,11 +24,8 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
     # register the world volume
     _g4.registry.setWorld('worldLogical')
 
-    # mesh the geometry
-    m = worldLogical.pycsgmesh()
-
     if vtkViewer:
-        visualise_overlaps(m, True)
+        _vis.viewWorld(checkOverlaps=True)
 
     if gdmlWriter:
         warnings.warn("GDML file writing not supported for overlap test! No file produced, contunie...")

@@ -1,6 +1,6 @@
 import pyg4ometry.geant4 as _g4
 from   pyg4ometry.pycsg.core import CSG as _CSG
-import pyg4ometry.vtk as _vtk
+import pyg4ometry.visualisation as _vis
 import pyg4ometry.gdml as _gdml
 import numpy as _np
 import cProfile as _cp
@@ -46,12 +46,6 @@ def pycsgmeshTest(vtkViewer = True, gdmlWriter = True) :
 
     # register the world volume
     _g4.registry.setWorld('worldLogical')
-    
-    m = worldLogical.pycsgmesh()
-    print m
-    
 
-    if vtkViewer : 
-        v = _vtk.Viewer()
-        v.addPycsgMeshList(m)
-        v.view();
+    if vtkViewer :
+        v = _vis.viewWorld()

@@ -1,5 +1,5 @@
 import pyg4ometry.geant4 as _g4
-import pyg4ometry.vtk    as _vtk
+import pyg4ometry.visualisation    as _vis
 import pyg4ometry.gdml   as _gdml
 import numpy             as _np
 
@@ -28,11 +28,8 @@ def PhysicalVolume() :
     # register the world volume
     _g4.registry.setWorld('wor')
 
-    # display 
-    m = lw.pycsgmesh()    
-    v = _vtk.Viewer()
-    v.addPycsgMeshList(m)
-    v.view()
+    # display
+    v = _vis.viewWorld()
 
     # write gdml
     w = _gdml.Writer()
