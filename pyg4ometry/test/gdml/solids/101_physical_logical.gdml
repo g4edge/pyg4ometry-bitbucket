@@ -7,22 +7,22 @@
   <constant name="wbz" value="200.0"/>
 
   <constant name="bx" value="10.0"/>
-  <constant name="by" value="10.0"/>
-  <constant name="bz" value="10.0"/>
   
   <position name="center"   x="0" y="0" z="0"/> 
   <rotation name="identity" x="0" y="0" z="0"/>
 
-  <position name="boxpos1" x="-2.5*bx" y="0" z="0"/>
-  <position name="boxpos2" x="0" y="0" z="0"/>
-  <position name="boxpos3" x="2.5*bx" y="0" z="0"/>
-  <rotation name="boxrot1" x="0" y="0" z="pi/4"/>
-  <rotation name="boxrot2" x="0" y="0" z="pi/8"/>
-  <rotation name="boxrot3" x="0" y="0" z="0"/>
+  <position name="boxpos1" x="-bx" y="0" z="0"/>
+  <position name="boxpos2" x="0"    y="0" z="0"/>
+  <position name="boxpos3" x="bx"  y="0" z="0"/>
 
-  <position name="pos1" x="0" y="0" z="100"/>
-  <rotation name="rot1" x="0" y="0" z="pi/4"/>
+  <position name="rowpos1" x="0"  y="-bx" z="0"/>
+  <position name="rowpos2" x="0"  y="0"   z="0"/>
+  <position name="rowpos3" x="0"  y="bx" z="0"/>
 
+  <position name="layerpos1" x="0" y="0" z="-bx"/>
+  <position name="layerpos2" x="0" y="0"  z="0"/>
+  <position name="layerpos3" x="0" y="0"  z="bx"/>
+  
 </define>
 
 <materials>
@@ -47,66 +47,97 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" />
-  <box name="box0"     x="5*bx" y="5*by" z="5*bz" />
-  <box name="box1"     x="bx" y="by"  z="bz"  />
-  <box name="box2"     x="bx" y="by"  z="bz"  />
-  <box name="box3"     x="bx" y="by"  z="bz"  />
+  <box name="WorldBox" x="wbx"  y="wby"  z="wbz" />
+  <box name="box"      x="bx"   y="bx"   z="bx"  />
+  <box name="row"      x="3*bx" y="bx"   z="bx" />
+  <box name="layer"    x="3*bx" y="3*bx" z="bx" />
+  <box name="cube"     x="3*bx" y="3*bx" z="3*bx" />  
 </solids>
 
 <structure>
 
-  <volume name="box1Vol">
+  <volume name="boxVol"> 
     <materialref ref="Air"/>
-    <solidref ref="box1"/>
+    <solidref ref="box"/>
   </volume>
 
-  <volume name="box2Vol">
+  <volume name="rowVol"> 
     <materialref ref="Air"/>
-    <solidref ref="box2"/>
-  </volume>
+    <solidref ref="row"/>
 
-  <volume name="box3Vol">
-    <materialref ref="Air"/>
-    <solidref ref="box3"/>
-  </volume>
-
-  <volume name="box0Vol">
-    <materialref ref="Air"/>
-    <solidref ref="box0"/>
     <physvol>
-       <volumeref ref="box1Vol"/>
+       <volumeref ref="boxVol"/>
        <positionref ref="boxpos1"/>
-       <rotationref ref="boxrot1"/>
+       <rotationref ref="identity"/>
     </physvol>
 
     <physvol>
-       <volumeref ref="box2Vol"/>
+       <volumeref ref="boxVol"/>
        <positionref ref="boxpos2"/>
-       <rotationref ref="boxrot2"/>
+       <rotationref ref="identity"/>
     </physvol>
 
     <physvol>
-       <volumeref ref="box3Vol"/>
+       <volumeref ref="boxVol"/>
        <positionref ref="boxpos3"/>
-       <rotationref ref="boxrot3"/>
+       <rotationref ref="identity"/>
     </physvol>
   </volume>
+
+  <volume name="layerVol"> 
+    <materialref ref="Air"/>
+    <solidref ref="layer"/>
+
+    <physvol>
+       <volumeref ref="rowVol"/>
+       <positionref ref="rowpos1"/>
+       <rotationref ref="identity"/>
+    </physvol>
+
+    <physvol>
+       <volumeref ref="rowVol"/>
+       <positionref ref="rowpos2"/>
+       <rotationref ref="identity"/>
+    </physvol>
+
+    <physvol>
+       <volumeref ref="rowVol"/>
+       <positionref ref="rowpos3"/>
+       <rotationref ref="identity"/>
+    </physvol>    
+  </volume>      
+   
+  <volume name="cubeVol"> 
+    <materialref ref="Air"/>
+    <solidref ref="cube"/>
+
+    <physvol>
+       <volumeref ref="layerVol"/>
+       <positionref ref="layerpos1"/>
+       <rotationref ref="identity"/>
+    </physvol>
+
+    <physvol>
+       <volumeref ref="layerVol"/>
+       <positionref ref="layerpos2"/>
+       <rotationref ref="identity"/>
+    </physvol>
+
+    <physvol>
+       <volumeref ref="layerVol"/>
+       <positionref ref="layerpos3"/>
+       <rotationref ref="identity"/>
+    </physvol>    
+  </volume>    
 
   <volume name="World">
     <materialref ref="Air"/>
     <solidref ref="WorldBox"/>
 
     <physvol>       
-       <volumeref ref="box0Vol"/>
+       <volumeref ref="cubeVol"/>
        <positionref ref="center"/>
        <rotationref ref="identity"/>
-    </physvol>      
-
-    <physvol>
-       <volumeref ref="box0Vol"/>
-       <positionref ref="pos1"/>
-       <rotationref ref="rot1"/>
     </physvol>      
   </volume>
 </structure>
