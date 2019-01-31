@@ -8,20 +8,20 @@
 
   <constant name="bx" value="10.0"/>
   
-  <position name="center"   x="0" y="0" z="0"/> 
-  <rotation name="identity" x="0" y="0" z="0"/>
+  <position name="center"    x="0"   y="0"   z="0"/> 
+  <rotation name="identity"  x="0"   y="0"   z="0"/>
 
-  <position name="boxpos1" x="-bx" y="0" z="0"/>
-  <position name="boxpos2" x="0"    y="0" z="0"/>
-  <position name="boxpos3" x="bx"  y="0" z="0"/>
+  <position name="boxpos1"   x="-bx" y="0"   z="0"/>
+  <position name="boxpos2"   x="0"   y="0"   z="0"/>
+  <position name="boxpos3"   x="bx"  y="0"   z="0"/>
 
-  <position name="rowpos1" x="0"  y="-bx" z="0"/>
-  <position name="rowpos2" x="0"  y="0"   z="0"/>
-  <position name="rowpos3" x="0"  y="bx" z="0"/>
+  <position name="rowpos1"   x="0"   y="-bx" z="0"/>
+  <position name="rowpos2"   x="0"   y="0"   z="0"/>
+  <position name="rowpos3"   x="0"   y="bx"  z="0"/>
 
-  <position name="layerpos1" x="0" y="0" z="-bx"/>
-  <position name="layerpos2" x="0" y="0"  z="0"/>
-  <position name="layerpos3" x="0" y="0"  z="bx"/>
+  <position name="layerpos1" x="0"   y="0"   z="-bx"/>
+  <position name="layerpos2" x="0"   y="0"   z="0"/>
+  <position name="layerpos3" x="0"   y="0"   z="bx"/>
   
 </define>
 
