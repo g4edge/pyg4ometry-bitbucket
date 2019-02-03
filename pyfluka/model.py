@@ -11,6 +11,7 @@ import warnings
 import textwrap
 import uuid
 import itertools
+from datetime import datetime
 
 import numpy as np
 import antlr4
@@ -546,7 +547,7 @@ class Model(object):
                 if do_all is False:
                     break
 
-    def survey(self, pickle=False, extents=True, connected_zones=True,
+    def survey(self, outpath=None, extents=True, connected_zones=True,
                optimised_extents=True):
         """Extents of every zone and the connected_zones of every region."""
         regions = {region_name: {"extents": {},
@@ -562,12 +563,20 @@ class Model(object):
                                                                     zone_no))
                     regions[region_name]["extents"][zone_no] = zone.extent(
                         optimised_extents)
+        regions["survey_options"] = {"connected_zones": connected_zones,
+                                     "outpath": outpath,
+                                     "extents": extents,
+                                     "optimised_extents": optimised_extents,
+                                     "input_filename": self._filename,
+                                     "git_version": "not implemented",
+                                     "date": str(datetime.now())}
 
-        if pickle is True:
-            pickle_name = "./{}_survey.pickle".format(
+
+        if outpath is None:
+            outpath = "./{}_survey.pickle".format(
                 os.path.basename(os.path.splitext(self._filename)[0]))
-            with open(pickle_name, 'w') as pickle_file:
-                cPickle.dump(regions, pickle_file)
+        with open(outpath, 'w') as pickle_file:
+            cPickle.dump(regions, pickle_file)
         return regions
 
     def check_overlaps(self):
