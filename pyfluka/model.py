@@ -472,6 +472,7 @@ class Model(object):
             gmad.write("use, period=component;\n")
             gmad.write('\n')
             gmad.write("option, physicsList=\"em FTFP_BERT muon\",\n"
+                       "preprocessGDML=0,\n"
                        "checkOverlaps=1;\n")
             print("Written GMAD file: {}".format(gmad_path))
 
