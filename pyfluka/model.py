@@ -99,7 +99,8 @@ class Model(object):
 
     def write_to_gdml(self, regions=None, out_path=None,
                       make_gmad=True, bounding_subtrahends=None,
-                      just_bounding_box=False, survey=None, optimise=True):
+                      just_bounding_box=False, survey=None,
+                      optimise=True, bb_addend=0.0):
         """Convert the region to GDML.  Returns the centre (in mm) of the GDML
                       bounding box in the original Fluka coordinate
                       system, which can be useful for placing the
@@ -138,13 +139,19 @@ class Model(object):
           preferable to compute the survey separately once using the
           survey method, for the sake of speed.
 
+        - bb_addend: Additional length safety to add to the
+          bounding box (bb) dimensions.  This may be necessary in
+          circumstances where the SetClip method fails to perfectly
+          wrap the solid within, typically this is the case when the
+          solids are curved.
+
         """
         # Make the mesh for the given regions.
         self._generate_mesh(regions, setclip=True,
                             optimise=optimise,
                             bounding_subtrahends=bounding_subtrahends,
                             just_bounding_box=just_bounding_box,
-                            survey=survey)
+                            survey=survey, bb_addend=bb_addend)
         # If no path to write to provided, then generate one
         # automatically based on input file name.
         if out_path is None:
@@ -216,7 +223,8 @@ class Model(object):
     def _generate_mesh(self, region_names, setclip,
                        optimise, bounding_subtrahends,
                        just_bounding_box=False,
-                       survey=None):
+                       survey=None,
+                       bb_addend=0.0):
         """This function has the side effect of recreating the world volume if
         the region_names requested are different to the ones already
         assigned to it and returns the relevant mesh.
@@ -229,9 +237,10 @@ class Model(object):
         self._add_regions_to_world_volume(region_names, optimise, survey)
         # If we are subtracting from the world box
         if bounding_subtrahends:
-            self._subtract_from_world_volume(bounding_subtrahends)
+            self._subtract_from_world_volume(bounding_subtrahends,
+                                             bb_addend=bb_addend)
         elif setclip:
-            self._clip_world_volume()
+            self._clip_world_volume(bb_addend)
 
         # Do we want to construct it with the full geometry within or
         # should be leave some volumes out?
@@ -266,7 +275,7 @@ class Model(object):
                 msg = ("unusable argument for just_bounding_box!")
                 raise TypeError(msg)
 
-    def _subtract_from_world_volume(self, subtrahends):
+    def _subtract_from_world_volume(self, subtrahends, bb_addend=0.0):
         """Nice pyfluka interface for subtracting from bounding boxes
         in pygdml.  We create an RPP out of the clipped bounding box
         and then subtract from it the subtrahends, which is defined in
@@ -283,7 +292,7 @@ class Model(object):
         # The offset is -1 * the unclipped extent's centre.
         unclipped_centre = unclipped_extent.centre
         other_offset = -1 * unclipped_centre
-        self._clip_world_volume()
+        self._clip_world_volume(bb_addend)
         # Make an RPP out of the clipped bounding box.
         world_name = self._world_volume.currentVolume.name
         # solids magically start having material attributes at the top-level so
@@ -313,8 +322,11 @@ class Model(object):
         self._world_volume.currentVolume = world.gdml_solid()
         self._world_volume.currentVolume.material = world_material
 
-    def _clip_world_volume(self):
+    def _clip_world_volume(self, addend):
         self._world_volume.setClip()
+        self._world_volume.currentVolume.pX += addend
+        self._world_volume.currentVolume.pY += addend
+        self._world_volume.currentVolume.pZ += addend
 
     def _add_regions_to_world_volume(self, regions, optimise, survey=None):
         """Add the region or regions in region_names to the current
