@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+
+<define>
+  <constant name="wbx" value="100.0"/>
+  <constant name="wby" value="100.0"/>
+  <constant name="wbz" value="100.0"/>
+
+  <constant name="tx1" value="20.0"/>
+  <constant name="ty1" value="25.0"/>
+  <constant name="tx2" value="5"/>
+  <constant name="ty2" value="7.5"/>
+  <constant name="tz" value="10"/>
+
+  <position name="center" x="0" y="0" z="0"/>
+  <rotation name="identity" x="0" y="0" z="0"/>
+
+</define>
+
+<materials>
+  <element name="Oxygen"   formula="O"  Z="8.">
+    <atom value="16.0"/>
+  </element>
+  <element name="Nitrogen" formula="N"  Z="7.">
+    <atom value="14.01"/>
+  </element>
+
+  <material name="Al" Z="13.0">
+   <D value="2.70"/>
+   <atom value="26.98"/>
+  </material>
+
+  <material name="Air">
+   <D value="1.290" unit="mg/cm3"/>
+   <fraction n="0.7" ref="Nitrogen"/>
+   <fraction n="0.3" ref="Oxygen"/>
+  </material>
+
+</materials>
+
+<solids>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <trd name="trd1"     x1="tx1"  x2="tx2"  y1="ty1" y2="ty2" z="tz"  lunit="m"/>
+</solids>
+
+<structure>
+
+  <volume name="trd1Vol">
+    <materialref ref="Air"/>
+    <solidref ref="trd1"/>
+  </volume>
+
+  <volume name="World">
+    <materialref ref="Air"/>
+    <solidref ref="WorldBox"/>
+    <physvol>
+       <volumeref ref="trd1Vol"/>
+       <positionref ref="center"/>
+       <rotationref ref="identity"/>
+    </physvol>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>
+
+</gdml>
