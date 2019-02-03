@@ -6,9 +6,11 @@
   <constant name="wby" value="100.0"/>
   <constant name="wbz" value="100.0"/>
 
-  <constant name="bx" value="10.0"/>
-  <constant name="by" value="20.0"/>
-  <constant name="bz" value="30.0"/>
+  <constant name="pi" value="3.1415926"/>
+  <constant name="rmin" value="2.5"/>
+  <constant name="rmax" value="10.0"/>
+  <constant name="z" value="50"/>
+  <constant name="deltaphi" value="1.5*pi"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -38,21 +40,21 @@
 
 <solids>
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <box name="box1"     x="bx"  y="by"  z="bz"  lunit="m"/>
+  <tube name="tube1" rmin="rmin"  rmax="rmax" z="z" deltaphi="deltaphi" lunit="m"/>
 </solids>
 
 <structure>
 
-  <volume name="box1Vol">
+  <volume name="tube1Vol">
     <materialref ref="Air"/>
-    <solidref ref="box1"/>
+    <solidref ref="tube1"/>
   </volume>
 
   <volume name="World">
     <materialref ref="Air"/>
     <solidref ref="WorldBox"/>
     <physvol>
-       <volumeref ref="box1Vol"/>
+       <volumeref ref="tube1Vol"/>
        <positionref ref="center"/>
        <rotationref ref="identity"/>
     </physvol>
