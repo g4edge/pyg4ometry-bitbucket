@@ -9,6 +9,7 @@
   <constant name="srmin" value="8.0"/>
   <constant name="srmax" value="10.0"/>
   <constant name="sdphi" value="pi"/>
+  <constant name="sdtheta" value="3*pi/4"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -38,7 +39,7 @@
 
 <solids>
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <sphere name="sphere1" rmin="srmin" rmax="srmax" deltaphi="sdphi" deltatheta="pi"  lunit="m"/>
+  <sphere name="sphere1" rmin="srmin" rmax="srmax" deltaphi="sdphi" deltatheta="sdtheta"  lunit="m"/>
 </solids>
 
 <structure>
