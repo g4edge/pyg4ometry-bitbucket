@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+
+<define>
+  <constant name="wbx" value="100.0"/>
+  <constant name="bx"  value="10.0"/>
+  <position name="center" x="0" y="0" z="0"/>
+  <rotation name="identity" x="0" y="0" z="0"/>
+</define>
+
+<materials>
+  <element name="Oxygen"   formula="O"  Z="8.">
+    <atom value="16.0"/>
+  </element>
+  <element name="Nitrogen" formula="N"  Z="7.">
+    <atom value="14.01"/>
+  </element>
+  <material name="Air">
+   <D value="1.290" unit="mg/cm3"/>
+   <fraction n="0.7" ref="Nitrogen"/>
+   <fraction n="0.3" ref="Oxygen"/>
+  </material>
+</materials>
+
+<solids>
+  <box name="WorldBox" x="wbx" y="wbx" z="wbx"/>
+  <box name="box1" x="bx" y="bx" z="bx"/>   
+  <subtraction name="subtraction1">
+    <first ref="box1"/>
+    <second ref="box1"/>
+    <position x="bx/2" y="bx/2" z="bx/2" />
+    <rotationref ref="identity"/>
+  </subtraction>
+</solids>
+
+<structure>
+  <volume name="box1Vol">
+    <materialref ref="Air"/>
+    <solidref ref="subtraction1"/>
+  </volume>
+  
+  <volume name="World">
+    <materialref ref="Air"/>
+    <solidref ref="WorldBox"/>
+    <physvol>
+      <volumeref ref="box1Vol"/>
+      <positionref ref="center"/>
+      <rotationref ref="identity"/>      
+    </physvol>    
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>
+
+</gdml>
