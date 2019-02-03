@@ -35,6 +35,7 @@ class Model(object):
     """
     def __init__(self, filename, fluka_g4_material_map=None):
         self._filename = filename
+        self._model_name = os.path.basename(self._filename).rstrip(".inp")
         # get the syntax tree.
         tree, cards = (
             pyfluka.parser.get_geometry_ast_and_other_cards(filename)
@@ -84,7 +85,7 @@ class Model(object):
                 region.material = fluka_material
 
         # Initialiser the world volume:
-        self._world_volume = _gdml_world_volume()
+        self._world_volume = _gdml_world_volume(self._model_name)
 
     def _regions_from_tree(self, tree):
         """Get the region definitions from the tree.  Called in the
@@ -841,10 +842,10 @@ def load_pickle(path):
         unpickled = cPickle.load(file_object)
     return unpickled
 
-def _gdml_world_volume():
+def _gdml_world_volume(name):
     """This method returns a world volume."""
     world_box = pygdml.solid.Box("world", 1, 1, 1)
-    name = "world_volume_{}".format(uuid.uuid4())
+    name = "{}_world_volume_{}".format(name, uuid.uuid4())
     return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
                          name, None, 1, False, "G4_Galactic")
 
