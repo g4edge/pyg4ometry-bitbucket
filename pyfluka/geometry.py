@@ -483,14 +483,16 @@ class RPP(Body):
 
 
 class SPH(Body):
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_x', 'v_y', 'v_z', 'radius']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    """A sphere"""
+    def __init__(self, name, x, y, z, radius):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.z = z
+        self.radius = radius
 
     def centre(self):
-        return vector.Three(self.parameters.v_x,
-                            self.parameters.v_y,
-                            self.parameters.v_z)
+        return vector.Three(self.x, self.y, self.z)
 
     def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
@@ -504,7 +506,7 @@ class SPH(Body):
         """Construct a solid, whole, GDML sphere from this."""
         safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Orb(self._unique_body_name(),
-                                self.parameters.radius + safety_addend)
+                                self.radius + safety_addend)
 
 
 class RCC(Body):
