@@ -750,34 +750,28 @@ class PLA(Body):
 class XCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to x-axis
 
-    parameters:
+    y = y-coordinate of the centre of the cylinder
+    z = z-coordinate of the centre of the cylinder
+    radius = radius of the cylinder
 
-    centre_y    -- y-coordinate of the centre of the cylinder
-    centre_z    -- z-coordinate of the centre of the cylinder
-    radius -- radius of the cylinder
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_y", "centre_z", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self._radius = self.parameters.radius
-
-    def _apply_extent(self, extent):
-        self._offset = vector.Three(extent.centre.x,
-                                    0.0,
-                                    0.0)
-        self._scale = extent.size.x * (SCALING_TOLERANCE + 1)
-
-    def centre(self):
-        return (self._offset
-                + vector.Three(0.0,
-                               self.parameters.centre_y,
-                               self.parameters.centre_z))
-
-    def _set_rotation_matrix(self):
+    def __init__(self, name, y, z, radius):
+        self.name = name
+        self.y = y
+        self.radius = radius
+        # Stuff for infinite scaling..
+        self._radius = radius
         # Rotate pi/2 about the y-axis.
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
                                    [1, 0, 0]])
+
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(extent.centre.x, 0.0, 0.0)
+        self._scale = extent.size.x * (SCALING_TOLERANCE + 1)
+
+    def centre(self):
+        return (self._offset + vector.Three(0.0, self.y, self.z))
 
 
 class YCC(InfiniteCylinder):
