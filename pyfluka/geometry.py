@@ -372,6 +372,7 @@ class RPP(Body):
         return cls(name, extent.lower, extent.upper)
 
     def _apply_crude_scale(self, scale):
+        # Reset the RPP.
         self._is_omittable = False
         self._x_min = self.lower.x
         self._x_max = self.upper.x
