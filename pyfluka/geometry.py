@@ -513,30 +513,22 @@ class RCC(Body):
     """Right-angled Circular Cylinder
 
     Parameters:
-    v_(x,y,z) = coordinates of the centre of one of the circular planes
-    faces
-    h_(x,y,z) = components of vector pointing in the direction of the
-    other plane face, with magnitude equal to the cylinder length.
+    face_centre: centre of one of the faces
+    direction: direction of cylinder from face_centre.  magnitude of
+    this vector is the length of the cylidner.
     radius    = cylinder radius
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_x', 'v_y', 'v_z', 'h_x', 'h_y', 'h_z', 'radius']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, face_centre, direction, radius):
+        self.face_centre = pyfluka.Vector.Three(face_centre)
+        self.direction = pyfluka.Vector.Three(direction)
+        self.radius = radius
+        self._offset = vector.Three(0, 0, 0) # what is this?
 
-        self.face_centre = vector.Three(self.parameters.v_x,
-                                        self.parameters.v_y,
-                                        self.parameters.v_z)
-        self.direction = vector.Three(self.parameters.h_x,
-                                      self.parameters.h_y,
-                                      self.parameters.h_z)
-        self.length = self.direction.length()
-        self.radius = self.parameters.radius
-        self._offset = vector.Three(0, 0, 0)
 
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
-        self._scale = self.length
+        self._scale = self.direction.length()
 
     def centre(self):
         return (self._offset
@@ -549,10 +541,8 @@ class RCC(Body):
         self.rotation = trf.matrix_from(initial, final)
 
     def crude_extent(self):
-        centre_max = max(abs(vector.Three(self.parameters.v_x,
-                                          self.parameters.v_y,
-                                          self.parameters.v_z)))
-        return centre_max + self.length
+        centre_max = max(abs(direction))
+        return centre_max + self.direction.length()
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
