@@ -484,23 +484,19 @@ class RPP(Body):
 
 class SPH(Body):
     """A sphere"""
-    def __init__(self, name, x, y, z, radius):
+    def __init__(self, name, centre, radius):
         self.name = name
-        self.x = x
-        self.y = y
-        self.z = z
+        self.centre = centre
         self.radius = radius
 
     def centre(self):
-        return vector.Three(self.x, self.y, self.z)
+        return self.centre
 
     def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
-        # Maximum possible extent won't be any more than 2 times the
-        # largest parameter.
-        return 2 * max(map(abs, self.parameters))
+        return max(map(abs, self.centre + radius))
 
     def gdml_solid(self, length_safety=None):
         """Construct a solid, whole, GDML sphere from this."""
