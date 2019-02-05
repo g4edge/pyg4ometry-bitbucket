@@ -516,6 +516,10 @@ class RCC(Body):
         self.radius = radius
         self._offset = vector.Three(0, 0, 0) # what is this?
 
+        initial = [0, 0, 1]
+        final = -self.direction
+        self.rotation = trf.matrix_from(initial, final)
+
 
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
@@ -525,11 +529,6 @@ class RCC(Body):
         return (self._offset
                 + self.face_centre
                 + (0.5 * self.direction))
-
-    def _set_rotation_matrix(self):
-        initial = [0, 0, 1]
-        final = -self.direction
-        self.rotation = trf.matrix_from(initial, final)
 
     def crude_extent(self):
         centre_max = max(abs(direction))
