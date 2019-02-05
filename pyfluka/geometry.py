@@ -846,20 +846,20 @@ class XEC(InfiniteEllipticalCylinder):
     face.
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_y", "centre_z", "semi_axis_y", "semi_axis_z"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(0.0,
-                            self.parameters.centre_y,
-                            self.parameters.centre_z)
-
-    def _set_rotation_matrix(self):
+    def __init__(self, name, y, z, semi_y, semi_z):
+        self.name = name
+        self.y = y
+        self.z = z
+        self.semi_y = semi_y
+        self.semi_z = semi_z
         # Rotate pi/2 about the y-axis.
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
                                    [1, 0, 0]])
+
+
+    def centre(self):
+        return vector.Three(0.0, self.centre_y, self.centre_z)
 
     def crude_extent(self):
         return max(map(abs, self.parameters))
@@ -868,8 +868,8 @@ class XEC(InfiniteEllipticalCylinder):
         safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.EllipticalTube(
             self._unique_body_name(),
-            self.parameters.semi_axis_z + safety_addend,
-            self.parameters.semi_axis_y + safety_addend,
+            self.semi_axis_z + safety_addend,
+            self.semi_axis_y + safety_addend,
             0.5 * self._scale
         )
 
