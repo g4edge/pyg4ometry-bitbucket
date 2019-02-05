@@ -869,40 +869,35 @@ class XEC(InfiniteEllipticalCylinder):
 class YEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the y-axis.
 
-    Parameters:
-
-    centre_z (Az) - z-coordinate of the centre of the ellipse face.
-    centre_x (Ax) - x-coordinate of the centre of the ellipse face.
-    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse face.
-    semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
+    z - z-coordinate of the centre of the ellipse face.
+    x - x-coordinate of the centre of the ellipse face.
+    semi_z - semi-axis in the z-direction of the ellipse face.
+    semi_x - semi-axis in the x-direction of the ellipse face.
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_z", "centre_x", "semi_axis_z", "semi_axis_x"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(self.parameters.centre_x,
-                            0.0,
-                            self.parameters.centre_z)
-
-    def _set_rotation_matrix(self):
+    def __init__(self, name, x, z, semi_x, semi_z):
+        self.name = name
+        self.x = x
+        self.z = z
+        self.semi_x = semi_x
+        self.semi_z = semi_z
         # Rotate by pi/2 about the x-axis.
         self.rotation = np.matrix([[1, 0, 0],
                                    [0, 0, 1],
                                    [0, -1, 0]])
 
+    def centre(self):
+        return vector.Three(self.x, 0.0, self.z)
+
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        return max(abs(i for i in [self.x, self.z, self.semi_x, self.semi_z]))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
-        return pygdml.solid.EllipticalTube(
-            self._unique_body_name(),
-            self.parameters.semi_axis_x + safety_addend,
-            self.parameters.semi_axis_z + safety_addend,
-            0.5 * self._scale
-        )
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
+                                           self.semi_x + safety_addend,
+                                           self.semi_z + safety_addend,
+                                           0.5 * self._scale)
 
 
 class ZEC(InfiniteEllipticalCylinder):
