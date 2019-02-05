@@ -662,18 +662,9 @@ class PLA(Body):
     """Generic infinite half-space.
 
     Parameters:
-    x_direction (Hx) :: x-component of a vector of arbitrary length
-                        perpendicular to the plane.  Pointing outside
-                        of the space.
-    y_direction (Hy) :: y-component of a vector of arbitrary length
-                        perpendicular to the plane.  Pointing outside
-                        of the space.
-    z_direction (Hz) :: z-component of a vector of arbitrary length
-                        perpendicular to the plane.  Pointing outside
-                        of the space.
-    x_position  (Vx) :: x-component of a point anywhere on the plane.
-    y_position  (Vy) :: y-component of a point anywhere on the plane.
-    z_position  (Vz) :: z-component of a point anywhere on the plane.
+    point = point on surface of halfspace
+    normal = vector normal to the surface (pointing outwards)
+
     """
     def _set_parameters(self, parameters):
         parameter_names = ["x_direction", "y_direction", "z_direction",
