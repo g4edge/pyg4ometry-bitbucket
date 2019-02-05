@@ -357,25 +357,20 @@ class InfiniteHalfSpace(Body):
 
 class RPP(Body):
     """An RPP is a rectangular parallelpiped (a cuboid). """
-    def __init__(self, name, x_min, x_max, y_min, y_max, z_min, z_max):
+    def __init__(self, name, lower, upper):
         self.name = name
-
-        self.x_min = x_min
-        self.x_max = x_max
-        self.y_min = y_min
-        self.y_max = y_max
-        self.z_min = z_min
-        self.z_max = z_max
+        self.lower = lower
+        self.upper = upper
 
         # Hidden versions of these parameters which can be reassigned
-        self._x_min = x_min
-        self._x_max = x_max
-        self._y_min = y_min
-        self._y_max = y_max
-        self._z_min = z_min
-        self._z_max = z_max
+        self._x_min = lower.x
+        self._x_max = upper.x
+        self._y_min = lower.y
+        self._y_max = upper.y
+        self._z_min = lower.z
+        self._z_max = upper.z
 
-        if (x_min > x_max or y_min > y_max or z_min > z_max):
+        if (self.lower > self.upper).any():
             raise Warning("This RPP \"" + self.name + "\" has mins larger than "
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
