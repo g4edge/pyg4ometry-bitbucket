@@ -518,7 +518,6 @@ class RCC(Body):
         final = -self.direction
         self.rotation = trf.matrix_from(initial, final)
 
-
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
         self._scale = self.direction.length()
