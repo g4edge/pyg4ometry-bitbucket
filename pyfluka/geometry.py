@@ -332,12 +332,6 @@ class InfiniteHalfSpace(Body):
         self._scale_y = scale
         self._scale_z = scale
 
-    def _set_rotation_matrix(self):
-        self.rotation = np.matrix(np.identity(3))
-
-    def crude_extent(self):
-        return abs(max(self.parameters))
-
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Box(self._unique_body_name(),
@@ -478,7 +472,7 @@ class SPH(Body):
         return self.point
 
     def crude_extent(self):
-        return max(map(abs, self.centre + radius))
+        return max(map(abs, self.centre + self.radius))
 
     def gdml_solid(self, length_safety=None):
         """Construct a solid, whole, GDML sphere from this."""
@@ -517,7 +511,7 @@ class RCC(Body):
                 + (0.5 * self.direction))
 
     def crude_extent(self):
-        centre_max = max(abs(direction))
+        centre_max = max(abs(self.direction))
         return centre_max + self.direction.length()
 
     def gdml_solid(self, length_safety=None):
@@ -525,7 +519,7 @@ class RCC(Body):
         return pygdml.solid.Tubs(self._unique_body_name(),
                                  0.0,
                                  self.radius + safety_addend,
-                                 self.length * 0.5 + safety_addend,
+                                 self.direction.length() * 0.5 + safety_addend,
                                  0.0,
                                  2*math.pi)
 
@@ -543,21 +537,19 @@ class TRC(Body):
         self.major_centre = major_centre
         self.direction = direction
         self.major_radius = major_radius
+        self.minor_radius = minior_radius
 
         # We choose in the as_gdml_solid method to place the major at
-        # -z, and the major at +z, hence this choice of initial and
-        # final vectors:
-        initial = [0, 0, 1]
-        final = self.major_to_minor
-        self.rotation = trf.matrix_from(initial, final)
+        # -z, and the major at +z:
+        self.rotation = trf.matrix_from([0, 0, 1], self.direction)
 
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
 
     def crude_extent(self):
-        return max(abs(self.major_centre.x) + direction.length(),
-                   abs(self.major_centre.y) + direction.length(),
-                   abs(self.major_centre.z) + direction.length(),
+        return max(abs(self.major_centre.x) + self.direction.length(),
+                   abs(self.major_centre.y) + self.direction.length(),
+                   abs(self.major_centre.z) + self.direction.length(),
                    self.minor_radius,
                    self.major_radius)
 
@@ -568,7 +560,7 @@ class TRC(Body):
         return pygdml.solid.Cons(self._unique_body_name(),
                                  0.0, self.major_radius + safety_addend,
                                  0.0, self.minor_radius + safety_addend,
-                                 0.5 * direction.length() + safety_addend,
+                                 0.5 * self.direction.length() + safety_addend,
                                  0.0, 2*math.pi)
 
 
@@ -577,6 +569,10 @@ class XYP(InfiniteHalfSpace):
     def __init__(self, name, z):
         self.name = name
         self.z = z
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(self.z)
 
     def _apply_extent(self, extent):
         if (self.z - 2 * LENGTH_SAFETY > extent.upper.z
@@ -592,11 +588,7 @@ class XYP(InfiniteHalfSpace):
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        # Choose the face at
-        centre_x = 0.0
-        centre_y = 0.0
-        centre_z = self.parameters.v_z - (self._scale_z * 0.5)
-        return self._offset + vector.Three(centre_x, centre_y, centre_z)
+        return self._offset + vector.Three(0, 0, self.z - (self._scale_z * 0.5))
 
 
 class XZP(InfiniteHalfSpace):
@@ -604,6 +596,10 @@ class XZP(InfiniteHalfSpace):
     def __init__(self, name, y):
         self.name = name
         self.y = y
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(self.y)
 
     def _apply_extent(self, extent):
         if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
@@ -617,8 +613,7 @@ class XZP(InfiniteHalfSpace):
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        centre_y = self.y - (self._scale_y * 0.5)
-        return self._offset + vector.Three(0.0, centre_y, 0.0)
+        return self._offset + vector.Three(0, self.y - (self._scale_y * 0.5), 0)
 
 
 class YZP(InfiniteHalfSpace):
@@ -626,6 +621,10 @@ class YZP(InfiniteHalfSpace):
     def __init__(self, name, x):
         self.name
         self.x = x
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(self.x)
 
     def _apply_extent(self, extent):
         if (self.x - 2 * LENGTH_SAFETY > extent.upper.x
@@ -633,16 +632,13 @@ class YZP(InfiniteHalfSpace):
             self._is_omittable = True
             logger.debug("Setting YZP \"{}\" omittable.".format(self.name))
             return
-        self._offset = vector.Three(0.0,
-                                    extent.centre.y,
-                                    extent.centre.z)
+        self._offset = vector.Three(0.0, extent.centre.y, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
         self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        centre_x = self.x - (self._scale_x * 0.5)
-        return self._offset + vector.Three(centre_x, 0, 0)
+        return self._offset + vector.Three(self.x - (self._scale_x * 0.5), 0, 0)
 
 
 class PLA(Body):
