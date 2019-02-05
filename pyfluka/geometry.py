@@ -798,10 +798,7 @@ class YCC(InfiniteCylinder):
         self._scale = extent.size.y * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset
-                + vector.Three(self.parameters.centre_x,
-                               0.0,
-                               self.parameters.centre_z))
+        return (self._offset + vector.Three(self.centre_x, 0.0, self.centre_z))
 
 
 class ZCC(InfiniteCylinder):
@@ -821,16 +818,12 @@ class ZCC(InfiniteCylinder):
         self.rotation = np.matrix(np.identity(3))
 
     def _apply_extent(self, extent):
-        self._offset = vector.Three(0.0,
-                                    0.0,
-                                    extent.centre.z)
+        self._offset = vector.Three(0.0, 0.0, extent.centre.z)
         self._scale = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
         return (self._offset
-                + vector.Three(self.parameters.centre_x,
-                               self.parameters.centre_y,
-                               0.0))
+                + vector.Three(self.centre_x, self.centre_y, 0.0))
 
 
 class XEC(InfiniteEllipticalCylinder):
@@ -856,7 +849,6 @@ class XEC(InfiniteEllipticalCylinder):
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
                                    [1, 0, 0]])
-
 
     def centre(self):
         return vector.Three(0.0, self.centre_y, self.centre_z)
