@@ -683,7 +683,6 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         self.unique_body_names = set()
         self.used_bodies_by_type = list()
 
-        self.transform_stack = []
         self.current_translat = None
         self.current_expansion = None
 
@@ -699,10 +698,7 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         # Try and construct the body, if it's not implemented then warn
         try:
             body_constructor = getattr(pyfluka.geometry, body_type)
-            body = body_constructor(body_name,
-                                    body_parameters,
-                                    self.transform_stack,
-                                    self.current_translat)
+            body = body_constructor(body_name, body_parameters)
             self.bodies[body_name] = body
         except (AttributeError, NotImplementedError):
             warnings.simplefilter('once', UserWarning)

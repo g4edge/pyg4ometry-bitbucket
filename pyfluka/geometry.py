@@ -60,15 +60,12 @@ logger = logging.getLogger(__name__)
 #      constituents zones and regions must be found.
 # For this reason it is necessary to cache the mesh.
 
-def make_body(body_type, parameters):
+def make_body(body_type, name, parameters):
     """Given a body type, "REC", "XYP", etc, and a list of the
     parameters in the correct order, return the correct Body instance."""
     body_constructor = getattr(pyfluka.geometry, body_type)
     try:
-        body = body_constructor(body_name,
-                                body_parameters,
-                                self.transform_stack,
-                                self.current_translat)
+        body = body_constructor(name, parameters)
     except AttributeError, NotImplementedError:
         raise NotImplementedError("Body type not supported")
     if not isinstance(body, Body):
@@ -98,12 +95,10 @@ class Body(object):
     # _get_overlap is called).
     _is_omittable = False
 
-    def __init__(self, name, parameters, translation=None, transformation=None):
+    def __init__(self, name, parameters):
         self.name = name
-        self.translation = translation
-        self.transformation = transformation
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
+        self._set_rotation_matrix()
 
     def to_fluka_string(self):
         body_type = type(self).__name__
@@ -335,12 +330,10 @@ class InfiniteEllipticalCylinder(Body):
     pass
 
 class InfiniteHalfSpace(Body):
-    def __init__(self, name, parameters, translation=None, transformation=None):
+    def __init__(self, name, parameters):
         self.name = name
-        self.translation = translation
-        self.transformation = transformation
         self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
+        self._set_rotation_matrix()
 
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
@@ -349,7 +342,7 @@ class InfiniteHalfSpace(Body):
         self._scale_y = scale
         self._scale_z = scale
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
@@ -461,7 +454,7 @@ class RPP(Body):
                                   self._y_min + self._y_max,
                                   self._z_min + self._z_max)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
@@ -495,7 +488,7 @@ class SPH(Body):
                             self.parameters.v_y,
                             self.parameters.v_z)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
@@ -544,7 +537,7 @@ class RCC(Body):
                 + self.face_centre
                 + (0.5 * self.direction))
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         initial = [0, 0, 1]
         final = -self.direction
         self.rotation = trf.matrix_from(initial, final)
@@ -597,10 +590,7 @@ class REC(Body):
     The length of the vector semi_major is the length of the
     semi-major axis.
     """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
+    def __init__(self, name, parameters):
         raise NotImplementedError
 
     def _set_parameters(self, parameters):
@@ -621,7 +611,7 @@ class REC(Body):
 
         return vector.Three(centre_x, centre_y, centre_z)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         pass
 
     def gdml_solid(self, length_safety=None):
@@ -688,7 +678,7 @@ class TRC(Body):
     def centre(self):
         return self.major_centre + 0.5 * self.major_to_minor
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         # We choose in the as_gdml_solid method to place the major at
         # -z, and the major at +z, hence this choice of initial and
         # final vectors:
@@ -847,7 +837,7 @@ class PLA(Body):
                           extent.size.y * (SCALING_TOLERANCE + 1) * root3,
                           extent.size.z * (SCALING_TOLERANCE + 1) * root3)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         # Choose the face pointing in the direction of the positive
         # z-axis to make the face of the plane.
         initial = [0, 0, 1]
@@ -907,7 +897,7 @@ class XCC(InfiniteCylinder):
                                self.parameters.centre_y,
                                self.parameters.centre_z))
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         # Rotate pi/2 about the y-axis.
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
@@ -938,7 +928,7 @@ class YCC(InfiniteCylinder):
                                0.0,
                                self.parameters.centre_z))
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         # Rotate by pi/2 about the x-axis.
         self.rotation = np.matrix([[1, 0, 0],
                                    [0, 0, 1],
@@ -971,7 +961,7 @@ class ZCC(InfiniteCylinder):
                                self.parameters.centre_y,
                                0.0))
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
 
 
@@ -997,7 +987,7 @@ class XEC(InfiniteEllipticalCylinder):
                             self.parameters.centre_y,
                             self.parameters.centre_z)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         # Rotate pi/2 about the y-axis.
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
@@ -1036,7 +1026,7 @@ class YEC(InfiniteEllipticalCylinder):
                             0.0,
                             self.parameters.centre_z)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         # Rotate by pi/2 about the x-axis.
         self.rotation = np.matrix([[1, 0, 0],
                                    [0, 0, 1],
@@ -1074,7 +1064,7 @@ class ZEC(InfiniteEllipticalCylinder):
                             self.parameters.centre_y,
                             0.0)
 
-    def _set_rotation_matrix(self, transformation):
+    def _set_rotation_matrix(self):
         self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
