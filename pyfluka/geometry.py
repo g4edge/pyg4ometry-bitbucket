@@ -8,11 +8,11 @@ from __future__ import (absolute_import, print_function, division)
 import math
 import uuid
 import collections
-import numpy as np
-import networkx as nx
 import itertools
 import logging
 
+import numpy as np
+import networkx as nx
 import pygdml
 import pygdml.transformation as trf
 
