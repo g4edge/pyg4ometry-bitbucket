@@ -325,11 +325,6 @@ class InfiniteEllipticalCylinder(Body):
 
 
 class InfiniteHalfSpace(Body):
-    def __init__(self, name, parameters):
-        self.name = name
-        self._set_parameters(parameters)
-        self._set_rotation_matrix()
-
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
