@@ -312,6 +312,7 @@ class Body(object):
 
 class InfiniteCylinder(Body):
     def _apply_crude_scale(self, scale):
+        self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
         self._scale = scale
 
