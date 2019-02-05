@@ -483,12 +483,10 @@ class SPH(Body):
         self.name = name
         self.centre = centre
         self.radius = radius
+        self.rotation = np.matrix(np.identity(3))
 
     def centre(self):
         return self.centre
-
-    def _set_rotation_matrix(self):
-        self.rotation = np.matrix(np.identity(3))
 
     def crude_extent(self):
         return max(map(abs, self.centre + radius))
