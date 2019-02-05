@@ -659,32 +659,31 @@ class PLA(Body):
     normal = vector normal to the surface (pointing outwards)
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["x_direction", "y_direction", "z_direction",
-                           "x_position", "y_position", "z_position"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, point, normal):
+        self.name = name
+        self.point = point
+        self.normal = normal
+        # Choose the face pointing in the direction of the positive
+        # z-axis to make the surface of the half space.
+        self.rotation = trf.matrix_from([0, 0, 1], self.normal)
 
-
-        # Normalise the perpendicular vector:
-        perpendicular = vector.Three([self.parameters.x_direction,
-                                      self.parameters.y_direction,
-                                      self.parameters.z_direction])
-        self.perpendicular = (perpendicular
-                              / np.linalg.norm(perpendicular))
-        self.surface_point = vector.Three([self.parameters.x_position,
-                                           self.parameters.y_position,
-                                           self.parameters.z_position])
-        self.surface_point = self._closest_point([0, 0, 0])
+        # Start by putting the point as close to the origin as can,
+        # and the normalising the norm vector.  these are the versions
+        # we actually "use.. in all methods within" this is a horrible
+        # wart and really i should do this more sensibly.  oh well for
+        # now.
+        self._normal = self.normal / np.linalg.norm(self.normal)
+        self._point = self.point
+        self._point = self._closest_point([0, 0, 0])
 
     def centre(self):
         # This is the centre of the underlying gdml solid (i.e. won't
         # be on the surface, but set backwards by half length scale's amount.
-        centre = (self.surface_point
-                  - (0.5 * self._scale * self.perpendicular.unit()))
+        centre = self._point - 0.5 * self._scale * self._normal.unit()
         return centre
 
     def _apply_extent(self, extent):
-        self.surface_point = self._closest_point(extent.centre)
+        self._point = self._closest_point(extent.centre)
         root3 = math.sqrt(3) # root3 to ensure that the box is big enough to
         # effectively act as a plane regardless of any rotations
         # present.  This is necessary because an extent is a box
@@ -696,17 +695,8 @@ class PLA(Body):
                           extent.size.y * (SCALING_TOLERANCE + 1) * root3,
                           extent.size.z * (SCALING_TOLERANCE + 1) * root3)
 
-    def _set_rotation_matrix(self):
-        # Choose the face pointing in the direction of the positive
-        # z-axis to make the face of the plane.
-        initial = [0, 0, 1]
-        final = self.perpendicular
-        self.rotation = trf.matrix_from(initial, final)
-
     def crude_extent(self):
-        return max(abs(self.surface_point.x),
-                   abs(self.surface_point.y),
-                   abs(self.surface_point.z))
+        return max(abs(self._point.x), abs(self._point.y), abs(self._point.z))
 
     def _closest_point(self, point):
         """
@@ -714,12 +704,11 @@ class PLA(Body):
 
         """
         # perpendicular distance from the point to the plane
-        distance = np.dot((self.surface_point - point),
-                          self.perpendicular)
-        closest_point = point + distance * self.perpendicular
-        assert (abs(np.dot(self.perpendicular,
-                           closest_point - self.surface_point)) < 1e-6), (
-                               "Point isn't on the plane!")
+        distance = np.dot((self._point - point), self._normal)
+        closest = point + distance * self.perpendicular
+
+        assert (abs(np.dot(self._normal, closest - self._point)) <
+                1e-6), "Point isn't on the plane!"
         return closest_point
 
     def gdml_solid(self, length_safety=None):
