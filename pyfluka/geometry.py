@@ -670,8 +670,7 @@ class PLA(Body):
         # Start by putting the point as close to the origin as can,
         # and the normalising the norm vector.  these are the versions
         # we actually "use.. in all methods within" this is a horrible
-        # wart and really i should do this more sensibly.  oh well for
-        # now.
+        # wart and really i should do this more sensibly.  oh well for now.
         self._normal = self.normal / np.linalg.norm(self.normal)
         self._point = self.point
         self._point = self._closest_point([0, 0, 0])
