@@ -479,6 +479,7 @@ class RCC(Body):
 
     """
     def __init__(self, name, face_centre, direction, radius):
+        self.name = name
         self.face_centre = vector.Three(face_centre)
         self.direction = vector.Three(direction)
         self.radius = radius
