@@ -613,13 +613,13 @@ class XYP(InfiniteHalfSpace):
 
 class XZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the y-axis."""
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_y']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, y):
+        self.name = name
+        self.y = y
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_y - 2 * LENGTH_SAFETY > extent.upper.y
-                and not np.isclose(self.parameters.v_y, extent.upper.y)):
+        if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
+            and not np.isclose(self.y, extent.upper.y)):
             self._is_omittable = True
             logger.debug("Setting XZP \"{}\" omittable.".format(self.name))
             return
@@ -627,14 +627,12 @@ class XZP(InfiniteHalfSpace):
                                     0.0,
                                     extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
-        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
+        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)a
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        centre_x = 0.0
-        centre_y = self.parameters.v_y - (self._scale_y * 0.5)
-        centre_z = 0.0
-        return self._offset + vector.Three(centre_x, centre_y, centre_z)
+        centre_y = self.y - (self._scale_y * 0.5)
+        return self._offset + vector.Three(0.0, centre_y, 0.0)
 
 
 class YZP(InfiniteHalfSpace):
