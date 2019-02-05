@@ -537,7 +537,7 @@ class TRC(Body):
         self.major_centre = major_centre
         self.direction = direction
         self.major_radius = major_radius
-        self.minor_radius = minior_radius
+        self.minor_radius = minor_radius
 
         # We choose in the as_gdml_solid method to place the major at
         # -z, and the major at +z:
