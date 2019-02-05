@@ -369,9 +369,7 @@ class RPP(Body):
 
     @classmethod
     def from_extent(cls, name, extent):
-        return cls(name, [extent.lower.x, extent.upper.x,
-                          extent.lower.y, extent.upper.y,
-                          extent.lower.z, extent.upper.z])
+        return cls(name, extent.lower, extent.upper)
 
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
@@ -385,23 +383,23 @@ class RPP(Body):
     def _check_omittable(self, extent):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
-        is_gt_in_x = (self.x_max + 2 * LENGTH_SAFETY > extent.upper.x
-                      and not np.isclose(self.x_max,
+        is_gt_in_x = (self.upper.x + 2 * LENGTH_SAFETY > extent.upper.x
+                      and not np.isclose(self.upper.x,
                                          extent.upper.x))
-        is_lt_in_x = (self.x_min - 2 * LENGTH_SAFETY < extent.lower.x
-                      and not np.isclose(self.x_min,
+        is_lt_in_x = (self.lower.x - 2 * LENGTH_SAFETY < extent.lower.x
+                      and not np.isclose(self.lower.x,
                                          extent.lower.x))
-        is_gt_in_y = (self.y_max + 2 * LENGTH_SAFETY > extent.upper.y
-                      and not np.isclose(self.y_max,
+        is_gt_in_y = (self.upper.y + 2 * LENGTH_SAFETY > extent.upper.y
+                      and not np.isclose(self.upper.y,
                                          extent.upper.y))
-        is_lt_in_y = (self.y_min - 2 * LENGTH_SAFETY < extent.lower.y
-                      and not np.isclose(self.y_min,
+        is_lt_in_y = (self.lower.y - 2 * LENGTH_SAFETY < extent.lower.y
+                      and not np.isclose(self.lower.y,
                                          extent.lower.y))
-        is_gt_in_z = (self.z_max + 2 * LENGTH_SAFETY > extent.upper.z
-                      and not np.isclose(self.z_max,
+        is_gt_in_z = (self.upper.z + 2 * LENGTH_SAFETY > extent.upper.z
+                      and not np.isclose(self.upper.z,
                                          extent.upper.z))
-        is_lt_in_z = (self.z_min - 2 * LENGTH_SAFETY < extent.lower.z
-                      and not np.isclose(self.z_min,
+        is_lt_in_z = (self.lower.z - 2 * LENGTH_SAFETY < extent.lower.z
+                      and not np.isclose(self.lower.z,
                                          extent.lower.z))
         return (is_gt_in_x and is_lt_in_x
                 and is_gt_in_y and is_lt_in_y
@@ -426,18 +424,18 @@ class RPP(Body):
 
         # If outside of tolerances, then assign to those tolerances.
         # Lower bounds:
-        if self.x_min < x_bound_lower:
+        if self.lower.x < x_bound_lower:
             self._x_min = x_bound_lower
-        if self.y_min < y_bound_lower:
+        if self.lower.y < y_bound_lower:
             self._y_min = y_bound_lower
-        if self.z_min < z_bound_lower:
+        if self.lower.z < z_bound_lower:
             self._z_min = z_bound_lower
         # Upper bounds::
-        if self.x_max > x_bound_upper:
+        if self.upper.x > x_bound_upper:
             self._x_max = x_bound_upper
-        if self.y_max > y_bound_upper:
+        if self.upper.y > y_bound_upper:
             self._y_max = y_bound_upper
-        if self.z_max > z_bound_upper:
+        if self.upper.z > z_bound_upper:
             self._z_max = z_bound_upper
 
     def centre(self):
@@ -447,12 +445,12 @@ class RPP(Body):
                                   self._z_min + self._z_max)
 
     def crude_extent(self):
-        return max([abs(self.x_min), abs(self.x_max),
-                    abs(self.y_min), abs(self.y_max),
-                    abs(self.z_min), abs(self.z_max),
-                    self.x_max - self.x_min,
-                    self.y_max - self.y_min,
-                    self.z_max - self.z_min])
+        return max([abs(self.lower.x), abs(self.upper.x),
+                    abs(self.lower.y), abs(self.upper.y),
+                    abs(self.lower.z), abs(self.upper.z),
+                    self.upper.x - self.lower.x,
+                    self.upper.y - self.lower.y,
+                    self.upper.z - self.lower.z])
 
 
     def gdml_solid(self, length_safety=None):
