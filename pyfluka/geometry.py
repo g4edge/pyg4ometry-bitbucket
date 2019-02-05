@@ -617,9 +617,7 @@ class XZP(InfiniteHalfSpace):
             self._is_omittable = True
             logger.debug("Setting XZP \"{}\" omittable.".format(self.name))
             return
-        self._offset = vector.Three(extent.centre.x,
-                                    0.0,
-                                    extent.centre.z)
+        self._offset = vector.Three(extent.centre.x, 0.0, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
         self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
