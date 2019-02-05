@@ -468,14 +468,14 @@ class RPP(Body):
 
 class SPH(Body):
     """A sphere"""
-    def __init__(self, name, centre, radius):
+    def __init__(self, name, point, radius):
         self.name = name
-        self.centre = centre
+        self.point = point
         self.radius = radius
         self.rotation = np.matrix(np.identity(3))
 
     def centre(self):
-        return self.centre
+        return self.point
 
     def crude_extent(self):
         return max(map(abs, self.centre + radius))
