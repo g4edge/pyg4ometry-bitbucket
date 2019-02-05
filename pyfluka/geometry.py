@@ -829,14 +829,10 @@ class ZCC(InfiniteCylinder):
 class XEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the x-axis.
 
-    Parameters:
-
-    centre_y (Ay) - y-coordinate of the centre of the ellipse face.
-    centre_z (Az) - z-coordinate of the centre of the ellipse face.
-    semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse
-    face.
-    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse
-    face.
+    y = y-coordinate of the centre of the ellipse face.
+    z = z-coordinate of the centre of the ellipse face.
+    semi_y = semi-axis in the y-direction of the ellipse face.
+    semi_z = semi-axis in the z-direction of the ellipse face.
 
     """
     def __init__(self, name, y, z, semi_y, semi_z):
@@ -851,19 +847,17 @@ class XEC(InfiniteEllipticalCylinder):
                                    [1, 0, 0]])
 
     def centre(self):
-        return vector.Three(0.0, self.centre_y, self.centre_z)
+        return vector.Three(0.0, self.y, self._z)
 
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        return max(abs(i for i in [self.y, self.z, self.semi_y, self.semi_z]))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
-        return pygdml.solid.EllipticalTube(
-            self._unique_body_name(),
-            self.semi_axis_z + safety_addend,
-            self.semi_axis_y + safety_addend,
-            0.5 * self._scale
-        )
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
+                                           self.semi_z + safety_addend,
+                                           self.semi_y + safety_addend,
+                                           0.5 * self._scale)
 
 
 class YEC(InfiniteEllipticalCylinder):
