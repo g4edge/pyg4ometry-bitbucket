@@ -66,7 +66,7 @@ def make_body(body_type, name, parameters):
     body_constructor = getattr(pyfluka.geometry, body_type)
     try:
         body = body_constructor(name, parameters)
-    except AttributeError
+    except AttributeError:
         raise ValueError("Body type not supported")
     if not isinstance(body, Body):
         raise ValueError("Not a recognised body type")
