@@ -822,8 +822,7 @@ class ZCC(InfiniteCylinder):
         self._scale = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset
-                + vector.Three(self.centre_x, self.centre_y, 0.0))
+        return (self._offset + vector.Three(self.centre_x, self.centre_y, 0.0))
 
 
 class XEC(InfiniteEllipticalCylinder):
@@ -903,6 +902,7 @@ class ZEC(InfiniteEllipticalCylinder):
     centre_y (Ay) - y-coordinate of the centre of the ellipse face.
     semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
     semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse face.
+
     """
     def _set_parameters(self, parameters):
         parameter_names = ["centre_x", "centre_y", "semi_axis_x", "semi_axis_y"]
