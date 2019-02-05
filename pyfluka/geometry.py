@@ -357,23 +357,30 @@ class InfiniteHalfSpace(Body):
 
 class RPP(Body):
     """An RPP is a rectangular parallelpiped (a cuboid). """
-    def _set_parameters(self, parameters):
-        parameter_names = ['x_min', 'x_max', 'y_min', 'y_max', 'z_min', 'z_max']
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        # Hidden versions of these parameters which can be reassigned
-        self._x_min = self.parameters.x_min
-        self._x_max = self.parameters.x_max
-        self._y_min = self.parameters.y_min
-        self._y_max = self.parameters.y_max
-        self._z_min = self.parameters.z_min
-        self._z_max = self.parameters.z_max
+    def __init__(self, name, x_min, x_max, y_min, y_max, z_min, z_max):
+        self.name = name
 
-        if (self.parameters.x_min > self.parameters.x_max
-                or self.parameters.y_min > self.parameters.y_max
-                or self.parameters.z_min > self.parameters.z_max):
+        self.x_min = x_min
+        self.x_max = x_max
+        self.y_min = y_min
+        self.y_max = y_max
+        self.z_min = z_min
+        self.z_max = z_max
+
+        # Hidden versions of these parameters which can be reassigned
+        self._x_min = x_min
+        self._x_max = x_max
+        self._y_min = y_min
+        self._y_max = y_max
+        self._z_min = z_min
+        self._z_max = z_max
+
+        if (x_min > x_max or y_min > y_max or z_min > z_max):
             raise Warning("This RPP \"" + self.name + "\" has mins larger than "
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
+
+        self.rotation = np.matrix(np.identity(3))
 
     @classmethod
     def from_extent(cls, name, extent):
@@ -383,33 +390,33 @@ class RPP(Body):
 
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
-        self._x_min = self.parameters.x_min
-        self._x_max = self.parameters.x_max
-        self._y_min = self.parameters.y_min
-        self._y_max = self.parameters.y_max
-        self._z_min = self.parameters.z_min
-        self._z_max = self.parameters.z_max
+        self._x_min = self.x_min
+        self._x_max = self.x_max
+        self._y_min = self.y_min
+        self._y_max = self.y_max
+        self._z_min = self.z_min
+        self._z_max = self.z_max
 
     def _check_omittable(self, extent):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
-        is_gt_in_x = (self.parameters.x_max + 2 * LENGTH_SAFETY > extent.upper.x
-                      and not np.isclose(self.parameters.x_max,
+        is_gt_in_x = (self.x_max + 2 * LENGTH_SAFETY > extent.upper.x
+                      and not np.isclose(self.x_max,
                                          extent.upper.x))
-        is_lt_in_x = (self.parameters.x_min - 2 * LENGTH_SAFETY < extent.lower.x
-                      and not np.isclose(self.parameters.x_min,
+        is_lt_in_x = (self.x_min - 2 * LENGTH_SAFETY < extent.lower.x
+                      and not np.isclose(self.x_min,
                                          extent.lower.x))
-        is_gt_in_y = (self.parameters.y_max + 2 * LENGTH_SAFETY > extent.upper.y
-                      and not np.isclose(self.parameters.y_max,
+        is_gt_in_y = (self.y_max + 2 * LENGTH_SAFETY > extent.upper.y
+                      and not np.isclose(self.y_max,
                                          extent.upper.y))
-        is_lt_in_y = (self.parameters.y_min - 2 * LENGTH_SAFETY < extent.lower.y
-                      and not np.isclose(self.parameters.y_min,
+        is_lt_in_y = (self.y_min - 2 * LENGTH_SAFETY < extent.lower.y
+                      and not np.isclose(self.y_min,
                                          extent.lower.y))
-        is_gt_in_z = (self.parameters.z_max + 2 * LENGTH_SAFETY > extent.upper.z
-                      and not np.isclose(self.parameters.z_max,
+        is_gt_in_z = (self.z_max + 2 * LENGTH_SAFETY > extent.upper.z
+                      and not np.isclose(self.z_max,
                                          extent.upper.z))
-        is_lt_in_z = (self.parameters.z_min - 2 * LENGTH_SAFETY < extent.lower.z
-                      and not np.isclose(self.parameters.z_min,
+        is_lt_in_z = (self.z_min - 2 * LENGTH_SAFETY < extent.lower.z
+                      and not np.isclose(self.z_min,
                                          extent.lower.z))
         return (is_gt_in_x and is_lt_in_x
                 and is_gt_in_y and is_lt_in_y
@@ -434,18 +441,18 @@ class RPP(Body):
 
         # If outside of tolerances, then assign to those tolerances.
         # Lower bounds:
-        if self.parameters.x_min < x_bound_lower:
+        if self.x_min < x_bound_lower:
             self._x_min = x_bound_lower
-        if self.parameters.y_min < y_bound_lower:
+        if self.y_min < y_bound_lower:
             self._y_min = y_bound_lower
-        if self.parameters.z_min < z_bound_lower:
+        if self.z_min < z_bound_lower:
             self._z_min = z_bound_lower
         # Upper bounds::
-        if self.parameters.x_max > x_bound_upper:
+        if self.x_max > x_bound_upper:
             self._x_max = x_bound_upper
-        if self.parameters.y_max > y_bound_upper:
+        if self.y_max > y_bound_upper:
             self._y_max = y_bound_upper
-        if self.parameters.z_max > z_bound_upper:
+        if self.z_max > z_bound_upper:
             self._z_max = z_bound_upper
 
     def centre(self):
@@ -454,16 +461,13 @@ class RPP(Body):
                                   self._y_min + self._y_max,
                                   self._z_min + self._z_max)
 
-    def _set_rotation_matrix(self):
-        self.rotation = np.matrix(np.identity(3))
-
     def crude_extent(self):
-        return max([abs(self.parameters.x_min), abs(self.parameters.x_max),
-                    abs(self.parameters.y_min), abs(self.parameters.y_max),
-                    abs(self.parameters.z_min), abs(self.parameters.z_max),
-                    self.parameters.x_max - self.parameters.x_min,
-                    self.parameters.y_max - self.parameters.y_min,
-                    self.parameters.z_max - self.parameters.z_min])
+        return max([abs(self.x_min), abs(self.x_max),
+                    abs(self.y_min), abs(self.y_max),
+                    abs(self.z_min), abs(self.z_max),
+                    self.x_max - self.x_min,
+                    self.y_max - self.y_min,
+                    self.z_max - self.z_min])
 
 
     def gdml_solid(self, length_safety=None):
