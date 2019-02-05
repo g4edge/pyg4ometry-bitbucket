@@ -637,13 +637,13 @@ class XZP(InfiniteHalfSpace):
 
 class YZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the x-axis."""
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_x']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, x):
+        self.name
+        self.x = x
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_x - 2 * LENGTH_SAFETY > extent.upper.x
-                and not np.isclose(self.parameters.v_x, extent.upper.x)):
+        if (self.x - 2 * LENGTH_SAFETY > extent.upper.x
+            and not np.isclose(self.x, extent.upper.x)):
             self._is_omittable = True
             logger.debug("Setting YZP \"{}\" omittable.".format(self.name))
             return
@@ -655,10 +655,8 @@ class YZP(InfiniteHalfSpace):
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        centre_x = self.parameters.v_x - (self._scale_x * 0.5)
-        centre_y = 0.0
-        centre_z = 0.0
-        return self._offset + vector.Three(centre_x, centre_y, centre_z)
+        centre_x = self.x - (self._scale_x * 0.5)
+        return self._offset + vector.Three(centre_x, 0, 0)
 
 
 class PLA(Body):
