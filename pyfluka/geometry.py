@@ -60,18 +60,6 @@ logger = logging.getLogger(__name__)
 #      constituents zones and regions must be found.
 # For this reason it is necessary to cache the mesh.
 
-def make_body(body_type, name, parameters):
-    """Given a body type, "REC", "XYP", etc, and a list of the
-    parameters in the correct order, return the correct Body instance."""
-    body_constructor = getattr(pyfluka.geometry, body_type)
-    try:
-        body = body_constructor(name, parameters)
-    except AttributeError:
-        raise ValueError("Body type not supported")
-    if not isinstance(body, Body):
-        raise ValueError("Not a recognised body type")
-    return body
-
 
 class Body(object):
     """A class representing a body as defined in Fluka.
