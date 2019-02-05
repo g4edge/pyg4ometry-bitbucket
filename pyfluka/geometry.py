@@ -95,11 +95,6 @@ class Body(object):
     # _get_overlap is called).
     _is_omittable = False
 
-    def __init__(self, name, parameters):
-        self.name = name
-        self._set_parameters(parameters)
-        self._set_rotation_matrix()
-
     def to_fluka_string(self):
         body_type = type(self).__name__
         return "{} {} {}".format(
