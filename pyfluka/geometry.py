@@ -586,13 +586,13 @@ class TRC(Body):
 
 class XYP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the z-axis."""
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_z']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, z):
+        self.name = name
+        self.z = z
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_z - 2 * LENGTH_SAFETY > extent.upper.z
-                and not np.isclose(self.parameters.v_z, extent.upper.z)):
+        if (self.z - 2 * LENGTH_SAFETY > extent.upper.z
+            and not np.isclose(self.z, extent.upper.z)):
             self._is_omittable = True
             logger.debug("Setting XYP \"{}\" omittable.".format(self.name))
             return
