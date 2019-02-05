@@ -548,46 +548,17 @@ class RCC(Body):
 class TRC(Body):
     """Truncated Right-angled Cone.
 
-    Parameters
-    ----------
-
-    centre_major_x: x-coordinate of the centre of the larger face.
-    centre_major_y: y-coordinate of the centre of the larger face.
-    centre_major_z: z-coordinate of the centre of the larger face.
-
-    major_to_minor_x : x_coordinat of the vector pointing from the major
-                       to minor face.
-    major_to_minor_y : y_coordinator of the vector pointing from the major
-                       to minor face.
-    major_to_minor_z : z_coordinator of the vector pointing from the major
-                       to minor face.
-    The length of the major_to_minor vector is the length of the resulting
-    cone.
-
-    major_radius : radius of the larger face.
-    minor_radius : radius of the smaller face.
+    centre: coordinates of the centre of the larger face.
+    direction: coordinates of the vector pointing from major to minor.
+    radius_major: radius of the larger face.
+    radius_minor: radius of the smaller face.
     """
-    def _set_parameters(self, parameters):
-        parameter_names = [
-            'centre_major_x', 'centre_major_y', 'centre_major_z',
-            'major_to_minor_x', 'major_to_minor_y', 'major_to_minor_z',
-            'major_radius', 'minor_radius'
-        ]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self.major_centre = vector.Three([self.parameters.centre_major_x,
-                                          self.parameters.centre_major_y,
-                                          self.parameters.centre_major_z])
-        self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
-                                            self.parameters.major_to_minor_y,
-                                            self.parameters.major_to_minor_z])
-        self.length = self.major_to_minor.length()
-        self.major_radius = self.parameters.major_radius
-        self.minor_radius = self.parameters.minor_radius
+    def __init__(self, name, major_centre, direction, major_radius, minor_radius):
+        self.name = name
+        self.major_centre = major_centre
+        self.direction = direction
+        self.major_radius = major_radius
 
-    def centre(self):
-        return self.major_centre + 0.5 * self.major_to_minor
-
-    def _set_rotation_matrix(self):
         # We choose in the as_gdml_solid method to place the major at
         # -z, and the major at +z, hence this choice of initial and
         # final vectors:
@@ -595,12 +566,15 @@ class TRC(Body):
         final = self.major_to_minor
         self.rotation = trf.matrix_from(initial, final)
 
+    def centre(self):
+        return self.major_centre + 0.5 * self.major_to_minor
+
     def crude_extent(self):
-        return max(abs(self.parameters.centre_major_x) + self.length,
-                   abs(self.parameters.centre_major_y) + self.length,
-                   abs(self.parameters.centre_major_z) + self.length,
-                   self.parameters.minor_radius,
-                   self.parameters.major_radius)
+        return max(abs(self.major_centre.x) + direction.length(),
+                   abs(self.major_centre.y) + direction.length(),
+                   abs(self.major_centre.z) + direction.length(),
+                   self.minor_radius,
+                   self.major_radius)
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
@@ -609,7 +583,7 @@ class TRC(Body):
         return pygdml.solid.Cons(self._unique_body_name(),
                                  0.0, self.major_radius + safety_addend,
                                  0.0, self.minor_radius + safety_addend,
-                                 0.5 * self.length + safety_addend,
+                                 0.5 * direction.length() + safety_addend,
                                  0.0, 2*math.pi)
 
 
