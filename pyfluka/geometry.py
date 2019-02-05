@@ -896,37 +896,33 @@ class YEC(InfiniteEllipticalCylinder):
 class ZEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the z-axis.
 
-    Parameters:
-
-    centre_x (Ax) - x-coordinate of the centre of the ellipse face.
-    centre_y (Ay) - y-coordinate of the centre of the ellipse face.
-    semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
-    semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse face.
+    x - x-coordinate of the centre of the ellipse face.
+    y - y-coordinate of the centre of the ellipse face.
+    semi_x - semi-axis in the x-direction of the ellipse face.
+    semi_y - semi-axis in the y-direction of the ellipse face.
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_x", "centre_y", "semi_axis_x", "semi_axis_y"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(self.parameters.centre_x,
-                            self.parameters.centre_y,
-                            0.0)
-
-    def _set_rotation_matrix(self):
+    def __init__(self, name, x, y, semi_x, semi_y):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.semi_x = semi_x
+        self.semi_y = semi_y
+        # Rotate by pi/2 about the x-axis.
         self.rotation = np.matrix(np.identity(3))
 
+    def centre(self):
+        return vector.Three(self.centre_x, self.centre_y, 0.0)
+
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        return max(abs(i for i in [self.x, self.y, self.semi_y, self.semi_y]))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
-        return pygdml.solid.EllipticalTube(
-            self._unique_body_name(),
-            self.parameters.semi_axis_x + safety_addend,
-            self.parameters.semi_axis_y + safety_addend,
-            0.5 * self._scale
-        )
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
+                                           self.semi_x + safety_addend,
+                                           self.semi_y + safety_addend,
+                                           0.5 * self._scale)
 
 
 class Region(object):
