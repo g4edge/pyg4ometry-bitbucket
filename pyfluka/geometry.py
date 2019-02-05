@@ -66,8 +66,8 @@ def make_body(body_type, name, parameters):
     body_constructor = getattr(pyfluka.geometry, body_type)
     try:
         body = body_constructor(name, parameters)
-    except AttributeError, NotImplementedError:
-        raise NotImplementedError("Body type not supported")
+    except AttributeError
+        raise ValueError("Body type not supported")
     if not isinstance(body, Body):
         raise ValueError("Not a recognised body type")
     return body
@@ -543,84 +543,6 @@ class RCC(Body):
                                  self.length * 0.5 + safety_addend,
                                  0.0,
                                  2*math.pi)
-
-
-class REC(Body):
-    """
-    NOT IMPLEMENTED
-
-    Class representing the Right Elliptical Cylinder of Fluka.
-
-    Parameters:
-    face_centre_x : x-coordinate of the centre of one of the faces.
-    face_centre_y : y-coordinate of the centre of one of the faces.
-    face_centre_z : z-coordinate of the centre of one of the faces.
-
-    to_other_face_x : x-component of the vector pointing from
-                      face_centre to the other face.
-    to_other_face_y : y-component of the vector pointing from
-                      face_centre to the other face.
-    to_other_face_z : z-component of the vector pointing from
-                      face_centre to the other face.
-    The length of the vector to_other_face is the length of the
-    elliptical cylinder.
-
-    semi_minor_x : x-component of the semi-minor axis.
-    semi_minor_y : y-component of the semi-minor axis.
-    semi_minor_z : z-component of the semi-minor axis.
-    The length of the vector semi_minor is the length of the
-    semi-minor axis.
-
-    semi_major_x : x-component of the semi-major axis.
-    semi_major_y : y-component of the semi-major axis.
-    semi_major_z : z-component of the semi-major axis.
-    The length of the vector semi_major is the length of the
-    semi-major axis.
-    """
-    def __init__(self, name, parameters):
-        raise NotImplementedError
-
-    def _set_parameters(self, parameters):
-        parameter_names = [
-            "face_centre_x", "face_centre_y", "face_centre_z",
-            "to_other_face_x", "to_other_face_y", "to_other_face_z",
-            "semi_minor_x", "semi_minor_y", "semi_minor_z",
-            "semi_major_x", "semi_major_y", "semi_major_z"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        centre_x = (self.parameters.face_centre_x
-                    + self.parameters.to_other_face_x * 0.5)
-        centre_y = (self.parameters.face_centre_y
-                    + self.parameters.to_other_face_y * 0.5)
-        centre_z = (self.parameters.face_centre_z
-                    + self.parameters.to_other_face_z * 0.5)
-
-        return vector.Three(centre_x, centre_y, centre_z)
-
-    def _set_rotation_matrix(self):
-        pass
-
-    def gdml_solid(self, length_safety=None):
-        safety_addend = Body._get_safety_addend(length_safety)
-        # EllipticalTube is defined in terms of half-lengths in x, y,
-        # and z.  Choose semi_major to start in the positive y direction.
-        semi_minor = np.linalg.norm([self.parameters.semi_minor_x,
-                                     self.parameters.semi_minor_y,
-                                     self.parameters.semi_minor_z])
-
-        semi_major = np.linalg.norm([self.parameters.semi_major_x,
-                                     self.parameters.semi_major_y,
-                                     self.parameters.semi_major_z])
-
-        length = np.linalg.norm([self.parameters.to_other_face_x,
-                                 self.parameters.to_other_face_y,
-                                 self.parameters.to_other_face_z])
-
-        return pygdml.solid.EllipticalTube(self._unique_body_name(),
-                                           semi_minor + safety_addend,
-                                           semi_major + safety_addend,
-                                           length * 0.5 + safety_addend)
 
 
 class TRC(Body):
