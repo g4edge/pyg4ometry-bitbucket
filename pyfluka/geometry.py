@@ -316,9 +316,6 @@ class InfiniteCylinder(Body):
         self._offset = vector.Three(0, 0, 0)
         self._scale = scale
 
-    def crude_extent(self):
-        return max(map(abs, self.parameters))
-
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Tubs(self._unique_body_name(),
@@ -766,6 +763,9 @@ class XCC(InfiniteCylinder):
     def centre(self):
         return (self._offset + vector.Three(0.0, self.y, self.z))
 
+    def crude_extent(self):
+        return max([self.y, self.z, self.radius])
+
 
 class YCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to y-axis
@@ -793,6 +793,9 @@ class YCC(InfiniteCylinder):
     def centre(self):
         return (self._offset + vector.Three(self.centre_x, 0.0, self.centre_z))
 
+    def crude_extent(self):
+        return max([self.x, self.z, self.radius])
+
 
 class ZCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to z-axis
@@ -816,6 +819,9 @@ class ZCC(InfiniteCylinder):
 
     def centre(self):
         return (self._offset + vector.Three(self.centre_x, self.centre_y, 0.0))
+
+    def crude_extent(self):
+        return max([self.x, self.y, self.radius])
 
 
 class XEC(InfiniteEllipticalCylinder):
