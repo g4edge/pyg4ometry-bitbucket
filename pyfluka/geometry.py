@@ -807,16 +807,18 @@ class YCC(InfiniteCylinder):
 class ZCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to z-axis
 
-    parameters:
+    x = x-coordinate of the centre of the cylinder
+    y = y-coordinate of the centre of the cylinder
+    radius = radius of the cylinder
 
-    centre_x    -- x-coordinate of the centre of the cylinder
-    centre_y    -- y-coordinate of the centre of the cylinder
-    radius -- radius of the cylinder
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_x", "centre_y", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self._radius = self.parameters.radius
+    def __init__(self, name, x, y, radius):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self._radius = radius
+        self.rotation = np.matrix(np.identity(3))
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0,
@@ -829,9 +831,6 @@ class ZCC(InfiniteCylinder):
                 + vector.Three(self.parameters.centre_x,
                                self.parameters.centre_y,
                                0.0))
-
-    def _set_rotation_matrix(self):
-        self.rotation = np.matrix(np.identity(3))
 
 
 class XEC(InfiniteEllipticalCylinder):
