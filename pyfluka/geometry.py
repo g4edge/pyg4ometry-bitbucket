@@ -326,9 +326,11 @@ class InfiniteCylinder(Body):
                                  self._scale * 0.5,
                                  0.0, 2*math.pi)
 
+
 class InfiniteEllipticalCylinder(Body):
     """Currently just for type checking XEC, YEC, and ZEC.  No functionality."""
     pass
+
 
 class InfiniteHalfSpace(Body):
     def __init__(self, name, parameters):
