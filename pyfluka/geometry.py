@@ -544,7 +544,7 @@ class TRC(Body):
         self.rotation = trf.matrix_from([0, 0, 1], self.direction)
 
     def centre(self):
-        return self.major_centre + 0.5 * self.major_to_minor
+        return self.major_centre + 0.5 * self.direction
 
     def crude_extent(self):
         return max(abs(self.major_centre.x) + self.direction.length(),
@@ -619,7 +619,7 @@ class XZP(InfiniteHalfSpace):
 class YZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the x-axis."""
     def __init__(self, name, x):
-        self.name
+        self.name = name
         self.x = x
         self.rotation = np.matrix(np.identity(3))
 
@@ -694,9 +694,9 @@ class PLA(Body):
         """
         # perpendicular distance from the point to the plane
         distance = np.dot((self._point - point), self._normal)
-        closest = point + distance * self.perpendicular
+        closest_point = point + distance * self._point
 
-        assert (abs(np.dot(self._normal, closest - self._point)) <
+        assert (abs(np.dot(self._normal, closest_point - self._point)) <
                 1e-6), "Point isn't on the plane!"
         return closest_point
 
@@ -719,6 +719,7 @@ class XCC(InfiniteCylinder):
     def __init__(self, name, y, z, radius):
         self.name = name
         self.y = y
+        self.z = z
         self.radius = radius
         # Stuff for infinite scaling..
         self._radius = radius
@@ -762,7 +763,7 @@ class YCC(InfiniteCylinder):
         self._scale = extent.size.y * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset + vector.Three(self.centre_x, 0.0, self.centre_z))
+        return (self._offset + vector.Three(self.x, 0.0, self.z))
 
     def crude_extent(self):
         return max([self.x, self.z, self.radius])
@@ -789,7 +790,7 @@ class ZCC(InfiniteCylinder):
         self._scale = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset + vector.Three(self.centre_x, self.centre_y, 0.0))
+        return (self._offset + vector.Three(self.x, self.y, 0.0))
 
     def crude_extent(self):
         return max([self.x, self.y, self.radius])
@@ -816,7 +817,7 @@ class XEC(InfiniteEllipticalCylinder):
                                    [1, 0, 0]])
 
     def centre(self):
-        return vector.Three(0.0, self.y, self._z)
+        return vector.Three(0.0, self.y, self.z)
 
     def crude_extent(self):
         return max(abs(i for i in [self.y, self.z, self.semi_y, self.semi_z]))
@@ -882,7 +883,7 @@ class ZEC(InfiniteEllipticalCylinder):
         self.rotation = np.matrix(np.identity(3))
 
     def centre(self):
-        return vector.Three(self.centre_x, self.centre_y, 0.0)
+        return vector.Three(self.x, self.y, 0.0)
 
     def crude_extent(self):
         return max(abs(i for i in [self.x, self.y, self.semi_y, self.semi_y]))
