@@ -343,16 +343,15 @@ class RPP(Body):
     """An RPP is a rectangular parallelpiped (a cuboid). """
     def __init__(self, name, lower, upper):
         self.name = name
-        self.lower = lower
-        self.upper = upper
-
+        self.lower = vector.Three(lower)
+        self.upper = vector.Three(upper)
         # Hidden versions of these parameters which can be reassigned
-        self._x_min = lower.x
-        self._x_max = upper.x
-        self._y_min = lower.y
-        self._y_max = upper.y
-        self._z_min = lower.z
-        self._z_max = upper.z
+        self._x_min = self.lower.x
+        self._x_max = self.upper.x
+        self._y_min = self.lower.y
+        self._y_max = self.upper.y
+        self._z_min = self.lower.z
+        self._z_max = self.upper.z
 
         if (self.lower > self.upper).any():
             raise Warning("This RPP \"" + self.name + "\" has mins larger than "
@@ -492,8 +491,8 @@ class RCC(Body):
 
     """
     def __init__(self, name, face_centre, direction, radius):
-        self.face_centre = pyfluka.Vector.Three(face_centre)
-        self.direction = pyfluka.Vector.Three(direction)
+        self.face_centre = vector.Three(face_centre)
+        self.direction = vector.Three(direction)
         self.radius = radius
         self._offset = vector.Three(0, 0, 0) # what is this?
 
@@ -649,10 +648,10 @@ class PLA(Body):
     normal = vector normal to the surface (pointing outwards)
 
     """
-    def __init__(self, name, point, normal):
+    def __init__(self, name, normal, point):
         self.name = name
-        self.point = point
-        self.normal = normal
+        self.normal = vector.Three(normal)
+        self.point = vector.Three(point)
         # Choose the face pointing in the direction of the positive
         # z-axis to make the surface of the half space.
         self.rotation = trf.matrix_from([0, 0, 1], self.normal)
@@ -694,10 +693,13 @@ class PLA(Body):
         """
         # perpendicular distance from the point to the plane
         distance = np.dot((self._point - point), self._normal)
-        closest_point = point + distance * self._point
+        closest_point = point + distance * self._normal
+        try:
+            assert (abs(np.dot(self._normal, closest_point - self._point)) <
+                    1e-6), "Point isn't on the plane!"
+        except:
+            from IPython import embed; embed()
 
-        assert (abs(np.dot(self._normal, closest_point - self._point)) <
-                1e-6), "Point isn't on the plane!"
         return closest_point
 
     def gdml_solid(self, length_safety=None):
@@ -747,7 +749,7 @@ class YCC(InfiniteCylinder):
     radius = radius of the cylinder
 
     """
-    def __init__(self, name, x, z, radius):
+    def __init__(self, name, z, x, radius):
         self.name = name
         self.x = x
         self.z = z
@@ -839,7 +841,7 @@ class YEC(InfiniteEllipticalCylinder):
     semi_x - semi-axis in the x-direction of the ellipse face.
 
     """
-    def __init__(self, name, x, z, semi_x, semi_z):
+    def __init__(self, name, z, x, semi_z, semi_x):
         self.name = name
         self.x = x
         self.z = z
