@@ -621,7 +621,7 @@ class XZP(InfiniteHalfSpace):
                                     0.0,
                                     extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
-        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)a
+        self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
