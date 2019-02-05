@@ -380,12 +380,12 @@ class RPP(Body):
 
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
-        self._x_min = self.x_min
-        self._x_max = self.x_max
-        self._y_min = self.y_min
-        self._y_max = self.y_max
-        self._z_min = self.z_min
-        self._z_max = self.z_max
+        self._x_min = self.lower.x
+        self._x_max = self.upper.x
+        self._y_min = self.lower.y
+        self._y_max = self.upper.y
+        self._z_min = self.lower.z
+        self._z_max = self.upper.z
 
     def _check_omittable(self, extent):
         # Tests to check whether this RPP completely envelops the
