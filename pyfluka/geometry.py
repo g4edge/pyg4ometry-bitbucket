@@ -48,7 +48,7 @@ logger = logging.getLogger(__name__)
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)20s() ] %(message)s"
 logging.basicConfig(format=FORMAT)
 logger.setLevel(logging.INFO)
-logger.setLevel=(logging.CRITICAL)
+# logger.setLevel(logging.DEBUG)
 
 
 # Where does the meshing actually happen?  This matters because it is
@@ -168,7 +168,7 @@ class Body(object):
                 # Redundant intersections naturally will not raise
                 # NullMeshErrors, and are dealt with in the
                 # _apply_extent methods.
-                logger.info("Omitting redundant subtraction of %s \"%s\"",
+                logger.debug("Omitting redundant subtraction of %s \"%s\"",
                              type(self).__name__, self.name)
                 self._is_omittable = True
         else:
@@ -571,7 +571,7 @@ class XYP(InfiniteHalfSpace):
         if (self.z - 2 * LENGTH_SAFETY > extent.upper.z
             and not np.isclose(self.z, extent.upper.z)):
             self._is_omittable = True
-            logger.info("Setting XYP \"{}\" omittable.".format(self.name))
+            logger.debug("Setting XYP \"{}\" omittable.".format(self.name))
             return
         self._offset = vector.Three(extent.centre.x,
                                     extent.centre.y,
@@ -598,7 +598,7 @@ class XZP(InfiniteHalfSpace):
         if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
             and not np.isclose(self.y, extent.upper.y)):
             self._is_omittable = True
-            logger.info("Setting XZP \"{}\" omittable.".format(self.name))
+            logger.debug("Setting XZP \"{}\" omittable.".format(self.name))
             return
         self._offset = vector.Three(extent.centre.x, 0.0, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
@@ -623,7 +623,7 @@ class YZP(InfiniteHalfSpace):
         if (self.x - 2 * LENGTH_SAFETY > extent.upper.x
             and not np.isclose(self.x, extent.upper.x)):
             self._is_omittable = True
-            logger.info("Setting YZP \"{}\" omittable.".format(self.name))
+            logger.debug("Setting YZP \"{}\" omittable.".format(self.name))
             return
         self._offset = vector.Three(0.0, extent.centre.y, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
@@ -968,7 +968,7 @@ class Region(object):
             1, False, self.material)
 
     def evaluate(self, zones=None, optimise=False):
-        logger.info("Evaluating Region \"%s\", optimisation=%s, zones=%s",
+        logger.debug("Evaluating Region \"%s\", optimisation=%s, zones=%s",
                      self.name, optimise, zones)
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
@@ -1172,10 +1172,10 @@ class Zone(object):
         extent = 0.0
         for body in self.contains + self.excludes:
             body_crude_extent = body.crude_extent()
-            logger.info("Extent for body {} = {}".format(
+            logger.debug("Extent for body {} = {}".format(
                 body, body_crude_extent))
             extent = max(extent, body_crude_extent)
-        logger.info("Crude extent for zone {} = {}".format(self, extent))
+        logger.debug("Crude extent for zone {} = {}".format(self, extent))
         return extent
 
     def view(self, setclip=True, optimise=False):
@@ -1211,14 +1211,14 @@ class Zone(object):
         appropriate optimisations, if any.
 
         """
-        logger.info("{}: optimise={}".format(self, optimise))
+        logger.debug("{}: optimise={}".format(self, optimise))
         if optimise:
             return self._optimised_boolean()
         else:
             return self._crude_boolean()
 
     def _crude_boolean(self):
-        logger.info("{}".format(self))
+        logger.debug("{}".format(self))
         scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
         self._map_extent_2_bodies(self.contains, scale)
@@ -1227,7 +1227,7 @@ class Zone(object):
         return self._accumulate(None) # Don't trim/extend.  Get the true mesh.
 
     def _optimised_boolean(self):
-        logger.info("{}".format(self))
+        logger.debug("{}".format(self))
         out = self._crude_boolean()
         # Rescale the bodies and zones with the resulting mesh:
         self._map_extent_2_bodies(self.contains, out)
