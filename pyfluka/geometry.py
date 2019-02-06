@@ -503,7 +503,7 @@ class RCC(Body):
                 + (0.5 * self.direction))
 
     def crude_extent(self):
-        centre_max = max(abs(self.direction))
+        centre_max = max(abs(self.face_centre))
         return centre_max + self.direction.length()
 
     def gdml_solid(self, length_safety=None):
