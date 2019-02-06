@@ -522,8 +522,8 @@ class TRC(Body):
     """
     def __init__(self, name, major_centre, direction, major_radius, minor_radius):
         self.name = name
-        self.major_centre = major_centre
-        self.direction = direction
+        self.major_centre = vector.Three(major_centre)
+        self.direction = vector.Three(direction)
         self.major_radius = major_radius
         self.minor_radius = minor_radius
 
@@ -683,11 +683,9 @@ class PLA(Body):
         # perpendicular distance from the point to the plane
         distance = np.dot((self._point - point), self._normal)
         closest_point = point + distance * self._normal
-        try:
-            assert (abs(np.dot(self._normal, closest_point - self._point)) <
-                    1e-6), "Point isn't on the plane!"
-        except:
-            from IPython import embed; embed()
+
+        assert (abs(np.dot(self._normal, closest_point - self._point)) <
+                1e-6), "Point isn't on the plane!"
 
         return closest_point
 
