@@ -307,7 +307,7 @@ class Model(object):
                           -1 * world_solid.pY, world_solid.pY,
                           -1 * world_solid.pZ, world_solid.pZ]
         box_parameters = [round(i, decimal_places) for i in box_parameters]
-        world = pyfluka.geometry.RPP(world_name, box_parameters)
+        world = make_body("RPP", world_name, box_parameters)
         # We make the subtraction a bit smaller just to be sure we
         # don't subract from a placed solid within, so safety='trim'.
         for subtrahend in subtrahends:
@@ -368,7 +368,9 @@ class Model(object):
                     sets = (region.connected_zones
                             if survey is True
                             else survey[region_name]["connected_zones"])
+                    print("Adding {}".format(region_name))
                     for connected_set in sets:
+                        print("Adding separately as... {}".format(connected_set))
                         # Place them as individual regions, but only
                         # those zones which have also been selected in
                         # the dictionary
@@ -683,7 +685,6 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         self.unique_body_names = set()
         self.used_bodies_by_type = list()
 
-        self.transform_stack = []
         self.current_translat = None
         self.current_expansion = None
 
@@ -696,15 +697,12 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         # Apply any expansions:
         body_parameters = self.apply_expansions(body_parameters)
 
-        # Try and construct the body, if it's not implemented then warn
+        # Try and construct the body, if it's not implemented then
+        # warn and continue.
         try:
-            body_constructor = getattr(pyfluka.geometry, body_type)
-            body = body_constructor(body_name,
-                                    body_parameters,
-                                    self.transform_stack,
-                                    self.current_translat)
-            self.bodies[body_name] = body
-        except (AttributeError, NotImplementedError):
+            self.bodies[body_name] = make_body(body_type, body_name,
+                                               body_parameters)
+        except ValueError:
             warnings.simplefilter('once', UserWarning)
             msg = ("\nBody type \"{}\" not supported.  All bodies"
                    " of this type will be omitted.  If bodies"
@@ -890,3 +888,33 @@ def _get_world_volume_dimensions(world_volume):
     box = _get_world_volume_box(world_volume)
     # Double because pX, pY, pZ are half-lengths for a pygdml.solid.Box.
     return pyfluka.vector.Three(2 * box.pX, 2 * box.pY, 2 * box.pZ)
+
+def make_body(body_type, name, parameters):
+    """Given a body type, "REC", "XYP", etc, and a list of the parameters
+    in the correct order as written in an input file, return the
+    correct Body instance.
+
+    """
+
+    try:
+        ctor = getattr(pyfluka.geometry, body_type)
+    except AttributeError:
+        raise ValueError("Body type not supported")
+
+    if body_type in {"XZP", "XYP", "YZP",
+                     "XCC", "YCC", "ZCC",
+                     "XEC", "YEC", "ZEC"}:
+        return ctor(name, *parameters)
+    elif body_type == "PLA":
+        return ctor(name, parameters[0:3], parameters[3:6])
+    elif body_type == "RCC":
+        return ctor(name, parameters[0:3], parameters[3:6], parameters[6])
+    elif body_type == "RPP":
+        return ctor(name,
+                    [parameters[0], parameters[2], parameters[4]],
+                    [parameters[1], parameters[3], parameters[5]])
+    elif body_type == "TRC":
+        return ctor(name, parameters[0:3], parameters[3:6],
+                    parameters[6], parameters[7])
+    elif body_type == "SPH":
+        return ctor(name, parameters[0:3], parameters[3])

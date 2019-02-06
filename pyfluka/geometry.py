@@ -8,11 +8,11 @@ from __future__ import (absolute_import, print_function, division)
 import math
 import uuid
 import collections
-import numpy as np
-import networkx as nx
 import itertools
 import logging
 
+import numpy as np
+import networkx as nx
 import pygdml
 import pygdml.transformation as trf
 
@@ -48,6 +48,7 @@ logger = logging.getLogger(__name__)
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)20s() ] %(message)s"
 logging.basicConfig(format=FORMAT)
 logger.setLevel(logging.INFO)
+# logger.setLevel(logging.DEBUG)
 
 
 # Where does the meshing actually happen?  This matters because it is
@@ -63,6 +64,7 @@ logger.setLevel(logging.INFO)
 #      on dimensional cuts in x, y and z.  The extents of the
 #      constituents zones and regions must be found.
 # For this reason it is necessary to cache the mesh.
+
 
 class Body(object):
     """A class representing a body as defined in Fluka.
@@ -85,13 +87,6 @@ class Body(object):
     # subtractions, but they will surely have already been caught when
     # _get_overlap is called).
     _is_omittable = False
-
-    def __init__(self, name, parameters, translation=None, transformation=None):
-        self.name = name
-        self.translation = translation
-        self.transformation = transformation
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
 
     def to_fluka_string(self):
         body_type = type(self).__name__
@@ -305,11 +300,9 @@ class Body(object):
 
 class InfiniteCylinder(Body):
     def _apply_crude_scale(self, scale):
+        self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
         self._scale = scale
-
-    def crude_extent(self):
-        return max(map(abs, self.parameters))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
@@ -318,30 +311,19 @@ class InfiniteCylinder(Body):
                                  self._scale * 0.5,
                                  0.0, 2*math.pi)
 
+
 class InfiniteEllipticalCylinder(Body):
     """Currently just for type checking XEC, YEC, and ZEC.  No functionality."""
     pass
 
-class InfiniteHalfSpace(Body):
-    def __init__(self, name, parameters, translation=None, transformation=None):
-        self.name = name
-        self.translation = translation
-        self.transformation = transformation
-        self._set_parameters(parameters)
-        self._set_rotation_matrix(transformation)
 
+class InfiniteHalfSpace(Body):
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
         self._offset = vector.Three(0, 0, 0)
         self._scale_x = scale
         self._scale_y = scale
         self._scale_z = scale
-
-    def _set_rotation_matrix(self, transformation):
-        self.rotation = np.matrix(np.identity(3))
-
-    def crude_extent(self):
-        return abs(max(self.parameters))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
@@ -352,59 +334,59 @@ class InfiniteHalfSpace(Body):
 
 class RPP(Body):
     """An RPP is a rectangular parallelpiped (a cuboid). """
-    def _set_parameters(self, parameters):
-        parameter_names = ['x_min', 'x_max', 'y_min', 'y_max', 'z_min', 'z_max']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, lower, upper):
+        self.name = name
+        self.lower = vector.Three(lower)
+        self.upper = vector.Three(upper)
         # Hidden versions of these parameters which can be reassigned
-        self._x_min = self.parameters.x_min
-        self._x_max = self.parameters.x_max
-        self._y_min = self.parameters.y_min
-        self._y_max = self.parameters.y_max
-        self._z_min = self.parameters.z_min
-        self._z_max = self.parameters.z_max
+        self._x_min = self.lower.x
+        self._x_max = self.upper.x
+        self._y_min = self.lower.y
+        self._y_max = self.upper.y
+        self._z_min = self.lower.z
+        self._z_max = self.upper.z
 
-        if (self.parameters.x_min > self.parameters.x_max
-                or self.parameters.y_min > self.parameters.y_max
-                or self.parameters.z_min > self.parameters.z_max):
+        if (self.lower > self.upper).any():
             raise Warning("This RPP \"" + self.name + "\" has mins larger than "
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
 
+        self.rotation = np.matrix(np.identity(3))
+
     @classmethod
     def from_extent(cls, name, extent):
-        return cls(name, [extent.lower.x, extent.upper.x,
-                          extent.lower.y, extent.upper.y,
-                          extent.lower.z, extent.upper.z])
+        return cls(name, extent.lower, extent.upper)
 
     def _apply_crude_scale(self, scale):
+        # Reset the RPP.
         self._is_omittable = False
-        self._x_min = self.parameters.x_min
-        self._x_max = self.parameters.x_max
-        self._y_min = self.parameters.y_min
-        self._y_max = self.parameters.y_max
-        self._z_min = self.parameters.z_min
-        self._z_max = self.parameters.z_max
+        self._x_min = self.lower.x
+        self._x_max = self.upper.x
+        self._y_min = self.lower.y
+        self._y_max = self.upper.y
+        self._z_min = self.lower.z
+        self._z_max = self.upper.z
 
     def _check_omittable(self, extent):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
-        is_gt_in_x = (self.parameters.x_max + 2 * LENGTH_SAFETY > extent.upper.x
-                      and not np.isclose(self.parameters.x_max,
+        is_gt_in_x = (self.upper.x + 2 * LENGTH_SAFETY > extent.upper.x
+                      and not np.isclose(self.upper.x,
                                          extent.upper.x))
-        is_lt_in_x = (self.parameters.x_min - 2 * LENGTH_SAFETY < extent.lower.x
-                      and not np.isclose(self.parameters.x_min,
+        is_lt_in_x = (self.lower.x - 2 * LENGTH_SAFETY < extent.lower.x
+                      and not np.isclose(self.lower.x,
                                          extent.lower.x))
-        is_gt_in_y = (self.parameters.y_max + 2 * LENGTH_SAFETY > extent.upper.y
-                      and not np.isclose(self.parameters.y_max,
+        is_gt_in_y = (self.upper.y + 2 * LENGTH_SAFETY > extent.upper.y
+                      and not np.isclose(self.upper.y,
                                          extent.upper.y))
-        is_lt_in_y = (self.parameters.y_min - 2 * LENGTH_SAFETY < extent.lower.y
-                      and not np.isclose(self.parameters.y_min,
+        is_lt_in_y = (self.lower.y - 2 * LENGTH_SAFETY < extent.lower.y
+                      and not np.isclose(self.lower.y,
                                          extent.lower.y))
-        is_gt_in_z = (self.parameters.z_max + 2 * LENGTH_SAFETY > extent.upper.z
-                      and not np.isclose(self.parameters.z_max,
+        is_gt_in_z = (self.upper.z + 2 * LENGTH_SAFETY > extent.upper.z
+                      and not np.isclose(self.upper.z,
                                          extent.upper.z))
-        is_lt_in_z = (self.parameters.z_min - 2 * LENGTH_SAFETY < extent.lower.z
-                      and not np.isclose(self.parameters.z_min,
+        is_lt_in_z = (self.lower.z - 2 * LENGTH_SAFETY < extent.lower.z
+                      and not np.isclose(self.lower.z,
                                          extent.lower.z))
         return (is_gt_in_x and is_lt_in_x
                 and is_gt_in_y and is_lt_in_y
@@ -429,18 +411,18 @@ class RPP(Body):
 
         # If outside of tolerances, then assign to those tolerances.
         # Lower bounds:
-        if self.parameters.x_min < x_bound_lower:
+        if self.lower.x < x_bound_lower:
             self._x_min = x_bound_lower
-        if self.parameters.y_min < y_bound_lower:
+        if self.lower.y < y_bound_lower:
             self._y_min = y_bound_lower
-        if self.parameters.z_min < z_bound_lower:
+        if self.lower.z < z_bound_lower:
             self._z_min = z_bound_lower
         # Upper bounds::
-        if self.parameters.x_max > x_bound_upper:
+        if self.upper.x > x_bound_upper:
             self._x_max = x_bound_upper
-        if self.parameters.y_max > y_bound_upper:
+        if self.upper.y > y_bound_upper:
             self._y_max = y_bound_upper
-        if self.parameters.z_max > z_bound_upper:
+        if self.upper.z > z_bound_upper:
             self._z_max = z_bound_upper
 
     def centre(self):
@@ -449,16 +431,13 @@ class RPP(Body):
                                   self._y_min + self._y_max,
                                   self._z_min + self._z_max)
 
-    def _set_rotation_matrix(self, transformation):
-        self.rotation = np.matrix(np.identity(3))
-
     def crude_extent(self):
-        return max([abs(self.parameters.x_min), abs(self.parameters.x_max),
-                    abs(self.parameters.y_min), abs(self.parameters.y_max),
-                    abs(self.parameters.z_min), abs(self.parameters.z_max),
-                    self.parameters.x_max - self.parameters.x_min,
-                    self.parameters.y_max - self.parameters.y_min,
-                    self.parameters.z_max - self.parameters.z_min])
+        return max([abs(self.lower.x), abs(self.upper.x),
+                    abs(self.lower.y), abs(self.upper.y),
+                    abs(self.lower.z), abs(self.upper.z),
+                    self.upper.x - self.lower.x,
+                    self.upper.y - self.lower.y,
+                    self.upper.z - self.lower.z])
 
 
     def gdml_solid(self, length_safety=None):
@@ -474,222 +453,98 @@ class RPP(Body):
 
 
 class SPH(Body):
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_x', 'v_y', 'v_z', 'radius']
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(self.parameters.v_x,
-                            self.parameters.v_y,
-                            self.parameters.v_z)
-
-    def _set_rotation_matrix(self, transformation):
+    """A sphere"""
+    def __init__(self, name, point, radius):
+        self.name = name
+        self.point = point
+        self.radius = radius
         self.rotation = np.matrix(np.identity(3))
 
+    def centre(self):
+        return self.point
+
     def crude_extent(self):
-        # Maximum possible extent won't be any more than 2 times the
-        # largest parameter.
-        return 2 * max(map(abs, self.parameters))
+        return max(map(abs, self.centre + self.radius))
 
     def gdml_solid(self, length_safety=None):
         """Construct a solid, whole, GDML sphere from this."""
         safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Orb(self._unique_body_name(),
-                                self.parameters.radius + safety_addend)
+                                self.radius + safety_addend)
 
 
 class RCC(Body):
     """Right-angled Circular Cylinder
 
     Parameters:
-    v_(x,y,z) = coordinates of the centre of one of the circular planes
-    faces
-    h_(x,y,z) = components of vector pointing in the direction of the
-    other plane face, with magnitude equal to the cylinder length.
+    face_centre: centre of one of the faces
+    direction: direction of cylinder from face_centre.  magnitude of
+    this vector is the length of the cylidner.
     radius    = cylinder radius
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_x', 'v_y', 'v_z', 'h_x', 'h_y', 'h_z', 'radius']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, face_centre, direction, radius):
+        self.name = name
+        self.face_centre = vector.Three(face_centre)
+        self.direction = vector.Three(direction)
+        self.radius = radius
+        self._offset = vector.Three(0, 0, 0) # what is this?
 
-        self.face_centre = vector.Three(self.parameters.v_x,
-                                        self.parameters.v_y,
-                                        self.parameters.v_z)
-        self.direction = vector.Three(self.parameters.h_x,
-                                      self.parameters.h_y,
-                                      self.parameters.h_z)
-        self.length = self.direction.length()
-        self.radius = self.parameters.radius
-        self._offset = vector.Three(0, 0, 0)
+        initial = [0, 0, 1]
+        final = -1 * self.direction
+        self.rotation = trf.matrix_from(initial, final)
 
     def _apply_crude_scale(self, scale):
         self._offset = vector.Three(0, 0, 0)
-        self._scale = self.length
+        self._scale = self.direction.length()
 
     def centre(self):
         return (self._offset
                 + self.face_centre
                 + (0.5 * self.direction))
 
-    def _set_rotation_matrix(self, transformation):
-        initial = [0, 0, 1]
-        final = -self.direction
-        self.rotation = trf.matrix_from(initial, final)
-
     def crude_extent(self):
-        centre_max = max(abs(vector.Three(self.parameters.v_x,
-                                          self.parameters.v_y,
-                                          self.parameters.v_z)))
-        return centre_max + self.length
+        centre_max = max(abs(self.face_centre))
+        return centre_max + self.direction.length()
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
         return pygdml.solid.Tubs(self._unique_body_name(),
                                  0.0,
                                  self.radius + safety_addend,
-                                 self.length * 0.5 + safety_addend,
+                                 self.direction.length() * 0.5 + safety_addend,
                                  0.0,
                                  2*math.pi)
-
-
-class REC(Body):
-    """
-    NOT IMPLEMENTED
-
-    Class representing the Right Elliptical Cylinder of Fluka.
-
-    Parameters:
-    face_centre_x : x-coordinate of the centre of one of the faces.
-    face_centre_y : y-coordinate of the centre of one of the faces.
-    face_centre_z : z-coordinate of the centre of one of the faces.
-
-    to_other_face_x : x-component of the vector pointing from
-                      face_centre to the other face.
-    to_other_face_y : y-component of the vector pointing from
-                      face_centre to the other face.
-    to_other_face_z : z-component of the vector pointing from
-                      face_centre to the other face.
-    The length of the vector to_other_face is the length of the
-    elliptical cylinder.
-
-    semi_minor_x : x-component of the semi-minor axis.
-    semi_minor_y : y-component of the semi-minor axis.
-    semi_minor_z : z-component of the semi-minor axis.
-    The length of the vector semi_minor is the length of the
-    semi-minor axis.
-
-    semi_major_x : x-component of the semi-major axis.
-    semi_major_y : y-component of the semi-major axis.
-    semi_major_z : z-component of the semi-major axis.
-    The length of the vector semi_major is the length of the
-    semi-major axis.
-    """
-    def __init__(self, name,
-                 parameters,
-                 translation=None,
-                 transformation=None):
-        raise NotImplementedError
-
-    def _set_parameters(self, parameters):
-        parameter_names = [
-            "face_centre_x", "face_centre_y", "face_centre_z",
-            "to_other_face_x", "to_other_face_y", "to_other_face_z",
-            "semi_minor_x", "semi_minor_y", "semi_minor_z",
-            "semi_major_x", "semi_major_y", "semi_major_z"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        centre_x = (self.parameters.face_centre_x
-                    + self.parameters.to_other_face_x * 0.5)
-        centre_y = (self.parameters.face_centre_y
-                    + self.parameters.to_other_face_y * 0.5)
-        centre_z = (self.parameters.face_centre_z
-                    + self.parameters.to_other_face_z * 0.5)
-
-        return vector.Three(centre_x, centre_y, centre_z)
-
-    def _set_rotation_matrix(self, transformation):
-        pass
-
-    def gdml_solid(self, length_safety=None):
-        safety_addend = Body._get_safety_addend(length_safety)
-        # EllipticalTube is defined in terms of half-lengths in x, y,
-        # and z.  Choose semi_major to start in the positive y direction.
-        semi_minor = np.linalg.norm([self.parameters.semi_minor_x,
-                                     self.parameters.semi_minor_y,
-                                     self.parameters.semi_minor_z])
-
-        semi_major = np.linalg.norm([self.parameters.semi_major_x,
-                                     self.parameters.semi_major_y,
-                                     self.parameters.semi_major_z])
-
-        length = np.linalg.norm([self.parameters.to_other_face_x,
-                                 self.parameters.to_other_face_y,
-                                 self.parameters.to_other_face_z])
-
-        return pygdml.solid.EllipticalTube(self._unique_body_name(),
-                                           semi_minor + safety_addend,
-                                           semi_major + safety_addend,
-                                           length * 0.5 + safety_addend)
 
 
 class TRC(Body):
     """Truncated Right-angled Cone.
 
-    Parameters
-    ----------
-
-    centre_major_x: x-coordinate of the centre of the larger face.
-    centre_major_y: y-coordinate of the centre of the larger face.
-    centre_major_z: z-coordinate of the centre of the larger face.
-
-    major_to_minor_x : x_coordinat of the vector pointing from the major
-                       to minor face.
-    major_to_minor_y : y_coordinator of the vector pointing from the major
-                       to minor face.
-    major_to_minor_z : z_coordinator of the vector pointing from the major
-                       to minor face.
-    The length of the major_to_minor vector is the length of the resulting
-    cone.
-
-    major_radius : radius of the larger face.
-    minor_radius : radius of the smaller face.
+    centre: coordinates of the centre of the larger face.
+    direction: coordinates of the vector pointing from major to minor.
+    radius_major: radius of the larger face.
+    radius_minor: radius of the smaller face.
     """
-    def _set_parameters(self, parameters):
-        parameter_names = [
-            'centre_major_x', 'centre_major_y', 'centre_major_z',
-            'major_to_minor_x', 'major_to_minor_y', 'major_to_minor_z',
-            'major_radius', 'minor_radius'
-        ]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self.major_centre = vector.Three([self.parameters.centre_major_x,
-                                          self.parameters.centre_major_y,
-                                          self.parameters.centre_major_z])
-        self.major_to_minor = vector.Three([self.parameters.major_to_minor_x,
-                                            self.parameters.major_to_minor_y,
-                                            self.parameters.major_to_minor_z])
-        self.length = self.major_to_minor.length()
-        self.major_radius = self.parameters.major_radius
-        self.minor_radius = self.parameters.minor_radius
+    def __init__(self, name, major_centre, direction, major_radius, minor_radius):
+        self.name = name
+        self.major_centre = vector.Three(major_centre)
+        self.direction = vector.Three(direction)
+        self.major_radius = major_radius
+        self.minor_radius = minor_radius
+
+        # We choose in the as_gdml_solid method to place the major at
+        # -z, and the major at +z:
+        self.rotation = trf.matrix_from([0, 0, 1], self.direction)
 
     def centre(self):
-        return self.major_centre + 0.5 * self.major_to_minor
-
-    def _set_rotation_matrix(self, transformation):
-        # We choose in the as_gdml_solid method to place the major at
-        # -z, and the major at +z, hence this choice of initial and
-        # final vectors:
-        initial = [0, 0, 1]
-        final = self.major_to_minor
-        self.rotation = trf.matrix_from(initial, final)
+        return self.major_centre + 0.5 * self.direction
 
     def crude_extent(self):
-        return max(abs(self.parameters.centre_major_x) + self.length,
-                   abs(self.parameters.centre_major_y) + self.length,
-                   abs(self.parameters.centre_major_z) + self.length,
-                   self.parameters.minor_radius,
-                   self.parameters.major_radius)
+        return max(abs(self.major_centre.x) + self.direction.length(),
+                   abs(self.major_centre.y) + self.direction.length(),
+                   abs(self.major_centre.z) + self.direction.length(),
+                   self.minor_radius,
+                   self.major_radius)
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
@@ -698,19 +553,23 @@ class TRC(Body):
         return pygdml.solid.Cons(self._unique_body_name(),
                                  0.0, self.major_radius + safety_addend,
                                  0.0, self.minor_radius + safety_addend,
-                                 0.5 * self.length + safety_addend,
+                                 0.5 * self.direction.length() + safety_addend,
                                  0.0, 2*math.pi)
 
 
 class XYP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the z-axis."""
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_z']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, z):
+        self.name = name
+        self.z = z
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(self.z)
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_z - 2 * LENGTH_SAFETY > extent.upper.z
-                and not np.isclose(self.parameters.v_z, extent.upper.z)):
+        if (self.z - 2 * LENGTH_SAFETY > extent.upper.z
+            and not np.isclose(self.z, extent.upper.z)):
             self._is_omittable = True
             logger.info("Setting XYP \"{}\" omittable.".format(self.name))
             return
@@ -722,108 +581,91 @@ class XYP(InfiniteHalfSpace):
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        # Choose the face at
-        centre_x = 0.0
-        centre_y = 0.0
-        centre_z = self.parameters.v_z - (self._scale_z * 0.5)
-        return self._offset + vector.Three(centre_x, centre_y, centre_z)
+        return self._offset + vector.Three(0, 0, self.z - (self._scale_z * 0.5))
 
 
 class XZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the y-axis."""
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_y']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, y):
+        self.name = name
+        self.y = y
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(self.y)
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_y - 2 * LENGTH_SAFETY > extent.upper.y
-                and not np.isclose(self.parameters.v_y, extent.upper.y)):
+        if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
+            and not np.isclose(self.y, extent.upper.y)):
             self._is_omittable = True
             logger.info("Setting XZP \"{}\" omittable.".format(self.name))
             return
-        self._offset = vector.Three(extent.centre.x,
-                                    0.0,
-                                    extent.centre.z)
+        self._offset = vector.Three(extent.centre.x, 0.0, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
         self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        centre_x = 0.0
-        centre_y = self.parameters.v_y - (self._scale_y * 0.5)
-        centre_z = 0.0
-        return self._offset + vector.Three(centre_x, centre_y, centre_z)
+        return self._offset + vector.Three(0, self.y - (self._scale_y * 0.5), 0)
 
 
 class YZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the x-axis."""
-    def _set_parameters(self, parameters):
-        parameter_names = ['v_x']
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, x):
+        self.name = name
+        self.x = x
+        self.rotation = np.matrix(np.identity(3))
+
+    def crude_extent(self):
+        return abs(self.x)
 
     def _apply_extent(self, extent):
-        if (self.parameters.v_x - 2 * LENGTH_SAFETY > extent.upper.x
-                and not np.isclose(self.parameters.v_x, extent.upper.x)):
+        if (self.x - 2 * LENGTH_SAFETY > extent.upper.x
+            and not np.isclose(self.x, extent.upper.x)):
             self._is_omittable = True
             logger.info("Setting YZP \"{}\" omittable.".format(self.name))
             return
-        self._offset = vector.Three(0.0,
-                                    extent.centre.y,
-                                    extent.centre.z)
+        self._offset = vector.Three(0.0, extent.centre.y, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
         self._scale_y = extent.size.y * (SCALING_TOLERANCE + 1)
         self._scale_z = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        centre_x = self.parameters.v_x - (self._scale_x * 0.5)
-        centre_y = 0.0
-        centre_z = 0.0
-        return self._offset + vector.Three(centre_x, centre_y, centre_z)
+        return self._offset + vector.Three(self.x - (self._scale_x * 0.5), 0, 0)
 
 
 class PLA(Body):
     """Generic infinite half-space.
 
     Parameters:
-    x_direction (Hx) :: x-component of a vector of arbitrary length
-                        perpendicular to the plane.  Pointing outside
-                        of the space.
-    y_direction (Hy) :: y-component of a vector of arbitrary length
-                        perpendicular to the plane.  Pointing outside
-                        of the space.
-    z_direction (Hz) :: z-component of a vector of arbitrary length
-                        perpendicular to the plane.  Pointing outside
-                        of the space.
-    x_position  (Vx) :: x-component of a point anywhere on the plane.
-    y_position  (Vy) :: y-component of a point anywhere on the plane.
-    z_position  (Vz) :: z-component of a point anywhere on the plane.
+    point = point on surface of halfspace
+    normal = vector normal to the surface (pointing outwards)
+
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["x_direction", "y_direction", "z_direction",
-                           "x_position", "y_position", "z_position"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
+    def __init__(self, name, normal, point):
+        self.name = name
+        self.normal = vector.Three(normal)
+        self.point = vector.Three(point)
+        # Choose the face pointing in the direction of the positive
+        # z-axis to make the surface of the half space.
+        self.rotation = trf.matrix_from([0, 0, 1], self.normal)
 
-
-        # Normalise the perpendicular vector:
-        perpendicular = vector.Three([self.parameters.x_direction,
-                                      self.parameters.y_direction,
-                                      self.parameters.z_direction])
-        self.perpendicular = (perpendicular
-                              / np.linalg.norm(perpendicular))
-        self.surface_point = vector.Three([self.parameters.x_position,
-                                           self.parameters.y_position,
-                                           self.parameters.z_position])
-        self.surface_point = self._closest_point([0, 0, 0])
+        # Start by putting the point as close to the origin as can,
+        # and the normalising the norm vector.  these are the versions
+        # we actually "use.. in all methods within" this is a horrible
+        # wart and really i should do this more sensibly.  oh well for now.
+        self._normal = self.normal / np.linalg.norm(self.normal)
+        self._point = self.point
+        self._point = self._closest_point([0, 0, 0])
 
     def centre(self):
         # This is the centre of the underlying gdml solid (i.e. won't
         # be on the surface, but set backwards by half length scale's amount.
-        centre = (self.surface_point
-                  - (0.5 * self._scale * self.perpendicular.unit()))
+        centre = self._point - 0.5 * self._scale * self._normal.unit()
         return centre
 
     def _apply_extent(self, extent):
-        self.surface_point = self._closest_point(extent.centre)
+        self._point = self._closest_point(extent.centre)
         root3 = math.sqrt(3) # root3 to ensure that the box is big enough to
         # effectively act as a plane regardless of any rotations
         # present.  This is necessary because an extent is a box
@@ -835,17 +677,8 @@ class PLA(Body):
                           extent.size.y * (SCALING_TOLERANCE + 1) * root3,
                           extent.size.z * (SCALING_TOLERANCE + 1) * root3)
 
-    def _set_rotation_matrix(self, transformation):
-        # Choose the face pointing in the direction of the positive
-        # z-axis to make the face of the plane.
-        initial = [0, 0, 1]
-        final = self.perpendicular
-        self.rotation = trf.matrix_from(initial, final)
-
     def crude_extent(self):
-        return max(abs(self.surface_point.x),
-                   abs(self.surface_point.y),
-                   abs(self.surface_point.z))
+        return max(abs(self._point.x), abs(self._point.y), abs(self._point.z))
 
     def _closest_point(self, point):
         """
@@ -853,12 +686,12 @@ class PLA(Body):
 
         """
         # perpendicular distance from the point to the plane
-        distance = np.dot((self.surface_point - point),
-                          self.perpendicular)
-        closest_point = point + distance * self.perpendicular
-        assert (abs(np.dot(self.perpendicular,
-                           closest_point - self.surface_point)) < 1e-6), (
-                               "Point isn't on the plane!")
+        distance = np.dot((self._point - point), self._normal)
+        closest_point = point + distance * self._normal
+
+        assert (abs(np.dot(self._normal, closest_point - self._point)) <
+                1e-6), "Point isn't on the plane!"
+
         return closest_point
 
     def gdml_solid(self, length_safety=None):
@@ -872,210 +705,189 @@ class PLA(Body):
 class XCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to x-axis
 
-    parameters:
+    y = y-coordinate of the centre of the cylinder
+    z = z-coordinate of the centre of the cylinder
+    radius = radius of the cylinder
 
-    centre_y    -- y-coordinate of the centre of the cylinder
-    centre_z    -- z-coordinate of the centre of the cylinder
-    radius -- radius of the cylinder
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_y", "centre_z", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self._radius = self.parameters.radius
-
-    def _apply_extent(self, extent):
-        self._offset = vector.Three(extent.centre.x,
-                                    0.0,
-                                    0.0)
-        self._scale = extent.size.x * (SCALING_TOLERANCE + 1)
-
-    def centre(self):
-        return (self._offset
-                + vector.Three(0.0,
-                               self.parameters.centre_y,
-                               self.parameters.centre_z))
-
-    def _set_rotation_matrix(self, transformation):
+    def __init__(self, name, y, z, radius):
+        self.name = name
+        self.y = y
+        self.z = z
+        self.radius = radius
+        # Stuff for infinite scaling..
+        self._radius = radius
         # Rotate pi/2 about the y-axis.
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
                                    [1, 0, 0]])
 
+    def _apply_extent(self, extent):
+        self._offset = vector.Three(extent.centre.x, 0.0, 0.0)
+        self._scale = extent.size.x * (SCALING_TOLERANCE + 1)
+
+    def centre(self):
+        return (self._offset + vector.Three(0.0, self.y, self.z))
+
+    def crude_extent(self):
+        return max([self.y, self.z, self.radius])
+
 
 class YCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to y-axis
 
-    parameters:
+    z = z-coordinate of the centre of the cylinder
+    x = x-coordinate of the centre of the cylinder
+    radius = radius of the cylinder
 
-    centre_z    -- z-coordinate of the centre of the cylinder
-    centre_x    -- x-coordinate of the centre of the cylinder
-    radius -- radius of the cylinder
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_z", "centre_x", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self._radius = self.parameters.radius
+    def __init__(self, name, z, x, radius):
+        self.name = name
+        self.x = x
+        self.z = z
+        self.radius = radius
+        self._radius = radius
+        # Rotate by pi/2 about the x-axis.
+        self.rotation = np.matrix([[1, 0, 0],
+                                   [0, 0, 1],
+                                   [0, -1, 0]])
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0, extent.centre.y, 0.0)
         self._scale = extent.size.y * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset
-                + vector.Three(self.parameters.centre_x,
-                               0.0,
-                               self.parameters.centre_z))
+        return (self._offset + vector.Three(self.x, 0.0, self.z))
 
-    def _set_rotation_matrix(self, transformation):
-        # Rotate by pi/2 about the x-axis.
-        self.rotation = np.matrix([[1, 0, 0],
-                                   [0, 0, 1],
-                                   [0, -1, 0]])
+    def crude_extent(self):
+        return max([self.x, self.z, self.radius])
 
 
 class ZCC(InfiniteCylinder):
     """Infinite circular cylinder parallel to z-axis
 
-    parameters:
+    x = x-coordinate of the centre of the cylinder
+    y = y-coordinate of the centre of the cylinder
+    radius = radius of the cylinder
 
-    centre_x    -- x-coordinate of the centre of the cylinder
-    centre_y    -- y-coordinate of the centre of the cylinder
-    radius -- radius of the cylinder
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_x", "centre_y", "radius"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-        self._radius = self.parameters.radius
+    def __init__(self, name, x, y, radius):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self._radius = radius
+        self.rotation = np.matrix(np.identity(3))
 
     def _apply_extent(self, extent):
-        self._offset = vector.Three(0.0,
-                                    0.0,
-                                    extent.centre.z)
+        self._offset = vector.Three(0.0, 0.0, extent.centre.z)
         self._scale = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset
-                + vector.Three(self.parameters.centre_x,
-                               self.parameters.centre_y,
-                               0.0))
+        return (self._offset + vector.Three(self.x, self.y, 0.0))
 
-    def _set_rotation_matrix(self, transformation):
-        self.rotation = np.matrix(np.identity(3))
+    def crude_extent(self):
+        return max([self.x, self.y, self.radius])
 
 
 class XEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the x-axis.
 
-    Parameters:
-
-    centre_y (Ay) - y-coordinate of the centre of the ellipse face.
-    centre_z (Az) - z-coordinate of the centre of the ellipse face.
-    semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse
-    face.
-    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse
-    face.
+    y = y-coordinate of the centre of the ellipse face.
+    z = z-coordinate of the centre of the ellipse face.
+    semi_y = semi-axis in the y-direction of the ellipse face.
+    semi_z = semi-axis in the z-direction of the ellipse face.
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_y", "centre_z", "semi_axis_y", "semi_axis_z"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(0.0,
-                            self.parameters.centre_y,
-                            self.parameters.centre_z)
-
-    def _set_rotation_matrix(self, transformation):
+    def __init__(self, name, y, z, semi_y, semi_z):
+        self.name = name
+        self.y = y
+        self.z = z
+        self.semi_y = semi_y
+        self.semi_z = semi_z
         # Rotate pi/2 about the y-axis.
         self.rotation = np.matrix([[0, 0, -1],
                                    [0, 1, 0],
                                    [1, 0, 0]])
 
+    def centre(self):
+        return vector.Three(0.0, self.y, self.z)
+
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        return max(abs(i for i in [self.y, self.z, self.semi_y, self.semi_z]))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
-        return pygdml.solid.EllipticalTube(
-            self._unique_body_name(),
-            self.parameters.semi_axis_z + safety_addend,
-            self.parameters.semi_axis_y + safety_addend,
-            0.5 * self._scale
-        )
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
+                                           self.semi_z + safety_addend,
+                                           self.semi_y + safety_addend,
+                                           0.5 * self._scale)
 
 
 class YEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the y-axis.
 
-    Parameters:
-
-    centre_z (Az) - z-coordinate of the centre of the ellipse face.
-    centre_x (Ax) - x-coordinate of the centre of the ellipse face.
-    semi_axis_z (Lz) - semi-axis in the z-direction of the ellipse face.
-    semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
+    z - z-coordinate of the centre of the ellipse face.
+    x - x-coordinate of the centre of the ellipse face.
+    semi_z - semi-axis in the z-direction of the ellipse face.
+    semi_x - semi-axis in the x-direction of the ellipse face.
 
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_z", "centre_x", "semi_axis_z", "semi_axis_x"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(self.parameters.centre_x,
-                            0.0,
-                            self.parameters.centre_z)
-
-    def _set_rotation_matrix(self, transformation):
+    def __init__(self, name, z, x, semi_z, semi_x):
+        self.name = name
+        self.x = x
+        self.z = z
+        self.semi_x = semi_x
+        self.semi_z = semi_z
         # Rotate by pi/2 about the x-axis.
         self.rotation = np.matrix([[1, 0, 0],
                                    [0, 0, 1],
                                    [0, -1, 0]])
 
+    def centre(self):
+        return vector.Three(self.x, 0.0, self.z)
+
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        return max(abs(i for i in [self.x, self.z, self.semi_x, self.semi_z]))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
-        return pygdml.solid.EllipticalTube(
-            self._unique_body_name(),
-            self.parameters.semi_axis_x + safety_addend,
-            self.parameters.semi_axis_z + safety_addend,
-            0.5 * self._scale
-        )
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
+                                           self.semi_x + safety_addend,
+                                           self.semi_z + safety_addend,
+                                           0.5 * self._scale)
 
 
 class ZEC(InfiniteEllipticalCylinder):
     """An infinite elliptical cylinder parallel to the z-axis.
 
-    Parameters:
+    x - x-coordinate of the centre of the ellipse face.
+    y - y-coordinate of the centre of the ellipse face.
+    semi_x - semi-axis in the x-direction of the ellipse face.
+    semi_y - semi-axis in the y-direction of the ellipse face.
 
-    centre_x (Ax) - x-coordinate of the centre of the ellipse face.
-    centre_y (Ay) - y-coordinate of the centre of the ellipse face.
-    semi_axis_x (Lx) - semi-axis in the x-direction of the ellipse face.
-    semi_axis_y (Ly) - semi-axis in the y-direction of the ellipse face.
     """
-    def _set_parameters(self, parameters):
-        parameter_names = ["centre_x", "centre_y", "semi_axis_x", "semi_axis_y"]
-        self.parameters = Parameters(zip(parameter_names, parameters))
-
-    def centre(self):
-        return vector.Three(self.parameters.centre_x,
-                            self.parameters.centre_y,
-                            0.0)
-
-    def _set_rotation_matrix(self, transformation):
+    def __init__(self, name, x, y, semi_x, semi_y):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.semi_x = semi_x
+        self.semi_y = semi_y
+        # Rotate by pi/2 about the x-axis.
         self.rotation = np.matrix(np.identity(3))
 
+    def centre(self):
+        return vector.Three(self.x, self.y, 0.0)
+
     def crude_extent(self):
-        return max(map(abs, self.parameters))
+        return max(abs(i for i in [self.x, self.y, self.semi_y, self.semi_y]))
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
-        return pygdml.solid.EllipticalTube(
-            self._unique_body_name(),
-            self.parameters.semi_axis_x + safety_addend,
-            self.parameters.semi_axis_y + safety_addend,
-            0.5 * self._scale
-        )
+        return pygdml.solid.EllipticalTube(self._unique_body_name(),
+                                           self.semi_x + safety_addend,
+                                           self.semi_y + safety_addend,
+                                           0.5 * self._scale)
 
 
 class Region(object):
@@ -1114,6 +926,32 @@ class Region(object):
         Basically for adding to a world volume.
 
         """
+        name = (self.name
+                if zones is None
+                else "{}-Zones-{}".format(self.name,
+                                          "-".join([str(index) for
+                                                    index in zones])))
+
+        if name in (["R32-Zones-4",
+                    "R38-Zones-3",
+                    "R36-Zones-6",
+                    "UPS16air-Zones-4",
+                    "UPS16air-Zones-6",
+                    "UPS16air-Zones-14",
+                    "UL16-Zones-0",
+                    "UL16CNCR-Zones-3",
+                    "UPS16H2A-Zones-1",
+                    "R26-Zones-6",
+                    "UJPLUGR4-Zones-1",
+                    "UJPLUGR0-Zones-1",
+                    "UPS16DR5-Zones-0",
+                    "R7UPS-Zones-1",
+                    "UJ16AIR2-Zones-0",
+                    "UPS16DA1-Zones-0",
+                    "RB16AIR3-Zones-0"]):
+            print("skipping bad tunnel region oops..")
+            return
+
         boolean = self.evaluate(zones, optimise=optimise)
         # Convert the matrix to TB xyz:
         rotation_angles = trf.matrix2tbxyz(boolean.rotation)
@@ -1123,11 +961,7 @@ class Region(object):
         rotation_angles = trf.reverse(rotation_angles)
         # Give a more informative name when a subset of the zones are
         # selected to be placed.
-        name = (self.name
-                if zones is None
-                else "{}-Zones-{}".format(self.name,
-                                          "-".join([str(index) for
-                                                    index in zones])))
+
         pygdml.volume.Volume(
             rotation_angles, boolean.centre(),
             boolean.gdml_solid(length_safety="trim"), name, volume,
@@ -1338,10 +1172,10 @@ class Zone(object):
         extent = 0.0
         for body in self.contains + self.excludes:
             body_crude_extent = body.crude_extent()
-            logger.info("Extent for body {} = {}".format(
+            logger.debug("Extent for body {} = {}".format(
                 body, body_crude_extent))
             extent = max(extent, body_crude_extent)
-        logger.info("Crude extent for zone {} = {}".format(self, extent))
+        logger.debug("Crude extent for zone {} = {}".format(self, extent))
         return extent
 
     def view(self, setclip=True, optimise=False):
@@ -1377,14 +1211,14 @@ class Zone(object):
         appropriate optimisations, if any.
 
         """
-        logger.info("{}: optimise={}".format(self, optimise))
+        logger.debug("{}: optimise={}".format(self, optimise))
         if optimise:
             return self._optimised_boolean()
         else:
             return self._crude_boolean()
 
     def _crude_boolean(self):
-        logger.info("{}".format(self))
+        logger.debug("{}".format(self))
         scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
         self._map_extent_2_bodies(self.contains, scale)
@@ -1393,7 +1227,7 @@ class Zone(object):
         return self._accumulate(None) # Don't trim/extend.  Get the true mesh.
 
     def _optimised_boolean(self):
-        logger.info("{}".format(self))
+        logger.debug("{}".format(self))
         out = self._crude_boolean()
         # Rescale the bodies and zones with the resulting mesh:
         self._map_extent_2_bodies(self.contains, out)
