@@ -368,7 +368,9 @@ class Model(object):
                     sets = (region.connected_zones
                             if survey is True
                             else survey[region_name]["connected_zones"])
+                    print("Adding {}".format(region_name))
                     for connected_set in sets:
+                        print("Adding separately as... {}".format(connected_set))
                         # Place them as individual regions, but only
                         # those zones which have also been selected in
                         # the dictionary

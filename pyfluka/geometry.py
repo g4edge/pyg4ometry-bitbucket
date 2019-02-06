@@ -921,6 +921,32 @@ class Region(object):
         Basically for adding to a world volume.
 
         """
+        name = (self.name
+                if zones is None
+                else "{}-Zones-{}".format(self.name,
+                                          "-".join([str(index) for
+                                                    index in zones])))
+
+        if name in (["R32-Zones-4",
+                    "R38-Zones-3",
+                    "R36-Zones-6",
+                    "UPS16air-Zones-4",
+                    "UPS16air-Zones-6",
+                    "UPS16air-Zones-14",
+                    "UL16-Zones-0",
+                    "UL16CNCR-Zones-3",
+                    "UPS16H2A-Zones-1",
+                    "R26-Zones-6",
+                    "UJPLUGR4-Zones-1",
+                    "UJPLUGR0-Zones-1",
+                    "UPS16DR5-Zones-0",
+                    "R7UPS-Zones-1",
+                    "UJ16AIR2-Zones-0",
+                    "UPS16DA1-Zones-0",
+                    "RB16AIR3-Zones-0"]):
+            print("skipping bad tunnel region oops..")
+            return
+
         boolean = self.evaluate(zones, optimise=optimise)
         # Convert the matrix to TB xyz:
         rotation_angles = trf.matrix2tbxyz(boolean.rotation)
@@ -930,11 +956,7 @@ class Region(object):
         rotation_angles = trf.reverse(rotation_angles)
         # Give a more informative name when a subset of the zones are
         # selected to be placed.
-        name = (self.name
-                if zones is None
-                else "{}-Zones-{}".format(self.name,
-                                          "-".join([str(index) for
-                                                    index in zones])))
+
         pygdml.volume.Volume(
             rotation_angles, boolean.centre(),
             boolean.gdml_solid(length_safety="trim"), name, volume,
