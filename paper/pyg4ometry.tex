@@ -1,0 +1,271 @@
+%% This template can be used to write a paper for
+%% Computer Physics Communications using LaTeX.
+%% For authors who want to write a computer program description,
+%% an example Program Summary is included that only has to be
+%% completed and which will give the correct layout in the
+%% preprint and the journal.
+%% The `elsarticle' style is used and more information on this style
+%% can be found at 
+%% http://www.elsevier.com/wps/find/authorsview.authors/elsarticle.
+%%
+%%
+\documentclass[preprint,12pt]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% if you use PostScript figures in your article
+%% use the graphics package for simple commands
+%% \usepackage{graphics}
+%% or use the graphicx package for more complicated commands
+%% \usepackage{graphicx}
+%% or use the epsfig package if you prefer to use the old commands
+%% \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+%% \usepackage{lineno}
+
+%% natbib.sty is loaded by default. However, natbib options can be
+%% provided with \biboptions{...} command. Following options are
+%% valid:
+
+%%   round  -  round parentheses are used (default)
+%%   square -  square brackets are used   [option]
+%%   curly  -  curly braces are used      {option}
+%%   angle  -  angle brackets are used    <option>
+%%   semicolon  -  multiple citations separated by semi-colon
+%%   colon  - same as semicolon, an earlier confusion
+%%   comma  -  separated by comma
+%%   numbers-  selects numerical citations
+%%   super  -  numerical citations as superscripts
+%%   sort   -  sorts multiple citations according to order in ref. list
+%%   sort&compress   -  like sort, but also compresses numerical citations
+%%   compress - compresses without sorting
+%%
+%% \biboptions{comma,round}
+
+% \biboptions{}
+
+%% This list environment is used for the references in the
+%% Program Summary
+%%
+\newcounter{bla}
+\newenvironment{refnummer}{%
+\list{[\arabic{bla}]}%
+{\usecounter{bla}%
+ \setlength{\itemindent}{0pt}%
+ \setlength{\topsep}{0pt}%
+ \setlength{\itemsep}{0pt}%
+ \setlength{\labelsep}{2pt}%
+ \setlength{\listparindent}{0pt}%
+ \settowidth{\labelwidth}{[9]}%
+ \setlength{\leftmargin}{\labelwidth}%
+ \addtolength{\leftmargin}{\labelsep}%
+ \setlength{\rightmargin}{0pt}}}
+ {\endlist}
+
+\journal{Computer Physics Communications}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for the associated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for the associated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for the associated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%%
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{{\em pyg4ometry}, a python library for the creation of Monte Carlo particle transport geometries}
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{<author name>}
+%% \address[label1]{<address>}
+%% \address[label2]{<address>}
+
+\author[a]{Stewart T. Boogert\corref{author}}
+\author[a]{Andrey Abramov}
+\author[a]{Laurence Nevay}
+
+\cortext[author] {Corresponding author.\\\textit{E-mail address:} stewart.boogert@rhul.ac.uk}
+\address[a]{First Address}
+\address[b]{Second Address}
+
+\begin{abstract}
+%% Text of abstract
+
+
+\end{abstract}
+
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+keyword1; keyword2; keyword3; etc.
+
+\end{keyword}
+
+\end{frontmatter}
+
+%%
+%% Start line numbering here if you want
+%%
+% \linenumbers
+
+% Computer program descriptions should contain the following
+% PROGRAM SUMMARY.
+
+{\bf PROGRAM SUMMARY/NEW VERSION PROGRAM SUMMARY}
+  %Delete as appropriate.
+
+\begin{small}
+\noindent
+{\em Program Title: pyg4ometry }                                         \\
+{\em Licensing provisions(please choose one): CC0 1.0/CC By 4.0/MIT/Apache-2.0/BSD 3-clause/BSD 2-clause/GPLv3/GPLv2/LGPL/CC BY NC 3.0/MPL-2.0 }                                   \\
+{\em Programming language: python, C/C++}                                   \\
+
+{\em Supplementary material:}                                 \\
+  % Fill in if necessary, otherwise leave out.
+{\em Journal reference of previous version:}                  \\
+  %Only required for a New Version summary, otherwise leave out.
+{\em Does the new version supersede the previous version?:}   \\
+  %Only required for a New Version summary, otherwise leave out.
+{\em Reasons for the new version:}\\
+  %Only required for a New Version summary, otherwise leave out.
+{\em Summary of revisions:}*\\
+  %Only required for a New Version summary, otherwise leave out.
+
+{\em Nature of problem(approx. 50-250 words):}\\
+Creating computer readable geometry descriptions for Monte Carlo particle transport codes is a time consuming and error prone task.  
+{\em Solution method(approx. 50-250 words):}\\
+  %Describe the method solution here.
+{\em Additional comments including Restrictions and Unusual features (approx. 50-250 words):}\\
+  %Provide any additional comments here.
+   \\
+
+\begin{thebibliography}{0}
+\bibitem{1}Reference 1         % This list should only contain those items referenced in the                 
+\bibitem{2}Reference 2         % Program Summary section.   
+\bibitem{3}Reference 3         % Type references in text as [1], [2], etc.
+                               % This list is different from the bibliography at the end of 
+                               % the Long Write-Up.
+\end{thebibliography}
+* Items marked with an asterisk are only required for new versions
+of programs previously published in the CPC Program Library.\\
+\end{small}
+
+
+%% main text
+\section{Introduction} \label{sec:introduction}
+There are numerous different software codes to simulate the passage of particles through material, so called particle transport (PT) programmes, these 
+include MCMP, FLUKA, Geant3 and Geant4. Each code either has a particular specialism or target user community.  A fundamental requirement of 
+all of the codes is to supply a computer readable description of the physical geometry that the particles are passing through.  The creation of geometry 
+files is typically a very time consuming activity, the simulation validity and performance is directly dependent on the quality of the geometry. The requirement of a 
+geometry system that allows the conversion between files prepared for different codes will enable cross checks of the physics processes in particle 
+transport codes. Parallel to the creation of geometry files for PT programs, usually computer assisted design (CAD) files exist for systems which 
+need to be simulated in PT programmes. The fundamental geometric representations in CAD files is typically not amenable for PT programmes.  For 
+these reasons it is advantageous to create a software tool that allows particle transport code users to rapidly develop geometry files, convert between 
+common PT programme geometry formats and finally import CAD models. This paper describes such geometry creation and conversion package 
+called {\em pyg4ometry}, implemented in {\em Python} and internally based on the Geant4 geometry description. The main features of  {\em pyg4ometry} 
+are a python scripting API to rapidly design parametrised geometry, conversion to and from  FLUKA geometry descriptions, conversion from CAD formats 
+(STEP and XXX) based on FreeCAD-OpenCascade and powerful geometry visualisation tools based on VTK. 
+
+\section{Geometric descriptions} \label{sec:geometric}
+
+\subsection{Constructive solid geometry (CSG)}
+Constructive solid geometry uses boolean operations to model complex surfaces which represent a solid. Typically simple finite or infinite solids are combined 
+with operations, such as union, intersection and difference to model more complex solids. FLUKA uses CSG to model solids.
+
+\subsection{Boundary representation (BREP)}
+Boundary representation consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. 
+
+\subsection{Tessellated polygons}
+Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL.  
+
+\subsection{Geant4 geometery}
+Geant4 geometry description is a mixture of BREP and CSG concepts. Geant4 includes XX fundamental solids, although it does not store a sense of topology
+present in traditional CAD BREP systems. Geant4 also provides the ability to perform boolean operations on these primitive solids.
+
+\section{{\em pyg4ometry} design and layout}
+The core of {\em pyg4ometry} consists of python classes that wrap Geant4 solid, logical and physical volume objects.  
+
+\section{Rapid geometry modelling in Python}
+
+\section{Conversion to Geant4 from common CAD formats}
+
+\section{Conversion between Geant4 and FLUKA}
+
+\section{Performance in Geant4}
+
+\section{Conclusions}
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+%% \section{}
+%% \label{}
+
+%% References
+%%
+%% Following citation commands can be used in the body text:
+%% Usage of \cite is as follows:
+%%   \cite{key}         ==>>  [#]
+%%   \cite[chap. 2]{key} ==>> [#, chap. 2]
+%%
+
+%% References with bibTeX database:
+
+\bibliographystyle{elsarticle-num}
+\bibliography{<your-bib-database>}
+
+%% Authors are advised to submit their bibtex database files. They are
+%% requested to list a bibtex style file in the manuscript if they do
+%% not want to use elsarticle-num.bst.
+
+%% References without bibTeX database:
+
+% \begin{thebibliography}{00}
+
+%% \bibitem must have the following form:
+%%   \bibitem{key}...
+%%
+
+% \bibitem{}
+
+% \end{thebibliography}
+
+
+\end{document}
+
+%%
+%% End of file 
