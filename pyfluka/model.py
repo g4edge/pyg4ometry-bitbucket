@@ -477,18 +477,17 @@ class Model(object):
                        " outerDiameter={}*m;\n".format(lengths.z / 1000.0,
                                                        gdml_name,
                                                        diameter / 1000.0))
-            gmad.write('\n')
-            gmad.write("component : line = (test_component);\n")
-            gmad.write('\n')
-            gmad.write("beam,  particle=\"e-\",\n"
-                       "energy=1.5 * GeV,\n"
-                       "X0=0.1*um;\n")
-            gmad.write('\n')
-            gmad.write("use, period=component;\n")
-            gmad.write('\n')
-            gmad.write("option, physicsList=\"em FTFP_BERT muon\",\n"
-                       "preprocessGDML=0,\n"
-                       "checkOverlaps=1;\n")
+            gmad.write("""
+component_line: line = (test_component);
+
+beam, particle="e-",
+energy=1.5*GeV,
+
+use, period=component_line;
+
+option, physicsList="g4FTFP_BERT",
+                    preprocessGDML=0,
+                    checkOverlaps=1;""")
             print("Written GMAD file: {}".format(gmad_path))
 
     def test_regions(self, pickle=None, regions=None, optimise=True):
