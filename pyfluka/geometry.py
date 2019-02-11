@@ -42,8 +42,7 @@ DEFAULTS                                                              PRECISIO
 BEAM         10000.0                                                  PROTON
 GEOBEGIN                                                              COMBNAME
     0    0                   MC-CAD
-"""
-)
+""")
 
 # logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -171,7 +170,7 @@ class Body(object):
                 # NullMeshErrors, and are dealt with in the
                 # _apply_extent methods.
                 logger.info("Omitting redundant subtraction of %s \"%s\"",
-                             type(self).__name__, self.name)
+                            type(self).__name__, self.name)
                 self._is_omittable = True
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
@@ -571,7 +570,7 @@ class XYP(InfiniteHalfSpace):
 
     def _apply_extent(self, extent):
         if (self.z - 2 * LENGTH_SAFETY > extent.upper.z
-            and not np.isclose(self.z, extent.upper.z)):
+                and not np.isclose(self.z, extent.upper.z)):
             self._is_omittable = True
             logger.info("Setting XYP \"{}\" omittable.".format(self.name))
             return
@@ -598,7 +597,7 @@ class XZP(InfiniteHalfSpace):
 
     def _apply_extent(self, extent):
         if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
-            and not np.isclose(self.y, extent.upper.y)):
+               and not np.isclose(self.y, extent.upper.y)):
             self._is_omittable = True
             logger.info("Setting XZP \"{}\" omittable.".format(self.name))
             return
@@ -623,7 +622,7 @@ class YZP(InfiniteHalfSpace):
 
     def _apply_extent(self, extent):
         if (self.x - 2 * LENGTH_SAFETY > extent.upper.x
-            and not np.isclose(self.x, extent.upper.x)):
+                and not np.isclose(self.x, extent.upper.x)):
             self._is_omittable = True
             logger.info("Setting YZP \"{}\" omittable.".format(self.name))
             return
@@ -971,7 +970,7 @@ class Region(object):
 
     def evaluate(self, zones=None, optimise=False):
         logger.info("Evaluating Region \"%s\", optimisation=%s, zones=%s",
-                     self.name, optimise, zones)
+                    self.name, optimise, zones)
         zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
         booleans = [zone.evaluate(optimise=optimise) for zone in zones]
@@ -1280,7 +1279,7 @@ class Zone(object):
             elif isinstance(body, Zone):
                 evaluated_zone = body._accumulate(subzone_order=subzone_order)
                 accumulated = evaluated_zone.intersection(
-                   accumulated, safety=safety_map['intersection'])
+                    accumulated, safety=safety_map['intersection'])
 
         for body in filtered_excludes:
             if isinstance(body, Body):
