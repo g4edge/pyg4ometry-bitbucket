@@ -19,8 +19,10 @@ import pygdml.transformation as trf
 from pyfluka import vector
 
 # Fractional tolerance when minimising solids.  Here have chosen this
-# to be 5% for no particular reason.
-SCALING_TOLERANCE = 0.05
+# to be 50% for no reason other than that it works!  Smaller values
+# introduce overlaps, and I don't know why...  Revisit this at some
+# point to understand.
+SCALING_TOLERANCE = 0.5
 
 # Minimum length safety between volumes to ensure no overlaps
 LENGTH_SAFETY = 1e-6 # 1 nanometre
