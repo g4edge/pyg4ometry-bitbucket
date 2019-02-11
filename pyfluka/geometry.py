@@ -933,24 +933,6 @@ class Region(object):
                                           "-".join([str(index) for
                                                     index in zones])))
 
-        if name in (["R32-Zones-4",
-                    "R38-Zones-3",
-                    "R36-Zones-6",
-                    "UPS16air-Zones-4",
-                    "UPS16air-Zones-6",
-                    "UPS16air-Zones-14",
-                    "UL16-Zones-0",
-                    "UL16CNCR-Zones-3",
-                    "UPS16H2A-Zones-1",
-                    "R26-Zones-6",
-                    "UJPLUGR4-Zones-1",
-                    "UJPLUGR0-Zones-1",
-                    "UPS16DR5-Zones-0",
-                    "R7UPS-Zones-1",
-                    "UJ16AIR2-Zones-0",
-                    "UPS16DA1-Zones-0",
-                    "RB16AIR3-Zones-0"]):
-            print("skipping bad tunnel region oops..")
             return
 
         boolean = self.evaluate(zones, optimise=optimise)
