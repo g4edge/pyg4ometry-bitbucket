@@ -481,7 +481,7 @@ class Model(object):
 component_line: line = (test_component);
 
 beam, particle="e-",
-energy=1.5*GeV,
+energy=1.5*GeV;
 
 use, period=component_line;
 
