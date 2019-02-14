@@ -56,7 +56,7 @@
 %%   super  -  numerical citations as superscripts
 %%   sort   -  sorts multiple citations according to order in ref. list
 %%   sort&compress   -  like sort, but also compresses numerical citations
-%%   compress - compresses without sorting
+%%   compress - compres ses without sorting
 %%
 %% \biboptions{comma,round}
 
@@ -200,29 +200,37 @@ are a python scripting API to rapidly design parametrised geometry, conversion t
 (STEP and XXX) based on FreeCAD-OpenCascade and powerful geometry visualisation tools based on VTK. 
 
 \section{Geometric descriptions} \label{sec:geometric}
+Central to description of a geometric description of a system is how a solid is defined in three dimensions. There are numerous different ways to describe a
+geometry and these are described briefly in the following sections.  
 
 \subsection{Constructive solid geometry (CSG)}
 Constructive solid geometry uses boolean operations to model complex surfaces which represent a solid. Typically simple finite or infinite solids are combined 
 with operations, such as union, intersection and difference to model more complex solids. FLUKA uses CSG to model solids.
 
 \subsection{Boundary representation (BREP)}
-Boundary representation consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. 
+Boundary representation consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. No current PT applications use native 
+file formats employed by CAD systems. The conversion of CAD BREP formats for loading in PT applications is typically performed via a tessellated format. 
 
 \subsection{Tessellated polygons}
-Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL.  
+Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL and more 
+modern variants being PLY, OBJ, etc.  
 
 \subsection{Geant4 geometery}
-Geant4 geometry description is a mixture of BREP and CSG concepts. Geant4 includes XX fundamental solids, although it does not store a sense of topology
-present in traditional CAD BREP systems. Geant4 also provides the ability to perform boolean operations on these primitive solids.
+Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes XX fundamental solids, although it does not store a sense 
+of topology present in traditional CAD BREP systems. One of the fundamental solids is a {\em TessellatedSolid} which can used to represent STL or PLY files. 
+Geant4 also provides the ability to perform boolean operations on these primitive solids. The richest and most flexible geometry description is currently used by
+Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\it Logical Volumes} 
+and {\it Physical Volumes}. A Logical Volume is a volume that has an outer solid but also material, magnetic field and zero or more physical {\it daughter} volumes. A Physical 
+Volume is a placement (or instance) of a Logical Volume.     
 
 \section{{\em pyg4ometry} design and layout}
-The core of {\em pyg4ometry} consists of python classes that wrap Geant4 solid, logical and physical volume objects.  
+The core of {\em pyg4ometry} consists of python classes that wrap Geant4 solid, logical and physical volume objects.    
 
-\section{Rapid geometry modelling in Python}
+\section{Rapid geometry modelling}
 
-\section{Conversion to Geant4 from common CAD formats}
+\section{CAD to Geant4 conversion }
 
-\section{Conversion between Geant4 and FLUKA}
+\section{Geant4 and FLUKA conversion}
 
 \section{Performance in Geant4}
 
