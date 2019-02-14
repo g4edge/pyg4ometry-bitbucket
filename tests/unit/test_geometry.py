@@ -13,7 +13,17 @@ def test_RPP_ctor():
     assert rpp.upper.y == 1
     assert rpp.upper.z == 1
 
+def test_XYP_ctor():
+    xyp = geo.XYP("aname", 10)
+    assert xzp.name = "aname"
+    assert xzp.y == 10
+
 def test_XZP_ctor():
-    rpp = geo.XZP("aname", 10)
-    assert rpp.name == "aname"
-    assert rpp.y == 10
+    xzp = geo.XZP("aname", 10)
+    assert xzp.name == "aname"
+    assert xzp.y == 10
+
+def test_YZP_ctor():
+    yzp = geo.YZP("aname", 10)
+    assert yzp.name == "aname"
+    assert yzp.y == 10
