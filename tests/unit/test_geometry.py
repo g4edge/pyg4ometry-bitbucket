@@ -15,7 +15,7 @@ def test_RPP_ctor():
 
 def test_XYP_ctor():
     xyp = geo.XYP("aname", 10)
-    assert xzp.name = "aname"
+    assert xzp.name == "aname"
     assert xzp.y == 10
 
 def test_XZP_ctor():
