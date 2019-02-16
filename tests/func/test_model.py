@@ -8,3 +8,6 @@ def test_check_overlaps():
     model = pyfluka.Model(path)
     overlaps = model.check_overlaps()
     assert {"overlap1", "overlap2"} == set(overlaps.keys())
+
+def test_subtract_from_world_volume():
+    pass
