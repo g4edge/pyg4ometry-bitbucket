@@ -1,6 +1,6 @@
 import pytest
 import pyfluka.geometry as geo
-
+import pyfluka.vector as vec
 
 def test_RPP_ctor():
     # Box with lower corner at origin and opposite corner at [1, 1, 1]
@@ -48,3 +48,11 @@ def test_ZCC_ctor():
     assert zcc.x == 10
     assert zcc.y == 12
     assert zcc.radius == 14
+
+def test_RPP_ctor():
+    rpp = geo.RPP("rpp",
+                  [0, 0.1, 0.2],
+                  [1, 1.2, 1.3])
+    assert rpp.name == "rpp"
+    assert rpp.lower == vec.Three([0, 0, 0])
+    assert rpp.upper == vec.Three([1, 1.2, 1.3])
