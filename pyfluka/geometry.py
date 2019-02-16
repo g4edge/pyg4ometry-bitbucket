@@ -933,7 +933,6 @@ class Region(object):
                                           "-".join([str(index) for
                                                     index in zones])))
 
-            return
 
         boolean = self.evaluate(zones, optimise=optimise)
         # Convert the matrix to TB xyz:
