@@ -27,3 +27,24 @@ def test_YZP_ctor():
     yzp = geo.YZP("aname", 10)
     assert yzp.name == "aname"
     assert yzp.y == 10
+
+def test_XCC_ctor():
+    xcc = geo.XCC("xcc", 10, 12, 14)
+    assert xcc.name == "xcc"
+    assert xcc.y == 10
+    assert xcc.z == 12
+    assert xcc.radius == 14
+
+def test_YCC_ctor():
+    ycc = geo.YCC("ycc", 10, 12, 14)
+    assert ycc.name == "ycc"
+    assert ycc.z == 10
+    assert ycc.x == 12
+    assert ycc.radius == 14
+
+def test_ZCC_ctor():
+    zcc = geo.ZCC("zcc", 10, 12, 14)
+    assert zcc.name == "zcc"
+    assert zcc.x == 10
+    assert zcc.y == 12
+    assert zcc.radius == 14
