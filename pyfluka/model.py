@@ -241,7 +241,8 @@ class Model(object):
             pyfluka.geometry.subtract_from_world_volume(bounding_subtrahends,
                                                         bb_addend)
         elif setclip:
-            pyfluka.geometry.clip_wv_with_safety(self._world_volume, bb_addend)
+            pyfluka.geometry.clip_world_volume_with_safety(self._world_volume,
+                                                           bb_addend)
 
         # Do we want to construct it with the full geometry within or
         # should be leave some volumes out?

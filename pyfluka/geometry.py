@@ -97,11 +97,11 @@ class Body(object):
             " ".join(str(value / 10) for value in self.parameters))
 
     def view(self, setclip=True):
-        wv = make_world_volume("world", "G4_AIR")
-        self.add_to_volume(wv)
+        world_volume = make_world_volume("world", "G4_AIR")
+        self.add_to_volume(world_volume)
         if setclip is True:
-            wv.setClip()
-        mesh = wv.pycsgmesh()
+            world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -174,9 +174,9 @@ class Body(object):
 
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
-        wv = make_world_volume("world", "G4_AIR")
-        self.add_to_volume(wv)
-        return Extent.from_world_volume(wv)
+        world_volume = make_world_volume("world", "G4_AIR")
+        self.add_to_volume(world_volume)
+        return Extent.from_world_volume(world_volume)
 
     def _get_overlap(self, other):
         """
@@ -901,12 +901,12 @@ class Region(object):
         the view_debug method to see the problematic boolean operation.
 
         """
-        wv = make_world_volume("world", "G4_AIR")
+        world_volume = make_world_volume("world", "G4_AIR")
         solid = self.evaluate(zones, optimise=optimise)
-        solid.add_to_volume(wv)
+        solid.add_to_volume(world_volume)
         if setclip is True:
-            wv.setClip()
-        mesh = wv.pycsgmesh()
+            world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -1153,16 +1153,16 @@ class Zone(object):
         self.evaluate(optimise=optimise).view(setclip=setclip)
 
     def view_compare_optimisation(self, setclip=True):
-        wv = make_world_volume("world", "G4_AIR")
+        world_volume = make_world_volume("world", "G4_AIR")
         optimised = self.evaluate(optimise=True)
         unoptimised = self.evaluate(optimise=False)
-        optimised.add_to_volume(wv)
-        unoptimised.add_to_volume(wv)
+        optimised.add_to_volume(world_volume)
+        unoptimised.add_to_volume(world_volume)
 
         if setclip is True:
-            wv.setClip()
+            world_volume.setClip()
 
-        mesh = wv.pycsgmesh()
+        mesh = world_volume.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -1351,10 +1351,10 @@ class Boolean(Body):
         return self._centre
 
     def view_debug(self, first=None, second=None):
-        wv = make_world_volume("world", "G4_AIR")
-        self.add_to_volume(wv)
+        world_volume = make_world_volume("world", "G4_AIR")
+        self.add_to_volume(world_volume)
         try:
-            wv.pycsgmesh()
+            world_volume.pycsgmesh()
             print("Mesh was successful.")
         except pygdml.solid.NullMeshError as error:
             print(error.message)
@@ -1366,25 +1366,25 @@ class Boolean(Body):
         solid2 = error.solid.obj2
         tra2 = error.solid.tra2
 
-        wv = wv("world", "G4_AIR")
+        world_volume = make_world_volume("world", "G4_AIR")
         if (first is None and second is None
                 or first is True and second is True):
             pygdml.Volume([0, 0, 0], [0, 0, 0], solid1, solid1.name,
-                          wv, 1, False, "G4_AIR")
+                          world_volume, 1, False, "G4_AIR")
             pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
-                          wv, 1, False, "G4_AIR")
+                          world_volume, 1, False, "G4_AIR")
         elif first is True and second is not True:
             pygdml.Volume([0, 0, 0], [0, 0, 0], solid1, solid1.name,
-                          wv, 1, False, "G4_AIR")
+                          world_volume, 1, False, "G4_AIR")
         elif second is True and first is not True:
             pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
-                          wv, 1, False, "G4_AIR")
+                          world_volume, 1, False, "G4_AIR")
         elif first is False and second is False:
             raise RuntimeError("Must select at least one"
                                " of the two solids to view")
         if setclip is True:
-            wv.setClip()
-        mesh = wv.pycsgmesh()
+            world_volume.setClip()
+        mesh = world_volume.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -1489,7 +1489,7 @@ def get_overlap(first, second):
     except pygdml.NullMeshError:
         return None
 
-def clip_wv_with_safety(world_volume, safety):
+def clip_world_volume_with_safety(world_volume, safety):
     world_volume.setClip()
     world_volume.currentVolume.pX += addend
     world_volume.currentVolume.pY += addend
@@ -1511,7 +1511,7 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
     # The offset is -1 * the unclipped extent's centre.
     unclipped_centre = unclipped_extent.centre
     other_offset = -1 * unclipped_centre
-    clip_wv_with_safety(world_volume, bb_addend)
+    clip_world_volume_with_safety(world_volume, bb_addend)
     # Make an RPP out of the clipped bounding box.
     world_name = world_volume.currentVolume.name
     # solids magically start having material attributes at the top-level so
