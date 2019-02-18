@@ -721,7 +721,7 @@ class XCC(InfiniteCylinder):
         self._scale = extent.size.x * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset + vector.Three(0.0, self.y, self.z))
+        return self._offset + vector.Three(0.0, self.y, self.z)
 
     def crude_extent(self):
         return max([self.y, self.z, self.radius])
