@@ -195,7 +195,7 @@ programmes.  For these reasons it is advantageous to create a software tool that
 common PT programme geometry formats and finally import CAD models. This paper describes such geometry creation and conversion package 
 called {\em pyg4ometry}, implemented in {\em Python} and internally based on the Geant4 geometry description. The main features of  {\em pyg4ometry} 
 are a python scripting API to rapidly design parametrised geometry, conversion to and from  FLUKA geometry descriptions, conversion from CAD formats 
-(STEP and XXX) based on FreeCAD-OpenCascade and powerful geometry visualisation tools based on VTK. 
+(STEP and IGES) based on FreeCAD-OpenCascade and powerful geometry visualisation tools based on VTK. 
 
 \section{Geometric descriptions} \label{sec:geometric}
 Central to description of a geometric description of a system is how a solid is defined in three dimensions. There are numerous different ways to describe a
@@ -224,7 +224,7 @@ Volume is a placement (or instance) of a Logical Volume.
 \subsection{Geant Detector Mark-up Language} 
 To exchange geometry descriptions Geant Detector Mark-up Language (GDML) was developed. Geant4 and ROOT can read and write GDML format and it is commonly
 used as an exchange format for Geant4 geometries. 
-\begin{table}
+\begin{table}[hbt!]
 \centering
 \begin{tabular}{|c|c|c|} \hline
 GDML tag 		&  Child tags				& pyg4ometry class 			\\ \hline
@@ -237,10 +237,10 @@ Structure			&						&						\\ \hline
 \end{table}
 
 \section{{\em pyg4ometry} design and layout}
-The core of {\em pyg4ometry} consists of python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters material classes.
+The core of {\em pyg4ometry} consists of python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
 The constructors of the python classes are kept as close to the original Geant4 C++ implementation so that {\it pyg4ometry} users do not have to learn 
 a new API. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
-should be able to start creating geometry in pyg4ometry immediately.  
+should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in {\it pyg4ometry} are described.  
     
 \subsection{Expression engine}
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
@@ -256,23 +256,30 @@ geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculat
 on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various algorithms from 
 TetGEN can be employed to give the meshes more desirable output. 
 
-\subsection{Visualisation}
-A  geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene tree is required as the Geant4 volume hierarchy is sufficient 
-to place the meshes associated with each physical volume. The python version of Geant4's physical volume is also used to store visualisation attributes like the solids 
-color, surface or wireframe representation and visibility.    
-  
 \subsection{Internal data representation} 
 The internal data representation follows closely the structure of GDML. A registry class aggregates python ordered dictionaries that are  used to store the main 
 elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.  
   
 \subsection{Input and output} 
 For each input format available in {\it pyg4ometry} a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
-and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and 
+and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a registry which can be used or manipulated by the user. 
+Output consists of taking the registry and writing the appropriate GDML.
+
+\subsection{Overlap detection}
+All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when encountering such a 
+situation.  A key feature of {\it pyg4ometry} is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
+and determining if the resulting mesh is empty. 
   
+\subsection{Visualisation}
+A  geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 volume hierarchy is sufficient 
+to place the meshes associated with each physical volume. The python version of Geant4's physical volume is also used to store visualisation attributes like the solids 
+color, surface or wireframe representation and visibility. Overlaps detected in the discretised mesh geometry can be displayed separately to allow a user to remove
+the potential overlaps. This is dependent on the accuracy of the mesh generated and is a particular problem with meshes based on curved surfaces.    
+
 \section{Rapid geometry modelling}
 Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the PT problem, vary 
 the parameters of the geometry and visualise the geometry. Finally when the desired result without geometry overlaps is finalised a GDML file can be output
-from the internal memory representation.   
+from the internal memory representation. 
 
 \section{CAD to Geant4 conversion }
 STEP and IGES files can be loaded into pyg4ometry, via an interface based on FreeCAD. FreeCAD is an open source CAD/CAM program, which in turn 
@@ -293,6 +300,7 @@ The authors believe that tools to quickly create, either ab-initio or by convers
 amounts of user effort and ultimately yield more accurate simulations. {\it pyg4ometry} is a relatively complete implementation of a geometry creation tool, whilst heavily 
 internally based on Geant4 and GDML can have utility for users of all PT codes. {\it pyg4ometry} can clearly be extended to other formats or applications. As for applications,
 examples include  the  generation triangular mesh structures for GPU accelerated photon tracking in liquid noble  dark matter detectors and geometries for event visualisation. 
+Although not implemented in the current version, a C++ output writer can be quickly implemented to generate geometry which can be compiled into a Geant4 application. 
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
