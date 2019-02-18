@@ -9,11 +9,9 @@ import time
 import cPickle
 import warnings
 import textwrap
-import uuid
 import itertools
 from datetime import datetime
 
-import numpy as np
 import antlr4
 import pygdml
 
