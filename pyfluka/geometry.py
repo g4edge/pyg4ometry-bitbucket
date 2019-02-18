@@ -981,10 +981,10 @@ class Region(object):
         n_zones = len(self.zones)
         tried = []
         # Build undirected graph, and add nodes corresponding to each zone.
-        g = nx.Graph()
-        g.add_nodes_from(range(n_zones))
+        graph = nx.Graph()
+        graph.add_nodes_from(range(n_zones))
         if n_zones == 1: # return here if there's only one zone.
-            return nx.connected_components(g)
+            return nx.connected_components(graph)
         # Build up a cache of booleans and extents for each zone.
         # format: {zone_index: (boolean, extent)}
         booleans_and_extents = self._get_zone_booleans_and_extents(True)
@@ -1002,7 +1002,7 @@ class Region(object):
 
             # Check if a path already exists.  Not sure how often this
             # arises but should at least occasionally save some time.
-            if nx.has_path(g, i, j):
+            if nx.has_path(graph, i, j):
                 continue
 
             # Finally: we must do the intersection op.
@@ -1010,8 +1010,8 @@ class Region(object):
                 print("Intersecting zone {} with {}".format(i, j))
             if get_overlap(booleans_and_extents[i][0],
                            booleans_and_extents[j][0]) is not None:
-                g.add_edge(i, j)
-        return nx.connected_components(g)
+                graph.add_edge(i, j)
+        return nx.connected_components(graph)
 
     def _get_zone_booleans_and_extents(self, optimise):
         """Return the meshes and extents of all regions of this model."""
