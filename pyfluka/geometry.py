@@ -1485,11 +1485,11 @@ def get_overlap(first, second):
     except pygdml.NullMeshError:
         return None
 
-def clip_world_volume_with_safety(world_volume, safety):
+def clip_world_volume_with_safety(world_volume, safety_addend):
     world_volume.setClip()
-    world_volume.currentVolume.pX += addend
-    world_volume.currentVolume.pY += addend
-    world_volume.currentVolume.pZ += addend
+    world_volume.currentVolume.pX += safety_addend
+    world_volume.currentVolume.pY += safety_addend
+    world_volume.currentVolume.pZ += safety_addend
 
 def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
     """Nice pyfluka interface for subtracting from bounding boxes
