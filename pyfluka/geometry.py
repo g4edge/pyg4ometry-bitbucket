@@ -41,7 +41,7 @@ GLOBAL        5000.0       0.0       0.0       0.0       1.0
 DEFAULTS                                                              PRECISIO
 BEAM         10000.0                                                  PROTON
 GEOBEGIN                                                              COMBNAME
-    0    0                   MC-CAD
+0        0                  PYFLUKA
 """)
 
 # logging.basicConfig(level=logging.INFO)
