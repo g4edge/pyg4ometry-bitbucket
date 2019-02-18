@@ -1527,7 +1527,7 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
                       -1 * world_solid.pZ, world_solid.pZ]
     box_parameters = [round(i, decimal_places) for i in
                       box_parameters]
-    world = RPP(world_name, box_parameters[:3], box_parameters[3:]
+    world = RPP(world_name, box_parameters[:3], box_parameters[3:])
     # We make the subtraction a bit smaller just to be sure we
     # don't subract from a placed solid within, so safety='trim'.
     for subtrahend in subtrahends:
