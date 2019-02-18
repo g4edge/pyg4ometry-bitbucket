@@ -477,20 +477,12 @@ class RCC(Body):
         self.face_centre = vector.Three(face_centre)
         self.direction = vector.Three(direction)
         self.radius = radius
-        self._offset = vector.Three(0, 0, 0) # what is this?
-
         initial = [0, 0, 1]
         final = -1 * self.direction
         self.rotation = trf.matrix_from(initial, final)
 
-    def _apply_crude_scale(self, scale):
-        self._offset = vector.Three(0, 0, 0)
-        self._scale = self.direction.length()
-
     def centre(self):
-        return (self._offset
-                + self.face_centre
-                + (0.5 * self.direction))
+        return self.face_centre +0.5 * self.direction
 
     def crude_extent(self):
         centre_max = max(abs(self.face_centre))
@@ -773,7 +765,7 @@ class ZCC(InfiniteCylinder):
         self._scale = extent.size.z * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset + vector.Three(self.x, self.y, 0.0))
+        return self._offset + vector.Three(self.x, self.y, 0.0)
 
     def crude_extent(self):
         return max([self.x, self.y, self.radius])
