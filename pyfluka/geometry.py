@@ -34,15 +34,14 @@ _IDENTITY_TYPE = collections.namedtuple("_IDENTITY_TYPE", [])
 _IDENTITY = _IDENTITY_TYPE()
 del _IDENTITY_TYPE
 
-_FLUKA_BOILERPLATE = (
-"""TITLE
+_FLUKA_BOILERPLATE = """TITLE
 {}
 GLOBAL        5000.0       0.0       0.0       0.0       1.0
 DEFAULTS                                                              PRECISIO
 BEAM         10000.0                                                  PROTON
 GEOBEGIN                                                              COMBNAME
 0        0                  PYFLUKA
-""")
+"""
 
 # logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -561,7 +560,7 @@ class XYP(InfiniteHalfSpace):
         if (self.z - 2 * LENGTH_SAFETY > extent.upper.z
                 and not np.isclose(self.z, extent.upper.z)):
             self._is_omittable = True
-            logger.info("Setting XYP \"{}\" omittable.".format(self.name))
+            logger.info("Setting XYP \"%s\" omittable.", self.name)
             return
         self._offset = vector.Three(extent.centre.x,
                                     extent.centre.y,
@@ -588,7 +587,7 @@ class XZP(InfiniteHalfSpace):
         if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
                 and not np.isclose(self.y, extent.upper.y)):
             self._is_omittable = True
-            logger.info("Setting XZP \"{}\" omittable.".format(self.name))
+            logger.info("Setting XZP \"%s\" omittable.", self.name)
             return
         self._offset = vector.Three(extent.centre.x, 0.0, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
@@ -613,7 +612,7 @@ class YZP(InfiniteHalfSpace):
         if (self.x - 2 * LENGTH_SAFETY > extent.upper.x
                 and not np.isclose(self.x, extent.upper.x)):
             self._is_omittable = True
-            logger.info("Setting YZP \"{}\" omittable.".format(self.name))
+            logger.info("Setting YZP \"%s\" omittable.", self.name)
             return
         self._offset = vector.Three(0.0, extent.centre.y, extent.centre.z)
         self._scale_x = extent.size.x * (SCALING_TOLERANCE + 1)
@@ -747,7 +746,7 @@ class YCC(InfiniteCylinder):
         self._scale = extent.size.y * (SCALING_TOLERANCE + 1)
 
     def centre(self):
-        return (self._offset + vector.Three(self.x, 0.0, self.z))
+        return self._offset + vector.Three(self.x, 0.0, self.z)
 
     def crude_extent(self):
         return max([self.x, self.z, self.radius])
@@ -1139,10 +1138,9 @@ class Zone(object):
         extent = 0.0
         for body in self.contains + self.excludes:
             body_crude_extent = body.crude_extent()
-            logger.debug("Extent for body {} = {}".format(
-                body, body_crude_extent))
+            logger.debug("Extent for body %s = %s", body, body_crude_extent)
             extent = max(extent, body_crude_extent)
-        logger.debug("Crude extent for zone {} = {}".format(self, extent))
+        logger.debug("Crude extent for zone %s = %s", self, extent)
         return extent
 
     def view(self, setclip=True, optimise=False):
@@ -1174,13 +1172,13 @@ class Zone(object):
         appropriate optimisations, if any.
 
         """
-        logger.debug("{}: optimise={}".format(self, optimise))
+        logger.debug("%s: optimise=%s", self, optimise)
         if optimise:
             return self._optimised_boolean()
         return self._crude_boolean()
 
     def _crude_boolean(self):
-        logger.debug("{}".format(self))
+        logger.debug("%s", self)
         scale = self.crude_extent() * 10.
         # Map the crude extents to the solids:
         self._map_extent_2_bodies(self.contains, scale)
@@ -1189,7 +1187,7 @@ class Zone(object):
         return self._accumulate(None) # Don't trim/extend.  Get the true mesh.
 
     def _optimised_boolean(self):
-        logger.debug("{}".format(self))
+        logger.debug("%s", self)
         out = self._crude_boolean()
         # Rescale the bodies and zones with the resulting mesh:
         self._map_extent_2_bodies(self.contains, out)
