@@ -23,7 +23,6 @@ import pyfluka.FlukaParserVisitor
 import pyfluka.FlukaParserListener
 import pyfluka.parser
 import pyfluka.materials
-import pyfluka.utils as utils
 
 
 class Model(object):
@@ -239,10 +238,10 @@ class Model(object):
         self._add_regions_to_world_volume(region_names, optimise, survey)
         # If we are subtracting from the world box
         if bounding_subtrahends:
-            utils.subtract_from_world_volume(bounding_subtrahends,
-                                             bb_addend)
+            pyfluka.geometry.subtract_from_world_volume(bounding_subtrahends,
+                                                        bb_addend)
         elif setclip:
-            utils.clip_wv_with_safety(self._world_volume, bb_addend)
+            pyfluka.geometry.clip_wv_with_safety(self._world_volume, bb_addend)
 
         # Do we want to construct it with the full geometry within or
         # should be leave some volumes out?

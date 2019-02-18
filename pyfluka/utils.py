@@ -1,73 +1,8 @@
 from __future__ import (absolute_import, print_function, division)
-import collections
-import warnings
 import textwrap
-
 
 import pygdml.transformation as trf
 import pyfluka.vector
-
-import pyfluka
-
-
-
-
-def clip_wv_with_safety(world_volume, safety):
-    world_volume.setClip()
-    world_volume.currentVolume.pX += addend
-    world_volume.currentVolume.pY += addend
-    world_volume.currentVolume.pZ += addend
-
-
-
-def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
-    """Nice pyfluka interface for subtracting from bounding boxes
-    in pygdml.  We create an RPP out of the clipped bounding box
-    and then subtract from it the subtrahends, which is defined in
-    the unclipped geometry's coordinate system.
-
-    This works by first getting the "true" centre of
-    the geometry, from the unclipped extent.  As the clipped
-    extent is always centred on zero, and the subtractee is always
-    centred on zero, this gives us the required
-    offset for the subtraction from the bounding RPP."""
-    # Get the "true" unclipped extent of the solids in the world volume
-    unclipped_extent = pyfluka.geometry.Extent.from_world_volume(
-        world_volume)
-    # The offset is -1 * the unclipped extent's centre.
-    unclipped_centre = unclipped_extent.centre
-    other_offset = -1 * unclipped_centre
-    clip_wv_with_safety(world_volume, bb_addend)
-    # Make an RPP out of the clipped bounding box.
-    world_name = world_volume.currentVolume.name
-    # solids magically start having material attributes at the top-level so
-    # we must pass the material correctly to the new subtraction solid.
-    world_material = world_volume.currentVolume.material
-    world_solid = world_volume.currentVolume
-
-    # Deal with the trailing floating points introduced somewhere
-    # in pygdml that cause the box to be marginally too big:
-    decimal_places = int((-1 * np.log10(pyfluka.geometry.LENGTH_SAFETY)))
-    box_parameters = [-1 * world_solid.pX, world_solid.pX,
-                      -1 * world_solid.pY, world_solid.pY,
-                      -1 * world_solid.pZ, world_solid.pZ]
-    box_parameters = [round(i, decimal_places) for i in box_parameters]
-    world = make_body("RPP", world_name, box_parameters)
-    # We make the subtraction a bit smaller just to be sure we
-    # don't subract from a placed solid within, so safety='trim'.
-    for subtrahend in subtrahends:
-        if isinstance(subtrahend,
-                      (pyfluka.geometry.InfiniteCylinder,
-                       pyfluka.geometry.InfiniteHalfSpace,
-                       pyfluka.geometry.InfiniteEllipticalCylinder)):
-            raise TypeError("Subtrahends must be finite!")
-
-        world = world.subtraction(subtrahend, safety="trim",
-                                  other_offset=other_offset)
-    world_volume.currentVolume = world.gdml_solid()
-    world_volume.currentVolume.material = world_material
-
-
 
 def get_bdsim_placement_string(output_name,
                                gdml_path,
