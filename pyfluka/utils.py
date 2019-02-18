@@ -1,5 +1,3 @@
-"""Useful functions and classes to ease the use of pyfluka with BDSIM."""
-
 from __future__ import (absolute_import, print_function, division)
 import collections
 import warnings
@@ -9,14 +7,76 @@ import textwrap
 import pygdml.transformation as trf
 import pyfluka.vector
 
-def get_placement_string(output_name,
-                         gdml_path,
-                         bdsim_point,
-                         fluka_point,
-                         fluka_bounding_box_origin,
-                         bdsim_rotation_axis,
-                         bdsim_rotation_angle,
-                         fluka_direction):
+import pyfluka
+
+
+
+
+def clip_wv_with_safety(world_volume, safety):
+    world_volume.setClip()
+    world_volume.currentVolume.pX += addend
+    world_volume.currentVolume.pY += addend
+    world_volume.currentVolume.pZ += addend
+
+
+
+def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
+    """Nice pyfluka interface for subtracting from bounding boxes
+    in pygdml.  We create an RPP out of the clipped bounding box
+    and then subtract from it the subtrahends, which is defined in
+    the unclipped geometry's coordinate system.
+
+    This works by first getting the "true" centre of
+    the geometry, from the unclipped extent.  As the clipped
+    extent is always centred on zero, and the subtractee is always
+    centred on zero, this gives us the required
+    offset for the subtraction from the bounding RPP."""
+    # Get the "true" unclipped extent of the solids in the world volume
+    unclipped_extent = pyfluka.geometry.Extent.from_world_volume(
+        world_volume)
+    # The offset is -1 * the unclipped extent's centre.
+    unclipped_centre = unclipped_extent.centre
+    other_offset = -1 * unclipped_centre
+    clip_wv_with_safety(world_volume, bb_addend)
+    # Make an RPP out of the clipped bounding box.
+    world_name = world_volume.currentVolume.name
+    # solids magically start having material attributes at the top-level so
+    # we must pass the material correctly to the new subtraction solid.
+    world_material = world_volume.currentVolume.material
+    world_solid = world_volume.currentVolume
+
+    # Deal with the trailing floating points introduced somewhere
+    # in pygdml that cause the box to be marginally too big:
+    decimal_places = int((-1 * np.log10(pyfluka.geometry.LENGTH_SAFETY)))
+    box_parameters = [-1 * world_solid.pX, world_solid.pX,
+                      -1 * world_solid.pY, world_solid.pY,
+                      -1 * world_solid.pZ, world_solid.pZ]
+    box_parameters = [round(i, decimal_places) for i in box_parameters]
+    world = make_body("RPP", world_name, box_parameters)
+    # We make the subtraction a bit smaller just to be sure we
+    # don't subract from a placed solid within, so safety='trim'.
+    for subtrahend in subtrahends:
+        if isinstance(subtrahend,
+                      (pyfluka.geometry.InfiniteCylinder,
+                       pyfluka.geometry.InfiniteHalfSpace,
+                       pyfluka.geometry.InfiniteEllipticalCylinder)):
+            raise TypeError("Subtrahends must be finite!")
+
+        world = world.subtraction(subtrahend, safety="trim",
+                                  other_offset=other_offset)
+    world_volume.currentVolume = world.gdml_solid()
+    world_volume.currentVolume.material = world_material
+
+
+
+def get_bdsim_placement_string(output_name,
+                               gdml_path,
+                               bdsim_point,
+                               fluka_point,
+                               fluka_bounding_box_origin,
+                               bdsim_rotation_axis,
+                               bdsim_rotation_angle,
+                               fluka_direction):
     """
     output_name -- the name of the output geometry placement.
     gdml_path -- the path of the GDML file.
@@ -112,123 +172,3 @@ def _build_placement_string(name, filepath, offset, axis, angle):
     out = '\n'.join(textwrap.wrap(out))
     return out.format(name=name, filepath=filepath,
                       offset=offset, axis=axis, angle=angle)
-
-_G4_EXCEPTION_START = (
-    "-------- WWWW ------- G4Exception-START -------- WWWW -------\n")
-_G4_EXCEPTION_END = (
-    "-------- WWWW -------- G4Exception-END --------- WWWW -------\n")
-
-class G4ExceptionMessage(object):
-    """Given an exception message (list of lines) from G4Exception-START to
-    G4-Exception-END."""
-
-
-    def __init__(self, msg):
-        self.exception = ""
-        self.issuer = ""
-        self.message = ""
-
-        self._set_exception(msg)
-        self._set_issuer(msg)
-        self._set_message(msg)
-
-    def _set_exception(self, msg):
-        for line in msg:
-            if line.startswith("*** G4Exception"):
-                self.exception = line.split(": ")[1].strip()
-
-        G4ExceptionMessage._only_one(msg, "*** G4Exception")
-
-    def _set_issuer(self, msg):
-        for line in msg:
-            if "issued by :" in line:
-                self.issuer = line.split(": ")[1].strip()
-        G4ExceptionMessage._only_one(msg, "issued by :")
-
-    def _set_message(self, msg):
-        start_index = next((i
-                            for i, line in enumerate(msg)
-                            if "issued by :" in line)) + 1
-        message = []
-        for line in msg[start_index:]:
-            if line == _G4_EXCEPTION_END:
-                break
-            message.append(line)
-        else:
-            raise ValueError("No G4Exception-END line found!")
-        self.message = message
-
-    @staticmethod
-    def _only_one(msg, substring):
-        n = len([1 for line in msg if substring in line])
-        if n != 1:
-            raise ValueError("Too many occurences of {}".format(substring))
-
-
-def process_geometry_test(file_in, file_out=None):
-    # Skip until we get to the geometry test
-    with open(file_in) as f:
-        for i, line in enumerate(f):
-            # If test was called from the vis.mac
-            if line.startswith("/geometry/test/run"):
-                start_overlaps_line_no = i
-            # If test was called from the opengl visualiser prompt
-            elif line.startswith("Running geometry overlaps"):
-                start_overlaps_line_no = i
-            elif line.startswith("Geometry overlaps check completed"):
-                end_overlaps_line_no = i
-
-    # Read in the geometry test exceptions and append
-    # G4ExceptionMessage instances to all_exceptions
-    with open(file_in) as f:
-        all_exceptions = []
-        this_exception = []
-        in_exception = False
-        for line in f.readlines()[start_overlaps_line_no:end_overlaps_line_no]:
-            # Look for an exception message
-            if line != _G4_EXCEPTION_START and in_exception is False:
-                continue
-            in_exception = True
-            this_exception.append(line)
-            if line == _G4_EXCEPTION_END and in_exception is True:
-                all_exceptions.append(G4ExceptionMessage(this_exception))
-                in_exception = False
-                this_exception = []
-
-    # Split into a dictionary of lists of instances based on issuer
-    issuers = _splitter(all_exceptions, "issuer")
-
-    return [_process_overlap_g4message(message)
-            for message in issuers["G4PVPlacement::CheckOverlaps()"]]
-
-
-def _splitter(iterable, attribute):
-    out = dict()
-    for item in iterable:
-        value = getattr(item, attribute)
-        if value not in out:
-            out[value] = []
-        out[value].append(item)
-
-    return out
-
-def _process_overlap_g4message(msg):
-    if msg.issuer != "G4PVPlacement::CheckOverlaps()":
-        raise ValueError("This exception message is not for an overlap!")
-    first_vol = msg.message[1].split()[-1]
-    amount = float(msg.message[3].split()[-2])
-    unit = msg.message[3].split()[-1]
-
-    if "mother volume" in msg.message[0]:
-        second_vol = "mother"
-        point = list(eval(msg.message[3].split()[4][:-1]))
-        with_mother = True
-    else:
-        second_vol = msg.message[2].split()[1]
-        point = list(eval(msg.message[3].split()[2][:-1]))
-        with_mother = False
-
-    OverlapInfo = collections.namedtuple(
-        "OverlapInfo", ["first", "second", "point",
-                        "amount", "unit", "with_mother"])
-    return OverlapInfo(first_vol, second_vol, point, amount, unit, with_mother)

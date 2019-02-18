@@ -17,6 +17,7 @@ from .geometry import (PLA, RCC, RPP, SPH, TRC, XCC, XEC,
                        Region, Zone)
 from . import materials
 from . import examples
+from . import utils
 
 __all__ = ['Model',
            "PLA", "RCC", "RPP", "SPH", "TRC", "XCC", "XEC",

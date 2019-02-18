@@ -23,6 +23,8 @@ import pyfluka.FlukaParserVisitor
 import pyfluka.FlukaParserListener
 import pyfluka.parser
 import pyfluka.materials
+import pyfluka.utils as utils
+
 
 class Model(object):
     """Class for viewing Fluka geometry and converting to GDML.
@@ -237,10 +239,10 @@ class Model(object):
         self._add_regions_to_world_volume(region_names, optimise, survey)
         # If we are subtracting from the world box
         if bounding_subtrahends:
-            self._subtract_from_world_volume(bounding_subtrahends,
-                                             bb_addend=bb_addend)
+            utils.subtract_from_world_volume(bounding_subtrahends,
+                                             bb_addend)
         elif setclip:
-            self._clip_world_volume(bb_addend)
+            utils.clip_wv_with_safety(self._world_volume, bb_addend)
 
         # Do we want to construct it with the full geometry within or
         # should be leave some volumes out?
@@ -274,59 +276,6 @@ class Model(object):
             except TypeError:
                 msg = ("unusable argument for just_bounding_box!")
                 raise TypeError(msg)
-
-    def _subtract_from_world_volume(self, subtrahends, bb_addend=0.0):
-        """Nice pyfluka interface for subtracting from bounding boxes
-        in pygdml.  We create an RPP out of the clipped bounding box
-        and then subtract from it the subtrahends, which is defined in
-        the unclipped geometry's coordinate system.
-
-        This works by first getting the "true" centre of
-        the geometry, from the unclipped extent.  As the clipped
-        extent is always centred on zero, and the subtractee is always
-        centred on zero, this gives us the required
-        offset for the subtraction from the bounding RPP."""
-        # Get the "true" unclipped extent of the solids in the world volume
-        unclipped_extent = pyfluka.geometry.Extent.from_world_volume(
-            self._world_volume)
-        # The offset is -1 * the unclipped extent's centre.
-        unclipped_centre = unclipped_extent.centre
-        other_offset = -1 * unclipped_centre
-        self._clip_world_volume(bb_addend)
-        # Make an RPP out of the clipped bounding box.
-        world_name = self._world_volume.currentVolume.name
-        # solids magically start having material attributes at the top-level so
-        # we must pass the material correctly to the new subtraction solid.
-        world_material = self._world_volume.currentVolume.material
-        world_solid = self._world_volume.currentVolume
-
-        # Deal with the trailing floating points introduced somewhere
-        # in pygdml that cause the box to be marginally too big:
-        decimal_places = int((-1 * np.log10(pyfluka.geometry.LENGTH_SAFETY)))
-        box_parameters = [-1 * world_solid.pX, world_solid.pX,
-                          -1 * world_solid.pY, world_solid.pY,
-                          -1 * world_solid.pZ, world_solid.pZ]
-        box_parameters = [round(i, decimal_places) for i in box_parameters]
-        world = make_body("RPP", world_name, box_parameters)
-        # We make the subtraction a bit smaller just to be sure we
-        # don't subract from a placed solid within, so safety='trim'.
-        for subtrahend in subtrahends:
-            if isinstance(subtrahend,
-                          (pyfluka.geometry.InfiniteCylinder,
-                           pyfluka.geometry.InfiniteHalfSpace,
-                           pyfluka.geometry.InfiniteEllipticalCylinder)):
-                raise TypeError("Subtrahends must be finite!")
-
-            world = world.subtraction(subtrahend, safety="trim",
-                                      other_offset=other_offset)
-        self._world_volume.currentVolume = world.gdml_solid()
-        self._world_volume.currentVolume.material = world_material
-
-    def _clip_world_volume(self, addend):
-        self._world_volume.setClip()
-        self._world_volume.currentVolume.pX += addend
-        self._world_volume.currentVolume.pY += addend
-        self._world_volume.currentVolume.pZ += addend
 
     def _add_regions_to_world_volume(self, regions, optimise, survey=None):
         """Add the region or regions in region_names to the current
