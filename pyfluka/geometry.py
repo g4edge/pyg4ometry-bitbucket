@@ -1482,6 +1482,7 @@ class Extent(object):
 
     def __sub__(self, other):
         return Extent(self.lower - other.lower, self.upper - other.upper)
+
 def are_extents_overlapping(first, second):
     """Check if two Extent instances are overlapping."""
     return not (first.upper.x < second.lower.x
