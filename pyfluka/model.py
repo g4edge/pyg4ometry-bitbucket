@@ -86,8 +86,8 @@ class Model(object):
                     fluka_material = "G4_Galactic"
                 region.material = fluka_material
 
-        self._world_volume = pyfluka.geometry.world_volume(self._model_name,
-                                                           "G4_AIR")
+        self._world_volume = pyfluka.geometry.make_world_volume(self._model_name,
+                                                                "G4_AIR")
 
     def _regions_from_tree(self, tree):
         """Get the region definitions from the tree.  Called in the

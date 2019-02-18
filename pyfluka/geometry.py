@@ -97,7 +97,7 @@ class Body(object):
             " ".join(str(value / 10) for value in self.parameters))
 
     def view(self, setclip=True):
-        wv = world_volume("world", "G4_AIR")
+        wv = make_world_volume("world", "G4_AIR")
         self.add_to_volume(wv)
         if setclip is True:
             wv.setClip()
@@ -174,7 +174,7 @@ class Body(object):
 
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
-        wv = world_volume("world", "G4_AIR")
+        wv = make_world_volume("world", "G4_AIR")
         self.add_to_volume(wv)
         return Extent.from_world_volume(wv)
 
@@ -901,7 +901,7 @@ class Region(object):
         the view_debug method to see the problematic boolean operation.
 
         """
-        wv = world_volume("world", "G4_AIR")
+        wv = make_world_volume("world", "G4_AIR")
         solid = self.evaluate(zones, optimise=optimise)
         solid.add_to_volume(wv)
         if setclip is True:
@@ -1153,7 +1153,7 @@ class Zone(object):
         self.evaluate(optimise=optimise).view(setclip=setclip)
 
     def view_compare_optimisation(self, setclip=True):
-        wv = world_volume("world", "G4_AIR")
+        wv = make_world_volume("world", "G4_AIR")
         optimised = self.evaluate(optimise=True)
         unoptimised = self.evaluate(optimise=False)
         optimised.add_to_volume(wv)
@@ -1351,7 +1351,7 @@ class Boolean(Body):
         return self._centre
 
     def view_debug(self, first=None, second=None):
-        wv = world_volume("world", "G4_AIR")
+        wv = make_world_volume("world", "G4_AIR")
         self.add_to_volume(wv)
         try:
             wv.pycsgmesh()
@@ -1542,7 +1542,7 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
     world_volume.currentVolume = world.gdml_solid()
     world_volume.currentVolume.material = world_material
 
-def world_volume(name, material):
+def make_world_volume(name, material):
     """This method returns a pygdml world volume with a correctly
     mangled name and a material"""
     unique_id = uuid.uuid4()
