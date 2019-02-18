@@ -648,8 +648,8 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         # Try and construct the body, if it's not implemented then
         # warn and continue.
         try:
-            self.bodies[body_name] = make_body(body_type, body_name,
-                                               body_parameters)
+            self.bodies[body_name] = _make_body(body_type, body_name,
+                                                body_parameters)
         except ValueError:
             warnings.simplefilter('once', UserWarning)
             msg = ("\nBody type \"{}\" not supported.  All bodies"
@@ -837,7 +837,7 @@ def _get_world_volume_dimensions(world_volume):
     # Double because pX, pY, pZ are half-lengths for a pygdml.solid.Box.
     return pyfluka.vector.Three(2 * box.pX, 2 * box.pY, 2 * box.pZ)
 
-def make_body(body_type, name, parameters):
+def _make_body(body_type, name, parameters):
     """Given a body type, "REC", "XYP", etc, and a list of the parameters
     in the correct order as written in an input file, return the
     correct Body instance.
