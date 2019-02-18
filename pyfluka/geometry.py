@@ -1323,7 +1323,7 @@ class Zone(object):
             if isinstance(part, Body):
                 bodies.append("+{}".format(part.name))
             if isinstance(part, Zone):
-                 zones.append("+({}) ".format(part.to_fluka_string()))
+                zones.append("+({}) ".format(part.to_fluka_string()))
         for part in self.excludes:
             if isinstance(part, Body):
                 bodies.append("-{}".format(part.name))
@@ -1370,7 +1370,7 @@ class Boolean(Body):
         if (first is None and second is None
                 or first is True and second is True):
             pygdml.Volume([0, 0, 0], [0, 0, 0], solid1, solid1.name,
-                wv, 1, False, "G4_AIR")
+                          wv, 1, False, "G4_AIR")
             pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
                           wv, 1, False, "G4_AIR")
         elif first is True and second is not True:
