@@ -97,15 +97,11 @@ class Body(object):
             " ".join(str(value / 10) for value in self.parameters))
 
     def view(self, setclip=True):
-        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
-
-        self.add_to_volume(world_volume)
+        wv = world_volume("world", "G4_AIR")
+        self.add_to_volume(wv)
         if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
+            wv.setClip()
+        mesh = wv.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -178,12 +174,9 @@ class Body(object):
 
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
-        world_solid = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_solid,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
-        self.add_to_volume(world_volume)
-        return Extent.from_world_volume(world_volume)
+        wv = world_volume("world", "G4_AIR")
+        self.add_to_volume(wv)
+        return Extent.from_world_volume(wv)
 
     def _get_overlap(self, other):
         """
@@ -908,16 +901,12 @@ class Region(object):
         the view_debug method to see the problematic boolean operation.
 
         """
-        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume(
-            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
-            None, 1, False, "G4_NITROUS_OXIDE"
-        )
+        wv = world_volume("world", "G4_AIR")
         solid = self.evaluate(zones, optimise=optimise)
-        solid.add_to_volume(world_volume)
+        solid.add_to_volume(wv)
         if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
+            wv.setClip()
+        mesh = wv.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -1164,20 +1153,16 @@ class Zone(object):
         self.evaluate(optimise=optimise).view(setclip=setclip)
 
     def view_compare_optimisation(self, setclip=True):
-        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume(
-            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
-            None, 1, False, "G4_NITROUS_OXIDE"
-        )
+        wv = world_volume("world", "G4_AIR")
         optimised = self.evaluate(optimise=True)
         unoptimised = self.evaluate(optimise=False)
-        optimised.add_to_volume(world_volume)
-        unoptimised.add_to_volume(world_volume)
+        optimised.add_to_volume(wv)
+        unoptimised.add_to_volume(wv)
 
         if setclip is True:
-            world_volume.setClip()
+            wv.setClip()
 
-        mesh = world_volume.pycsgmesh()
+        mesh = wv.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
@@ -1366,13 +1351,10 @@ class Boolean(Body):
         return self._centre
 
     def view_debug(self, first=None, second=None):
-        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
-                                     "world-volume", None,
-                                     1, False, "G4_NITROUS_OXIDE")
-        self.add_to_volume(world_volume)
+        wv = world_volume("world", "G4_AIR")
+        self.add_to_volume(wv)
         try:
-            world_volume.pycsgmesh()
+            wv.pycsgmesh()
             print("Mesh was successful.")
         except pygdml.solid.NullMeshError as error:
             print(error.message)
@@ -1384,37 +1366,25 @@ class Boolean(Body):
         solid2 = error.solid.obj2
         tra2 = error.solid.tra2
 
-        world_box = pygdml.solid.Box("world", 10000, 10000, 10000)
-        world_volume = pygdml.Volume(
-            [0, 0, 0], [0, 0, 0], world_box, "world-volume",
-            None, 1, False, "G4_NITROUS_OXIDE"
-        )
+        wv = wv("world", "G4_AIR")
         if (first is None and second is None
                 or first is True and second is True):
-            pygdml.Volume(
-                [0, 0, 0], [0, 0, 0], solid1, solid1.name,
-                world_volume, 1, False, "G4_NITROUS_OXIDE"
-            )
-            pygdml.Volume(
-                trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
-                world_volume, 1, False, "G4_NITROUS_OXIDE"
-            )
+            pygdml.Volume([0, 0, 0], [0, 0, 0], solid1, solid1.name,
+                wv, 1, False, "G4_AIR")
+            pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
+                          wv, 1, False, "G4_AIR")
         elif first is True and second is not True:
-            pygdml.Volume(
-                [0, 0, 0], [0, 0, 0], solid1, solid1.name,
-                world_volume, 1, False, "G4_NITROUS_OXIDE"
-            )
+            pygdml.Volume([0, 0, 0], [0, 0, 0], solid1, solid1.name,
+                          wv, 1, False, "G4_AIR")
         elif second is True and first is not True:
-            pygdml.Volume(
-                trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
-                world_volume, 1, False, "G4_NITROUS_OXIDE"
-            )
+            pygdml.Volume(trf.reverse(tra2[0]), tra2[1], solid2, solid2.name,
+                          wv, 1, False, "G4_AIR")
         elif first is False and second is False:
             raise RuntimeError("Must select at least one"
                                " of the two solids to view")
         if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
+            wv.setClip()
+        mesh = wv.pycsgmesh()
         viewer = pygdml.VtkViewer()
         viewer.addSource(mesh)
         viewer.view()
