@@ -360,23 +360,17 @@ class RPP(Body):
         # Tests to check whether this RPP completely envelops the
         # extent.  If it does, then we can safely omit it.
         is_gt_in_x = (self.upper.x + 2 * LENGTH_SAFETY > extent.upper.x
-                      and not np.isclose(self.upper.x,
-                                         extent.upper.x))
+                      and not np.isclose(self.upper.x, extent.upper.x))
         is_lt_in_x = (self.lower.x - 2 * LENGTH_SAFETY < extent.lower.x
-                      and not np.isclose(self.lower.x,
-                                         extent.lower.x))
+                      and not np.isclose(self.lower.x, extent.lower.x))
         is_gt_in_y = (self.upper.y + 2 * LENGTH_SAFETY > extent.upper.y
-                      and not np.isclose(self.upper.y,
-                                         extent.upper.y))
+                      and not np.isclose(self.upper.y, extent.upper.y))
         is_lt_in_y = (self.lower.y - 2 * LENGTH_SAFETY < extent.lower.y
-                      and not np.isclose(self.lower.y,
-                                         extent.lower.y))
+                      and not np.isclose(self.lower.y, extent.lower.y))
         is_gt_in_z = (self.upper.z + 2 * LENGTH_SAFETY > extent.upper.z
-                      and not np.isclose(self.upper.z,
-                                         extent.upper.z))
+                      and not np.isclose(self.upper.z, extent.upper.z))
         is_lt_in_z = (self.lower.z - 2 * LENGTH_SAFETY < extent.lower.z
-                      and not np.isclose(self.lower.z,
-                                         extent.lower.z))
+                      and not np.isclose(self.lower.z, extent.lower.z))
         return (is_gt_in_x and is_lt_in_x
                 and is_gt_in_y and is_lt_in_y
                 and is_gt_in_z and is_lt_in_z)
@@ -1315,6 +1309,8 @@ class Zone(object):
             if isinstance(part, Zone):
                 zones.append("-({})".format(part.to_fluka_string()))
         return " ".join(bodies + zones)
+
+
 class Boolean(Body):
     """A Body is a solid with a centre, a rotation and a name.  This
     is used to represent combinations of bodies, e.g. as a result of
