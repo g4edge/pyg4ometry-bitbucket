@@ -130,10 +130,8 @@ class Body(object):
         # because so are boolean rotations.  However, volume rotations
         # are passive, so reverse the rotation:
         rotation_angles = trf.reverse(rotation_angles)
-        pygdml.volume.Volume(
-            rotation_angles, self.centre(), self.gdml_solid(),
-            self.name, volume, 1, False, "G4_Galactic"
-        )
+        pygdml.volume.Volume(rotation_angles, self.centre(), self.gdml_solid(),
+                             self.name, volume, 1, False, "G4_Galactic")
 
     def _resize(self, scale):
         """Return this instance bounded or extented according to the
@@ -224,10 +222,8 @@ class Body(object):
         relative_translation = self._get_relative_translation(other) + offset
         relative_transformation = [relative_angles, relative_translation]
         out_name = self._unique_boolean_name(other)
-        out_solid = op(
-            out_name, self.gdml_solid(safety1),
-            other.gdml_solid(safety2), relative_transformation
-        )
+        out_solid = op(out_name, self.gdml_solid(safety1),
+                       other.gdml_solid(safety2), relative_transformation)
         out_centre = self.centre()
         out_rotation = self.rotation
         return Boolean(out_name, out_solid, out_centre, out_rotation)
