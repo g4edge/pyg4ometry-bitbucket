@@ -487,7 +487,8 @@ use, period=component_line;
 
 option, physicsList="g4FTFP_BERT",
                     preprocessGDML=0,
-                    checkOverlaps=1;""")
+                    checkOverlaps=1;
+""")
             print("Written GMAD file: {}".format(gmad_path))
 
     def test_regions(self, pickle=None, regions=None, optimise=True):
