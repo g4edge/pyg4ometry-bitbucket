@@ -1507,8 +1507,7 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
     centred on zero, this gives us the required
     offset for the subtraction from the bounding RPP."""
     # Get the "true" unclipped extent of the solids in the world volume
-    unclipped_extent = pyfluka.geometry.Extent.from_world_volume(
-        world_volume)
+    unclipped_extent = Extent.from_world_volume(world_volume)
     # The offset is -1 * the unclipped extent's centre.
     unclipped_centre = unclipped_extent.centre
     other_offset = -1 * unclipped_centre
@@ -1522,19 +1521,20 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
 
     # Deal with the trailing floating points introduced somewhere
     # in pygdml that cause the box to be marginally too big:
-    decimal_places = int((-1 * np.log10(pyfluka.geometry.LENGTH_SAFETY)))
+    decimal_places = int((-1 * np.log10(LENGTH_SAFETY)))
     box_parameters = [-1 * world_solid.pX, world_solid.pX,
                       -1 * world_solid.pY, world_solid.pY,
                       -1 * world_solid.pZ, world_solid.pZ]
-    box_parameters = [round(i, decimal_places) for i in box_parameters]
-    world = make_body("RPP", world_name, box_parameters)
+    box_parameters = [round(i, decimal_places) for i in
+                      box_parameters]
+    world = RPP(world_name, box_parameters[:3], box_parameters[3:]
     # We make the subtraction a bit smaller just to be sure we
     # don't subract from a placed solid within, so safety='trim'.
     for subtrahend in subtrahends:
         if isinstance(subtrahend,
-                      (pyfluka.geometry.InfiniteCylinder,
-                       pyfluka.geometry.InfiniteHalfSpace,
-                       pyfluka.geometry.InfiniteEllipticalCylinder)):
+                      (InfiniteCylinder,
+                       InfiniteHalfSpace,
+                       InfiniteEllipticalCylinder)):
             raise TypeError("Subtrahends must be finite!")
 
         world = world.subtraction(subtrahend, safety="trim",
