@@ -1434,26 +1434,6 @@ class Boolean(Body):
         return [primitive for primitive in primitives
                 if primitive is not None]
 
-class Parameters(object):
-    # Kind of rubbishy class but sufficient for what it's used for (a
-    # very rudimentary mutable record-type class)
-    def __init__(self, parameters):
-        self._fields = []
-        for parameter, value in parameters:
-            setattr(self, parameter, value)
-            self._fields.append(parameter)
-
-    def __repr__(self):
-        out_string = ', '.join(['{}={}'.format(parameter,
-                                               getattr(self, parameter))
-                                for parameter in self._fields])
-        return "<Parameters: ({})>".format(out_string)
-
-    def __iter__(self):
-        for field_name in self._fields:
-            yield getattr(self, field_name)
-
-
 class Extent(object):
     def __init__(self, lower, upper):
          # Decimal places for rounding
