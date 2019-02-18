@@ -221,7 +221,7 @@ class Body(object):
         relative_angles = self._get_relative_rotation(other)
         relative_translation = self._get_relative_translation(other) + offset
         relative_transformation = [relative_angles, relative_translation]
-        out_name = self._unique_boolean_name(other)
+        out_name = self._unique_boolean_name()
         out_solid = op(out_name, self.gdml_solid(safety1),
                        other.gdml_solid(safety2), relative_transformation)
         out_centre = self.centre()
@@ -257,7 +257,7 @@ class Body(object):
         # rotation.
         return trf.matrix2tbxyz(self._get_relative_rot_matrix(other))
 
-    def _unique_boolean_name(self, other):
+    def _unique_boolean_name(self):
         """wrapper for uuid.  Solid names must begin with a letter in
         Geant4, so we simply prepend with an 'a'."""
         return "a" + str(uuid.uuid4())
@@ -586,7 +586,7 @@ class XZP(InfiniteHalfSpace):
 
     def _apply_extent(self, extent):
         if (self.y - 2 * LENGTH_SAFETY > extent.upper.y
-               and not np.isclose(self.y, extent.upper.y)):
+                and not np.isclose(self.y, extent.upper.y)):
             self._is_omittable = True
             logger.info("Setting XZP \"{}\" omittable.".format(self.name))
             return
@@ -1177,8 +1177,7 @@ class Zone(object):
         logger.debug("{}: optimise={}".format(self, optimise))
         if optimise:
             return self._optimised_boolean()
-        else:
-            return self._crude_boolean()
+        return self._crude_boolean()
 
     def _crude_boolean(self):
         logger.debug("{}".format(self))
