@@ -1571,3 +1571,11 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
                                   other_offset=other_offset)
     world_volume.currentVolume = world.gdml_solid()
     world_volume.currentVolume.material = world_material
+
+def world_volume(name, material):
+    """This method returns a pygdml world volume with a correctly
+    mangled name and a material"""
+    world_box = pygdml.solid.Box("world", 1, 1, 1)
+    name = "{}_world_volume_{}".format(name, uuid.uuid4())
+    return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
+                         name, None, 1, False, material)
