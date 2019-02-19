@@ -9,7 +9,7 @@
 %% http://www.elsevier.com/wps/find/authorsview.authors/elsarticle.
 %%
 %%
-\documentclass[preprint,12pt]{elsarticle}
+%% \documentclass[preprint,12pt]{elsarticle}
 
 %% Use the option review to obtain double line spacing
 %% \documentclass[preprint,review,12pt]{elsarticle}
@@ -19,9 +19,9 @@
 %% \documentclass[final,1p,times]{elsarticle}
 %% \documentclass[final,1p,times,twocolumn]{elsarticle}
 %% \documentclass[final,3p,times]{elsarticle}
-%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%\documentclass[final,3p,times,twocolumn]{elsarticle}
 %% \documentclass[final,5p,times]{elsarticle}
-%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+\documentclass[final,5p,times,twocolumn]{elsarticle}
 
 %% if you use PostScript figures in your article
 %% use the graphics package for simple commands
@@ -33,6 +33,7 @@
 
 %% The amssymb package provides various useful mathematical symbols
 \usepackage{amssymb}
+\usepackage{fancyvrb}
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -107,7 +108,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{{\em pyg4ometry}, a python library for the creation of Monte Carlo particle transport geometries}
+\title{pyg4ometry: a python library for the creation of Monte Carlo particle transport geometries}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{<author name>}
@@ -280,6 +281,53 @@ the potential overlaps. This is dependent on the accuracy of the mesh generated 
 Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the PT problem, vary 
 the parameters of the geometry and visualise the geometry. Finally when the desired result without geometry overlaps is finalised a GDML file can be output
 from the internal memory representation. 
+
+{\small
+\begin{verbatim}
+import pyg4ometry.gdml as gd
+import pyg4ometry.geant4 as g4
+import pyg4ometry.visualisation as vi
+
+# create empty data storage structure
+reg = g4.Registry()
+
+# expressions 
+wx = gd.Constant("wx","100",reg)
+wy = gd.Constant("wy","100",reg)
+wz = gd.Constant("wz","100",reg)
+
+bx = gd.Constant("wx","10",reg)
+by = gd.Constant("wy","10",reg)
+bz = gd.Constant("wz","10",reg)
+
+# materials
+bm = g4.Material("G4_Galactic") 
+wm = g4.Material("G4_Iron") 
+
+# solids
+wb = g4.solid.Box("wb",wx,wy,wz,reg)
+b  = g4.solid.Box("b",bx,by,bz)
+
+# structure 
+wl = g4.LogicalVolume(wb, wm, "wl", reg)
+bl = g4.LogicalVolume(b, bm, "b", reg)
+bp1 = g4.PhysicalVolume([0,0,0],[0,0,0], 
+                        bl, "b_pv1", wl) 
+bp2 = g4.PhysicalVolume([0,0,0],[-2*bx,0,0], 
+                        bl, "b_pv2", wl)  
+bp3 = g4.PhysicalVolume([0,0,0],[2*bx,0,0], 
+                        bl, "b_pv3", wl) 
+                        
+# gdml output
+w = gd.Writer()
+w.write(reg,"output.gdml")
+
+# visualisation 
+v = vi.VtkViewer()
+v.addLogicalVolume(wl)
+v.view()
+\end{verbatim}
+}
 
 \section{CAD to Geant4 conversion }
 STEP and IGES files can be loaded into pyg4ometry, via an interface based on FreeCAD. FreeCAD is an open source CAD/CAM program, which in turn 
