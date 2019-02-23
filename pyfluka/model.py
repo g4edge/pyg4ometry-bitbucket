@@ -725,7 +725,9 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         # Build a zone from the list of bodies or single body:
         zone = [pyfluka.geometry.Zone(region_defn)]
         region_name = ctx.RegionName().getText()
-        self.regions[region_name] = pyfluka.geometry.Region(region_name, zone)
+        # temporarily G4_Galactic
+        self.regions[region_name] = pyfluka.geometry.Region(region_name, zone,
+                                                            "G4_Galactic")
 
     def visitComplexRegion(self, ctx):
         # Complex in the sense that it consists of the union of
@@ -736,7 +738,7 @@ class FlukaRegionVisitor(pyfluka.FlukaParserVisitor.FlukaParserVisitor):
         # Construct zones out of these:
         zones = [pyfluka.geometry.Zone(defn) for defn in region_defn]
         region_name = ctx.RegionName().getText()
-        region = pyfluka.geometry.Region(region_name, zones)
+        region = pyfluka.geometry.Region(region_name, zones, "G4_Galactic")
         self.regions[region_name] = region
 
     def visitUnaryAndBoolean(self, ctx):

@@ -872,9 +872,11 @@ class Region(object):
     placement and rotation in the world volume, and a material.
 
     """
-    def __init__(self, name, zones, material="G4_Galactic"):
+    def __init__(self, name, zones, material):
         self.name = name
         self.material = material
+        if isinstance(zones, Zone):
+            raise TypeError("zones must be an iterable of Zone instances.")
         self.zones = zones
 
     def view(self, zones=None, setclip=True, optimise=False):
