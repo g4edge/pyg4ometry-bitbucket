@@ -379,6 +379,7 @@ class RPP(Body):
     def _apply_extent(self, extent):
         self._is_omittable = self._check_omittable(extent)
         if self._is_omittable:
+            logger.info("Setting RPP \"%s\" omittable.", self.name)
             return
 
         # Then we can't omit it, but maybe we can shrink it:
