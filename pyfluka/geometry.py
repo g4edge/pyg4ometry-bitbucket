@@ -1504,11 +1504,17 @@ def subtract_from_world_volume(world_volume, subtrahends, bb_addend=0.0):
     # Deal with the trailing floating points introduced somewhere
     # in pygdml that cause the box to be marginally too big:
     decimal_places = int((-1 * np.log10(LENGTH_SAFETY)))
-    box_parameters = [-1 * world_solid.pX, world_solid.pX,
-                      -1 * world_solid.pY, world_solid.pY,
-                      -1 * world_solid.pZ, world_solid.pZ]
+    box_parameters = [-1 * world_solid.pX,
+                      -1 * world_solid.pY,
+                      -1 * world_solid.pZ,
+                      world_solid.pX,
+                      world_solid.pY,
+                      world_solid.pZ]
+
+
     box_parameters = [round(i, decimal_places) for i in
                       box_parameters]
+
     world = RPP(world_name, box_parameters[:3], box_parameters[3:])
     # We make the subtraction a bit smaller just to be sure we
     # don't subract from a placed solid within, so safety='trim'.
