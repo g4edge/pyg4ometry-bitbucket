@@ -26,3 +26,11 @@ build
 dist
 *.tokens
 pyg4ometry.egg-info
+gdmlLoader
+vtk_cpp
+vulkan_cpp
+opencascade
+*.aux
+pyg4ometry.pdf
+*.spl
+*.synctex.gz
