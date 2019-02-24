@@ -17,6 +17,14 @@ def null_zone(RPP):
 def wv():
     return geo.make_world_volume("worldname", "material")
 
+@pytest.fixture
+def region():
+    box1 = geo.RPP("rpp", [0, 0, 0], [1, 1, 1])
+    box2 = geo.RPP("rpp2", [0, 0, 0] , [1, 1, 0.5])
+    # box1 - box2
+    zone = geo.Zone([("+", box1), ("-", box2)])
+    return geo.Region("region", [zone], "material")
+
 def test_subtract_from_world_volume(wv):
     # cube with sides of length 1 and centeres at the origin.
     cube = geo.RPP("cube", [-0.5, -0.5, -0.5], [0.5, 0.5, 0.5])
