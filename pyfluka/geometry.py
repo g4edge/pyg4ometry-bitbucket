@@ -2,6 +2,10 @@
 
 Note:  All units are in millimetres, c.f. centimetres in Fluka.
 
+Note:  Zone numbers count from 1, not zero, so as to match FLUKA.
+
+Note:  It's up to you to ensure your input consists of no null zones.
+
 """
 
 from __future__ import (absolute_import, print_function, division)
@@ -907,9 +911,11 @@ class Region(object):
     def evaluate(self, zones=None, optimise=False):
         logger.info("Evaluating Region \"%s\", optimisation=%s, zones=%s",
                     self.name, optimise, zones)
-        zones = self._select_zones(zones)
+        numbered_zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
-        booleans = [zone.evaluate(optimise=optimise) for zone in zones]
+        booleans = []
+        for _, zone in numbered_zones:
+            booleans.append(zone.evaluate(optimise=optimise))
 
         def accumulate_unions(first, second):
             # only add automatic length safety if the whole geometry
@@ -925,20 +931,19 @@ class Region(object):
         return boolean, extent
 
     def _select_zones(self, zones):
-        if zones is None:
-            return self.zones
-        try:
-            return [self.zones[key] for key in zones]
-        except TypeError:
-            pass
-        try:
-            # if no __getitem__, or __iter__, then try using it as a
-            # key directly:
-            return [self.zones[zones]]
-        except TypeError:
-            msg = ("Unknown selection "
-                   "provided for zones {}").format(type(zones))
-            raise TypeError(msg)
+        # Zone numbers start from 1, not 0.  Do this simply to match
+        # FLUKA which seems to count zones in the same fashion.
+        numbered_zones = list(enumerate(self.zones, 1))
+        selection = []
+        if zones is None: # No zone selection, return all.
+            selection = numbered_zones
+        else:
+            if 0 in zones:
+                raise ValueError("Zone numbers count from 1, not 0")
+            for idx, zone in numbered_zones:
+                if idx in zones:
+                    selection.append((idx, zone))
+        return selection
 
     def extent(self, zones=None):
         boolean = self.evaluate(zones)
