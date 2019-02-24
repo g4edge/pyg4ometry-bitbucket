@@ -1,9 +1,9 @@
 import pytest
+import pygdml
+
 import pyfluka.geometry as geo
 import pyfluka.vector as vec
-import re
 
-import pygdml
 
 @pytest.fixture
 def RPP():
