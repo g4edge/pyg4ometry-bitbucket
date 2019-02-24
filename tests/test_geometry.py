@@ -43,6 +43,26 @@ def test_make_world_volume_result_currentVolume_is_box(wv):
 def test_make_world_volume_result_has_no_daughter_volumes(wv):
     assert wv.daughterVolumes == []
 
+def test_region_with_redundant_subtraction(RPP):
+    sub = geo.RPP("redundant", [1e6, 1e6, 1e6],
+                                [1e6+1, 1e6+1, 1e6+1])
+    zone = geo.Zone([("+", RPP), ("-", sub)])
+    # the original solid should be returned if from it is subtracted a
+    # redundant subtraction.
+    assert zone.evaluate(optimise=True) == RPP
+
+def test_omit_redundant_RPP_intersection(RPP):
+    big_rpp = geo.RPP("redundant",
+                      [-1e3, -1e3, -1e3],
+                      [1e3, 1e3, 1e3])
+    zone = geo.Zone([("+", RPP), ("+", big_rpp)])
+    assert zone.evaluate(optimise=True) == RPP
+
+def test_omit_redundant_halfspace_intersection(RPP):
+    for ctor in [geo.XZP, geo.XYP, geo.YZP]:
+        halfspace = ctor("redundant", 1e3)
+        zone = geo.Zone([("+", RPP), ("+", halfspace)])
+        assert zone.evaluate(optimise=True) == RPP
 
 def test_get_overlap():
     pass
