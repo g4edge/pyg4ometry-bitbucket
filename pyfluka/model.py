@@ -236,7 +236,8 @@ class Model(object):
         self._add_regions_to_world_volume(region_names, optimise, survey)
         # If we are subtracting from the world box
         if bounding_subtrahends:
-            pyfluka.geometry.subtract_from_world_volume(bounding_subtrahends,
+            pyfluka.geometry.subtract_from_world_volume(self._world_volume,
+                                                        bounding_subtrahends,
                                                         bb_addend)
         elif setclip:
             pyfluka.geometry.clip_world_volume_with_safety(self._world_volume,

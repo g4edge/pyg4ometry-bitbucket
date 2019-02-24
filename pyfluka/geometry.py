@@ -98,12 +98,7 @@ class Body(object):
     def view(self, setclip=True):
         world_volume = make_world_volume("world", "G4_AIR")
         self.add_to_volume(world_volume)
-        if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
-        viewer = pygdml.VtkViewer()
-        viewer.addSource(mesh)
-        viewer.view()
+        _mesh_and_view_world_volume(world_volume, setclip)
 
     def _apply_crude_scale(self, scale):
         self._is_omittable = False
@@ -888,12 +883,7 @@ class Region(object):
         world_volume = make_world_volume("world", "G4_AIR")
         solid = self.evaluate(zones, optimise=optimise)
         solid.add_to_volume(world_volume)
-        if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
-        viewer = pygdml.VtkViewer()
-        viewer.addSource(mesh)
-        viewer.view()
+        _mesh_and_view_world_volume(world_volume, setclip)
 
     def add_to_volume(self, volume, zones=None, optimise=True):
         """
@@ -1142,13 +1132,7 @@ class Zone(object):
         optimised.add_to_volume(world_volume)
         unoptimised.add_to_volume(world_volume)
 
-        if setclip is True:
-            world_volume.setClip()
-
-        mesh = world_volume.pycsgmesh()
-        viewer = pygdml.VtkViewer()
-        viewer.addSource(mesh)
-        viewer.view()
+        _mesh_and_view_world_volume(world_volume, setclip)
 
     def evaluate_with_extent(self, optimise):
         boolean = self.evaluate(optimise=optimise)
@@ -1366,12 +1350,8 @@ class Boolean(Body):
         elif first is False and second is False:
             raise RuntimeError("Must select at least one"
                                " of the two solids to view")
-        if setclip is True:
-            world_volume.setClip()
-        mesh = world_volume.pycsgmesh()
-        viewer = pygdml.VtkViewer()
-        viewer.addSource(mesh)
-        viewer.view()
+
+        _mesh_and_view_world_volume(world_volume, setclip)
 
     def gdml_primitives(self):
         # quick and dirty..  revisit this at a later date.
@@ -1540,3 +1520,11 @@ def make_world_volume(name, material):
     name = "{}_world_volume_{}".format(name, unique_id)
     return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
                          name, None, 1, False, material)
+
+def _mesh_and_view_world_volume(wv, setclip):
+    if setclip:
+        wv.setClip()
+    mesh = wv.pycsgmesh()
+    viewer = pygdml.VtkViewer()
+    viewer.addSource(mesh)
+    viewer.view()
