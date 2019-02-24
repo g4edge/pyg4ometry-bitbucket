@@ -34,14 +34,6 @@ _IDENTITY_TYPE = collections.namedtuple("_IDENTITY_TYPE", [])
 _IDENTITY = _IDENTITY_TYPE()
 del _IDENTITY_TYPE
 
-_FLUKA_BOILERPLATE = """TITLE
-{}
-GLOBAL        5000.0       0.0       0.0       0.0       1.0
-DEFAULTS                                                              PRECISIO
-BEAM         10000.0                                                  PROTON
-GEOBEGIN                                                              COMBNAME
-0        0                  PYFLUKA
-"""
 
 # logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -1034,7 +1026,15 @@ class Region(object):
     def to_fluka_inp(self, filename=None):
         filename = "{}.inp".format(self.name) if filename is None else filename
         with open(filename, 'w') as f:
-            f.write(_FLUKA_BOILERPLATE.format(self.name))
+            boilerplate = """TITLE
+{}
+GLOBAL        5000.0       0.0       0.0       0.0       1.0
+DEFAULTS                                                              PRECISIO
+BEAM         10000.0                                                  PROTON
+GEOBEGIN                                                              COMBNAME
+0        0                  PYFLUKA
+"""
+            f.write(boilerplate.format(self.name))
             for body in self.bodies():
                 f.write(body.to_fluka_string() + "\n")
             f.write("END\n")
