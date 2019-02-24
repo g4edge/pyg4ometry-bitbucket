@@ -59,8 +59,8 @@ logger.setLevel(logging.INFO)
 
 
 class Body(object):
-    """A class representing a body as defined in Fluka.
-    get_body_as_gdml_solid() returns the body as a pygdml.solid
+    """A class representing a body as defined in Fluka. gdml_solid()
+    returns the body as a pygdml.solid.
 
     """
     # The _is_omittable flag is set internally for a body if the body
