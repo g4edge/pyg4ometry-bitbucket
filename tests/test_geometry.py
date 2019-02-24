@@ -10,6 +10,10 @@ def RPP():
     return geo.RPP("rpp", [0, 0, 0], [1, 1, 1])
 
 @pytest.fixture
+def null_zone(RPP):
+    return geo.Zone([("+", RPP), ("-", RPP)])
+
+@pytest.fixture
 def wv():
     return geo.make_world_volume("worldname", "material")
 
@@ -63,6 +67,17 @@ def test_omit_redundant_halfspace_intersection(RPP):
         halfspace = ctor("redundant", 1e3)
         zone = geo.Zone([("+", RPP), ("+", halfspace)])
         assert zone.evaluate(optimise=True) == RPP
+
+def test_region_mesh_fail_null_zone(RPP, null_zone):
+    z = geo.Zone([("+", RPP)])
+    r = geo.Region("r", [z, null_zone], "material")
+    with pytest.raises(pygdml.solid.NullMeshError):
+        r.evaluate().gdml_solid().pycsgmesh()
+
+def test_null_zone_mesh_fails(null_zone):
+    with pytest.raises(pygdml.solid.NullMeshError):
+        null_zone.evaluate().gdml_solid().pycsgmesh()
+
 
 def test_get_overlap():
     pass
