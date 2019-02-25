@@ -429,7 +429,8 @@ class SPH(Body):
         return self.point
 
     def crude_extent(self):
-        return max(map(abs, self.centre + self.radius))
+        max_abs_centre = max([abs(c) for c in self.centre()])
+        return  max_abs_centre + self.radius
 
     def gdml_solid(self, length_safety=None):
         """Construct a solid, whole, GDML sphere from this."""
