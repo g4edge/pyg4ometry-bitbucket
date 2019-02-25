@@ -124,7 +124,7 @@ class Body(object):
                              self.name, volume, 1, False, "G4_Galactic")
 
     def _resize(self, scale):
-        """Return this instance bounded or extented according to the
+        """Modify this instance bounded or extented according to the
         parameter "scale".
 
         """
@@ -144,10 +144,8 @@ class Body(object):
             except pygdml.solid.NullMeshError:
                 msg = "Scaling body \"{}\" is not meshable!".format(scale.name)
                 raise pygdml.solid.NullMeshError(msg)
-            try:
-                extent = self._get_overlap(scale)
-                self._apply_extent(extent)
-            except pygdml.NullMeshError:
+            extent = get_overlap(self, scale)
+            if extent is None:
                 # In this event, the subtraction is redundant one, so
                 # we can omit it.
                 # Redundant intersections naturally will not raise
@@ -156,25 +154,17 @@ class Body(object):
                 logger.info("Omitting redundant subtraction of %s \"%s\"",
                             type(self).__name__, self.name)
                 self._is_omittable = True
+            else:
+                # _is_omittable may also be set inside:
+                self._apply_extent(extent)
         else:
             raise TypeError("Unknown scale type: {}".format(type(scale)))
-        return self
 
     def _extent(self):
         # Construct a world volume to place the solid in to be meshed.
         world_volume = make_world_volume("world", "G4_AIR")
         self.add_to_volume(world_volume)
         return Extent.from_world_volume(world_volume)
-
-    def _get_overlap(self, other):
-        """
-        Get the overlap of this solid with another, calculate the
-        extent of the mesh, and return this.
-
-        """
-        intersection = self.intersection(other, safety="trim")
-        extent = intersection._extent()
-        return extent
 
     def intersection(self, other, safety=None, other_offset=None):
         # Safety is the same for an intersection, either we seek to
@@ -1432,7 +1422,7 @@ def are_extents_overlapping(first, second):
                 or first.lower.z > second.upper.z)
 
 def get_overlap(first, second):
-    """Return the extent of any overlapping region between the first
+    """Return the extent of any overlapping or solid region between the first
     and the second Region or Zone instance.  If there are no overlaps,
     then None is returned.
 
