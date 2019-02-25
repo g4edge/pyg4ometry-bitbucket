@@ -7,7 +7,13 @@ import pyfluka.vector as vec
 
 @pytest.fixture
 def RPP():
+    # A cube with sides of 1mm, from origin to 1, 1, 1..
     return geo.RPP("rpp", [0, 0, 0], [1, 1, 1])
+
+@pytest.fixture
+def RPP_at_1e6():
+    return geo.RPP("rpp1e6", [1e6, 1e6, 1e6],
+                   [1e6+1, 1e6+1, 1e6+1])
 
 @pytest.fixture
 def null_zone(RPP):
@@ -16,14 +22,6 @@ def null_zone(RPP):
 @pytest.fixture
 def wv():
     return geo.make_world_volume("worldname", "material")
-
-@pytest.fixture
-def region():
-    box1 = geo.RPP("rpp", [0, 0, 0], [1, 1, 1])
-    box2 = geo.RPP("rpp2", [0, 0, 0] , [1, 1, 0.5])
-    # box1 - box2
-    zone = geo.Zone([("+", box1), ("-", box2)])
-    return geo.Region("region", [zone], "material")
 
 def test_subtract_from_world_volume(wv):
     # cube with sides of length 1 and centeres at the origin.
@@ -55,10 +53,8 @@ def test_make_world_volume_result_currentVolume_is_box(wv):
 def test_make_world_volume_result_has_no_daughter_volumes(wv):
     assert wv.daughterVolumes == []
 
-def test_region_with_redundant_subtraction(RPP):
-    sub = geo.RPP("redundant", [1e6, 1e6, 1e6],
-                                [1e6+1, 1e6+1, 1e6+1])
-    zone = geo.Zone([("+", RPP), ("-", sub)])
+def test_region_with_redundant_subtraction(RPP, RPP_at_1e6):
+    zone = geo.Zone([("+", RPP), ("-", RPP_at_1e6)])
     # the original solid should be returned if from it is subtracted a
     # redundant subtraction.
     assert zone.evaluate(optimise=True) == RPP
@@ -86,9 +82,15 @@ def test_null_zone_mesh_fails(null_zone):
     with pytest.raises(pygdml.solid.NullMeshError):
         null_zone.evaluate().gdml_solid().pycsgmesh()
 
+def test_get_overlap_returns_none_on_no_overlap(RPP, RPP_at_1e6):
+    assert geo.get_overlap(RPP, RPP_at_1e6) is None
 
-def test_get_overlap():
-    pass
+def test_get_overlap(RPP):
+    overlap_extent = geo.get_overlap(RPP, RPP)
+    upper = 1 - geo.LENGTH_SAFETY
+    lower = geo.LENGTH_SAFETY
+    expected_extent = geo.Extent([lower, lower, lower], [upper, upper, upper])
+    assert overlap_extent == expected_extent
 
 def test_connected_zones():
     pass
