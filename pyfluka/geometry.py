@@ -421,7 +421,7 @@ class SPH(Body):
     """A sphere"""
     def __init__(self, name, point, radius):
         self.name = name
-        self.point = point
+        self.point = vector.Three(point)
         self.radius = radius
         self.rotation = np.identity(3)
 
@@ -430,7 +430,7 @@ class SPH(Body):
 
     def crude_extent(self):
         max_abs_centre = max([abs(c) for c in self.centre()])
-        return  max_abs_centre + self.radius
+        return max_abs_centre + self.radius
 
     def gdml_solid(self, length_safety=None):
         """Construct a solid, whole, GDML sphere from this."""
