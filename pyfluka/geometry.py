@@ -321,7 +321,7 @@ class RPP(Body):
                           "its maxes.\n It is ignored in Fluka but "
                           "won't be ignored here!")
 
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     @classmethod
     def from_extent(cls, name, extent):
@@ -423,7 +423,7 @@ class SPH(Body):
         self.name = name
         self.point = point
         self.radius = radius
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     def centre(self):
         return self.point
@@ -519,7 +519,7 @@ class XYP(InfiniteHalfSpace):
     def __init__(self, name, z):
         self.name = name
         self.z = z
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     def crude_extent(self):
         return abs(self.z)
@@ -546,7 +546,7 @@ class XZP(InfiniteHalfSpace):
     def __init__(self, name, y):
         self.name = name
         self.y = y
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     def crude_extent(self):
         return abs(self.y)
@@ -571,7 +571,7 @@ class YZP(InfiniteHalfSpace):
     def __init__(self, name, x):
         self.name = name
         self.x = x
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     def crude_extent(self):
         return abs(self.x)
@@ -675,9 +675,9 @@ class XCC(InfiniteCylinder):
         # Stuff for infinite scaling..
         self._radius = radius
         # Rotate pi/2 about the y-axis.
-        self.rotation = np.matrix([[0, 0, -1],
-                                   [0, 1, 0],
-                                   [1, 0, 0]])
+        self.rotation = np.array([[0, 0, -1],
+                                  [0, 1, 0],
+                                  [1, 0, 0]])
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(extent.centre.x, 0.0, 0.0)
@@ -705,9 +705,9 @@ class YCC(InfiniteCylinder):
         self.radius = radius
         self._radius = radius
         # Rotate by pi/2 about the x-axis.
-        self.rotation = np.matrix([[1, 0, 0],
-                                   [0, 0, 1],
-                                   [0, -1, 0]])
+        self.rotation = np.array([[1, 0, 0],
+                                  [0, 0, 1],
+                                  [0, -1, 0]])
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0, extent.centre.y, 0.0)
@@ -734,7 +734,7 @@ class ZCC(InfiniteCylinder):
         self.y = y
         self.radius = radius
         self._radius = radius
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     def _apply_extent(self, extent):
         self._offset = vector.Three(0.0, 0.0, extent.centre.z)
@@ -763,9 +763,9 @@ class XEC(InfiniteEllipticalCylinder):
         self.semi_y = semi_y
         self.semi_z = semi_z
         # Rotate pi/2 about the y-axis.
-        self.rotation = np.matrix([[0, 0, -1],
-                                   [0, 1, 0],
-                                   [1, 0, 0]])
+        self.rotation = np.array([[0, 0, -1],
+                                  [0, 1, 0],
+                                  [1, 0, 0]])
 
     def centre(self):
         return vector.Three(0.0, self.y, self.z)
@@ -797,9 +797,9 @@ class YEC(InfiniteEllipticalCylinder):
         self.semi_x = semi_x
         self.semi_z = semi_z
         # Rotate by pi/2 about the x-axis.
-        self.rotation = np.matrix([[1, 0, 0],
-                                   [0, 0, 1],
-                                   [0, -1, 0]])
+        self.rotation = np.array([[1, 0, 0],
+                                  [0, 0, 1],
+                                  [0, -1, 0]])
 
     def centre(self):
         return vector.Three(self.x, 0.0, self.z)
@@ -831,7 +831,7 @@ class ZEC(InfiniteEllipticalCylinder):
         self.semi_x = semi_x
         self.semi_y = semi_y
         # Rotate by pi/2 about the x-axis.
-        self.rotation = np.matrix(np.identity(3))
+        self.rotation = np.identity(3)
 
     def centre(self):
         return vector.Three(self.x, self.y, 0.0)
