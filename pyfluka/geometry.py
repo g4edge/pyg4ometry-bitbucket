@@ -1556,10 +1556,10 @@ def make_world_volume(name, material):
     return pygdml.Volume([0, 0, 0], [0, 0, 0], world_box,
                          name, None, 1, False, material)
 
-def _mesh_and_view_world_volume(wv, setclip):
+def _mesh_and_view_world_volume(world_volume, setclip):
     if setclip:
-        wv.setClip()
-    mesh = wv.pycsgmesh()
+        world_volume.setClip()
+    mesh = world_volume.pycsgmesh()
     viewer = pygdml.VtkViewer()
     viewer.addSource(mesh)
     viewer.view()
