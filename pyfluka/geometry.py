@@ -304,10 +304,13 @@ class InfiniteHalfSpace(Body):
 
 class RPP(Body):
     """An RPP is a rectangular parallelpiped (a cuboid). """
-    def __init__(self, name, lower, upper):
+    def __init__(self, name, lower, upper, translation=None):
         self.name = name
         self.lower = vector.Three(lower)
         self.upper = vector.Three(upper)
+        if translation is not None:
+            self.lower += vector.Three(translation)
+            self.upper += vector.Three(translation)
         # Hidden versions of these parameters which can be reassigned
         self._x_min = self.lower.x
         self._x_max = self.upper.x
@@ -419,9 +422,11 @@ class RPP(Body):
 
 class SPH(Body):
     """A sphere"""
-    def __init__(self, name, point, radius):
+    def __init__(self, name, point, radius, translation=None):
         self.name = name
         self.point = vector.Three(point)
+        if translation is not None:
+            self.point += vector.Three(translation)
         self.radius = radius
         self.rotation = np.identity(3)
 
@@ -449,9 +454,11 @@ class RCC(Body):
     radius    = cylinder radius
 
     """
-    def __init__(self, name, face_centre, direction, radius):
+    def __init__(self, name, face_centre, direction, radius, translation=None):
         self.name = name
         self.face_centre = vector.Three(face_centre)
+        if translation is not None:
+            self.face_centre += vector.Three(translation)
         self.direction = vector.Three(direction)
         self.radius = radius
         initial = [0, 0, 1]
@@ -483,9 +490,12 @@ class TRC(Body):
     radius_major: radius of the larger face.
     radius_minor: radius of the smaller face.
     """
-    def __init__(self, name, major_centre, direction, major_radius, minor_radius):
+    def __init__(self, name, major_centre, direction, major_radius,
+                 minor_radius, translation=None):
         self.name = name
         self.major_centre = vector.Three(major_centre)
+        if translation is not None:
+            self.major_centre += vector.Three(translation)
         self.direction = vector.Three(direction)
         self.major_radius = major_radius
         self.minor_radius = minor_radius
@@ -517,9 +527,11 @@ class TRC(Body):
 
 class XYP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the z-axis."""
-    def __init__(self, name, z):
+    def __init__(self, name, z, translation=None):
         self.name = name
         self.z = z
+        if translation is not None:
+            self.z += translation[2]
         self.rotation = np.identity(3)
 
     def crude_extent(self):
@@ -544,9 +556,11 @@ class XYP(InfiniteHalfSpace):
 
 class XZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the y-axis."""
-    def __init__(self, name, y):
+    def __init__(self, name, y, translation=None):
         self.name = name
         self.y = y
+        if translation is not None:
+            self.y += translation[1]
         self.rotation = np.identity(3)
 
     def crude_extent(self):
@@ -569,9 +583,11 @@ class XZP(InfiniteHalfSpace):
 
 class YZP(InfiniteHalfSpace):
     """Infinite half space perpendicular to the x-axis."""
-    def __init__(self, name, x):
+    def __init__(self, name, x, translation=None):
         self.name = name
         self.x = x
+        if translation is not None:
+            self.x += translation[0]
         self.rotation = np.identity(3)
 
     def crude_extent(self):
@@ -600,10 +616,12 @@ class PLA(Body):
     normal = vector normal to the surface (pointing outwards)
 
     """
-    def __init__(self, name, normal, point):
+    def __init__(self, name, normal, point, translation=None):
         self.name = name
         self.normal = vector.Three(normal)
         self.point = vector.Three(point)
+        if translation is not None:
+            self.point += vector.Three(translation)
         # Choose the face pointing in the direction of the positive
         # z-axis to make the surface of the half space.
         self.rotation = trf.matrix_from([0, 0, 1], self.normal)
@@ -668,10 +686,13 @@ class XCC(InfiniteCylinder):
     radius = radius of the cylinder
 
     """
-    def __init__(self, name, y, z, radius):
+    def __init__(self, name, y, z, radius, translation=None):
         self.name = name
         self.y = y
         self.z = z
+        if translation is not None:
+            self.y += translation[1]
+            self.z += translation[2]
         self.radius = radius
         # Stuff for infinite scaling..
         self._radius = radius
@@ -699,10 +720,13 @@ class YCC(InfiniteCylinder):
     radius = radius of the cylinder
 
     """
-    def __init__(self, name, z, x, radius):
+    def __init__(self, name, z, x, radius, translation=None):
         self.name = name
         self.x = x
         self.z = z
+        if translation is not None:
+            self.x += translation[0]
+            self.z += translation[2]
         self.radius = radius
         self._radius = radius
         # Rotate by pi/2 about the x-axis.
@@ -729,10 +753,13 @@ class ZCC(InfiniteCylinder):
     radius = radius of the cylinder
 
     """
-    def __init__(self, name, x, y, radius):
+    def __init__(self, name, x, y, radius, translation=None):
         self.name = name
         self.x = x
         self.y = y
+        if translation is not None:
+            self.y += translation[1]
+            self.z += translation[2]
         self.radius = radius
         self._radius = radius
         self.rotation = np.identity(3)
@@ -757,10 +784,13 @@ class XEC(InfiniteEllipticalCylinder):
     semi_z = semi-axis in the z-direction of the ellipse face.
 
     """
-    def __init__(self, name, y, z, semi_y, semi_z):
+    def __init__(self, name, y, z, semi_y, semi_z, translation=None):
         self.name = name
         self.y = y
         self.z = z
+        if translation is not None:
+            self.y += translation[1]
+            self.z += translation[2]
         self.semi_y = semi_y
         self.semi_z = semi_z
         # Rotate pi/2 about the y-axis.
@@ -791,10 +821,13 @@ class YEC(InfiniteEllipticalCylinder):
     semi_x - semi-axis in the x-direction of the ellipse face.
 
     """
-    def __init__(self, name, z, x, semi_z, semi_x):
+    def __init__(self, name, z, x, semi_z, semi_x, translation=None):
         self.name = name
         self.x = x
         self.z = z
+        if translation is not None:
+            self.x += translation[0]
+            self.z += translation[2]
         self.semi_x = semi_x
         self.semi_z = semi_z
         # Rotate by pi/2 about the x-axis.
@@ -825,10 +858,13 @@ class ZEC(InfiniteEllipticalCylinder):
     semi_y - semi-axis in the y-direction of the ellipse face.
 
     """
-    def __init__(self, name, x, y, semi_x, semi_y):
+    def __init__(self, name, x, y, semi_x, semi_y, translation=None):
         self.name = name
         self.x = x
         self.y = y
+        if translation is not None:
+            self.x += translation[0]
+            self.y += translation[1]
         self.semi_x = semi_x
         self.semi_y = semi_y
         # Rotate by pi/2 about the x-axis.
