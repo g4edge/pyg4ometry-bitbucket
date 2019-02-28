@@ -709,7 +709,7 @@ class XCC(InfiniteCylinder):
         return self._offset + vector.Three(0.0, self.y, self.z)
 
     def crude_extent(self):
-        return max([self.y, self.z, self.radius])
+        return max([abs(self.y), abs(self.z), self.radius])
 
 
 class YCC(InfiniteCylinder):
@@ -742,7 +742,7 @@ class YCC(InfiniteCylinder):
         return self._offset + vector.Three(self.x, 0.0, self.z)
 
     def crude_extent(self):
-        return max([self.x, self.z, self.radius])
+        return max([abs(self.x), abs(self.z), self.radius])
 
 
 class ZCC(InfiniteCylinder):
@@ -772,7 +772,7 @@ class ZCC(InfiniteCylinder):
         return self._offset + vector.Three(self.x, self.y, 0.0)
 
     def crude_extent(self):
-        return max([self.x, self.y, self.radius])
+        return max([abs(self.x), abs(self.y), self.radius])
 
 
 class XEC(InfiniteEllipticalCylinder):
@@ -802,7 +802,8 @@ class XEC(InfiniteEllipticalCylinder):
         return vector.Three(0.0, self.y, self.z)
 
     def crude_extent(self):
-        return max(abs(i for i in [self.y, self.z, self.semi_y, self.semi_z]))
+        return max([abs(self.y), abs(self.z),
+                    abs(self.semi_y), abs(self.semi_z)])
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
@@ -839,7 +840,8 @@ class YEC(InfiniteEllipticalCylinder):
         return vector.Three(self.x, 0.0, self.z)
 
     def crude_extent(self):
-        return max(abs(i for i in [self.x, self.z, self.semi_x, self.semi_z]))
+        return max([abs(self.x), abs(self.z),
+                    abs(self.semi_x), abs(self.semi_z)])
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
@@ -874,7 +876,8 @@ class ZEC(InfiniteEllipticalCylinder):
         return vector.Three(self.x, self.y, 0.0)
 
     def crude_extent(self):
-        return max(abs(i for i in [self.x, self.y, self.semi_y, self.semi_y]))
+        return max([abs(self.x), abs(self.y),
+                    abs(self.semi_x), abs(self.semi_y)])
 
     def gdml_solid(self, length_safety=None):
         safety_addend = Body._get_safety_addend(length_safety)
