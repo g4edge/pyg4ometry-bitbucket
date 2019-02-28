@@ -93,7 +93,24 @@ def test_get_overlap(RPP):
     assert overlap_extent == expected_extent
 
 def test_connected_zones():
-    pass
+    # All 3 of these overlap:
+    box1 = geo.RPP("box1", [0,0,0], [1,1,1])
+    box2 = geo.RPP("box2", [0.75, 0, 0.1], [1.75, 1, 0.9])
+    box3 = geo.RPP("box4", [1.5, 0, 0.2], [2.5, 1, 0.8])
+    zone1 = geo.Zone([("+", box1)])
+    zone2 = geo.Zone([("+", box2)])
+    zone3 = geo.Zone([("+", box3)])
 
-def test_coplanar_union():
-    pass
+    # This pair is separate to the first:
+    box4 = geo.RPP("box4", [3, 0, 0], [4, 1, 1])
+    zone4 = geo.Zone([("+", box4)])
+    box5 = geo.RPP("box5", [3.75, 0, 0.1], [4.75, 1, 0.9])
+    zone5 = geo.Zone([("+", box5)])
+
+    # This zone is separate to other two.
+    box6 = geo.RPP("box6", [5, 0, 0.], [6, 1, 1])
+    zone6 = geo.Zone([("+", box6)])
+    region = geo.Region("region", [zone1, zone2, zone3, zone4, zone5, zone6], "material")
+
+    expected_connected_zones = [{0, 1, 2}, {3, 4}, {5}]
+    assert list(region.connected_zones()) == expected_connected_zones
