@@ -963,7 +963,7 @@ class Region(object):
     def _select_zones(self, zones):
         # Zone numbers start from 1, not 0.  Do this simply to match
         # FLUKA which seems to count zones in the same fashion.
-        numbered_zones = list(enumerate(self.zones, 1))
+        numbered_zones = list(enumerate_zones(self.zones))
         selection = []
         if zones is None: # No zone selection, return all.
             selection = numbered_zones
@@ -1019,9 +1019,9 @@ class Region(object):
             if nx.has_path(graph, i, j):
                 continue
 
-            # Finally: we must do the intersection op.
-            if verbose:
-                print("Intersecting zone {} with {}".format(i, j))
+            # Finally: we must do the intersection op.  add 1 because
+            # we conform to convention that
+            logger.debug("Intersecting zone %d with %d", i, j)
             if get_overlap(booleans_and_extents[i][0],
                            booleans_and_extents[j][0]) is not None:
                 graph.add_edge(i, j)
@@ -1030,8 +1030,8 @@ class Region(object):
     def _get_zone_booleans_and_extents(self, optimise):
         """Return the meshes and extents of all regions of this model."""
         out = {}
-        for index, zone in enumerate(self.zones):
-            print("Evaluating zone {}".format(index))
+        for index, zone in enumerate_zones(self.zones):
+            logger.debug("Evaluating zone %d", index)
             boolean, extent = zone.evaluate_with_extent(optimise)
             out[index] = (boolean, extent)
         return out
@@ -1050,8 +1050,8 @@ class Region(object):
         if len(zone_strings) == 1:
             return name_and_mystery_number + " {}".format(zone_strings[0])
         lines = []
-        for i, string in enumerate(zone_strings):
-            if i == 0:
+        for i, string in enumerate_zones(zone_strings):
+            if i == 1:
                 lines.append((name_and_mystery_number
                               + " | {}".format(zone_strings[0])))
                 continue
@@ -1563,3 +1563,8 @@ def _mesh_and_view_world_volume(world_volume, setclip):
     viewer = pygdml.VtkViewer()
     viewer.addSource(mesh)
     viewer.view()
+
+def enumerate_zones(zones):
+    """Wraps builtin enumerate, but counts from 1 instead of the
+    default 0, as in FLUKA zones are counted from 1."""
+    return enumerate(zones, 1)
