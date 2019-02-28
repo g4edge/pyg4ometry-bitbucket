@@ -2,8 +2,6 @@
 
 Note:  All units are in millimetres, c.f. centimetres in Fluka.
 
-Note:  Zone numbers count from 1, not zero, so as to match FLUKA.
-
 Note:  It's up to you to ensure your input consists of no null zones.
 
 """
@@ -941,11 +939,9 @@ class Region(object):
     def evaluate(self, zones=None, optimise=False):
         logger.info("Evaluating Region \"%s\", optimisation=%s, zones=%s",
                     self.name, optimise, zones)
-        numbered_zones = self._select_zones(zones)
+        zones = self._select_zones(zones)
         # Get the boolean solids from the zones:
-        booleans = []
-        for _, zone in numbered_zones:
-            booleans.append(zone.evaluate(optimise=optimise))
+        booleans = [zone.evaluate(optimise=optimise) for zone in zones]
 
         def accumulate_unions(first, second):
             # only add automatic length safety if the whole geometry
@@ -961,19 +957,20 @@ class Region(object):
         return boolean, extent
 
     def _select_zones(self, zones):
-        # Zone numbers start from 1, not 0.  Do this simply to match
-        # FLUKA which seems to count zones in the same fashion.
-        numbered_zones = list(enumerate_zones(self.zones))
-        selection = []
-        if zones is None: # No zone selection, return all.
-            selection = numbered_zones
-        else:
-            if 0 in zones:
-                raise ValueError("Zone numbers count from 1, not 0")
-            for idx, zone in numbered_zones:
-                if idx in zones:
-                    selection.append((idx, zone))
-        return selection
+        if zones is None:
+            return self.zones
+        try:
+            return [self.zones[key] for key in zones]
+        except TypeError:
+            pass
+        try:
+            # if no __getitem__, or __iter__, then try using it as a
+            # key directly:
+            return [self.zones[zones]]
+        except TypeError:
+            msg = ("Unknown selection "
+                   "provided for zones {}").format(type(zones))
+            raise TypeError(msg)
 
     def extent(self, zones=None):
         boolean = self.evaluate(zones)
@@ -1030,7 +1027,7 @@ class Region(object):
     def _get_zone_booleans_and_extents(self, optimise):
         """Return the meshes and extents of all regions of this model."""
         out = {}
-        for index, zone in enumerate_zones(self.zones):
+        for index, zone in enumerate(self.zones):
             logger.debug("Evaluating zone %d", index)
             boolean, extent = zone.evaluate_with_extent(optimise)
             out[index] = (boolean, extent)
@@ -1050,8 +1047,8 @@ class Region(object):
         if len(zone_strings) == 1:
             return name_and_mystery_number + " {}".format(zone_strings[0])
         lines = []
-        for i, string in enumerate_zones(zone_strings):
-            if i == 1:
+        for i, string in enumerate(zone_strings):
+            if i == 0:
                 lines.append((name_and_mystery_number
                               + " | {}".format(zone_strings[0])))
                 continue
@@ -1563,8 +1560,3 @@ def _mesh_and_view_world_volume(world_volume, setclip):
     viewer = pygdml.VtkViewer()
     viewer.addSource(mesh)
     viewer.view()
-
-def enumerate_zones(zones):
-    """Wraps builtin enumerate, but counts from 1 instead of the
-    default 0, as in FLUKA zones are counted from 1."""
-    return enumerate(zones, 1)

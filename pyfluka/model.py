@@ -521,7 +521,7 @@ option, physicsList="g4FTFP_BERT",
                 regions[region_name]["connected_zones"] = list(
                     region.connected_zones(verbose=True))
             if extents:
-                for zone_no, zone in geo.enumerate_zones(region.zones):
+                for zone_no, zone in enumerate(region.zones):
                     print("Meshing Region: {}, Zone: {} ...".format(region_name,
                                                                     zone_no))
                     regions[region_name]["extents"][zone_no] = zone.extent(
