@@ -921,6 +921,22 @@ class Region(object):
                                                     index in zones])))
 
 
+        # if name in (["UJPLUGR4-Zones-1",
+        # Note the overlaps in the UPS stuff below seem to get worse
+        # with larger scaling tolerance..
+        if name in (["UPS16H1A-Zones-1",
+                     "UPS16H1C-Zones-1",
+                     "UPS16H1S-Zones-1",
+                     "UPS16H2A-Zones-1",
+                     "UPS16H2S-Zones-1",
+                     "UPS16H2C-Zones-1",
+                     "UJ16AIR1-Zones-0", # Highest priority to fix.
+                     "UJPLUGR0-Zones-1", #zones
+                     "UJPLUGR4-Zones-1"]): # second priority
+            print("Skipping bad tunnel region, oops...")
+            return
+
+
         boolean = self.evaluate(zones, optimise=optimise)
         # Convert the matrix to TB xyz:
         rotation_angles = trf.matrix2tbxyz(boolean.rotation)

@@ -63,7 +63,7 @@ def _get_bdsim_rotation(fluka_direction,
     # Vector pointing in the direction sig
     bdsim_unit_vector = trf.axisangle2matrix(bdsim_rotation_axis,
                                              bdsim_rotation_angle).dot(
-                                                 [0, 0, 1]).A1
+                                                 [0, 0, 1])
     net_rotation_matrix = trf.matrix_from(fluka_direction, bdsim_unit_vector)
 
     axis_angle = trf.matrix2axisangle(net_rotation_matrix)
@@ -90,7 +90,7 @@ def _get_bdsim_placement(bdsim_point, fluka_point,
     # converts a point in the fluka coordinate system to its point in
     # the bdsim global coordinate system.
     fluka_point_in_bdsim = fluka_point - fluka_bounding_box_origin
-    rotated_point = rotation_matrix.dot(fluka_point_in_bdsim).A1
+    rotated_point = rotation_matrix.dot(fluka_point_in_bdsim)
     offset = bdsim_point - rotated_point
     return offset
 
