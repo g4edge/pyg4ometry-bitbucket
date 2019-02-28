@@ -1,5 +1,4 @@
 from __future__ import (absolute_import, print_function, division)
-import textwrap
 
 import pygdml.transformation as trf
 import pyfluka.vector
@@ -99,11 +98,11 @@ def _build_placement_string(name, filepath, offset, axis, angle):
     # cast iterables to vectors.
     offset = pyfluka.vector.Three(offset)
     axis = pyfluka.vector.Three(axis)
-    out = ("{name}: placement,"
-           " x = {offset.x}*mm, y = {offset.y}*mm, z = {offset.z}*mm,"
-           " geometryFile=\"gdml:{filepath}\", axisAngle=1,"
-           " axisX = {axis.x}, axisY = {axis.y}, axisZ = {axis.z},"
-           " angle = {angle};")
-    out = '\n'.join(textwrap.wrap(out))
-    return out.format(name=name, filepath=filepath,
-                      offset=offset, axis=axis, angle=angle)
+    out = """{name}: placement,
+geometryFile="gdml:{filepath}", axisAngle=1,
+x={offset.x}*mm, y={offset.y}*mm, z={offset.z}*mm,
+axisX={axis.x}, axisY={axis.y}, axisZ={axis.z},
+angle={angle};
+""".format(name=name, filepath=filepath,
+           offset=offset, axis=axis, angle=angle)
+    return out
