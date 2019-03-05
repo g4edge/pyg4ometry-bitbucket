@@ -1294,21 +1294,6 @@ class Zone(object):
         _flatten_iter()
         return out
 
-    def remove(self, body_name):
-        """Recursively remove a body (by name) from this Zone instance."""
-        # remove from contains:
-        for index, element in enumerate(self.contains):
-            if isinstance(element, Zone):
-                element.remove(body_name)
-            elif element.name == body_name:
-                self.contains.pop(index)
-        # remove from excludes:
-        for index, element in enumerate(self.excludes):
-            if isinstance(element, Zone):
-                element.remove(body_name)
-            elif element.name == body_name:
-                self.excludes.pop(index)
-
     def __contains__(self, value):
         # A name of a body:
         flattened = self._flatten()
