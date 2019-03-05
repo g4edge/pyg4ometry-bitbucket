@@ -1300,9 +1300,6 @@ class Zone(object):
         return (value in [body.name for body in flattened]
                 or value in flattened)
 
-    def __iter__(self):
-        return iter(self.contains + self.excludes)
-
     def bodies(self):
         """Return all the unique body instances associated with this zone"""
         return list(set(self._flatten()))
