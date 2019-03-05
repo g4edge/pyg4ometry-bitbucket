@@ -9,7 +9,6 @@ Note:  It's up to you to ensure your input consists of no null zones.
 from __future__ import (absolute_import, print_function, division)
 import math
 import uuid
-import collections
 import itertools
 import logging
 
@@ -28,14 +27,6 @@ SCALING_TOLERANCE = 0.5
 
 # Minimum length safety between volumes to ensure no overlaps
 LENGTH_SAFETY = 1e-6 # 1 nanometre
-
-# Intersection/Union/Subtraction identity.
-# Intersecting/unioning/subtracting with this will simply return the
-# other body.  Used for accumulating.
-_IDENTITY_TYPE = collections.namedtuple("_IDENTITY_TYPE", [])
-_IDENTITY = _IDENTITY_TYPE()
-del _IDENTITY_TYPE
-
 
 # logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -190,8 +181,6 @@ class Body(object):
         operation of choice.  safety1 is the safety of self (either
         None, "trim", or "extend"), and offset is ???
         """
-        if other == _IDENTITY:
-            return self
         if offset is None:
             offset = vector.Three(0, 0, 0)
         else: # Coerce an iterable to a vector
@@ -1242,7 +1231,6 @@ class Zone(object):
         elif subzone_order % 2 == 1:
             safety_map = {"intersection": "extend", "subtraction": "trim"}
 
-        accumulated = _IDENTITY # An intersection with _IDENTITY is just self..
 
         # Remove all bodies which are omittable:
         filtered_contains = [body for body in self.contains
@@ -1252,11 +1240,16 @@ class Zone(object):
                              if (isinstance(body, Zone)
                                  or not body._is_omittable)]
 
+        accumulated = None
         for body in filtered_contains:
             if isinstance(body, Body):
+                if accumulated is None: # If nothing to intersect with yet.
+                    accumulated = body
                 accumulated = body.intersection(
                     accumulated, safety_map['intersection'])
-            elif isinstance(body, Zone):
+            elif isinstance(body, Zone): # If nothing to intersect with yet.
+                if accumulated is None:
+                    evaluated_zone = body._accumulate(subzone_order=subzone_order)
                 evaluated_zone = body._accumulate(subzone_order=subzone_order)
                 accumulated = evaluated_zone.intersection(
                     accumulated, safety=safety_map['intersection'])
@@ -1283,7 +1276,7 @@ class Zone(object):
                     body._accumulate(subzone_order=next_subzone_order),
                     safety=safety_map['subtraction'])
 
-        assert accumulated is not _IDENTITY
+        assert accumulated is not None
         return accumulated
 
     def extent(self, optimise=False):
