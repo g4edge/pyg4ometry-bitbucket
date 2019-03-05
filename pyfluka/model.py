@@ -1,5 +1,5 @@
-""" Collection of classes for representing, viewing and viewing a
-Fluka model, and converting it GDML. """
+""" Collection of classes for representing a FLUKA model.  You can
+then check for overlaps, view it, and convert it to GDML."""
 
 from __future__ import (absolute_import, print_function, division)
 
@@ -47,7 +47,7 @@ class Model(object):
             cards
         )
 
-        # Assign the materials if provided with a fluka->G4 material map.
+        # Assign the materials if provided with a FLUKA->G4 material map.
         # Circular dependencies means we can't do this until after the regions
         # are defined: Material assignments depend on the order in which the
         # regions are defined, which we get from the region definitions, which
@@ -65,13 +65,13 @@ class Model(object):
                     region.material = g4_material
                 except KeyError:
                     msg = ("Missing material \"{}\"from"
-                           " Fluka->G4 material map!").format(fluka_material)
+                           " FLUKA->G4 material map!").format(fluka_material)
                     warnings.warn(msg)
 
         else: # If no material map, we still want to omit BLCKHOLE
             # regions from viewing/conversion.
             msg = '\n'.join(textwrap.wrap(
-                "No Fluka->G4 material map provided.  All converted regions"
+                "No FLUKA->G4 material map provided.  All converted regions"
                 " will be \"G4_Galactic\" by default, but BLCKHOLE regions"
                 " will still be omitted from both conversion and viewing."))
             print(msg, '\n')
@@ -101,7 +101,7 @@ class Model(object):
                       just_bounding_box=False, survey=None,
                       optimise=True, bb_addend=0.0):
         """Convert the region to GDML.  Returns the centre (in mm) of the GDML
-                      bounding box in the original Fluka coordinate
+                      bounding box in the original FLUKA coordinate
                       system, which can be useful for placing the
                       geometry.
 

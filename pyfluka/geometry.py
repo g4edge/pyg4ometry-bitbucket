@@ -1,6 +1,6 @@
-""" A collection of classes for representing Fluka regions, zones, and bodies.
+""" A collection of classes for representing FLUKA regions, zones, and bodies.
 
-Note:  All units are in millimetres, c.f. centimetres in Fluka.
+Note:  All units are in millimetres, c.f. centimetres in FLUKA.
 
 Note:  It's up to you to ensure your input consists of no null zones.
 
@@ -61,7 +61,7 @@ logger.setLevel(logging.INFO)
 
 
 class Body(object):
-    """A class representing a body as defined in Fluka. gdml_solid()
+    """A class representing a body as defined in FLUKA. gdml_solid()
     returns the body as a pygdml.solid.
 
     """
@@ -241,7 +241,7 @@ class Body(object):
         return "a" + str(uuid.uuid4())
 
     def _unique_body_name(self):
-        """Generate a name for a given body.  As a single Fluka body
+        """Generate a name for a given body.  As a single FLUKA body
         may ultimately map to an arbitrary number of GDML solids, it
         is necessary that each name is unique.  We try here to
         maintain the reference to the original name slightly by
@@ -319,7 +319,7 @@ class RPP(Body):
 
         if (self.lower > self.upper).any():
             raise Warning("This RPP \"" + self.name + "\" has mins larger than "
-                          "its maxes.\n It is ignored in Fluka but "
+                          "its maxes.\n It is ignored in FLUKA but "
                           "won't be ignored here!")
 
         self.rotation = np.identity(3)
@@ -886,7 +886,7 @@ class ZEC(InfiniteEllipticalCylinder):
 
 
 class Region(object):
-    """Class used for interfacing a Fluka region with a GDML volume.
+    """Class used for interfacing a FLUKA region with a GDML volume.
     This class has the underlying pygdml volume payload, alongside its
     placement and rotation in the world volume, and a material.
 
@@ -1330,7 +1330,7 @@ class Zone(object):
         return list(set(self._flatten()))
 
     def to_fluka_string(self):
-        """Returns this Zone as a fluka input string."""
+        """Returns this Zone as a FLUKA input string."""
         bodies = []
         zones = []
         for part in self.contains:
