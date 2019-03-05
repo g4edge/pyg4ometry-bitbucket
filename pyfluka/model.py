@@ -650,7 +650,8 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
         # warn and continue.
         try:
             self.bodies[body_name] = _make_body(body_type, body_name,
-                                                body_parameters)
+                                                body_parameters,
+                                                self.current_translat)
         except ValueError:
             warnings.simplefilter('once', UserWarning)
             msg = ("\nBody type \"{}\" not supported.  All bodies"
@@ -669,6 +670,9 @@ class FlukaBodyListener(pyfluka.FlukaParserListener.FlukaParserListener):
 
     def enterTranslat(self, ctx):
         translation = FlukaBodyListener._get_floats(ctx)
+        if self.current_translat is not None:
+            # Nested translations are not supported.
+            raise pyfluka.parser.FLUKAInputError("Nested translation.")
         self.current_translat = pyfluka.vector.Three(translation)
 
     def exitTranslat(self, ctx):
@@ -833,7 +837,7 @@ def _get_world_volume_dimensions(world_volume):
     # Double because pX, pY, pZ are half-lengths for a pygdml.solid.Box.
     return pyfluka.vector.Three(2 * box.pX, 2 * box.pY, 2 * box.pZ)
 
-def _make_body(body_type, name, parameters):
+def _make_body(body_type, name, parameters, translation):
     """Given a body type, "REC", "XYP", etc, and a list of the parameters
     in the correct order as written in an input file, return the
     correct Body instance.
@@ -848,17 +852,21 @@ def _make_body(body_type, name, parameters):
     if body_type in {"XZP", "XYP", "YZP",
                      "XCC", "YCC", "ZCC",
                      "XEC", "YEC", "ZEC"}:
-        return ctor(name, *parameters)
+        return ctor(name, *parameters, translation=translation)
     elif body_type == "PLA":
-        return ctor(name, parameters[0:3], parameters[3:6])
+        return ctor(name, parameters[0:3], parameters[3:6],
+                    translation=translation)
     elif body_type == "RCC":
-        return ctor(name, parameters[0:3], parameters[3:6], parameters[6])
+        return ctor(name, parameters[0:3], parameters[3:6], parameters[6],
+                    translation=translation)
     elif body_type == "RPP":
         return ctor(name,
                     [parameters[0], parameters[2], parameters[4]],
-                    [parameters[1], parameters[3], parameters[5]])
+                    [parameters[1], parameters[3], parameters[5]],
+                    translation=translation)
     elif body_type == "TRC":
         return ctor(name, parameters[0:3], parameters[3:6],
-                    parameters[6], parameters[7])
+                    parameters[6], parameters[7], translation=translation)
     elif body_type == "SPH":
-        return ctor(name, parameters[0:3], parameters[3])
+        return ctor(name, parameters[0:3], parameters[3],
+                    translation=translation)
