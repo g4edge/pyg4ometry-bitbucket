@@ -258,11 +258,16 @@ defining geometry and the expression engine will update all internal values.
 For each Geant4 primitive solid a triangular tessellated mesh is generated and cached. This mesh is then used to determine the extent of placed instances of 
 geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique. Triangular meshes based
 on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various algorithms from 
-TetGEN can be employed to give the meshes more desirable output. 
+TetGEN can be employed to give the meshes more desirable features. 
+
+\subsection{Replica, parametrised and looped volumes}
+A powerful feature of Geant4 and hence GDML is the ability to either repeat or parametrise geometry. The create mulitple replicas of a volume in a cartesian, cylindrical or 
+spherical grid is known as a ReplicaVolume.  
 
 \subsection{Internal data representation} 
 The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates python ordered dictionaries that are  used to store the main 
-elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.  
+elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.
+\verb|Registry| instances can be aggregated to form a composite geometry or volumes can be removed and added.   
   
 \subsection{Input and output} 
 For each input format available in {\it pyg4ometry} a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
@@ -283,6 +288,10 @@ Overlap detection
 For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential waste if small overlaps are present in the final 
 PT simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are considered. 
  
+\subsection{Volume bounding} 
+If a user is creating a placing multiple {\em daughter} volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully encompasses the 
+daughter volumes. Overlaps between daughter volumes and the mother can be detected, but it is desirable to have a mother volume shape that efficiently holds all of its daughters. 
+ 
 \subsection{Visualisation}
 A  geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 volume hierarchy is sufficient 
 to place the meshes associated with each physical volume. The python version of Geant4's physical volume is also used to store visualisation attributes like the solids 
@@ -290,6 +299,10 @@ color, surface or wireframe representation and visibility. Overlaps detected in 
 the potential overlaps. This is dependent on the accuracy of the mesh generated and is a particular problem with meshes based on curved surfaces.    
 
 \subsection{Adding properties to volumes}
+A pure geometry description is an insufficient description for a PT simulation. Often other attributes need to be assigned for example material definition, magnetic field or    
+
+\subsection{Graphical user interface}
+A basic Qt based graphical user interface is also available with pyg4ometry. If a model has a large number of volumes defined in a hierarchical tree structure, it is cumbersome for the user to find the logical or physical volume.    
 
 \section{Rapid geometry modelling}
 Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the PT problem, vary 
@@ -369,6 +382,19 @@ solid and a FLUKA region is represented by a Geant4 CSG tree is formed using the
 \item infinite planes
 \item disjoint unions 
 \end{enumerate} 
+
+\section{Interesting use cases}
+pyg4ometry is designed to be as flexible as possible and offer the user a wide range of usage styles and workflows. The following sections describe a selection of 
+possible applications.
+
+\subsection{Mixing geometry sources}
+It is possible to mix different geometries from STL, STEP, GDML and FLUKA in single GDML file for use in Geant4 and ROOT. 
+
+\subsection{Editing existing CAD models}
+Often existing CAD models have either missing details or too much detail. 
+
+\subsection{Overlap checking in geometry}
+Often small errors in geometry cause unexpected PT code behaviour.  
 
 \section{Performance of converted geometry in Geant4}
 Clearly for Geant4 geometry defined in {\it pyg4ometry} the performance is exactly the same as it the geometry was specified in C++ and linked against the Geant4
