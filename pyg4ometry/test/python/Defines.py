@@ -44,13 +44,13 @@ def DefinesTest() :
         
 
     print 'DefinesTest> position construction' 
-    p001 = pyg4ometry.gdml.Position("p001",x,y,z,r)
-    p002 = pyg4ometry.gdml.Position("p002","1",y,z,r)
-    p003 = pyg4ometry.gdml.Position("p003",x,"2",z,r)
-    p004 = pyg4ometry.gdml.Position("p004",x,y,"3",r)
-    p005 = pyg4ometry.gdml.Position("p005",v001,y,z,r)
-    p006 = pyg4ometry.gdml.Position("p006",x,v001,z,r)
-    p007 = pyg4ometry.gdml.Position("p007",x,y,v001,r)
+    p001 = pyg4ometry.gdml.Position("p001",x,y,z,"mm",r)
+    p002 = pyg4ometry.gdml.Position("p002","1",y,z,"mm",r)
+    p003 = pyg4ometry.gdml.Position("p003",x,"2",z,"mm",r)
+    p004 = pyg4ometry.gdml.Position("p004",x,y,"3","mm",r)
+    p005 = pyg4ometry.gdml.Position("p005",v001,y,z,"mm",r)
+    p006 = pyg4ometry.gdml.Position("p006",x,v001,z,"mm",r)
+    p007 = pyg4ometry.gdml.Position("p007",x,y,v001,"mm",r)
 
     print p001, p001.eval()
     print p002, p002.eval()
