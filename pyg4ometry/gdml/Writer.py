@@ -6,6 +6,7 @@ from ..geant4.Material import Isotope as _Isotope
 from ..gdml import Defines as _Defines
 import Expression as _Expression
 import pyg4ometry.geant4 as _g4
+import logging as _log
 
 class Writer(object):
     def __init__(self, prepend = ''):
@@ -38,22 +39,25 @@ class Writer(object):
 
         # loop over defines
         for definition in registry.defineDict:
+            _log.info('gdml.Writer.addDetector> define '+definition)
             define = self.registry.defineDict[definition]
             self.writeDefine(define)
 
         # loop over materials
         for mat in registry.materialDict:
+            _log.info('gdml.Writer.addDetector> material '+mat)
             material = self.registry.materialDict[mat]
             self.writeMaterial(material)
 
         # loop over solids
         for solidId in registry.solidDict.keys():
+            _log.info('gdml.Writer.addDetector> solid '+solidId)
             solid = registry.solidDict[solidId]
             self.writeSolid(solid)
 
         # loop over logical volumes
         for logicalName in registry.logicalVolumeList  :
-            print "writer", logicalName
+            _log.info('gdml.Writer.addDetector> logical '+logicalName)
             logical = registry.logicalVolumeDict[logicalName]
             self.writeLogicalVolume(logical)
             self.writeMaterial(logical.material)
@@ -324,15 +328,25 @@ class Writer(object):
             raise ValueError("No such solid "+solid.type)
 
     def getValueOrExprFromInstance(self, instance, variable, index=None):
+
         if not hasattr(instance, variable):
             raise AttributeError("") #TODO: Add error message
         indexedVariable = variable
+
+        # Indexed variable 
         if index is not None:
             try:
                 indexedVariable = variable[index]
             except IndexError:
                 raise IndexError("") #TODO: Add error message
+
         var = getattr(instance, indexedVariable)
+
+        # check if variable is in registry #TODO indexed variables
+        if self.registry.defineDict.has_key(var.name) :
+            return var.name
+
+        # Expression, Constant, Quantity or Variable
         if isinstance(var, _Defines.Expression) or isinstance(var, _Defines.Constant) or isinstance(var, _Defines.Quantity) or isinstance(var, _Defines.Variable):
             return str(var.expr.expression)
         else:
