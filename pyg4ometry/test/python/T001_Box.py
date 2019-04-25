@@ -7,13 +7,13 @@ def Test() :
     reg = _g4.Registry()
     
     # defines 
-    wx = _gd.Constant("wx","100",reg)
-    wy = _gd.Constant("wy","100",reg)
-    wz = _gd.Constant("wz","100",reg)
+    wx = _gd.Constant("wx","100",reg,True)
+    wy = _gd.Constant("wy","100",reg,True)
+    wz = _gd.Constant("wz","100",reg,True)
 
-    bx = _gd.Constant("bx","10",reg)
-    by = _gd.Constant("by","10",reg)
-    bz = _gd.Constant("bz","10",reg)
+    bx = _gd.Constant("bx","10",reg,True)
+    by = _gd.Constant("by","10",reg,True)
+    bz = _gd.Constant("bz","10",reg,True)
     
     wm = _g4.Material(name="G4_Galactic") 
     bm = _g4.Material(name="G4_Fe") 
