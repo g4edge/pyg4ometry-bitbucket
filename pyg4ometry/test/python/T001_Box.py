@@ -34,4 +34,5 @@ def Test() :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write("T001_Box.gdml")
-    
+
+    return True
