@@ -5,6 +5,61 @@ import logging as _log
 
 class PythonDefineTests(_unittest.TestCase) :
 
+    def testExpressionInt(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1",r)        
+        self.assertEqual(xc.eval(),1)
+
+    def testExpressionFloat(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1.2345",r)        
+        self.assertEqual(xc.eval(),1.2345)
+
+    def testExpressionIntScientific(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1E3",r)        
+        self.assertEqual(xc.eval(),1000)
+
+    def testExpressionFloatScientific(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1.2345E3",r)
+        self.assertEqual(xc.eval(),1234.5)
+      
+    def testExpressionOperatorAddIntInt(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1+2",r)        
+        self.assertEqual(xc.eval(),3)        
+
+    def testExpressionOperatorAddIntFloat(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","2.3456+1",r)
+        self.assertEqual(xc.eval(),3.3456)        
+
+    def testExpressionOperatorAddFloatFloat(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1.2345+2.3456",r)
+        self.assertEqual(xc.eval(),3.5801)        
+
+    def testExpressionOperatorAddFloatInt(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1+2.3456",r)
+        self.assertEqual(xc.eval(),3.3456)        
+  
+    def testExpressionOperatorSubIntInt(self) : 
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1-2",r)        
+        self.assertEqual(xc.eval(),-1)                
+
+    def testExpressionOperatorSubIntFloat(self) : 
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1-2.3456",r)
+        self.assertEqual(xc.eval(),-1.3456000000000001)
+
+    def testExpressionOperatorSubFloatInt(self) : 
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","2.3456-1",r)
+        self.assertEqual(xc.eval(),1.3456000000000001)
+        
     def testConstantOperatorAddExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
@@ -123,6 +178,11 @@ class PythonDefineTests(_unittest.TestCase) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.atan(xc)).eval(),0.09966865249116204) 
+        
+    def testPositionConstructorStrStrStr(self) :
+        r = pyg4ometry.geant4.Registry()
+        v = pyg4ometry.gdml.Position("p","1","2","3",r)
+        
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
