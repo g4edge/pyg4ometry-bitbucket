@@ -89,20 +89,20 @@ class PythonDefineTests(_unittest.TestCase) :
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.tan(xc)).eval(),0.10033467208545055) 
 
-#    def testConstantExpExpression(self) :
-#        r = pyg4ometry.geant4.Registry()
-#        xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-#        self.assertEqual((pyg4ometry.gdml.exp(xc)).eval(),1.1051709180756477) 
+    def testConstantExpExpression(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","0.1",r)
+        self.assertEqual((pyg4ometry.gdml.exp(xc)).eval(),1.1051709180756477) 
 
     def testConstantLogExpression(self) : 
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.log(xc)).eval(),-2.3025850929940455) 
 
-#    def testConstantLog10Expression(self) : 
-#        r = pyg4ometry.geant4.Registry()
-#        xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-#        self.assertEqual((pyg4ometry.gdml.log10(xc)).eval(),-0.1) 
+    def testConstantLog10Expression(self) : 
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","0.1",r)
+        self.assertEqual((pyg4ometry.gdml.log10(xc)).eval(),-1.0) 
 
     def testConstantSqrtExpression(self) : 
         r = pyg4ometry.geant4.Registry()
