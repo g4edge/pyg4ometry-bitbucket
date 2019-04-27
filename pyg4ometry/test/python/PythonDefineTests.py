@@ -5,6 +5,10 @@ import logging as _log
 
 class PythonDefineTests(_unittest.TestCase) :
 
+    # #############################
+    # ANTLR expressions 
+    # #############################
+
     def testExpressionInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)        
@@ -60,7 +64,10 @@ class PythonDefineTests(_unittest.TestCase) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2.3456-1",r)
         self.assertEqual(xc.eval(),1.3456000000000001)
-        
+
+    # #############################
+    # Constants 
+    # #############################        
     def testConstantOperatorAddExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
@@ -179,6 +186,18 @@ class PythonDefineTests(_unittest.TestCase) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.atan(xc)).eval(),0.09966865249116204) 
+
+    # #############################
+    # Quanty
+    # #############################        
+
+    # #############################
+    # Variable
+    # #############################        
+
+    # #############################
+    # Position
+    # #############################        
         
     def testPositionConstructorStrStrStr(self) :
         r = pyg4ometry.geant4.Registry()
@@ -270,8 +289,29 @@ class PythonDefineTests(_unittest.TestCase) :
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         self.assertEqual((v1*x).eval(),[1.5,3.0,4.5])            
 
-    
+    def testPositionOperatorDivPositionFloat(self) : 
+        r = pyg4ometry.geant4.Registry()
+        v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
+        self.assertEqual((v1/10).eval(),[0.1,0.2,0.3])
 
+    def testPositionOperatorDivPositionExpression(self) : 
+        r = pyg4ometry.geant4.Registry()
+        x = pyg4ometry.gdml.Constant("x","10.0",r)
+        v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
+        self.assertEqual((v1/x).eval(),[0.1,0.2,0.3])
+
+    # #############################
+    # Rotations
+    # #############################
+
+    # #############################
+    # Scale
+    # #############################
+
+    # #############################
+    # Matrix
+    # #############################
+    
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
         
