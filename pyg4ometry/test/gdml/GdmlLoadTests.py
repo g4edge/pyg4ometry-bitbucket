@@ -52,6 +52,7 @@ class SolidLoader(object):
         reader = pyg4ometry.gdml.Reader(self.solid_dict[solidname].filename)
         reg = reader.getRegistry()
         solid = reg.solidDict[self.solid_dict[solidname].solidname]
+        print solid # Dump the parameters of the solid / check the repr method
         mesh = solid.pycsgmesh()
         return (hash(mesh), self.solid_dict[solidname].hashval)
 
