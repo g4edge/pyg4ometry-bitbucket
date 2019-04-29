@@ -26,7 +26,7 @@ class SolidLoader(object):
             "orb" : solid_inf(9, "009_orb.gdml", "orb1", -1),
             "torus" : solid_inf(10, "010_torus.gdml", "torus1", -1),
             "polycone" : solid_inf(11, "011_polycone.gdml", "polycone1", -1),
-            # TODO: 12 Generic polycone
+            "genpoly" : solid_inf(12, "012_generic_polycone.gdml", "genpoly1", -1),
             "polyhedra" : solid_inf(13, "013_polyhedra.gdml", "polyhedra1", -1),
             # TODO: 14 Generic polyhedra
             "eltube" : solid_inf(15, "015_eltube.gdml", "eltube1", -1),
@@ -94,7 +94,9 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testPolyconeLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("polycone")))
 
-    # TODO: Generic Polycone here
+
+    def testGenericPolyconeLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("genpoly")))
 
     def testPolyhedraLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("polyhedra")))
