@@ -40,7 +40,7 @@
 
 <solids>
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <trd name="trd1"     x1="tx1"  x2="tx2"  y1="ty1" y2="ty2" z="tz"  lunit="m"/>
+  <trd name="trd1" x1="tx1"  x2="tx2"  y1="ty1" y2="ty2" z="tz"/>
 </solids>
 
 <structure>
