@@ -35,7 +35,7 @@ class SolidLoader(object):
             "paraboloid" : solid_inf(18, "018_paraboloid.gdml", "paraboloid1", -1),
             "hype" : solid_inf(19, "019_hype.gdml", "hype1", -1),
             "tet" : solid_inf(20, "020_tet.gdml", "tet1", -1),
-            # TODO: 21 Extruded solid
+            "xtru" : solid_inf(21, "021_xtru.gdml", "xtru1", -1),
             "twistedbox" : solid_inf(22, "022_twisted_box.gdml", "twistbox1", -1),
             # TODO: 23 Twsited trap
             "twistedtrd" : solid_inf(24, "024_twisted_trd.gdml", "twisttrd1", -1),
@@ -119,7 +119,8 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testTetLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("tet")))
 
-    # TODO: Extruded solid
+    def testExtrudedSolid(self):
+        self.assertTrue(bool(_loader.getMeshHashes("xtru")))
 
     def testTwistedBox(self):
         self.assertTrue(bool(_loader.getMeshHashes("tet")))
