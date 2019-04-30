@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+
+<define>
+  <constant name="wbx" value="100.0"/>
+  <constant name="wby" value="100.0"/>
+  <constant name="wbz" value="100.0"/>
+
+  <constant name="av1x" value="10"/>
+  <constant name="av1y" value="10"/>
+  <constant name="av2x" value="20"/>
+  <constant name="av2y" value="30"/>
+  <constant name="av3x" value="30"/>
+  <constant name="av3y" value="30"/>
+  <constant name="av4x" value="40"/>
+  <constant name="av4y" value="10"/>
+
+  <constant name="av5x" value="20"/>
+  <constant name="av5y" value="20"/>
+  <constant name="av6x" value="20"/>
+  <constant name="av6y" value="40"/>
+  <constant name="av7x" value="40"/>
+  <constant name="av7y" value="40"/>
+  <constant name="av8x" value="40"/>
+  <constant name="av8y" value="20"/>
+
+  <constant name="adz" value="30"/>
+
+  <position name="center" x="0" y="0" z="0"/>
+  <rotation name="identity" x="0" y="0" z="0"/>
+
+</define>
+
+<materials>
+  <element name="Oxygen"   formula="O"  Z="8.">
+    <atom value="16.0"/>
+  </element>
+  <element name="Nitrogen" formula="N"  Z="7.">
+    <atom value="14.01"/>
+  </element>
+
+  <material name="Al" Z="13.0">
+   <D value="2.70"/>
+   <atom value="26.98"/>
+  </material>
+
+  <material name="Air">
+   <D value="1.290" unit="mg/cm3"/>
+   <fraction n="0.7" ref="Nitrogen"/>
+   <fraction n="0.3" ref="Oxygen"/>
+  </material>
+
+</materials>
+
+<solids>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <arb8 name = "arb81" v1x="av1x" v1y="av1y" v2x="av2x" v2y="av2y" v3x="av3x" v3y="av3y" v4x="av4x" v4y="av4y" v5x="av5x" v5y="av5y" v6x="av6x" v6y="av6y" v7x="av7x" v7y="av7y" v8x="av8x" v8y="av8y" dz="adz" lunit= "mm"/>
+
+
+</solids>
+
+<structure>
+
+  <volume name="arb81Vol">
+    <materialref ref="Air"/>
+    <solidref ref="arb81"/>
+  </volume>
+
+  <volume name="World">
+    <materialref ref="Air"/>
+    <solidref ref="WorldBox"/>
+    <physvol>
+       <volumeref ref="arb81Vol"/>
+       <positionref ref="center"/>
+       <rotationref ref="identity"/>
+    </physvol>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>
+
+</gdml>
