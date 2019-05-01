@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+
+<define>
+  <constant name="wbx" value="100.0"/>
+  <constant name="wby" value="100.0"/>
+  <constant name="wbz" value="100.0"/>
+
+  <constant name="ttptwist" value="1"/>
+  <constant name="ttptheta" value="0.6"/>
+  <constant name="ttpphi" value="0"/>
+  <constant name="ttpalp" value="0.0"/>
+  <constant name="ttpx1" value="5.0"/>
+  <constant name="ttpx2" value="5.0"/>
+  <constant name="ttpx3" value="10.0"/>
+  <constant name="ttpx4" value="10.0"/>
+  <constant name="ttpy1" value="5.0"/>
+  <constant name="ttpy2" value="7.5"/>
+  <constant name="ttpz" value="20.0"/>
+
+  <position name="center" x="0" y="0" z="0"/>
+  <rotation name="identity" x="0" y="0" z="0"/>
+
+</define>
+
+<materials>
+  <element name="Oxygen"   formula="O"  Z="8.">
+    <atom value="16.0"/>
+  </element>
+  <element name="Nitrogen" formula="N"  Z="7.">
+    <atom value="14.01"/>
+  </element>
+
+  <material name="Al" Z="13.0">
+   <D value="2.70"/>
+   <atom value="26.98"/>
+  </material>
+
+  <material name="Air">
+   <D value="1.290" unit="mg/cm3"/>
+   <fraction n="0.7" ref="Nitrogen"/>
+   <fraction n="0.3" ref="Oxygen"/>
+  </material>
+
+</materials>
+
+<solids>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+   <twistedtrap name = "twisttrap1" PhiTwist="ttptwist" z="ttpz" Theta="ttptheta" Phi="ttpphi" y1="ttpy1" x1="ttpx1" x2="ttpx2" y2="ttpy2" x3="ttpx3" x4="ttpx4" Alph="ttpalp" aunit="rad" lunit= "mm"/>
+</solids>
+
+<structure>
+
+  <volume name="twisttrap1Vol">
+    <materialref ref="Air"/>
+    <solidref ref="twisttrap1"/>
+  </volume>
+
+  <volume name="World">
+    <materialref ref="Air"/>
+    <solidref ref="WorldBox"/>
+    <physvol>
+       <volumeref ref="twisttrap1Vol"/>
+       <positionref ref="center"/>
+       <rotationref ref="identity"/>
+    </physvol>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="World"/>
+</setup>
+
+</gdml>
