@@ -28,7 +28,7 @@ class SolidLoader(object):
             "polycone" : solid_inf(11, "011_polycone.gdml", "polycone1", -1),
             "genpoly" : solid_inf(12, "012_generic_polycone.gdml", "genpoly1", -1),
             "polyhedra" : solid_inf(13, "013_polyhedra.gdml", "polyhedra1", -1),
-            "genpolyhedra" : solid_inf(13, "014_generic_polyhedra.gdml", "genpolyhedra1", -1),
+            "genpolyhedra" : solid_inf(14, "014_generic_polyhedra.gdml", "genpolyhedra1", -1),
             "eltube" : solid_inf(15, "015_eltube.gdml", "eltube1", -1),
             "ellipsoid" : solid_inf(16, "016_ellipsoid.gdml", "ellipsoid1", -1),
             "elcone" : solid_inf(17, "017_elcone.gdml", "elcone1", -1),
@@ -40,7 +40,7 @@ class SolidLoader(object):
             # TODO: 23 Twsited trap
             "twistedtrd" : solid_inf(24, "024_twisted_trd.gdml", "twisttrd1", -1),
             # TODO: 25 Twsited tubs
-            "arbtrap" : solid_inf(25, "025_generic_trap.gdml", "arb81", -1),
+            "arbtrap" : solid_inf(26, "026_generic_trap.gdml", "arb81", -1),
             # TODO: 27 Tesselated solid
             "union" : solid_inf(28, "028_union.gdml", "union1", -1),
             "subtraction" : solid_inf(29, "029_subtraction.gdml", "subtraction1", -1),
