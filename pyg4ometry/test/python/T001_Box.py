@@ -1,3 +1,4 @@
+import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
@@ -33,6 +34,6 @@ def Test() :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write("T001_Box.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T001_Box.gdml"))
 
     return True
