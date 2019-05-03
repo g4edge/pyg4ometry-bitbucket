@@ -5,6 +5,9 @@ import logging as _log
 
 from collections import namedtuple
 
+logger = _log.getLogger()
+logger.disabled = True
+
 # Make a cheeky class to reduce repetition
 class SolidLoader(object):
     """

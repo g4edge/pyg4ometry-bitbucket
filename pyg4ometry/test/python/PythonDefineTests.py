@@ -19,7 +19,6 @@ class PythonDefineTests(_unittest.TestCase) :
         xc = pyg4ometry.gdml.Constant("xc","1.2345",r)        
         self.assertEqual(xc.eval(),1.2345)
 
-
     def testExpressionIntScientific(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1E3",r)        
