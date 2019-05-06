@@ -8,7 +8,7 @@ logger = _log.getLogger()
 logger.disabled = True
 
 if __name__ == '__main__':
-    _unittest.main(verbosity=0)
+    _unittest.main(verbosity=2)
 
 
 
