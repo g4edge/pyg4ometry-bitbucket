@@ -78,7 +78,7 @@ class SolidLoader(object):
             "Ellipsoid" : (8, 8),
             "EllipticalCone" : (16, 16),
             "Paraboloid" : (16, 8),
-            "Hype" : (25, 25),
+            "Hype" : (6, 6),
             "TwistedBox" : (None, 20),
             "TwistedTrap" : (None, 20),
             "TwistedTrd" : (None, 20),
