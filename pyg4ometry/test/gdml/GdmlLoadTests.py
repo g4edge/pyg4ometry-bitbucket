@@ -61,10 +61,60 @@ class SolidLoader(object):
 
         }
 
+        # solid name : (nslice , nstack)
+        # nslice is normally used for granularity of curvature in radius
+        # nstack is normally used for granularity of curvature in Z
+        # solids not listed here do not have discretised curves
+        self.curved_solids = {
+            "Tubs" : (16, None),
+            "CutTubs" : (16, None),
+            "Cons" : (16, None),
+            "Sphere" : (6, 6),
+            "Orb" : (16, 8),
+            "Torus" : (6, 6),
+            "Polycone" : (16, None),
+            "GenericPolycone" : (16, None),
+            "EllipticalTube" : (6, 6),
+            "Ellipsoid" : (8, 8),
+            "EllipticalCone" : (16, 16),
+            "Paraboloid" : (16, 8),
+            "Hype" : (6, 6),
+            "TwistedBox" : (None, 20),
+            "TwistedTrap" : (None, 20),
+            "TwistedTrd" : (None, 20),
+            "TwistedTubs" : (16, 16),
+            "GenericTrap" : (None, 20),
+        }
+
     def getMeshHashes(self, solidname):
         reader = pyg4ometry.gdml.Reader(self.solid_dict[solidname].filename)
         reg = reader.getRegistry()
         solid = reg.solidDict[self.solid_dict[solidname].solidname]
+
+        """
+        DEBUG making sure the attribute setting is working
+        try:
+            solid.nstack
+            print solid.type, "->", solid.nstack
+        except:
+            pass
+        """
+
+        if solid.type in self.curved_solids:
+            mesh_density = self.curved_solids[solid.type]
+            if mesh_density[0]:
+                setattr(solid, "nslice", mesh_density[0])
+            if mesh_density[1]:
+                setattr(solid, "nstack", mesh_density[1])
+
+        """
+        #DEBUG
+        try:
+            print solid.type, "->", solid.nstack
+        except:
+            pass
+        """
+
         if self.verbosity:
             print solid # Dump the parameters of the solid / check the repr method
         mesh = solid.pycsgmesh()
