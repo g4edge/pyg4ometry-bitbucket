@@ -78,7 +78,7 @@ class SolidLoader(object):
             "Ellipsoid" : (8, 8),
             "EllipticalCone" : (16, 16),
             "Paraboloid" : (16, 8),
-            "Hype" : (6, 6),
+            "Hype" : (25, 25),
             "TwistedBox" : (None, 20),
             "TwistedTrap" : (None, 20),
             "TwistedTrd" : (None, 20),
@@ -146,18 +146,17 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testTrapLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("trap")))
 
-    #def testSphereLoad(self):
-    #    self.assertTrue(bool(_loader.getMeshHashes("sphere")))
+    def testSphereLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("sphere")))
 
     def testOrbLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("orb")))
 
-    #def testTorusLoad(self):
-    #    self.assertTrue(bool(_loader.getMeshHashes("torus")))
+    def testTorusLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("torus")))
 
     def testPolyconeLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("polycone")))
-
 
     def testGenericPolyconeLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("genpoly")))
@@ -180,8 +179,8 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testParaboloidLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("paraboloid")))
 
-    #def testHypeLoad(self):
-    #    self.assertTrue(bool(_loader.getMeshHashes("hype")))
+    def testHypeLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("hype")))
 
     def testTetLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("tet")))
