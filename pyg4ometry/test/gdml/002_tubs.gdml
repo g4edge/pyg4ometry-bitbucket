@@ -39,8 +39,8 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <tube name="tube1" rmin="rmin"  rmax="rmax" z="z" deltaphi="deltaphi" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <tube name="tube1" rmin="rmin"  rmax="rmax" z="z" deltaphi="deltaphi" lunit="mm" aunit="rad"/>
 </solids>
 
 <structure>

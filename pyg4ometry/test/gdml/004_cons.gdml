@@ -41,8 +41,8 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <cone name="cone1" rmin1="rmin1" rmax1="rmax1" rmin2="rmin2" rmax2="rmax2" z="z" deltaphi="deltaphi"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <cone name="cone1" rmin1="rmin1" rmax1="rmax1" rmin2="rmin2" rmax2="rmax2" z="z" deltaphi="deltaphi" lunit="mm"/>
 </solids>
 
 <structure>

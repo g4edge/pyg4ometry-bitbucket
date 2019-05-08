@@ -11,13 +11,12 @@
   <constant name="startphi" value="1"/>
   <constant name="delptaphi" value="4"/>
   <constant name="ctz" value="20"/>
-  <constant name="ctlowx" value="15"/>
-  <constant name="ctlowy" value="15"/>
-  <constant name="ctlowz" value="15"/>
+  <constant name="ctlowx" value="-15"/>
+  <constant name="ctlowy" value="-15"/>
+  <constant name="ctlowz" value="-15"/>
   <constant name="cthix" value="10"/>
   <constant name="cthiy" value="10"/>
   <constant name="cthiz" value="10"/>
-
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -46,8 +45,8 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
- <cutTube name = "cuttube1" z="20" rmin="1" rmax="5" startphi="1" deltaphi="4" lowX="15" lowY="15" lowZ="15" highX="10" highY="10" highZ="10"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+ <cutTube name = "cuttube1" z="20" rmin="1" rmax="5" startphi="1" deltaphi="4" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" highX="cthix" highY="cthiy" highZ="cthiz" lunit="mm"/>
 </solids>
 
 <structure>

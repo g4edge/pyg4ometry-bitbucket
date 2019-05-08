@@ -61,10 +61,43 @@ class SolidLoader(object):
 
         }
 
+        # solid name : (nslice , nstack)
+        # nslice is normally used for granularity of curvature in radius
+        # nstack is normally used for granularity of curvature in Z
+        # solids not listed here do not have discretised curves
+        self.curved_solids = {
+            "Tubs" : (16, None),
+            "CutTubs" : (16, None),
+            "Cons" : (16, None),
+            "Sphere" : (6, 6),
+            "Orb" : (16, 8),
+            "Torus" : (6, 6),
+            "Polycone" : (16, None),
+            "GenericPolycone" : (16, None),
+            "EllipticalTube" : (6, 6),
+            "Ellipsoid" : (8, 8),
+            "EllipticalCone" : (16, 16),
+            "Paraboloid" : (16, 8),
+            "Hype" : (6, 6),
+            "TwistedBox" : (None, 20),
+            "TwistedTrap" : (None, 20),
+            "TwistedTrd" : (None, 20),
+            "TwistedTubs" : (16, 16),
+            "GenericTrap" : (None, 20),
+        }
+
     def getMeshHashes(self, solidname):
         reader = pyg4ometry.gdml.Reader(self.solid_dict[solidname].filename)
         reg = reader.getRegistry()
         solid = reg.solidDict[self.solid_dict[solidname].solidname]
+
+        if solid.type in self.curved_solids:
+            mesh_density = self.curved_solids[solid.type]
+            if mesh_density[0]:
+                setattr(solid, "nslice", mesh_density[0])
+            if mesh_density[1]:
+                setattr(solid, "nstack", mesh_density[1])
+
         if self.verbosity:
             print solid # Dump the parameters of the solid / check the repr method
         mesh = solid.pycsgmesh()
@@ -96,18 +129,17 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testTrapLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("trap")))
 
-    #def testSphereLoad(self):
-    #    self.assertTrue(bool(_loader.getMeshHashes("sphere")))
+    def testSphereLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("sphere")))
 
     def testOrbLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("orb")))
 
-    #def testTorusLoad(self):
-    #    self.assertTrue(bool(_loader.getMeshHashes("torus")))
+    def testTorusLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("torus")))
 
     def testPolyconeLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("polycone")))
-
 
     def testGenericPolyconeLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("genpoly")))
@@ -130,8 +162,8 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testParaboloidLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("paraboloid")))
 
-    #def testHypeLoad(self):
-    #    self.assertTrue(bool(_loader.getMeshHashes("hype")))
+    def testHypeLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("hype")))
 
     def testTetLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("tet")))
@@ -166,10 +198,10 @@ class GdmlLoadTests(_unittest.TestCase) :
         self.assertTrue(bool(_loader.getMeshHashes("intersection")))
 
     def testMaterials(self):
-        r = pyg4ometry.gdml.Reader("201_materials.gdml")
+        r = pyg4ometry.gdml.Reader(_pj("201_materials.gdml"))
         w = pyg4ometry.gdml.Writer()
         w.addDetector(r.getRegistry())
-        w.write("201_materials_processed.gdml")
+        w.write(_pj("201_materials_processed.gdml"))
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
