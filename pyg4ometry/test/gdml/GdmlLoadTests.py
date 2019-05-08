@@ -201,7 +201,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         r = pyg4ometry.gdml.Reader("201_materials.gdml")
         w = pyg4ometry.gdml.Writer()
         w.addDetector(r.getRegistry())
-        w.write("201_materials_processed.gdml")
+        w.write(_pj("201_materials_processed.gdml"))
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
