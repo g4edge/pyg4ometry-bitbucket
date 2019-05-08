@@ -198,7 +198,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         self.assertTrue(bool(_loader.getMeshHashes("intersection")))
 
     def testMaterials(self):
-        r = pyg4ometry.gdml.Reader("201_materials.gdml")
+        r = pyg4ometry.gdml.Reader(_pj("201_materials.gdml"))
         w = pyg4ometry.gdml.Writer()
         w.addDetector(r.getRegistry())
         w.write(_pj("201_materials_processed.gdml"))
