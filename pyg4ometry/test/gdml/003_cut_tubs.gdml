@@ -46,7 +46,7 @@
 
 <solids>
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
- <cutTube name = "cuttube1" z="20" rmin="1" rmax="5" startphi="1" deltaphi="4" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" highX="cthix" highY="cthiy" highZ="cthiz"/>
+ <cutTube name = "cuttube1" z="20" rmin="1" rmax="5" startphi="1" deltaphi="4" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" highX="cthix" highY="cthiy" highZ="cthiz" lunit="mm"/>
 </solids>
 
 <structure>
