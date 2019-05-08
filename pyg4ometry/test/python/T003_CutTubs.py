@@ -18,10 +18,10 @@ def Test(vis = False) :
     ctz        = _gd.Constant("tz","50",reg,True)
     ctstartphi = _gd.Constant("startphi","0",reg,True)
     ctdeltaphi = _gd.Constant("deltaphi","1.5*pi",reg,True)
-    ctlowx     = _gd.Constant("ctlowx","0",reg,True)
-    ctlowy     = _gd.Constant("ctlowy","1",reg,True)
-    ctlowz     = _gd.Constant("ctlowz","1",reg,True)
-    cthighx    = _gd.Constant("cthighx","0",reg,True)
+    ctlowx     = _gd.Constant("ctlowx","-1",reg,True)
+    ctlowy     = _gd.Constant("ctlowy","-1",reg,True)
+    ctlowz     = _gd.Constant("ctlowz","-1",reg,True)
+    cthighx    = _gd.Constant("cthighx","1",reg,True)
     cthighy    = _gd.Constant("cthighy","1",reg,True)
     cthighz    = _gd.Constant("cthighz","1",reg,True)
     
@@ -29,8 +29,8 @@ def Test(vis = False) :
     bm = _g4.Material(name="G4_Fe") 
 
     # solids
-    ws = _g4.solid.Box("ws",wx,wy,wz, "mm", reg)
-    cts = _g4.solid.CutTubs("ts",ctrmin,ctrmax,ctz,ctstartphi,ctdeltaphi,[ctlowx,ctlowy,ctlowz],[cthighx,cthighy,cthighz],reg)
+    ws = _g4.solid.Box("ws",wx,wy,wz, reg,"mm")
+    cts = _g4.solid.CutTubs("ts",ctrmin,ctrmax,ctz,ctstartphi,ctdeltaphi,[ctlowx,ctlowy,ctlowz],[cthighx,cthighy,cthighz],reg,"mm","rad")
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
