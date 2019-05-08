@@ -91,29 +91,12 @@ class SolidLoader(object):
         reg = reader.getRegistry()
         solid = reg.solidDict[self.solid_dict[solidname].solidname]
 
-        """
-        DEBUG making sure the attribute setting is working
-        try:
-            solid.nstack
-            print solid.type, "->", solid.nstack
-        except:
-            pass
-        """
-
         if solid.type in self.curved_solids:
             mesh_density = self.curved_solids[solid.type]
             if mesh_density[0]:
                 setattr(solid, "nslice", mesh_density[0])
             if mesh_density[1]:
                 setattr(solid, "nstack", mesh_density[1])
-
-        """
-        #DEBUG
-        try:
-            print solid.type, "->", solid.nstack
-        except:
-            pass
-        """
 
         if self.verbosity:
             print solid # Dump the parameters of the solid / check the repr method
