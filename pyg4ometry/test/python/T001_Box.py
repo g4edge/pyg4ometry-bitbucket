@@ -16,8 +16,8 @@ def Test(vis = False) :
     by = _gd.Constant("by","10",reg,True)
     bz = _gd.Constant("bz","10",reg,True)
     
-    wm = _g4.Material(name="G4_Galactic") 
-    bm = _g4.Material(name="G4_Fe") 
+    wm = _g4.MaterialPredefined("G4_Galactic") 
+    bm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
