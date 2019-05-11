@@ -33,10 +33,11 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <polycone name = "polycone1" startphi="1" deltaphi="4" aunit="rad" lunit= "mm">
-  <zplane rmin="1" rmax="9" z="10" />
-  <zplane rmin="3" rmax="5" z="12" />
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <polycone name = "polycone1" startphi="1" deltaphi="4" aunit="rad" lunit="mm">
+  <zplane rmin="1" rmax="9" z="-20" />
+  <zplane rmin="3" rmax="5" z="0" />
+  <zplane rmin="1" rmax="9" z="20" />
   </polycone>
 
 </solids>
