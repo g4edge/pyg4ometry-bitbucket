@@ -7,6 +7,7 @@ import T004_Cons
 import T005_Para
 import T006_Trd
 import T007_Trap
+import T008_Sphere
 
 import logging as _log
 
@@ -34,6 +35,9 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testTrap(self) :
         self.assertTrue(T007_Trap.Test())
+
+    def testSphere(self) :
+        self.assertTrue(T008_Sphere.Test())
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
