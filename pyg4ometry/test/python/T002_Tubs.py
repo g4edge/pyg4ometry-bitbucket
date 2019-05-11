@@ -23,8 +23,8 @@ def Test(vis = False) :
     bm = _g4.Material(name="G4_Fe") 
 
     # solids
-    ws = _g4.solid.Box("ws",wx,wy,wz, "mm", reg)
-    ts = _g4.solid.Tubs("ts",trmin,trmax,tz,tstartphi,tdeltaphi,"mm","rad",reg)
+    ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
+    ts = _g4.solid.Tubs("ts",trmin,trmax,tz,tstartphi,tdeltaphi,reg, "mm","rad")
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
