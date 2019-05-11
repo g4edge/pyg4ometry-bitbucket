@@ -8,6 +8,7 @@ import T005_Para
 import T006_Trd
 import T007_Trap
 import T008_Sphere
+import T009_Orb
 
 import logging as _log
 
@@ -38,6 +39,9 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testSphere(self) :
         self.assertTrue(T008_Sphere.Test())
+
+    def testOrb(self) :
+        self.assertTrue(T009_Orb.Test())
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
