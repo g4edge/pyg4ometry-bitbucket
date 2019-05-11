@@ -9,6 +9,8 @@ import T006_Trd
 import T007_Trap
 import T008_Sphere
 import T009_Orb
+import T010_Torus
+import T011_Polycone
 
 import logging as _log
 
@@ -42,6 +44,14 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testOrb(self) :
         self.assertTrue(T009_Orb.Test())
+
+    def testTorus(self) :
+        self.assertTrue(T010_Torus.Test())
+
+    def testPolycone(self) :
+        self.assertTrue(T011_Polycone.Test())
+
+
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
