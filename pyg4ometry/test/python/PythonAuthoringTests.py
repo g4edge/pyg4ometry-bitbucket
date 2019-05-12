@@ -23,6 +23,7 @@ import T020_Tet
 import T021_ExtrudedSolid
 import T022_TwistedBox
 import T023_TwistedTrap
+import T024_TwistedTrd
 
 import logging as _log
 
@@ -98,6 +99,10 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testTwistedTrap(self) : 
         self.assertTrue(T023_TwistedTrap.Test())
+
+    def testTwistedTrd(self) : 
+        self.assertTrue(T024_TwistedTrd.Test())
+
     
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
