@@ -40,7 +40,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <xtru
       name = "xtru1" lunit= "mm" >
     <twoDimVertex x="xv1x" y="xv1y" />
