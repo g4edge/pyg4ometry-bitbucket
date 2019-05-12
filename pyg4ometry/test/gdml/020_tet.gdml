@@ -38,8 +38,8 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <tet name="tet1" vertex1="v1" vertex2="v2" vertex3="v3" vertex4="v4"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <tet name="tet1" vertex1="v1" vertex2="v2" vertex3="v3" vertex4="v4" lunit="mm"/>
 </solids>
 
 <structure>
