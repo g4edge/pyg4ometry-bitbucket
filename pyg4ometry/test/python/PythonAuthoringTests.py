@@ -109,7 +109,7 @@ class PythonAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T025_TwistedTubs.Test())
 
     def testGenericTrap(self) : 
-        self.assertTrue(T026_TwistedTubs.Test())
+        self.assertTrue(T026_GenericTrap.Test())
 
     
 if __name__ == '__main__':
