@@ -15,6 +15,8 @@ import T012_GenericPolycone
 import T013_Polyhedra
 import T014_GenericPolyhedra
 import T015_EllipticalTube
+import T016_Ellipsoid
+import T017_EllipticalCone
 
 import logging as _log
 
@@ -64,8 +66,14 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testGenericPolyhedra(self) : 
         self.assertTrue(T014_GenericPolyhedra.Test())
 
-    def testGenericPolyhedra(self) : 
+    def testEllipticalTube(self) : 
         self.assertTrue(T015_EllipticalTube.Test())
+
+    def testEllipsoid(self) : 
+        self.assertTrue(T016_Ellipsoid.Test())
+
+    def testEllipticalCone(self) : 
+        self.assertTrue(T017_EllipticalCone.Test())
 
 
 if __name__ == '__main__':
