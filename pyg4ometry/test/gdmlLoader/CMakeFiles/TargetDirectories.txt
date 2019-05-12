@@ -1,8 +1,0 @@
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/install/local.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/install/strip.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/install.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/list_install_components.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/rebuild_cache.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/edit_cache.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/G01.dir
-/Users/sboogert/Physics/coderepos/pyg4ometry/gdmlLoader/CMakeFiles/load_gdml.dir
