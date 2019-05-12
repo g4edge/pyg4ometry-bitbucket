@@ -9,7 +9,7 @@
   <constant name="ax" value="10.0"/>
   <constant name="by" value="15.0"/>
   <constant name="cz" value="20.0"/>
-  <constant name="topcut" value="4"/>
+  <constant name="topcut" value="0"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -38,7 +38,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <ellipsoid name = "ellipsoid1" ax="ax" by="by" cz="cz" zcut2="topcut" lunit= "mm"/>
 </solids>
 

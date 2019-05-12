@@ -37,7 +37,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <eltube name = "eltube1" dx="dx" dy="dy" dz="dz" lunit= "mm"/>
 </solids>
 
