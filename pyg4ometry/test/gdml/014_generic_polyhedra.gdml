@@ -33,11 +33,11 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <genericPolyhedra name= "genpolyhedra1" startphi="1" deltaphi="4" numsides="10" aunit="rad" lunit= "mm">
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <genericPolyhedra name= "genpolyhedra1" startphi="1" deltaphi="4" numsides="10" aunit="rad" lunit="mm">
+      <rzpoint r="1" z="-10" />
+      <rzpoint r="3" z="0" />
       <rzpoint r="1" z="10" />
-      <rzpoint r="3" z="12" />
-      <rzpoint r="1" z="12" />
   </genericPolyhedra>
 
 
