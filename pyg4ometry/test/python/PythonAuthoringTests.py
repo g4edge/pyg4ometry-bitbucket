@@ -24,6 +24,8 @@ import T021_ExtrudedSolid
 import T022_TwistedBox
 import T023_TwistedTrap
 import T024_TwistedTrd
+import T025_TwistedTubs
+import T026_GenericTrap
 
 import logging as _log
 
@@ -102,6 +104,12 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testTwistedTrd(self) : 
         self.assertTrue(T024_TwistedTrd.Test())
+
+    def testTwistedTubs(self) : 
+        self.assertTrue(T025_TwistedTubs.Test())
+
+    def testGenericTrap(self) : 
+        self.assertTrue(T026_TwistedTubs.Test())
 
     
 if __name__ == '__main__':
