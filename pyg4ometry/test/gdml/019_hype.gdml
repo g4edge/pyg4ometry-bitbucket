@@ -39,7 +39,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <hype name = "hype1" rmin="hrmin" rmax="hrmax" z="hz" inst="hinst" outst="houtst"/>
 </solids>
 
