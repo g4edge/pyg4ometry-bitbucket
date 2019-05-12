@@ -18,6 +18,7 @@ import T015_EllipticalTube
 import T016_Ellipsoid
 import T017_EllipticalCone
 import T018_Paraboloid
+import T019_Hyperboloid
 
 import logging as _log
 
@@ -79,6 +80,8 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testParaboloid(self) : 
         self.assertTrue(T018_Paraboloid.Test())
 
+    def testHyperboloid(self) : 
+        self.assertTrue(T019_Hyperboloid.Test())
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
