@@ -8,8 +8,8 @@
 
   <constant name="dx" value="1.0"/>
   <constant name="dy" value="1.5"/>
-  <constant name="zmax" value="2.0"/>
-  <constant name="zcut" value="1.5"/>
+  <constant name="zmax" value="20"/>
+  <constant name="zcut" value="15"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -38,8 +38,8 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-  <elcone name = "elcone1" dx="dx" dy="dy" zmax="zmax" zcut="zcut" lunit= "mm" />
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <elcone name = "elcone1" dx="dx" dy="dy" zmax="zmax" zcut="zcut" lunit="mm" />
 </solids>
 
 <structure>
