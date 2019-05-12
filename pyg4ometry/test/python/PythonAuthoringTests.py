@@ -11,6 +11,9 @@ import T008_Sphere
 import T009_Orb
 import T010_Torus
 import T011_Polycone
+import T012_GenericPolycone
+import T013_Polyhedra
+import T014_GenericPolyhedra
 
 import logging as _log
 
@@ -51,6 +54,14 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testPolycone(self) :
         self.assertTrue(T011_Polycone.Test())
 
+    def testGenericPolycone(self) :
+        self.assertTrue(T012_GenericPolycone.Test())
+
+    def testPolyhedra(self) :
+        self.assertTrue(T013_Polyhedra.Test())
+
+    def testGenericPolyhedra(self) : 
+        self.assertTrue(T014_GenericPolyhedra.Test())
 
 
 if __name__ == '__main__':
