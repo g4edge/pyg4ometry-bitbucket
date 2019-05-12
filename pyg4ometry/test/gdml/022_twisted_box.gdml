@@ -38,7 +38,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
 <twistedbox name = "twistbox1" PhiTwist= "tbtwist" x= "tbx" y= "tby" z= "tbz"/>
 </solids>
 

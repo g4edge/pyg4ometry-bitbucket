@@ -19,6 +19,10 @@ import T016_Ellipsoid
 import T017_EllipticalCone
 import T018_Paraboloid
 import T019_Hyperboloid
+import T020_Tet
+import T021_ExtrudedSolid
+import T022_TwistedBox
+import T023_TwistedTrap
 
 import logging as _log
 
@@ -83,5 +87,17 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testHyperboloid(self) : 
         self.assertTrue(T019_Hyperboloid.Test())
 
+    def testTet(self) :
+        self.assertTrue(T020_Tet.Test())        
+
+    def testExtrudedSolid(self) :
+        self.assertTrue(T021_ExtrudedSolid.Test())        
+
+    def testTwistedBox(self) : 
+        self.assertTrue(T022_TwistedBox.Test())
+
+    def testTwistedTrap(self) : 
+        self.assertTrue(T023_TwistedTrap.Test())
+    
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        

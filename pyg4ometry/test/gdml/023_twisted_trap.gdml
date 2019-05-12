@@ -45,8 +45,8 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
-   <twistedtrap name = "twisttrap1" PhiTwist="ttptwist" z="ttpz" Theta="ttptheta" Phi="ttpphi" y1="ttpy1" x1="ttpx1" x2="ttpx2" y2="ttpy2" x3="ttpx3" x4="ttpx4" Alph="ttpalp" aunit="rad" lunit= "mm"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+  <twistedtrap name ="twisttrap1" PhiTwist="ttptwist" z="ttpz" Theta="ttptheta" Phi="ttpphi" y1="ttpy1" x1="ttpx1" x2="ttpx2" y2="ttpy2" x3="ttpx3" x4="ttpx4" Alph="ttpalp" aunit="rad" lunit="mm"/>
 </solids>
 
 <structure>
