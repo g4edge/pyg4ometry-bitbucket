@@ -17,6 +17,7 @@ import T014_GenericPolyhedra
 import T015_EllipticalTube
 import T016_Ellipsoid
 import T017_EllipticalCone
+import T018_Paraboloid
 
 import logging as _log
 
@@ -74,6 +75,9 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testEllipticalCone(self) : 
         self.assertTrue(T017_EllipticalCone.Test())
+
+    def testParaboloid(self) : 
+        self.assertTrue(T018_Paraboloid.Test())
 
 
 if __name__ == '__main__':
