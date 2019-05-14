@@ -1,0 +1,204 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="length_safety" value="1e-08"/>
+		<constant name="beam_pipe_radius" value="7.5"/>
+		<constant name="beam_pipe_thickness" value="2"/>
+		<constant name="beam_pipe_length" value="50"/>
+		<constant name="wg_innerrb" value="7.5"/>
+		<constant name="wg_outerd" value="91.2"/>
+		<constant name="wg_outerr" value="(wg_outerd) / (2.0)"/>
+		<constant name="wg_length" value="50.0"/>
+		<constant name="wg_height" value="27.5"/>
+		<constant name="wg_offset" value="12.0"/>
+		<constant name="wg_centre" value="(wg_offset) + ((wg_height) / (2))"/>
+		<constant name="ec_innerr" value="7.5"/>
+		<constant name="ec_outerr" value="(wg_outerd) / (2.0)"/>
+		<constant name="ec_length" value="5"/>
+		<constant name="ec_center" value="(wg_length) + ((ec_length) / (2))"/>
+		<constant name="ca_length" value="13"/>
+		<constant name="ca_outerr" value="(wg_outerd) / (2.0)"/>
+		<constant name="ca_centre" value="(ca_length) / (2.0)"/>
+		<constant name="ca_innerr" value="26.389"/>
+		<constant name="ce_outerr" value="(ca_innerr) + (5)"/>
+		<constant name="ce_length" value="5"/>
+		<position name="wg_sub1_position" x="wg_centre" y="0" z="0"/>
+		<rotation name="wg_sub1_rotation" x="0" y="0" z="0"/>
+		<position name="wg_sub2_position" x="0" y="wg_centre" z="0"/>
+		<rotation name="wg_sub2_rotation" x="0" y="0" z="1.57079632679"/>
+		<position name="wg_sub3_position" x="(-wg_centre)" y="0" z="0"/>
+		<rotation name="wg_sub3_rotation" x="0" y="0" z="3.14159265359"/>
+		<position name="wg_sub4_position" x="0" y="(-wg_centre)" z="0"/>
+		<rotation name="wg_sub4_rotation" x="0" y="0" z="4.71238898038"/>
+		<position name="sg_sub5_position" x="60" y="60" z="-10"/>
+		<rotation name="sg_sub5_rotation" x="0" y="0" z="0"/>
+		<position name="sg_sub6_position" x="-60" y="60" z="-10"/>
+		<rotation name="sg_sub6_rotation" x="0" y="0" z="0"/>
+		<position name="sg_sub7_position" x="-60" y="-60" z="-10"/>
+		<rotation name="sg_sub7_rotation" x="0" y="0" z="0"/>
+		<position name="sg_sub8_position" x="60" y="-60" z="-10"/>
+		<rotation name="sg_sub8_rotation" x="0" y="0" z="0"/>
+		<position name="ec_sub1_position" x="60" y="60" z="0"/>
+		<rotation name="ec_sub1_rotation" x="0" y="0" z="0"/>
+		<position name="ec_sub2_position" x="-60" y="60" z="0"/>
+		<rotation name="ec_sub2_rotation" x="0" y="0" z="0"/>
+		<position name="ec_sub3_position" x="-60" y="-60" z="0"/>
+		<rotation name="ec_sub3_rotation" x="0" y="0" z="0"/>
+		<position name="ec_sub4_position" x="60" y="-60" z="0"/>
+		<rotation name="ec_sub4_rotation" x="0" y="0" z="0"/>
+		<position name="wg_physical_position" x="0" y="0" z="((-wg_length)) / (2.0)"/>
+		<rotation name="wg_physical_rotation" x="0" y="0" z="0"/>
+		<position name="ec_physical_position" x="0" y="0" z="(((-wg_length)) - ((ec_length) / (2.0))) - (length_safety)"/>
+		<rotation name="ec_physical_rotation" x="0" y="0" z="0"/>
+		<position name="ca_physical_position" x="0" y="0" z="((ca_length) / (2.0)) + (length_safety)"/>
+		<rotation name="ca_physical_rotation" x="0" y="0" z="0"/>
+		<position name="ce_physical_position" x="0" y="0" z="((ca_length) + ((ce_length) / (2))) + ((length_safety) * (2))"/>
+		<rotation name="ce_physical_rotation" x="0" y="0" z="0"/>
+		<position name="bp_physical1_position" x="0" y="0" z="(((ca_length) + (ce_length)) + ((beam_pipe_length) / (2.0))) + ((length_safety) * (2))"/>
+		<rotation name="bp_physical1_rotation" x="0" y="0" z="0"/>
+		<position name="bp_physical2_position" x="0" y="0" z="((((-wg_length)) - (ec_length)) - ((beam_pipe_length) / (2.0))) - ((length_safety) * (2))"/>
+		<rotation name="bp_physical2_rotation" x="0" y="0" z="0"/>
+	</define>
+	<materials/>
+	<solids>
+		<box name="world_solid" x="500" y="500" z="500"/>
+		<tube deltaphi="6.28318530718" name="wg_body_solid" rmax="wg_outerr" rmin="wg_innerrb" startphi="0" z="wg_length"/>
+		<box name="wg_cut_solid" x="wg_height" y="8.0" z="wg_length"/>
+		<box name="wg_cut2_solid" x="100.0" y="100.0" z="wg_length"/>
+		<subtraction name="wg_sub1">
+			<first ref="wg_body_solid"/>
+			<second ref="wg_cut_solid"/>
+			<positionref ref="wg_sub1_position"/>
+			<rotationref ref="wg_sub1_rotation"/>
+		</subtraction>
+		<subtraction name="wg_sub2">
+			<first ref="wg_sub1"/>
+			<second ref="wg_cut_solid"/>
+			<positionref ref="wg_sub2_position"/>
+			<rotationref ref="wg_sub2_rotation"/>
+		</subtraction>
+		<subtraction name="wg_sub3">
+			<first ref="wg_sub2"/>
+			<second ref="wg_cut_solid"/>
+			<positionref ref="wg_sub3_position"/>
+			<rotationref ref="wg_sub3_rotation"/>
+		</subtraction>
+		<subtraction name="wg_sub4">
+			<first ref="wg_sub3"/>
+			<second ref="wg_cut_solid"/>
+			<positionref ref="wg_sub4_position"/>
+			<rotationref ref="wg_sub4_rotation"/>
+		</subtraction>
+		<subtraction name="sg_sub5">
+			<first ref="wg_sub4"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="sg_sub5_position"/>
+			<rotationref ref="sg_sub5_rotation"/>
+		</subtraction>
+		<subtraction name="sg_sub6">
+			<first ref="sg_sub5"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="sg_sub6_position"/>
+			<rotationref ref="sg_sub6_rotation"/>
+		</subtraction>
+		<subtraction name="sg_sub7">
+			<first ref="sg_sub6"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="sg_sub7_position"/>
+			<rotationref ref="sg_sub7_rotation"/>
+		</subtraction>
+		<subtraction name="sg_sub8">
+			<first ref="sg_sub7"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="sg_sub8_position"/>
+			<rotationref ref="sg_sub8_rotation"/>
+		</subtraction>
+		<tube deltaphi="6.28318530718" name="ec_solid" rmax="ec_outerr" rmin="ec_innerr" startphi="0" z="ec_length"/>
+		<subtraction name="ec_sub1">
+			<first ref="ec_solid"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="ec_sub1_position"/>
+			<rotationref ref="ec_sub1_rotation"/>
+		</subtraction>
+		<subtraction name="ec_sub2">
+			<first ref="ec_sub1"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="ec_sub2_position"/>
+			<rotationref ref="ec_sub2_rotation"/>
+		</subtraction>
+		<subtraction name="ec_sub3">
+			<first ref="ec_sub2"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="ec_sub3_position"/>
+			<rotationref ref="ec_sub3_rotation"/>
+		</subtraction>
+		<subtraction name="ec_sub4">
+			<first ref="ec_sub3"/>
+			<second ref="wg_cut2_solid"/>
+			<positionref ref="ec_sub4_position"/>
+			<rotationref ref="ec_sub4_rotation"/>
+		</subtraction>
+		<tube deltaphi="6.28318530718" name="ca_solid" rmax="wg_outerr" rmin="ca_innerr" startphi="0" z="ca_length"/>
+		<tube deltaphi="6.28318530718" name="ce_solid" rmax="ce_outerr" rmin="beam_pipe_radius" startphi="0" z="ce_length"/>
+		<tube deltaphi="6.28318530718" name="bp_solid" rmax="(beam_pipe_radius) + (beam_pipe_thickness)" rmin="beam_pipe_radius" startphi="0" z="beam_pipe_length"/>
+	</solids>
+	<structure>
+		<volume name="wg_logical">
+			<materialref ref="G4_Cu"/>
+			<solidref ref="sg_sub8"/>
+		</volume>
+		<volume name="ec_logical">
+			<materialref ref="G4_Cu"/>
+			<solidref ref="ec_sub4"/>
+		</volume>
+		<volume name="ca_logical">
+			<materialref ref="G4_Cu"/>
+			<solidref ref="ca_solid"/>
+		</volume>
+		<volume name="ce_logical">
+			<materialref ref="G4_Cu"/>
+			<solidref ref="ce_solid"/>
+		</volume>
+		<volume name="bp_logical">
+			<materialref ref="G4_Cu"/>
+			<solidref ref="bp_solid"/>
+		</volume>
+		<volume name="world_logical">
+			<materialref ref="G4_Galactic"/>
+			<solidref ref="world_solid"/>
+			<physvol name="wg_physical">
+				<volumeref ref="wg_logical"/>
+				<positionref ref="wg_physical_position"/>
+				<rotationref ref="wg_physical_rotation"/>
+			</physvol>
+			<physvol name="ec_physical">
+				<volumeref ref="ec_logical"/>
+				<positionref ref="ec_physical_position"/>
+				<rotationref ref="ec_physical_rotation"/>
+			</physvol>
+			<physvol name="ca_physical">
+				<volumeref ref="ca_logical"/>
+				<positionref ref="ca_physical_position"/>
+				<rotationref ref="ca_physical_rotation"/>
+			</physvol>
+			<physvol name="ce_physical">
+				<volumeref ref="ce_logical"/>
+				<positionref ref="ce_physical_position"/>
+				<rotationref ref="ce_physical_rotation"/>
+			</physvol>
+			<physvol name="bp_physical1">
+				<volumeref ref="bp_logical"/>
+				<positionref ref="bp_physical1_position"/>
+				<rotationref ref="bp_physical1_rotation"/>
+			</physvol>
+			<physvol name="bp_physical2">
+				<volumeref ref="bp_logical"/>
+				<positionref ref="bp_physical2_position"/>
+				<rotationref ref="bp_physical2_rotation"/>
+			</physvol>
+		</volume>
+	</structure>
+	<setup name="Default" version="1.0">
+		<world ref="world_logical"/>
+	</setup>
+</gdml>

@@ -23,6 +23,17 @@
 % ONLY FOR \footnote in table/tabular
 %
 \usepackage{pdfpages,multirow,ragged2e} %
+\usepackage{listings}
+\usepackage{fancyvrb}
+
+\lstset{
+ identifierstyle=\small, 
+ commentstyle=\color{red}, 
+ stringstyle=\ttfamily, 
+ showstringspaces=false
+ }
+
+
 %
 % CHANGE SEQUENCE OF GRAPHICS EXTENSION TO BE EMBEDDED
 % ----------------------------------------------------
@@ -83,15 +94,39 @@ Studying the energy deposits in accelerator components, mechanical supports, ser
 \section{INTRODUCTION}
 
 \subsection{Particle transport codes}
+There are multiple different codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX and FLUKA \cite{fluka}. 
 
 \subsection{Geometry generation}
 
 \section{EXAMPLES}
 \subsection{Python}
 
+\VerbatimInput[fontsize=\small]{./examples/simple.py}
+
+\begin{figure}[!htb]
+   \centering
+   \includegraphics*[width=.9\columnwidth]{./examples/simple.jpg}
+   \caption{Example of three primitive Geant4 solids rendered in VTK.}
+   \label{fig:simple}
+\end{figure}
+
+Figure \ref{fig:dipole} shows a more complex geometry example. 
+\begin{figure}[!htb]
+   \centering
+   \includegraphics*[width=.9\columnwidth]{./examples/dipole.jpg}
+   \caption{Example of a more complex geometry example, this time a cavity beam position monitor}
+   \label{fig:dipole}
+\end{figure}
+
+
+%\lstinputlisting[language=Python]{./examples/simple.py}
+
 \subsection{Geometry Description Markup Language (GDML)}
 
+\subsection{Standard tessellation language (STL)}
+
 \subsection{Computer aided design (STEP)}
+
 
 \section{SUMMARY}
 
@@ -103,6 +138,7 @@ the \textbf{REFERENCES} or \textbf{APPENDIX} section.
 %
 % only for "biblatex"
 %
+
 \ifboolexpr{bool{jacowbiblatex}}%
 	{\printbibliography}%
 	{%
@@ -111,25 +147,36 @@ the \textbf{REFERENCES} or \textbf{APPENDIX} section.
 	%\begin{thebibliography}{99}   % Use for  10-99  references
 	\begin{thebibliography}{9} % Use for 1-9 references
 	
-	\bibitem{jacow-help}
-		JACoW,
-		\url{http://www.jacow.org}
+	\bibitem{geant4} Recent developments in Geant4, NIMA 835, pages 186-225, 2016 
+	\bibitem{fluka} CERN-2005-10 (2005), 
 	
-	\bibitem{IEEE}
-		\textit{IEEE Editorial Style Manual},
-		IEEE Periodicals, Piscataway,
-		NJ, USA, Oct. 2014, pp. 34--52.
-
-	\bibitem{journal-abbreviations}
-	\url{https://woodward.library.ubc.ca/researchhelp/journal-abbreviations/}
 
 	\end{thebibliography}
 } % end \ifboolexpr
-%
+
+
 % for use as JACoW template the inclusion of the ANNEX parts have been commented out
 % to generate the complete documentation please remove the "%" of the next two commands
 % 
 %%%\newpage
+
+%@article{ALLISON2016186,
+%title = "Recent developments in Geant4",
+%journal = "Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment",
+%volume = "835",
+%pages = "186 - 225",
+%year = "2016",
+%issn = "0168-9002",
+%doi = "https://doi.org/10.1016/j.nima.2016.06.125",
+%url = "http://www.sciencedirect.com/science/article/pii/S0168900216306957",
+%author = "J. Allison and K. Amako and J. Apostolakis and P. Arce and M. Asai and T. Aso and E. Bagli and A. Bagulya and S. Banerjee and G. Barrand and B.R. Beck and A.G. Bogdanov and D. Brandt and J.M.C. Brown and H. Burkhardt and Ph. Canal and D. Cano-Ott and S. Chauvie and K. Cho and G.A.P. Cirrone and G. Cooperman and M.A. Cortés-Giraldo and G. Cosmo and G. Cuttone and G. Depaola and L. Desorgher and X. Dong and A. Dotti and V.D. Elvira and G. Folger and Z. Francis and A. Galoyan and L. Garnier and M. Gayer and K.L. Genser and V.M. Grichine and S. Guatelli and P. Guèye and P. Gumplinger and A.S. Howard and I. Hřivnáčová and S. Hwang and S. Incerti and A. Ivanchenko and V.N. Ivanchenko and F.W. Jones and S.Y. Jun and P. Kaitaniemi and N. Karakatsanis and M. Karamitros and M. Kelsey and A. Kimura and T. Koi and H. Kurashige and A. Lechner and S.B. Lee and F. Longo and M. Maire and D. Mancusi and A. Mantero and E. Mendoza and B. Morgan and K. Murakami and T. Nikitina and L. Pandola and P. Paprocki and J. Perl and I. Petrović and M.G. Pia and W. Pokorski and J.M. Quesada and M. Raine and M.A. Reis and A. Ribon and A. Ristić Fira and F. Romano and G. Russo and G. Santin and T. Sasaki and D. Sawkey and J.I. Shin and I.I. Strakovsky and A. Taborda and S. Tanaka and B. Tomé and T. Toshito and H.N. Tran and P.R. Truscott and L. Urban and V. Uzhinsky and J.M. Verbeke and M. Verderi and B.L. Wendt and H. Wenzel and D.H. Wright and D.M. Wright and T. Yamashita and J. Yarba and H. Yoshida",
+%keywords = "High energy physics, Nuclear physics, Radiation, Simulation, Computing",
+%abstract = "Geant4 is a software toolkit for the simulation of the passage of particles through matter. It is used by a large number of experiments and projects in a variety of application domains, including high energy physics, astrophysics and space science, medical physics and radiation protection. Over the past several years, major changes have been made to the toolkit in order to accommodate the needs of these user communities, and to efficiently exploit the growth of computing power made available by advances in technology. The adaptation of Geant4 to multithreading, advances in physics, detector modeling and visualization, extensions to the toolkit, including biasing and reverse Monte Carlo, and tools for physics and release validation are discussed here."
+%}
+
+%"FLUKA: a multi-particle transport code"
+%A. Ferrari, P.R. Sala, A. Fasso`, and J. Ranft,
+% CERN-2005-10 (2005), INFN/TC_05/11, SLAC-R-773
 
 %%%\include{annexes-A4}
 
