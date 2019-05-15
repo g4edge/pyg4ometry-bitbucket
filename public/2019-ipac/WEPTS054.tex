@@ -87,16 +87,21 @@ JAI, Egham, Surrey)}
 
 %
 \begin{abstract}
-Studying the energy deposits in accelerator components, mechanical supports, services, ancillary equipment and shielding requires a detailed computer readable description of the component geometry. The creation of geometries is a significant bottle neck in producing complete simulation models and reducing the effort required will provide the ability of non- experts to simulate the effects of beam losses on realistic accelerators. The paper describes a flexible and easy to use PYTHON package to create geometries usable by either Geant4 (and so BDSIM or G4Beamline) or FLUKA either from scratch or by conversion from common engineering formats, such as STEP or IGES created by industry standard CAD/CAM packages. The conversion requires an intermediate conversion to STL or similar triangular or tetrahedral tessellation description. A key capability of \verb|pyg4ometry| is to mix GDML/STEP/STL geometries and visualisation of the resulting geometry and determine if there are any geometric overlaps. An example conversion of a complex geometry is presented along with performance results for physical particle tracking of electromagnetically and hadronically produced particles using BDSIM.
+Studying the energy deposits in accelerator components, mechanical supports, services, ancillary equipment and shielding requires a detailed computer readable description of the component geometry. The creation of geometries is a significant bottle neck in producing complete simulation models and reducing the effort required will provide the ability of non-experts to simulate the effects of beam losses on realistic accelerators. The paper describes a flexible and easy to use PYTHON package to create geometries usable by either Geant4 (and so BDSIM or G4Beamline) or FLUKA either from scratch or by conversion from common engineering formats, such as STEP or IGES created by industry standard CAD/CAM packages. The conversion requires an intermediate conversion to STL or similar triangular or tetrahedral tessellation description. A key capability of \verb|pyg4ometry| is to mix GDML/STEP/STL geometries and visualisation of the resulting geometry and determine if there are any geometric overlaps. An example conversion of a complex geometry is presented along with performance results for physical particle tracking of electromagnetically and hadronically produced particles using BDSIM.
 \end{abstract}
 
 
 \section{INTRODUCTION}
+\verb|Pyg4ometry| started as an internal tool to generate beam line geometries for BDSIM. 
 
 \subsection{Particle transport codes}
-There are multiple different codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX and FLUKA \cite{fluka}. 
+There are multiple different codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX and FLUKA \cite{fluka}. Generally accelerator codes are interfaced  to a particle transport code to produce a complete simulation of beam losses. Two beam line simulation tools have been developed on the basis of Geant4, BDSIM and G4Beamline.   
 
-\subsection{Geometry generation}
+\subsection{Geometry generation and GDML}
+The specification in a computer readable format the geometry of the material surrounding an accelerator can be an exceedingly time consuming and error prone task. Typically either the detector or accelerator infrastructure is constructed over many years and the simulation geometry can be created over similar time scales. This does not allow for rapid simulation of a system as the burden of creating the geometry is too great.
+
+\section{SOFTWARE IMPLEMENTATION}
+\verb|pyg4ometry| is a collection of python classes that mimic closely the C++ interface of Geant4. The aim to have all of the ``detector'' description classes implemented in python, these include geometry, materials and optical surfaces. The \verb|pyg4ometry| defined geometry can then quickly be written as a GDML file for loading into BDSIM or G4Beamline. This is a much quicker interface to a full C++ Geant4 application and any programmed geometry can be viewed quickly using VTK. A Python interface to the geometry primitives of Geant4 allows conversion applications to be developed from FLUKA/STEP/STL descriptions to \verb|pyg4ometry|. Finally and most importantly \verb|pyg4ometry| provides an interface to GDML, as the python interpreter performs important syntax checking of large and complex geometries. 
 
 \section{EXAMPLES}
 \subsection{Python}
@@ -114,26 +119,37 @@ Figure \ref{fig:dipole} shows a more complex geometry example.
 \begin{figure}[!htb]
    \centering
    \includegraphics*[width=.9\columnwidth]{./examples/dipole.jpg}
-   \caption{Example of a more complex geometry example, this time a cavity beam position monitor}
+   \caption{Example of a more complex geometry example, this time a cavity beam position monitor.}
    \label{fig:dipole}
 \end{figure}
 
-
 %\lstinputlisting[language=Python]{./examples/simple.py}
-
-\subsection{Geometry Description Markup Language (GDML)}
 
 \subsection{Standard tessellation language (STL)}
 
 \subsection{Computer aided design (STEP)}
+Arbitrary conversion of CAD/CAM files to \verb|pyg4ometry| is a very challenging task. Typically users convert the CAD description into
+an intermediate surface triangulation (such as STL described previously) and load the geometry as a G4TessellatedSolid.
+A example of a conversion of a large STEP file to pyg4ometry/GDML is shown in Figure~\ref{fig:ea910}.
+\begin{figure}[!htb]
+   \centering
+   \includegraphics*[width=.9\columnwidth]{./examples/ea9-10.jpg}
+   \caption{Example a conversion from STEP file description of the shielding of the CERN East Area T9 and T10 test beam lines to GDML Each part is 
+   coloured with a randomly to clearly indicate the structure of the shielding.}
+   \label{fig:ea910}
+\end{figure}
 
-
-\section{SUMMARY}
+\section{SUMMARY AND FUTURE DEVELOPMENTS}
+There any many potential enhancements that are being considered for \verb|pyg4ometry|. Given the interface matches so closely that of Geant4, 
+an alternative C++ output writer can be quickly written to allow \verb|pyg4ometry| to generate C++ code which can be directly compiled into a 
+Geant4 application.
+Although not described in this publication a FLUKA geometry loader has been written and can load large pre-existing geometries into 
+\verb|pyg4ometry| and subsequently write GDML files. This is currently being refactored and will appear in the next public release of \verb|pyg4ometry|.
+In addition to the FLUKA to GDML conversion, conversion of Geant4/GDML geometry to FLUKA is yet unstarted but a relatively straight forward
+task. The requirement that volumes do not overlap causes a problem for the CAD/CAM (STEP) conversion to Geant4/GDML as there is no requirement 
+that the parts and assemblies are not overlapping. 
 
 \section{ACKNOWLEDGEMENTS}
-Any acknowledgement should be in a separate section directly preceding
-the \textbf{REFERENCES} or \textbf{APPENDIX} section.
-
 
 %
 % only for "biblatex"
