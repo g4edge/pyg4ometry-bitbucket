@@ -315,7 +315,6 @@ class PythonDefineTests(_unittest.TestCase) :
         m = pyg4ometry.gdml.Matrix("m",1,[1,2,3,4,5,6,7,8,9,10],r,False)
         self.assertEqual(m.eval(),[1,2,3,4,5,6,7,8,9,10])
 
-
     def testMatrixConstructor1x10(self) : 
         r = pyg4ometry.geant4.Registry()
         m = pyg4ometry.gdml.Matrix("m",2,[1,2,3,4,5,6,7,8,9,10],r,False)
