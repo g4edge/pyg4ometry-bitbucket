@@ -31,11 +31,7 @@ Geant4 module
    :members:
    :undoc-members:
    :show-inheritance:
-.. automodule:: pyg4ometry.geant4.Parameter
-   :members:
-   :undoc-members:
-   :show-inheritance:
-.. automodule:: pyg4ometry.geant4.ParameterVector
+.. automodule:: pyg4ometry.gdml.Defines
    :members:
    :undoc-members:
    :show-inheritance:
@@ -102,21 +98,17 @@ Geant4 solids
 
 VTK module 
 ----------
-.. automodule:: pyg4ometry.vtk.Viewer
-   :members:
-   :undoc-members:
-   :show-inheritance:
-.. automodule:: pyg4ometry.vtk.Convert
-   :members:
-   :undoc-members:
-   :show-inheritance:
-.. automodule:: pyg4ometry.vtk.Writer
+.. automodule:: pyg4ometry.visualisation.VtkViewer
    :members:
    :undoc-members:
    :show-inheritance:
 
 Freecad module 
 --------------
+.. automodule:: pyg4ometry.freecad.Reader
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 STL module
 ----------
