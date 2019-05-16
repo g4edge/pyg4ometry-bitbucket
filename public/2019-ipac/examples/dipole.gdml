@@ -22,30 +22,6 @@
 		<constant name="ca_innerr" value="26.389"/>
 		<constant name="ce_outerr" value="(ca_innerr) + (5)"/>
 		<constant name="ce_length" value="5"/>
-		<position name="wg_sub1_position" x="wg_centre" y="0" z="0"/>
-		<rotation name="wg_sub1_rotation" x="0" y="0" z="0"/>
-		<position name="wg_sub2_position" x="0" y="wg_centre" z="0"/>
-		<rotation name="wg_sub2_rotation" x="0" y="0" z="1.57079632679"/>
-		<position name="wg_sub3_position" x="(-wg_centre)" y="0" z="0"/>
-		<rotation name="wg_sub3_rotation" x="0" y="0" z="3.14159265359"/>
-		<position name="wg_sub4_position" x="0" y="(-wg_centre)" z="0"/>
-		<rotation name="wg_sub4_rotation" x="0" y="0" z="4.71238898038"/>
-		<position name="sg_sub5_position" x="60" y="60" z="-10"/>
-		<rotation name="sg_sub5_rotation" x="0" y="0" z="0"/>
-		<position name="sg_sub6_position" x="-60" y="60" z="-10"/>
-		<rotation name="sg_sub6_rotation" x="0" y="0" z="0"/>
-		<position name="sg_sub7_position" x="-60" y="-60" z="-10"/>
-		<rotation name="sg_sub7_rotation" x="0" y="0" z="0"/>
-		<position name="sg_sub8_position" x="60" y="-60" z="-10"/>
-		<rotation name="sg_sub8_rotation" x="0" y="0" z="0"/>
-		<position name="ec_sub1_position" x="60" y="60" z="0"/>
-		<rotation name="ec_sub1_rotation" x="0" y="0" z="0"/>
-		<position name="ec_sub2_position" x="-60" y="60" z="0"/>
-		<rotation name="ec_sub2_rotation" x="0" y="0" z="0"/>
-		<position name="ec_sub3_position" x="-60" y="-60" z="0"/>
-		<rotation name="ec_sub3_rotation" x="0" y="0" z="0"/>
-		<position name="ec_sub4_position" x="60" y="-60" z="0"/>
-		<rotation name="ec_sub4_rotation" x="0" y="0" z="0"/>
 		<position name="wg_physical_position" x="0" y="0" z="((-wg_length)) / (2.0)"/>
 		<rotation name="wg_physical_rotation" x="0" y="0" z="0"/>
 		<position name="ec_physical_position" x="0" y="0" z="(((-wg_length)) - ((ec_length) / (2.0))) - (length_safety)"/>
@@ -68,75 +44,75 @@
 		<subtraction name="wg_sub1">
 			<first ref="wg_body_solid"/>
 			<second ref="wg_cut_solid"/>
-			<positionref ref="wg_sub1_position"/>
-			<rotationref ref="wg_sub1_rotation"/>
+			<position x="wg_centre" y="0" z="0"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="wg_sub2">
 			<first ref="wg_sub1"/>
 			<second ref="wg_cut_solid"/>
-			<positionref ref="wg_sub2_position"/>
-			<rotationref ref="wg_sub2_rotation"/>
+			<position x="0" y="wg_centre" z="0"/>
+			<rotation x="0" y="0" z="1.57079632679"/>
 		</subtraction>
 		<subtraction name="wg_sub3">
 			<first ref="wg_sub2"/>
 			<second ref="wg_cut_solid"/>
-			<positionref ref="wg_sub3_position"/>
-			<rotationref ref="wg_sub3_rotation"/>
+			<position x="(-wg_centre)" y="0" z="0"/>
+			<rotation x="0" y="0" z="3.14159265359"/>
 		</subtraction>
 		<subtraction name="wg_sub4">
 			<first ref="wg_sub3"/>
 			<second ref="wg_cut_solid"/>
-			<positionref ref="wg_sub4_position"/>
-			<rotationref ref="wg_sub4_rotation"/>
+			<position x="0" y="(-wg_centre)" z="0"/>
+			<rotation x="0" y="0" z="4.71238898038"/>
 		</subtraction>
 		<subtraction name="sg_sub5">
 			<first ref="wg_sub4"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="sg_sub5_position"/>
-			<rotationref ref="sg_sub5_rotation"/>
+			<position x="60" y="60" z="-10"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="sg_sub6">
 			<first ref="sg_sub5"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="sg_sub6_position"/>
-			<rotationref ref="sg_sub6_rotation"/>
+			<position x="-60" y="60" z="-10"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="sg_sub7">
 			<first ref="sg_sub6"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="sg_sub7_position"/>
-			<rotationref ref="sg_sub7_rotation"/>
+			<position x="-60" y="-60" z="-10"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="sg_sub8">
 			<first ref="sg_sub7"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="sg_sub8_position"/>
-			<rotationref ref="sg_sub8_rotation"/>
+			<position x="60" y="-60" z="-10"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<tube deltaphi="6.28318530718" name="ec_solid" rmax="ec_outerr" rmin="ec_innerr" startphi="0" z="ec_length"/>
 		<subtraction name="ec_sub1">
 			<first ref="ec_solid"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="ec_sub1_position"/>
-			<rotationref ref="ec_sub1_rotation"/>
+			<position x="60" y="60" z="0"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="ec_sub2">
 			<first ref="ec_sub1"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="ec_sub2_position"/>
-			<rotationref ref="ec_sub2_rotation"/>
+			<position x="-60" y="60" z="0"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="ec_sub3">
 			<first ref="ec_sub2"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="ec_sub3_position"/>
-			<rotationref ref="ec_sub3_rotation"/>
+			<position x="-60" y="-60" z="0"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<subtraction name="ec_sub4">
 			<first ref="ec_sub3"/>
 			<second ref="wg_cut2_solid"/>
-			<positionref ref="ec_sub4_position"/>
-			<rotationref ref="ec_sub4_rotation"/>
+			<position x="60" y="-60" z="0"/>
+			<rotation x="0" y="0" z="0"/>
 		</subtraction>
 		<tube deltaphi="6.28318530718" name="ca_solid" rmax="wg_outerr" rmin="ca_innerr" startphi="0" z="ca_length"/>
 		<tube deltaphi="6.28318530718" name="ce_solid" rmax="ce_outerr" rmin="beam_pipe_radius" startphi="0" z="ce_length"/>

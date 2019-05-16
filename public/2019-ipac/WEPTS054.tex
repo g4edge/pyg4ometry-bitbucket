@@ -92,22 +92,22 @@ Studying the energy deposits in accelerator components, mechanical supports, ser
 
 
 \section{INTRODUCTION}
-\verb|Pyg4ometry| started as an internal python scripting tool to generate beam line geometries for BDSIM. BDSIM is a Geant4 application which allows a user to rapidly create a full three dimensional model of an accelerator from an optical description. A guiding principle of BDSIM is rapid simulation of optical models, in the MADX input format for example, can be converted for use in BDSIM in minutes. Rarely described in accelerator optical descriptions is the geometry of the physical material that comprises the accelerator, so beam-pipe, magnets, supports, tunnel, beam instrumentation etc. The aim of \verb|pyg4ometry| is to create a tool  in which complex geometry can be created as quickly as a generic BDSIM model. A key requirement is to be able to integrate and composite geometry sources to a single file.             
+\verb|Pyg4ometry| started as an internal python scripting tool to generate beam line geometries for BDSIM. BDSIM is a Geant4 application which allows a user to rapidly create a full three dimensional model of an accelerator from an optical description. A guiding principle of BDSIM is rapid simulation of accelerator models, the MADX input format for example can be converted for use in BDSIM in minutes. Rarely described in accelerator optical descriptions is the geometry of the physical material that comprises the accelerator, beam-pipe, magnets, supports, tunnel, beam instrumentation etc. The aim of \verb|pyg4ometry| is to create a tool  in which complex geometry can be created as quickly as a generic BDSIM model. A key requirement is to be able to integrate and composite geometry sources to a single file.             
 
 \subsection{Particle transport codes}
-There are multiple different codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX and FLUKA \cite{fluka}. Generally accelerator codes are interfaced  to a particle transport code to produce a complete simulation of beam losses. Two beam line simulation tools have been developed on the basis of Geant4, BDSIM and G4Beamline.    
+There are multiple different codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX and FLUKA \cite{fluka}. Generally accelerator codes, like MAD8, MADX, Transport etc, are interfaced to a Monte Carlo code to produce a complete simulation of beam losses. Two beam line simulation tools have been developed on the basis of Geant4, BDSIM and G4Beamline.     
 
 \subsection{Geometry generation and GDML}
 The specification in a computer readable format the geometry of the material surrounding an accelerator can be an exceedingly time consuming and error prone task. Typically either the detector or accelerator infrastructure is constructed over many years and the simulation geometry can be created over similar time scales. This does not allow for rapid simulation of a system as the burden of creating the geometry is too great. An XML based markup language Geometry Description Markup Language (GDML) is used as the file format for geometry export in \verb|pyg4ometry|.
 
 \section{SOFTWARE IMPLEMENTATION}
-\verb|pyg4ometry| is a collection of python classes that mimic closely the C++ interface of Geant4. The aim to have all of the ``detector'' description classes implemented in python, these include geometry, materials and optical surfaces. The \verb|pyg4ometry| defined geometry can then quickly be written as a GDML file for loading into BDSIM or G4Beamline. This is a much quicker interface to a full C++ Geant4 application and any programmed geometry can be viewed quickly using VTK. \verb|pyg4ometry| naterial can be converted to a surface triangulation using primitive mesh generation of each solid in python and a constructive solid geometry (CSG) library based on Binary Space Partitioning (BSP) trees. GDML has a simple mathematical expression language so geometries can be parametrised, this is also implemented in \verb|pyg4ometry| using ANTLR. A Python interface to the geometry primitives of Geant4 allows conversion applications to be developed from FLUKA/STEP/STL descriptions to \verb|pyg4ometry|. Finally and most importantly \verb|pyg4ometry| provides an interface to GDML, as the python interpreter performs important syntax checking of large and complex geometries. 
+\verb|Pyg4ometry| is a collection of python classes that mimic closely the C++ interface of Geant4. The aim to have all of the ``detector'' description classes implemented in python, these include geometry, materials and optical surfaces. The \verb|pyg4ometry| defined geometry can then quickly be written as a GDML file for loading into BDSIM or G4Beamline. This is a much quicker interface to a full C++ Geant4 application and any programmed geometry can be viewed quickly using VTK. \verb|Pyg4ometry| geometry can be converted to a surface triangulation using primitive mesh generation of each solid in python and a constructive solid geometry (CSG) library based on Binary Space Partitioning (BSP) trees. GDML has a simple mathematical expression language so geometries can be parametrised, this is also implemented in \verb|pyg4ometry| using ANTLR. A Python interface to the geometry primitives of Geant4 allows conversion applications to be developed from FLUKA/STEP/STL descriptions to \verb|pyg4ometry|. Finally and most importantly \verb|pyg4ometry| provides an interface to GDML, as the python interpreter performs important syntax checking of large and complex geometries. 
 
 \section{EXAMPLES}
 \subsection{Python}
 A complete code example for creation a simple geometry consisting of three Iron solids is shown below. The python interfaces are so similar to Geant4 C++ interface and a user can refer to the Geant4 documentation.  
 \VerbatimInput[fontsize=\small]{./examples/simple.py}
-The code is divided in 6 blocks of definitions, reusable parameters, materials, solids, structure and placement, GDML IO and finally visualisation. A key difference between \verb|pyg4ometry| and Geant4 is a dedicated object known as the \verb|Registry| to store all geometry definitions which need to stored in the output file.  
+The code is divided in 6 blocks of definitions, reusable parameters, materials, solids, structure and placement, GDML IO and finally visualisation. A key difference between \verb|pyg4ometry| and Geant4 is a dedicated object known as the \verb|Registry| to store all geometry definitions which need to stored in the output file. The VTK output from this example is shown in Figure~\ref{fig:simple}, where three solids, a cube, sphere and cylinder, are placed with translations and rotations within a cubical world volume.
 \begin{figure}[!htb]
    \centering
    \includegraphics*[width=.9\columnwidth]{./examples/simple.jpg}
@@ -115,15 +115,13 @@ The code is divided in 6 blocks of definitions, reusable parameters, materials, 
    \label{fig:simple}
 \end{figure}
 
-Figure \ref{fig:dipole} shows a more complex geometry example. 
+Figure \ref{fig:dipole} shows a more complex geometry example of a cavity beam position monitor and short sections of beam pipe.
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=.9\columnwidth]{./examples/dipole.jpg}
+   \includegraphics*[width=.8\columnwidth]{./examples/dipole.jpg}
    \caption{Example of a more complex geometry example, this time a cavity beam position monitor.}
    \label{fig:dipole}
 \end{figure}
-
-%\lstinputlisting[language=Python]{./examples/simple.py}
 
 \subsection{Standard tessellation language (STL)}
 STL file format describes a raw unstructured triangulated surface, the normal is defined by the ordering of the vertices. \verb|pyg4ometry| supports the loading 
@@ -132,19 +130,21 @@ STL files and conversion to G4TessellatedSolid.
 
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=.9\columnwidth]{./examples/utahteapot.jpg}
+   \includegraphics*[width=.6\columnwidth]{./examples/utahteapot.jpg}
    \caption{STL surface mesh rendered in VTK using pyg4ometry.}
    \label{fig:simple}
 \end{figure}
 
 \subsection{Computer aided design (STEP)}
 Arbitrary conversion of CAD/CAM files to \verb|pyg4ometry| is a very challenging task. Typically users convert the CAD description into
-an intermediate surface triangulation (such as STL described previously) and load the geometry as a G4TessellatedSolid.
+an intermediate surface triangulation (such as STL described previously) and load the geometry as a G4TessellatedSolid. An interface for
+loading STEP/STP files was creating using FreeCAD/OpenCASCADE. A single solid in general corresponds to a {\it part} and multiple placements 
+of a solid to a {\it part assembly}.
 A example of a conversion of a large STEP file to pyg4ometry/GDML is shown in Figure~\ref{fig:ea910}.
 \VerbatimInput[fontsize=\small]{./examples/freecad.py}
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=.9\columnwidth]{./examples/ea9-10.jpg}
+   \includegraphics*[width=1.0\columnwidth]{./examples/ea9-10.jpg}
    \caption{Example a conversion from STEP file description of the shielding of the CERN East Area T9 and T10 test beam lines to GDML Each part is 
    coloured with a randomly to clearly indicate the structure of the shielding.}
    \label{fig:ea910}
@@ -153,9 +153,9 @@ A example of a conversion of a large STEP file to pyg4ometry/GDML is shown in Fi
 
 \section{BDSIM}
 
-\begin{figure}[!htb]
+\begin{figure}[h!tb]
    \centering
-   \includegraphics*[width=.9\columnwidth]{./examples/dipole_bdsim.jpg}
+   \includegraphics*[width=1.0\columnwidth]{./examples/dipole_bdsim.jpg}
    \caption{Example of geometry in Geant4/BDSIM. The example shows a 50~GeV proton interacting with the geometry material.}
    \label{fig:dipole}
 \end{figure}
@@ -170,7 +170,7 @@ task. The requirement that volumes do not overlap causes a problem for the CAD/C
 that the parts and assemblies are not overlapping. Finally a graphical user interface (GUI) can be developed so allow users without programming 
 experience to generate geometry.
 
-\verb|pyg4ometry| is a powerful package to rapidly develop material geometries for accelerator beam line simulations. Currently existing geometry can
+\verb|Pyg4ometry| is a powerful package to rapidly develop material geometries for accelerator beam line simulations. Currently existing geometry can
 be loaded from GDML, STEP, STL and FLUKA files. We introduce a new python interface to create geometry and adapt existing geometry. \verb|pyg4ometry| 
 can composite geometry from multiple sources to create a complete model which can be exported directly to GDML and then can be loaded into a Geant4 
 based application. Although based on GDML and Geant4 \verb|pyg4ometry| can be easily extended to other MC simulation geometry formats.  
