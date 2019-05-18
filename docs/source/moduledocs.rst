@@ -95,7 +95,6 @@ Geant4 solids
 .. automodule:: pyg4ometry.geant4.solid.TesselatedSolid
    :members:
 
-
 VTK module 
 ----------
 .. automodule:: pyg4ometry.visualisation.VtkViewer

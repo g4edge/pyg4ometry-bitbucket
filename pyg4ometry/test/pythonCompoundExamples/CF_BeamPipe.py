@@ -10,7 +10,7 @@ def CF_BeamPipe(bpLength = 200, bpId = 10, bpThickness = 5, cf_dn = '16') :
     cf_data = {'16': {'od':34, 'id':16, 'bd':27, 'h':7.5, 'nh':6, 'hd':4.3}}
 
     print cf_data[cf_dn]
-    
+       
     # defines 
     wx = _gd.Constant("wx",2*bpLength,reg,True)
     wy = _gd.Constant("wy",2*bpLength,reg,True)

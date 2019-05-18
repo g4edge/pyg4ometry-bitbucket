@@ -1,5 +1,6 @@
 from python import PythonAuthoringTests, PythonDefineTests
 from gdml import GdmlLoadTests
+from stl import StlLoadingTests
 
 import unittest as _unittest
 import logging as _log
