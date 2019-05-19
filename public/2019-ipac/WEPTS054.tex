@@ -2,11 +2,11 @@
 % !TeX program = lualatex
 %
 % v 2.3  Feb 2019   Volker RW Schaa
-%		# changes in the collaboration therefore updated file "jacow-collaboration.tex"
-%		# all References with DOIs have their period/full stop before the DOI (after pp. or year)
-%		# in the author/affiliation block all ZIP codes in square brackets removed as it was not %         understood as optional parameter and ZIP codes had bin put in brackets
-%       # References to the current IPAC are changed to "IPAC'19, Melbourne, Australia"
-%       # font for ‘url’ style changed to ‘newtxtt’ as it is easier to distinguish "O" and "0"
+%# changes in the collaboration therefore updated file ``jacow-collaboration.tex''
+%# all References with DOIs have their period/full stop before the DOI (after pp. or year)
+%# in the author/affiliation block all ZIP codes in square brackets removed as it was not %         understood as optional parameter and ZIP codes had bin put in brackets
+%       # References to the current IPAC are changed to ``IPAC'19, Melbourne, Australia''
+%       # font for ‘url’ style changed to ‘newtxtt’ as it is easier to distinguish ``O'' and ``0''
 %
 \documentclass[a4paper,
                %boxit,        % check whether paper is inside correct margins
@@ -15,7 +15,7 @@
                %biblatex,     % biblatex is used
                keeplastbox,   % flushend option: not to un-indent last line in References
                %nospread,     % flushend option: do not fill with whitespace to balance columns
-               %hyphens,      % allow \url to hyphenate at "-" (hyphens)
+               %hyphens,      % allow \url to hyphenate at ``-'' (hyphens)
                %xetex,        % use XeLaTeX to process the file
                %luatex,       % use LuaLaTeX to process the file
                ]{jacow}
@@ -42,11 +42,11 @@
 %    might generates errors, therefore PNG and JPG first
 %
 \makeatletter%
-	\ifboolexpr{bool{xetex}}
-	 {\renewcommand{\Gin@extensions}{.pdf,%
-	                    .png,.jpg,.bmp,.pict,.tif,.psd,.mac,.sga,.tga,.gif,%
-	                    .eps,.ps,%
-	                    }}{}
+\ifboolexpr{bool{xetex}}
+ {\renewcommand{\Gin@extensions}{.pdf,%
+                         .png,.jpg,.bmp,.pict,.tif,.psd,.mac,.sga,.tga,.gif,%
+                         .eps,.ps,%
+                         }}{}
 \makeatother
 
 % CHECK FOR XeTeX/LuaTeX BEFORE DEFINING AN INPUT ENCODING
@@ -82,7 +82,7 @@
 
 \author{Stewart Boogert\thanks{stewart.boogert@rhul.ac.uk}, Andrey Abramov, Joshua Albrecht, \\ Gian Luigi D'Alessandro, Laurence Nevay, William Shields, Stuart Walker \\
 JAI at Royal Holloway, University of London, Egham, TW20 0EX, UK}
-	
+
 \maketitle
 
 %
@@ -92,7 +92,9 @@ Studying the energy deposits in accelerator components, mechanical supports, ser
 
 
 \section{INTRODUCTION}
-\verb|Pyg4ometry| started as an internal python scripting tool to generate beam line geometries for BDSIM \cite{bdsim_arxiv, bdsim_manual, Nevay:IPAC19-WEPTS058}. BDSIM is a Geant4 application which allows a user to rapidly create a full three dimensional model of an accelerator from an optical description. A guiding principle of BDSIM is rapid simulation of accelerator models, the MADX input format for example can be converted for use in BDSIM in minutes. Rarely described in accelerator optical descriptions is the geometry of the physical material that comprises the accelerator, beam-pipe, magnets, supports, tunnel, beam instrumentation etc. The aim of \verb|pyg4ometry| is to create a tool  in which complex geometry can be created as quickly as a generic BDSIM model. A key requirement is to be able to integrate and composite geometry sources to a single file.             
+
+Simulating radiation transport in an accelerator beamline requires a description of the 3D layout, structure, dimensions and material properties of the physical objects that the beam particles can interact with. This description is commonly referred to as a ``geometry model'' or ``geometry''. In general, the elements (volumes) in such a model must not overlap, ensuring that particles can be located in only one volume at a time. There is also a trade-off between the geometry detail and the simulation execution time. Because of those constraints, radiation transport geometries have traditionally been prepared by hand.\\
+\verb|Pyg4ometry| started as a python scripting tool to generate beam line geometries for BDSIM. BDSIM is a Geant4 application which allows a user to rapidly create a full three dimensional model of an accelerator from an optical description. A guiding principle of BDSIM is rapid simulation of accelerator models, the MADX input format for example can be converted for use in BDSIM in minutes. Rarely described in accelerator optical descriptions is the geometry of the physical material that comprises the accelerator, beam-pipe, magnets, supports, tunnel, beam instrumentation etc. The aim of \verb|pyg4ometry| is to create a tool  in which complex geometry can be created as quickly as a generic BDSIM model. A key requirement is to be able to integrate and composite geometry sources to a single file.             
 %I would begin with introducing the concept of geometry for radiation transport and outline some of the problems and limitations mentioned later:
 %
 %* Models that describe the 3D layout, structure and composition of materials that particles can interact with
@@ -101,13 +103,13 @@ Studying the energy deposits in accelerator components, mechanical supports, ser
 %* Traditionally prepared by hand, separately to other 3D models like engineering specifications.
 
 \subsection{Particle transport codes}
-There are multiple different Monte Carlo (MC) codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX and FLUKA \cite{fluka}. Generally accelerator codes, like MAD8 \cite{mad8}, MADX \cite{madx}, Transport \cite{transport} etc, are interfaced to a MC code to produce a complete simulation of beam losses. Two beam line simulation tools have been developed on the basis of Geant4; BDSIM~\cite{bdsim_arxiv} and G4Beamline~\cite{g4beamline}.     
+There are multiple different Monte Carlo (MC) codes to simulate the transportation and physics processes of particles though accelerators and detectors, these include Geant4 \cite{geant4}, MCMPX~\cite{mcnpx} and FLUKA \cite{fluka}. Generally accelerator codes, like MAD8 \cite{mad8}, MADX \cite{madx}, Transport \cite{transport} etc, are interfaced to a MC code to produce a complete simulation of beam losses. Two beam line simulation tools have been developed on the basis of Geant4; BDSIM~\cite{bdsim_arxiv} and G4Beamline~\cite{g4beamline}.     
 
 \subsection{Geometry generation and GDML}
 The specification of the geometry of the material surrounding an accelerator can be an exceedingly time consuming and error prone task. Typically either the detector or accelerator infrastructure is constructed over many years and the simulation geometry can be created over similar time scales. This does not allow for rapid simulation of a system as the burden of creating the geometry is too great. An XML-based markup language, Geometry Description Markup Language (GDML) is used as the file format for geometry export in \verb|pyg4ometry|.
 
 \section{SOFTWARE IMPLEMENTATION}
-\verb|Pyg4ometry| is a collection of python classes that mimic closely the C++ interface of Geant4. The aim to have all of the ``detector'' description classes implemented in python, these include geometry, materials and optical surfaces. The \verb|pyg4ometry| defined geometry can then quickly be written as a GDML file for loading into BDSIM or G4Beamline. This is a much quicker interface to a full C++ Geant4 application and any programmed geometry can be viewed quickly using VTK. Geometry defined using \verb|Pyg4ometry| can be converted to a surface triangulation using primitive mesh generation of each solid in python and a constructive solid geometry (CSG) library based on Binary Space Partitioning (BSP) trees. GDML has a simple mathematical expression language so geometries can be parametrised, this is also implemented in \verb|pyg4ometry| using ANTLR. A Python interface to the geometry primitives of Geant4 allows conversion applications to be developed from FLUKA/STEP/STL descriptions to \verb|pyg4ometry|. Finally and most importantly \verb|pyg4ometry| provides an interface to GDML, as the python interpreter performs important syntax checking of large and complex geometries. 
+\verb|Pyg4ometry| is a collection of python classes that mimic closely the C++ interface of Geant4. The aim to have all of the ``detector'' description classes implemented in python, these include geometry, materials and optical surfaces. The \verb|pyg4ometry| defined geometry can then quickly be written as a GDML file for loading into BDSIM or G4Beamline. This is a much quicker interface to a full C++ Geant4 application and any programmed geometry can be viewed quickly using VTK. Geometry defined using \verb|Pyg4ometry| can be converted to a surface triangulation using primitive mesh generation of each solid in python and a constructive solid geometry (CSG) library based on Binary Space Partitioning (BSP) trees. GDML has a simple mathematical expression language so geometries can be parametrised, this is also implemented in \verb|pyg4ometry| using ANTLR~\cite{antlr}. A Python interface to the geometry primitives of Geant4 allows conversion applications to be developed from FLUKA/STEP/STL descriptions to \verb|pyg4ometry|. Finally and most importantly \verb|pyg4ometry| provides an interface to GDML, as the python interpreter performs important syntax checking of large and complex geometries. 
 
 \section{EXAMPLES}
 \subsection{Python}
@@ -157,7 +159,7 @@ A example of a conversion of a large STEP file to pyg4ometry/GDML is shown in Fi
 
 
 \section{BDSIM}
-Geometry created by \verb|pyg4ometry| can be directly loaded into Geant4 based application directly. Figure \ref{fig:dipole-bdsim} shows the cavity BPM 
+Geometry created by \verb|pyg4ometry| can be directly loaded into Geant4 based. Figure~\ref{fig:dipole-bdsim} shows the cavity BPM 
 example loaded into BDSIM. 
 \begin{figure}[h!tb]
    \centering
@@ -183,33 +185,34 @@ based application. Although based on GDML and Geant4 \verb|pyg4ometry| can be ea
 available via git and published under a GPL licence \cite{pyg4omtery-git}.   
 
 %
-% only for "biblatex"
+% only for ``biblatex''
 %
 
 \ifboolexpr{bool{jacowbiblatex}}%
-	{\printbibliography}%
-	{%
-	% "biblatex" is not used, go the "manual" way
-	
-	%\begin{thebibliography}{99}   % Use for  10-99  references
-	\begin{thebibliography}{9} % Use for 1-9 references
-	
-	\bibitem{bdsim_arxiv} L.~Nevay, \emph{ et~al.}, ``Bdsim: An accelerator tracking code with particle-matter interactions,'' , {\tt arXiv:1808.10745}, 2018.
-	
-	\bibitem{g4beamline} \url{http://www.muonsinternal.com/muons3/G4beamline}
-	\bibitem{bdsim_manual}  BDSIM manual, \url{http://www.pp.rhul.ac.uk/bdsim}
-	\bibitem{Nevay:IPAC19-WEPTS058} L. J. Nevay \emph{et al.}, \textquotedblleft{BDSIM: Recent Developments and New Features Beyond V1.0}\textquotedblright, presented at the 10th Int. Particle Accelerator Conf. (IPAC'19), Melbourne, Australia, May 2019, paper WEPTS058, this conference.
-	
-	\bibitem{geant4} Recent developments in Geant4, NIMA 835, pages 186-225, 2016 	
-	\bibitem{fluka} A.~Ferrari, {\em et~al.}, ``{FLUKA}: a multi-particle transport code,'' {\em   CERN Report CERN-2005-10}, 2005.
+{\printbibliography}%
+{%
+  % ``biblatex'' is not used, go the ``manual'' way
+  
+  %\begin{thebibliography}{99}   % Use for  10-99  references
+  \begin{thebibliography}{9} % Use for 1-9 references
+    
+    \bibitem{bdsim_arxiv} L.~Nevay, \emph{ et~al.}, ``Bdsim: An accelerator tracking code with particle-matter interactions,'' , {\tt arXiv:1808.10745}, 2018.
+      
+      \bibitem{g4beamline} G4Beamline documentation, \url{http://www.muonsinternal.com/muons3/G4beamline}
+        \bibitem{bdsim_manual}  BDSIM manual, \url{http://www.pp.rhul.ac.uk/bdsim}
+          \bibitem{Nevay:IPAC19-WEPTS058} L. J. Nevay \emph{et al.}, \textquotedblleft{BDSIM: Recent Developments and New Features Beyond V1.0}\textquotedblright, presented at the 10th Int. Particle Accelerator Conf. (IPAC'19), Melbourne, Australia, May 2019, paper WEPTS058, this conference.
+            
+          \bibitem{geant4} Recent developments in Geant4, NIMA 835, pages 186-225, 2016 
+            \bibitem{fluka} A.~Ferrari, {\em et~al.}, ``{FLUKA}: a multi-particle transport code,'' {\em   CERN Report CERN-2005-10}, 2005.
+    \bibitem{mcnpx} MCNPX user manual,  \url{https://laws.lanl.gov/vhosts/mcnp.lanl.gov/pdf\_files/la-ur-02-2607.pdf}
+    \bibitem{antlr} ANTLR documentation, \url{https://www.antlr.org}
+      \bibitem{mad8} MAD8 documentation, \url{http://mad8.web.cern.ch/mad8/}
+        \bibitem{madx} MAD-X documentation, \url{http://madx.web.cern.ch/madx/}
+          \bibitem{transport} PSI Graphic Transport Framework by U. Rohrer, based on a CERN-SLAC-FERMILAB version by K.L. Brown et al. 
+            
+            \bibitem{pyg4omtery-git} Pyg4ometry project, \url{https://bitbucket.org/jairhul/pyg4ometry/src/master/}
 
-	\bibitem{mad8} MAD8 \url{http://mad8.web.cern.ch/mad8/}
-	\bibitem{madx} MAD-X \url{http://madx.web.cern.ch/madx/}
-	\bibitem{transport} PSI Graphic Transport Framework by U. Rohrer, based on a CERN-SLAC-FERMILAB version by K.L. Brown et al. 
-	
-	\bibitem{pyg4omtery-git} \url{https://bitbucket.org/jairhul/pyg4ometry/src/master/}
-
-	\end{thebibliography}
+              \end{thebibliography}
 } % end \ifboolexpr
 
 
