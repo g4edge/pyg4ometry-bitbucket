@@ -114,11 +114,13 @@ The specification of the geometry of the material surrounding an accelerator can
 \section{EXAMPLES}
 \subsection{Python}
 A complete code example for creation of a simple geometry consisting of three Iron solids is shown below. The python interfaces are so similar to the Geant4 C++ interface and the user can refer to the Geant4 documentation.  
-\VerbatimInput[fontsize=\small]{./examples/simple.py}
+%\VerbatimInput[fontsize=\small]{./examples/simple.py}
+\VerbatimInput[fontsize=\small]{simple.py}
 The code is divided in 6 blocks of definitions, reusable parameters, materials, solids, structure and placement, GDML IO and finally visualisation. A key difference between \verb|pyg4ometry| and Geant4 is a dedicated object known as the \verb|Registry| to store all geometry definitions to be stored in the output file. The VTK output from this example is shown in Figure~\ref{fig:simple}, where three solids, a cube, sphere and cylinder, are placed with translations and rotations within a cubical world volume.
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=.9\columnwidth]{./examples/simple.jpg}
+   %\includegraphics*[width=.9\columnwidth]{./examples/simple.jpg}
+   \includegraphics*[width=.9\columnwidth]{simple.jpg}
    \caption{Example of three primitive Geant4 solids rendered in VTK.}
    \label{fig:simple}
 \end{figure}
@@ -126,7 +128,8 @@ The code is divided in 6 blocks of definitions, reusable parameters, materials, 
 Figure \ref{fig:dipole} shows a more complex geometry example of a cavity beam position monitor and short sections of beam pipe.
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=.8\columnwidth]{./examples/dipole.jpg}
+   %\includegraphics*[width=.8\columnwidth]{./examples/dipole.jpg}
+   \includegraphics*[width=.8\columnwidth]{dipole.jpg}
    \caption{Example of a more complex geometry example, a cavity beam position monitor.}
    \label{fig:dipole}
 \end{figure}
@@ -134,10 +137,13 @@ Figure \ref{fig:dipole} shows a more complex geometry example of a cavity beam p
 \subsection{Standard tessellation language (STL)}
 STL file format describes a raw unstructured triangulated surface, where the surface normal is defined by the ordering of the vertices. \verb|Pyg4ometry| supports the loading 
 STL files and conversion to G4TessellatedSolid. A classic STL example loaded in \verb|pg4ometry| and displayed in VTK is shown in Figure~\ref{fig:utahteapot}
-\VerbatimInput[fontsize=\small]{./examples/stl.py}
+%\VerbatimInput[fontsize=\small]{./examples/stl.py}
+\VerbatimInput[fontsize=\small]{stl.py}
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=.6\columnwidth]{./examples/utahteapot.jpg}
+   %\includegraphics*[width=.6\columnwidth]{./examples/utahteapot.jpg}
+   \includegraphics*[width=.6\columnwidth]{utahteapot.jpg}
+
    \caption{STL surface mesh rendered in VTK using pyg4ometry.}
    \label{fig:utahteapot}
 \end{figure}
@@ -148,10 +154,12 @@ an intermediate surface triangulation format (such as STL described previously) 
 loading STEP/STP files was creating using FreeCAD/OpenCASCADE. A single solid in general corresponds to a {\it part} and multiple placements 
 of a solid to a {\it part assembly}.
 A example of a conversion of a large STEP file to pyg4ometry/GDML is shown in Figure~\ref{fig:ea910}.
-\VerbatimInput[fontsize=\small]{./examples/freecad.py}
+%\VerbatimInput[fontsize=\small]{./examples/freecad.py}
+\VerbatimInput[fontsize=\small]{freecad.py}
 \begin{figure}[!htb]
    \centering
-   \includegraphics*[width=1.0\columnwidth]{./examples/ea9-10.jpg}
+   %\includegraphics*[width=1.0\columnwidth]{./examples/ea9-10.jpg}
+   \includegraphics*[width=1.0\columnwidth]{ea9-10.jpg}
    \caption{Example a conversion from STEP file description of the shielding of the CERN East Area T8 and T11 test beam lines to GDML. Each part is 
    given a randomly assigned colour to clearly indicate the structure of the shielding.}
    \label{fig:ea910}
@@ -163,7 +171,8 @@ Geometry created by \verb|pyg4ometry| can be directly loaded into Geant4 based. 
 example loaded into BDSIM. 
 \begin{figure}[h!tb]
    \centering
-   \includegraphics*[width=1.0\columnwidth]{./examples/dipole_bdsim.jpg}
+   %\includegraphics*[width=1.0\columnwidth]{./examples/dipole_bdsim.jpg}
+   \includegraphics*[width=1.0\columnwidth]{dipole_bdsim.jpg}
    \caption{Example of geometry in Geant4/BDSIM. The example shows a 50~GeV proton interacting with the geometry material.}
    \label{fig:dipole-bdsim}
 \end{figure}

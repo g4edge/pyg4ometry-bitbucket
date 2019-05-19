@@ -9,16 +9,18 @@ Making use of pyg4ometry requires the following modules
 
 .. code-block :: python
 
-   import pyg4ometry      as pyg  # geant4  
-   import pyg4ometry.vtk  as vtk  # vistualisation tool kit commands
-   import pyg4ometry.gdml as gdml # gdml io
+   import pyg4ometry                as _pyg     # geant4  
+   import pyg4ometry.visualisation  as _vtk     # vistualisation tool kit commands
+   import pyg4ometry.gdml           as _gdml    # gdml io
+   import pyg4ometry.stl            as _stl     # STL io
+   import pyg4ometry.freecad        as _freecad # Freecad io
 
 The standard math and numpy modules are also very useful
 
 .. code-block :: python
 
-   import numpy as np
-   import math  as math
+   import numpy as _np
+   import math  as _math
 
 To make a simple geometery of a boolean subtraction solid (a cube with a cylinder removed in the centre)
 

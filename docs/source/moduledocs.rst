@@ -7,10 +7,64 @@ may be incomplete.
 
 Defines and variables
 ---------------------
+
 .. automodule:: pyg4ometry.gdml.Defines
+   :members: upgradeToStringExpression
+
+.. autoclass:: pyg4ometry.gdml.Defines.ScalarBase
+   :members: 
+   :undoc-members:
+   :show-inheritance:
+   :special-members: __add__, __sub__, __rsub__, __mul__, __div__, __rdiv__, __neg__
+
+.. autoclass:: pyg4ometry.gdml.Defines.Constant
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. autoclass:: pyg4ometry.gdml.Defines.Quantity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.gdml.Defines.Variable
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.gdml.Defines.Expression
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.gdml.Defines
+   :members: sin, cos, tan, asin, acos, atan, exp, log, log10, sqrt
+
+.. autoclass:: pyg4ometry.gdml.Defines.VectorBase
+   :members: 
+   :undoc-members:
+   :show-inheritance:
+   :special-members: __add__, __sub__, __mul__, __rmul__, __div__ 
+
+.. autoclass:: pyg4ometry.gdml.Position
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.gdml.Rotation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.gdml.Scale
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.gdml.Defines
+   :members: upgradeToVector, upgradeToTransformation
+
+
 
 Geant4 solids
 -------------
@@ -24,35 +78,29 @@ Geant4 solids
    :members:
 .. automodule:: pyg4ometry.geant4.solid.CutTubs
    :members:
-.. automodule:: pyg4ometry.geant4.solid.Sphere
-   :members:
 .. automodule:: pyg4ometry.geant4.solid.Cons
    :members:
-.. automodule:: pyg4ometry.geant4.solid.Ellipsoid
+.. automodule:: pyg4ometry.geant4.solid.Para
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Trd
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Trap
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Sphere
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Orb
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Torus
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Polycone
    :members:
+.. automodule:: pyg4ometry.geant4.solid.GenericPolycone
+   :members:
 .. automodule:: pyg4ometry.geant4.solid.Polyhedra
    :members:
-.. automodule:: pyg4ometry.geant4.solid.ExtrudedSolid
-   :members:
-.. automodule:: pyg4ometry.geant4.solid.Union
-   :members:
-.. automodule:: pyg4ometry.geant4.solid.Intersection
-   :members:
-.. automodule:: pyg4ometry.geant4.solid.Subtraction
-   :members:
-.. automodule:: pyg4ometry.geant4.solid.Para
-   :members:
-.. automodule:: pyg4ometry.geant4.solid.Trap
-   :members:
-.. automodule:: pyg4ometry.geant4.solid.Orb
-   :members:
 .. automodule:: pyg4ometry.geant4.solid.EllipticalTube
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Ellipsoid
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Paraboloid
    :members:
@@ -60,28 +108,36 @@ Geant4 solids
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Tet
    :members:
+.. automodule:: pyg4ometry.geant4.solid.ExtrudedSolid
+   :members:
 .. automodule:: pyg4ometry.geant4.solid.TwistedBox
    :members:
 .. automodule:: pyg4ometry.geant4.solid.TwistedTrap
    :members:
 .. automodule:: pyg4ometry.geant4.solid.TwistedTrd
    :members:
-.. automodule:: pyg4ometry.geant4.solid.GenericPolycone
+.. automodule:: pyg4ometry.geant4.solid.TwistedTubs
    :members:
 .. automodule:: pyg4ometry.geant4.solid.TesselatedSolid
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Union
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Intersection
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.Subtraction
    :members:
 
 Geant4 module 
 -------------
-.. automodule:: pyg4ometry.geant4
-   :members:
-   :undoc-members:
-   :show-inheritance:
-.. automodule:: pyg4ometry.geant4.PhysicalVolume
+.. automodule:: pyg4ometry.geant4.Registry
    :members:
    :undoc-members:
    :show-inheritance:
 .. automodule:: pyg4ometry.geant4.LogicalVolume
+   :members:
+   :undoc-members:
+   :show-inheritance:
+.. automodule:: pyg4ometry.geant4.PhysicalVolume
    :members:
    :undoc-members:
    :show-inheritance:
@@ -93,11 +149,6 @@ Geant4 module
    :members:
    :undoc-members:
    :show-inheritance:
-.. automodule:: pyg4ometry.geant4.Registry
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 
 VTK module 
 ----------
