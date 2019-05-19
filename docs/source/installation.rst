@@ -8,6 +8,7 @@ Requirements
 
  * pyg4ometry is developed exclusively for Python 2.7.
  * VTK (Visualisation toolkit)
+ * Freecad >0.17
 
 Installation
 ------------
