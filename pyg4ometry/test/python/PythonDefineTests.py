@@ -11,20 +11,40 @@ class PythonDefineTests(_unittest.TestCase) :
 
     def testExpressionInt(self) :
         r = pyg4ometry.geant4.Registry()
-        xc = pyg4ometry.gdml.Constant("xc","1",r)        
+        xc = pyg4ometry.gdml.Constant("xc",1,r)        
         self.assertEqual(xc.eval(),1)
 
     def testExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc",1.2345,r)        
+        self.assertEqual(xc.eval(),1.2345)
+
+    def testExpressionScientific1(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc",1E3,r)        
+        self.assertEqual(xc.eval(),1000)
+
+    def testExpressionScientific2(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc",1.2345E3,r)
+        self.assertEqual(xc.eval(),1234.5)
+
+    def testExpressionStringInt(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","1",r)        
+        self.assertEqual(xc.eval(),1)
+
+    def testExpressionStringFloat(self) :
+        r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1.2345",r)        
         self.assertEqual(xc.eval(),1.2345)
 
-    def testExpressionIntScientific(self) :
+    def testExpressionStringScientific1(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1E3",r)        
         self.assertEqual(xc.eval(),1000)
 
-    def testExpressionFloatScientific(self) :
+    def testExpressionStringScientific2(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1.2345E3",r)
         self.assertEqual(xc.eval(),1234.5)
