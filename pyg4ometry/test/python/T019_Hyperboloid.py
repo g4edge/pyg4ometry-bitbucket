@@ -3,7 +3,6 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-
 def Test(vis = False) : 
     reg = _g4.Registry()
     
