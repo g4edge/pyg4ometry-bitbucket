@@ -23,7 +23,7 @@ def _pj(filename):
     """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-class StlTests(_unittest.TestCase) :
+class StlLoadingTests(_unittest.TestCase) :
     def testLoadStlDog(self) :
         ret,l = LoadStl(_pj("dog.stl"))
         self.assertTrue(ret)
