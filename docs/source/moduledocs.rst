@@ -118,7 +118,9 @@ Geant4 solids
    :members:
 .. automodule:: pyg4ometry.geant4.solid.TwistedTubs
    :members:
-.. automodule:: pyg4ometry.geant4.solid.TesselatedSolid
+.. automodule:: pyg4ometry.geant4.solid.GenericTrap 
+   :members: 
+.. automodule:: pyg4ometry.geant4.solid.TessellatedSolid
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Union
    :members:
