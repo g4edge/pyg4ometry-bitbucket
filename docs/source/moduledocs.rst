@@ -61,6 +61,11 @@ Defines and variables
    :undoc-members:
    :show-inheritance:
 
+.. autoclass:: pyg4ometry.gdml.Matrix
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: pyg4ometry.gdml.Defines
    :members: upgradeToVector, upgradeToTransformation
 
@@ -131,7 +136,11 @@ Geant4 solids
 
 Geant4 module 
 -------------
-.. automodule:: pyg4ometry.geant4.Registry
+.. autoclass:: pyg4ometry.geant4.Registry
+   :members: addDefine, addMaterial, addSolid, addLogicalVolume, addPhysicalVolume
+   :undoc-members:
+   :show-inheritance:
+.. autoclass:: pyg4ometry.geant4.Material
    :members:
    :undoc-members:
    :show-inheritance:
