@@ -27,6 +27,10 @@ import T024_TwistedTrd
 import T025_TwistedTubs
 import T026_GenericTrap
 
+import T028_Union
+import T029_Subtraction
+import T030_Intersection
+
 import logging as _log
 
 logger = _log.getLogger()
@@ -110,6 +114,15 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testGenericTrap(self) : 
         self.assertTrue(T026_GenericTrap.Test())
+
+    def testUnion(self) : 
+        self.assertTrue(T028_Union.Test())
+
+    def testSubtraction(self) : 
+        self.assertTrue(T029_Subtraction.Test())
+
+    def testIntersection(self) : 
+        self.assertTrue(T030_Intersection.Test())
 
     
 if __name__ == '__main__':
