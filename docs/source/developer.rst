@@ -1,14 +1,21 @@
 Developer
 =========
 
+Unit tests
+----------
+
+.. code-block :: console 
+
+   cd pyg4ometry/pyg4ometry/test
+   python2.7 runTests.py
+
 Coverage
 --------
 
 .. code-block :: console
 
-   cd pyg4ometry/pyg4ometry/test/
-   coverage-2.7 run --source pyg4ometry ./runTests.py
-   coverage report -m
+   cd pyg4ometry/coverage
+   ./runCoverage.sh
  
 Profiling
 ---------
