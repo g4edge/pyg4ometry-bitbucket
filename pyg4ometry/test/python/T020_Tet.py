@@ -44,3 +44,6 @@ def Test(vis = False) :
         v.view()
 
     return True
+
+if __name__ == "__main__":
+    Test()
