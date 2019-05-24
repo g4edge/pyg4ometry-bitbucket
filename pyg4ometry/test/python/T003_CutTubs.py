@@ -45,6 +45,9 @@ def Test(vis = False) :
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T003_CutTubs.gdml"))
 
+    # test __repr__
+    str(cts)
+
     # visualisation
     if vis : 
         v = _vi.VtkViewer()

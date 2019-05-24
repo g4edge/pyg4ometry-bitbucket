@@ -31,6 +31,9 @@ def Test(vis = False) :
     tl = _g4.LogicalVolume(ts, tm, "tl", reg)
     tp = _g4.PhysicalVolume([0,0,0],[0,0,0],  tl, "t_pv1", wl, reg) 
     
+    # test __repr__
+    str(ts)
+
     # set world volume
     reg.setWorld(wl.name)
     

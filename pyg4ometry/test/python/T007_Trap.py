@@ -42,6 +42,9 @@ def Test(vis = False) :
     
     # set world volume
     reg.setWorld(wl.name)
+
+    # test __repr__
+    str(ts)
     
     # gdml output 
     w = _gd.Writer()

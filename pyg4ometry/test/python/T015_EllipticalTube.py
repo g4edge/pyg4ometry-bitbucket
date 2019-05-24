@@ -11,13 +11,11 @@ def Test(vis = False) :
     wx = _gd.Constant("wx","100",reg,True)
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
-
     
     pi     = _gd.Constant("pi","3.1415926",reg,True)
     ex     = _gd.Constant("ex","10",reg,True)
     ey     = _gd.Constant("ey","15",reg,True)
     ez     = _gd.Constant("ez","20",reg,True)
-
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
     em = _g4.MaterialPredefined("G4_Fe") 
@@ -33,6 +31,9 @@ def Test(vis = False) :
     
     # set world volume
     reg.setWorld(wl.name)
+
+    # test __repr__
+    str(es)
     
     # gdml output 
     w = _gd.Writer()

@@ -11,7 +11,6 @@ def Test(vis = False) :
     wx = _gd.Constant("wx","100",reg,True)
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
-
     
     pi     = _gd.Constant("pi","3.1415926",reg,True)
     edx    = _gd.Constant("eax","1.0",reg,True)
@@ -33,6 +32,9 @@ def Test(vis = False) :
     
     # set world volume
     reg.setWorld(wl.name)
+
+    # test __repr__
+    str(es)
     
     # gdml output 
     w = _gd.Writer()

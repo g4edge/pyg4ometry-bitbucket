@@ -41,6 +41,9 @@ def Test(vis = False) :
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T004_Cons.gdml"))
 
+    # test __repr__
+    str(cs)
+
     # visualisation
     if vis : 
         v = _vi.VtkViewer()

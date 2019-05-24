@@ -12,7 +12,6 @@ def Test(vis = False) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
     
-
     ttwist = _gd.Constant("tptwist","1.0",reg,True)
 
     tx1    = _gd.Constant("tx1","5",reg,True)
@@ -44,6 +43,9 @@ def Test(vis = False) :
     # set world volume
     reg.setWorld(wl.name)
     
+    # test __repr__
+    str(ts)
+
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
