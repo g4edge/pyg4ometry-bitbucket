@@ -1,5 +1,7 @@
 import unittest as _unittest
 
+import pyg4ometry
+
 import T001_Box
 import T002_Tubs
 import T003_CutTubs
@@ -37,6 +39,29 @@ logger = _log.getLogger()
 logger.disabled = True
 
 class PythonAuthoringTests(_unittest.TestCase) :
+    def testSolidBase(self) : 
+        s = pyg4ometry.geant4.solid.SolidBase("oldname")
+
+        # get name
+        name = s.name 
+        
+        # set name 
+        s.name = "newname"
+        
+        # set name special char
+        try : 
+            s.name = "newname!"
+        except ValueError :
+            pass
+
+        # set name first char number
+        try :
+            s.name = "1newname"
+        except ValueError : 
+            pass
+
+        self.assertEqual(s.name,"newname")
+
     def testBox(self) :
         self.assertTrue(T001_Box.Test())
 
