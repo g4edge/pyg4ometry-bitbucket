@@ -27,3 +27,11 @@ Or install from pypi.::
 
 or alternatively, run ``make develop`` from the same directory to ensure
 that any local changes are picked up.
+
+For FreeCAD support need to add library to PYTHONPATH
+
+.. code-block :: console 
+   
+   export PYTHONPATH=/opt/local/libexec/freecad/lib/
+
+

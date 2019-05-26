@@ -44,7 +44,7 @@ class PythonAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T000_SolidBase.Test())
 
     def testBox(self) :
-        self.assertTrue(T001_Box.Test())
+        self.assertTrue(T001_Box.Test(vis=True))
 
     def testTubs(self) :
         self.assertTrue(T002_Tubs.Test())

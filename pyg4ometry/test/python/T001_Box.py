@@ -43,7 +43,7 @@ def Test(vis = False) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive=False)
 
     return True
 

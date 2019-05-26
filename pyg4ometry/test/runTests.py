@@ -1,4 +1,7 @@
+#!/opt/local/bin/python
+
 from freecad import FreecadLoadingTests
+from python  import PythonTests
 from python  import PythonDefineTests
 from python  import PythonAuthoringTests
 from gdml    import GdmlLoadTests

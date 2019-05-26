@@ -6,6 +6,59 @@ import logging as _log
 class PythonDefineTests(_unittest.TestCase) :
 
     # #############################
+    # Define upgrades
+    # #############################
+    def testUpgradeToStringExpression(self) :
+        r = pyg4ometry.geant4.Registry()
+
+        # number to expression string
+        self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,10),"10")
+
+        # string to expression string (evaluatable)
+        self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"10+10"),"10+10")
+
+        # string to expression string (unevaluatable)
+        try : 
+            self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"10*x+10"),"10*x+10")
+        except AttributeError : 
+            pass
+
+        # string but in define dict 
+        c = pyg4ometry.gdml.Defines.Constant("c","10",r,True)
+        self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"c"),"c")
+
+    def testUpgradeToVector(self) : 
+        r = pyg4ometry.geant4.Registry() 
+
+        v = pyg4ometry.gdml.Defines.Position("v",0,0,0,"mm",r,False)
+
+        # vector 
+        p = pyg4ometry.gdml.Defines.upgradeToVector(v,r,"position",False)
+        self.assertEqual(p.eval(),[0,0,0])
+
+        # list to position
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"position",False)
+        self.assertEqual(p.eval(),[0,0,0])
+
+        # list to rotation
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"rotation",False)
+        self.assertEqual(p.eval(),[0,0,0])        
+
+        # list to scale
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"scale",False)
+        self.assertEqual(p.eval(),[0,0,0])
+
+        # list to undefined
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"undefined",False)
+        self.assertEqual(p,None)
+
+        
+
+    # #############################
+    # Scalar base
+    # #############################        
+
+    # #############################
     # ANTLR expressions 
     # #############################
 
@@ -87,6 +140,13 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Constants 
     # #############################        
+    def testConstantSetName(self) : 
+        r = pyg4ometry.geant4.Registry()
+        c = pyg4ometry.gdml.Constant("xc","1",r)
+        c.setName("testName") 
+        self.assertEqual(c.name,"testName")
+        self.assertEqual(c.expr.name,"expr_testName")
+        
     def testConstantOperatorAddExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
