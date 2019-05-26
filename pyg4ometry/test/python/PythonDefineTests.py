@@ -53,11 +53,6 @@ class PythonDefineTests(_unittest.TestCase) :
         self.assertEqual(p,None)
 
         
-
-    # #############################
-    # Scalar base
-    # #############################        
-
     # #############################
     # ANTLR expressions 
     # #############################
