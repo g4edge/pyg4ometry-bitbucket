@@ -264,10 +264,23 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Quanty
     # #############################        
+    def testQuantity(self) : 
+        r = pyg4ometry.geant4.Registry()
+        xq = pyg4ometry.gdml.Quantity("xq","0.1","mass","kg",r)
+        self.assertEqual(xq.eval(),0.1)
+        self.assertEqual(float(xq),0.1)
+        str(xq)
 
     # #############################
     # Variable
     # #############################        
+    def testVariable(self) : 
+        r = pyg4ometry.geant4.Registry()
+        xv = pyg4ometry.gdml.Variable("xv","0.1",r)
+        self.assertEqual(xv.eval(), 0.1)
+        self.assertEqual(float(xv),0.1)
+        str(xv)
+
 
     # #############################
     # Position
