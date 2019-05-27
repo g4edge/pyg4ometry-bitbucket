@@ -261,6 +261,11 @@ class PythonDefineTests(_unittest.TestCase) :
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.atan(xc)).eval(),0.09966865249116204) 
 
+    def testPowExpression(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","2",r)
+        self.assertEqual((pyg4ometry.gdml.pow(xc,2)).eval(),4) 
+
     # #############################
     # Quantity
     # #############################        

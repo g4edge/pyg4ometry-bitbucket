@@ -5,15 +5,15 @@
 		<constant name="beam_pipe_radius" value="7.5"/>
 		<constant name="beam_pipe_thickness" value="2"/>
 		<constant name="beam_pipe_length" value="50"/>
-		<constant name="wg_innerrb" value="7.5"/>
+		<constant name="wg_innerrb" value="beam_pipe_radius"/>
 		<constant name="wg_outerd" value="91.2"/>
 		<constant name="wg_outerr" value="(wg_outerd) / (2.0)"/>
 		<constant name="wg_length" value="50.0"/>
 		<constant name="wg_height" value="27.5"/>
 		<constant name="wg_offset" value="12.0"/>
 		<constant name="wg_centre" value="(wg_offset) + ((wg_height) / (2))"/>
-		<constant name="ec_innerr" value="7.5"/>
-		<constant name="ec_outerr" value="(wg_outerd) / (2.0)"/>
+		<constant name="ec_innerr" value="beam_pipe_radius"/>
+		<constant name="ec_outerr" value="wg_outerr"/>
 		<constant name="ec_length" value="5"/>
 		<constant name="ec_center" value="(wg_length) + ((ec_length) / (2))"/>
 		<constant name="ca_length" value="13"/>
