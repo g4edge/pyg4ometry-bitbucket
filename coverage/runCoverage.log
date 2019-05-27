@@ -6,7 +6,7 @@ Name                                                                            
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/exceptions.py                                  22      0   100%
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/freecad/Reader.py                             395    180    54%   23, 35-42, 45-53, 57-83, 87-88, 91-99, 123-124, 131, 148-149, 227, 254-256, 264, 269-286, 289-290, 294-299, 303-375, 379-392, 395-422, 426-461, 464-467, 553-554, 558-559
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/freecad/__init__.py                             5      2    60%   4-5
-/Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/gdml/Defines.py                               319     25    92%   38, 442, 461, 465, 539-546, 568, 620, 632, 652, 661, 664, 697, 707-710, 713, 717-718
+/Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/gdml/Defines.py                               322      3    99%   38, 724-725
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/gdml/Expression/GdmlExpressionEval.py         117     23    80%   27-29, 59-60, 65-70, 74, 99-102, 155-164, 167
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/gdml/Expression/GdmlExpressionLexer.py        140      0   100%
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/gdml/Expression/GdmlExpressionListener.py      62     62     0%   2-139
@@ -80,4 +80,4 @@ Name                                                                            
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/visualisation/Writer.py                        21     21     0%   1-31
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/visualisation/__init__.py                       3      0   100%
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
-TOTAL                                                                                                                         7406   1535    79%
+TOTAL                                                                                                                         7409   1513    80%
