@@ -1,11 +1,12 @@
 #!/opt/local/bin/python
 
-from freecad import FreecadLoadingTests
-from python  import PythonTests
-from python  import PythonDefineTests
-from python  import PythonAuthoringTests
-from gdml    import GdmlLoadTests
-from stl     import StlLoadingTests
+from freecad                import FreecadLoadingTests
+from python                 import PythonTests
+from python                 import PythonDefineTests
+from python                 import PythonAuthoringTests
+from pythonCompoundExamples import PythonCompoundExampleTests
+from gdml                   import GdmlLoadTests
+from stl                    import StlLoadingTests
 
 import unittest as _unittest
 import logging as _log
