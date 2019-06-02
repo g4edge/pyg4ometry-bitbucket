@@ -3,8 +3,10 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
+normal = 1
+non_intersecting = 2 
 
-def Test(vis = False) : 
+def Test(vis = False, type = normal) : 
     reg = _g4.Registry()
     
     # defines 
@@ -22,8 +24,11 @@ def Test(vis = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
-    ns = _g4.solid.Intersection("ns",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
-        
+    if type == normal : 
+        ns = _g4.solid.Intersection("ns",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
+    elif type == non_intersecting :
+        ns = _g4.solid.Intersection("ns",bs,bs,[[0.1,0.2,0.3],[bx*2,by*2,bz*22]],reg)        
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     nl = _g4.LogicalVolume(ns, bm, "nl", reg)

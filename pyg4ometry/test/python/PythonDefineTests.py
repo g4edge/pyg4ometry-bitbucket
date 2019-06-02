@@ -12,7 +12,7 @@ class PythonDefineTests(_unittest.TestCase) :
         r = pyg4ometry.geant4.Registry()
 
         # number to expression string
-        self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,10),"10")
+        self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,10),"10.000000000000000")
 
         # string to expression string (evaluatable)
         self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"10+10"),"10+10")

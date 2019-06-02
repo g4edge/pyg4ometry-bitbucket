@@ -10,6 +10,9 @@ logger.disabled = True
 
 class PythonTests(_unittest.TestCase) :
 
+    # #############################
+    # Transformation
+    # #############################
     def testRad2Deg(self) : 
         self.assertEqual(_trans.rad2deg(_np.pi),180)
 
@@ -38,8 +41,9 @@ class PythonTests(_unittest.TestCase) :
     def testMatrix_from(self) : 
         pass 
 
-    
-
+    # #############################
+    # Freecad
+    # #############################
     def testFreeCadImportFail(self) :         
         import sys
         # remove freecad 
@@ -48,6 +52,15 @@ class PythonTests(_unittest.TestCase) :
                 sys.path.remove(p)
     
         import pyg4ometry.freecad
+
+    # #############################
+    # Mesh
+    # #############################
+    
+    
+    # #############################
+    # CSG
+    # #############################
 
     def testExceptionNullMeshErrorIntersection(self) : 
         import pyg4ometry

@@ -3,7 +3,11 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-def Test(vis = False) : 
+normal = 1
+rmin_eq_zero = 2
+rmin_gt_rmax = 3
+
+def Test(vis = False, type = normal) : 
     reg = _g4.Registry()
     
     # defines 
@@ -17,6 +21,13 @@ def Test(vis = False) :
     hz    = _gd.Constant("hz","20.0",reg,True)
     hinst = _gd.Constant("hinst","3",reg,True)
     houtst= _gd.Constant("houtst","4",reg,True)
+    
+    if type == rmin_eq_zero : 
+        hrmin.setExpression(0)
+
+    if type == rmin_gt_rmax :
+        hrmin.setExpression(2)
+        hrmax.setExpression(1)
 
     wm = _g4.MaterialPredefined("G4_Galactic") 
     hm = _g4.MaterialPredefined("G4_Fe") 

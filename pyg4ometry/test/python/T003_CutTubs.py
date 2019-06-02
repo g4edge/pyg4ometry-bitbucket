@@ -3,8 +3,10 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
+normal     = 1 
+flat_ends  = 2
 
-def Test(vis = False) : 
+def Test(vis = False, type = normal) : 
     reg = _g4.Registry()
     
     # defines 
@@ -24,7 +26,15 @@ def Test(vis = False) :
     cthighx    = _gd.Constant("cthighx","1",reg,True)
     cthighy    = _gd.Constant("cthighy","1",reg,True)
     cthighz    = _gd.Constant("cthighz","1",reg,True)
-    
+
+    if type == flat_ends : 
+        ctlowx.setExpression(0)
+        ctlowy.setExpression(0)
+        ctlowz.setExpression(-1)
+        cthighx.setExpression(0)
+        cthighy.setExpression(0)
+        cthighz.setExpression(1)
+            
     wm = _g4.Material(name="G4_Galactic") 
     bm = _g4.Material(name="G4_Fe") 
 

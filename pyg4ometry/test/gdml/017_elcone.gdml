@@ -6,9 +6,9 @@
   <constant name="wby" value="100.0"/>
   <constant name="wbz" value="100.0"/>
 
-  <constant name="dx" value="1.0"/>
-  <constant name="dy" value="1.5"/>
-  <constant name="zmax" value="20"/>
+  <constant name="dx" value="0.2"/>
+  <constant name="dy" value="0.4"/>
+  <constant name="zmax" value="50"/>
   <constant name="zcut" value="15"/>
 
   <position name="center" x="0" y="0" z="0"/>

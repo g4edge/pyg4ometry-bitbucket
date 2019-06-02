@@ -1,10 +1,18 @@
 import os as _os
+import numpy as _np
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
+normal         = 1
+r1min_gt_r1max = 2
+r2min_gt_r2max = 3
+dphi_gt_2pi    = 4
+dphi_eq_2pi    = 5 
+cone_up        = 6
+inner_cylinder = 7
 
-def Test(vis = False) : 
+def Test(vis = False, type = normal) : 
     reg = _g4.Registry()
     
     # defines 
@@ -21,12 +29,29 @@ def Test(vis = False) :
     cdp    = _gd.Constant("cdp","1.5*pi",reg,True)
     zero   = _gd.Constant("zero","0.0",reg,False)
 
+    if type == r1min_gt_r1max : 
+        crmin1.setExpression(21)
+    elif type == type == r2min_gt_r2max : 
+        crmin2.setExpression(11)
+    elif type == dphi_gt_2pi : 
+        cdp.setExpression("3*pi")
+    elif type == dphi_eq_2pi : 
+        cdp.setExpression(2*_np.pi)
+    elif type == cone_up : 
+        crmin1.setExpression(5)
+        crmax1.setExpression(10)
+        crmin2.setExpression(6)
+        crmax2.setExpression(20)
+    elif type == inner_cylinder :
+        crmin1.setExpression(5)
+        crmin2.setExpression(5)
+
     wm = _g4.MaterialPredefined("G4_Galactic") 
     cm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    cs = _g4.solid.Cons("cs",crmin1,crmax1,crmin2,crmax2,cz,zero,1.5*pi,reg,"mm")
+    cs = _g4.solid.Cons("cs",crmin1,crmax1,crmin2,crmax2,cz,zero,cdp,reg,"mm")
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

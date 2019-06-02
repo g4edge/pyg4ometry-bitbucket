@@ -1,4 +1,5 @@
 import unittest as _unittest
+import numpy as _np
 
 import pyg4ometry
 
@@ -40,6 +41,14 @@ logger = _log.getLogger()
 logger.disabled = True
 
 class PythonAuthoringTests(_unittest.TestCase) :
+    def testPlane(self) : 
+        p = pyg4ometry.geant4.solid.Plane("plane",[0,0,1],1000)
+        str(p)
+
+    def testWedge(self) : 
+        w = pyg4ometry.geant4.solid.Wedge("wedge",1000,0,1.5*_np.pi,10000)
+        str(w)
+
     def testSolidBase(self) :         
         self.assertTrue(T000_SolidBase.Test())
 
@@ -50,11 +59,31 @@ class PythonAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T002_Tubs.Test())
 
     def testCutTubs(self) :
-        self.assertTrue(T003_CutTubs.Test())
+        self.assertTrue(T003_CutTubs.Test(False,T003_CutTubs.normal))
+        self.assertTrue(T003_CutTubs.Test(False,T003_CutTubs.flat_ends))
 
     def testCons(self) :
-        self.assertTrue(T004_Cons.Test())
+        try : 
+            T004_Cons.Test(False,T004_Cons.r1min_gt_r1max)
+        except ValueError :
+            pass
 
+        try : 
+            T004_Cons.Test(False,T004_Cons.r2min_gt_r2max)
+        except ValueError : 
+            pass
+
+        try : 
+            T004_Cons.Test(False,T004_Cons.dphi_gt_2pi)
+        except ValueError : 
+            pass
+
+        self.assertTrue(T004_Cons.Test(False,T004_Cons.dphi_eq_2pi))
+        self.assertTrue(T004_Cons.Test(False,T004_Cons.cone_up))
+        self.assertTrue(T004_Cons.Test(False,T004_Cons.inner_cylinder))
+
+        self.assertTrue(T004_Cons.Test())      
+      
     def testPara(self) :
         self.assertTrue(T005_Para.Test())
 
@@ -77,13 +106,23 @@ class PythonAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T011_Polycone.Test())
 
     def testGenericPolycone(self) :
-        self.assertTrue(T012_GenericPolycone.Test())
+        self.assertTrue(T012_GenericPolycone.Test(False,T012_GenericPolycone.normal))
+
+        try : 
+            T012_GenericPolycone.Test(False,T012_GenericPolycone.two_planes)
+        except ValueError : 
+            pass
 
     def testPolyhedra(self) :
         self.assertTrue(T013_Polyhedra.Test())
 
     def testGenericPolyhedra(self) : 
-        self.assertTrue(T014_GenericPolyhedra.Test())
+        self.assertTrue(T014_GenericPolyhedra.Test(False,T014_GenericPolyhedra.normal))
+
+        try : 
+            T014_GenericPolyhedra.Test(False,T014_GenericPolyhedra.two_planes)            
+        except ValueError : 
+            pass
 
     def testEllipticalTube(self) : 
         self.assertTrue(T015_EllipticalTube.Test())
@@ -93,12 +132,23 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testEllipticalCone(self) : 
         self.assertTrue(T017_EllipticalCone.Test())
+        
+        try : 
+            T017_EllipticalCone.Test(False,T017_EllipticalCone.zcut_outofrange)
+        except ValueError : 
+            pass
 
     def testParaboloid(self) : 
         self.assertTrue(T018_Paraboloid.Test())
 
     def testHyperboloid(self) : 
-        self.assertTrue(T019_Hyperboloid.Test())
+        self.assertTrue(T019_Hyperboloid.Test(False,T019_Hyperboloid.normal))
+        self.assertTrue(T019_Hyperboloid.Test(False,T019_Hyperboloid.rmin_eq_zero))
+
+        try : 
+            T019_Hyperboloid.Test(False,T019_Hyperboloid.rmin_gt_rmax)            
+        except ValueError : 
+            pass
 
     def testTet(self) :
         self.assertTrue(T020_Tet.Test())        
@@ -128,7 +178,12 @@ class PythonAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T029_Subtraction.Test())
 
     def testIntersection(self) : 
-        self.assertTrue(T030_Intersection.Test())
-    
+        self.assertTrue(T030_Intersection.Test(False,T030_Intersection.normal))
+
+        try : 
+            T030_Intersection.Test(False,T030_Intersection.non_intersecting)            
+        except pyg4ometry.exceptions.NullMeshError : 
+            pass
+
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        

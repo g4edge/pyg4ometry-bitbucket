@@ -3,8 +3,10 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
+normal = 1
+zcut_outofrange = 2
 
-def Test(vis = False) : 
+def Test(vis = False, type = normal) : 
     reg = _g4.Registry()
     
     # defines 
@@ -13,10 +15,13 @@ def Test(vis = False) :
     wz = _gd.Constant("wz","100",reg,True)
     
     pi     = _gd.Constant("pi","3.1415926",reg,True)
-    edx    = _gd.Constant("eax","1.0",reg,True)
-    edy    = _gd.Constant("eby","1.5",reg,True)
-    ezmax  = _gd.Constant("ecz","20",reg,True)
+    edx    = _gd.Constant("eax","0.2",reg,True)
+    edy    = _gd.Constant("eby","0.4",reg,True)
+    ezmax  = _gd.Constant("ecz","50",reg,True)
     ezcut  = _gd.Constant("ebc","15",reg,True)
+
+    if type == zcut_outofrange : 
+        ezcut.setExpression(30)
 
     wm = _g4.MaterialPredefined("G4_Galactic") 
     em = _g4.MaterialPredefined("G4_Fe") 

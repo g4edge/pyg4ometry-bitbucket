@@ -3,8 +3,10 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
+normal = 1
+two_planes = 2
 
-def Test(vis = False) : 
+def Test(vis = False, type = normal) : 
     reg = _g4.Registry()
     
     # defines 
@@ -28,6 +30,10 @@ def Test(vis = False) :
 
     pr    = [pr1,pr2,pr3]
     pz    = [pz1,pz2,pz3]
+
+    if type == two_planes : 
+        pr  = [pr1,pr2]
+        pz  = [pz1,pz2]
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
     pm = _g4.MaterialPredefined("G4_Fe") 
