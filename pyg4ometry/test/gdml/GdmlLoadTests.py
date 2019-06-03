@@ -107,6 +107,29 @@ _loader = SolidLoader(verbosity=0)
 
 
 class GdmlLoadTests(_unittest.TestCase) :
+    def testMalformedGdml(self) : 
+        import xml.parsers.expat                 as _expat
+        
+        try : 
+            r = pyg4ometry.gdml.Reader(_pj("./300_malformed_gdml.gdml"))
+        except _expat.ExpatError :
+            pass
+
+    def testQuantity(self) :
+        r = pyg4ometry.gdml.Reader(_pj("301_quantity.gdml"))
+
+    def testVariable(self) :
+        r = pyg4ometry.gdml.Reader(_pj("302_variable.gdml"))
+
+    def testMatrix(self) :
+        r = pyg4ometry.gdml.Reader(_pj("303_matrix.gdml"))
+
+    def testScale(self) :
+        r = pyg4ometry.gdml.Reader(_pj("304_scale.gdml"))
+
+    def testUnrecognisedDefine(self) :
+        r = pyg4ometry.gdml.Reader(_pj("305_unrecognised_define.gdml"))
+
     def testBoxLoad(self):
         #self.assertEqual(*_loader.getMeshHashes("box")) # Proper way to do it, but requires a stable code state
         self.assertTrue(bool(_loader.getMeshHashes("box"))) # For now just check it loads

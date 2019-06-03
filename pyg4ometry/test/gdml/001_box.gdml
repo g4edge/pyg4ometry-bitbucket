@@ -37,6 +37,7 @@
 </materials>
 
 <solids>
+  <!-- Solid comment -->
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
   <box name="box1"     x="bx"  y="by"  z="bz"  lunit="m"/>
 </solids>

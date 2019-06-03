@@ -55,7 +55,7 @@
 </solids>
 
 <structure>
-
+  <!-- Structure  comment -->
   <volume name="boxVol"> 
     <materialref ref="Air"/>
     <solidref ref="box"/>
