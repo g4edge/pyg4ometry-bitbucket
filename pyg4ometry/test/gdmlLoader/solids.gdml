@@ -2,6 +2,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
  <define>
+  <constant name="pi" value="3.14159" />
   <constant name="HALFPI" value="pi/2."/>
   <constant name="PI" value="1.*pi"/>
   <constant name="TWOPI" value="2.*pi"/>

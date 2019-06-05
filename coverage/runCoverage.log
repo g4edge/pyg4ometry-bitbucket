@@ -43,7 +43,7 @@ Name                                                                            
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/OpticalSurface.py                 14      9    36%   6-13, 17
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Orb.py                            29      0   100%
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Para.py                           45      0   100%
-/Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Paraboloid.py                     91      1    99%   91
+/Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Paraboloid.py                     88      0   100%
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Plane.py                          26      0   100%
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Polycone.py                      109      2    98%   104, 124
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/geant4/solid/Polyhedra.py                      44      0   100%
@@ -78,4 +78,4 @@ Name                                                                            
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/visualisation/Writer.py                        21     21     0%   1-31
 /Users/sboogert/Dropbox (Royal Holloway)/Physics/coderepos/pyg4ometry/pyg4ometry/visualisation/__init__.py                       3      0   100%
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
-TOTAL                                                                                                                         7405   1374    81%
+TOTAL                                                                                                                         7402   1373    81%
