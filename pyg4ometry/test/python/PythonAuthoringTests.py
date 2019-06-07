@@ -185,5 +185,9 @@ class PythonAuthoringTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.NullMeshError : 
             pass
 
+    def testMultiUnion(self) : 
+        self.assertTrue(T030_MultiUnion.Test(False,False))
+        
+
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
