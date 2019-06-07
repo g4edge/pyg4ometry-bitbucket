@@ -4,6 +4,8 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.gdml as _gdml
 import pyg4ometry.visualisation as _vis
 
+from os import path as _path
+
 def dipole_cbpm() :
     
     reg = _g4.Registry()
@@ -106,7 +108,7 @@ def dipole_cbpm() :
     ################################
     w = _gdml.Writer() 
     w.addDetector(reg)
-    w.write("dipole.gdml")
+    w.write(_path.join(_path.dirname(_path.abspath(__file__)), "dipole.gdml"))
 
     ################################
     # visualisation 
