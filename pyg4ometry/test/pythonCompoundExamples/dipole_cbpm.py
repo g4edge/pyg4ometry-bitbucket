@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vis
 
 from os import path as _path
 
-def dipole_cbpm() :
+def dipole_cbpm(interactive = False) :
     
     reg = _g4.Registry()
     
@@ -117,7 +117,7 @@ def dipole_cbpm() :
     v.addLogicalVolume(world_logical)
     v.addAxes(100)
     v.setOpacity(0.25)
-    v.view(interactive=False)
+    v.view(interactive=interactive)
 
     return reg
     

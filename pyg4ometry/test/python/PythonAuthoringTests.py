@@ -34,6 +34,7 @@ import T026_GenericTrap
 import T028_Union
 import T029_Subtraction
 import T030_Intersection
+import T031_MultiUnion
 
 import logging as _log
 
@@ -186,7 +187,7 @@ class PythonAuthoringTests(_unittest.TestCase) :
             pass
 
     def testMultiUnion(self) : 
-        self.assertTrue(T030_MultiUnion.Test(False,False))
+        self.assertTrue(T031_MultiUnion.Test(False,False))
         
 
 if __name__ == '__main__':
