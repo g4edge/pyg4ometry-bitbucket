@@ -16,8 +16,8 @@
   </materials>
 
   <solids>
-    <tube name="tube"       rmin="0"  rmax="100" z="800" deltaphi="2*pi/8" lunit="mm" aunit="rad"/>
-    <tube name="motherTube" rmin="0"  rmax="100" z="800" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+    <tube name="tube"       rmin="100"  rmax="200" z="800" deltaphi="2*pi/8" lunit="mm" aunit="rad"/>
+    <tube name="motherTube" rmin="100"  rmax="200" z="800" deltaphi="2*pi" lunit="mm" aunit="rad"/>
     <box  name="WorldBox"   x="1000"  y="1000"   z="1000" lunit="mm"/>
   </solids>
 
