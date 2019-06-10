@@ -34,6 +34,7 @@ import T026_GenericTrap
 import T028_Union
 import T029_Subtraction
 import T030_Intersection
+import T031_MultiUnion
 
 import logging as _log
 
@@ -184,6 +185,10 @@ class PythonAuthoringTests(_unittest.TestCase) :
             T030_Intersection.Test(False,T030_Intersection.non_intersecting)            
         except pyg4ometry.exceptions.NullMeshError : 
             pass
+
+    def testMultiUnion(self) : 
+        self.assertTrue(T031_MultiUnion.Test(False,False))
+        
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
