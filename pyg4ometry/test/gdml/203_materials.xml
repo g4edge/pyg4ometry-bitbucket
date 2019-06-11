@@ -1,0 +1,40 @@
+<materials>
+    <material Z="13.0" name="Al">
+        <D value="2.7"/>
+        <atom value="26.98"/>
+    </material>
+    <element Z="1.0" formula="H" name="Hydrogen">
+        <atom value="1.0"/>
+    </element>
+    <element Z="8.0" formula="O" name="Oxygen">
+        <atom value="16.0"/>
+    </element>
+    <material name="Water">
+        <D value="1.0"/>
+        <composite n="2" ref="Hydrogen"/>
+        <composite n="1" ref="Oxygen"/>
+    </material>
+    <element Z="7.0" formula="N" name="Nitrogen">
+        <atom value="14.01"/>
+    </element>
+    <material name="Air_163514448">
+        <D value="0.001289"/>
+        <fraction n="0.7" ref="Nitrogen"/>
+        <fraction n="0.3" ref="Oxygen"/>
+    </material>
+    <isotope N="235.0" Z="92.0" name="U235">
+        <atom type="A" value="235.01"/>
+    </isotope>
+    <isotope N="238.0" Z="92.0" name="U238">
+        <atom type="A" value="235.03"/>
+    </isotope>
+    <element formula="" name="EnrichedUranium">
+        <fraction n="0.9" ref="U235"/>
+        <fraction n="0.1" ref="U238"/>
+    </element>
+    <material name="WetEnrichedUranium">
+        <D value="0.001289"/>
+        <fraction n="0.9" ref="EnrichedUranium"/>
+        <fraction n="0.1" ref="Water"/>
+    </material>
+</materials>
