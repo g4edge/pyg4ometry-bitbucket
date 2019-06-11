@@ -229,5 +229,17 @@ class GdmlLoadTests(_unittest.TestCase) :
         w.addDetector(r.getRegistry())
         w.write(_pj("201_materials_processed.gdml"))
 
+    def testAuxiliary(self):
+        r = pyg4ometry.gdml.Reader(_pj("202_auxiliary.gdml"))
+        w = pyg4ometry.gdml.Writer()
+        w.addDetector(r.getRegistry())
+        w.write(_pj("202_auxiliary_processed.gdml"))
+
+    def testEntity(self):
+        r = pyg4ometry.gdml.Reader(_pj("203_entity.gdml"))
+        w = pyg4ometry.gdml.Writer()
+        w.addDetector(r.getRegistry())
+        w.write(_pj("203_entity_processed.gdml"))
+
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
