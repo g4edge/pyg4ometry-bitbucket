@@ -36,66 +36,57 @@
   </materials>
   
   <solids>
-    <box name="WorldBox"      x="wbx" y="wby" z="wbz" lunit="mm"/>
-    <box name="box"           x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
-    <box name="box_param"     x="bx"  y="by"  z="bz"  lunit="mm"/>
+    <box name="WorldBox"  x="wbx" y="wby" z="wbz" lunit="mm"/>
+    <box name="box"       x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
+    <trd name="trd_param" x1="0.5" y1="1.0" x2="1.0" y2="1.5" z="3" lunit="mm"/>
   </solids>
   
   <structure>    
-    <volume name="box1Vol">
+    <volume name="trd1Vol">
       <materialref ref="Al"/>
-      <solidref ref="box_param"/>
+      <solidref ref="trd_param"/>
     </volume>
-    <volume name="box2Vol">
+    <volume name="trd2Vol">
       <materialref ref="Air"/>
       <solidref ref="box"/>
       <paramvol ncopies="9">
-	<volumeref ref="box1Vol"/>
+	<volumeref ref="trd1Vol"/>
 	<parameterised_position_size> 
 	  <parameters number="1">
-	    <position name="bol1Vol1pos" x="0" y="0" z="-8*bx"/>
-	    <rotation name="bol1Vol1Rot" x="0" y="0" z="-0.4"/>
-	    <box_dimensions x="bx*0.80" y="by*0.80" z="bz*0.40"/>
+	    <position name="trd1Vol1pos" x="0" y="0" z="-8*bx"/>
+	    <trd_dimensions x1="5" y1="5" x2="2.5" y2="2.5" z="0.5" lunit="mm"/>
 	  </parameters>
 	  <parameters number="2">
-	    <position name="bol1Vol2pos" x="0" y="0" z="-6*bx"/>
-	    <rotation name="bol1Vol2Rot" x="0" y="0" z="-0.3"/>
-	    <box_dimensions x="bx*0.85" y="by*0.85" z="bz*0.5"/>
+	    <position name="trd1Vol2pos" x="0" y="0" z="-6*bx"/>
+	    <trd_dimensions x1="4.5" y1="5.5" x2="2.75" y2="2.25" z="1.0" lunit="mm"/>
 	  </parameters>
 	  <parameters number="3">
-	    <position name="bol1Vol3pos" x="0" y="0" z="-4*bx"/>
-	    <rotation name="bol1Vol3Rot" x="0" y="0" z="-0.2"/>
-	    <box_dimensions x="bx*0.90" y="by*0.90" z="bz*0.6"/>
+	    <position name="trd1Vol3pos" x="0" y="0" z="-4*bx"/>
+	    <trd_dimensions x1="4.0" y1="6.0" x2="3.0" y2="2.0" z="1.5" lunit="mm"/>
 	  </parameters>
 	  <parameters number="4">
-	    <position name="bol1Vol4pos" x="0" y="0" z="-2*bx"/>
-	    <rotation name="bol1Vol24ot" x="0" y="0" z="-0.1"/>
-	    <box_dimensions x="bx*0.95" y="by*0.95" z="bz*0.7"/>
+	    <position name="trd1Vol3pos" x="0" y="0" z="-2*bx"/>
+	    <trd_dimensions x1="3.5" y1="6.5" x2="3.25" y2="1.75" z="2.0" lunit="mm"/>
 	  </parameters>
 	  <parameters number="5">
-	    <position name="bol1Vol5pos" x="0" y="0" z="0*bx"/>
-	    <rotation name="bol1Vol5Rot" x="0" y="0" z="0.0"/>
-	    <box_dimensions x="bx" y="by" z="0.8*bz"/>
+	    <position name="trd1Vol5pos" x="0" y="0" z="0*bx"/>
+	    <trd_dimensions x1="3.0" y1="7.0" x2="3.5" y2="1.50" z="2.5" lunit="mm"/>
 	  </parameters>
 	  <parameters number="6">
-	    <position name="bol1Vol6pos" x="0" y="0" z="2*bx"/>
-	    <rotation name="bol1Vol6Rot" x="0" y="0" z="0.1"/>
-	    <box_dimensions x="bx*1.05" y="by*1.05" z="0.9*bz"/>
+	    <position name="trd1Vol5pos" x="0" y="0" z="2*bx"/>
+	    <trd_dimensions x1="2.5" y1="7.5" x2="3.75" y2="1.25" z="3.0" lunit="mm"/>
 	  </parameters>
 	  <parameters number="7">
-	    <position name="bol1Vol7pos" x="0" y="0" z="4*bx"/>
-	    <rotation name="bol1Vol7Rot" x="0" y="0" z="0.2"/>
-	    <box_dimensions x="bx*1.1" y="by*1.1" z="1.0*bz"/>
+	    <position name="trd1Vol7pos" x="0" y="0" z="4*bx"/>
+	    <trd_dimensions x1="2.0" y1="8.0" x2="4.0" y2="1.0" z="3.5" lunit="mm"/>
 	  </parameters>
 	  <parameters number="8">
-	    <position name="bol1Vol8pos" x="0" y="0" z="6*bx"/>
-	    <rotation name="bol1Vol8Rot" x="0" y="0" z="0.3"/>
-	    <box_dimensions x="bx*1.15" y="by*1.15" z="1.1*bz"/>
+	    <position name="trd1Vol8pos" x="0" y="0" z="6*bx"/>
+	    <trd_dimensions x1="1.5" y1="8.5" x2="4.25" y2="0.75" z="4.0" lunit="mm"/>
 	  </parameters>
 	  <parameters number="9">
-	    <position name="bol1Vol9pos" x="0" y="0" z="8*bx"/>
-	    <rotation name="bol1Vol9Rot" x="0" y="0" z="0.4"/>
-	    <box_dimensions x="bx*1.2" y="by*1.2" z="1.2*bz"/>
+	    <position name="trd1Vol9pos" x="0" y="0" z="8*bx"/>
+	    <trd_dimensions x1="1.0" y1="9.0" x2="4.5" y2="0.5" z="4.5" lunit="mm"/>
 	  </parameters>
 	</parameterised_position_size>
       </paramvol>    
@@ -104,7 +95,7 @@
       <materialref ref="Air"/>
       <solidref ref="WorldBox"/>
       <physvol>
-	<volumeref ref="box2Vol"/>
+	<volumeref ref="trd2Vol"/>
 	<positionref ref="center"/>
 	<rotationref ref="identity"/>
       </physvol>  

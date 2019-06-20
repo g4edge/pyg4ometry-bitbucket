@@ -9,12 +9,11 @@
   <constant name="hrmin" value="1.0"/>
   <constant name="hrmax" value="2.0"/>
   <constant name="hz" value="20"/>
-  <constant name="hinst" value="3"/>
-  <constant name="houtst" value="4"/>
+  <constant name="hinst" value="4"/>
+  <constant name="houtst" value="5"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
-
 </define>
 
 <materials>
