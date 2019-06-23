@@ -38,7 +38,7 @@
   <solids>
     <box name="WorldBox"  x="wbx" y="wby" z="wbz" lunit="mm"/>
     <box name="box"       x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
-    <trap name="trap_param" x1="0.5" y1="1.0" x2="1.0" y2="1.5" z="3" lunit="mm"/>
+    <trap name="trap_param" x1="0.5" x2="1.0" x3="1.0" x4="1.5" y1="1.0" y2="1.0" alpha1="0.0" alpha2="0.0" theta="0.0" phi="0.0" z="3" lunit="mm" aunit="rad"/>
   </solids>
   
   <structure>    
@@ -54,39 +54,39 @@
 	<parameterised_position_size> 
 	  <parameters number="1">
 	    <position name="trap1Vol1pos" x="0" y="0" z="-8*bx"/>
-	    <trap_dimensions x1="5" y1="5" x2="2.5" y2="2.5" z="0.5" lunit="mm"/>
+	    <trap_dimensions x1="0.5" x2="1.0" x3="1.5" x4="2.0" y1="1.0" y2="1.0" alpha1="0.0" alpha2="0.0" theta="0.05" phi="0.05" z="1" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="2">
 	    <position name="trap1Vol2pos" x="0" y="0" z="-6*bx"/>
-	    <trap_dimensions x1="4.5" y1="5.5" x2="2.75" y2="2.25" z="1.0" lunit="mm"/>
+	    <trap_dimensions x1="0.5" x2="1.0" x3="1.5" x4="2.0" y1="1.25" y2="1.25" alpha1="0.0" alpha2="0.0" theta="0.1" phi="0.1" z="1.5" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="3">
 	    <position name="trap1Vol3pos" x="0" y="0" z="-4*bx"/>
-	    <trap_dimensions x1="4.0" y1="6.0" x2="3.0" y2="2.0" z="1.5" lunit="mm"/>
+	    <trap_dimensions x1="0.5" x2="1.0" x3="1.5" x4="2.0" y1="1.5" y2="1.5" alpha1="0.0" alpha2="0.0" theta="0.15" phi="0.15" z="2.0" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="4">
 	    <position name="trap1Vol3pos" x="0" y="0" z="-2*bx"/>
-	    <trap_dimensions x1="3.5" y1="6.5" x2="3.25" y2="1.75" z="2.0" lunit="mm"/>
+	    <trap_dimensions x1="0.75" x2="1.25" x3="1.75" x4="2.25" y1="1.75" y2="1.75" alpha1="0.0" alpha2="0.0" theta="0.2" phi="0.20" z="2.5" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="5">
 	    <position name="trap1Vol5pos" x="0" y="0" z="0*bx"/>
-	    <trap_dimensions x1="3.0" y1="7.0" x2="3.5" y2="1.50" z="2.5" lunit="mm"/>
+	    <trap_dimensions x1="1.0" x2="1.5" x3="1.75" x4="2.25" y1="2.0" y2="2.0" alpha1="0.0" alpha2="0.0" theta="0.25" phi="0.25" z="3.0" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="6">
 	    <position name="trap1Vol5pos" x="0" y="0" z="2*bx"/>
-	    <trap_dimensions x1="2.5" y1="7.5" x2="3.75" y2="1.25" z="3.0" lunit="mm"/>
+	    <trap_dimensions x1="1.25" x2="1.75" x3="2.0" x4="2.5" y1="2.25" y2="2.25" alpha1="0.0" alpha2="0.0" theta="0.3" phi="0.3" z="3.5" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="7">
 	    <position name="trap1Vol7pos" x="0" y="0" z="4*bx"/>
-	    <trap_dimensions x1="2.0" y1="8.0" x2="4.0" y2="1.0" z="3.5" lunit="mm"/>
+	    <trap_dimensions x1="1.5" x2="2.0" x3="2.25" x4="2.75" y1="2.5" y2="2.5" alpha1="0.0" alpha2="0.0" theta="0.35" phi="0.35" z="4.0" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="8">
 	    <position name="trap1Vol8pos" x="0" y="0" z="6*bx"/>
-	    <trap_dimensions x1="1.5" y1="8.5" x2="4.25" y2="0.75" z="4.0" lunit="mm"/>
+	    <trap_dimensions x1="1.75" x2="2.25" x3="2.5" x4="3.0" y1="2.75" y2="2.75" alpha1="0.0" alpha2="0.0" theta="0.4" phi="0.4" z="4.5" lunit="mm" aunit="rad"/>
 	  </parameters>
 	  <parameters number="9">
 	    <position name="trap1Vol9pos" x="0" y="0" z="8*bx"/>
-	    <trap_dimensions x1="1.0" y1="9.0" x2="4.5" y2="0.5" z="4.5" lunit="mm"/>
+	    <trap_dimensions x1="2.0" x2="2.5" x3="2.75" x4="3.25" y1="3.0" y2="3.0" alpha1="0.0" alpha2="0.0" theta="0.45" phi="0.45" z="5.0" lunit="mm" aunit="rad"/>
 	  </parameters>
 	</parameterised_position_size>
       </paramvol>    
