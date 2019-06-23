@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+  
+  <define>
+    <constant name="wbx" value="1000.0"/>
+    <constant name="wby" value="1000.0"/>
+    <constant name="wbz" value="1000.0"/>
+    
+    <constant name="bx" value="5.0"/>
+    <constant name="by" value="bx"/>
+    <constant name="bz" value="bx"/>
+    
+    <position name="center" x="0" y="0" z="0"/>
+    <rotation name="identity" x="0" y="0" z="0"/>   
+  </define>
+  
+  <materials>
+    <element name="Oxygen"   formula="O"  Z="8.">
+      <atom value="16.0"/>
+    </element>
+    <element name="Nitrogen" formula="N"  Z="7.">
+      <atom value="14.01"/>
+    </element>
+    
+    <material name="Al" Z="13.0">
+      <D value="2.70"/>
+      <atom value="26.98"/>
+    </material>
+    
+    <material name="Air">
+      <D value="1.290" unit="mg/cm3"/>
+      <fraction n="0.7" ref="Nitrogen"/>
+      <fraction n="0.3" ref="Oxygen"/>
+    </material>
+    
+  </materials>
+  
+  <solids>
+    <box name="WorldBox"      x="wbx" y="wby" z="wbz" lunit="mm"/>
+    <box name="box"           x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
+    <tube name="tube_param"    rmin="5"  rmax="25"  z="50"  deltaphi="2*pi" lunit="mm" aunit="rad"/>
+  </solids>
+  
+  <structure>    
+    <volume name="tube1Vol">
+      <materialref ref="Al"/>
+      <solidref ref="tube_param"/>
+    </volume>
+    <volume name="box2Vol">
+      <materialref ref="Air"/>
+      <solidref ref="box"/>
+      <paramvol ncopies="9">
+	<volumeref ref="tube1Vol"/>
+	<parameterised_position_size> 
+	  <parameters number="1">
+	    <position name="tub1Vol1pos" x="0" y="0" z="-8*bx"/>
+	    <rotation name="tub11Vol1Rot" x="0" y="0" z="-0.4"/>
+	    <tube_dimensions rmin="0.1"  rmax="1.0"  z="2.5"  deltaphi="2*pi*0.1" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="2">
+	    <position name="tub1Vol2pos" x="0" y="0" z="-6*bx"/>
+	    <rotation name="tub1Vol2Rot" x="0" y="0" z="-0.3"/>
+	    <tube_dimensions rmin="0.2"  rmax="1.2"  z="2.5"  deltaphi="2*pi*0.2" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="3">
+	    <position name="tub1Vol3pos" x="0" y="0" z="-4*bx"/>
+	    <rotation name="tub1Vol3Rot" x="0" y="0" z="-0.2"/>
+	    <tube_dimensions rmin="0.3"  rmax="1.4"  z="2.5"  deltaphi="2*pi*0.3" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="4">
+	    <position name="tub1Vol4pos" x="0" y="0" z="-2*bx"/>
+	    <rotation name="tub1Vol24ot" x="0" y="0" z="-0.1"/>
+	    <tube_dimensions rmin="0.4"  rmax="1.6"  z="2.5"  deltaphi="2*pi*0.4" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="5">
+	    <position name="tub1Vol5pos" x="0" y="0" z="0*bx"/>
+	    <rotation name="tub1Vol5Rot" x="0" y="0" z="0.0"/>
+	    <tube_dimensions rmin="0.5"  rmax="1.8"  z="2.5"  deltaphi="2*pi*0.5" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="6">
+	    <position name="tub1Vol6pos" x="0" y="0" z="2*bx"/>
+	    <rotation name="tub1Vol6Rot" x="0" y="0" z="0.1"/>
+	    <tube_dimensions rmin="0.6"  rmax="2.0"  z="2.5"  deltaphi="2*pi*0.6" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="7">
+	    <position name="tub1Vol7pos" x="0" y="0" z="4*bx"/>
+	    <rotation name="tub1Vol7Rot" x="0" y="0" z="0.2"/>
+	    <tube_dimensions rmin="0.7"  rmax="2.2"  z="2.5"  deltaphi="2*pi*0.7" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="8">
+	    <position name="tub1Vol8pos" x="0" y="0" z="6*bx"/>
+	    <rotation name="tub1Vol8Rot" x="0" y="0" z="0.3"/>
+	    <tube_dimensions rmin="0.8"  rmax="2.4"  z="2.5"  deltaphi="2*pi*0.8" lunit="mm" aunit="rad"/>
+	  </parameters>
+	  <parameters number="9">
+	    <position name="tub1Vol9pos" x="0" y="0" z="8*bx"/>
+	    <rotation name="tub1Vol9Rot" x="0" y="0" z="0.4"/>
+	    <tube_dimensions rmin="0.9"  rmax="2.6"  z="2.5"  deltaphi="2*pi*0.9" lunit="mm" aunit="rad"/>
+	  </parameters>
+	</parameterised_position_size>
+      </paramvol>    
+    </volume>    
+    <volume name="World">
+      <materialref ref="Air"/>
+      <solidref ref="WorldBox"/>
+      <physvol>
+	<volumeref ref="box2Vol"/>
+	<positionref ref="center"/>
+	<rotationref ref="identity"/>
+      </physvol>  
+    </volume>
+  </structure>    
+  <setup name="Default" version="1.0">
+    <world ref="World"/>
+  </setup>   
+</gdml>
