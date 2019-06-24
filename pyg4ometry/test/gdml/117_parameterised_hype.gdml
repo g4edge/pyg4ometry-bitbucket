@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+  
+  <define>
+    <constant name="wbx" value="1000.0"/>
+    <constant name="wby" value="1000.0"/>
+    <constant name="wbz" value="1000.0"/>
+    
+    <constant name="bx" value="5.0"/>
+    <constant name="by" value="bx"/>
+    <constant name="bz" value="bx"/>
+    
+    <position name="center" x="0" y="0" z="0"/>
+    <rotation name="identity" x="0" y="0" z="0"/>   
+  </define>
+  
+  <materials>
+    <element name="Oxygen"   formula="O"  Z="8.">
+      <atom value="16.0"/>
+    </element>
+    <element name="Nitrogen" formula="N"  Z="7.">
+      <atom value="14.01"/>
+    </element>
+    
+    <material name="Al" Z="13.0">
+      <D value="2.70"/>
+      <atom value="26.98"/>
+    </material>
+    
+    <material name="Air">
+      <D value="1.290" unit="mg/cm3"/>
+      <fraction n="0.7" ref="Nitrogen"/>
+      <fraction n="0.3" ref="Oxygen"/>
+    </material>
+    
+  </materials>
+  
+  <solids>
+    <box name="WorldBox"      x="wbx" y="wby" z="wbz" lunit="mm"/>
+    <box name="box"           x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
+    <hype name="hype_param" rmin="0.25" rmax="0.5" z="5" inst="1" outst="2" lunit="mm" />
+  </solids>
+  
+  <structure>    
+    <volume name="hype1Vol">
+      <materialref ref="Al"/>
+      <solidref ref="hype_param"/>
+    </volume>
+    <volume name="box2Vol">
+      <materialref ref="Air"/>
+      <solidref ref="box"/>
+      <paramvol ncopies="9">
+	<volumeref ref="hype1Vol"/>
+	<parameterised_position_size> 
+	  <parameters number="1">
+	    <position name="hype1Vol1pos" x="0" y="0" z="-8*bx"/>
+	    <hype_dimensions rmin="0.25" rmax="0.5" z="1" inst="0.1" outst="0.2" lunit="mm" aunut="rad"/>
+	  </parameters>
+	  <parameters number="2">
+	    <position name="hype1Vol2pos" x="0" y="0" z="-6*bx"/>
+	    <hype_dimensions rmin="0.5" rmax="1.0" z="2" inst="0.2" outst="0.3" lunit="mm" aunut="rad" />
+	  </parameters>
+	  <parameters number="3">
+	    <position name="hype1Vol3pos" x="0" y="0" z="-4*bx"/>
+	    <hype_dimensions rmin="0.75" rmax="1.5" z="3" inst="0.3" outst="0.4" lunit="mm" aunut="rad" />
+	  </parameters>
+ 	  <parameters number="4">
+	    <position name="hype1Vol4pos" x="0" y="0" z="-2*bx"/>
+	    <hype_dimensions rmin="1.0" rmax="2.0" z="4" inst="0.4" outst="0.5" lunit="mm" aunut="rad" />
+	  </parameters>
+	  <parameters number="5">
+	    <position name="hype1Vol5pos" x="0" y="0" z="0*bx"/>
+	    <hype_dimensions rmin="1.25" rmax="2.5" z="5" inst="0.5" outst="0.6" lunit="mm" aunut="rad" />
+	  </parameters>
+	  <parameters number="6">
+	    <position name="hype1Vol6pos" x="0" y="0" z="2*bx"/>
+	    <hype_dimensions rmin="1.5" rmax="3.0" z="6" inst="0.6" outst="0.7" lunit="mm" aunut="rad" />
+	  </parameters>
+	  <parameters number="7">
+	    <position name="hype1Vol7pos" x="0" y="0" z="4*bx"/>
+	    <hype_dimensions rmin="1.75" rmax="4.5" z="7" inst="0.7" outst="0.8" lunit="mm" aunut="rad" />
+	  </parameters>
+	  <parameters number="8">
+	    <position name="hype1Vol8pos" x="0" y="0" z="6*bx"/>
+	    <hype_dimensions rmin="2.0" rmax="5.0" z="8" inst="0.8" outst="0.9" lunit="mm" aunut="rad" />
+	  </parameters>
+	  <parameters number="9">
+	    <position name="hype1Vol9pos" x="0" y="0" z="8*bx"/>
+	    <hype_dimensions rmin="2.25" rmax="5.5" z="9" inst="0.9" outst="1.0" lunit="mm" aunut="rad" />
+	  </parameters>
+	</parameterised_position_size>
+      </paramvol>    
+    </volume>    
+    <volume name="World">
+      <materialref ref="Air"/>
+      <solidref ref="WorldBox"/>
+      <physvol>
+	<volumeref ref="box2Vol"/>
+	<positionref ref="center"/>
+	<rotationref ref="identity"/>
+      </physvol>  
+    </volume>
+  </structure>    
+  <setup name="Default" version="1.0">
+    <world ref="World"/>
+  </setup>   
+</gdml>

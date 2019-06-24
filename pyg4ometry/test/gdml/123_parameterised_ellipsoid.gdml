@@ -38,64 +38,64 @@
   <solids>
     <box name="WorldBox"      x="wbx" y="wby" z="wbz" lunit="mm"/>
     <box name="box"           x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
-    <box name="box_param"     x="bx"  y="by"  z="bz"  lunit="mm"/>
+    <ellipsoid name="ellipsoid_param" ax="1" by="2" cz="5" zcut1="-4" zcut2="4" lunit="mm" />
   </solids>
   
   <structure>    
-    <volume name="box1Vol">
+    <volume name="ellipsoid1Vol">
       <materialref ref="Al"/>
-      <solidref ref="box_param"/>
+      <solidref ref="ellipsoid_param"/>
     </volume>
-    <volume name="box2Vol">
+    <volume name="ellipsoid2Vol">
       <materialref ref="Air"/>
       <solidref ref="box"/>
       <paramvol ncopies="9">
-	<volumeref ref="box1Vol"/>
+	<volumeref ref="ellipsoid1Vol"/>
 	<parameterised_position_size> 
 	  <parameters number="1">
-	    <position name="bol1Vol1pos" x="0" y="0" z="-8*bx"/>
-	    <rotation name="bol1Vol1Rot" x="0" y="0" z="-0.4"/>
-	    <box_dimensions x="bx*0.80" y="by*0.80" z="bz*0.80"/>
+	    <position name="ellipsoid1Vol1pos" x="0" y="0" z="-8*bx"/>
+	    <rotation name="ellipsoid11Vol1Rot" x="0" y="0" z="-0.4"/>
+	    <ellipsoid_dimensions ax="0.5" by="0.75" cz="1" zcut1="-1" zcut2="1" lunit="mm" />
 	  </parameters>
 	  <parameters number="2">
-	    <position name="bol1Vol2pos" x="0" y="0" z="-6*bx"/>
-	    <rotation name="bol1Vol2Rot" x="0" y="0" z="-0.3"/>
-	    <box_dimensions x="bx*0.85" y="by*0.85" z="bz*0.85"/>
+	    <position name="ellipsoid1Vol2pos" x="0" y="0" z="-6*bx"/>
+	    <rotation name="ellipsoid1Vol2Rot" x="0" y="0" z="-0.3"/>
+	    <ellipsoid_dimensions ax="1.0" by="1.25" cz="1.5" zcut1="-1.25" zcut2="1.25" lunit="mm" />
 	  </parameters>
 	  <parameters number="3">
-	    <position name="bol1Vol3pos" x="0" y="0" z="-4*bx"/>
-	    <rotation name="bol1Vol3Rot" x="0" y="0" z="-0.2"/>
-	    <box_dimensions x="bx*0.90" y="by*0.90" z="bz*0.90"/>
+	    <position name="ellipsoid1Vol3pos" x="0" y="0" z="-4*bx"/>
+	    <rotation name="ellipsoid1Vol3Rot" x="0" y="0" z="-0.2"/>
+	    <ellipsoid_dimensions ax="1.5" by="1.75" cz="2.0" zcut1="-1.5" zcut2="1.5" lunit="mm" />
 	  </parameters>
 	  <parameters number="4">
-	    <position name="bol1Vol4pos" x="0" y="0" z="-2*bx"/>
-	    <rotation name="bol1Vol24ot" x="0" y="0" z="-0.1"/>
-	    <box_dimensions x="bx*0.95" y="by*0.95" z="bz*0.95"/>
+	    <position name="ellipsoid1Vol4pos" x="0" y="0" z="-2*bx"/>
+	    <rotation name="ellipsoid1Vol24ot" x="0" y="0" z="-0.1"/>
+	    <ellipsoid_dimensions ax="2.0" by="2.25" cz="2.5" zcut1="-1.75" zcut2="1.75" lunit="mm" />
 	  </parameters>
 	  <parameters number="5">
-	    <position name="bol1Vol5pos" x="0" y="0" z="0*bx"/>
-	    <rotation name="bol1Vol5Rot" x="0" y="0" z="0.0"/>
-	    <box_dimensions x="bx" y="by" z="bz"/>
+	    <position name="ellipsoid1Vol5pos" x="0" y="0" z="0*bx"/>
+	    <rotation name="ellipsoid1Vol5Rot" x="0" y="0" z="0.0"/>
+	    <ellipsoid_dimensions ax="2.5" by="2.75" cz="3.0" zcut1="-2.0" zcut2="2.0" lunit="mm" />
 	  </parameters>
 	  <parameters number="6">
-	    <position name="bol1Vol6pos" x="0" y="0" z="2*bx"/>
-	    <rotation name="bol1Vol6Rot" x="0" y="0" z="0.1"/>
-	    <box_dimensions x="bx*1.05" y="by*1.05" z="bz*1.05"/>
+	    <position name="ellipsoid1Vol6pos" x="0" y="0" z="2*bx"/>
+	    <rotation name="ellipsoid1Vol6Rot" x="0" y="0" z="0.1"/>
+	    <ellipsoid_dimensions ax="3.0" by="3.25" cz="3.5" zcut1="-2.25" zcut2="2.25" lunit="mm" />
 	  </parameters>
 	  <parameters number="7">
-	    <position name="bol1Vol7pos" x="0" y="0" z="4*bx"/>
-	    <rotation name="bol1Vol7Rot" x="0" y="0" z="0.2"/>
-	    <box_dimensions x="bx*1.1" y="by*1.1" z="bz*1.1"/>
+	    <position name="ellipsoid1Vol7pos" x="0" y="0" z="4*bx"/>
+	    <rotation name="ellipsoid1Vol7Rot" x="0" y="0" z="0.2"/>
+	    <ellipsoid_dimensions ax="3.5" by="3.75" cz="4.0" zcut1="-2.5" zcut2="2.5" lunit="mm" />
 	  </parameters>
 	  <parameters number="8">
-	    <position name="bol1Vol8pos" x="0" y="0" z="6*bx"/>
-	    <rotation name="bol1Vol8Rot" x="0" y="0" z="0.3"/>
-	    <box_dimensions x="bx*1.15" y="by*1.15" z="bz*1.15"/>
+	    <position name="ellipsoid1Vol8pos" x="0" y="0" z="6*bx"/>
+	    <rotation name="ellipsoid1Vol8Rot" x="0" y="0" z="0.3"/>
+	    <ellipsoid_dimensions ax="4.0" by="4.25" cz="4.5" zcut1="-2.75" zcut2="2.75" lunit="mm" />
 	  </parameters>
 	  <parameters number="9">
-	    <position name="bol1Vol9pos" x="0" y="0" z="8*bx"/>
-	    <rotation name="bol1Vol9Rot" x="0" y="0" z="0.4"/>
-	    <box_dimensions x="bx*1.2" y="by*1.2" z="bz*1.2"/>
+	    <position name="ellipsoid1Vol9pos" x="0" y="0" z="8*bx"/>
+	    <rotation name="ellipsoid1Vol9Rot" x="0" y="0" z="0.4"/>
+	    <ellipsoid_dimensions ax="4.5" by="4.75" cz="5" zcut1="-3.0" zcut2="3" lunit="mm" />
 	  </parameters>
 	</parameterised_position_size>
       </paramvol>    
@@ -104,7 +104,7 @@
       <materialref ref="Air"/>
       <solidref ref="WorldBox"/>
       <physvol>
-	<volumeref ref="box2Vol"/>
+	<volumeref ref="ellipsoid2Vol"/>
 	<positionref ref="center"/>
 	<rotationref ref="identity"/>
       </physvol>  

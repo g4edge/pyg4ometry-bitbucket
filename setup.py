@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-
+from Cython.Build import cythonize
 
 setup(
     name="pyg4ometry",
@@ -12,6 +12,9 @@ setup(
                       "networkx",
                       "numpy",
                       "vtk"],
+
+    ext_modules=cythonize(["pyg4ometry/pycsg/geom.pyx","pyg4ometry/pycsg/core.pyx"]),
+
     python_requires="==2.7.*", # refer to pep440 for writing these correctly
 
     author="Stuart D Walker",

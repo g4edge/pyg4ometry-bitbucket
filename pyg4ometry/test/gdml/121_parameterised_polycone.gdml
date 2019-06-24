@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+  
+  <define>
+    <constant name="wbx" value="1000.0"/>
+    <constant name="wby" value="1000.0"/>
+    <constant name="wbz" value="1000.0"/>
+    
+    <constant name="bx" value="5.0"/>
+    <constant name="by" value="bx"/>
+    <constant name="bz" value="bx"/>
+    
+    <position name="center" x="0" y="0" z="0"/>
+    <rotation name="identity" x="0" y="0" z="0"/>   
+  </define>
+  
+  <materials>
+    <element name="Oxygen"   formula="O"  Z="8.">
+      <atom value="16.0"/>
+    </element>
+    <element name="Nitrogen" formula="N"  Z="7.">
+      <atom value="14.01"/>
+    </element>
+    
+    <material name="Al" Z="13.0">
+      <D value="2.70"/>
+      <atom value="26.98"/>
+    </material>
+    
+    <material name="Air">
+      <D value="1.290" unit="mg/cm3"/>
+      <fraction n="0.7" ref="Nitrogen"/>
+      <fraction n="0.3" ref="Oxygen"/>
+    </material>
+    
+  </materials>
+  
+  <solids>
+    <box name="WorldBox"  x="wbx" y="wby" z="wbz" lunit="mm"/>
+    <box name="box"       x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
+    <polycone name="polycone_param" startphi="1" deltaphi="4" aunit="rad" lunit="mm">
+      <zplane rmin="1" rmax="9" z="-5" />
+      <zplane rmin="3" rmax="5" z="0" />
+      <zplane rmin="1" rmax="9" z="5" />
+    </polycone>
+  </solids>
+  
+  <structure>    
+    <volume name="polycone1Vol">
+      <materialref ref="Al"/>
+      <solidref ref="polycone_param"/>
+    </volume>
+    <volume name="polycone2Vol">
+      <materialref ref="Air"/>
+      <solidref ref="box"/>
+      <paramvol ncopies="9">
+	<volumeref ref="polycone1Vol"/>
+	<parameterised_position_size> 
+	  <parameters number="1">
+	    <position name="polycone1Vol1pos" x="0" y="0" z="-8*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.1" openPhi="2*pi*0.9" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="1" rmax="9" z="-0.5" />
+	      <zplane rmin="3" rmax="5" z="0" />
+	      <zplane rmin="1" rmax="9" z="0.5" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="2">
+	    <position name="polycone1Vol2pos" x="0" y="0" z="-6*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.2" openPhi="2*pi*0.8" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="2" rmax="10" z="-1.0" />
+	      <zplane rmin="3" rmax="6" z="0" />
+	      <zplane rmin="2" rmax="10" z="1.0" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="3">
+	    <position name="polycone1Vol3pos" x="0" y="0" z="-4*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.3" openPhi="2*pi*0.7" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="3" rmax="11" z="-1.0" />
+	      <zplane rmin="4" rmax="7" z="0" />
+	      <zplane rmin="3" rmax="11" z="1.0" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="4">
+	    <position name="polycone1Vol3pos" x="0" y="0" z="-2*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.4" openPhi="2*pi*0.6" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="4" rmax="12" z="-1.5" />
+	      <zplane rmin="5" rmax="8" z="0" />
+	      <zplane rmin="4" rmax="12" z="1.5" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="5">
+	    <position name="polycone1Vol5pos" x="0" y="0" z="0*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.5" openPhi="2*pi*0.5" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="5" rmax="13" z="-2" />
+	      <zplane rmin="6" rmax="9" z="0" />
+	      <zplane rmin="5" rmax="13" z="2" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="6">
+	    <position name="polycone1Vol5pos" x="0" y="0" z="2*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.6" openPhi="2*pi*0.4" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="6" rmax="14" z="-2.5" />
+	      <zplane rmin="7" rmax="10" z="0" />
+	      <zplane rmin="6" rmax="14" z="2.5" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="7">
+	    <position name="polycone1Vol7pos" x="0" y="0" z="4*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.7" openPhi="2*pi*0.3" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="7" rmax="15" z="-3" />
+	      <zplane rmin="8" rmax="11" z="0" />
+	      <zplane rmin="7" rmax="15" z="3" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="8">
+	    <position name="polycone1Vol8pos" x="0" y="0" z="6*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.8" openPhi="2*pi*0.2" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="8" rmax="16" z="-3.5" />
+	      <zplane rmin="9" rmax="12" z="0" />
+	      <zplane rmin="8" rmax="16" z="3.5" />
+	    </polycone_dimensions>
+	  </parameters>
+	  <parameters number="9">
+	    <position name="polycone1Vol9pos" x="0" y="0" z="8*bx"/>
+	    <polycone_dimensions startPhi="2*pi*0.9" openPhi="2*pi*0.1" numRZ="3" aunit="rad" lunit="mm">
+	      <zplane rmin="9" rmax="17" z="-4.0" />
+	      <zplane rmin="10" rmax="13" z="0" />
+	      <zplane rmin="9" rmax="17" z="4.0" />
+	    </polycone_dimensions>
+	  </parameters>
+	</parameterised_position_size>
+      </paramvol>    
+    </volume>    
+    <volume name="World">
+      <materialref ref="Air"/>
+      <solidref ref="WorldBox"/>
+      <physvol>
+	<volumeref ref="polycone2Vol"/>
+	<positionref ref="center"/>
+	<rotationref ref="identity"/>
+      </physvol>  
+    </volume>
+  </structure>    
+  <setup name="Default" version="1.0">
+    <world ref="World"/>
+  </setup>   
+</gdml>

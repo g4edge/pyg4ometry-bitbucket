@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
+  
+  <define>
+    <constant name="wbx" value="1000.0"/>
+    <constant name="wby" value="1000.0"/>
+    <constant name="wbz" value="1000.0"/>
+    
+    <constant name="bx" value="5.0"/>
+    <constant name="by" value="bx"/>
+    <constant name="bz" value="bx"/>
+    
+    <position name="center" x="0" y="0" z="0"/>
+    <rotation name="identity" x="0" y="0" z="0"/>   
+  </define>
+  
+  <materials>
+    <element name="Oxygen"   formula="O"  Z="8.">
+      <atom value="16.0"/>
+    </element>
+    <element name="Nitrogen" formula="N"  Z="7.">
+      <atom value="14.01"/>
+    </element>
+    
+    <material name="Al" Z="13.0">
+      <D value="2.70"/>
+      <atom value="26.98"/>
+    </material>
+    
+    <material name="Air">
+      <D value="1.290" unit="mg/cm3"/>
+      <fraction n="0.7" ref="Nitrogen"/>
+      <fraction n="0.3" ref="Oxygen"/>
+    </material>
+    
+  </materials>
+  
+  <solids>
+    <box name="WorldBox"      x="wbx" y="wby" z="wbz" lunit="mm"/>
+    <box name="box"           x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
+    <box name="box_param"     x="bx"  y="by"  z="bz"  lunit="mm"/>
+  </solids>
+  
+  <structure>    
+    <volume name="box1Vol">
+      <materialref ref="Al"/>
+      <solidref ref="box_param"/>
+    </volume>
+    <volume name="box2Vol">
+      <materialref ref="Air"/>
+      <solidref ref="box"/>
+      <paramvol ncopies="9">
+	<volumeref ref="box1Vol"/>
+	<parameterised_position_size> 
+	  <parameters number="1">
+	    <position name="bol1Vol1pos" x="0" y="0" z="-8*bx"/>
+	    <rotation name="bol1Vol1Rot" x="0" y="0" z="-0.4"/>
+	    <box_dimensions x="bx*0.80" y="by*0.80" z="bz*0.40"/>
+	  </parameters>
+	  <parameters number="2">
+	    <position name="bol1Vol2pos" x="0" y="0" z="-6*bx"/>
+	    <rotation name="bol1Vol2Rot" x="0" y="0" z="-0.3"/>
+	    <box_dimensions x="bx*0.85" y="by*0.85" z="bz*0.5"/>
+	  </parameters>
+	  <parameters number="3">
+	    <position name="bol1Vol3pos" x="0" y="0" z="-4*bx"/>
+	    <rotation name="bol1Vol3Rot" x="0" y="0" z="-0.2"/>
+	    <box_dimensions x="bx*0.90" y="by*0.90" z="bz*0.6"/>
+	  </parameters>
+	  <parameters number="4">
+	    <position name="bol1Vol4pos" x="0" y="0" z="-2*bx"/>
+	    <rotation name="bol1Vol24ot" x="0" y="0" z="-0.1"/>
+	    <box_dimensions x="bx*0.95" y="by*0.95" z="bz*0.7"/>
+	  </parameters>
+	  <parameters number="5">
+	    <position name="bol1Vol5pos" x="0" y="0" z="0*bx"/>
+	    <rotation name="bol1Vol5Rot" x="0" y="0" z="0.0"/>
+	    <box_dimensions x="bx" y="by" z="0.8*bz"/>
+	  </parameters>
+	  <parameters number="6">
+	    <position name="bol1Vol6pos" x="0" y="0" z="2*bx"/>
+	    <rotation name="bol1Vol6Rot" x="0" y="0" z="0.1"/>
+	    <box_dimensions x="bx*1.05" y="by*1.05" z="0.9*bz"/>
+	  </parameters>
+	  <parameters number="7">
+	    <position name="bol1Vol7pos" x="0" y="0" z="4*bx"/>
+	    <rotation name="bol1Vol7Rot" x="0" y="0" z="0.2"/>
+	    <box_dimensions x="bx*1.1" y="by*1.1" z="1.0*bz"/>
+	  </parameters>
+	  <parameters number="8">
+	    <position name="bol1Vol8pos" x="0" y="0" z="6*bx"/>
+	    <rotation name="bol1Vol8Rot" x="0" y="0" z="0.3"/>
+	    <box_dimensions x="bx*1.15" y="by*1.15" z="1.1*bz"/>
+	  </parameters>
+	  <parameters number="9">
+	    <position name="bol1Vol9pos" x="0" y="0" z="8*bx"/>
+	    <rotation name="bol1Vol9Rot" x="0" y="0" z="0.4"/>
+	    <box_dimensions x="bx*1.2" y="by*1.2" z="1.2*bz"/>
+	  </parameters>
+	</parameterised_position_size>
+      </paramvol>    
+    </volume>    
+    <volume name="World">
+      <materialref ref="Air"/>
+      <solidref ref="WorldBox"/>
+      <physvol>
+	<volumeref ref="box2Vol"/>
+	<positionref ref="center"/>
+	<rotationref ref="identity"/>
+      </physvol>  
+    </volume>
+  </structure>    
+  <setup name="Default" version="1.0">
+    <world ref="World"/>
+  </setup>   
+</gdml>
