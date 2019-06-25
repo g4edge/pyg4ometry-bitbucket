@@ -24,7 +24,7 @@ def Test(vis = False, interactive = False) :
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
 
-    nbox = 5
+    nbox = 15
     solids = [] 
     transforms = []
     for i in range(0,nbox,1) : 
