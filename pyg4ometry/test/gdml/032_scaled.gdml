@@ -72,7 +72,6 @@
       <rotationref ref="identity"/>      
     </physvol>
   </volume>
-
 </structure>
 
 <setup name="Default" version="1.0">
