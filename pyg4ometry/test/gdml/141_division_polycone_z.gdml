@@ -28,7 +28,7 @@
       <volume name="lvDivision">
          <materialref ref="AIR"/>
          <solidref ref="WorldBox"/>
-         <divisionvol axis="kXAxis" number="8" unit="mm" width="0" offset="0">
+         <divisionvol axis="kZAxis" number="8" unit="mm" width="0" offset="0">
             <volumeref ref="lvCube"/>
          </divisionvol>
       </volume>

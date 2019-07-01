@@ -17,19 +17,23 @@
 
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <box name="Cube" x="100" y="100" z="100"/>
+      <polycone name="Polycone" startphi="1" deltaphi="4" aunit="rad" lunit="mm">
+	<zplane rmin="1" rmax="9" z="-20" />
+	<zplane rmin="3" rmax="5" z="0" />
+	<zplane rmin="1" rmax="9" z="20" />
+      </polycone>
    </solids>
    
    <structure>
-      <volume name="lvCube">
+      <volume name="lvPolycone">
          <materialref ref="ALU"/>
-         <solidref ref="Cube"/>
+         <solidref ref="Polycone"/>
       </volume>
       <volume name="lvDivision">
          <materialref ref="AIR"/>
-         <solidref ref="WorldBox"/>
-         <divisionvol axis="kXAxis" number="8" unit="mm" width="0" offset="0">
-            <volumeref ref="lvCube"/>
+         <solidref ref="Polycone"/>
+         <divisionvol axis="kRho" number="2" unit="mm" width="0" offset="0">
+            <volumeref ref="lvPolycone"/>
          </divisionvol>
       </volume>
       <volume name="TOP">

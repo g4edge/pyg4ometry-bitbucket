@@ -17,19 +17,23 @@
 
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <box name="Cube" x="100" y="100" z="100"/>
+      <polyhedra name="Polyhedra" startphi="1" deltaphi="4" numsides="10" aunit="rad" lunit= "mm">
+	<zplane rmin="0" rmax="9" z="-10" />
+	<zplane rmin="0" rmax="5" z="0" />
+	<zplane rmin="0" rmax="5" z="10" />
+      </polyhedra>
    </solids>
    
    <structure>
-      <volume name="lvCube">
+      <volume name="lvPolyhedra">
          <materialref ref="ALU"/>
-         <solidref ref="Cube"/>
+         <solidref ref="Polyhedra"/>
       </volume>
       <volume name="lvDivision">
          <materialref ref="AIR"/>
-         <solidref ref="WorldBox"/>
-         <divisionvol axis="kXAxis" number="8" unit="mm" width="0" offset="0">
-            <volumeref ref="lvCube"/>
+         <solidref ref="Polyhedra"/>
+         <divisionvol axis="kRho" number="3" unit="mm" width="0" offset="0">
+            <volumeref ref="lvPolyhedra"/>
          </divisionvol>
       </volume>
       <volume name="TOP">
