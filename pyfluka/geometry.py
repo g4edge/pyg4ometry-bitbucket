@@ -1245,8 +1245,9 @@ class Zone(object):
             if isinstance(body, Body):
                 if accumulated is None: # If nothing to intersect with yet.
                     accumulated = body
-                accumulated = body.intersection(
-                    accumulated, safety_map['intersection'])
+                else:
+                    accumulated = body.intersection(
+                        accumulated, safety_map['intersection'])
             elif isinstance(body, Zone): # If nothing to intersect with yet.
                 if accumulated is None:
                     evaluated_zone = body._accumulate(subzone_order=subzone_order)
