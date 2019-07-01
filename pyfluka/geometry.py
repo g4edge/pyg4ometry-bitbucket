@@ -919,6 +919,7 @@ class Region(object):
                      "UPS16H2A-Zones-1",
                      "UPS16H2S-Zones-1",
                      "UPS16H2C-Zones-1",
+                     "R35-Zones-3",
                      "UJ16AIR1-Zones-0", # Highest priority to fix.
                      "UJPLUGR0-Zones-1", #zones
                      "UJPLUGR4-Zones-1"]): # second priority
