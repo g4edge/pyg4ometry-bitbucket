@@ -1,9 +1,9 @@
 #!/opt/local/bin/python
 
 from freecad                import FreecadLoadingTests
-from python                 import PythonTests
-from python-geant4          import PythonDefineTests
-from python-geant4          import PythonAuthoringTests
+from pythonGeant4           import PythonTests
+from pythonGeant4           import PythonDefineTests
+from pythonGeant4           import PythonAuthoringTests
 from pythonCompoundExamples import PythonCompoundExampleTests
 from gdml                   import GdmlLoadTests
 from stl                    import StlLoadingTests
