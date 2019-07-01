@@ -2,8 +2,8 @@
 
 from freecad                import FreecadLoadingTests
 from python                 import PythonTests
-from python                 import PythonDefineTests
-from python                 import PythonAuthoringTests
+from python-geant4          import PythonDefineTests
+from python-geant4          import PythonAuthoringTests
 from pythonCompoundExamples import PythonCompoundExampleTests
 from gdml                   import GdmlLoadTests
 from stl                    import StlLoadingTests
