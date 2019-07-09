@@ -1,11 +1,13 @@
-import pyg4ometry.geant4 as g4
+import os.path
+
 import pyg4ometry.fluka as fluka
 
-import pyg4ometry
 
+_TEST_DIR = os.path.dirname(__file__)
+_TEST_INP = os.path.join(_TEST_DIR, "cylinder.inp")
 
 def test_read(vis=False):
-    reader = fluka.Reader("cylinder.inp")
+    reader = fluka.Reader(_TEST_INP)
     bodies = reader.fluka_model.bodies
     cylinder = bodies["cyl"]
 
