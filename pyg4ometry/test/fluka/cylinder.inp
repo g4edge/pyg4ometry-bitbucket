@@ -1,0 +1,13 @@
+TITLE
+Example of a cylinder in FLUKA.
+GEOBEGIN                                                              COMBNAME
+    0    0
+* Cylinder with one face centre at (-5, -5. -5.), and with direction vector
+* equal to (10, 10, 10), which also gives the length of the cylidner, and finally,
+* radius equal to 5.
+RCC cyl   -5. -5. -5.     10. 10. 10.  5.
+END
+cylreg      5 +cyl
+END
+GEOEND
+ASSIGNMA        IRON   cyl

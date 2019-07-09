@@ -5,9 +5,9 @@ import pyg4ometry
 
 
 def test_read(vis=False):
-    reader = fluka.Reader("sphere.inp")
+    reader = fluka.Reader("cone.inp")
     bodies = reader.fluka_model.bodies
-    sphere = bodies["sphere"]
+    cone = bodies["cone"]
 
 def test_write(vis=False):
     pass
