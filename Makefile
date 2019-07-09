@@ -6,6 +6,7 @@ uninstall:
 
 develop:
 	pip install --editable . --user
+	python setup.py build_ext
 
 build_ext:
 	python setup.py build_ext --inplace
