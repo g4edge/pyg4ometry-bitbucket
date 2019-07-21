@@ -3,13 +3,15 @@ TITLE
 * Set the defaults for precision simulations
 DEFAULTS                                                              PRECISIO
 * Define the beam characteristics
-BEAM             0.0
+BEAM
 * Define the beam position
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
     0    0          
-RPP bb         -200. 200. -170. 230. -200. 200.
-ELL bb1        50. 0.0 0.0 -50. 0.0 0.0 150.
+RPP bb         -200. 200. -200. 200. -200. 200.
+$start_translat 50.0 50.0 50.0
+RPP bb1        -50. 50. -50. 50. -50. 50.
+$end_translat 
 END
 bbr          5 -bb
 vr           5 +bb -bb1

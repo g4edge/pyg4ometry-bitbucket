@@ -2,10 +2,10 @@
 # FLUKA Project file
 Version: 2
 Title: 
-Input: 007_ELL.inp
+Input: 050_RPP_Translate.inp
 Submit: *Default
 Tabs: 0.1 0.32 0.56 0.81 1.0
-Page: Flair
+Page: Geometry
 DefMain: True
 LinkPrg: lfluka
 F77bound: True
@@ -35,10 +35,10 @@ Plot: Red
 	basisv: 0 1 0
 	boundaries: 1
 	coord: X-Y
-	extends: 306.701 197.804
+	extends: 619.174 428.549
 	labels: 1
 	layer: Media
-	origin: -2.24162 -4.48324 0
+	origin: 0 0 0
 	subtype: Material
 	title: GeoViewer Red plot
 End
@@ -51,10 +51,10 @@ Plot: Green
 	basisv: 1 0 0
 	boundaries: 1
 	coord: Z-X
-	extends: 441.649 284.837
+	extends: 358.318 248.578
 	labels: 1
 	layer: Media
-	origin: 0 10 0
+	origin: 0 0 0
 	subtype: Material
 	title: GeoViewer Green plot
 End
@@ -67,7 +67,7 @@ Plot: Blue
 	basisv: 0 1 0
 	boundaries: 1
 	coord: Z-Y
-	extends: 306.701 197.804
+	extends: 358.318 247.173
 	labels: 1
 	layer: Media
 	origin: 0 0 0
@@ -79,13 +79,13 @@ End
 Plot: Magenta
 	Format: .eps
 	Type:   Geometry
-	basisu: -0.903486 -0.0097965 -0.428505
-	basisv: -0.159318 0.935785 0.314521
+	basisu: -1 0 0
+	basisv: 0 1 0
 	boundaries: 1
-	coord: U-V
-	extends: 368.041 237.364
+	coord: X-Y
+	extends: 358.318 247.747
 	labels: 1
-	layer: 3D
+	layer: Media
 	origin: 0 0 0
 	subtype: Material
 	title: GeoViewer Magenta plot
