@@ -1,0 +1,34 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RPP bb         -200. 200. -200. 200. -200. 200.
+$start_transform bb1rotdefi
+$start_translat 25 25 25
+$start_expansion 3.0
+RPP bb1        -50. 50. -50. 50. -50. 50.
+$end_translat 
+$end_transform 
+$end_expansion 
+END
+bbr          5 -bb
+vr           5 +bb -bb1
+bbrr         5 +bb1
+END
+GEOEND
+ASSIGNMA    BLCKHOLE       bbr
+ASSIGNMA      VACUUM        vr
+ASSIGNMA    BERYLLIU      bbrr
+ROT-DEFI                   45.       45.       50.       50.       50.bb1rotdefi
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START
+STOP
