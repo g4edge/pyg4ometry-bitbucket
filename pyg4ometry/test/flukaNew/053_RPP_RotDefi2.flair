@@ -38,7 +38,7 @@ Plot: Red
 	extends: 619.174 399.33
 	labels: 1
 	layer: Media
-	origin: 0 0 25
+	origin: 0 0 100
 	subtype: Material
 	title: GeoViewer Red plot
 End
@@ -54,7 +54,7 @@ Plot: Green
 	extends: 358.318 231.094
 	labels: 1
 	layer: Media
-	origin: 0 0 0
+	origin: 0 70 0
 	subtype: Material
 	title: GeoViewer Green plot
 End
@@ -70,7 +70,7 @@ Plot: Blue
 	extends: 358.318 231.094
 	labels: 1
 	layer: Media
-	origin: 20 0 0
+	origin: 95 0 0
 	subtype: Material
 	title: GeoViewer Blue plot
 End
