@@ -17,7 +17,7 @@
 
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <cone name="Cone" rmin1="0" rmax1="100" rmin2="0" rmax2="100" z="100" startphi="pi" deltaphi="pi" lunit="mm"/>
+      <cone name="Cone" rmin1="0" rmax1="100" rmin2="0" rmax2="70" z="100" startphi="pi" deltaphi="pi" lunit="mm"/>
    </solids>
    
    <structure>
