@@ -17,19 +17,19 @@
 
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <box name="Cube" x="100" y="100" z="100"/>
+      <trd name="Trd" x1="30" y1="40" x2="10" y2="15" z="60" lunit="mm"/>
    </solids>
    
    <structure>
-      <volume name="lvCube">
+      <volume name="lvTrd">
          <materialref ref="ALU"/>
-         <solidref ref="Cube"/>
+         <solidref ref="Trd"/>
       </volume>
       <volume name="lvDivision">
          <materialref ref="AIR"/>
-         <solidref ref="WorldBox"/>
-         <divisionvol axis="kZAxis" number="8" unit="mm" width="0" offset="0">
-            <volumeref ref="lvCube"/>
+         <solidref ref="Trd"/>
+         <divisionvol axis="kZAxis" number="4" unit="mm" width="0" offset="0">
+            <volumeref ref="lvTrd"/>
          </divisionvol>
       </volume>
       <volume name="TOP">
