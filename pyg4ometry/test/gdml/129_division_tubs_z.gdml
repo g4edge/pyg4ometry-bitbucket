@@ -28,7 +28,7 @@
       <volume name="lvDivision">
          <materialref ref="AIR"/>
          <solidref ref="tube"/>
-         <divisionvol axis="kZAxis" unit="mm" number="8" width="0" offset="0">
+         <divisionvol axis="kZAxis" unit="mm" number="5" width="10" offset="0">
             <volumeref ref="lvTube"/>
          </divisionvol>
       </volume>
