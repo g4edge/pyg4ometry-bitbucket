@@ -17,7 +17,7 @@
 
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <cone name="Cone" rmin1="0" rmax1="100" rmin2="0" rmax2="50" z="100" startphi="pi" deltaphi="pi" lunit="mm"/>
+      <cone name="Cone" rmin1="70" rmax1="100" rmin2="30" rmax2="50" z="100" startphi="pi" deltaphi="pi" lunit="mm"/>
    </solids>
    
    <structure>
@@ -28,7 +28,7 @@
       <volume name="lvDivision">
          <materialref ref="AIR"/>
          <solidref ref="Cone"/>
-         <divisionvol axis="kPhi" number="8" unit="rad" width="0" offset="0">
+         <divisionvol axis="kPhi" number="4" unit="rad" width="0" offset="0">
             <volumeref ref="lvCone"/>
          </divisionvol>
       </volume>
