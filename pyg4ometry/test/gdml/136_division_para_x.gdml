@@ -18,7 +18,7 @@
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
       <box name="Cube" x="100" y="100" z="100"/>
-      <para name = "Para" x="50" y="50" z="50" alpha="0.2" theta="0.2" phi="0.2" aunit="rad" lunit="mm"/>
+      <para name = "Para" x="50" y="50" z="50" alpha="0.4" theta="0.4" phi="0.4" aunit="rad" lunit="mm"/>
    </solids>
    
    <structure>
@@ -29,7 +29,7 @@
       <volume name="lvDivision">
          <materialref ref="AIR"/>
          <solidref ref="Para"/>
-         <divisionvol axis="kXAxis" number="8" unit="mm" width="0" offset="0">
+         <divisionvol axis="kXAxis" number="5" unit="mm" width="10" offset="30">
             <volumeref ref="lvPara"/>
          </divisionvol>
       </volume>
