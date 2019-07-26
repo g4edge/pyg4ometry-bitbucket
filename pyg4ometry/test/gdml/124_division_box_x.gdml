@@ -16,8 +16,9 @@
    </materials>
 
    <solids>
-      <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <box name="Cube" x="100" y="100" z="100"/>
+     <box name="WorldBox" x="1000" y="1000" z="1000"/>
+     <box lunit="mm" name="MotherCube" x="800" y="100" z="100"/>
+     <box name="Cube" x="50" y="50" z="50"/>
    </solids>
    
    <structure>
@@ -27,8 +28,8 @@
       </volume>
       <volume name="lvDivision">
          <materialref ref="AIR"/>
-         <solidref ref="Cube"/>
-         <divisionvol axis="kXAxis" number="8" unit="mm" width="0" offset="0">
+         <solidref ref="MotherCube"/>
+         <divisionvol axis="kXAxis" number="3" unit="mm" width="30" offset="0">
             <volumeref ref="lvCube"/>
          </divisionvol>
       </volume>
