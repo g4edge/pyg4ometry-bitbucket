@@ -17,10 +17,10 @@
 
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
-      <polyhedra name="Polyhedra" startphi="1" deltaphi="4" numsides="10" aunit="rad" lunit= "mm">
-	<zplane rmin="0" rmax="9" z="-10" />
-	<zplane rmin="0" rmax="5" z="0" />
-	<zplane rmin="0" rmax="5" z="10" />
+      <polyhedra name="Polyhedra" startphi="1" deltaphi="4" numsides="4" aunit="rad" lunit= "mm">
+	      <zplane rmin="0" rmax="9" z="-10" />
+	      <zplane rmin="0" rmax="5" z="0" />
+	      <zplane rmin="0" rmax="5" z="10" />
       </polyhedra>
    </solids>
    
