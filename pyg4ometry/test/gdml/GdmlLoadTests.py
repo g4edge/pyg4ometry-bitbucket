@@ -103,8 +103,32 @@ class SolidLoader(object):
         mesh = solid.pycsgmesh()
         return (hash(mesh), self.solid_dict[solidname].hashval)
 
-_loader = SolidLoader(verbosity=0)
+div_volume_hashes = {
+    # The hashes of the first division mesh for every division test
+    "124_division_box_x" : -1,
+    "125_division_box_y" : -1,
+    "126_division_box_z" : -1,
+    "127_division_tubs_rho" : -1,
+    "128_division_tubs_phi" : -1,
+    "129_division_tubs_z" : -1,
+    "130_division_cons_rho" : -1,
+    "131_division_cons_phi" : -1,
+    "132_division_cons_z" : -1,
+    "133_division_trd_x" : -1,
+    "134_division_trd_y" : -1,
+    "135_division_trd_z" : -1,
+    "136_division_para_x" : -1,
+    "137_division_para_y" : -1,
+    "138_division_para_z" : -1,
+    "139_division_polycone_rho" : -1,
+    "140_division_polycone_phi" : -1,
+    "141_division_polycone_z" : -1,
+    "142_division_polyhedra_rho" : -1,
+    "143_division_polyhedra_phi" : -1,
+    "144_division_polyhedra_z" : -1,
+    }
 
+_loader = SolidLoader(verbosity=0)
 
 class GdmlLoadTests(_unittest.TestCase) :
     def testMalformedGdml(self) : 
@@ -228,6 +252,17 @@ class GdmlLoadTests(_unittest.TestCase) :
         w = pyg4ometry.gdml.Writer()
         w.addDetector(r.getRegistry())
         w.write(_pj("201_materials_processed.gdml"))
+
+    def testDivisionVolume(self):
+        for name in div_volume_hashes:
+            r = pyg4ometry.gdml.Reader(_pj("{}.gdml".format(name)))
+            reg = r.getRegistry()
+            for volname, volume in reg.physicalVolumeDict.iteritems():
+                if volume.type == "division":
+                    first_div_mesh = volume.meshes[0]
+
+            #print "test no. {}".format(name.split("_")[0]), hash(first_div_mesh)
+            #self.assertEqual(hash(first_div_mesh), div_volume_hashes[name])
 
     def testAuxiliary(self):
         r = pyg4ometry.gdml.Reader(_pj("202_auxiliary.gdml"))
