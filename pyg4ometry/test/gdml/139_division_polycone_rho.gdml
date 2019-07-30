@@ -32,7 +32,7 @@
       <volume name="lvDivision">
          <materialref ref="AIR"/>
          <solidref ref="Polycone"/>
-         <divisionvol axis="kRho" number="2" unit="mm" width="0" offset="0">
+         <divisionvol axis="kRho" number="3" unit="rad" width="0" offset="5">
             <volumeref ref="lvPolycone"/>
          </divisionvol>
       </volume>
