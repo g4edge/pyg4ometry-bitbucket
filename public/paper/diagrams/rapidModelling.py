@@ -14,8 +14,8 @@ by = gd.Constant("by","10",reg)
 bz = gd.Constant("bz","10",reg)
 
 # materials
-bm = g4.Material.nist("G4_Galactic")
-wm = g4.Material.nist("G4_Fe")
+bm = g4.MaterialPredefined("G4_Galactic")
+wm = g4.MaterialPredefined("G4_Fe")
 
 # solids
 wb = g4.solid.Box("wb",wx,wy,wz,reg)
@@ -31,6 +31,8 @@ bp2 = g4.PhysicalVolume([0,0,-0.25],[-3*bx,0,0],
 bp3 = g4.PhysicalVolume([0,0,0.5],[3*bx,0,0],
                         bl, "b_pv3", wl, reg)
 
+reg.setWorld(wl.name)
+
 # physical volume vistualisation attributes
 bp1.visOptions.color = (1,0,0)
 bp1.visOptions.alpha = 0.25
@@ -40,7 +42,8 @@ bp3.visOptions.color = (0,0,1)
 
 # gdml output
 w = gd.Writer()
-w.write(reg,"output.gdml")
+w.addDetector(reg)
+w.write("output.gdml")
 
 # visualisation
 v = vi.VtkViewer()
