@@ -58,7 +58,8 @@ class SolidLoader(object):
             "union" : solid_inf(28, _pj("028_union.gdml"), "union1", -1),
             "subtraction" : solid_inf(29, _pj("029_subtraction.gdml"), "subtraction1", -1),
             "intersection" : solid_inf(30, _pj("030_intersection.gdml"), "intersection1", -1),
-            "multiunion" : solid_inf(31, _pj("031_multiUnion.gdml"),"multiunion1",-1)
+            "multiunion" : solid_inf(31, _pj("031_multiUnion.gdml"),"multiunion1",-1),
+            "scaled" : solid_inf(32, _pj("032_scaled.gdml"),"box1Scaled",-1)
         }
 
         # solid name : (nslice , nstack)
@@ -246,6 +247,9 @@ class GdmlLoadTests(_unittest.TestCase) :
 
     def testMultiUnionLoad(self):
         self.assertTrue(bool(_loader.getMeshHashes("multiunion")))
+
+    def testScaledLoad(self):
+        self.assertTrue(bool(_loader.getMeshHashes("scaled")))
 
     def testMaterials(self):
         r = pyg4ometry.gdml.Reader(_pj("201_materials.gdml"))
