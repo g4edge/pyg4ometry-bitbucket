@@ -261,7 +261,7 @@ class GdmlLoadTests(_unittest.TestCase) :
                 if volume.type == "division":
                     first_div_mesh = volume.meshes[0]
 
-            #print "test no. {}".format(name.split("_")[0]), hash(first_div_mesh)
+            #print "test no. {}".format(name.split("_")[0]), hash(first_div_mesh.solid.pycsgmesh())
             #self.assertEqual(hash(first_div_mesh), div_volume_hashes[name])
 
     def testAuxiliary(self):
