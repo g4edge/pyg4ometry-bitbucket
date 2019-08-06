@@ -6,8 +6,6 @@ import logging as _log
 
 from collections import namedtuple
 
-from IPython import embed
-
 logger = _log.getLogger()
 logger.disabled = True
 
@@ -51,7 +49,7 @@ class MeshValidator(object):
             "022_twisted_box.gdml" : ("twistbox1", -1),
             "023_twisted_trap.gdml" : ("twisttrap1", -1),
             "024_twisted_trd.gdml" : ("twisttrd1", -1),
-            "025_twisted_tube.gdml" : ("twisttubs1", -1),
+            "025_twisted_tube.gdml" : ("twisttube1", -1),
             "026_generic_trap.gdml" : ("arb81", -1),
             # TODO: 27 Tesselated solid
             "028_union.gdml" : ("union1", -1),
@@ -111,7 +109,34 @@ class MeshValidator(object):
             "144_division_polyhedra_z.gdml" : -1,
         }
 
-        self.available_checksums = self.solid_checksums.keys() + self.division_checksums.keys()
+        self.replica_checksums = {
+            # The hashes of the first replica mesh for every replica test
+            "106_replica_x.gdml" : -1,
+            "107_replica_y.gdml" : -1,
+            "108_replica_z.gdml" : -1,
+            "109_replica_phi.gdml" : -1,
+            "110_replica_rho.gdml" : -1,
+        }
+
+        self.parameterised_checksums = {
+            # The hashes of the first parameterised mesh for every parameterised test
+            "111_parameterised_box.gdml" : -1,
+            "112_parameterised_tube.gdml" : -1,
+            "113_parameterised_cone.gdml" : -1,
+            "114_parameterised_orb.gdml" : -1,
+            "115_parameterised_sphere.gdml" : -1,
+            "116_parameterised_torus.gdml" : -1,
+            "117_parameterised_hype.gdml" : -1,
+            "118_parameterised_para.gdml" : -1,
+            "119_parameterised_trd.gdml" : -1,
+            "120_parameterised_trap.gdml" : -1,
+            "121_parameterised_polycone.gdml" : -1,
+            "122_parameterised_polyhedron.gdml" : -1,
+            "123_parameterised_ellipsoid.gdml" : -1,
+        }
+
+        self.available_checksums = (self.parameterised_checksums.keys()+self.solid_checksums.keys()
+                                    +self.division_checksums.keys()+self.replica_checksums.keys())
 
     def verifyMeshChecksum(self, filename, registry):
         if filename in self.solid_checksums:
@@ -132,6 +157,20 @@ class MeshValidator(object):
 
             checksum = self.division_checksums[filename]
 
+        elif filename in self.replica_checksums:
+            for volname, volume in registry.physicalVolumeDict.iteritems():
+                if volume.type == "replica":
+                    solid = volume.meshes[0].solid
+
+            checksum = self.replica_checksums[filename]
+
+        elif filename in self.parameterised_checksums:
+            for volname, volume in registry.physicalVolumeDict.iteritems():
+                if volume.type == "parametrised":
+                    solid = volume.meshes[0].solid
+
+            checksum = self.parameterised_checksums[filename]
+
         if self.verbosity:
             print solid # Dump the parameters of the solid / check the repr method
 
@@ -149,12 +188,9 @@ def testSingleGDML(filename):
     registry = reader.getRegistry()
 
     # Visualisation
-    try:
-        v = pyg4ometry.visualisation.VtkViewer()
-        v.addLogicalVolume(registry.getWorldVolume())
-        v.view(interactive=True)
-    except:
-        embed()
+    v = pyg4ometry.visualisation.VtkViewer()
+    v.addLogicalVolume(registry.getWorldVolume())
+    v.view(interactive=False)
 
     # Writing
     writer = pyg4ometry.gdml.Writer()
@@ -263,7 +299,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         self.assertTrue(testSingleGDML("024_twisted_trd.gdml"))
 
     def testTwistedTubs(self):
-        self.assertTrue(testSingleGDML("025_twisted_tub2.gdml"))
+        self.assertTrue(testSingleGDML("025_twisted_tube.gdml"))
 
     def testGenericTrap(self):
         self.assertTrue(testSingleGDML("026_generic_trap.gdml"))
@@ -291,9 +327,19 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testDivisionVolume(self):
         results = []
         for name in _meshValidator.division_checksums:
-            print name
             results.append(testSingleGDML(name))
+        self.assertTrue(all(results))
 
+    def testReplicaVolume(self):
+        results = []
+        for name in _meshValidator.replica_checksums:
+            results.append(testSingleGDML(name))
+        self.assertTrue(all(results))
+
+    def testParameterisedVolume(self):
+        results = []
+        for name in _meshValidator.parameterised_checksums:
+            results.append(testSingleGDML(name))
         self.assertTrue(all(results))
 
     def testAuxiliary(self):
