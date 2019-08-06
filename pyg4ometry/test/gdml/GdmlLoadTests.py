@@ -51,7 +51,7 @@ class MeshValidator(object):
             "022_twisted_box.gdml" : ("twistbox1", -1),
             "023_twisted_trap.gdml" : ("twisttrap1", -1),
             "024_twisted_trd.gdml" : ("twisttrd1", -1),
-            "025_twisted_tube.gdml" : ("twisttubs1", -1),
+            "025_twisted_tube.gdml" : ("twisttube1", -1),
             "026_generic_trap.gdml" : ("arb81", -1),
             # TODO: 27 Tesselated solid
             "028_union.gdml" : ("union1", -1),
