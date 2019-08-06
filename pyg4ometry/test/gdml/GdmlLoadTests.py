@@ -6,8 +6,6 @@ import logging as _log
 
 from collections import namedtuple
 
-from IPython import embed
-
 logger = _log.getLogger()
 logger.disabled = True
 
@@ -149,12 +147,9 @@ def testSingleGDML(filename):
     registry = reader.getRegistry()
 
     # Visualisation
-    try:
-        v = pyg4ometry.visualisation.VtkViewer()
-        v.addLogicalVolume(registry.getWorldVolume())
-        v.view(interactive=True)
-    except:
-        embed()
+    v = pyg4ometry.visualisation.VtkViewer()
+    v.addLogicalVolume(registry.getWorldVolume())
+    v.view(interactive=False)
 
     # Writing
     writer = pyg4ometry.gdml.Writer()
