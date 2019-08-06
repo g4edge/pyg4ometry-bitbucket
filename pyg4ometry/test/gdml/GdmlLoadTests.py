@@ -6,6 +6,8 @@ import logging as _log
 
 from collections import namedtuple
 
+from IPython import embed
+
 logger = _log.getLogger()
 logger.disabled = True
 
@@ -17,49 +19,46 @@ def _pj(filename):
     """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-# Make a cheeky class to reduce repetition
-class SolidLoader(object):
+class MeshValidator(object):
     """
-    Simple class to perfrom loading of and checking of solids
+    Simple class to perfrom checking of mesh validity by using stored mesh checksums
     """
     def __init__(self, verbosity=0):
 
-        solid_inf = namedtuple('SolidInfo', 'index filename solidname hashval')
         self.verbosity = verbosity
-        self.solid_dict = {
-            # solid file index, filename, solid name in file and mesh hash
-            "box" : solid_inf(1, _pj("001_box.gdml"), "box1", -4189916779045808977),
-            "tube" : solid_inf(2, _pj("002_tubs.gdml"), "tube1", -7570577582805396235),
-            "cuttube" : solid_inf(3, _pj("003_cut_tubs.gdml"), "cuttube1", 6510770975685252931),
-            "cone" : solid_inf(4, _pj("004_cons.gdml"), "cone1", -435058689958624196),
-            "para" : solid_inf(5, _pj("005_para.gdml"), "para1", -1),
-            "trd" : solid_inf(6, _pj("006_trd.gdml"), "trd1", -1),
-            "trap" : solid_inf(7, _pj("007_trap.gdml"), "trap1", -1),
-            "sphere" : solid_inf(8, _pj("008_sphere.gdml"), "sphere1", -1),
-            "orb" : solid_inf(9, _pj("009_orb.gdml"), "orb1",-1),
-            "torus" : solid_inf(10, _pj("010_torus.gdml"), "torus1", -1),
-            "polycone" : solid_inf(11, _pj("011_polycone.gdml"), "polycone1", -1),
-            "genpoly" : solid_inf(12, _pj("012_generic_polycone.gdml"), "genpoly1", -1),
-            "polyhedra" : solid_inf(13, _pj("013_polyhedra.gdml"), "polyhedra1", -1),
-            "genpolyhedra" : solid_inf(14, _pj("014_generic_polyhedra.gdml"), "genpolyhedra1", -1),
-            "eltube" : solid_inf(15, _pj("015_eltube.gdml"), "eltube1", -1),
-            "ellipsoid" : solid_inf(16, _pj("016_ellipsoid.gdml"), "ellipsoid1", -1),
-            "elcone" : solid_inf(17, _pj("017_elcone.gdml"), "elcone1", -1),
-            "paraboloid" : solid_inf(18, _pj("018_paraboloid.gdml"), "paraboloid1", -1),
-            "hype" : solid_inf(19, _pj("019_hype.gdml"), "hype1", -1),
-            "tet" : solid_inf(20, _pj("020_tet.gdml"), "tet1", -1),
-            "xtru" : solid_inf(21, _pj("021_xtru.gdml"), "xtru1", -1),
-            "twistedbox" : solid_inf(22, _pj("022_twisted_box.gdml"), "twistbox1", -1),
-            "twistedtrap" : solid_inf(23, _pj("023_twisted_trap.gdml"), "twisttrap1", -1),
-            "twistedtrd" : solid_inf(24, _pj("024_twisted_trd.gdml"), "twisttrd1", -1),
-            "twistedtubs" : solid_inf(25, _pj("024_twisted_tubs.gdml"), "twisttubs1", -1),
-            "arbtrap" : solid_inf(26, _pj("026_generic_trap.gdml"), "arb81", -1),
+        self.solid_checksums = {
+            "001_box.gdml" : ("box1", -4189916779045808977),
+            "002_tubs.gdml" : ("tube1", -7570577582805396235),
+            "003_cut_tubs.gdml" : ("cuttube1", 6510770975685252931),
+            "004_cons.gdml" : ("cone1", -435058689958624196),
+            "005_para.gdml" : ("para1", -1),
+            "006_trd.gdml" : ("trd1", -1),
+            "007_trap.gdml" : ("trap1", -1),
+            "008_sphere.gdml" : ("sphere1", -1),
+            "009_orb.gdml" : ("orb1",-1),
+            "010_torus.gdml" : ("torus1", -1),
+            "011_polycone.gdml" : ("polycone1", -1),
+            "012_generic_polycone.gdml" : ( "genpoly1", -1),
+            "013_polyhedra.gdml" : ("polyhedra1", -1),
+            "014_generic_polyhedra.gdml" : ( "genpolyhedra1", -1),
+            "015_eltube.gdml" : ("eltube1", -1),
+            "016_ellipsoid.gdml" : ("ellipsoid1", -1),
+            "017_elcone.gdml" : ("elcone1", -1),
+            "018_paraboloid.gdml" : ( "paraboloid1", -1),
+            "019_hype.gdml" : ( "hype1", -1),
+            "020_tet.gdml" : ( "tet1", -1),
+            "021_xtru.gdml" : ( "xtru1", -1),
+            "022_twisted_box.gdml" : ("twistbox1", -1),
+            "023_twisted_trap.gdml" : ("twisttrap1", -1),
+            "024_twisted_trd.gdml" : ("twisttrd1", -1),
+            "025_twisted_tube.gdml" : ("twisttubs1", -1),
+            "026_generic_trap.gdml" : ("arb81", -1),
             # TODO: 27 Tesselated solid
-            "union" : solid_inf(28, _pj("028_union.gdml"), "union1", -1),
-            "subtraction" : solid_inf(29, _pj("029_subtraction.gdml"), "subtraction1", -1),
-            "intersection" : solid_inf(30, _pj("030_intersection.gdml"), "intersection1", -1),
-            "multiunion" : solid_inf(31, _pj("031_multiUnion.gdml"),"multiunion1",-1),
-            "scaled" : solid_inf(32, _pj("032_scaled.gdml"),"box1Scaled",-1)
+            "028_union.gdml" : ("union1", -1),
+            "029_subtraction.gdml" : ("subtraction1", -1),
+            "030_intersection.gdml" : ("intersection1", -1),
+            "031_multiUnion.gdml" : ("multiunion1",-1),
+            "032_scaled.gdml" : ("box1Scaled",-1)
         }
 
         # solid name : (nslice , nstack)
@@ -87,49 +86,85 @@ class SolidLoader(object):
             "GenericTrap" : (None, 20),
         }
 
-    def getMeshHashes(self, solidname):
-        reader = pyg4ometry.gdml.Reader(self.solid_dict[solidname].filename)
-        reg = reader.getRegistry()
-        solid = reg.solidDict[self.solid_dict[solidname].solidname]
+        self.division_checksums = {
+            # The hashes of the first division mesh for every division test
+            "124_division_box_x.gdml" : -1,
+            "125_division_box_y.gdml" : -1,
+            "126_division_box_z.gdml" : -1,
+            "127_division_tubs_rho.gdml" : -1,
+            "128_division_tubs_phi.gdml" : -1,
+            "129_division_tubs_z.gdml" : -1,
+            "130_division_cons_rho.gdml" : -1,
+            "131_division_cons_phi.gdml" : -1,
+            "132_division_cons_z.gdml" : -1,
+            "133_division_trd_x.gdml" : -1,
+            "134_division_trd_y.gdml" : -1,
+            "135_division_trd_z.gdml" : -1,
+            "136_division_para_x.gdml" : -1,
+            "137_division_para_y.gdml" : -1,
+            "138_division_para_z.gdml" : -1,
+            "139_division_polycone_rho.gdml" : -1,
+            "140_division_polycone_phi.gdml" : -1,
+            "141_division_polycone_z.gdml" : -1,
+            "142_division_polyhedra_rho.gdml" : -1,
+            "143_division_polyhedra_phi.gdml" : -1,
+            "144_division_polyhedra_z.gdml" : -1,
+        }
 
-        if solid.type in self.curved_solids:
-            mesh_density = self.curved_solids[solid.type]
-            if mesh_density[0]:
-                setattr(solid, "nslice", mesh_density[0])
-            if mesh_density[1]:
-                setattr(solid, "nstack", mesh_density[1])
+        self.available_checksums = self.solid_checksums.keys() + self.division_checksums.keys()
+
+    def verifyMeshChecksum(self, filename, registry):
+        if filename in self.solid_checksums:
+            solid = registry.solidDict[self.solid_checksums[filename][0]]
+            checksum = self.solid_checksums[filename][1]
+
+            if solid.type in self.curved_solids:
+                mesh_density = self.curved_solids[solid.type]
+                if mesh_density[0]:
+                    setattr(solid, "nslice", mesh_density[0])
+                if mesh_density[1]:
+                    setattr(solid, "nstack", mesh_density[1])
+
+        elif filename in self.division_checksums:
+            for volname, volume in registry.physicalVolumeDict.iteritems():
+                if volume.type == "division":
+                    solid = volume.meshes[0].solid
+
+            checksum = self.division_checksums[filename]
 
         if self.verbosity:
             print solid # Dump the parameters of the solid / check the repr method
+
         mesh = solid.pycsgmesh()
-        return (hash(mesh), self.solid_dict[solidname].hashval)
 
-div_volume_hashes = {
-    # The hashes of the first division mesh for every division test
-    "124_division_box_x" : -1,
-    "125_division_box_y" : -1,
-    "126_division_box_z" : -1,
-    "127_division_tubs_rho" : -1,
-    "128_division_tubs_phi" : -1,
-    "129_division_tubs_z" : -1,
-    "130_division_cons_rho" : -1,
-    "131_division_cons_phi" : -1,
-    "132_division_cons_z" : -1,
-    "133_division_trd_x" : -1,
-    "134_division_trd_y" : -1,
-    "135_division_trd_z" : -1,
-    "136_division_para_x" : -1,
-    "137_division_para_y" : -1,
-    "138_division_para_z" : -1,
-    "139_division_polycone_rho" : -1,
-    "140_division_polycone_phi" : -1,
-    "141_division_polycone_z" : -1,
-    "142_division_polyhedra_rho" : -1,
-    "143_division_polyhedra_phi" : -1,
-    "144_division_polyhedra_z" : -1,
-    }
+        return True #hash(mesh) == self.solid_checksums[filename][1]
 
-_loader = SolidLoader(verbosity=0)
+_meshValidator = MeshValidator(verbosity=0)
+
+def testSingleGDML(filename):
+    filepath = _pj(filename)
+
+    # Loading
+    reader = pyg4ometry.gdml.Reader(filepath)
+    registry = reader.getRegistry()
+
+    # Visualisation
+    try:
+        v = pyg4ometry.visualisation.VtkViewer()
+        v.addLogicalVolume(registry.getWorldVolume())
+        v.view(interactive=True)
+    except:
+        embed()
+
+    # Writing
+    writer = pyg4ometry.gdml.Writer()
+    writer.addDetector(registry)
+    writer.write(filepath.replace(".gdml", "_processed.gdml"))
+
+    if filename in _meshValidator.available_checksums:
+        return _meshValidator.verifyMeshChecksum(filename, registry)
+    else:
+        return True
 
 class GdmlLoadTests(_unittest.TestCase) :
     def testMalformedGdml(self) : 
@@ -141,140 +176,131 @@ class GdmlLoadTests(_unittest.TestCase) :
             pass
 
     def testQuantity(self) :
-        r = pyg4ometry.gdml.Reader(_pj("301_quantity.gdml"))
+        self.assertTrue(testSingleGDML("301_quantity.gdml"))
 
     def testVariable(self) :
-        r = pyg4ometry.gdml.Reader(_pj("302_variable.gdml"))
+        self.assertTrue(testSingleGDML("302_variable.gdml"))
 
     def testMatrix(self) :
-        r = pyg4ometry.gdml.Reader(_pj("303_matrix.gdml"))
+        self.assertTrue(testSingleGDML("303_matrix.gdml"))
 
     def testScale(self) :
-        r = pyg4ometry.gdml.Reader(_pj("304_scale.gdml"))
+        self.assertTrue(testSingleGDML("304_scale.gdml"))
 
     def testUnrecognisedDefine(self) :
-        r = pyg4ometry.gdml.Reader(_pj("305_unrecognised_define.gdml"))
+        self.assertTrue(testSingleGDML("305_unrecognised_define.gdml"))
 
     def testBoxLoad(self):
-        #self.assertEqual(*_loader.getMeshHashes("box")) # Proper way to do it, but requires a stable code state
-        self.assertTrue(bool(_loader.getMeshHashes("box"))) # For now just check it loads
+        self.assertTrue(testSingleGDML("001_box.gdml")) # For now just check it loads
 
     def testTubeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("tube")))
+        self.assertTrue(testSingleGDML("002_tubs.gdml"))
 
     def testCutTubeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("cuttube")))
+        self.assertTrue(testSingleGDML("003_cut_tubs.gdml"))
 
     def testConeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("cone")))
+        self.assertTrue(testSingleGDML("004_cons.gdml"))
 
     def testParaLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("para")))
+        self.assertTrue(testSingleGDML("005_para.gdml"))
 
     def testTrdLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("trd")))
+        self.assertTrue(testSingleGDML("006_trd.gdml"))
 
     def testTrapLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("trap")))
+        self.assertTrue(testSingleGDML("007_trap.gdml"))
 
     def testSphereLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("sphere")))
+        self.assertTrue(testSingleGDML("008_sphere.gdml"))
 
     def testOrbLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("orb")))
+        self.assertTrue(testSingleGDML("009_orb.gdml"))
 
     def testTorusLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("torus")))
+        self.assertTrue(testSingleGDML("010_torus.gdml"))
 
     def testPolyconeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("polycone")))
+        self.assertTrue(testSingleGDML("011_polycone.gdml"))
 
     def testGenericPolyconeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("genpoly")))
+        self.assertTrue(testSingleGDML("012_generic_polycone.gdml"))
 
     def testPolyhedraLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("polyhedra")))
+        self.assertTrue(testSingleGDML("013_polyhedra.gdml"))
 
     def testGenericPolyhedraLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("genpolyhedra")))
+        self.assertTrue(testSingleGDML("014_generic_polyhedra.gdml"))
 
     def testEltubeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("eltube")))
+        self.assertTrue(testSingleGDML("015_eltube.gdml"))
 
     def testEllipsoidLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("ellipsoid")))
+        self.assertTrue(testSingleGDML("016_ellipsoid.gdml"))
 
     def testElconeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("elcone")))
+        self.assertTrue(testSingleGDML("017_elcone.gdml"))
 
     def testParaboloidLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("paraboloid")))
+        self.assertTrue(testSingleGDML("018_paraboloid.gdml"))
 
     def testHypeLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("hype")))
+        self.assertTrue(testSingleGDML("019_hype.gdml"))
 
     def testTetLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("tet")))
+        self.assertTrue(testSingleGDML("020_tet.gdml"))
 
     def testExtrudedSolid(self):
-        self.assertTrue(bool(_loader.getMeshHashes("xtru")))
+        self.assertTrue(testSingleGDML("021_xtru.gdml"))
 
     def testTwistedBox(self):
-        self.assertTrue(bool(_loader.getMeshHashes("tet")))
-
-    def testTwistedTrd(self):
-        self.assertTrue(bool(_loader.getMeshHashes("twistedtubs")))
-
-    def testTwistedTrd(self):
-        self.assertTrue(bool(_loader.getMeshHashes("twistedtrd")))
+        self.assertTrue(testSingleGDML("022_twisted_box.gdml"))
 
     def testTwistedTrap(self):
-        self.assertTrue(bool(_loader.getMeshHashes("twistedtrap")))
+        self.assertTrue(testSingleGDML("023_twisted_trap.gdml"))
 
     def testTwistedTrd(self):
-        self.assertTrue(bool(_loader.getMeshHashes("twistedtrd")))
+        self.assertTrue(testSingleGDML("024_twisted_trd.gdml"))
+
+    def testTwistedTubs(self):
+        self.assertTrue(testSingleGDML("025_twisted_tub2.gdml"))
+
+    def testGenericTrap(self):
+        self.assertTrue(testSingleGDML("026_generic_trap.gdml"))
 
     # TODO: Tesselated solid here
 
     def testUnionLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("union")))
+        self.assertTrue(testSingleGDML("028_union.gdml"))
 
     def testSubtractionLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("subtraction")))
+        self.assertTrue(testSingleGDML("029_subtraction.gdml"))
 
     def testIntersetionLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("intersection")))
+        self.assertTrue(testSingleGDML("030_intersection.gdml"))
 
     def testMultiUnionLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("multiunion")))
+        self.assertTrue(testSingleGDML("031_multiUnion.gdml"))
 
     def testScaledLoad(self):
-        self.assertTrue(bool(_loader.getMeshHashes("scaled")))
+        self.assertTrue(testSingleGDML("032_scaled.gdml"))
 
     def testMaterials(self):
-        r = pyg4ometry.gdml.Reader(_pj("201_materials.gdml"))
-        w = pyg4ometry.gdml.Writer()
-        w.addDetector(r.getRegistry())
-        w.write(_pj("201_materials_processed.gdml"))
+        self.assertTrue(testSingleGDML("201_materials.gdml"))
 
     def testDivisionVolume(self):
-        for name in div_volume_hashes:
-            r = pyg4ometry.gdml.Reader(_pj("{}.gdml".format(name)))
-            reg = r.getRegistry()
-            for volname, volume in reg.physicalVolumeDict.iteritems():
-                if volume.type == "division":
-                    first_div_mesh = volume.meshes[0]
+        results = []
+        for name in _meshValidator.division_checksums:
+            print name
+            results.append(testSingleGDML(name))
 
-            #print "test no. {}".format(name.split("_")[0]), hash(first_div_mesh.solid.pycsgmesh())
-            #self.assertEqual(hash(first_div_mesh), div_volume_hashes[name])
+        self.assertTrue(all(results))
 
     def testAuxiliary(self):
-        r = pyg4ometry.gdml.Reader(_pj("202_auxiliary.gdml"))
-        w = pyg4ometry.gdml.Writer()
-        w.addDetector(r.getRegistry())
-        w.write(_pj("202_auxiliary_processed.gdml"))
+        self.assertTrue(testSingleGDML("202_auxiliary.gdml"))
 
     def testEntity(self):
+        # Need to process the GDML file to inject the absolute path to the entity file
         with open(_pj("203_entity.gdml")) as infile:
             contents = infile.read()
 
@@ -282,11 +308,10 @@ class GdmlLoadTests(_unittest.TestCase) :
             with open(_pj("203_temp.gdml"), "w") as tempfile:
                 tempfile.write(contents_replaced)
 
-        r = pyg4ometry.gdml.Reader(_pj("203_temp.gdml"))
-        w = pyg4ometry.gdml.Writer()
-        w.addDetector(r.getRegistry())
-        w.write(_pj("203_entity_processed.gdml"))
+        result = testSingleGDML("203_temp.gdml") # Store the result before mopping temp files
         _os.unlink(_pj("203_temp.gdml"))
+
+        self.assertTrue(result)
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
