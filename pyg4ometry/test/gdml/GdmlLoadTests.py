@@ -258,7 +258,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         self.assertTrue(testSingleGDML("024_twisted_trd.gdml"))
 
     def testTwistedTubs(self):
-        self.assertTrue(testSingleGDML("025_twisted_tub2.gdml"))
+        self.assertTrue(testSingleGDML("025_twisted_tube.gdml"))
 
     def testGenericTrap(self):
         self.assertTrue(testSingleGDML("026_generic_trap.gdml"))
