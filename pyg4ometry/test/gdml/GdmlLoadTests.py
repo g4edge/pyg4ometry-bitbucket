@@ -286,7 +286,6 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testDivisionVolume(self):
         results = []
         for name in _meshValidator.division_checksums:
-            print name
             results.append(testSingleGDML(name))
 
         self.assertTrue(all(results))
