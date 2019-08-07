@@ -51,7 +51,7 @@ class MeshValidator(object):
             "024_twisted_trd.gdml" : ("twisttrd1", -1),
             "025_twisted_tube.gdml" : ("twisttube1", -1),
             "026_generic_trap.gdml" : ("arb81", -1),
-            # TODO: 27 Tesselated solid
+            "027_tesselated.gdml" : ("tessellated", -1),
             "028_union.gdml" : ("union1", -1),
             "029_subtraction.gdml" : ("subtraction1", -1),
             "030_intersection.gdml" : ("intersection1", -1),
@@ -304,7 +304,8 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testGenericTrap(self):
         self.assertTrue(testSingleGDML("026_generic_trap.gdml"))
 
-    # TODO: Tesselated solid here
+    def testTessellatedSolid(self):
+        self.assertTrue(testSingleGDML("027_tesselated.gdml"))
 
     def testUnionLoad(self):
         self.assertTrue(testSingleGDML("028_union.gdml"))
