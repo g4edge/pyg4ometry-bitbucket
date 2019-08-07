@@ -108,7 +108,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Pyg4ometry: a python library for the creation of Monte Carlo particle transport geometries}
+\title{Pyg4ometry: a python library for the creation of Monte Carlo particle transport physical geometries}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{<author name>}
@@ -186,20 +186,26 @@ of programs previously published in the CPC Program Library.\\
 %% main text
 \section{Introduction} \label{sec:introduction}
 There are numerous different software codes to simulate the passage of particles through material, so called particle transport (PT) programmes, these 
-include MCMP, FLUKA, Geant3 and Geant4. All these codes are based on the Monte Carlo technique but each code either has a particular specialism 
-or target user community.  PT Monte Carlo simulations have diverse uses, shielding calculations for radiological protection, detector performance, medical 
-imaging and therapy, space radiation environment simulation are some examples. A fundamental requirement of all of the codes is to supply a computer 
-readable description of the physical geometry that the particles are passing through.  The creation of geometry files is typically a very time consuming activity, 
-the simulation validity and performance is directly dependent on the quality of the geometry. The requirement of a  geometry system that allows the conversion 
-between files prepared for different codes will enable cross checks of the physics processes in particle transport codes. Parallel to the creation of geometry files 
-for PT programs, usually computer assisted design (CAD) files exist for systems which need to be simulated in PT programmes. The fundamental geometric 
-representations in CAD files is typically not amenable for PT programmes.  For these reasons it is advantageous to create a software tool that allows particle 
-transport code users to rapidly develop geometry files, convert between common PT programme geometry formats and finally import CAD models. This paper 
-describes such geometry creation and conversion package called {\em pyg4ometry}, implemented in {\em Python} and internally based on the Geant4 geometry 
+include MCNP \cite{Mcnp_Werner}, FLUKA \cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3 \cite{Geant3_Brun} and Geant4 \cite{Geant4_Agostinelli}. 
+All these codes are based on the Monte Carlo technique but each code either has a particular specialism or target user community.  PT Monte Carlo simulations 
+have diverse uses, shielding calculations for radiological protection, detector performance, medical imaging and therapy and space radiation environment 
+simulation are some examples. A fundamental requirement of all of the codes is to supply a computer readable description of the physical geometry that 
+the particles are passing through.  The creation of geometry files is typically a very time consuming activity and the simulation validity and performance is directly 
+dependent on the quality of the geometry. The requirement of a geometry system that allows the conversion between files prepared for different codes will 
+enable cross checks of the physics processes in different particle transport codes. Parallel to the creation of geometry files for PT programs, usually computer assisted 
+design (CAD) files exist for systems which need to be simulated in PT programmes. The fundamental geometric representations in CAD files is typically not 
+amenable for PT programmes.  For these reasons it is advantageous to create a software tool that allows particle transport code users to rapidly develop 
+geometry files, convert between common PT programme geometry formats and finally import CAD models. 
+
+This paper describes such geometry creation and conversion package called {\em pyg4ometry}, implemented in {\em Python} and internally based on the Geant4 geometry 
 description. The main features of  {\em pyg4ometry} are a python scripting API to rapidly design parametrised geometry, conversion to and from  FLUKA geometry 
-descriptions, conversion from CAD formats  (STEP and IGES) based on FreeCAD-OpenCascade and powerful geometry visualisation tools based on VTK. 
-The origin of pyg4ometry was a set of utilities to prepare geometry for an accelerator beam line simulation based on Geant4 called BDSIM. Accelerator physicists 
-like specialists in other areas need a tool to quickly simulate beam losses, and the subsequent interaction of the charged particle beam with the accelerator material.
+descriptions, conversion from CAD formats  (STEP and IGES) based on FreeCAD \cite{FreeCAD} OpenCascade \cite{OpenCASCADE} and powerful geometry 
+visualisation tools based on VTK \cite{VTK4}. The origin of pyg4ometry was a set of utilities to prepare geometry for an accelerator beam line simulation based on Geant4 
+called BDSIM. Accelerator physicists like specialists in other areas need a tool to quickly simulate beam losses, and the subsequent interaction of the charged particle 
+beam with the accelerator material.
+
+There are existing codes that have functionality similar to pyg4ometry. Tools exist to convert CAD files to GDML, e.g. GUIMesh \cite{GUIMesh_Pinto}.
+CAD software can export data to STL. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.   
 
 \section{Geometric descriptions} \label{sec:geometric}
 Central to description of a geometric description of a system is how a solid is defined in three dimensions. There are numerous different ways to describe a
@@ -246,7 +252,7 @@ The constructors of the python classes are kept as close to the original Geant4 
 a new API. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
 should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in {\it pyg4ometry} are described.  
     
-\subsection{Expression engine}
+\subsection{Expression evaluation}
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
 In order to fully replicate the functionality of GDML an expression engine was implemented using ANTLR. GDML allows for the definition and assignment of 
 variables. GDML expressions are not much more complicated than binary operators $+, -, \times, /$ and common trigonometric and special functions $\sin, \cos, \tan$ etc. 
@@ -254,7 +260,7 @@ The AST terminates on either expressions which evaluate to numbers or GDML varia
 Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of solid parameters and placements. This allows a user to update variables whilst
 defining geometry and the expression engine will update all internal values.  
  
-\subsection{Tessellation engine}
+\subsection{Tessellation of solids}
 For each Geant4 primitive solid a triangular tessellated mesh is generated and cached. This mesh is then used to determine the extent of placed instances of 
 geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique. Triangular meshes based
 on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various algorithms from 
@@ -270,13 +276,13 @@ elements of a GDML file. As a user specifies geometry the registry is updated. W
 \verb|Registry| instances can be aggregated to form a composite geometry or volumes can be removed and added.   
   
 \subsection{Input and output} 
-For each input format available in {\it pyg4ometry} a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
+For each input format available in pyg4ometry a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
 and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a registry which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
 
 \subsection{Overlap detection}
 All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
-throughsuch a situation.  A key feature of {\it pyg4ometry} is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
+throughsuch a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
 and determining if the resulting mesh is empty. Generally the overlap detection algorithm proceeds as 
 
 {\small 
@@ -397,15 +403,15 @@ Often existing CAD models have either missing details or too much detail.
 Often small errors in geometry cause unexpected PT code behaviour.  
 
 \section{Performance of converted geometry in Geant4}
-Clearly for Geant4 geometry defined in {\it pyg4ometry} the performance is exactly the same as it the geometry was specified in C++ and linked against the Geant4
+Clearly for Geant4 geometry defined in pyg4ometry the performance is exactly the same as it the geometry was specified in C++ and linked against the Geant4
 libraries. A comparison of the performance of converted CAD or FLUKA geometry compared with native Geant4 solids is required so a user can optimise the available
 computing resources against the human resources (required to convert geometry). BDSIM is used to load the pyg4ometry generated files  and run basic simulations where 
 high energy particles are   
 
 \section{Conclusions}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in particle transport Monte Carlo programmes will save significant 
-amounts of user effort and ultimately yield more accurate simulations. {\it pyg4ometry} is a relatively complete implementation of a geometry creation tool, whilst heavily 
-internally based on Geant4 and GDML can have utility for users of all PT codes. {\it pyg4ometry} can clearly be extended to other formats or applications. As for applications,
+amounts of user effort and ultimately yield more accurate simulations. Pyg4ometry is a relatively complete implementation of a geometry creation tool, whilst heavily 
+internally based on Geant4 and GDML can have utility for users of all PT codes. Pyg4ometry can clearly be extended to other formats or applications. As for applications,
 examples include  the  generation triangular mesh structures for GPU accelerated photon tracking in liquid noble  dark matter detectors and geometries for event visualisation. 
 Although not implemented in the current version, a C++ output writer can be quickly implemented to generate geometry which can be compiled into a Geant4 application. 
 
@@ -427,8 +433,7 @@ Although not implemented in the current version, a C++ output writer can be quic
 %% References with bibTeX database:
 
 \bibliographystyle{elsarticle-num}
-\bibliography{<your-bib-database>}
-
+\bibliography{pyg4ometry}
 %% Authors are advised to submit their bibtex database files. They are
 %% requested to list a bibtex style file in the manuscript if they do
 %% not want to use elsarticle-num.bst.
