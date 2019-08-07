@@ -37,6 +37,10 @@ def Test(vis = False) :
     # test __repr__
     str(ts)
 
+    # test extent of physical volume
+    wlextent           = wl.extent(True)
+    wlextent_daughters = wl.extent(False)
+
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)

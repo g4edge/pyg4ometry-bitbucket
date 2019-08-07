@@ -39,6 +39,10 @@ def Test(vis = False) :
     # test __repr__
     str(bs)
 
+    # test extent of physical volume
+    wlextent           = wl.extent(True)
+    wlextent_daughters = wl.extent(False)
+
     # visualisation
     if vis : 
         v = _vi.VtkViewer()
