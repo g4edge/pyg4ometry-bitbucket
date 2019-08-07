@@ -6,9 +6,9 @@ import pyg4ometry.visualisation as vi
 reg = g4.Registry()
 
 # expressions
-wx = gd.Constant("wx","50",reg)
-wy = gd.Constant("wy","50",reg)
-wz = gd.Constant("wz","50",reg)
+wx = gd.Constant("wx","100",reg)
+wy = gd.Constant("wy","100",reg)
+wz = gd.Constant("wz","100",reg)
 bx = gd.Constant("bx","10",reg)
 by = gd.Constant("by","10",reg)
 bz = gd.Constant("bz","10",reg)
@@ -26,9 +26,9 @@ wl = g4.LogicalVolume(wb, wm, "wl", reg)
 bl = g4.LogicalVolume(b, bm, "b", reg)
 bp1 = g4.PhysicalVolume([0,0,0],[0,0,0],
                         bl, "b_pv1", wl, reg)
-bp2 = g4.PhysicalVolume([0,0,-0.25],[-3*bx,0,0],
+bp2 = g4.PhysicalVolume([0,0,-0.25],[-2*bx,0,0],
                         bl, "b_pv2", wl, reg)
-bp3 = g4.PhysicalVolume([0,0,0.5],[3*bx,0,0],
+bp3 = g4.PhysicalVolume([0,0,0.5],[2*bx,0,0],
                         bl, "b_pv3", wl, reg)
 
 reg.setWorld(wl.name)
