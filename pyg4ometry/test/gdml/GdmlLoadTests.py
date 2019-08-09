@@ -325,6 +325,9 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testMaterials(self):
         self.assertTrue(testSingleGDML("201_materials.gdml"))
 
+    def testOpticalSurfaces(self):
+        self.assertTrue(testSingleGDML("150_opticalsurfaces.gdml"))
+
     def testDivisionVolume(self):
         results = []
         for name in _meshValidator.division_checksums:
