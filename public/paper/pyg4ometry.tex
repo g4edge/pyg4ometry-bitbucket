@@ -236,17 +236,62 @@ To exchange geometry descriptions Geant Detector Mark-up Language (GDML) was dev
 used as an exchange format for Geant4 geometries. 
 \begin{table}[hbt!]
 \centering
-\begin{tabular}{|c|c|c|} \hline
-GDML tag 		&  Child tags				& pyg4ometry class 			\\ \hline
-Defines 			&						&						\\
-Solids 			&						&						\\
-Materials 			&						&						\\
-Structure			&						&						\\ \hline
+\begin{tabular}{|l|l|l|} \hline
+GDML tag 		&  Child tags				& pyg4ometry class 				\\ \hline
+define 			& constant				& gdml.Constant				\\
+				& variable					& gdml.Variable					\\
+				& expression 				& gdml.Expression				\\
+				& position					& gdml.Position					\\
+				& rotation					& gdml.Rotation				\\
+				& scale					& gdml.Scale					\\
+				& matrix					& gdml.Matrix					\\
+materials 			& element					& geant4.Element				\\
+				& isotope					& geant4.Isotope				\\
+				& material					& geant4.Material				\\
+solid  			& box					& geant4.solid.Box				\\
+	  			& tube					&							\\
+	  			& cutTube					&							\\
+	  			& cone					&							\\
+	  			& para					&							\\
+	  			& trd						&							\\
+	  			& trap					&							\\
+	  			& sphere					&							\\
+	  			& orb					&							\\
+	  			& torus					&							\\
+	  			& polycone				&							\\
+	  			& genericPolycone			&							\\
+	  			& polyhedra				&							\\
+	  			& eltube					&							\\
+	  			& ellipsoid					&							\\
+	  			& elcone					&							\\
+				& paraboloid				&							\\
+				& hype					& 							\\
+				& tet						& 							\\
+				& xtru					& 							\\
+				& twistedbox				& 							\\
+				& twistedtrap				& 							\\
+				& twistedtrd				& 							\\
+				& twistedtube				& 							\\
+				& arb8					& 							\\
+				& tesselated				& 							\\
+				& union					& 							\\
+				& subtraction				& 							\\
+				& intersection				& 							\\
+				& multiUnion				& 							\\				
+	  			& opticalsurface			&							\\
+structure			& volume					& geant4.LogicalVolume			\\
+				& physvol					& geant4.PhysicalVolume			\\ 
+				& replicavol				& geant4.ReplicaVolume			\\ 
+				& paravol					& geant4.ParameterisedVolume	\\ 
+				& divisionvol				& geant4.DivisionVolume			\\
+				& skinsurface				& geant4.SkinSurface			\\ 
+				& bordersurface			& geant4.BorderSurface			\\ \hline
+
 \end{tabular}
-\caption{GDML tags and corresponding {\it pyg4ometry} classes.}
+\caption{GDML tags and corresponding pyg4ometry classes.}
 \end{table}
 
-\section{{\em pyg4ometry} design and layout}
+\section{pyg4ometry design and layout}
 The core of {\em pyg4ometry} consists of python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
 The constructors of the python classes are kept as close to the original Geant4 C++ implementation so that {\it pyg4ometry} users do not have to learn 
 a new API. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
