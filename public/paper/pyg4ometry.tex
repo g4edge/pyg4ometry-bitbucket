@@ -300,7 +300,16 @@ daughter volumes. Overlaps between daughter volumes and the mother can be detect
  
 \subsection{Visualisation}
 A  geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 volume hierarchy is sufficient 
-to place the meshes associated with each physical volume. The python version of Geant4's physical volume is also used to store visualisation attributes like the solids 
+to place the meshes associated with each physical volume. A daughter volume is placed within a logical volume with a rotation $\mathbf{R}$, scale $\mathbf{S}$ and 
+translation $\mathbf{T}$. 
+
+\begin{eqnarray}
+\mathbf{M}	  	& = & \mathbf{M}_p \mathbf{M}_d  = \mathbf{S}_p \mathbf{R}_p  \mathbf{S}_d \mathbf{R}_d\\
+\mathbf{T}	 		& = & \mathbf{M}_p \mathbf{T}_d + \mathbf{T}_p= \mathbf{S}_p \mathbf{R}_p \mathbf{T}_d + \mathbf{T}_p,
+\end{eqnarray}
+where the subscript $p$ indicates parent volume and $d$ indicates daughter volume.
+
+The python version of Geant4's physical volume is also used to store visualisation attributes like the solids 
 color, surface or wireframe representation and visibility. Overlaps detected in the discretised mesh geometry can be displayed separately to allow a user to remove
 the potential overlaps. This is dependent on the accuracy of the mesh generated and is a particular problem with meshes based on curved surfaces.    
 
