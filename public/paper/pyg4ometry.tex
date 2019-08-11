@@ -278,7 +278,8 @@ solid  			& box					& geant4.solid.Box				\\
 				& union					& 							\\
 				& subtraction				& 							\\
 				& intersection				& 							\\
-				& multiUnion				& 							\\				
+				& multiUnion				& 							\\
+				& scaledSolid				&							\\				
 	  			& opticalsurface			&							\\
 structure			& volume					& geant4.LogicalVolume			\\
 				& physvol					& geant4.PhysicalVolume			\\ 
@@ -297,6 +298,14 @@ The core of {\em pyg4ometry} consists of python classes that mimic Geant4 solids
 The constructors of the python classes are kept as close to the original Geant4 C++ implementation so that {\it pyg4ometry} users do not have to learn 
 a new API. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
 should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in {\it pyg4ometry} are described.  
+
+\begin{figure*}[hbt]
+  \normalsize
+  \centering
+  \includegraphics[width=0.7\textwidth]{./diagrams/workflow.pdf}
+  \caption{\label{fig:workflow}Workflow}
+\end{figure*}
+
     
 \subsection{Expression evaluation}
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
@@ -347,11 +356,19 @@ daughter volumes. Overlaps between daughter volumes and the mother can be detect
 \subsection{Visualisation}
 A  geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 volume hierarchy is sufficient 
 to place the meshes associated with each physical volume. A daughter volume is placed within a logical volume with a rotation $\mathbf{R}$, scale $\mathbf{S}$ and 
-translation $\mathbf{T}$. 
+translation $\mathbf{T}$.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=5cm]{./diagrams/lvToPv.pdf}
+\caption{Placement of physical volume inside a logical volume}
+\label{fig:lvToPv}
+\end{center}
+\end{figure} 
 
 \begin{eqnarray}
-\mathbf{M}	  	& = & \mathbf{M}_p \mathbf{M}_d  = \mathbf{S}_p \mathbf{R}_p  \mathbf{S}_d \mathbf{R}_d\\
-\mathbf{T}	 		& = & \mathbf{M}_p \mathbf{T}_d + \mathbf{T}_p= \mathbf{S}_p \mathbf{R}_p \mathbf{T}_d + \mathbf{T}_p,
+\mathbf{M}	  	& = & \mathbf{M}_m \mathbf{M}_d  = \mathbf{S}_m \mathbf{R}_m  \mathbf{S}_d \mathbf{R}_d\\
+\mathbf{T}	 		& = & \mathbf{M}_m \mathbf{T}_d + \mathbf{T}_m= \mathbf{S}_m \mathbf{R}_m \mathbf{T}_d + \mathbf{T}_m,
 \end{eqnarray}
 where the subscript $p$ indicates parent volume and $d$ indicates daughter volume.
 
@@ -420,7 +437,7 @@ v.view()
 An example of the VTK output for code listing XXX is shown in Figure~\ref{fig:rapidModellingExample}.
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=10cm]{./diagrams/rapidModelling.pdf}
+\includegraphics[width=7cm]{./diagrams/rapidModelling.pdf}
 \caption{VTK visualisation output from code example XXX.}
 \label{fig:rapidModellingExample}
 \end{center}
