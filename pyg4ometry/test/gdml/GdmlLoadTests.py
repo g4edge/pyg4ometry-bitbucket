@@ -180,7 +180,7 @@ class MeshValidator(object):
 
 _meshValidator = MeshValidator(verbosity=0)
 
-def testSingleGDML(filename):
+def testSingleGDML(filename, interactive = False):
     filepath = _pj(filename)
 
     # Loading
@@ -190,7 +190,7 @@ def testSingleGDML(filename):
     # Visualisation
     v = pyg4ometry.visualisation.VtkViewer()
     v.addLogicalVolume(registry.getWorldVolume())
-    v.view(interactive=False)
+    v.view(interactive=interactive)
 
     # Writing
     newFilename = filepath.replace(".gdml", "_processed.gdml")
