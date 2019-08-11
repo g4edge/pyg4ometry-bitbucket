@@ -368,7 +368,6 @@ class GdmlLoadTests(_unittest.TestCase) :
 
     def testChargeExhangeMC(self):
         self.assertTrue(testSingleGDML("../gdmlG4examples/ChargeExchangeMC/lht.gdml"))
-
     def testG01assembly(self):
         self.assertTrue(testSingleGDML("../gdmlG4examples/G01/assembly.gdml"))
 
@@ -399,8 +398,8 @@ class GdmlLoadTests(_unittest.TestCase) :
     def testG01scale(self):
         self.assertTrue(testSingleGDML("../gdmlG4examples/G01/scale.gdml"))
 
-#    def testG01solids(self):
-#        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/solids.gdml"))
+    def testG01solids(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/solids.gdml"))
 
     def testG01tess(self):
         self.assertTrue(testSingleGDML("../gdmlG4examples/G01/tess.gdml"))
