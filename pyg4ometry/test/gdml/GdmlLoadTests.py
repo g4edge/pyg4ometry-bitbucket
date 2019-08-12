@@ -180,7 +180,7 @@ class MeshValidator(object):
 
 _meshValidator = MeshValidator(verbosity=0)
 
-def testSingleGDML(filename):
+def testSingleGDML(filename, interactive = False):
     filepath = _pj(filename)
 
     # Loading
@@ -190,12 +190,15 @@ def testSingleGDML(filename):
     # Visualisation
     v = pyg4ometry.visualisation.VtkViewer()
     v.addLogicalVolume(registry.getWorldVolume())
-    v.view(interactive=False)
+    v.view(interactive=interactive)
 
     # Writing
+    newFilename = filepath.replace(".gdml", "_processed.gdml")
+
     writer = pyg4ometry.gdml.Writer()
     writer.addDetector(registry)
-    writer.write(filepath.replace(".gdml", "_processed.gdml"))
+    writer.write(newFilename)
+
 
     if filename in _meshValidator.available_checksums:
         return _meshValidator.verifyMeshChecksum(filename, registry)
@@ -362,6 +365,53 @@ class GdmlLoadTests(_unittest.TestCase) :
         _os.unlink(_pj("203_temp.gdml"))
 
         self.assertTrue(result)
+
+    def testChargeExhangeMC(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/ChargeExchangeMC/lht.gdml"))
+    def testG01assembly(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/assembly.gdml"))
+
+    def testG01auxiliary(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/auxiliary.gdml"))
+
+    def testG01axes(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/axes.gdml"))
+
+    def testG01divisionvol(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/divisionvol.gdml"))
+
+    def testG01mat_nist(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/mat_nist.gdml"))
+
+    def testG01multiUnion(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/multiUnion.gdml"))
+
+    def testG01pTube(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/pTube.gdml"))
+
+    def testG01parameterized(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/parameterized.gdml"))
+
+    def testG01replicated(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/replicated.gdml"))
+
+    def testG01scale(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/scale.gdml"))
+
+    def testG01solids(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/solids.gdml"))
+
+    def testG01tess(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/tess.gdml"))
+
+    def testG02test(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G02/test.gdml"))
+
+    def testG04auxiliary(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/G04/auxiliary.gdml"))
+
+    def testPar02FullDetector(self):
+        self.assertTrue(testSingleGDML("../gdmlG4examples/Par02/Par02FullDetector.gdml"))
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)

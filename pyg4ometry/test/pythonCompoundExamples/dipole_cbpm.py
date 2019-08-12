@@ -108,7 +108,7 @@ def dipole_cbpm(interactive = False) :
     ################################
     w = _gdml.Writer() 
     w.addDetector(reg)
-    w.write(_path.join(_path.dirname(_path.abspath(__file__)), "dipole.gdml"))
+    w.write(_path.join(_path.dirname(_path.abspath(__file__)), "dipole_cbpm.gdml"))
 
     ################################
     # visualisation 
