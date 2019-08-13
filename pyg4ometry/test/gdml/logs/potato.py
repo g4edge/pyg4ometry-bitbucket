@@ -1,0 +1,41 @@
+import os as _os
+import pyg4ometry.gdml as _gd
+import pyg4ometry.geant4 as _g4
+import pyg4ometry.visualisation as _vi
+import numpy as _np
+
+def Test() : 
+    reg = _g4.Registry()
+    
+    # defines 
+    wx = _gd.Constant("wx","100",reg,True)
+    wy = _gd.Constant("wy","100",reg,True)
+    wz = _gd.Constant("wz","100",reg,True)
+
+    bx = _gd.Constant("bx","10",reg,True)
+    by = _gd.Constant("by","10",reg,True)
+    bz = _gd.Constant("bz","10",reg,True)
+    
+    wm = _g4.Material(name="G4_Galactic") 
+    bm = _g4.Material(name="G4_Fe") 
+
+
+    # solids
+    ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
+    bs = _g4.solid.Torus("torus_solid1", 40., 60., 200., 0., _np.pi/2, reg, nslice=16, nstack=8)
+
+    # structure 
+    wl = _g4.LogicalVolume(ws, wm, "wl", reg)
+    bl = _g4.LogicalVolume(bs, bm, "bl", reg)
+    bp = _g4.PhysicalVolume([0,0,0],[0,0,0],  bl, "b_pv1", wl, reg) 
+
+    # set world volume
+    reg.setWorld(wl.name)
+
+    v = _vi.VtkViewer()
+    v.addLogicalVolume(reg.worldVolume)
+    v.addAxes(10)
+    v.view()
+
+
+Test()

@@ -46,12 +46,12 @@
 <structure>
 
   <volume name="boxVol"> 
-    <materialref ref="Air"/>
+    <materialref ref="Al"/>
     <solidref ref="box"/>
   </volume>
 
   <volume name="rowVol"> 
-    <materialref ref="Air"/>
+    <materialref ref="Al"/>
     <solidref ref="row"/>
 
     <physvol>
