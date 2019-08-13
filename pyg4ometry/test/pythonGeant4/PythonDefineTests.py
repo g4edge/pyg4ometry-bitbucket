@@ -453,37 +453,37 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     def testMatrixConstructor1x10(self) : 
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",1,[1,2,3,4,5,6,7,8,9,10],r,False)
-        self.assertTrue((m.eval() == [1,2,3,4,5,6,7,8,9,10]).all())
+        mat = pyg4ometry.gdml.Matrix("mat",1,[1,2,3,4,5,6,7,8,9,10],r,False)
+        self.assertTrue((mat.eval() == [1,2,3,4,5,6,7,8,9,10]).all())
 
     def testMatrixConstructor1x10(self) : 
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",2,[1,2,3,4,5,6,7,8,9,10],r,False)
+        mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,False)
 
     def testMatrix1x10Index(self) : 
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",1,[1,2,3,4,5,6,7,8,9,10],r,False)
-        self.assertEqual(m[9].eval(),10)
+        mat = pyg4ometry.gdml.Matrix("mat",1,[1,2,3,4,5,6,7,8,9,10],r,False)
+        self.assertEqual(mat[9].eval(),10)
 
     def testMatrix2x5Index(self) : 
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",2,[1,2,3,4,5,6,7,8,9,10],r,False)
-        self.assertEqual(m[0][2].eval(),3)
+        mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,False)
+        self.assertEqual(mat[0][2].eval(),3)
 
     def testMatrixConstructor1x10AddRegistry(self) : 
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",1,[1,2,3,4,5,6,7,8,9,10],r,True)
-        self.assertTrue((m.eval() == [1,2,3,4,5,6,7,8,9,10]).all())
+        mat = pyg4ometry.gdml.Matrix("mat",1,[1,2,3,4,5,6,7,8,9,10],r,True)
+        self.assertTrue((mat.eval() == [1,2,3,4,5,6,7,8,9,10]).all())
 
     def testMatrixRepr(self) :
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",2,[1,2,3,4,5,6,7,8,9,10],r,True)
-        str(m)
+        mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,True)
+        str(mat)
 
     def testMatrixGetItemInRegistry(self) :
         r = pyg4ometry.geant4.Registry()
-        m = pyg4ometry.gdml.Matrix("m",2,[1,2,3,4,5,6,7,8,9,10],r,True)
-        self.assertEqual(m[0,0].expr.expression,"m[1,1]")
+        mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,True)
+        self.assertEqual(mat[0,0].expr.expression,"mat[1,1]")
     
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
