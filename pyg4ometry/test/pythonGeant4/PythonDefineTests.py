@@ -18,6 +18,9 @@ class PythonDefineTests(_unittest.TestCase) :
         self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"10+10"),"10+10")
 
         # string to expression string (unevaluatable)
+
+        x = pyg4ometry.gdml.Constant("x", 1, r)
+
         try : 
             self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"10*x+10"),"10*x+10")
         except AttributeError : 
