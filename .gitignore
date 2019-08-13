@@ -12,9 +12,6 @@ test/*gdml
 test/*gmad
 test/*stl
 docs/build*/*
-ANDREY_local_files/*
-*runCoverage.log*
-*.coverage*
 *.class
 *.java
 FM.pdf
@@ -38,4 +35,9 @@ pyg4ometry.pdf
 *.spl
 *.synctex.gz
 *FCStd1
-*.c
+*c
+*venv
+external
+papers
+gdmlLoader_4.10.5.1
+*interp
