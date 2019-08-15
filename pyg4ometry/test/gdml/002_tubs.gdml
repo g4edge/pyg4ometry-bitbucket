@@ -6,7 +6,6 @@
   <constant name="wby" value="100.0"/>
   <constant name="wbz" value="100.0"/>
 
-  <constant name="pi" value="3.1415926"/>
   <constant name="rmin" value="2.5"/>
   <constant name="rmax" value="10.0"/>
   <constant name="z" value="50"/>

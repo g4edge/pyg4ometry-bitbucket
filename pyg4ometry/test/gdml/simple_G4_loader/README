@@ -1,0 +1,22 @@
+INSTRUCTION FOR USING THE GEANT4 LOADER
+
+A simple program has been prepared for loading GDML files in Geant4.
+
+TO BUILD:
+
+mkdir build
+cd build
+cmake ..
+make
+
+If the executable is prepared as prescribed, the automatic testing will pick it up and perform Geant4 load tests.
+
+TO USE:
+
+simple_loader <filename:mandatory> <visualisation:optional> <physics:optional>
+
+The filename is the path to a GDML file to be loaded. By default, the geometry is loaded and checked for overlaps and 100 electrons are launched in batch mode with an isotropic distribution centered at the origin  with no physics interactions enabled.
+
+The visualisation flag is an integer where value != 0 triggers an interactive visualiser instead of the batch exectution.
+
+The physics flag is an integer where value != 0 enables physics interactions for the simulated electrons. The physics list used is the FTFP_BERT reference pysics (the electrons have E=0.5 GeV) and the range cuts are default..
