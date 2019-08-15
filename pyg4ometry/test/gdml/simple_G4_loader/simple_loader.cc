@@ -90,7 +90,7 @@ int main(int argc,char **argv)
 #endif
     }
     else {
-        runManager->BeamOn(1000);
+        runManager->BeamOn(100);
     }
 
    delete runManager;
