@@ -4,7 +4,7 @@ import os as _os
 import pyg4ometry
 import logging as _log
 
-from collections import namedtuple
+from subprocess import Popen as _Popen, PIPE as _PIPE
 
 logger = _log.getLogger()
 logger.disabled = True
@@ -180,7 +180,23 @@ class MeshValidator(object):
 
 _meshValidator = MeshValidator(verbosity=0)
 
-def testSingleGDML(filename, interactive = False):
+def geant4LoadTest(filename, visualiser=False, physics=False):
+    script_path = _pj("simple_G4_loader/build/simple_loader")
+    if not _os.path.isfile(script_path):
+        print "Geant4 test executable not found in {}, skip test.".format(script_path)
+        return True
+
+    proc = _Popen([script_path, _pj(filename), str(int(visualiser)), str(int(physics))],
+                  stdout=_PIPE, stderr=_PIPE)
+    outs, errs = proc.communicate()
+
+    status = proc.returncode
+    if status:
+        print "Error! Geant4 load failed: \nOutput>>> {} \nErrors>>> {}".format(outs, errs)
+
+    return not status # 0 is normal termination
+
+def testSingleGDML(filename, interactive=False, geant4load=True):
     filepath = _pj(filename)
 
     # Loading
