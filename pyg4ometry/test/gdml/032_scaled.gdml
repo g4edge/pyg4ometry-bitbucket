@@ -2,9 +2,9 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd" >
 
 <define>
-  <constant name="wbx" value="100.0"/>
-  <constant name="wby" value="100.0"/>
-  <constant name="wbz" value="100.0"/>
+  <constant name="wbx" value="200.0"/>
+  <constant name="wby" value="200.0"/>
+  <constant name="wbz" value="200.0"/>
 
   <constant name="bx" value="10.0"/>
   <constant name="by" value="10.0"/>
