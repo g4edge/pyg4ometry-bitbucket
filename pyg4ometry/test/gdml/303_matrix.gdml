@@ -33,7 +33,7 @@
  </materials>
  <solids>
   <tet aunit="degree" lunit="mm" name="Tet" vertex1="v0" vertex2="v1" vertex3="v2" vertex4="v3" />
-  <box aunit="radian" lunit="mm" name="WorldBox" x="100" y="100" z="100" />
+  <box aunit="radian" lunit="mm" name="WorldBox" x="150" y="150" z="150" />
  </solids>
 
  <structure>
