@@ -8,7 +8,7 @@
   <position name="P" unit="mm" x="10" y="20" z="30" />
   <rotation name="R" unit="degree" x="10" y="20" z="30" />
 
-  <matrix name="m" coldim="3" values="100000 200000 30000 
+  <matrix name="mat" coldim="3" values="100000 200000 30000 
                                       100000 500000 6000 
                                       70000 8000 90000"/>
 
