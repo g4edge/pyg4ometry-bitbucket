@@ -9,7 +9,7 @@
   <constant name="bx" value="10.0"/>
   
   <position name="center"    x="0"   y="0"   z="0"/> 
-  <rotation name="identity"  x="0"   y="0"   z="0"/>
+  <rotation name="identity"  x="0.79"   y="0"   z="0"/>
 
   <position name="boxpos1"   x="-bx" y="0"   z="0"/>
   <position name="boxpos2"   x="0"   y="0"   z="0"/>
@@ -57,19 +57,19 @@
     <physvol>
        <volumeref ref="boxVol"/>
        <positionref ref="boxpos1"/>
-       <rotationref ref="identity"/>
+       <rotation name="boxVol1_pos" x="0.2" y="0" z="0" />
     </physvol>
 
     <physvol>
        <volumeref ref="boxVol"/>
        <positionref ref="boxpos2"/>
-       <rotationref ref="identity"/>
+       <rotation name="boxVol2_pos" x="0.4" y="0" z="0" />
     </physvol>
 
     <physvol>
        <volumeref ref="boxVol"/>
        <positionref ref="boxpos3"/>
-       <rotationref ref="identity"/>
+       <rotation name="boxVol3_pos" x="0.6" y="0" z="0" />
     </physvol>
   </volume>
 
@@ -80,7 +80,7 @@
     <physvol>       
        <volumeref ref="rowVol"/>
        <positionref ref="center"/>
-       <rotationref ref="identity"/>
+       <rotation name="rowVol" x="0" y="0" z="0"/>
     </physvol>      
   </volume>
 </structure>
