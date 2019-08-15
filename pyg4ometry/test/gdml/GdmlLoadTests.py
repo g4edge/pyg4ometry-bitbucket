@@ -215,11 +215,15 @@ def testSingleGDML(filename, interactive=False, geant4load=True):
     writer.addDetector(registry)
     writer.write(newFilename)
 
+    status = True
+
+    if geant4load: # Load tje processed file in geant4
+        status = geant4LoadTest(newFilename)
 
     if filename in _meshValidator.available_checksums:
-        return _meshValidator.verifyMeshChecksum(filename, registry)
-    else:
-        return True
+        status &= _meshValidator.verifyMeshChecksum(filename, registry)
+
+    return status
 
 class GdmlLoadTests(_unittest.TestCase) :
     def testMalformedGdml(self) : 
