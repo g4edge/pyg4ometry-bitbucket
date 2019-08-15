@@ -192,7 +192,7 @@ def geant4LoadTest(filename, visualiser=False, physics=False):
 
     status = proc.returncode
     if status:
-        print "Error! Geant4 load failed: \nOutput>>> {} \nErrors>>> {}".format(outs, errs)
+        print "\nError! Geant4 load failed: \nOutput>>> {} \nErrors>>> {}".format(outs, errs)
 
     return not status # 0 is normal termination
 
