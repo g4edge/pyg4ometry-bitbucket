@@ -38,6 +38,7 @@
 %% \usepackage{amsthm}
 
 %% The lineno packages adds line numbers. Start line numbering with
+
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers after \end{frontmatter}.
 %% \usepackage{lineno}
@@ -282,6 +283,7 @@ solid  			& box					& geant4.solid.Box				\\
 				& scaledSolid				&							\\				
 	  			& opticalsurface			&							\\
 structure			& volume					& geant4.LogicalVolume			\\
+				& assembly				& geant4.AssemblyVolume 		\\
 				& physvol					& geant4.PhysicalVolume			\\ 
 				& replicavol				& geant4.ReplicaVolume			\\ 
 				& paravol					& geant4.ParameterisedVolume	\\ 
@@ -335,21 +337,7 @@ For each input format available in pyg4ometry a dedicated {\it Reader} class is 
 and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a registry which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
 
-\subsection{Overlap detection}
-All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
-throughsuch a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
-and determining if the resulting mesh is empty. Generally the overlap detection algorithm proceeds as 
-
-{\small 
-\begin{verbatim}
-Overlap detection
-\end{verbatim}
-} 
-
-For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential waste if small overlaps are present in the final 
-PT simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are considered. 
- 
-\subsection{Volume bounding} 
+ \subsection{Volume bounding} 
 If a user is creating a placing multiple {\em daughter} volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully encompasses the 
 daughter volumes. Overlaps between daughter volumes and the mother can be detected, but it is desirable to have a mother volume shape that efficiently holds all of its daughters. 
  
@@ -378,6 +366,27 @@ the potential overlaps. This is dependent on the accuracy of the mesh generated 
 
 \subsection{Adding properties to volumes}
 A pure geometry description is an insufficient description for a PT simulation. Often other attributes need to be assigned for example material definition, magnetic field or    
+
+\subsection{Overlap detection}
+All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
+throughsuch a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
+and determining if the resulting mesh is empty. Generally the overlap detection algorithm proceeds as 
+
+{\small 
+\begin{verbatim}
+Overlap detection
+\end{verbatim}
+} 
+
+For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential waste if small overlaps are present in the final 
+PT simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are considered. 
+ \begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=8cm]{./diagrams/overlap.pdf}
+\caption{Placement of physical volume inside a logical volume}
+\label{fig:lvToPv}
+\end{center}
+\end{figure} 
 
 \subsection{Graphical user interface}
 A basic Qt based graphical user interface is also available with pyg4ometry. If a model has a large number of volumes defined in a hierarchical tree structure, it is cumbersome for the user to find the logical or physical volume.    
@@ -456,6 +465,35 @@ to emulate FLUKA geometry construction large but finite extent Geant4 primitive 
 An ANTLR based expression parser is used to load and comprehend the FLUKA input syntax, an example is shown in XXX. Each FLUKA body is matched to a Geant4 
 solid and a FLUKA region is represented by a Geant4 CSG tree is formed using the pyg4ometry classes. 
 
+\begin{table}[hbt!]
+\centering
+\begin{tabular}{|l|l|l|} \hline
+Fluka body			& note			& pyg4ometry class 				\\ \hline
+RPP (done)			&				&							\\
+BOX					&				&							\\
+SPH (done)			&				&							\\
+RCC (done)			&				&							\\
+REC (done)			&				&							\\
+TRC (done)			&				&							\\
+ELL 					&				&							\\
+WED					&				&							\\
+RAW					&				&							\\
+ARB					&				&							\\
+XYP (done)			&				&							\\
+XZP (done)			&				&							\\
+YZP (done)			&				&							\\
+PLA (done)			&				&							\\
+XCC (done)			&				&							\\
+YCC (done)			&				&							\\
+ZCC (done)			&				&							\\
+XEC (done)			&				&							\\
+YEC (done)			&				&							\\
+ZEC (done)			&				&							\\
+QUA (done)			&				&							\\ \hline
+\end{tabular}
+\caption{Fluka geometry directives pyg4ometry classes.}
+\end{table}
+
 \begin{enumerate} 
 \item infinite planes
 \item disjoint unions 
@@ -473,6 +511,7 @@ Often existing CAD models have either missing details or too much detail.
 
 \subsection{Overlap checking in geometry}
 Often small errors in geometry cause unexpected PT code behaviour.  
+
 
 \section{Performance of converted geometry in Geant4}
 Clearly for Geant4 geometry defined in pyg4ometry the performance is exactly the same as it the geometry was specified in C++ and linked against the Geant4
