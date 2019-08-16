@@ -12,6 +12,8 @@ G4bool SLExceptionHandler::Notify(const char *originOfException, const char *exc
     (void)originOfException;
     (void)severity;
 
+    G4cerr << "ERROR! " << description << G4endl;
+
     if (std::strcmp(exceptionCode, "GeomVol1002") == 0){
         G4cout << description << G4endl;
         G4cout << "Error! Overlaps detected in geometry" << G4endl;
