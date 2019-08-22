@@ -9,7 +9,7 @@ def redefineMaterialsFreecad():
     reg = r.getRegistry()
 
     # Make new materials as needed
-    new_mat = pyg4ometry.geant4.MaterialPredefined("G4_Cu")
+    new_mat = pyg4ometry.geant4.MaterialPredefined("G4_Cu", registry=reg)
 
     # Define a dictionary mapping volume names to new materials
     new_mats = {"Cone_ZRot_lv" : new_mat}
