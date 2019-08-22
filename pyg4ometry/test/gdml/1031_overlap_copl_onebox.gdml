@@ -9,11 +9,7 @@
   <constant name="bx" value="10.0"/>
   
   <position name="center"    x="0"   y="0"   z="0"/> 
-  <rotation name="identity"  x="0.79"   y="0"   z="0"/>
-
-  <position name="boxpos1"   x="-bx" y="0"   z="0"/>
-  <position name="boxpos2"   x="0"   y="0"   z="0"/>
-  <position name="boxpos3"   x="bx"  y="0"   z="0"/>
+  <rotation name="identity"  x="0"   y="0"   z="0"/>
 </define>
 
 <materials>
@@ -39,8 +35,8 @@
 
 <solids>
   <box name="WorldBox" x="wbx"  y="wby"  z="wbz" />
-  <box name="box"      x="bx"   y="0.9*bx"   z="0.9*bx"  />
-  <box name="row"      x="3*bx" y="2*bx"   z="2*bx" />
+  <box name="box"      x="0.5*bx"   y="0.5*bx"   z="0.5*bx"  />
+  <box name="row"      x="bx" y="bx"   z="bx" />
 </solids>
 
 <structure>
@@ -56,21 +52,10 @@
 
     <physvol>
        <volumeref ref="boxVol"/>
-       <positionref ref="boxpos1"/>
-       <rotation name="boxVol1_pos" x="0.2" y="0" z="0" />
+       <position name="boxVol_pos" x="0" y="0" z="-0.5*bx/2.0"/>
+       <rotationref ref="identity"/>
     </physvol>
 
-    <physvol>
-       <volumeref ref="boxVol"/>
-       <positionref ref="boxpos2"/>
-       <rotation name="boxVol2_pos" x="0.4" y="0" z="0" />
-    </physvol>
-
-    <physvol>
-       <volumeref ref="boxVol"/>
-       <positionref ref="boxpos3"/>
-       <rotation name="boxVol3_pos" x="0.6" y="0" z="0" />
-    </physvol>
   </volume>
 
   <volume name="World">
@@ -79,8 +64,8 @@
 
     <physvol>       
        <volumeref ref="rowVol"/>
-       <positionref ref="center"/>
-       <rotation name="rowVol" x="0" y="0" z="0"/>
+       <position name="rowVol_pos" x="0" y="0" z="0"/>
+       <rotationref ref="identity"/>
     </physvol>      
   </volume>
 </structure>
