@@ -40,7 +40,7 @@
 <solids>
   <box name="WorldBox" x="wbx"  y="wby"  z="wbz" />
   <box name="box"      x="bx"   y="0.9*bx"   z="0.9*bx"  />
-  <box name="row"      x="3*bx" y="bx"   z="bx" />
+  <box name="row"      x="3*bx" y="2*bx"   z="2*bx" />
 </solids>
 
 <structure>
