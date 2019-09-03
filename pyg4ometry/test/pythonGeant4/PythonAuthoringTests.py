@@ -7,6 +7,9 @@ import T000_SolidBase
 import T001_Box
 import T002_Tubs
 import T003_CutTubs
+import T0031_CutTubs_number
+import T0032_CutTubs_string
+import T0033_CutTubs_expression
 import T004_Cons
 import T005_Para
 import T006_Trd

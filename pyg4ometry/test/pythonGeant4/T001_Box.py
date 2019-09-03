@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False) : 
+def Test(vis = False, interactive = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -47,7 +47,7 @@ def Test(vis = False) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view(interactive=False)
+        v.view(interactive=interactive)
 
     return True
 
