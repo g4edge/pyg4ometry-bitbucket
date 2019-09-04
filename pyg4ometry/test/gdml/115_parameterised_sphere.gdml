@@ -38,7 +38,7 @@
   <solids>
     <box name="WorldBox"      x="wbx" y="wby" z="wbz" lunit="mm"/>
     <box name="box"           x="20*bx"  y="20*bx"  z="20*bx" lunit="mm"/>
-    <sphere name="sphere_param" rmin="1.0" rmax="1.2" startphi="0" deltaphi="2*pi" starttheta="0" deltatheta="2*pi" lunit="mm" aunit="rad"/>
+    <sphere name="sphere_param" rmin="1.0" rmax="1.2" startphi="0" deltaphi="2*pi" starttheta="0" deltatheta="0.1*pi" lunit="mm" aunit="rad"/>
   </solids>
   
   <structure>    
