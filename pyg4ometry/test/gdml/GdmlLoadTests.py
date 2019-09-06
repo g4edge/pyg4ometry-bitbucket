@@ -9,7 +9,6 @@ from subprocess import Popen as _Popen, PIPE as _PIPE
 logger = _log.getLogger()
 logger.disabled = True
 
-
 def _pj(filename):
     """
     Append the absolute path to *this* directory to the filename so the tests
@@ -17,186 +16,7 @@ def _pj(filename):
     """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-class MeshValidator(object):
-    """
-    Simple class to perfrom checking of mesh validity by using stored mesh checksums
-    """
-    def __init__(self, verbosity=0):
-
-        self.verbosity = verbosity
-        self.solid_checksums = {
-            "001_box.gdml" : ("box1", -4189916779045808977),
-            "002_tubs.gdml" : ("tube1", -7570577582805396235),
-            "003_cut_tubs.gdml" : ("cuttube1", 6510770975685252931),
-            "004_cons.gdml" : ("cone1", -435058689958624196),
-            "005_para.gdml" : ("para1", -1),
-            "006_trd.gdml" : ("trd1", -1),
-            "007_trap.gdml" : ("trap1", -1),
-            "008_sphere.gdml" : ("sphere1", -1),
-            "009_orb.gdml" : ("orb1",-1),
-            "010_torus.gdml" : ("torus1", -1),
-            "011_polycone.gdml" : ("polycone1", -1),
-            "012_generic_polycone.gdml" : ( "genpoly1", -1),
-            "013_polyhedra.gdml" : ("polyhedra1", -1),
-            "014_generic_polyhedra.gdml" : ( "genpolyhedra1", -1),
-            "015_eltube.gdml" : ("eltube1", -1),
-            "016_ellipsoid.gdml" : ("ellipsoid1", -1),
-            "017_elcone.gdml" : ("elcone1", -1),
-            "018_paraboloid.gdml" : ( "paraboloid1", -1),
-            "019_hype.gdml" : ( "hype1", -1),
-            "020_tet.gdml" : ( "tet1", -1),
-            "021_xtru.gdml" : ( "xtru1", -1),
-            "022_twisted_box.gdml" : ("twistbox1", -1),
-            "023_twisted_trap.gdml" : ("twisttrap1", -1),
-            "024_twisted_trd.gdml" : ("twisttrd1", -1),
-            "025_twisted_tube.gdml" : ("twisttube1", -1),
-            "026_generic_trap.gdml" : ("arb81", -1),
-            "027_tesselated.gdml" : ("tessellated", -1),
-            "028_union.gdml" : ("union1", -1),
-            "029_subtraction.gdml" : ("subtraction1", -1),
-            "030_intersection.gdml" : ("intersection1", -1),
-            "031_multiUnion.gdml" : ("multiunion1",-1),
-            "032_scaled.gdml" : ("box1Scaled",-1)
-        }
-
-        # solid name : (nslice , nstack)
-        # nslice is normally used for granularity of curvature in radius
-        # nstack is normally used for granularity of curvature in Z
-        # solids not listed here do not have discretised curves
-        self.curved_solids = {
-            "Tubs" : (16, None),
-            "CutTubs" : (16, None),
-            "Cons" : (16, None),
-            "Sphere" : (6, 6),
-            "Orb" : (16, 8),
-            "Torus" : (6, 6),
-            "Polycone" : (16, None),
-            "GenericPolycone" : (16, None),
-            "EllipticalTube" : (6, 6),
-            "Ellipsoid" : (8, 8),
-            "EllipticalCone" : (16, 16),
-            "Paraboloid" : (16, 8),
-            "Hype" : (6, 6),
-            "TwistedBox" : (None, 20),
-            "TwistedTrap" : (None, 20),
-            "TwistedTrd" : (None, 20),
-            "TwistedTubs" : (16, 16),
-            "GenericTrap" : (None, 20),
-        }
-
-        self.division_checksums = {
-            # The hashes of the first division mesh for every division test
-            "124_division_box_x.gdml" : -1,
-            "125_division_box_y.gdml" : -1,
-            "126_division_box_z.gdml" : -1,
-            "127_division_tubs_rho.gdml" : -1,
-            "128_division_tubs_phi.gdml" : -1,
-            "129_division_tubs_z.gdml" : -1,
-            "130_division_cons_rho.gdml" : -1,
-            "131_division_cons_phi.gdml" : -1,
-            "132_division_cons_z.gdml" : -1,
-            "133_division_trd_x.gdml" : -1,
-            "134_division_trd_y.gdml" : -1,
-            "135_division_trd_z.gdml" : -1,
-            "136_division_para_x.gdml" : -1,
-            "137_division_para_y.gdml" : -1,
-            "138_division_para_z.gdml" : -1,
-            "139_division_polycone_rho.gdml" : -1,
-            "140_division_polycone_phi.gdml" : -1,
-            "141_division_polycone_z.gdml" : -1,
-            "142_division_polyhedra_rho.gdml" : -1,
-            "143_division_polyhedra_phi.gdml" : -1,
-            "144_division_polyhedra_z.gdml" : -1,
-        }
-
-        self.replica_checksums = {
-            # The hashes of the first replica mesh for every replica test
-            "106_replica_x.gdml" : -1,
-            "107_replica_y.gdml" : -1,
-            "108_replica_z.gdml" : -1,
-            "109_replica_phi.gdml" : -1,
-            "110_replica_rho.gdml" : -1,
-        }
-
-        self.parameterised_checksums = {
-            # The hashes of the first parameterised mesh for every parameterised test
-            "111_parameterised_box.gdml" : -1,
-            "112_parameterised_tube.gdml" : -1,
-            "113_parameterised_cone.gdml" : -1,
-            "114_parameterised_orb.gdml" : -1,
-            "115_parameterised_sphere.gdml" : -1,
-            "116_parameterised_torus.gdml" : -1,
-            "117_parameterised_hype.gdml" : -1,
-            "118_parameterised_para.gdml" : -1,
-            "119_parameterised_trd.gdml" : -1,
-            "120_parameterised_trap.gdml" : -1,
-            "121_parameterised_polycone.gdml" : -1,
-            "122_parameterised_polyhedron.gdml" : -1,
-            "123_parameterised_ellipsoid.gdml" : -1,
-        }
-
-        self.available_checksums = (self.parameterised_checksums.keys()+self.solid_checksums.keys()
-                                    +self.division_checksums.keys()+self.replica_checksums.keys())
-
-    def verifyMeshChecksum(self, filename, registry):
-        if filename in self.solid_checksums:
-            solid = registry.solidDict[self.solid_checksums[filename][0]]
-            checksum = self.solid_checksums[filename][1]
-
-            if solid.type in self.curved_solids:
-                mesh_density = self.curved_solids[solid.type]
-                if mesh_density[0]:
-                    setattr(solid, "nslice", mesh_density[0])
-                if mesh_density[1]:
-                    setattr(solid, "nstack", mesh_density[1])
-
-        elif filename in self.division_checksums:
-            for volname, volume in registry.physicalVolumeDict.iteritems():
-                if volume.type == "division":
-                    solid = volume.meshes[0].solid
-
-            checksum = self.division_checksums[filename]
-
-        elif filename in self.replica_checksums:
-            for volname, volume in registry.physicalVolumeDict.iteritems():
-                if volume.type == "replica":
-                    solid = volume.meshes[0].solid
-
-            checksum = self.replica_checksums[filename]
-
-        elif filename in self.parameterised_checksums:
-            for volname, volume in registry.physicalVolumeDict.iteritems():
-                if volume.type == "parametrised":
-                    solid = volume.meshes[0].solid
-
-            checksum = self.parameterised_checksums[filename]
-
-        if self.verbosity:
-            print solid # Dump the parameters of the solid / check the repr method
-
-        mesh = solid.pycsgmesh()
-
-        return True #hash(mesh) == self.solid_checksums[filename][1]
-
-_meshValidator = MeshValidator(verbosity=0)
-
-def geant4LoadTest(filename, visualiser=False, physics=False):
-    script_path = _pj("simple_G4_loader/build/simple_loader")
-    if not _os.path.isfile(script_path):
-        print "Geant4 test executable not found in {}, skip test.".format(script_path)
-        return True
-
-    proc = _Popen([script_path, _pj(filename), str(int(visualiser)), str(int(physics))],
-                  stdout=_PIPE, stderr=_PIPE)
-    outs, errs = proc.communicate()
-
-    status = proc.returncode
-    if status:
-        print "\nError! Geant4 load failed: \nOutput>>> {} \nErrors>>> {}".format(outs, errs)
-
-    return not status # 0 is normal termination
-
-def testSingleGDML(filename, interactive=False, geant4load=True):
+def testSingleGDML(filename, interactive=False):
     filepath = _pj(filename)
 
     # Loading
@@ -215,162 +35,605 @@ def testSingleGDML(filename, interactive=False, geant4load=True):
     writer.addDetector(registry)
     writer.write(newFilename)
 
-    status = True
+    return registry, newFilename
 
-    if geant4load: # Load tje processed file in geant4
-        status = geant4LoadTest(newFilename)
+def geant4LoadTest(filename, visualiser=False, physics=False, verbose=True):
+    script_path = _pj("simple_G4_loader/build/simple_loader")
+    if not _os.path.isfile(script_path):
+        print "Geant4 test executable not found in {}, skip test.".format(script_path)
+        return True
 
-    if filename in _meshValidator.available_checksums:
-        status &= _meshValidator.verifyMeshChecksum(filename, registry)
+    proc = _Popen([script_path, _pj(filename), str(int(visualiser)), str(int(physics))],
+                  stdout=_PIPE, stderr=_PIPE)
+    outs, errs = proc.communicate()
 
-    return status
+    status = proc.returncode
+    if status and verbose:
+        print "\nError! Geant4 load failed: \nOutput>>> {} \nErrors>>> {}".format(outs, errs)
+
+    return not status # 0 is normal termination
+
+# solid name : (nslice , nstack)
+# nslice is normally used for granularity of curvature in radius
+# nstack is normally used for granularity of curvature in Z
+# solids not listed here do not have discretised curves
+curved_solids = {
+    "Tubs" : (16, None),
+    "CutTubs" : (16, None),
+    "Cons" : (16, None),
+    "Sphere" : (6, 6),
+    "Orb" : (16, 8),
+    "Torus" : (6, 6),
+    "Polycone" : (16, None),
+    "GenericPolycone" : (16, None),
+    "EllipticalTube" : (6, 6),
+    "Ellipsoid" : (8, 8),
+    "EllipticalCone" : (16, 16),
+    "Paraboloid" : (16, 8),
+    "Hype" : (6, 6),
+    "TwistedBox" : (None, 20),
+    "TwistedTrap" : (None, 20),
+    "TwistedTrd" : (None, 20),
+    "TwistedTubs" : (16, 16),
+    "GenericTrap" : (None, 20),
+}
+
+def getSolidChecksum(solid):
+    if solid.type in curved_solids:
+        mesh_density = self.curved_solids[solid.type]
+        if mesh_density[0]:
+            setattr(solid, "nslice", mesh_density[0])
+        if mesh_density[1]:
+            setattr(solid, "nstack", mesh_density[1])
+
+    checksum = hash(solid.pycsgmesh())
+    return checksum
 
 class GdmlLoadTests(_unittest.TestCase) :
-    def testMalformedGdml(self) : 
+    def testMalformedGdml(self):
         import xml.parsers.expat                 as _expat
-        
-        try : 
+
+        try :
             r = pyg4ometry.gdml.Reader(_pj("./300_malformed_gdml.gdml"))
-        except _expat.ExpatError :
+        except _expat.ExpatError:
             pass
 
-    def testQuantity(self) :
+    def testQuantity(self):
         self.assertTrue(testSingleGDML("301_quantity.gdml"))
 
-    def testVariable(self) :
+    def testVariable(self):
         self.assertTrue(testSingleGDML("302_variable.gdml"))
 
-    def testMatrix(self) :
+    def testMatrix(self):
         self.assertTrue(testSingleGDML("303_matrix.gdml"))
 
-    def testScale(self) :
+    def testScale(self):
         self.assertTrue(testSingleGDML("304_scale.gdml"))
 
-    def testUnrecognisedDefine(self) :
+    def testUnrecognisedDefine(self):
         self.assertTrue(testSingleGDML("305_unrecognised_define.gdml"))
 
     def testBoxLoad(self):
-        self.assertTrue(testSingleGDML("001_box.gdml")) # For now just check it loads
+        registry, writtenFilename = testSingleGDML("001_box.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["box1"]), -1)
 
     def testTubeLoad(self):
-        self.assertTrue(testSingleGDML("002_tubs.gdml"))
+        registry, writtenFilename = testSingleGDML("002_tubs.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["tube1"]), -1)
 
     def testCutTubeLoad(self):
-        self.assertTrue(testSingleGDML("003_cut_tubs.gdml"))
+        registry, writtenFilename = testSingleGDML("003_cut_tubs.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["cuttube1"]), -1)
 
     def testConeLoad(self):
-        self.assertTrue(testSingleGDML("004_cons.gdml"))
+        registry, writtenFilename = testSingleGDML("004_cons.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["cone1"]), -1)
 
     def testParaLoad(self):
-        self.assertTrue(testSingleGDML("005_para.gdml"))
+        registry, writtenFilename = testSingleGDML("005_para.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["para1"]), -1)
 
     def testTrdLoad(self):
-        self.assertTrue(testSingleGDML("006_trd.gdml"))
+        registry, writtenFilename = testSingleGDML("006_trd.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["trd1"]), -1)
 
     def testTrapLoad(self):
-        self.assertTrue(testSingleGDML("007_trap.gdml"))
+        registry, writtenFilename = testSingleGDML("007_trap.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["trap1"]), -1)
 
     def testSphereLoad(self):
-        self.assertTrue(testSingleGDML("008_sphere.gdml"))
+        registry, writtenFilename = testSingleGDML("008_sphere.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["sphere1"]), -1)
 
     def testOrbLoad(self):
-        self.assertTrue(testSingleGDML("009_orb.gdml"))
+        registry, writtenFilename = testSingleGDML("009_orb.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["orb1"]), -1)
 
     def testTorusLoad(self):
-        self.assertTrue(testSingleGDML("010_torus.gdml"))
+        registry, writtenFilename = testSingleGDML("010_torus.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["torus1"]), -1)
 
     def testPolyconeLoad(self):
-        self.assertTrue(testSingleGDML("011_polycone.gdml"))
+        registry, writtenFilename = testSingleGDML("011_polycone.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["polycone1"]), -1)
 
     def testGenericPolyconeLoad(self):
-        self.assertTrue(testSingleGDML("012_generic_polycone.gdml"))
+        registry, writtenFilename = testSingleGDML("012_generic_polycone.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["genpoly1"]), -1)
 
     def testPolyhedraLoad(self):
-        self.assertTrue(testSingleGDML("013_polyhedra.gdml"))
+        registry, writtenFilename = testSingleGDML("013_polyhedra.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["polyhedra1"]), -1)
 
     def testGenericPolyhedraLoad(self):
-        self.assertTrue(testSingleGDML("014_generic_polyhedra.gdml"))
+        registry, writtenFilename = testSingleGDML("014_generic_polyhedra.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["genpolyhedra1"]), -1)
 
     def testEltubeLoad(self):
-        self.assertTrue(testSingleGDML("015_eltube.gdml"))
+        registry, writtenFilename = testSingleGDML("015_eltube.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["eltube1"]), -1)
 
     def testEllipsoidLoad(self):
-        self.assertTrue(testSingleGDML("016_ellipsoid.gdml"))
+        registry, writtenFilename = testSingleGDML("016_ellipsoid.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["ellipsoid"]), -1)
 
     def testElconeLoad(self):
-        self.assertTrue(testSingleGDML("017_elcone.gdml"))
+        registry, writtenFilename = testSingleGDML("017_elcone.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["elcone1"]), -1)
 
     def testParaboloidLoad(self):
-        self.assertTrue(testSingleGDML("018_paraboloid.gdml"))
+        registry, writtenFilename = testSingleGDML("018_paraboloid.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["paraboloid1"]), -1)
 
     def testHypeLoad(self):
-        self.assertTrue(testSingleGDML("019_hype.gdml"))
+        registry, writtenFilename = testSingleGDML("019_hype.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["hype1"]), -1)
 
     def testTetLoad(self):
-        self.assertTrue(testSingleGDML("020_tet.gdml"))
+        registry, writtenFilename = testSingleGDML("020_tet.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["tet1"]), -1)
 
     def testExtrudedSolid(self):
-        self.assertTrue(testSingleGDML("021_xtru.gdml"))
+        registry, writtenFilename = testSingleGDML("021_xtru.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["xtru1"]), -1)
 
     def testTwistedBox(self):
-        self.assertTrue(testSingleGDML("022_twisted_box.gdml"))
+        registry, writtenFilename = testSingleGDML("022_twisted_box.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["twistbox1"]), -1)
 
     def testTwistedTrap(self):
-        self.assertTrue(testSingleGDML("023_twisted_trap.gdml"))
+        registry, writtenFilename = testSingleGDML("023_twisted_trap.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["twisttrap1"]), -1)
 
     def testTwistedTrd(self):
-        self.assertTrue(testSingleGDML("024_twisted_trd.gdml"))
+        registry, writtenFilename = testSingleGDML("024_twisted_trd.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["twisttrd1"]), -1)
 
     def testTwistedTubs(self):
-        self.assertTrue(testSingleGDML("025_twisted_tube.gdml"))
+        registry, writtenFilename = testSingleGDML("025_twisted_tube.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["twisttube1"]), -1)
 
     def testGenericTrap(self):
-        self.assertTrue(testSingleGDML("026_generic_trap.gdml"))
+        registry, writtenFilename = testSingleGDML("026_generic_trap.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["arb81"]), -1)
 
     def testTessellatedSolid(self):
-        self.assertTrue(testSingleGDML("027_tesselated.gdml"))
+        registry, writtenFilename = testSingleGDML("027_tesselated.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["tessellated"]), -1)
 
     def testUnionLoad(self):
-        self.assertTrue(testSingleGDML("028_union.gdml"))
+        registry, writtenFilename = testSingleGDML("028_union.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["union1"]), -1)
 
     def testSubtractionLoad(self):
-        self.assertTrue(testSingleGDML("029_subtraction.gdml"))
+        registry, writtenFilename = testSingleGDML("029_subtraction.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["subtraction1"]), -1)
 
     def testIntersetionLoad(self):
-        self.assertTrue(testSingleGDML("030_intersection.gdml"))
+        registry, writtenFilename = testSingleGDML("030_intersection.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["intersection1"]), -1)
 
     def testMultiUnionLoad(self):
-        self.assertTrue(testSingleGDML("031_multiUnion.gdml"))
+        registry, writtenFilename = testSingleGDML("031_multiUnion.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["multiunion1"]), -1)
 
     def testScaledLoad(self):
-        self.assertTrue(testSingleGDML("032_scaled.gdml"))
+        registry, writtenFilename = testSingleGDML("032_scaled.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+        #self.assertEqual(getSolidChecksum(registry.solidDict["box1Scaled"]), -1)
 
     def testMaterials(self):
-        self.assertTrue(testSingleGDML("201_materials.gdml"))
+        registry, writtenFilename = testSingleGDML("201_materials.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testOpticalSurfaces(self):
-        self.assertTrue(testSingleGDML("150_opticalsurfaces.gdml"))
+        registry, writtenFilename = testSingleGDML("150_opticalsurfaces.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
-    def testDivisionVolume(self):
-        results = []
-        for name in _meshValidator.division_checksums:
-            results.append(testSingleGDML(name))
-        self.assertTrue(all(results))
+    def testDivisionVolume_box_x(self):
+        registry, writtenFilename = testSingleGDML("124_division_box_x.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
-    def testReplicaVolume(self):
-        results = []
-        for name in _meshValidator.replica_checksums:
-            results.append(testSingleGDML(name))
-        self.assertTrue(all(results))
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
 
-    def testParameterisedVolume(self):
-        results = []
-        for name in _meshValidator.parameterised_checksums:
-            results.append(testSingleGDML(name))
-        self.assertTrue(all(results))
+    def testDivisionVolume_box_y(self):
+        registry, writtenFilename = testSingleGDML("125_division_box_y.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_box_z(self):
+        registry, writtenFilename = testSingleGDML("126_division_box_z.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_tubs_rho(self):
+        registry, writtenFilename = testSingleGDML("127_division_tubs_rho.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_tubs_phi(self):
+        registry, writtenFilename = testSingleGDML("128_division_tubs_phi.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_tubs_z(self):
+        registry, writtenFilename = testSingleGDML("129_division_tubs_z.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_cons_rho(self):
+        registry, writtenFilename = testSingleGDML("130_division_cons_rho.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_cons_phi(self):
+        registry, writtenFilename = testSingleGDML("131_division_cons_phi.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_cons_z(self):
+        registry, writtenFilename = testSingleGDML("132_division_cons_z.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_trd_x(self):
+        registry, writtenFilename = testSingleGDML("133_division_trd_x.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_trd_y(self):
+        registry, writtenFilename = testSingleGDML("134_division_trd_y.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_trd_z(self):
+        registry, writtenFilename = testSingleGDML("135_division_trd_z.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_para_x(self):
+        registry, writtenFilename = testSingleGDML("136_division_para_x.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename))  # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_para_y(self):
+        registry, writtenFilename = testSingleGDML("137_division_para_y.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_para_z(self):
+        registry, writtenFilename = testSingleGDML("138_division_para_z.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_polycone_rho(self):
+        registry, writtenFilename = testSingleGDML("139_division_polycone_rho.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_polycone_phi(self):
+        registry, writtenFilename = testSingleGDML("140_division_polycone_phi.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_polycone_z(self):
+        registry, writtenFilename = testSingleGDML("141_division_polycone_z.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_polyhedra_rho(self):
+        registry, writtenFilename = testSingleGDML("142_division_polyhedra_rho.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_polyhedra_phi(self):
+        registry, writtenFilename = testSingleGDML("143_division_polyhedra_phi.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename))   # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testDivisionVolume_polyhedra_z(self):
+        registry, writtenFilename = testSingleGDML("144_division_polyhedra_z.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "division":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testReplicaVolume_x(self):
+        registry, writtenFilename = testSingleGDML("106_replica_x.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "replica":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testReplicaVolume_y(self):
+        registry, writtenFilename = testSingleGDML("107_replica_y.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "replica":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testReplicaVolume_z(self):
+        registry, writtenFilename = testSingleGDML("108_replica_z.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "replica":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testReplicaVolume_phi(self):
+        registry, writtenFilename = testSingleGDML("109_replica_phi.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "replica":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testReplicaVolume_rho(self):
+        registry, writtenFilename = testSingleGDML("110_replica_rho.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "replica":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_box(self):
+        registry, writtenFilename = testSingleGDML("111_parameterised_box.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_tube(self):
+        registry, writtenFilename = testSingleGDML("112_parameterised_tube.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_cone(self):
+        registry, writtenFilename = testSingleGDML("113_parameterised_cone.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_orb(self):
+        registry, writtenFilename = testSingleGDML("114_parameterised_orb.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_sphere(self):
+        registry, writtenFilename = testSingleGDML("115_parameterised_sphere.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_torus(self):
+        registry, writtenFilename = testSingleGDML("116_parameterised_torus.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_hype(self):
+        registry, writtenFilename = testSingleGDML("117_parameterised_hype.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_para(self):
+        registry, writtenFilename = testSingleGDML("118_parameterised_para.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_trd(self):
+        registry, writtenFilename = testSingleGDML("119_parameterised_trd.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_trap(self):
+        registry, writtenFilename = testSingleGDML("120_parameterised_trap.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_polycone(self):
+        registry, writtenFilename = testSingleGDML("121_parameterised_polycone.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_polyhedron(self):
+        registry, writtenFilename = testSingleGDML("122_parameterised_polyhedron.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
+        #self.assertEqual(getSolidChecksum(solid), -1)
+
+    def testParameterisedVolume_ellipsoid(self):
+        registry, writtenFilename = testSingleGDML("123_parameterised_ellipsoid.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
+
+        for volname, volume in registry.physicalVolumeDict.iteritems():
+            if volume.type == "parametrised":
+                solid= volume.meshes[0].solid
 
     def testAuxiliary(self):
-        self.assertTrue(testSingleGDML("202_auxiliary.gdml"))
+        registry, writtenFilename = testSingleGDML("202_auxiliary.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testEntity(self):
         # Need to process the GDML file to inject the absolute path to the entity file
@@ -381,57 +644,73 @@ class GdmlLoadTests(_unittest.TestCase) :
             with open(_pj("203_temp.gdml"), "w") as tempfile:
                 tempfile.write(contents_replaced)
 
-        result = testSingleGDML("203_temp.gdml") # Store the result before mopping temp files
+        registry, writtenFilename = testSingleGDML("203_temp.gdml")
         _os.unlink(_pj("203_temp.gdml"))
-
-        self.assertTrue(result)
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testChargeExhangeMC(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/ChargeExchangeMC/lht.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/ChargeExchangeMC/lht.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Overlaps in the original file
+
     def testG01assembly(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/assembly.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/assembly.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Overlaps in the original file
 
     def testG01auxiliary(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/auxiliary.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/auxiliary.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01axes(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/axes.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/axes.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Overlaps in the original file
 
     def testG01divisionvol(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/divisionvol.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/divisionvol.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01mat_nist(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/mat_nist.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/mat_nist.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01multiUnion(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/multiUnion.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/multiUnion.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01pTube(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/pTube.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/pTube.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01parameterized(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/parameterized.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/parameterized.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01replicated(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/replicated.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/replicated.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01scale(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/scale.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/scale.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01solids(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/solids.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/solids.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG01tess(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G01/tess.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G01/tess.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG02test(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G02/test.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G02/test.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testG04auxiliary(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/G04/auxiliary.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/G04/auxiliary.gdml")
+        self.assertTrue(geant4LoadTest(writtenFilename))
 
     def testPar02FullDetector(self):
-        self.assertTrue(testSingleGDML("../gdmlG4examples/Par02/Par02FullDetector.gdml"))
+        registry, writtenFilename = testSingleGDML("../gdmlG4examples/Par02/Par02FullDetector.gdml")
+        #self.assertTrue(geant4LoadTest(writtenFilename)) # Overlaps in the orignal file
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
