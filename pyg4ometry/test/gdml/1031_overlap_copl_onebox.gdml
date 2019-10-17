@@ -35,7 +35,7 @@
 
 <solids>
   <box name="WorldBox" x="wbx"  y="wby"  z="wbz" />
-  <box name="box"      x="0.5*bx"   y="0.5*bx"   z="0.5*bx"  />
+  <box name="box"      x="1.0*bx"   y="1.0*bx"   z="0.5*bx"  />
   <box name="row"      x="bx" y="bx"   z="bx" />
 </solids>
 
