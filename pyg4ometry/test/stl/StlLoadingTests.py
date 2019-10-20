@@ -16,7 +16,7 @@ def LoadStl(fileName) :
         
     return True,l
 
-def _pj(filename):
+def _pj(filename): # path join
     """
     Append the absolute path to *this* directory to the filename so the tests
     can be ran from anywhere
