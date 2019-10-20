@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 non_intersecting = 2 
 
-def Test(vis = False, type = normal) : 
+def Test(vis = False, interactive = False, type = normal) :
     reg = _g4.Registry()
     
     # defines 
@@ -49,9 +49,9 @@ def Test(vis = False, type = normal) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive = interactive )
 
-    return True
+    return {"testStatus": True, "logicalVolume":wl}
 
 if __name__ == "__main__":
     Test()

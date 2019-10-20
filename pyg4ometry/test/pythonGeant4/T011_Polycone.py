@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False) : 
+def Test(vis = False, interactive = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -13,7 +13,7 @@ def Test(vis = False) :
     wz = _gd.Constant("wz","100",reg,True)
 
     
-    pi     = _gd.Constant("pi","3.1415926",reg,True)
+    # pi     = _gd.Constant("pi","3.1415926",reg,True)
     psphi  = _gd.Constant("sphi","1",reg,True)
     pdphi  = _gd.Constant("dphi","4",reg,True)
 
@@ -60,9 +60,9 @@ def Test(vis = False) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive = interactive)
 
-    return True
+    return {"testStatus":True, "logicalVolume":wl}
 
 if __name__ == "__main__":
     Test()
