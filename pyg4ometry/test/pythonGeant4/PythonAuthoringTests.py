@@ -38,6 +38,7 @@ import T028_Union
 import T029_Subtraction
 import T030_Intersection
 import T031_MultiUnion
+import T032_Scaled
 
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
@@ -224,6 +225,8 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testMultiUnion(self) : 
         self.assertTrue(T031_MultiUnion.Test())
 
+    def testScaled(self):
+        self.assertTrue(T032_Scaled.Test()["testStatus"])
     def testMergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
 
