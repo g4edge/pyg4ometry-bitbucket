@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 zcut_outofrange = 2
 
-def Test(vis = False, type = normal) : 
+def Test(vis = False, interactive = False, type = normal) :
     reg = _g4.Registry()
     
     # defines 
@@ -14,7 +14,7 @@ def Test(vis = False, type = normal) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
     
-    pi     = _gd.Constant("pi","3.1415926",reg,True)
+    # pi     = _gd.Constant("pi","3.1415926",reg,True)
     edx    = _gd.Constant("eax","0.2",reg,True)
     edy    = _gd.Constant("eby","0.4",reg,True)
     ezmax  = _gd.Constant("ecz","50",reg,True)
@@ -50,9 +50,9 @@ def Test(vis = False, type = normal) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive = interactive)
 
-    return True
+    return {"testStatus": True, "logicalVolume":wl}
 
 if __name__ == "__main__":
     Test()

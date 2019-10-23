@@ -33,7 +33,7 @@ def MakeGeometry() :
     return reg
 
 
-def Test(vis = True) :
+def Test(vis = False, interactive=False) :
     reg0 = _g4.Registry()
     reg1 = MakeGeometry()
     reg2 = MakeGeometry()
@@ -66,10 +66,8 @@ def Test(vis = True) :
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg0.getWorldVolume())
-        v.view(interactive=True)
+        v.view(interactive=interactive)
 
-
-    reg0.printStats()
     return reg0
 
 

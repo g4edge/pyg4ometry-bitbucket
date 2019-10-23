@@ -3,8 +3,7 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-
-def Test(vis = False) : 
+def Test(vis = False, interactive = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -12,7 +11,7 @@ def Test(vis = False) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
 
-    pi        = _gd.Constant("pi","3.1415926",reg,True)
+    # pi        = _gd.Constant("pi","3.1415926",reg,True)
 
     ttwist    = _gd.Constant("tptwist","1.0",reg,True)
     trmin     = _gd.Constant("trmin","2.5",reg,True)
@@ -47,9 +46,9 @@ def Test(vis = False) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive = interactive )
 
-    return True
+    return {"testStatus": True, "logicalVolume":wl}
 
 if __name__ == "__main__":
     Test()

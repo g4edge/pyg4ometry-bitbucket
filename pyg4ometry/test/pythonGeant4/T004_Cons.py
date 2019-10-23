@@ -12,7 +12,7 @@ dphi_eq_2pi    = 5
 cone_up        = 6
 inner_cylinder = 7
 
-def Test(vis = False, type = normal) : 
+def Test(vis = False, interactive = False, type = normal) :
     reg = _g4.Registry()
     
     # defines 
@@ -20,7 +20,7 @@ def Test(vis = False, type = normal) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
 
-    pi     = _gd.Constant("pi","3.1415926",reg,True)
+    # pi     = _gd.Constant("pi","3.1415926",reg,True)
     crmin1 = _gd.Constant("crmin1","6",reg,True)
     crmax1 = _gd.Constant("crmax1","20",reg,True)
     crmin2 = _gd.Constant("crmin2","5",reg,True)
@@ -73,9 +73,9 @@ def Test(vis = False, type = normal) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive=interactive)
 
-    return True
+    return {"testStatus": True, "logicalVolume":wl}
 
 if __name__ == "__main__":
     Test()

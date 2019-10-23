@@ -7,7 +7,7 @@ normal = 1
 rmin_eq_zero = 2
 rmin_gt_rmax = 3
 
-def Test(vis = False, type = normal) : 
+def Test(vis = False, interactive = False, type = normal) :
     reg = _g4.Registry()
     
     # defines 
@@ -56,9 +56,9 @@ def Test(vis = False, type = normal) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.view()
+        v.view(interactive = interactive)
 
-    return True
+    return {"testStatus": True, "logicalVolume":wl}
 
 if __name__ == "__main__":
     Test()

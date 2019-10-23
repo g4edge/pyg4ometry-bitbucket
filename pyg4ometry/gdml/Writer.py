@@ -1131,7 +1131,7 @@ class Writer(object):
     def writeTwistedTrap(self, instance):
         oe = self.doc.createElement("twistedtrap")
         oe.setAttribute('name',self.prepend + instance.name)
-        oe.setAttribute('PhiTwist',self.getValueOrExprFromInstance(instance,'twistedangle'))
+        oe.setAttribute('PhiTwist',self.getValueOrExprFromInstance(instance,'twistedAngle'))
         oe.setAttribute('z',self.getValueOrExprFromInstance(instance,'pDz'))
         oe.setAttribute('Theta',self.getValueOrExprFromInstance(instance,'pTheta'))
         oe.setAttribute('Phi',self.getValueOrExprFromInstance(instance,'pDPhi'))
@@ -1253,9 +1253,11 @@ class Writer(object):
         oe.appendChild(srf)
 
         scl = self.doc.createElement('scale')
-        scl.setAttribute('x',str(instance.pX.expression))
-        scl.setAttribute('y',str(instance.pY.expression))
-        scl.setAttribute('z',str(instance.pZ.expression))
+
+        scl.setAttribute('x',self.getValueOrExprFromInstance(instance,'pX'))
+        scl.setAttribute('y',self.getValueOrExprFromInstance(instance,'pY'))
+        scl.setAttribute('z',self.getValueOrExprFromInstance(instance,'pZ'))
+
         oe.appendChild(scl)
 
         self.solids.appendChild(oe)
