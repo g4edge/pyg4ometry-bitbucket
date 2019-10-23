@@ -80,7 +80,7 @@ curved_solids = {
 
 def getSolidChecksum(solid):
     if solid.type in curved_solids:
-        mesh_density = self.curved_solids[solid.type]
+        mesh_density = curved_solids[solid.type]
         if mesh_density[0]:
             setattr(solid, "nslice", mesh_density[0])
         if mesh_density[1]:
