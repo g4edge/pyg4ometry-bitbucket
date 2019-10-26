@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="1000.0"/>
+		<constant name="wby" value="1000.0"/>
+		<constant name="wbz" value="1000.0"/>
+		<constant name="bx" value="5.0"/>
+		<constant name="by" value="bx"/>
+		<constant name="bz" value="bx"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
+		<box lunit="mm" name="box_param" x="bx" y="by" z="bz"/>
+	</solids>
+	<structure>
+		<volume name="box1Vol">
+			<materialref ref="Al"/>
+			<solidref ref="box_param"/>
+		</volume>
+		<volume name="box2Vol">
+			<materialref ref="Air"/>
+			<solidref ref="box"/>
+			<paramvol ncopies="9">
+				<volumeref ref="box1Vol"/>
+				<parameterised_position_size>
+					<parameters number="1">
+						<position name="bol1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
+						<rotation name="bol1Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
+						<box_dimensions lunit="mm" x="4.0" y="4.0" z="2.0"/>
+					</parameters>
+					<parameters number="2">
+						<position name="bol1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
+						<rotation name="bol1Vol2Rot" unit="rad" x="0" y="0" z="-0.3"/>
+						<box_dimensions lunit="mm" x="4.25" y="4.25" z="2.5"/>
+					</parameters>
+					<parameters number="3">
+						<position name="bol1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
+						<rotation name="bol1Vol3Rot" unit="rad" x="0" y="0" z="-0.2"/>
+						<box_dimensions lunit="mm" x="4.5" y="4.5" z="3.0"/>
+					</parameters>
+					<parameters number="4">
+						<position name="bol1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
+						<rotation name="bol1Vol24ot" unit="rad" x="0" y="0" z="-0.1"/>
+						<box_dimensions lunit="mm" x="4.75" y="4.75" z="3.5"/>
+					</parameters>
+					<parameters number="5">
+						<box_dimensions lunit="mm" x="5.0" y="5.0" z="4.0"/>
+					</parameters>
+					<parameters number="6">
+						<position name="bol1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
+						<rotation name="bol1Vol6Rot" unit="rad" x="0" y="0" z="0.1"/>
+						<box_dimensions lunit="mm" x="5.25" y="5.25" z="4.5"/>
+					</parameters>
+					<parameters number="7">
+						<position name="bol1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
+						<rotation name="bol1Vol7Rot" unit="rad" x="0" y="0" z="0.2"/>
+						<box_dimensions lunit="mm" x="5.5" y="5.5" z="5.0"/>
+					</parameters>
+					<parameters number="8">
+						<position name="bol1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
+						<rotation name="bol1Vol8Rot" unit="rad" x="0" y="0" z="0.3"/>
+						<box_dimensions lunit="mm" x="5.75" y="5.75" z="5.5"/>
+					</parameters>
+					<parameters number="9">
+						<position name="bol1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
+						<rotation name="bol1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
+						<box_dimensions lunit="mm" x="6.0" y="6.0" z="6.0"/>
+					</parameters>
+				</parameterised_position_size>
+			</paramvol>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="box2Vol_PV">
+				<volumeref ref="box2Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

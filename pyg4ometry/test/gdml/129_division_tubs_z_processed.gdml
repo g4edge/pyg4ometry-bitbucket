@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define/>
+	<materials>
+		<material Z="1" name="AIR">
+			<D value="1e-24"/>
+			<atom value="1.00794"/>
+		</material>
+		<material Z="13" name="ALU">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+		<tube aunit="rad" deltaphi="pi/2.0" lunit="mm" name="tube" rmax="50" rmin="25" startphi="0" z="100"/>
+	</solids>
+	<structure>
+		<volume name="lvTube">
+			<materialref ref="ALU"/>
+			<solidref ref="tube"/>
+		</volume>
+		<volume name="lvDivision">
+			<materialref ref="AIR"/>
+			<solidref ref="tube"/>
+			<divisionvol axis="kZAxis" number="5" offset="10.0" unit="mm" width="10.0">
+				<volumeref ref="lvTube"/>
+			</divisionvol>
+		</volume>
+		<volume name="TOP">
+			<materialref ref="AIR"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="lvDivision_PV">
+				<volumeref ref="lvDivision"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="TOP"/>
+	</setup>
+</gdml>

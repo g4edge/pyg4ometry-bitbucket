@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define/>
+	<materials>
+		<material Z="1" name="AIR">
+			<D value="1e-24"/>
+			<atom value="1.00794"/>
+		</material>
+		<material Z="13" name="ALU">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+		<polycone aunit="rad" deltaphi="4" lunit="mm" name="Polyc" startphi="1">
+			<zplane rmax="9" rmin="1" z="-20"/>
+			<zplane rmax="5" rmin="3" z="0"/>
+			<zplane rmax="9" rmin="1" z="20"/>
+		</polycone>
+	</solids>
+	<structure>
+		<volume name="lvPolyc">
+			<materialref ref="ALU"/>
+			<solidref ref="Polyc"/>
+		</volume>
+		<volume name="lvDivision">
+			<materialref ref="AIR"/>
+			<solidref ref="Polyc"/>
+			<divisionvol axis="kPhi" number="3" offset="0.0981747704247" unit="rad" width="0.0981747704247">
+				<volumeref ref="lvPolyc"/>
+			</divisionvol>
+		</volume>
+		<volume name="TOP">
+			<materialref ref="AIR"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="lvDivision_PV">
+				<volumeref ref="lvDivision"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="TOP"/>
+	</setup>
+</gdml>

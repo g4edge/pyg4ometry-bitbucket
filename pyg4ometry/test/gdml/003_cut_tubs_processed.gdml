@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="100.0"/>
+		<constant name="wby" value="100.0"/>
+		<constant name="wbz" value="100.0"/>
+		<constant name="ctrmin" value="1"/>
+		<constant name="ctrmax" value="5.0"/>
+		<constant name="startphi" value="1"/>
+		<constant name="delptaphi" value="4"/>
+		<constant name="ctz" value="20"/>
+		<constant name="ctlowx" value="-15"/>
+		<constant name="ctlowy" value="-15"/>
+		<constant name="ctlowz" value="-15"/>
+		<constant name="cthix" value="10"/>
+		<constant name="cthiy" value="10"/>
+		<constant name="cthiz" value="10"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<cutTube aunit="rad" deltaphi="4" highX="cthix" highY="cthiy" highZ="cthiz" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" lunit="mm" name="cuttube1" rmax="5" rmin="1" startphi="1" z="20"/>
+	</solids>
+	<structure>
+		<volume name="cuttube11Vol">
+			<materialref ref="Air"/>
+			<solidref ref="cuttube1"/>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="cuttube11Vol_PV">
+				<volumeref ref="cuttube11Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

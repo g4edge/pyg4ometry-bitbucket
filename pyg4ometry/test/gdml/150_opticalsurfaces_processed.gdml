@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<position name="detinWorldp" unit="mm" x="0" y="0" z="0"/>
+		<position name="pos2" unit="mm" x="2000" y="0" z="0"/>
+		<matrix coldim="2" name="prop1" values="1.0 7.0 2.0 9.4"/>
+		<matrix coldim="2" name="prop2" values="3.0 -1.0 4.0 -9.4 5.0 -11.1"/>
+		<matrix coldim="2" name="RINDEX" values="1.65*eV 1.58"/>
+	</define>
+	<materials>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="0.00129"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+			<property name="RINDEX" value="RINDEX"/>
+			<property name="myproperty1" value="prop1"/>
+			<property name="myproperty2" value="prop2"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="world" x="10000" y="10000" z="10000"/>
+		<box lunit="mm" name="det" x="2000" y="2000" z="2000"/>
+		<opticalsurface finish="polished" model="glisur" name="surf1" type="dielectric_dielectric" value="1.0"/>
+	</solids>
+	<structure>
+		<volume name="Detector">
+			<materialref ref="Air"/>
+			<solidref ref="det"/>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="world"/>
+			<physvol name="pv1">
+				<volumeref ref="Detector"/>
+				<positionref ref="detinWorldp"/>
+			</physvol>
+			<physvol name="pv2">
+				<volumeref ref="Detector"/>
+				<positionref ref="pos2"/>
+			</physvol>
+		</volume>
+		<skinsurface name="skinsrf1" surfaceproperty="surf1">
+			<volumeref ref="Detector"/>
+		</skinsurface>
+		<bordersurface name="bordersrf1" surfaceproperty="surf1">
+			<physvolref ref="pv1"/>
+			<physvolref ref="pv1"/>
+		</bordersurface>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

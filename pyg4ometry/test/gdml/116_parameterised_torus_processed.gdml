@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="1000.0"/>
+		<constant name="wby" value="1000.0"/>
+		<constant name="wbz" value="1000.0"/>
+		<constant name="bx" value="5.0"/>
+		<constant name="by" value="bx"/>
+		<constant name="bz" value="bx"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
+		<torus aunit="rad" deltaphi="2*pi" lunit="mm" name="torus_param" rmax="1.2" rmin="1.0" rtor="5" startphi="0"/>
+	</solids>
+	<structure>
+		<volume name="torus1Vol">
+			<materialref ref="Al"/>
+			<solidref ref="torus_param"/>
+		</volume>
+		<volume name="box2Vol">
+			<materialref ref="Air"/>
+			<solidref ref="box"/>
+			<paramvol ncopies="9">
+				<volumeref ref="torus1Vol"/>
+				<parameterised_position_size>
+					<parameters number="1">
+						<position name="torus1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="0.628318530718" lunit="mm" rmax="0.2" rmin="0.1" rtor="0.5" startphi="0.0"/>
+					</parameters>
+					<parameters number="2">
+						<position name="torus1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="1.25663706144" lunit="mm" rmax="0.4" rmin="0.2" rtor="1.0" startphi="0.0"/>
+					</parameters>
+					<parameters number="3">
+						<position name="torus1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="1.88495559215" lunit="mm" rmax="0.6" rmin="0.3" rtor="1.5" startphi="0.0"/>
+					</parameters>
+					<parameters number="4">
+						<position name="torus1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="2.51327412287" lunit="mm" rmax="0.8" rmin="0.4" rtor="2.0" startphi="0.0"/>
+					</parameters>
+					<parameters number="5">
+						<torus_dimensions aunit="rad" deltaphi="3.14159265359" lunit="mm" rmax="1.0" rmin="0.5" rtor="2.5" startphi="0.0"/>
+					</parameters>
+					<parameters number="6">
+						<position name="torus1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="3.76991118431" lunit="mm" rmax="1.2" rmin="0.6" rtor="3.0" startphi="0.0"/>
+					</parameters>
+					<parameters number="7">
+						<position name="torus1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="4.39822971503" lunit="mm" rmax="1.4" rmin="0.7" rtor="3.5" startphi="0.0"/>
+					</parameters>
+					<parameters number="8">
+						<position name="torus1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="5.02654824574" lunit="mm" rmax="1.6" rmin="0.8" rtor="4.0" startphi="0.0"/>
+					</parameters>
+					<parameters number="9">
+						<position name="torus1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
+						<torus_dimensions aunit="rad" deltaphi="5.65486677646" lunit="mm" rmax="1.8" rmin="0.9" rtor="4.5" startphi="0.0"/>
+					</parameters>
+				</parameterised_position_size>
+			</paramvol>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="box2Vol_PV">
+				<volumeref ref="box2Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define/>
+	<materials>
+		<material Z="13" name="ALU">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<material Z="1" name="AIR">
+			<D value="1e-24"/>
+			<atom value="1.00794"/>
+		</material>
+	</materials>
+	<solids>
+		<tube aunit="rad" deltaphi="2*pi/8" lunit="mm" name="tube" rmax="200" rmin="100" startphi="0" z="800"/>
+		<tube aunit="rad" deltaphi="2*pi" lunit="mm" name="motherTube" rmax="200" rmin="100" startphi="0" z="800"/>
+		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+	</solids>
+	<structure>
+		<volume name="lvTube">
+			<materialref ref="ALU"/>
+			<solidref ref="tube"/>
+		</volume>
+		<volume name="lvReplica">
+			<materialref ref="AIR"/>
+			<solidref ref="motherTube"/>
+			<replicavol number="8">
+				<volumeref ref="lvTube"/>
+				<replicate_along_axis>
+					<direction phi="1"/>
+					<width unit="mm" value="0.785398163397"/>
+					<offset unit="mm" value="0.0"/>
+				</replicate_along_axis>
+			</replicavol>
+		</volume>
+		<volume name="TOP">
+			<materialref ref="AIR"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="lvReplica_phys">
+				<volumeref ref="lvReplica"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="TOP"/>
+	</setup>
+</gdml>

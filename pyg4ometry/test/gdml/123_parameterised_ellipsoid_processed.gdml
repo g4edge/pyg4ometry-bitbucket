@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="1000.0"/>
+		<constant name="wby" value="1000.0"/>
+		<constant name="wbz" value="1000.0"/>
+		<constant name="bx" value="5.0"/>
+		<constant name="by" value="bx"/>
+		<constant name="bz" value="bx"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
+		<ellipsoid ax="1" by="2" cz="5" lunit="mm" name="ellipsoid_param" zcut1="-4" zcut2="4"/>
+	</solids>
+	<structure>
+		<volume name="ellipsoid1Vol">
+			<materialref ref="Al"/>
+			<solidref ref="ellipsoid_param"/>
+		</volume>
+		<volume name="ellipsoid2Vol">
+			<materialref ref="Air"/>
+			<solidref ref="box"/>
+			<paramvol ncopies="9">
+				<volumeref ref="ellipsoid1Vol"/>
+				<parameterised_position_size>
+					<parameters number="1">
+						<position name="ellipsoid1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
+						<rotation name="ellipsoid11Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
+						<ellipsoid_dimensions ax="0.5" by="0.75" cz="1.0" lunit="mm" zcut1="-1.0" zcut2="1.0"/>
+					</parameters>
+					<parameters number="2">
+						<position name="ellipsoid1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
+						<rotation name="ellipsoid1Vol2Rot" unit="rad" x="0" y="0" z="-0.3"/>
+						<ellipsoid_dimensions ax="1.0" by="1.25" cz="1.5" lunit="mm" zcut1="-1.25" zcut2="1.25"/>
+					</parameters>
+					<parameters number="3">
+						<position name="ellipsoid1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
+						<rotation name="ellipsoid1Vol3Rot" unit="rad" x="0" y="0" z="-0.2"/>
+						<ellipsoid_dimensions ax="1.5" by="1.75" cz="2.0" lunit="mm" zcut1="-1.5" zcut2="1.5"/>
+					</parameters>
+					<parameters number="4">
+						<position name="ellipsoid1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
+						<rotation name="ellipsoid1Vol24ot" unit="rad" x="0" y="0" z="-0.1"/>
+						<ellipsoid_dimensions ax="2.0" by="2.25" cz="2.5" lunit="mm" zcut1="-1.75" zcut2="1.75"/>
+					</parameters>
+					<parameters number="5">
+						<ellipsoid_dimensions ax="2.5" by="2.75" cz="3.0" lunit="mm" zcut1="-2.0" zcut2="2.0"/>
+					</parameters>
+					<parameters number="6">
+						<position name="ellipsoid1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
+						<rotation name="ellipsoid1Vol6Rot" unit="rad" x="0" y="0" z="0.1"/>
+						<ellipsoid_dimensions ax="3.0" by="3.25" cz="3.5" lunit="mm" zcut1="-2.25" zcut2="2.25"/>
+					</parameters>
+					<parameters number="7">
+						<position name="ellipsoid1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
+						<rotation name="ellipsoid1Vol7Rot" unit="rad" x="0" y="0" z="0.2"/>
+						<ellipsoid_dimensions ax="3.5" by="3.75" cz="4.0" lunit="mm" zcut1="-2.5" zcut2="2.5"/>
+					</parameters>
+					<parameters number="8">
+						<position name="ellipsoid1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
+						<rotation name="ellipsoid1Vol8Rot" unit="rad" x="0" y="0" z="0.3"/>
+						<ellipsoid_dimensions ax="4.0" by="4.25" cz="4.5" lunit="mm" zcut1="-2.75" zcut2="2.75"/>
+					</parameters>
+					<parameters number="9">
+						<position name="ellipsoid1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
+						<rotation name="ellipsoid1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
+						<ellipsoid_dimensions ax="4.5" by="4.75" cz="5.0" lunit="mm" zcut1="-3.0" zcut2="3.0"/>
+					</parameters>
+				</parameterised_position_size>
+			</paramvol>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="ellipsoid2Vol_PV">
+				<volumeref ref="ellipsoid2Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

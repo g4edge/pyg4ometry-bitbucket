@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="100.0"/>
+		<constant name="wby" value="100.0"/>
+		<constant name="wbz" value="100.0"/>
+		<constant name="x" value="10"/>
+		<constant name="y" value="10"/>
+		<constant name="z" value="10"/>
+		<constant name="alpha" value="1"/>
+		<constant name="theta" value="1"/>
+		<constant name="phi" value="1"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<para alpha="alpha" aunit="rad" lunit="mm" name="para1" phi="phi" theta="theta" x="x" y="y" z="z"/>
+	</solids>
+	<structure>
+		<volume name="para1Vol">
+			<materialref ref="Air"/>
+			<solidref ref="para1"/>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="para1Vol_PV">
+				<volumeref ref="para1Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

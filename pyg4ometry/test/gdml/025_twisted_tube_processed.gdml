@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="100.0"/>
+		<constant name="wby" value="100.0"/>
+		<constant name="wbz" value="100.0"/>
+		<constant name="ttbeir" value="1.0"/>
+		<constant name="ttbeor" value="4.0"/>
+		<constant name="ttbz" value="20.0"/>
+		<constant name="ttbphi" value="3*pi/2"/>
+		<constant name="ttbtwist" value="1"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<twistedtubs aunit="rad" endinnerrad="ttbeir" endouterrad="ttbeor" lunit="mm" name="twisttube1" phi="ttbphi" twistedangle="ttbtwist" zlen="ttbz"/>
+	</solids>
+	<structure>
+		<volume name="twisttube1Vol">
+			<materialref ref="Air"/>
+			<solidref ref="twisttube1"/>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="twisttube1Vol_PV">
+				<volumeref ref="twisttube1Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

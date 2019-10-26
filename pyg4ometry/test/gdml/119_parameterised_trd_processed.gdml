@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="1000.0"/>
+		<constant name="wby" value="1000.0"/>
+		<constant name="wbz" value="1000.0"/>
+		<constant name="bx" value="5.0"/>
+		<constant name="by" value="bx"/>
+		<constant name="bz" value="bx"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
+		<trd lunit="mm" name="trd_param" x1="0.5" x2="1.0" y1="1.0" y2="1.5" z="3"/>
+	</solids>
+	<structure>
+		<volume name="trd1Vol">
+			<materialref ref="Al"/>
+			<solidref ref="trd_param"/>
+		</volume>
+		<volume name="trd2Vol">
+			<materialref ref="Air"/>
+			<solidref ref="box"/>
+			<paramvol ncopies="9">
+				<volumeref ref="trd1Vol"/>
+				<parameterised_position_size>
+					<parameters number="1">
+						<position name="trd1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
+						<trd_dimensions lunit="mm" x1="5.0" x2="2.5" y1="5.0" y2="2.5" z="0.5"/>
+					</parameters>
+					<parameters number="2">
+						<position name="trd1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
+						<trd_dimensions lunit="mm" x1="4.5" x2="2.75" y1="5.5" y2="2.25" z="1.0"/>
+					</parameters>
+					<parameters number="3">
+						<position name="trd1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
+						<trd_dimensions lunit="mm" x1="4.0" x2="3.0" y1="6.0" y2="2.0" z="1.5"/>
+					</parameters>
+					<parameters number="4">
+						<position name="trd1Vol3pos" unit="mm" x="0" y="0" z="-2*bx"/>
+						<trd_dimensions lunit="mm" x1="3.5" x2="3.25" y1="6.5" y2="1.75" z="2.0"/>
+					</parameters>
+					<parameters number="5">
+						<trd_dimensions lunit="mm" x1="3.0" x2="3.5" y1="7.0" y2="1.5" z="2.5"/>
+					</parameters>
+					<parameters number="6">
+						<position name="trd1Vol5pos" unit="mm" x="0" y="0" z="2*bx"/>
+						<trd_dimensions lunit="mm" x1="2.5" x2="3.75" y1="7.5" y2="1.25" z="3.0"/>
+					</parameters>
+					<parameters number="7">
+						<position name="trd1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
+						<trd_dimensions lunit="mm" x1="2.0" x2="4.0" y1="8.0" y2="1.0" z="3.5"/>
+					</parameters>
+					<parameters number="8">
+						<position name="trd1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
+						<trd_dimensions lunit="mm" x1="1.5" x2="4.25" y1="8.5" y2="0.75" z="4.0"/>
+					</parameters>
+					<parameters number="9">
+						<position name="trd1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
+						<trd_dimensions lunit="mm" x1="1.0" x2="4.5" y1="9.0" y2="0.5" z="4.5"/>
+					</parameters>
+				</parameterised_position_size>
+			</paramvol>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="trd2Vol_PV">
+				<volumeref ref="trd2Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

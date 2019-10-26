@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="1000.0"/>
+		<constant name="wby" value="1000.0"/>
+		<constant name="wbz" value="1000.0"/>
+		<constant name="bx" value="5.0"/>
+		<constant name="by" value="bx"/>
+		<constant name="bz" value="bx"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
+		<para alpha="0.25" aunit="rad" lunit="mm" name="para_param" phi="0.75" theta="0.5" x="0.5" y="1" z="1.5"/>
+	</solids>
+	<structure>
+		<volume name="para1Vol">
+			<materialref ref="Al"/>
+			<solidref ref="para_param"/>
+		</volume>
+		<volume name="box2Vol">
+			<materialref ref="Air"/>
+			<solidref ref="box"/>
+			<paramvol ncopies="9">
+				<volumeref ref="para1Vol"/>
+				<parameterised_position_size>
+					<parameters number="1">
+						<position name="para1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
+						<para_dimensions alpha="0.0" aunit="rad" lunit="mm" phi="0.0" theta="0.0" x="0.5" y="1.0" z="1.5"/>
+					</parameters>
+					<parameters number="2">
+						<position name="para1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
+						<para_dimensions alpha="0.1" aunit="rad" lunit="mm" phi="0.1" theta="0.1" x="1.0" y="1.5" z="2.0"/>
+					</parameters>
+					<parameters number="3">
+						<position name="para1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
+						<para_dimensions alpha="0.2" aunit="rad" lunit="mm" phi="0.2" theta="0.2" x="1.5" y="2.0" z="2.5"/>
+					</parameters>
+					<parameters number="4">
+						<position name="para1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
+						<para_dimensions alpha="0.3" aunit="rad" lunit="mm" phi="0.3" theta="0.3" x="2.0" y="2.5" z="3.0"/>
+					</parameters>
+					<parameters number="5">
+						<para_dimensions alpha="0.4" aunit="rad" lunit="mm" phi="0.4" theta="0.4" x="2.5" y="3.0" z="3.5"/>
+					</parameters>
+					<parameters number="6">
+						<position name="para1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
+						<para_dimensions alpha="0.5" aunit="rad" lunit="mm" phi="0.5" theta="0.5" x="3.0" y="3.5" z="4.0"/>
+					</parameters>
+					<parameters number="7">
+						<position name="para1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
+						<para_dimensions alpha="0.6" aunit="rad" lunit="mm" phi="0.6" theta="0.6" x="3.5" y="4.0" z="5.0"/>
+					</parameters>
+					<parameters number="8">
+						<position name="para1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
+						<para_dimensions alpha="0.7" aunit="rad" lunit="mm" phi="0.7" theta="0.7" x="4.0" y="4.5" z="5.5"/>
+					</parameters>
+					<parameters number="9">
+						<position name="para1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
+						<para_dimensions alpha="0.8" aunit="rad" lunit="mm" phi="0.8" theta="0.8" x="4.5" y="5.0" z="6.0"/>
+					</parameters>
+				</parameterised_position_size>
+			</paramvol>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="box2Vol_PV">
+				<volumeref ref="box2Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>

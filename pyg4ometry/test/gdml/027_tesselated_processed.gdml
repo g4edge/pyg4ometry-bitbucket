@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wbx" value="100.0"/>
+		<constant name="wby" value="100.0"/>
+		<constant name="wbz" value="100.0"/>
+		<position name="v1" unit="m" x="10" y="10" z="0"/>
+		<position name="v2" unit="m" x="-10" y="10" z="0"/>
+		<position name="v3" unit="m" x="-10" y="-10" z="0"/>
+		<position name="v4" unit="m" x="10" y="-10" z="0"/>
+		<position name="v5" unit="m" x="7" y="3" z="20"/>
+		<position name="v6" unit="m" x="-3" y="7" z="5"/>
+		<position name="center" unit="mm" x="0" y="0" z="0"/>
+		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+	</define>
+	<materials>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16"/>
+		</element>
+		<material name="Air">
+			<D value="1.29"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
+	</materials>
+	<solids>
+		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<tessellated name="tessellated">
+			<triangular type="ABSOLUTE" vertex1="v1" vertex2="v2" vertex3="v6"/>
+			<triangular type="ABSOLUTE" vertex1="v2" vertex2="v3" vertex3="v6"/>
+			<triangular type="ABSOLUTE" vertex1="v3" vertex2="v4" vertex3="v5"/>
+			<triangular type="ABSOLUTE" vertex1="v4" vertex2="v1" vertex3="v5"/>
+			<triangular type="ABSOLUTE" vertex1="v1" vertex2="v6" vertex3="v5"/>
+			<triangular type="ABSOLUTE" vertex1="v6" vertex2="v3" vertex3="v5"/>
+			<quadrangular type="ABSOLUTE" vertex1="v4" vertex2="v3" vertex3="v2" vertex4="v1"/>
+		</tessellated>
+	</solids>
+	<structure>
+		<volume name="tessellated1Vol">
+			<materialref ref="Air"/>
+			<solidref ref="tessellated"/>
+		</volume>
+		<volume name="World">
+			<materialref ref="Air"/>
+			<solidref ref="WorldBox"/>
+			<physvol name="tessellated1Vol_PV">
+				<volumeref ref="tessellated1Vol"/>
+				<positionref ref="center"/>
+				<rotationref ref="identity"/>
+			</physvol>
+		</volume>
+	</structure>
+	<userinfo/>
+	<setup name="Default" version="1.0">
+		<world ref="World"/>
+	</setup>
+</gdml>
