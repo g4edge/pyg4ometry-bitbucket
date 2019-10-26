@@ -40,6 +40,12 @@ import T030_Intersection
 import T031_MultiUnion
 import T032_Scaled
 
+import T101_physical_logical
+import T102_overlap_none
+import T103_overlap_copl
+import T104_overlap_volu
+import T105_assembly
+
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
 import T402_MergeRegistry_Tubs
@@ -227,6 +233,22 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
     def testScaled(self):
         self.assertTrue(T032_Scaled.Test()["testStatus"])
+
+    def test_physical_logical(self):
+        self.assertTrue(T101_physical_logical.Test()["testStatus"])
+
+    def test_overlap_none(self):
+        self.assertTrue(T102_overlap_none.Test()["testStatus"])
+
+    def test_overlap_copl(self):
+        self.assertTrue(T103_overlap_copl.Test()["testStatus"])
+
+    def test_overlap_volu(self):
+        self.assertTrue(T104_overlap_volu.Test()["testStatus"])
+
+    def test_assembly(self):
+        self.assertTrue(T105_assembly.Test()["testStatus"])
+
     def testMergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
 
