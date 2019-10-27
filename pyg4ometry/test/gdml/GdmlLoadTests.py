@@ -48,6 +48,7 @@ def geant4LoadTest(filename, visualiser=False, physics=False, verbose=True):
     if not checkIfGdmlFileUpdated(filename) :
         return True
 
+    print "geant4LoadTest> running G4"
     script_path = _pj("simple_G4_loader/build/simple_loader")
     if not _os.path.isfile(script_path):
         print "Geant4 test executable not found in {}, skip test.".format(script_path)
