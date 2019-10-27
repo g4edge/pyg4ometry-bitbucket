@@ -6,8 +6,8 @@
   <constant name="wby" value="100.0"/>
   <constant name="wbz" value="100.0"/>
 
-  <constant name="srmin" value="8.0"/>
-  <constant name="srmax" value="10.0"/>
+  <constant name="srmin" value="40.0"/>
+  <constant name="srmax" value="45.0"/>
   <constant name="sdphi" value="pi"/>
   <constant name="sdtheta" value="3*pi/4"/>
 
