@@ -11,6 +11,7 @@ def Test(vis = False, interactive = False) :
 
     l1 = T001_Box.Test(False,False)["logicalVolume"]
     l2 = T001_Box.Test(False,False)["logicalVolume"]
+    av1 = l1.assemblyVolume()
     av2 = l2.assemblyVolume()
 
     wx0 = _gd.Constant("wx0", "200", reg0, True)
@@ -19,9 +20,9 @@ def Test(vis = False, interactive = False) :
 
     wm = _g4.MaterialPredefined("G4_Galactic")
     ws = _g4.solid.Box("ws", wx0, wy0, wz0, reg0, "mm")
-    wl = _g4.LogicalVolume(ws, wm, "wl", reg0)
+    wl = _g4.LogicalVolume(ws, wm, "world", reg0)
 
-    p1 = _g4.PhysicalVolume([0,0,0],[-25,0,0], l1, "l1_pv", wl, reg0)
+    p1 = _g4.PhysicalVolume([0,0,0],[-25,0,0], av1, "av1_pv", wl, reg0)
     p2 = _g4.PhysicalVolume([0,0,0],[ 25,0,0], av2, "av2_pv", wl, reg0)
 
     reg0.addVolumeRecursive(p1)
@@ -32,7 +33,7 @@ def Test(vis = False, interactive = False) :
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg0)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T401_MergeRegistry_Box.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T432_MergeRegistry_Box_AssemblyConversion.gdml"))
 
     # visualisation
     if vis :
