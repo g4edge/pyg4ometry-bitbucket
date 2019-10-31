@@ -1,4 +1,5 @@
 import unittest as _unittest
+import testtools as _testtools
 import numpy as _np
 
 import pyg4ometry
@@ -377,4 +378,15 @@ class PythonAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T432_MergeRegistry_Box_AssemblyConversion.Test()["testStatus"])
 
 if __name__ == '__main__':
-    _unittest.main(verbosity=2)        
+    _unittest.main(verbosity=2)
+
+    class TracingStreamResult(_testtools.StreamResult):
+        def status(self, *args, **kwargs):
+            print('{0[test_id]}: {0[test_status]}'.format(kwargs))
+
+    #suite            = _unittest.TestLoader().loadTestsFromTestCase(PythonAuthoringTests)
+    #concurrent_suite = _testtools.ConcurrentStreamTestSuite(lambda: ((case, None) for case in suite))
+    #result = TracingStreamResult()
+    #result.startTestRun()
+    #concurrent_suite.run(result)
+    #result.stopTestRun()
