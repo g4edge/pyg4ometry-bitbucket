@@ -12,7 +12,8 @@ setup(
                       "networkx",
                       "numpy",
                       "vtk",
-                      "GitPython"],
+                      "GitPython",
+                      "testtools"],
 
     ext_modules=cythonize(["pyg4ometry/pycsg/geom.pyx","pyg4ometry/pycsg/core.pyx"]),
 
