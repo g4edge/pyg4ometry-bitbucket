@@ -13,17 +13,17 @@ def Test(vis=False, interactive=False):
     wz = _gd.Constant("wz", "150", reg, True)
 
     # pi         = _gd.Constant("pi","3.1415926",reg,True)
-    ctrmin = _gd.Constant("trmin", "2.5", reg, True)
-    ctrmax = _gd.Constant("trmax", "10.0", reg, True)
-    ctz = _gd.Constant("tz", "110", reg, True)
+    ctrmin     = _gd.Constant("trmin", "2.5", reg, True)
+    ctrmax     = _gd.Constant("trmax", "10.0", reg, True)
+    ctz        = _gd.Constant("tz", "110", reg, True)
     ctstartphi = _gd.Constant("startphi", "0", reg, True)
     ctdeltaphi = _gd.Constant("deltaphi", "1.5*pi", reg, True)
-    ctlowx = _gd.Constant("ctlowx", "-1", reg, True)
-    ctlowy = _gd.Constant("ctlowy", "-1", reg, True)
-    ctlowz = _gd.Constant("ctlowz", "-1", reg, True)
-    cthighx = _gd.Constant("cthighx", "1", reg, True)
-    cthighy = _gd.Constant("cthighy", "1", reg, True)
-    cthighz = _gd.Constant("cthighz", "1", reg, True)
+    ctlowx     = _gd.Constant("ctlowx", "-1", reg, True)
+    ctlowy     = _gd.Constant("ctlowy", "-1", reg, True)
+    ctlowz     = _gd.Constant("ctlowz", "-1", reg, True)
+    cthighx    = _gd.Constant("cthighx", "1", reg, True)
+    cthighy    = _gd.Constant("cthighy", "1", reg, True)
+    cthighz    = _gd.Constant("cthighz", "1", reg, True)
 
     wm = _g4.Material(name="G4_Galactic")
     bm = _g4.Material(name="G4_Fe")
@@ -49,7 +49,7 @@ def Test(vis=False, interactive=False):
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T003_CutTubs.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T600_LVTessellated.gdml"))
 
     # visualisation
     if vis:
