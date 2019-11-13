@@ -3,7 +3,7 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, n_slice = 30) :
     reg = _g4.Registry()
     
     # defines 
@@ -13,7 +13,7 @@ def Test(vis = False, interactive = False) :
     
     # pi     = _gd.Constant("pi","3.1415926",reg,True)
     ex     = _gd.Constant("ex","10",reg,True)
-    ey     = _gd.Constant("ey","15",reg,True)
+    ey     = _gd.Constant("ey","25",reg,True)
     ez     = _gd.Constant("ez","20",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
@@ -21,7 +21,7 @@ def Test(vis = False, interactive = False) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    es = _g4.solid.EllipticalTube("es",ex,ey,ez,reg)
+    es = _g4.solid.EllipticalTube("es",ex,ey,ez,reg,nslice = n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
