@@ -1,0 +1,83 @@
+@inproceedings{Mcnp_Werner,
+author = "{C}. {J}. {W}erner {\it et al.}", 
+title  = "{MCNP}6.2 {R}elease {N}otes",
+booktitle = "{L}os {A}lamos {N}ational {L}aboratory report {LA-UR}-18-20808",
+year = "2018"
+}
+
+@inproceedings{Fluka_Ferrari,
+author = "A. Ferrari and P. R. Sala and A. Fasso and J. Ranft and Organisation Européenne and Pour La and Recherche Nucléaire and Alfredo Ferrari and Paola R. Sala and Alberto Fassò and Johannes Ranft",
+title = "{FLUKA}: a multi-particle transport code",
+booktitle = "{CERN} 2005-10 (2005), {INFN/TC} 05/11, {SLAC-R}-773",
+year = "2005"
+}
+
+@article{Fluka_Bohlen,
+title = "The {FLUKA} Code: {D}evelopments and {C}hallenges for {H}igh {E}nergy and {M}edical {A}pplications",
+journal = "{N}uclear {D}ata {S}heets",
+volume = "120",
+pages = "211 - 214",
+year = "2014",
+issn = "0090-3752",
+doi = "https://doi.org/10.1016/j.nds.2014.07.049",
+url = "http://www.sciencedirect.com/science/article/pii/S0090375214005018",
+author = "T.T. Böhlen and F. Cerutti and M.P.W. Chin and A. Fassò and A. Ferrari and P.G. Ortega and A. Mairani and P.R. Sala and G. Smirnov and V. Vlachoudis",
+abstract = "The FLUKA Monte Carlo code is used extensively at CERN for all beam-machine interactions, radioprotection calculations and facility design of forthcoming projects. Such needs require the code to be consistently reliable over the entire energy range (from MeV to TeV) for all projectiles (full suite of elementary particles and heavy ions). Outside CERN, among various applications worldwide, FLUKA serves as a core tool for the HIT and CNAO hadron-therapy facilities in Europe. Therefore, medical applications further impose stringent requirements in terms of reliability and predictive power, which demands constant refinement of sophisticated nuclear models and continuous code improvement. Some of the latest developments implemented in FLUKA are presented in this paper, with particular emphasis on issues and concerns pertaining to CERN and medical applications."
+}
+
+@inproceedings{Geant3_Brun,
+author         = "Brun, R. and Bruyant, F. and Maire, M. and McPherson, A. C. and Zanarini, P.",
+title          = "{GEANT3}",
+year           = "1987",
+booktitle      = "{CERN-DD-EE}-84-1",
+}
+
+@article{Geant4_Agostinelli,
+title = "Geant4—a simulation toolkit",
+journal = "Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment",
+volume = "506",
+number = "3",
+pages = "250 - 303",
+year = "2003",
+issn = "0168-9002",
+doi = "https://doi.org/10.1016/S0168-9002(03)01368-8",
+url = "http://www.sciencedirect.com/science/article/pii/S0168900203013688",
+author = "{S}. {A}gostinelli {\it et al.}",
+keywords = "Simulation, Particle interactions, Geometrical modelling, Software engineering, Object-oriented technology, Distributed software development",
+abstract = "Geant4 is a toolkit for simulating the passage of particles through matter. It includes a complete range of functionality including tracking, geometry, physics models and hits. The physics processes offered cover a comprehensive range, including electromagnetic, hadronic and optical processes, a large set of long-lived particles, materials and elements, over a wide energy range starting, in some cases, from 250eV and extending in others to the TeV energy range. It has been designed and constructed to expose the physics models utilised, to handle complex geometries, and to enable its easy adaptation for optimal use in different sets of applications. The toolkit is the result of a worldwide collaboration of physicists and software engineers. It has been created exploiting software engineering and object-oriented technology and implemented in the C++ programming language. It has been used in applications in particle physics, nuclear physics, accelerator design, space engineering and medical physics."
+}
+
+@software{FreeCAD,
+title = "Free{CAD}",
+url = "https://www.freecadweb.org",
+}
+
+@software{OpenCASCADE,
+title = "Open{CASCADE}",
+url = "https://www.opencascade.com",
+}
+
+@book{VTK4,
+  author={Will Schroeder and Ken Martin and Bill Lorensen},
+  title={{The Visualization Toolkit--An Object-Oriented Approach To 3D
+                  Graphics}},
+  publisher={Kitware, Inc.},
+  edition={Fourth},
+  year={2006}
+}
+
+@article{GUIMesh_Pinto,
+title = "{GUI}Mesh: A tool to import {STEP} geometries into Geant4 via {GDML}",
+journal = "Computer Physics Communications",
+volume = "239",
+pages = "150 - 156",
+year = "2019",
+issn = "0010-4655",
+doi = "https://doi.org/10.1016/j.cpc.2019.01.024",
+url = "http://www.sciencedirect.com/science/article/pii/S0010465519300438",
+author = "M. Pinto and P. Gonçalves",
+keywords = "Geant4, STEP, GDML, Radiation, Simulation, Mesh",
+abstract = "Detailed radiation analysis of instruments flown in space is critical to ensure mission safety, often requiring the use of state-of-the-art particle transport simulation tools. Geant4 is one of the most powerful toolkits to simulate the interaction and the passage of particles through matter, but it is not prepared to receive Standard for The Exchange of Product data (STEP) files, the most versatile Computer-Aided Design (CAD) format, as input, requiring previous conversion to other CAD formats. This may lead to loss of detail and under or overestimation of the quantities under study, especially when the instruments have complex shapes, and/or a large number of volumes. Though several solutions have been proposed to import complex geometries from STEP files into Geant4, so far, only commercial options are available. In this paper we present a new tool, GUIMesh, that embeds FreeCAD libraries, an open-source CAD editor, to tessellate volumes, and convert them to Geometry Description Markup Language (GDML), a Geant4 readable format, in a straightforward way. Several degrees of freedom are given to the user regarding mesh precision and choice of material. Different geometries were tested for material definition, geometry and navigation errors, and the method used was successfully validated.
+Program Summary
+Program Title: GUIMesh Program Files doi: http://dx.doi.org/10.17632/c3c9xbspzp.1 Licensing provisions: GNU General Public License 3 (GPLv3) Programming language: Python Nature of problem: No open-source software allows to import STEP geometries intro Geant4, one of the most powerful toolkits to simulate radiation interaction with matter. Since CAD software is extensively used in the design of particle and radiation detection instruments, it is highly desirable for physicists that STEP geometries can be imported to Geant4 with little effort instead of having to code structures made of a very large number of solid volumes which are difficult to accurately reproduce with Geant4 C++ classes. Solution method: STEP geometries are converted to tessellated volumes (with some margin of error) using FreeCAD libraries. A Python script then writes GDML files based on the results allowing users to import these geometries with Geant4. A graphical user interface provides several options to the user, including material assignment and mesh precision setting for each volume."
+}

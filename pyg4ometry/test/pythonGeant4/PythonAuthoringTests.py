@@ -1,4 +1,5 @@
 import unittest as _unittest
+import testtools as _testtools
 import numpy as _np
 
 import pyg4ometry
@@ -45,6 +46,12 @@ import T102_overlap_none
 import T103_overlap_copl
 import T104_overlap_volu
 import T105_assembly
+import T106_replica_x
+import T107_replica_y
+import T108_replica_z
+import T109_replica_phi
+import T110_replica_rho
+import T111_DefineTree
 
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
@@ -77,6 +84,7 @@ import T428_MergeRegistry_Union
 import T429_MergeRegistry_Subtraction
 import T430_MergeRegistry_Intersection
 import T431_MergeRegistry_MultiUnion
+import T432_MergeRegistry_Box_AssemblyConversion
 
 import logging as _log
 
@@ -234,20 +242,38 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testScaled(self):
         self.assertTrue(T032_Scaled.Test()["testStatus"])
 
-    def test_physical_logical(self):
+    def testPhysicalLogical(self):
         self.assertTrue(T101_physical_logical.Test()["testStatus"])
 
-    def test_overlap_none(self):
+    def testOverlapMone(self):
         self.assertTrue(T102_overlap_none.Test()["testStatus"])
 
-    def test_overlap_copl(self):
+    def testOverlapCopl(self):
         self.assertTrue(T103_overlap_copl.Test()["testStatus"])
 
-    def test_overlap_volu(self):
+    def testOverlapVolu(self):
         self.assertTrue(T104_overlap_volu.Test()["testStatus"])
 
-    def test_assembly(self):
+    def testAssembly(self):
         self.assertTrue(T105_assembly.Test()["testStatus"])
+
+    def testReplicaX(self):
+        self.assertTrue(T106_replica_x.Test()["testStatus"])
+
+    def testReplicaY(self):
+        self.assertTrue(T107_replica_y.Test()["testStatus"])
+
+    def testReplicaZ(self):
+        self.assertTrue(T108_replica_z.Test()["testStatus"])
+
+    def testReplicaPhi(self):
+        self.assertTrue(T109_replica_phi.Test()["testStatus"])
+
+    def testReplicaRho(self):
+        self.assertTrue(T110_replica_rho.Test()["testStatus"])
+
+    def testDefineTree(self):
+        self.assertTrue(T111_DefineTree.Test()["testStatus"])
 
     def testMergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
@@ -348,5 +374,19 @@ class PythonAuthoringTests(_unittest.TestCase) :
     def testMergeRegistry_MultiUnion(self):
         self.assertTrue(T431_MergeRegistry_MultiUnion.Test()["testStatus"])
 
+    def testMergeRegistryBoxAssemblyConverion(self):
+        self.assertTrue(T432_MergeRegistry_Box_AssemblyConversion.Test()["testStatus"])
+
 if __name__ == '__main__':
-    _unittest.main(verbosity=2)        
+    _unittest.main(verbosity=2)
+
+    class TracingStreamResult(_testtools.StreamResult):
+        def status(self, *args, **kwargs):
+            print('{0[test_id]}: {0[test_status]}'.format(kwargs))
+
+    #suite            = _unittest.TestLoader().loadTestsFromTestCase(PythonAuthoringTests)
+    #concurrent_suite = _testtools.ConcurrentStreamTestSuite(lambda: ((case, None) for case in suite))
+    #result = TracingStreamResult()
+    #result.startTestRun()
+    #concurrent_suite.run(result)
+    #result.stopTestRun()

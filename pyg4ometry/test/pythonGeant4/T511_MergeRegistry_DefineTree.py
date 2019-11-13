@@ -5,14 +5,13 @@ import pyg4ometry.visualisation as _vi
 
 
 import T001_Box
+import T111_DefineTree
 
 def Test(vis = False, interactive = False) :
     reg0 = _g4.Registry()
 
     l1 = T001_Box.Test(False,False)["logicalVolume"]
-    l2 = T001_Box.Test(False,False)["logicalVolume"]
-    av1 = l1.assemblyVolume()
-    av2 = l2.assemblyVolume()
+    l2 = T111_DefineTree.Test(False,False)["logicalVolume"]
 
     wx0 = _gd.Constant("wx0", "200", reg0, True)
     wy0 = _gd.Constant("wy0", "200", reg0, True)
@@ -20,10 +19,10 @@ def Test(vis = False, interactive = False) :
 
     wm = _g4.MaterialPredefined("G4_Galactic")
     ws = _g4.solid.Box("ws", wx0, wy0, wz0, reg0, "mm")
-    wl = _g4.LogicalVolume(ws, wm, "world", reg0)
+    wl = _g4.LogicalVolume(ws, wm, "wl", reg0)
 
-    p1 = _g4.PhysicalVolume([0,0,0],[-25,0,0], av1, "av1_pv", wl, reg0)
-    p2 = _g4.PhysicalVolume([0,0,0],[ 25,0,0], av2, "av2_pv", wl, reg0)
+    p1 = _g4.PhysicalVolume([0,0,0],[-50,0,0], l1, "l1_pv", wl, reg0)
+    p2 = _g4.PhysicalVolume([0,0,0],[ 50,0,0], l2, "l2_pv", wl, reg0)
 
     reg0.addVolumeRecursive(p1)
     reg0.addVolumeRecursive(p2)
@@ -33,7 +32,7 @@ def Test(vis = False, interactive = False) :
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg0)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T432_MergeRegistry_Box_AssemblyConversion.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T511_MergeRegistry_DefineTree.gdml"))
 
     # visualisation
     if vis :
