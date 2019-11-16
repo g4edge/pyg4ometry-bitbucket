@@ -109,7 +109,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Pyg4ometry: a python library for the creation of Monte Carlo particle transport physical geometries}
+\title{Pyg4ometry: a python library for the creation of Monte Carlo radiation transport physical geometries}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{<author name>}
@@ -165,7 +165,7 @@ Geant; Monte Carlo; Particle; Transport; Geometry;
   %Only required for a New Version summary, otherwise leave out.
 
 {\em Nature of problem(approx. 50-250 words):}\\
-Creating computer readable geometry descriptions for Monte Carlo particle transport codes is a time consuming and error prone task.  \\
+Creating computer readable geometry descriptions for Monte Carlo radiation transport codes is a time consuming and error prone task.  \\
 {\em Solution method(approx. 50-250 words):}\\
   %Describe the method solution here.
 {\em Additional comments including Restrictions and Unusual features (approx. 50-250 words):}\\
@@ -186,9 +186,9 @@ of programs previously published in the CPC Program Library.\\
 
 %% main text
 \section{Introduction} \label{sec:introduction}
-There are numerous different software codes to simulate the passage of particles through material, so called particle transport (PT) programmes, these 
+There are numerous different software codes to simulate the passage of particles through material, so called radiation transport (RT) programmes, these 
 include MCNP \cite{Mcnp_Werner}, FLUKA \cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3 \cite{Geant3_Brun} and Geant4 \cite{Geant4_Agostinelli}. 
-All these codes are based on the Monte Carlo technique but each code either has a particular specialism or target user community.  PT Monte Carlo simulations 
+All these codes are based on the Monte Carlo technique but each code either has a particular specialism or target user community.  RT Monte Carlo (RTMC) simulations 
 have diverse uses, shielding calculations for radiological protection, detector performance, medical imaging and therapy and space radiation environment 
 simulation are some examples. A fundamental requirement of all of the codes is to supply a computer readable description of the physical geometry that 
 the particles are passing through.  The creation of geometry files is typically a very time consuming activity and the simulation validity and performance is directly 
