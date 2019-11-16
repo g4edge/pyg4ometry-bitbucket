@@ -26,7 +26,7 @@ def Test(vis=False, interactive=False):
     cthighz    = _gd.Constant("cthighz", "1", reg, True)
 
     wm = _g4.Material(name="G4_Galactic")
-    bm = _g4.Material(name="G4_Fe")
+    bm = _g4.Material(name="G4_W")
 
     # solids
     ws = _g4.solid.Box("ws", wx, wy, wz, reg, "mm")
@@ -41,7 +41,7 @@ def Test(vis=False, interactive=False):
     ctl.makeSolidTessellated()  # Operation is in-place
 
     # Place the lv as normal
-    ctp = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], ctl, "ct_pv1", wl, reg)
+    ctp = _g4.PhysicalVolume([3.14/2., 0, 0], [0, 0, 0], ctl, "ct_pv1", wl, reg)
 
     # set world volume
     reg.setWorld(wl.name)
@@ -50,6 +50,7 @@ def Test(vis=False, interactive=False):
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T600_LVTessellated.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T600_LVTessellated.gmad","T600_LVTessellated.gdml")
 
     # visualisation
     if vis:
