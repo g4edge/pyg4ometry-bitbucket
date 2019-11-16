@@ -6,8 +6,8 @@ import pyg4ometry.freecad as _fc
 import logging as _log
 import os as _os
 
-logger = _log.getLogger()
-logger.disabled = True
+#logger = _log.getLogger()
+#logger.disabled = True
 
 def LoadFreecad(fileName) : 
     r = _fc.Reader(fileName) 

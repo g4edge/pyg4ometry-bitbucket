@@ -10,8 +10,8 @@ from subprocess import Popen as _Popen, PIPE as _PIPE
 from hashlib import md5 as _md5
 from collections import OrderedDict as _OrderedDict
 
-logger = _log.getLogger()
-logger.disabled = True
+#logger = _log.getLogger()
+#logger.disabled = True
 
 def _pj(filename):
     """

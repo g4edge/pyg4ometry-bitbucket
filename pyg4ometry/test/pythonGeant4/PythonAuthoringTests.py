@@ -88,8 +88,8 @@ import T432_MergeRegistry_Box_AssemblyConversion
 
 import logging as _log
 
-logger = _log.getLogger()
-logger.disabled = True
+#logger = _log.getLogger()
+#logger.disabled = True
 
 class PythonAuthoringTests(_unittest.TestCase) :
     def testPlane(self) : 

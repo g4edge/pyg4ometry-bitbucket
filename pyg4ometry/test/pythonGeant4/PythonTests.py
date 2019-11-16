@@ -5,8 +5,8 @@ import pyg4ometry.transformation as _trans
 
 import logging as _log
 
-logger = _log.getLogger()
-logger.disabled = True
+# logger = _log.getLogger()
+# logger.disabled = True
 
 class PythonTests(_unittest.TestCase) :
 

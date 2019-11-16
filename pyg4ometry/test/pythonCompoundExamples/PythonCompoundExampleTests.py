@@ -6,8 +6,8 @@ import dipole_cbpm
 
 import logging as _log
 
-logger = _log.getLogger()
-logger.disabled = True
+#logger = _log.getLogger()
+#logger.disabled = True
 
 class PythonCompoundExampleTests(_unittest.TestCase) :
     def testCavityBpm(self) :         
