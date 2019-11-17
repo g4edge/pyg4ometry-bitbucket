@@ -8,9 +8,9 @@ def Test(vis = False, interactive = False) :
     reg = _g4.Registry()
     
     # defines 
-    wx = _gd.Constant("wx","100",reg,True)
-    wy = _gd.Constant("wy","100",reg,True)
-    wz = _gd.Constant("wz","100",reg,True)
+    wx = _gd.Constant("wx","75",reg,True)
+    wy = _gd.Constant("wy","25",reg,True)
+    wz = _gd.Constant("wz","25",reg,True)
 
     bx = _gd.Constant("bx","10",reg,True)
 
@@ -23,22 +23,21 @@ def Test(vis = False, interactive = False) :
     bm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
-    ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    bs = _g4.solid.Box("bs",bx,0.9*bx,0.9*bx, reg, "mm")
-    rs = _g4.solid.Box("rs",3*bx,2*bx,2*bx, reg, "mm")
-
+    ws = _g4.solid.Box("ws",1.5*wx,1.5*wy,1.5*wz, reg, "mm")
+    bs = _g4.solid.Box("bs",1.0*bx,1.0*bx,1.0*bx, reg, "mm")
 
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
 
     bl = _g4.LogicalVolume(bs, bm, "bl", reg)
-    rl = _g4.LogicalVolume(rs, wm, "rl", reg)
 
-    bp1 = _g4.PhysicalVolume([0.2,0,0],  [-bx,0,0],  bl, "b_pv1", rl, reg)
-    bp2 = _g4.PhysicalVolume([0.4,0,0],  [0  ,0,0],  bl, "b_pv2", rl, reg)
-    bp3 = _g4.PhysicalVolume([0.6,0,0],[bx ,0,0],  bl, "b_pv3", rl, reg)
-
-    rp  = _g4.PhysicalVolume([0,0,0],  [0,0,0],    rl, "r_pv1", wl, reg)
+    bp1 = _g4.PhysicalVolume([0,0,0]        ,  [-1.5*wx/2+bx/2      ,0,0],         bl, "b_pv1", wl, reg)
+    bp2 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,0,0],         bl, "b_pv2", wl, reg)
+    bp3 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2+bx/2 ,bx/2,0],      bl, "b_pv3", wl, reg)
+    bp4 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,0,0],         bl, "b_pv4", wl, reg)
+    bp5 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,bx/2,0],      bl, "b_pv5", wl, reg)
+    bp6 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/2-bx/2      ,0,0]   ,      bl, "b_pv6", wl, reg)
+    bp7 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2      ,3*bx/4,0] ,      bl, "b_pv7", wl, reg)
 
     # check for overlaps
     wl.checkOverlaps(True)
@@ -64,7 +63,7 @@ def Test(vis = False, interactive = False) :
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()
