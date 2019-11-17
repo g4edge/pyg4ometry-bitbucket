@@ -32,10 +32,16 @@ def Test(vis = False, interactive = False) :
     bl = _g4.LogicalVolume(bs, bm, "bl", reg)
 
     bp1 = _g4.PhysicalVolume([0,0,0]        ,  [-1.5*wx/2+bx/2      ,0,0],     bl, "b_pv1", wl, reg)
+
     bp2 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,0,0],         bl, "b_pv2", wl, reg)
     bp3 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2+bx/2 ,bx/2,0],      bl, "b_pv3", wl, reg)
+
+    #bp2 = _g4.PhysicalVolume([0,0,0]        ,  [-bx/4 ,-bx/4,0],         bl, "b_pv2", wl, reg)
+    #bp3 = _g4.PhysicalVolume([0,0,0]        ,  [ bx/4 ,bx/4,0],      bl, "b_pv3", wl, reg)
+
     bp4 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,0,0],         bl, "b_pv4", wl, reg)
     bp5 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,bx/2,0],      bl, "b_pv5", wl, reg)
+
     bp6 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/2-bx/2      ,0,0]   ,      bl, "b_pv6", wl, reg)
     bp7 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2      ,2*bx/4,0] ,   bl, "b_pv7", wl, reg)
 
@@ -61,6 +67,7 @@ def Test(vis = False, interactive = False) :
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes()
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
