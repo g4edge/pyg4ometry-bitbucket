@@ -38,13 +38,15 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T032_Scaled.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T032_Scaled.gmad","T032_Scaled.gdml")
+
 
     # test __repr__
     str(bs)
 
     # test extent of physical volume
-    wlextent           = wl.extent(True)
-    wlextent_daughters = wl.extent(False)
+    wl.extent(True)
+    wl.extent(False)
 
     # visualisation
     if vis : 

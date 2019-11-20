@@ -44,6 +44,8 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T008_Sphere.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T008_Sphere.gmad","T008_Sphere.gdml")
+
 
     # visualisation
     if vis : 

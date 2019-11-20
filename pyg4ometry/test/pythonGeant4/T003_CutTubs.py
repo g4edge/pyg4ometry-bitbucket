@@ -54,6 +54,8 @@ def Test(vis = False, interactive=False, type = normal) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T003_CutTubs.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T003_CutTubs.gmad","T003_CutTubs.gdml")
+
 
     # test __repr__
     str(cts)

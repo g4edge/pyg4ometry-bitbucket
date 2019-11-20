@@ -50,6 +50,10 @@ def Test(vis = False, interactive = False) :
     # test __repr__
     str(ts)
 
+    # test extent of physical volume
+    wl.extent(True)
+    wl.extent(False)
+
     # visualisation
     if vis : 
         v = _vi.VtkViewer()
