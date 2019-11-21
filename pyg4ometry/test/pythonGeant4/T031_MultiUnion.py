@@ -51,6 +51,8 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T031_MultiUnion.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T031_MultiUnion.gmad","T031_MultiUnion.gdml")
+
 
     # test __repr__
     str(mu)

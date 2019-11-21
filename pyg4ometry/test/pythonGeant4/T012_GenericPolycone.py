@@ -57,6 +57,8 @@ def Test(vis = False, interactive = False, type = normal) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T012_GenericPolycone.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T012_GenericPolycone.gmad","T012_GenericPolycone.gdml")
+
 
     # visualisation
     if vis : 

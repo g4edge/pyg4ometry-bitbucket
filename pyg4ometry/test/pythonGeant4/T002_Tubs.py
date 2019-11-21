@@ -45,9 +45,14 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T002_Tubs.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T002_Tubs.gmad","T002_Tubs.gdml")
 
     # test __repr__
     str(ts)
+
+    # test extent of physical volume
+    wl.extent(True)
+    wl.extent(False)
 
     # visualisation
     if vis : 

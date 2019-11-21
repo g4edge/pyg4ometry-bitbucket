@@ -45,6 +45,8 @@ def Test(vis = False, interactive = False, type = normal) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T017_EllipticalCone.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T017_EllipticalCone.gmad","T017_EllipticalCone.gdml")
+
 
     # visualisation
     if vis : 

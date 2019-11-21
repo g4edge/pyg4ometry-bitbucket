@@ -44,6 +44,8 @@ def Test(vis = False, interactive = False, type = normal) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T030_Intersection.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T030_Intersection.gmad","T030_Intersection.gdml")
+
 
     # visualisation
     if vis : 
