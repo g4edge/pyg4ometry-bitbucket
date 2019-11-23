@@ -9,7 +9,7 @@ def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
     greg = g4.Registry()
 
-    rpp = RPP("RPP_BODY", -5, 5, -5, 5, -5, 5, flukaregistry=freg)
+    rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg)
     z = Zone()
     z.addIntersection(rpp)
     region = Region("RPP_REG")
@@ -25,6 +25,7 @@ def Test(vis=False, interactive=False):
     
     if vis:
         v = vi.VtkViewer()
+        v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
