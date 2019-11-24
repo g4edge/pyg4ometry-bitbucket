@@ -193,8 +193,28 @@ GDML module
    :undoc-members:
    :show-inheritance:
 
+Fluka bodies 
+------------
+.. automodule:: pyg4ometry.fluka.Body
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Fluka module 
 ------------
+.. automodule:: pyg4ometry.fluka.FlukaRegistry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+.. automodule:: pyg4ometry.fluka.Reader
+   :members:
+   :undoc-members:
+   :show-inheritance:
+.. automodule:: pyg4ometry.fluka.FlukaRegistry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Test module 
 -----------
