@@ -23,7 +23,7 @@ def Test(vis = False, interactive = False) :
     bm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
-    ws = _g4.solid.Box("ws",1.5*wx,1.5*wy,1.5*wz, reg, "mm")
+    ws = _g4.solid.Box("ws",1.5*wx,4*wy,2.5*wz, reg, "mm")
     bs = _g4.solid.Box("bs",1.0*bx,1.0*bx,1.0*bx, reg, "mm")
 
     # structure 
@@ -33,17 +33,25 @@ def Test(vis = False, interactive = False) :
 
     bp1 = _g4.PhysicalVolume([0,0,0]        ,  [-1.5*wx/2+bx/2      ,0,0],     bl, "b_pv1", wl, reg)
 
-    bp2 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,0,0],         bl, "b_pv2", wl, reg)
-    bp3 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2+bx/2 ,bx/2,0],      bl, "b_pv3", wl, reg)
+    bp2 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,-2*bx,0],         bl, "b_pv2", wl, reg)
+    bp3 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2+bx/2 ,-2*bx+bx/2,bx],      bl, "b_pv3", wl, reg)
 
-    #bp2 = _g4.PhysicalVolume([0,0,0]        ,  [-bx/4 ,-bx/4,0],         bl, "b_pv2", wl, reg)
-    #bp3 = _g4.PhysicalVolume([0,0,0]        ,  [ bx/4 ,bx/4,0],      bl, "b_pv3", wl, reg)
+    bp4 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,-2*bx,0],         bl, "b_pv4", wl, reg)
+    bp5 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,-2*bx+bx/2,bx],      bl, "b_pv5", wl, reg)
 
-    bp4 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,0,0],         bl, "b_pv4", wl, reg)
-    bp5 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2      ,bx/2,0],      bl, "b_pv5", wl, reg)
+    bp6 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/2-bx/2      ,-2*bx,0]   ,      bl, "b_pv6", wl, reg)
+    bp7 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2      ,-2*bx+2*bx/4,bx] ,   bl, "b_pv7", wl, reg)
 
-    bp6 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/2-bx/2      ,0,0]   ,      bl, "b_pv6", wl, reg)
-    bp7 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2      ,2*bx/4,0] ,   bl, "b_pv7", wl, reg)
+    bp8 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,2*bx,0],         bl, "b_pv9", wl, reg)
+    bp9 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2+bx/2 ,2*bx+bx/2,0],      bl, "b_pv9", wl, reg)
+
+    bp10 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2     ,2*bx,0],         bl, "b_pv10", wl, reg)
+    bp11 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2     ,2*bx+bx/2,0],      bl, "b_pv11", wl, reg)
+
+    bp12 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/2-bx/2     ,2*bx,0]   ,      bl, "b_pv12", wl, reg)
+    bp13 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2     ,2*bx+2*bx/4,0] ,   bl, "b_pv13", wl, reg)
+
+
 
     # check for overlaps
     wl.checkOverlaps(True)
