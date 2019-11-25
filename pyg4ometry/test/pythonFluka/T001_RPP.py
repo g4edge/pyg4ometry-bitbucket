@@ -18,8 +18,6 @@ def Test(vis=False, interactive=False):
 
     greg = freg.toG4Registry()
 
-    # from IPython import embed; embed()
-
     # Test extents??
     # clip wv?
     
