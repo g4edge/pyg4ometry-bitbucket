@@ -19,8 +19,8 @@ setup(
 
     python_requires="==2.7.*", # refer to pep440 for writing these correctly
 
-    author="Stuart D Walker",
-    author_email="stuart.walker.2011@live.rhul.ac.uk",
+    author="Stewart T. Boogert",
+    author_email="stewart.boogert@rhul.ac.uk",
     description='Geometry package for high energy physics',
     license='GPL3',
     url='https://bitbucket.org/jairhul/pyg4ometry/',

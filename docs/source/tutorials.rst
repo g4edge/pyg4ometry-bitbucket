@@ -9,20 +9,32 @@ Making use of pyg4ometry requires the following modules
 
 .. code-block :: python
 
-   import pyg4ometry                as _pyg     # geant4  
-   import pyg4ometry.visualisation  as _vtk     # vistualisation tool kit commands
-   import pyg4ometry.gdml           as _gdml    # gdml io
-   import pyg4ometry.stl            as _stl     # STL io
-   import pyg4ometry.freecad        as _freecad # Freecad io
+   import pyg4ometry               
 
-The standard math and numpy modules are also very useful
+To make a simple geometery of a box located at the origin
 
 .. code-block :: python
 
-   import numpy as _np
-   import math  as _math
+   # load pyg4ometry
+   import pyg4ometry               
 
-To make a simple geometery of a boolean subtraction solid (a cube with a cylinder removed in the centre)
+   # registry to store gdml data
+   reg  = pyg4ometry.geant4.Registry()
+  
+   # world solid and logical
+   ws   = pyg4ometry.geant4.solid.Box("ws",50,50,50,reg)
+   wl   = pyg4ometry.geant4.LogicalVolume(ws,"G4_Galactic","wl",reg)
+
+   # box placed at origin
+   b1   = pyg4ometry.geant4.solid.Box("b1",10,10,10,reg)
+   b1_l = pyg4ometry.geant4.LogicalVolume(b1,"G4_Fe","b1_l",reg)
+   b1_p = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,0,0],b1_l,"b1_p",wl,reg)
+
+   # visualise geometry
+   v = pyg4ometry.visualisation.VtkViewer()
+   v.addLogicalVolume(wl)
+   v.addAxes(20)
+   v.view()
 
 
 A triangular mesh is generated from any physical ``volume`` by the following command 
@@ -68,6 +80,9 @@ STEP/STP input
 
 FLUKA input 
 -----------
+
+Merging geometry
+----------------
 
 STL output
 ----------

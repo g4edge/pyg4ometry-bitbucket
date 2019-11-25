@@ -9,19 +9,27 @@ Requirements
  * pyg4ometry is developed exclusively for Python 2.7.
  * VTK (Visualisation toolkit)
  * Freecad >0.17
+ * antlr4
+ * cython
+ * GitPython
+ * matplotlib
 
 Installation
 ------------
 
 To install pyg4ometry, simply run ``make install`` from the root pyg4ometry
-directory.::
+directory::
 
   cd /my/path/to/repositories/
   git clone http://bitbucket.org/jairhul/pyg4ometry
   cd pyg4ometry
   make install
 
-Or install from pypi.::
+To build pycsg with cpython::
+
+  make build_ext
+
+Or install from pypi::
 
   pip install pyg4ometry
 
