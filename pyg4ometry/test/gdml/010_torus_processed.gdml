@@ -31,7 +31,7 @@
 	</materials>
 	<solids>
 		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<torus aunit="rad" deltaphi="tdphi" lunit="mm" name="torus1" rmax="trmax" rmin="trmin" rtor="trtor" startphi="tsphi"/>
+		<torus aunit="rad" deltaphi="tdphi" lunit="m" name="torus1" rmax="trmax" rmin="trmin" rtor="trtor" startphi="tsphi"/>
 	</solids>
 	<structure>
 		<volume name="torus1Vol">

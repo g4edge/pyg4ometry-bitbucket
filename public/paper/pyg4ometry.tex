@@ -34,6 +34,7 @@
 %% The amssymb package provides various useful mathematical symbols
 \usepackage{amssymb}
 \usepackage{fancyvrb}
+\usepackage[T1]{fontenc}
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -205,7 +206,8 @@ visualisation tools based on VTK \cite{VTK4}. The origin of pyg4ometry was a set
 called BDSIM. Accelerator physicists like specialists in other areas need a tool to quickly simulate beam losses, and the subsequent interaction of the charged particle 
 beam with the accelerator material.
 
-There are existing codes that have functionality similar to pyg4ometry. Tools exist to convert CAD files to GDML, e.g. GUIMesh \cite{GUIMesh_Pinto}.
+There are existing codes that have functionality similar to pyg4ometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, 
+commercial products include ESABASE2 \cite{ESABASE2} and FASTRAD \cite{FASTRAD}. 
 CAD software can export data to STL. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.   
 
 \section{Geometric descriptions} \label{sec:geometric}
@@ -238,58 +240,58 @@ used as an exchange format for Geant4 geometries.
 \begin{table}[hbt!]
 \centering
 \begin{tabular}{|l|l|l|} \hline
-GDML tag 		&  Child tags				& pyg4ometry class 				\\ \hline
-define 			& constant				& gdml.Constant				\\
-				& variable					& gdml.Variable					\\
-				& quantity					& gdml.Quantity				\\
-				& expression 				& gdml.Expression				\\
-				& position					& gdml.Position					\\
-				& rotation					& gdml.Rotation				\\
-				& scale					& gdml.Scale					\\
-				& matrix					& gdml.Matrix					\\
-materials 			& element					& geant4.Element				\\
-				& isotope					& geant4.Isotope				\\
-				& material					& geant4.Material				\\
-solid  			& box					& geant4.solid.Box				\\
-	  			& tube					&							\\
-	  			& cutTube					&							\\
-	  			& cone					&							\\
-	  			& para					&							\\
-	  			& trd						&							\\
-	  			& trap					&							\\
-	  			& sphere					&							\\
-	  			& orb					&							\\
-	  			& torus					&							\\
-	  			& polycone				&							\\
-	  			& genericPolycone			&							\\
-	  			& polyhedra				&							\\
-	  			& eltube					&							\\
-	  			& ellipsoid					&							\\
-	  			& elcone					&							\\
-				& paraboloid				&							\\
-				& hype					& 							\\
-				& tet						& 							\\
-				& xtru					& 							\\
-				& twistedbox				& 							\\
-				& twistedtrap				& 							\\
-				& twistedtrd				& 							\\
-				& twistedtube				& 							\\
-				& arb8					& 							\\
-				& tesselated				& 							\\
-				& union					& 							\\
-				& subtraction				& 							\\
-				& intersection				& 							\\
-				& multiUnion				& 							\\
-				& scaledSolid				&							\\				
-	  			& opticalsurface			&							\\
-structure			& volume					& geant4.LogicalVolume			\\
-				& assembly				& geant4.AssemblyVolume 		\\
-				& physvol					& geant4.PhysicalVolume			\\ 
-				& replicavol				& geant4.ReplicaVolume			\\ 
-				& paravol					& geant4.ParameterisedVolume	\\ 
-				& divisionvol				& geant4.DivisionVolume			\\
-				& skinsurface				& geant4.SkinSurface			\\ 
-				& bordersurface			& geant4.BorderSurface			\\ \hline
+GDML tag 		& Child tags				& pyg4ometry class 				\\ \hline
+Define 			& Constant				& gdml.Constant				\\
+				& Variable					& gdml.Variable					\\
+				& Quantity					& gdml.Quantity				\\
+				& Expression 				& gdml.Expression				\\
+				& Position					& gdml.Position					\\
+				& Rotation					& gdml.Rotation				\\
+				& Scale					& gdml.Scale					\\
+				& Matrix					& gdml.Matrix					\\ \hline
+Materials 			& Element					& geant4.Element				\\
+				& Isotope					& geant4.Isotope				\\
+				& Material					& geant4.Material				\\ \hline
+Solid  			& Box					& geant4.solid.Box				\\
+	  			& Tube					& geant4.solid.Tubs				\\
+	  			& CutTube				& geant4.solid.CutTubs			\\
+	  			& Cone					& geant4.solid.Cons				\\
+	  			& Para					& geant4.solid.Para				\\
+	  			& Trd					& geant4.solid.Trd				\\
+	  			& Trap					& geant4.solid.Trap				\\
+	  			& Sphere					& geant4.solid.Sphere			\\
+	  			& Orb					& geant4.solid.Orb				\\
+	  			& Torus					& geant4.solid.Torus				\\
+	  			& Polycone				& geant4.solid.Polycone			\\
+	  			& GenericPolycone			& geant4.solid.GenericPolycone	\\
+	  			& Polyhedra				& geant4.solid.Polyhedra			\\
+	  			& Eltube					& geant4.solid.EllipticalTube		\\
+	  			& Ellipsoid					& geant4.solid.Ellipsoid			\\
+	  			& Elcone					& geant4.solid.EllipticalCone		\\
+				& Paraboloid				& geant4.solid.Paraboloid			\\
+				& Hype					& geant4.solid.Hyperboloid		\\
+				& Tet						& geant4.solid.Tet				\\
+				& Xtru					& geant4.solid.ExtrudedSolid		\\
+				& TwistedBox				& geant4.solid.TwistedBox		\\
+				& TwistedTtap				& geant4.solid.TwistedTrap		\\
+				& TwistedTrd				& geant4.solid.TwistedTrd 		\\
+				& TwistedTube				& geant4.solid.TwistedTube		\\
+				& Arb8					& geant4.solid.GenericTrap		\\
+				& Tessellated				& geant4.solid.TessellatedSolid 	\\
+				& Union					& geant4.solid.Union				\\
+				& Subtraction				& geant4.solid.Subtraction			\\
+				& Intersection				& geant4.solid.Intersection 		\\
+				& MultiUnion				& geant4.solid.MultiUnion 			\\
+				& ScaledSolid				& geant4.solid.ScaledSolid		\\				
+	  			& OpticalSurface			& geant4.solid.OpticalSurface		\\ \hline
+Structure			& Volume					& geant4.LogicalVolume			\\
+				& Assembly				& geant4.AssemblyVolume 		\\
+				& PhysVol					& geant4.PhysicalVolume			\\ 
+				& ReplicaVol				& geant4.ReplicaVolume			\\ 
+				& ParaVol					& geant4.ParameterisedVolume	\\ 
+				& DivisionVol				& geant4.DivisionVolume			\\
+				& SkinSurface				& geant4.SkinSurface			\\ 
+				& BorderSurface			& geant4.BorderSurface			\\ \hline
 
 \end{tabular}
 \caption{GDML tags and corresponding pyg4ometry classes.}
@@ -369,7 +371,7 @@ A pure geometry description is an insufficient description for a PT simulation. 
 
 \subsection{Overlap detection}
 All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
-throughsuch a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
+through such a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
 and determining if the resulting mesh is empty. Generally the overlap detection algorithm proceeds as 
 
 {\small 
@@ -459,7 +461,7 @@ is based on OpenCASCADE. A STEP CAD file could be considered as a hierarchical t
 collection of part features. A part feature can be used to create  a triangular mesh which can used to create a pyg4ometry tessellated solid. Assignment of materials 
 and visualisation attributes. 
 
-\section{Geant4 and FLUKA conversion}
+\section{FLUKA to Geant4 conversion}
 FLUKA geometry is based upon a limited set of primitive volumes which can be combined using logical operations. Many FLUKA primitives are infinite in extent, so 
 to emulate FLUKA geometry construction large but finite extent Geant4 primitive solids are used. Table XXX shows the mapping between FLUKA and Geant4 objects.
 An ANTLR based expression parser is used to load and comprehend the FLUKA input syntax, an example is shown in XXX. Each FLUKA body is matched to a Geant4 
@@ -467,37 +469,77 @@ solid and a FLUKA region is represented by a Geant4 CSG tree is formed using the
 
 \begin{table}[hbt!]
 \centering
-\begin{tabular}{|l|l|l|} \hline
-Fluka body			& note			& pyg4ometry class 				\\ \hline
-RPP (done)			&				&							\\
-BOX					&				&							\\
-SPH (done)			&				&							\\
-RCC (done)			&				&							\\
-REC (done)			&				&							\\
-TRC (done)			&				&							\\
-ELL 					&				&							\\
-WED					&				&							\\
-RAW					&				&							\\
-ARB					&				&							\\
-XYP (done)			&				&							\\
-XZP (done)			&				&							\\
-YZP (done)			&				&							\\
-PLA (done)			&				&							\\
-XCC (done)			&				&							\\
-YCC (done)			&				&							\\
-ZCC (done)			&				&							\\
-XEC (done)			&				&							\\
-YEC (done)			&				&							\\
-ZEC (done)			&				&							\\
-QUA (done)			&				&							\\ \hline
+\begin{tabular}{|l|l|} \hline
+FLUKA body							& pyg4ometry class 		\\ \hline
+RPP 	(Rectangular parallelepiped)			& Box				\\
+BOX	(General rectangular parallelepiped)		& Box				\\
+SPH 	(Sphere)							& Orb				\\
+RCC (Right circular cylinder)				& Cone				\\
+REC (Right elliptical cylinder)				& EllipticalTube			\\
+TRC (Truncated Right Angle Cone)			& Cone				\\
+ELL (Ellipsoid of Revolution) 				& Ellipsoid				\\
+WED/RAW (Right Angle Wedge)			& ExtrudedSolid		\\
+ARB	(Arbitrary Convex Polyhedron)			& TessellatedSolid		\\
+XYP 	($X$-$Y$ Infinite half-space)			& Box				\\
+XZP 	($X$-$Z$ Infinite half-space)			& Box				\\
+YZP 	($Y$-$Z$ Infinite half-space)			& Box				\\
+PLA (Generic infinite half-space)			& Box				\\
+XCC ($X$-axis Infinite Circular Cylinder)		& Tubs				\\
+YCC ($Y$-axis Infinite Circular Cylinder)		& Tubs				\\
+ZCC 	($Z$-axis Infinite Circular Cylinder)		& Tubs				\\
+XEC 	($X$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
+YEC 	($Y$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
+ZEC ($Z$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
+QUA (Quadric surface) 					& TessellatedSolid		\\ \hline
 \end{tabular}
 \caption{Fluka geometry directives pyg4ometry classes.}
 \end{table}
 
 \begin{enumerate} 
+\item length safety
 \item infinite planes
 \item disjoint unions 
 \end{enumerate} 
+
+\section{Geant4 to FLUKA conversion}
+
+\begin{table}[hbt!]
+\centering
+\begin{tabular}{| l | l | } \hline
+Geant4 solid			& FLUKA constuction			\\ \hline
+Box					& XYP, XZP, YZP 				\\
+Tube					& ZCC, XYP	 				\\
+CutTube				& ZCC, PLA					\\
+Cone				& TRC						\\
+Para					& ARB						\\
+Trd					& ARB						\\
+Trap					& ARB						\\
+Sphere				& SPH, WED					\\
+Orb					& SPH						\\
+Torus				& (PLA)						\\
+Polycone				& (PLA)						\\
+GenericPolycone		& (PLA)						\\
+Polyhedra				& (PLA)						\\
+Eltube				& ZEC, XYP					\\
+Ellipsoid				& ELL						\\
+Elcone				& QUA						\\
+Paraboloid			& QUA						\\
+Hype					& QUA						\\
+Tet					& PLA						\\
+Xtru					& PLA						\\
+TwistedBox			& (PLA)						\\
+TwistedTtap			& (PLA)						\\
+TwistedTrd			& (PLA)				 		\\
+TwistedTube			& (PLA)						\\
+Arb8					& ARB						\\
+Tessellated			& (PLA)					 	\\
+Union				& | zone1 | zone2				\\
+Subtraction			& +zone1 -zone2				\\
+Intersection			& +zone1 +zone2				\\
+MultiUnion			& | zone1 | zone2 | zone3 | ...	\\
+ScaledSolid			& geant4.solid.ScaledSolid		\\ \hline				
+\end{tabular}
+\end{table}
 
 \section{Interesting use cases}
 pyg4ometry is designed to be as flexible as possible and offer the user a wide range of usage styles and workflows. The following sections describe a selection of 

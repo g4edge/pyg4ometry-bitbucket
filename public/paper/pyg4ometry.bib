@@ -81,3 +81,23 @@ abstract = "Detailed radiation analysis of instruments flown in space is critica
 Program Summary
 Program Title: GUIMesh Program Files doi: http://dx.doi.org/10.17632/c3c9xbspzp.1 Licensing provisions: GNU General Public License 3 (GPLv3) Programming language: Python Nature of problem: No open-source software allows to import STEP geometries intro Geant4, one of the most powerful toolkits to simulate radiation interaction with matter. Since CAD software is extensively used in the design of particle and radiation detection instruments, it is highly desirable for physicists that STEP geometries can be imported to Geant4 with little effort instead of having to code structures made of a very large number of solid volumes which are difficult to accurately reproduce with Geant4 C++ classes. Solution method: STEP geometries are converted to tessellated volumes (with some margin of error) using FreeCAD libraries. A Python script then writes GDML files based on the results allowing users to import these geometries with Geant4. A graphical user interface provides several options to the user, including material assignment and mesh precision setting for each volume."
 }
+
+@software{ESABASE2,
+title = "{ESABASE2}",
+url = "https://esabase2.net/product/",
+}
+
+@software{FASTRAD,
+title = "{FASTRAD}",
+url = "https://www.fastrad.net",
+}
+
+@software(InStep,
+title = "{I}n{S}tep",
+url = "https://www.solveering.com/InStep/instep.aspx",
+}
+
+@software{CADMC,
+title = "(CADMC)"
+url = "http://polar.psi.ch/cadmc/",
+}
