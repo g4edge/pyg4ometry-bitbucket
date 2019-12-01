@@ -516,10 +516,10 @@ Trd					& ARB						\\
 Trap					& ARB						\\
 Sphere				& SPH, WED					\\
 Orb					& SPH						\\
-Torus				& (PLA)						\\
-Polycone				& (PLA)						\\
-GenericPolycone		& (PLA)						\\
-Polyhedra				& (PLA)						\\
+Torus				& ZCC, PLA					\\
+Polycone				& ARB						\\
+GenericPolycone		& ARB						\\
+Polyhedra				& ARB						\\
 Eltube				& ZEC, XYP					\\
 Ellipsoid				& ELL						\\
 Elcone				& QUA						\\
@@ -527,18 +527,19 @@ Paraboloid			& QUA						\\
 Hype					& QUA						\\
 Tet					& PLA						\\
 Xtru					& PLA						\\
-TwistedBox			& (PLA)						\\
-TwistedTtap			& (PLA)						\\
-TwistedTrd			& (PLA)				 		\\
-TwistedTube			& (PLA)						\\
+TwistedBox			& ARB						\\
+TwistedTtap			& ARB						\\
+TwistedTrd			& ARB				 		\\
+TwistedTube			& ARB						\\
 Arb8					& ARB						\\
-Tessellated			& (PLA)					 	\\
+Tessellated			& N/A					 	\\
 Union				& | zone1 | zone2				\\
 Subtraction			& +zone1 -zone2				\\
 Intersection			& +zone1 +zone2				\\
 MultiUnion			& | zone1 | zone2 | zone3 | ...	\\
 ScaledSolid			& geant4.solid.ScaledSolid		\\ \hline				
 \end{tabular}
+\caption{GDML/Geant4 solids and the mapping to FLUKA bodies}
 \end{table}
 
 \section{Interesting use cases}
