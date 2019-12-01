@@ -19,7 +19,7 @@
 %% \documentclass[final,1p,times]{elsarticle}
 %% \documentclass[final,1p,times,twocolumn]{elsarticle}
 %% \documentclass[final,3p,times]{elsarticle}
-%\documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
 %% \documentclass[final,5p,times]{elsarticle}
 \documentclass[final,5p,times,twocolumn]{elsarticle}
 
@@ -35,6 +35,7 @@
 \usepackage{amssymb}
 \usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -194,10 +195,10 @@ have diverse uses, shielding calculations for radiological protection, detector 
 simulation are some examples. A fundamental requirement of all of the codes is to supply a computer readable description of the physical geometry that 
 the particles are passing through.  The creation of geometry files is typically a very time consuming activity and the simulation validity and performance is directly 
 dependent on the quality of the geometry. The requirement of a geometry system that allows the conversion between files prepared for different codes will 
-enable cross checks of the physics processes in different particle transport codes. Parallel to the creation of geometry files for PT programs, usually computer assisted 
-design (CAD) files exist for systems which need to be simulated in PT programmes. The fundamental geometric representations in CAD files is typically not 
-amenable for PT programmes.  For these reasons it is advantageous to create a software tool that allows particle transport code users to rapidly develop 
-geometry files, convert between common PT programme geometry formats and finally import CAD models. 
+enable cross checks of the physics processes in different particle transport codes. Parallel to the creation of geometry files for RT programs, usually computer assisted 
+design (CAD) files exist for systems which need to be simulated in RT programmes. The fundamental geometric representations in CAD files is typically not 
+amenable for RT programmes.  For these reasons it is advantageous to create a software tool that allows particle transport code users to rapidly develop 
+geometry files, convert between common RT programme geometry formats and finally import CAD models. 
 
 This paper describes such geometry creation and conversion package called {\em pyg4ometry}, implemented in {\em Python} and internally based on the Geant4 geometry 
 description. The main features of  {\em pyg4ometry} are a python scripting API to rapidly design parametrised geometry, conversion to and from  FLUKA geometry 
@@ -215,16 +216,19 @@ Central to description of a geometric description of a system is how a solid is 
 geometry and these are described briefly in the following sections.  
 
 \subsection{Constructive solid geometry (CSG)}
-Constructive solid geometry uses boolean operations to model complex surfaces which represent a solid. Typically simple finite or infinite solids are combined 
-with operations, such as union, intersection and difference to model more complex solids. FLUKA uses CSG to model solids.
+Constructive solid geometry uses boolean operations (subtraction, intersection and union) between simple solids shapes (cube, cylinder, sphere etc) to model complex 
+surfaces which represent a solid. Typically simple finite or infinite solids are combined with operations, such as union, intersection and difference to model more 
+complex solids. FLUKA uses CSG to model solids.
 
 \subsection{Boundary representation (BREP)}
-Boundary representation consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. No current PT applications use native 
-file formats employed by CAD systems. The conversion of CAD BREP formats for loading in PT applications is typically performed via a tessellated format. 
+Boundary representation consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. No current RT applications use native 
+file formats employed by CAD systems. The conversion of CAD BREP formats for loading in PT applications is typically performed via a tessellated format, although it 
+is possible to decompose BREP descriptions to simple half-spaces and solids as used in CSG descriptions. 
 
 \subsection{Tessellated polygons}
 Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL and more 
-modern variants being PLY, OBJ, etc.  
+modern variants being PLY, OBJ, etc. For solids with curved faces a tessellated mesh will always give an approximate description. As the mesh deviation distance from the 
+solid decreases the number of polygons increases and hence the memory consumption and execution time of the RTMC. 
 
 \subsection{Geant4 geometery}
 Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes XX fundamental solids, although it does not store a sense 
@@ -307,7 +311,7 @@ should be able to start creating geometry in pyg4ometry immediately. In the foll
   \normalsize
   \centering
   \includegraphics[width=0.7\textwidth]{./diagrams/workflow.pdf}
-  \caption{\label{fig:workflow}Workflow}
+  \caption{\label{fig:workflow}Pyg4ometry geometry conversion workflow.}
 \end{figure*}
 
     
@@ -319,15 +323,9 @@ The AST terminates on either expressions which evaluate to numbers or GDML varia
 Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of solid parameters and placements. This allows a user to update variables whilst
 defining geometry and the expression engine will update all internal values.  
  
-\subsection{Tessellation of solids}
-For each Geant4 primitive solid a triangular tessellated mesh is generated and cached. This mesh is then used to determine the extent of placed instances of 
-geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique. Triangular meshes based
-on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various algorithms from 
-TetGEN can be employed to give the meshes more desirable features. 
-
-\subsection{Replica, parametrised and looped volumes}
-A powerful feature of Geant4 and hence GDML is the ability to either repeat or parametrise geometry. The create mulitple replicas of a volume in a cartesian, cylindrical or 
-spherical grid is known as a ReplicaVolume.  
+\subsection{Replica, division, parametrised and looped volumes}
+A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The create multiple replicas of a volume in a cartesian, cylindrical or 
+spherical grid is known as a ReplicaVolume. Currently GDML loops are not supported by pyg4ometry and will be implemented in a future release. 
 
 \subsection{Internal data representation} 
 The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates python ordered dictionaries that are  used to store the main 
@@ -339,7 +337,13 @@ For each input format available in pyg4ometry a dedicated {\it Reader} class is 
 and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a registry which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
 
- \subsection{Volume bounding} 
+\subsection{Tessellation of solids (meshing)}
+For each Geant4 primitive solid a triangular tessellated mesh is generated and cached. This mesh is then used to determine the extent of placed instances of 
+geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique. Triangular meshes based
+on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various algorithms from 
+TetGEN can be employed to give the meshes more desirable features. 
+
+\subsection{Volume bounding} 
 If a user is creating a placing multiple {\em daughter} volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully encompasses the 
 daughter volumes. Overlaps between daughter volumes and the mother can be detected, but it is desirable to have a mother volume shape that efficiently holds all of its daughters. 
  
@@ -367,7 +371,8 @@ color, surface or wireframe representation and visibility. Overlaps detected in 
 the potential overlaps. This is dependent on the accuracy of the mesh generated and is a particular problem with meshes based on curved surfaces.    
 
 \subsection{Adding properties to volumes}
-A pure geometry description is an insufficient description for a PT simulation. Often other attributes need to be assigned for example material definition, magnetic field or    
+A pure geometry description is an insufficient description for a RT simulation. Often other attributes need to be assigned for example material definition, magnetic field or  
+optical surface properties.  
 
 \subsection{Overlap detection}
 All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
@@ -394,7 +399,7 @@ PT simulation. This algorithm clearly favours geometry descriptions which have a
 A basic Qt based graphical user interface is also available with pyg4ometry. If a model has a large number of volumes defined in a hierarchical tree structure, it is cumbersome for the user to find the logical or physical volume.    
 
 \section{Rapid geometry modelling}
-Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the PT problem, vary 
+Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the RT problem, vary 
 the parameters of the geometry and visualise the geometry. Finally when the desired result without geometry overlaps is finalised a GDML file can be output
 from the internal memory representation. 
 
@@ -463,7 +468,7 @@ and visualisation attributes.
 
 \section{FLUKA to Geant4 conversion}
 FLUKA geometry is based upon a limited set of primitive volumes which can be combined using logical operations. Many FLUKA primitives are infinite in extent, so 
-to emulate FLUKA geometry construction large but finite extent Geant4 primitive solids are used. Table XXX shows the mapping between FLUKA and Geant4 objects.
+to emulate FLUKA geometry construction large but finite extent Geant4 primitive solids are used. Table \ref{tab:Fluka2Geant4} shows the mapping between FLUKA and Geant4 objects.
 An ANTLR based expression parser is used to load and comprehend the FLUKA input syntax, an example is shown in XXX. Each FLUKA body is matched to a Geant4 
 solid and a FLUKA region is represented by a Geant4 CSG tree is formed using the pyg4ometry classes. 
 
@@ -492,7 +497,7 @@ YEC 	($Y$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
 ZEC ($Z$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
 QUA (Quadric surface) 					& TessellatedSolid		\\ \hline
 \end{tabular}
-\caption{Fluka geometry directives pyg4ometry classes.}
+\caption{FLUKA geometry directives pyg4ometry classes.} \label{tab:Fluka2Geant4}
 \end{table}
 
 \begin{enumerate} 
@@ -502,36 +507,39 @@ QUA (Quadric surface) 					& TessellatedSolid		\\ \hline
 \end{enumerate} 
 
 \section{Geant4 to FLUKA conversion}
+It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG region.
+Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. 
+
 
 \begin{table}[hbt!]
 \centering
 \begin{tabular}{| l | l | } \hline
-Geant4 solid			& FLUKA constuction			\\ \hline
-Box					& XYP, XZP, YZP 				\\
-Tube					& ZCC, XYP	 				\\
-CutTube				& ZCC, PLA					\\
-Cone				& TRC						\\
-Para					& ARB						\\
-Trd					& ARB						\\
-Trap					& ARB						\\
-Sphere				& SPH, WED					\\
-Orb					& SPH						\\
-Torus				& ZCC, PLA					\\
-Polycone				& ARB						\\
-GenericPolycone		& ARB						\\
-Polyhedra				& ARB						\\
-Eltube				& ZEC, XYP					\\
-Ellipsoid				& ELL						\\
-Elcone				& QUA						\\
-Paraboloid			& QUA						\\
-Hype					& QUA						\\
-Tet					& PLA						\\
-Xtru					& PLA						\\
-TwistedBox			& ARB						\\
-TwistedTtap			& ARB						\\
-TwistedTrd			& ARB				 		\\
-TwistedTube			& ARB						\\
-Arb8					& ARB						\\
+Geant4 solid			& FLUKA region constuction		\\ \hline
+Box					& +2 XYP + 2 XZP + 2 YZP 		\\
+Tube					& +ZCC - 2 XYP	 			\\
+CutTube				& +ZCC - 2 PLA				\\
+Cone				& +TRC						\\
+Para					& +ARB						\\
+Trd					& +ARB						\\
+Trap					& +ARB						\\
+Sphere				& +SPH - SPH  - WED - TRC		\\
+Orb					& +SPH						\\
+Torus				& +$N$ ZCC  - $N$ PLA			\\
+Polycone				& +$N$ ARB					\\
+GenericPolycone		& +$N$ ARB					\\
+Polyhedra				& +$N$ ARB					\\
+Eltube				& +ZEC  - 2 XYP				\\
+Ellipsoid				& +ELL - 2 XYP		 			\\
+Elcone				& +QUA - 2 XYP				\\
+Paraboloid			& +QUA - 2 XYP				\\
+Hype					& +QUA - 2 XYP				\\
+Tet					& +ARB						\\
+Xtru					& +$N$ ARB					\\
+TwistedBox			& +$N$ ARB					\\
+TwistedTtap			& +$N$ ARB					\\
+TwistedTrd			& +$N$ ARB				 	\\
+TwistedTube			& +$N$ ARB					\\
+Arb8					& +ARB						\\
 Tessellated			& N/A					 	\\
 Union				& | zone1 | zone2				\\
 Subtraction			& +zone1 -zone2				\\
@@ -553,7 +561,7 @@ It is possible to mix different geometries from STL, STEP, GDML and FLUKA in sin
 Often existing CAD models have either missing details or too much detail. 
 
 \subsection{Overlap checking in geometry}
-Often small errors in geometry cause unexpected PT code behaviour.  
+Often small errors in geometry cause unexpected RT code behaviour.  
 
 
 \section{Performance of converted geometry in Geant4}
@@ -565,7 +573,7 @@ high energy particles are
 \section{Conclusions}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in particle transport Monte Carlo programmes will save significant 
 amounts of user effort and ultimately yield more accurate simulations. Pyg4ometry is a relatively complete implementation of a geometry creation tool, whilst heavily 
-internally based on Geant4 and GDML can have utility for users of all PT codes. Pyg4ometry can clearly be extended to other formats or applications. As for applications,
+internally based on Geant4 and GDML can have utility for users of all RT codes. Pyg4ometry can clearly be extended to other formats or applications. As for applications,
 examples include  the  generation triangular mesh structures for GPU accelerated photon tracking in liquid noble  dark matter detectors and geometries for event visualisation. 
 Although not implemented in the current version, a C++ output writer can be quickly implemented to generate geometry which can be compiled into a Geant4 application. 
 
