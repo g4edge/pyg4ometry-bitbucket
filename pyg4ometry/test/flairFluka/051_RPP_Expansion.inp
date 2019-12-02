@@ -13,7 +13,6 @@ $start_expansion 3.0
 RPP bb1        -50. 50. -50. 50. -50. 50.
 $end_expansion 
 END
-bbr          5 -bb
 vr           5 +bb -bb1
 bbrr         5 +bb1
 END

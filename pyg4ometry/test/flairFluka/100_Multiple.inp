@@ -16,7 +16,6 @@ $start_translat -125.0 -125.0 0.0
 RPP bb2        -50. 50. -50. 50. -50. 50.
 $end_translat 
 END
-bbr          5 -bb
 vr           5 +bb -bb1 -bb2
 bbrr1        5 +bb1
 bbrr2        5 +bb2

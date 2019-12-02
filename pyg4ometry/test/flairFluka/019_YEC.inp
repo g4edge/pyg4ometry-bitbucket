@@ -11,7 +11,6 @@ GEOBEGIN                                                              COMBNAME
 RPP bb         -200. 200. -200. 200. -200. 200.
 YEC bb1        0.0 0.0 50. 100.
 END
-bbr          5 -bb
 vr           5 +bb -bb1
 bbrr         5 +bb +bb1
 END
