@@ -21,6 +21,9 @@ def Test(vis=False, interactive=False):
     region = Region("RPP_REG")
     region.addZone(z1)
     region.addZone(z2)
+
+    cz = region.get_connected_zones()
+
     freg.addRegion(region)
 
     greg = freg.toG4Registry()
