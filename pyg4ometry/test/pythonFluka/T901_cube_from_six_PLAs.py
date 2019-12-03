@@ -1,11 +1,8 @@
-import os
-
 import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RPP, RCC
+from pyg4ometry.fluka.Body import XYP, XZP, YZP
 from pyg4ometry.fluka.Region import Region, Zone
 from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
-import pyg4ometry.gdml as gdml
 
 
 def Test(vis=False, interactive=False):
@@ -13,21 +10,34 @@ def Test(vis=False, interactive=False):
     greg = g4.Registry()
     # I pick 20 because that's the length of the axes added below, so
     # verifying the resulting cube is of the correct length is trivial.
-    rpp = RPP("RPP_BODY", 0, 20., 0, 20., 0., 20., flukaregistry=freg)
-    rcc = RCC("RCC_BODY", [0., 0., 20.], [0., 20., 0.], 10., flukaregistry=freg)
+    xyp_lo = XYP("XYP1_BODY", 0, flukaregistry=freg)
+    xyp_hi = XYP("XYP2_BODY", 20.0, flukaregistry=freg)
 
-    z1 = Zone()
-    z1.addIntersection(rpp)
-    z2 = Zone()
-    z2.addIntersection(rcc)
-    z2.addSubtraction(rpp)
+    xzp_lo = XZP("XZP1_BODY", 0, flukaregistry=freg)
+    xzp_hi = XZP("XZP2_BODY", 20.0, flukaregistry=freg)
+
+    yzp_lo = YZP("YZP1_BODY", 0, flukaregistry=freg)
+    yzp_hi = YZP("YZP2_BODY", 20.0, flukaregistry=freg)
+
+
+
+    z = Zone()
+
+    z.addIntersection(xyp_hi)
+    z.addSubtraction(xyp_lo)
+
+    z.addIntersection(xzp_hi)
+    z.addSubtraction(xzp_lo)
+
+    z.addIntersection(yzp_hi)
+    z.addSubtraction(yzp_lo)
 
 
     region = Region("REG_INF")
-    region.addZone(z1)
-    region.addZone(z2)
+    region.addZone(z)
 
     freg.addRegion(region)
+
     greg = freg.toG4Registry()
 
 
@@ -41,13 +51,6 @@ def Test(vis=False, interactive=False):
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    w = gdml.Writer()
-    w.addDetector(greg)
-    gdml_name = "REUSE.gdml"
-    gmad_name = "REUSE.gmad"
-    w.write(os.path.join(os.path.dirname(__file__), gdml_name))
-    w.writeGmadTester(gmad_name, gdml_name)
-        
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
 
 
