@@ -13,26 +13,33 @@ def Test(vis=False, interactive=False):
 
     # trivially coplanar:
     rcc1 = RCC("RCC_BODY1", [0, 0, 0], [5, 5, 5], 2.5, flukaregistry=freg)
-    rcc2 = RCC("RCC_BODY2", [5, 5, 5], [5, 5, 5], 2.5, flukaregistry=freg)
+    rcc2 = RCC("RCC_BODY2", [10, 10, 10], [-5, -5, -5], 2.5, flukaregistry=freg)
+
+    rcc3 = RCC("RCC_BODY3", [10, 10, 10], [5, 5, 5], 2.5, flukaregistry=freg)
 
     z1 = Zone()
     z2 = Zone()
+    z3 = Zone()
 
     z1.addIntersection(rcc1)
     z2.addIntersection(rcc2)
+    z3.addIntersection(rcc3)
 
     region1 = Region("RCC_REG1")
     region2 = Region("RCC_REG2")
+    region3 = Region("RCC_REG3")
 
     region1.addZone(z1)
     region2.addZone(z2)
+    region3.addZone(z3)
 
     freg.addRegion(region1)
     freg.addRegion(region2)
-
+    freg.addRegion(region3)
 
     # default is True, but to be explicit:
-    greg = freg.toG4Registry(with_length_safety=True)
+    greg = freg.toG4Registry(with_length_safety=True,
+                             split_disjoint_unions=False)
 
     wv = greg.getWorldVolume()
     wv.checkOverlaps()
