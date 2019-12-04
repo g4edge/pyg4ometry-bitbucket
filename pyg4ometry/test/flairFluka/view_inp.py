@@ -10,11 +10,12 @@ def main(filein):
     r = Reader(filein)
     greg = r.flukaregistry.toG4Registry()
 
+    wlv = greg.getWorldVolume()
+    wlv.checkOverlaps()
     v = vi.VtkViewer()
     v.addAxes(length=20)
-    v.addLogicalVolume(greg.getWorldVolume())
+    v.addLogicalVolume(wlv)
     v.view(True)
-
 
     w = gdml.Writer()
     w.addDetector(greg)
