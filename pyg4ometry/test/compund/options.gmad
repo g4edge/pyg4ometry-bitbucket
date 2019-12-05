@@ -1,0 +1,11 @@
+option, ngenerate=1,
+	physicsList="em",
+	beampipeRadius=4.0*cm,
+	beampipeThickness=0.3*cm,
+	outerDiameter=0.5*m,
+	defaultRangeCut=1*m,	
+	prodCutPositrons=1*m,
+	prodCutElectrons=1*m,
+	prodCutPhotons=1*m,
+	checkOverlaps=1,
+	elossHistoBinWidth=10*cm;
