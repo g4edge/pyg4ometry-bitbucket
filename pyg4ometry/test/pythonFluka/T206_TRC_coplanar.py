@@ -1,6 +1,6 @@
 import os
 import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RCC
+from pyg4ometry.fluka.Body import TRC
 from pyg4ometry.fluka.Region import Region, Zone
 from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
@@ -12,22 +12,21 @@ def Test(vis=False, interactive=False):
     greg = g4.Registry()
 
     # trivially coplanar:
-    rcc1 = RCC("RCC_BODY1", [0, 0, 0], [5, 5, 5], 2.5, flukaregistry=freg)
-    rcc2 = RCC("RCC_BODY2", [10, 10, 10], [-5, -5, -5], 2.5, flukaregistry=freg)
-
-    rcc3 = RCC("RCC_BODY3", [10, 10, 10], [5, 5, 5], 2.5, flukaregistry=freg)
+    trc1 = TRC("TRC_BODY1", [0, 0, 0], [5, 5, 5], 5, 2, flukaregistry=freg)
+    trc2 = TRC("TRC_BODY2", [10, 10, 10], [-5, -5, -5], 5, 2, flukaregistry=freg)
+    trc3 = TRC("TRC_BODY3", [10, 10, 10], [5, 5, 5], 5, 2, flukaregistry=freg)
 
     z1 = Zone()
     z2 = Zone()
     z3 = Zone()
 
-    z1.addIntersection(rcc1)
-    z2.addIntersection(rcc2)
-    z3.addIntersection(rcc3)
+    z1.addIntersection(trc1)
+    z2.addIntersection(trc2)
+    z3.addIntersection(trc3)
 
-    region1 = Region("RCC_REG1")
-    region2 = Region("RCC_REG2")
-    region3 = Region("RCC_REG3")
+    region1 = Region("TRC_REG1")
+    region2 = Region("TRC_REG2")
+    region3 = Region("TRC_REG3")
 
     region1.addZone(z1)
     region2.addZone(z2)

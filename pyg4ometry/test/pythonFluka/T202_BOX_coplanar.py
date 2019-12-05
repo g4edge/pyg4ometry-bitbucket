@@ -1,6 +1,6 @@
 import os
 import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RCC
+from pyg4ometry.fluka.Body import BOX
 from pyg4ometry.fluka.Region import Region, Zone
 from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
@@ -12,30 +12,35 @@ def Test(vis=False, interactive=False):
     greg = g4.Registry()
 
     # trivially coplanar:
-    rcc1 = RCC("RCC_BODY1", [0, 0, 0], [5, 5, 5], 2.5, flukaregistry=freg)
-    rcc2 = RCC("RCC_BODY2", [10, 10, 10], [-5, -5, -5], 2.5, flukaregistry=freg)
+    box1 = BOX("BOX1_BODY",
+               [0, 0, 0],
+               [0, 0, 10],
+               [0, 10, 0],
+               [10, 0, 0],
+               flukaregistry=freg)
 
-    rcc3 = RCC("RCC_BODY3", [10, 10, 10], [5, 5, 5], 2.5, flukaregistry=freg)
+    box2 = BOX("BOX2_BODY",
+               [2, 2, 2],
+               [0, 0, 6],
+               [0, 6, 0],
+               [6, 0, 0],
+               flukaregistry=freg)
 
     z1 = Zone()
     z2 = Zone()
-    z3 = Zone()
 
-    z1.addIntersection(rcc1)
-    z2.addIntersection(rcc2)
-    z3.addIntersection(rcc3)
+    z1.addIntersection(box1)
+    z1.addSubtraction(box2)
+    z2.addIntersection(box2)
 
-    region1 = Region("RCC_REG1")
-    region2 = Region("RCC_REG2")
-    region3 = Region("RCC_REG3")
+    region1 = Region("BOX_REG1")
+    region2 = Region("BOX_REG2")
 
     region1.addZone(z1)
     region2.addZone(z2)
-    region3.addZone(z3)
 
     freg.addRegion(region1)
     freg.addRegion(region2)
-    freg.addRegion(region3)
 
     # default is True, but to be explicit:
     greg = freg.toG4Registry(with_length_safety=True,
@@ -53,16 +58,6 @@ def Test(vis=False, interactive=False):
         v.addLogicalVolume(wv)
         v.view(interactive=interactive)
 
-
-    # gdml output
-    w = gdml.Writer()
-    w.addDetector(greg)
-    this_file_name = __file__
-    gmad_name = this_file_name.rstrip(".py") + ".gmad"
-    gdml_name = this_file_name.rstrip(".py") + ".gdml"
-    w.write(os.path.join(os.path.dirname(__file__), gdml_name))
-    w.writeGmadTester(os.path.join(os.path.dirname(__file__))+gmad_name,
-                      gdml_name)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
 

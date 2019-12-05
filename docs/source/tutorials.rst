@@ -51,7 +51,7 @@ Given an output from ``m = volume.pycsgmesh()`` it can be viewed in the ``vtk`` 
     v.addPycsgMeshList(m)
     v.view();
 
-To write an STL file from ``m = volume.pycshmesh()`` 
+To write an STL file from ``m = volume.pycsgmesh()`` 
 
 .. code-block :: python
 
