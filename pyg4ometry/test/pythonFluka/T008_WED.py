@@ -19,16 +19,15 @@ def Test(vis=False, interactive=False):
               [-20, 0, 0], # one transverse side.
               [0, 0, -20], # length vector.
               [0, -20, 0], # the other transverse side.
-              freg)
+               flukaregistry=freg)
 
     wed2 = WED("WED2_BODY",
                [0, 0, 0],
                [20, 0, 0], # one transverse side.
                [0, 0, 20], # length vector.
                [0, 20, 0], # the other transverse side.
-               freg)
+               flukaregistry=freg)
 
-    
     z1 = Zone()
     z1.addIntersection(wed1)
 
