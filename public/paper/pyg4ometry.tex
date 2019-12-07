@@ -151,19 +151,19 @@ Geant; Monte Carlo; Particle; Transport; Geometry;
 
 \begin{small}
 \noindent
-{\em Program Title: pyg4ometry }                                         \\
-{\em Licensing provisions(please choose one): GPLv3 }                                   \\
-{\em Programming language: python, C/C++}                                   \\
+{\em Program Title: pyg4ometry }                                         		\\
+{\em Licensing provisions(please choose one): GPLv3 }			\\
+{\em Programming language: python, C/C++}                         		\\
 
-{\em Supplementary material:}                                 \\
+{\em Supplementary material:}                                 				\\
   % Fill in if necessary, otherwise leave out.
-{\em Journal reference of previous version:}                  \\
+{\em Journal reference of previous version:}                  			\\
   %Only required for a New Version summary, otherwise leave out.
-{\em Does the new version supersede the previous version?:}   \\
+{\em Does the new version supersede the previous version?:}   	\\
   %Only required for a New Version summary, otherwise leave out.
-{\em Reasons for the new version:}\\
+{\em Reasons for the new version:}							\\
   %Only required for a New Version summary, otherwise leave out.
-{\em Summary of revisions:}*\\
+{\em Summary of revisions:}*								\\
   %Only required for a New Version summary, otherwise leave out.
 
 {\em Nature of problem(approx. 50-250 words):}\\
@@ -222,7 +222,7 @@ complex solids. FLUKA uses CSG to model solids.
 
 \subsection{Boundary representation (BREP)}
 Boundary representation consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. No current RT applications use native 
-file formats employed by CAD systems. The conversion of CAD BREP formats for loading in PT applications is typically performed via a tessellated format, although it 
+file formats employed by CAD systems. The conversion of CAD BREP formats for loading in RT applications is typically performed via a tessellated format, although it 
 is possible to decompose BREP descriptions to simple half-spaces and solids as used in CSG descriptions. 
 
 \subsection{Tessellated polygons}
@@ -338,7 +338,7 @@ and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes
 Output consists of taking the registry and writing the appropriate GDML.
 
 \subsection{Tessellation of solids (meshing)}
-For each Geant4 primitive solid a triangular tessellated mesh is generated and cached. This mesh is then used to determine the extent of placed instances of 
+For each Geant4 primitive solid a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent of placed instances of 
 geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique. Triangular meshes based
 on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various algorithms from 
 TetGEN can be employed to give the meshes more desirable features. 
@@ -375,7 +375,7 @@ A pure geometry description is an insufficient description for a RT simulation. 
 optical surface properties.  
 
 \subsection{Overlap detection}
-All PT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
+All RT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
 through such a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
 and determining if the resulting mesh is empty. Generally the overlap detection algorithm proceeds as 
 
@@ -386,7 +386,7 @@ Overlap detection
 } 
 
 For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential waste if small overlaps are present in the final 
-PT simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are considered. 
+RT simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are considered. 
  \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=8cm]{./diagrams/overlap.pdf}
@@ -518,7 +518,7 @@ Geant4 solid			& FLUKA region constuction		\\ \hline
 Box					& +2 XYP + 2 XZP + 2 YZP 		\\
 Tube					& +ZCC - 2 XYP	 			\\
 CutTube				& +ZCC - 2 PLA				\\
-Cone				& +TRC						\\
+Cone				& +TRC -TRC - WED			\\
 Para					& +ARB						\\
 Trd					& +ARB						\\
 Trap					& +ARB						\\
@@ -558,7 +558,7 @@ possible applications.
 It is possible to mix different geometries from STL, STEP, GDML and FLUKA in single GDML file for use in Geant4 and ROOT. 
 
 \subsection{Editing existing models}
-Often existing CAD models have either missing details or too much detail. 
+Often existing CAD models have either missing details or too many details. Examples of too potentially superfluous detail are gaskets and bolts 
 
 \subsection{Overlap checking in geometry}
 Often small errors in geometry cause unexpected RT code behaviour.  
