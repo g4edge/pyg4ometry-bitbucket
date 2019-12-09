@@ -29,40 +29,13 @@ def Test(vis=False, interactive=False):
     pla_c1 = PLA("PLA_C1_BODY",
                [20, 0, 0],
                [20, 0, 0],
-               flukaregistry=freg)
+               flukaregistry=freg) 
     pla_c2 = PLA("PLA_C2_BODY",
                [20, 0, 0],
                [0, 0, 0],
-               flukaregistry=freg)
-
-    # smaller cube.
-    pla_d1 = PLA("PLA_D1_BODY",
-                 [0, 0, 20],
-                 [0, 0, 15],
-                 flukaregistry=freg)
-    pla_d2 = PLA("PLA_D2_BODY",
-                 [0, 0, 20],
-                 [0, 0, 5.],
-                 flukaregistry=freg)
-    pla_e1 = PLA("PLA_e1_BODY",
-               [0, 20, 0],
-               [0, 15, 0],
-               flukaregistry=freg)
-    pla_e2 = PLA("PLA_e2_BODY",
-               [0, 20, 0],
-               [0, 5., 0],
-               flukaregistry=freg)
-    pla_f1 = PLA("PLA_f1_BODY",
-               [20, 0, 0],
-               [15, 0, 0],
-               flukaregistry=freg)
-    pla_f2 = PLA("PLA_f2_BODY",
-               [20, 0, 0],
-               [5, 0, 0],
-               flukaregistry=freg)
-
+               flukaregistry=freg) 
+    
     z1 = Zone()
-    z2 = Zone()
 
     # Box1:
     z1.addIntersection(pla_a1)
@@ -72,26 +45,11 @@ def Test(vis=False, interactive=False):
     z1.addIntersection(pla_c1)
     z1.addSubtraction(pla_c2)
 
-    # box 2
-    z2.addIntersection(pla_d1)
-    z2.addSubtraction(pla_d2)
-    z2.addIntersection(pla_e1)
-    z2.addSubtraction(pla_e2)
-    z2.addIntersection(pla_f1)
-    z2.addSubtraction(pla_f2)
-    # make hole in box1 with box2
-    z1.addSubtraction(z2)
-
 
     region1 = Region("REG_INF1")
     region1.addZone(z1)
-
-    # # fill hole with box.
-    region2 = Region("REG_INF2")
-    region2.addZone(z2)
-
+    
     freg.addRegion(region1)
-    freg.addRegion(region2)
 
     greg = freg.toG4Registry(True, False)
 

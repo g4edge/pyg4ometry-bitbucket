@@ -19,14 +19,14 @@ def Test(vis=False, interactive=False):
               [-20, 0, 0], # one transverse side.
               [0, 0, -20], # length vector.
               [0, -20, 0], # the other transverse side.
-              freg)
+              flukaregistry=freg)
 
     raw2 = RAW("RAW2_BODY",
                [0, 0, 0],
                [20, 0, 0], # one transverse side.
                [0, 0, 20], # length vector.
                [0, 20, 0], # the other transverse side.
-               freg)
+               flukaregistry=freg)
 
     # better test please...?
 
