@@ -1,3 +1,4 @@
+import pyg4ometry.convert as convert
 import pyg4ometry.geant4 as g4
 from pyg4ometry.fluka.Body import PLA
 from pyg4ometry.fluka.Region import Region, Zone
@@ -93,7 +94,7 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region1)
     freg.addRegion(region2)
 
-    greg = freg.toG4Registry(True, False)
+    greg = convert.fluka2Geant4(freg, True, False)
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()

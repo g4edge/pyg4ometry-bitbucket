@@ -1,3 +1,4 @@
+import pyg4ometry.convert as convert
 from pyg4ometry.fluka.Vector import Three
 import pyg4ometry.geant4 as g4
 from pyg4ometry.fluka.Body import ARB, RPP
@@ -69,7 +70,7 @@ def Test(vis=False, interactive=False):
     region.addZone(z2)
     freg.addRegion(region)
 
-    greg = freg.toG4Registry()
+    greg = convert.fluka2Geant4(freg)
 
 
     # Test extents??

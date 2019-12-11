@@ -1,3 +1,4 @@
+import pyg4ometry.convert as convert
 import os
 import pyg4ometry.geant4 as g4
 from pyg4ometry.fluka.Body import REC
@@ -42,8 +43,9 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region2)
 
     # default is True, but to be explicit:
-    greg = freg.toG4Registry(with_length_safety=True,
-                             split_disjoint_unions=False)
+    greg = convert.fluka2Geant4(freg,
+                                with_length_safety=True,
+                                split_disjoint_unions=False)
 
     wv = greg.getWorldVolume()
     wv.checkOverlaps()

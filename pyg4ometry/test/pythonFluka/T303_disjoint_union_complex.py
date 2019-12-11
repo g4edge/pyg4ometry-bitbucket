@@ -1,3 +1,4 @@
+import pyg4ometry.convert as convert
 import os
 import pyg4ometry.geant4 as g4
 from pyg4ometry.fluka.Body import RPP, RCC
@@ -59,7 +60,7 @@ def Test(vis=False, interactive=False):
 
 
 
-    greg = freg.toG4Registry()
+    greg = convert.fluka2Geant4(freg)
 
     if vis:
         v = vi.VtkViewer()
