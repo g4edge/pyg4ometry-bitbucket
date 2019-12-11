@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import YZP
+from pyg4ometry.fluka.Body import XZP
 import pyg4ometry.fluka.Body
 from pyg4ometry.fluka.Region import Region, Zone
 from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
