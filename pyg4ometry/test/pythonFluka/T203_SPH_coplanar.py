@@ -1,14 +1,10 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import SPH
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
+from pyg4ometry.fluka import SPH, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
     sph1 = SPH("SPH_BODY1", [0, 0, 0], 10, flukaregistry=freg)
     sph2 = SPH("SPH_BODY2", [0, 0, 0], 5, flukaregistry=freg)

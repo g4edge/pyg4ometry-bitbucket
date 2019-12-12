@@ -1,14 +1,21 @@
 import sys
 import os
 
-from pyg4ometry.fluka import Reader
+from pyg4ometry.fluka import FlukaRegistry, Reader
+from pyg4ometry.convert import fluka2Geant4
 import pyg4ometry.visualisation as vi
 import pyg4ometry.gdml as gdml
+import logging
 
+def main(filein, debug=False):
+    if debug:
+        logging.getLogger("pyg4ometry.fluka.region").setLevel(logging.DEBUG)
+        logging.getLogger("pyg4ometry.fluka.fluka_registry").setLevel(logging.DEBUG)
 
-def main(filein):
     r = Reader(filein)
-    greg = r.flukaregistry.toG4Registry()
+    greg = fluka2Geant4(r.flukaregistry,
+                        with_length_safety=True,
+                        split_disjoint_unions=False)
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()

@@ -1,11 +1,6 @@
 import pyg4ometry.convert as convert
-import os
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RPP, RCC
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
-import pyg4ometry.gdml as gdml
+from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
@@ -67,18 +62,6 @@ def Test(vis=False, interactive=False):
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
-
-
-    # gdml output
-    w = gdml.Writer()
-    w.addDetector(greg)
-    this_file_name = __file__
-    gmad_name = this_file_name.rstrip(".py") + ".gmad"
-    gdml_name = this_file_name.rstrip(".py") + ".gdml"
-    w.write(os.path.join(os.path.dirname(__file__), gdml_name))
-    w.writeGmadTester(os.path.join(os.path.dirname(__file__))+gmad_name,
-                      gdml_name)
-
 
 
 if __name__ == '__main__':

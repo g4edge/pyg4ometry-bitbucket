@@ -1,14 +1,10 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RPP
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
+from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
     rpp1 = RPP("RPP_BODY1", 0, 20, 0, 20, 0, 20, flukaregistry=freg)
     rpp2 = RPP("RPP_BODY2", 5, 15, 5, 15, 5, 15, flukaregistry=freg)

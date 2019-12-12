@@ -1,15 +1,12 @@
-import pyg4ometry.convert as convert
 import numpy as np
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import REC
 
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
+import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
+from pyg4ometry.fluka import REC, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
     face = [0, 0, 0] # one face is situated at (0, 0, 0).
     direction = [3, 3, 3] # length pointing from above face in the

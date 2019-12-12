@@ -1,17 +1,10 @@
 import pyg4ometry.convert as convert
-import os
-
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RPP, RCC
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
-import pyg4ometry.gdml as gdml
+from pyg4ometry.fluka import RPP, RCC, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
     # I pick 20 because that's the length of the axes added below, so
     # verifying the resulting cube is of the correct length is trivial.
     rpp = RPP("RPP_BODY", 0, 20., 0, 20., 0., 20., flukaregistry=freg)
@@ -43,13 +36,6 @@ def Test(vis=False, interactive=False):
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    w = gdml.Writer()
-    w.addDetector(greg)
-    gdml_name = "REUSE.gdml"
-    gmad_name = "REUSE.gmad"
-    w.write(os.path.join(os.path.dirname(__file__), gdml_name))
-    w.writeGmadTester(gmad_name, gdml_name)
-        
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
 
 

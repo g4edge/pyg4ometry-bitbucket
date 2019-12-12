@@ -1,14 +1,10 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RCC
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
+from pyg4ometry.fluka import RCC, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
     rcc1 = RCC("RCC1_BODY", [0, 0, 0], [5, 5, 5], 2.5, flukaregistry=freg)
     rcc2 = RCC("RCC2_BODY", [-1, -1, -1], [6, 6, 6], 1.25, flukaregistry=freg)

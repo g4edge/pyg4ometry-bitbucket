@@ -1,14 +1,10 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import XZP
-import pyg4ometry.fluka.Body
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
+from pyg4ometry.fluka import XZP, Region, Zone, FlukaRegistry
+import pyg4ometry.fluka.Body
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
     pyg4ometry.fluka.Body.INFINITY = 30
     xzp = XZP("XZP_BODY", 20.0, flukaregistry=freg)
 

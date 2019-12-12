@@ -1,10 +1,7 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import WED
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka.Vector import Three
+from pyg4ometry.fluka import WED, Region, Zone, FlukaRegistry
+
 import numpy as np
 
 def Test(vis=False, interactive=False):

@@ -1,14 +1,10 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import XYP, XZP, YZP
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
+from pyg4ometry.fluka import XYP, YZP, XZP, Region, Zone, FlukaRegistry
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
     # I pick 20 because that's the length of the axes added below, so
     # verifying the resulting cube is of the correct length is trivial.
     xyp_lo = XYP("XYP1_BODY", 0, flukaregistry=freg)

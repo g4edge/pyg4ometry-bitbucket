@@ -1,17 +1,10 @@
 import pyg4ometry.convert as convert
-from pyg4ometry.fluka.Vector import Three
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import ARB, RPP
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka.Vector import Three
-import numpy as np
+from pyg4ometry.fluka import ARB, RPP, Region, Zone, FlukaRegistry, Three
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
 
     # In FLUKA we can choose: either all of the face numbers must

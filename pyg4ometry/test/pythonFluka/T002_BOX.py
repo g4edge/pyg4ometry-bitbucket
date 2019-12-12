@@ -1,14 +1,9 @@
 import pyg4ometry.convert as convert
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import BOX
-
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
-
+from pyg4ometry.fluka import BOX, Region, Zone, FlukaRegistry
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
     # box with corner at the origin and sides of length 20 extending
     # along the axes
