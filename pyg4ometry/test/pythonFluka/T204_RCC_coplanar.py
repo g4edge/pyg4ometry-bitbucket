@@ -2,7 +2,7 @@ import pyg4ometry.convert as convert
 import os
 import pyg4ometry.geant4 as g4
 from pyg4ometry.fluka.Body import RCC
-from pyg4ometry.fluka.Region import Region, Zone
+
 from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
 import pyg4ometry.visualisation as vi
 import pyg4ometry.gdml as gdml
