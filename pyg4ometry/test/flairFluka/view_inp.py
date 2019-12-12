@@ -1,11 +1,12 @@
-import sys
+import logging
 import os
+import sys
 
 from pyg4ometry.fluka import FlukaRegistry, Reader
 from pyg4ometry.convert import fluka2Geant4
 import pyg4ometry.visualisation as vi
 import pyg4ometry.gdml as gdml
-import logging
+
 
 def main(filein, debug=False):
     if debug:
@@ -15,7 +16,7 @@ def main(filein, debug=False):
     r = Reader(filein)
     greg = fluka2Geant4(r.flukaregistry,
                         with_length_safety=True,
-                        split_disjoint_unions=False)
+                        split_disjoint_unions=True)
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
