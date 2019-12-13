@@ -19,19 +19,16 @@ def Test(vis=False, interactive=False):
     region.addZone(z1)
     region.addZone(z2)
 
-    cz = region.get_connected_zones()
-
     freg.addRegion(region)
 
-    greg = convert.fluka2Geant4(freg)
-
-    # Test extents??
-    # clip wv?
+    greg = convert.fluka2Geant4(freg, split_disjoint_unions=True)
 
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
+        # should appear as different colours if  split properly
+        v.setRandomColours()
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}

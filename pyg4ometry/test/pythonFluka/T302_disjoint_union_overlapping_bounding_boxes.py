@@ -35,6 +35,8 @@ def Test(vis=False, interactive=False):
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
+        # should appear as different colours if  split properly
+        v.setRandomColours()
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
