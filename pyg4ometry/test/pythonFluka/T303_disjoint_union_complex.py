@@ -53,8 +53,6 @@ def Test(vis=False, interactive=False):
 
     freg.addRegion(region)
 
-
-
     greg = convert.fluka2Geant4(freg)
 
     if vis:
