@@ -8,7 +8,7 @@ def Test(vis=False, interactive=False):
 
     rpp1 = RPP("RPP_BODY1", 0, 20, 0, 20, 0, 20, flukaregistry=freg)
     rpp2 = RPP("RPP_BODY2", 5, 15, 5, 15, 5, 15, flukaregistry=freg)
-    rpp3 = RPP("RPP_BODY3", 7.5, 12.5, 7.5, 12.5, 7.5, 12. flukaregistry=freg)
+    rpp3 = RPP("RPP_BODY3", 7.5, 12.5, 7.5, 12.5, 7.5, 12., flukaregistry=freg)
 
     z1 = Zone()
     z2 = Zone()
@@ -26,8 +26,7 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
 
-    # Test extents??
-    # clip wv?
+    assert len(greg.logicalVolumeList) == 3
 
     if vis:
         v = vi.VtkViewer()

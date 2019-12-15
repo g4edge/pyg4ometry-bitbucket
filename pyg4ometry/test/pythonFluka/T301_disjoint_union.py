@@ -23,6 +23,8 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg, split_disjoint_unions=True)
 
+    assert len(greg.logicalVolumeList) == 3
+
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)

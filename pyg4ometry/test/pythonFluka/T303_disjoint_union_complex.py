@@ -49,11 +49,11 @@ def Test(vis=False, interactive=False):
     region.addZone(z6)
     region.addZone(z7)
 
-    # region._determine_connected_zones()
-
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
+
+    assert len(greg.logicalVolumeList) == 4
 
     if vis:
         v = vi.VtkViewer()
