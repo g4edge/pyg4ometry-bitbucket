@@ -195,8 +195,9 @@ GDML module
 
 Fluka bodies 
 ------------
-.. automodule:: pyg4ometry.fluka.Body
+.. automodule:: pyg4ometry.fluka.body
    :members:
+   :private-members:
    :undoc-members:
    :show-inheritance:
 
