@@ -5,7 +5,7 @@ from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    rpp = RPP("RPP_BODY", 20, 40, 20, 40, 20, 40,
+    rpp = RPP("RPP_BODY", -20, 20, -20, 20, -20, 20,
               translation=[-20, -20, -20],
               flukaregistry=freg)
 
@@ -20,6 +20,7 @@ def Test(vis=False, interactive=False):
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
+        v.addAxes(length=20,origin=(-20,-20,-20))
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
