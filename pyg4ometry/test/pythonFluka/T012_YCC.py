@@ -1,7 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka.Body import YCC, XZP, Region, Zone, FlukaRegistry
-
+from pyg4ometry.fluka import YCC, XZP, Region, Zone, FlukaRegistry
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
@@ -13,14 +12,11 @@ def Test(vis=False, interactive=False):
     xzp_hi = XZP("XZP1_BODY", 20, flukaregistry=freg)
     xzp_lo = XZP("XZP2_BODY", 0, flukaregistry=freg)
 
-
-
     z = Zone()
 
     z.addIntersection(ycc)
     z.addIntersection(xzp_hi)
     z.addSubtraction(xzp_lo)
-
 
     region = Region("REG_INF")
     region.addZone(z)
@@ -28,11 +24,6 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
-
-
-    # Test extents??
-    # clip wv?
-    # test writing back to fluka?
 
     if vis:
         v = vi.VtkViewer()
