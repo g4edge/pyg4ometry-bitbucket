@@ -1,11 +1,12 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
 from pyg4ometry.fluka import XYP, Region, Zone, FlukaRegistry
-import pyg4ometry.fluka.Body
+import pyg4ometry.fluka.body
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    pyg4ometry.fluka.Body.INFINITY = 30
+    pyg4ometry.fluka.body.INFINITY = 30
+
     xyp = XYP("XYP_BODY", 20.0, flukaregistry=freg)
 
     z = Zone()
@@ -18,11 +19,6 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
 
-
-    # Test extents??
-    # clip wv?
-    # test writing back to fluka?
-
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
@@ -30,8 +26,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)
