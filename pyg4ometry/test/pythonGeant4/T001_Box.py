@@ -35,7 +35,7 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T001_Box.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T001_Box.gmad","T001_Box.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__)),"T001_Box.gmad","T001_Box.gdml")
 
     # test __repr__
     str(bs)
