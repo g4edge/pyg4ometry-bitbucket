@@ -43,7 +43,10 @@ def Test(vis=False, interactive=False):
                 vertex5, vertex6, vertex7, vertex8]
     facenumbers = [face1, face2, face3, face4, face5, face6]
 
-    arb = ARB("ARB_BODY", vertices, facenumbers, flukaregistry=freg)
+    arb = ARB("ARB_BODY",
+              vertices, facenumbers,
+              expansion=2.0,
+              flukaregistry=freg)
 
     z = Zone()
     z.addIntersection(arb)

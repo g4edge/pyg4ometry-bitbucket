@@ -207,19 +207,8 @@ Fluka module
    :members:
    :undoc-members:
    :show-inheritance:
+
 .. automodule:: pyg4ometry.fluka.Reader
-   :members:
-   :undoc-members:
-   :show-inheritance:
-.. automodule:: pyg4ometry.fluka.FlukaRegistry
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Test module 
------------
-.. automodule:: pyg4ometry.test
    :members:
    :undoc-members:
    :show-inheritance:
