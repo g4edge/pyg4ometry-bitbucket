@@ -1,0 +1,13 @@
+GEOBEGIN                                                              COMBNAME
+    0    0          
+$start_transform rpprotdefi
+RPP rpp        -10. 10. -10. 10. -10. 10.
+$end_transform 
+END
+rppreg       5 +rpp
+END
+GEOEND
+ASSIGNMA         TIN    rppreg
+!@y=-2.0
+ROT-DEFI                   45.       45.                 10.          rpprotdefi
+STOP
