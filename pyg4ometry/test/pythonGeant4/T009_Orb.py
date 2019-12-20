@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, n_slice=16, n_stack=16) :
     reg = _g4.Registry()
     
     # defines 
@@ -19,12 +19,12 @@ def Test(vis = False, interactive = False) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    os = _g4.solid.Orb("os",ormax,reg,"mm")
+    os = _g4.solid.Orb("os",ormax,reg,"mm", nslice=n_slice, nstack=n_stack)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     ol = _g4.LogicalVolume(os, om, "ol", reg)
-    op = _g4.PhysicalVolume([0,0,0],[0,0,0],  ol, "o_pv1", wl, reg) 
+    op = _g4.PhysicalVolume([0,0,0],[0,0,0],  ol, "o_pv1", wl, reg)
     
     # set world volume
     reg.setWorld(wl.name)
