@@ -33,11 +33,11 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <genericPolycone name = "genpoly1" startphi="1" deltaphi="4" aunit="rad" lunit= "mm">
-    <rzpoint r="1" z="5" />
-    <rzpoint r="3" z="10" />
-    <rzpoint r="2" z="12" />
+    <rzpoint r="10" z="-25" />
+    <rzpoint r="30" z="0" />
+    <rzpoint r="20" z="25" />
  </genericPolycone>
 
 

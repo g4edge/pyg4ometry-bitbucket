@@ -27,8 +27,8 @@
 	<solids>
 		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<polyhedra aunit="rad" deltaphi="4" lunit="mm" name="polyhedra1" numsides="10" startphi="1">
-			<zplane rmax="9" rmin="1" z="10"/>
-			<zplane rmax="5" rmin="3" z="12"/>
+			<zplane rmax="45" rmin="5" z="-10"/>
+			<zplane rmax="25" rmin="15" z="10"/>
 		</polyhedra>
 	</solids>
 	<structure>

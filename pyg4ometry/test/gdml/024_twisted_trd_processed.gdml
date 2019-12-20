@@ -5,11 +5,11 @@
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
 		<constant name="ttdtwist" value="1.0"/>
-		<constant name="ttdx1" value="9.0"/>
-		<constant name="ttdx2" value="8.0"/>
-		<constant name="ttdy1" value="6.0"/>
-		<constant name="ttdy2" value="5.0"/>
-		<constant name="ttdz" value="10.0"/>
+		<constant name="ttdx1" value="35.0"/>
+		<constant name="ttdx2" value="32.0"/>
+		<constant name="ttdy1" value="24.0"/>
+		<constant name="ttdy2" value="20.0"/>
+		<constant name="ttdz" value="60.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>

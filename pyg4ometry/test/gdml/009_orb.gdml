@@ -6,7 +6,7 @@
   <constant name="wby" value="100.0"/>
   <constant name="wbz" value="100.0"/>
 
-  <constant name="somax" value="10.0"/>
+  <constant name="somax" value="45.0"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -35,7 +35,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <orb name="orb1" r="somax"/>
 </solids>
 

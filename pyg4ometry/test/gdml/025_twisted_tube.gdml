@@ -6,9 +6,9 @@
   <constant name="wby" value="100.0"/>
   <constant name="wbz" value="100.0"/>
 
-  <constant name="ttbeir" value="1.0"/>
-  <constant name="ttbeor" value="4.0"/>  
-  <constant name="ttbz" value="20.0"/>
+  <constant name="ttbeir" value="10.0"/>
+  <constant name="ttbeor" value="40.0"/>  
+  <constant name="ttbz" value="60.0"/>
   <constant name="ttbphi" value="3*pi/2"/>
   <constant name="ttbtwist" value="1"/>
 
@@ -39,7 +39,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <twistedtubs name = "twisttube1" endinnerrad="ttbeir" endouterrad="ttbeor" zlen="ttbz" phi="ttbphi" twistedangle="ttbtwist" aunit="rad" lunit= "mm"/>
 </solids>
 

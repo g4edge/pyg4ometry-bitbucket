@@ -4,7 +4,7 @@
 		<constant name="wbx" value="100.0"/>
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
-		<constant name="somax" value="10.0"/>
+		<constant name="somax" value="45.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>
@@ -26,7 +26,7 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<orb lunit="mm" name="orb1" r="somax"/>
 	</solids>
 	<structure>

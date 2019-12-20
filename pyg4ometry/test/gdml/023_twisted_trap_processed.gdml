@@ -8,13 +8,13 @@
 		<constant name="ttptheta" value="0.6"/>
 		<constant name="ttpphi" value="0"/>
 		<constant name="ttpalp" value="0.0"/>
-		<constant name="ttpx1" value="5.0"/>
-		<constant name="ttpx2" value="5.0"/>
-		<constant name="ttpx3" value="10.0"/>
-		<constant name="ttpx4" value="10.0"/>
-		<constant name="ttpy1" value="5.0"/>
-		<constant name="ttpy2" value="7.5"/>
-		<constant name="ttpz" value="20.0"/>
+		<constant name="ttpx1" value="20.0"/>
+		<constant name="ttpx2" value="20.0"/>
+		<constant name="ttpx3" value="40.0"/>
+		<constant name="ttpx4" value="40.0"/>
+		<constant name="ttpy1" value="20.0"/>
+		<constant name="ttpy2" value="30"/>
+		<constant name="ttpz" value="60.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>

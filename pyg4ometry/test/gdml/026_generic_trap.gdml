@@ -53,7 +53,7 @@
 </materials>
 
 <solids>
-  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+  <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <arb8 name = "arb81" v1x="av1x" v1y="av1y" v2x="av2x" v2y="av2y" v3x="av3x" v3y="av3y" v4x="av4x" v4y="av4y" v5x="av5x" v5y="av5y" v6x="av6x" v6y="av6y" v7x="av7x" v7y="av7y" v8x="av8x" v8y="av8y" dz="adz" lunit= "mm"/>
 
 

@@ -5,9 +5,9 @@
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
 		<constant name="tbtwist" value="1.0"/>
-		<constant name="tbx" value="10.0"/>
-		<constant name="tby" value="20.0"/>
-		<constant name="tbz" value="30.0"/>
+		<constant name="tbx" value="20.0"/>
+		<constant name="tby" value="40.0"/>
+		<constant name="tbz" value="60.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>

@@ -36,7 +36,7 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<trap alpha1="talp1" alpha2="talp2" aunit="rad" lunit="mm" name="trap1" phi="tphi" theta="ttheta" x1="tx1" x2="tx2" x3="tx3" x4="tx4" y1="ty1" y2="ty2" z="tz"/>
 	</solids>
 	<structure>

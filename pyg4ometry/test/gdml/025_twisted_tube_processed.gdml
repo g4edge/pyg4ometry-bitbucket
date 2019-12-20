@@ -4,9 +4,9 @@
 		<constant name="wbx" value="100.0"/>
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
-		<constant name="ttbeir" value="1.0"/>
-		<constant name="ttbeor" value="4.0"/>
-		<constant name="ttbz" value="20.0"/>
+		<constant name="ttbeir" value="10.0"/>
+		<constant name="ttbeor" value="40.0"/>
+		<constant name="ttbz" value="60.0"/>
 		<constant name="ttbphi" value="3*pi/2"/>
 		<constant name="ttbtwist" value="1"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
@@ -30,7 +30,7 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<twistedtubs aunit="rad" endinnerrad="ttbeir" endouterrad="ttbeor" lunit="mm" name="twisttube1" phi="ttbphi" twistedangle="ttbtwist" zlen="ttbz"/>
 	</solids>
 	<structure>

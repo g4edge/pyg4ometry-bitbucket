@@ -4,9 +4,9 @@
 		<constant name="wbx" value="100.0"/>
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
-		<constant name="dx" value="10.0"/>
-		<constant name="dy" value="15.0"/>
-		<constant name="dz" value="20.0"/>
+		<constant name="dx" value="20.0"/>
+		<constant name="dy" value="30.0"/>
+		<constant name="dz" value="50.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>
