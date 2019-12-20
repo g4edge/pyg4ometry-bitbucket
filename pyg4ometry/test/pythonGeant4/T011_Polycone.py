@@ -4,18 +4,17 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False,n_slice = 10) :
     reg = _g4.Registry()
     
     # defines 
     wx = _gd.Constant("wx","100",reg,True)
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
-
     
     # pi     = _gd.Constant("pi","3.1415926",reg,True)
-    psphi  = _gd.Constant("sphi","1",reg,True)
-    pdphi  = _gd.Constant("dphi","4",reg,True)
+    psphi  = _gd.Constant("sphi","0",reg,True)
+    pdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
 
     prmin1 = _gd.Constant("prmin1","1",reg,True)
     prmax1 = _gd.Constant("prmax1","9",reg,True)
@@ -38,7 +37,7 @@ def Test(vis = False, interactive = False) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ps = _g4.solid.Polycone("ps",psphi,pdphi,pz,prmin,prmax,reg,"mm","rad")
+    ps = _g4.solid.Polycone("ps",psphi,pdphi,pz,prmin,prmax,reg,"mm","rad",nslice=n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
