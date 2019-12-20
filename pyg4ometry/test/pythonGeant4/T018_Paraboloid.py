@@ -3,7 +3,7 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False,n_slice =16,n_stack=16) :
     reg = _g4.Registry()
     
     # defines 
@@ -21,7 +21,7 @@ def Test(vis = False, interactive = False) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ps = _g4.solid.Paraboloid("ps",pz,prlo,prhi,reg)
+    ps = _g4.solid.Paraboloid("ps",pz,prlo,prhi,reg,nslice=n_slice,nstack=n_stack)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
