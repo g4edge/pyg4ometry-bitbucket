@@ -10,10 +10,7 @@ $start_transform ellrotz
 ELL ellz       0 0 5  0 0 15 20
 $end_transform
 END
-* ellreg       5 | +ellx | +elly | +ellz
-ellreg1       5  | +ellx
-ellreg2       5  | +elly
-ellreg3       5  | +ellz
+ellreg       5 | +ellx | +elly | +ellz
 END
 GEOEND
 ASSIGNMA         TIN    ellreg
