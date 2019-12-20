@@ -7,7 +7,7 @@ normal = 1
 rmin_eq_zero = 2
 rmin_gt_rmax = 3
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack = 16) :
     reg = _g4.Registry()
     
     # defines 
@@ -16,11 +16,11 @@ def Test(vis = False, interactive = False, type = normal) :
     wz = _gd.Constant("wz","100",reg,True)
     
     pi    = _gd.Constant("pi","3.1415926",reg,True)
-    hrmin = _gd.Constant("hrmin","1.0",reg,True)
-    hrmax = _gd.Constant("hrmax","2.0",reg,True)
-    hz    = _gd.Constant("hz","20.0",reg,True)
-    hinst = _gd.Constant("hinst","3",reg,True)
-    houtst= _gd.Constant("houtst","4",reg,True)
+    hrmin = _gd.Constant("hrmin","20",reg,True)
+    hrmax = _gd.Constant("hrmax","30.0",reg,True)
+    hz    = _gd.Constant("hz","50.0",reg,True)
+    hinst = _gd.Constant("hinst","0.7",reg,True)
+    houtst= _gd.Constant("houtst","0.7",reg,True)
     
     if type == rmin_eq_zero : 
         hrmin.setExpression(0)
@@ -34,7 +34,7 @@ def Test(vis = False, interactive = False, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    hs = _g4.solid.Hype("ps",hrmin, hrmax, hinst, houtst, hz, reg)
+    hs = _g4.solid.Hype("ps",hrmin, hrmax, hinst, houtst, hz, reg,nslice=n_slice,nstack=n_stack)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
