@@ -58,7 +58,7 @@ def Test(vis = False, interactive = False, type = normal) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T014_GenericPolyhedra.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T014_GenericPolyhedra.gmad","T014_GenericPolyhedra.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T014_GenericPolyhedra.gmad"),"T014_GenericPolyhedra.gdml")
 
     # visualisation
     if vis : 

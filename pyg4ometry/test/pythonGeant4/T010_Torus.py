@@ -41,7 +41,7 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T010_Torus.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T010_Torus.gmad","T010_Torus.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T010_Torus.gmad"),"T010_Torus.gdml")
 
 
     # visualisation

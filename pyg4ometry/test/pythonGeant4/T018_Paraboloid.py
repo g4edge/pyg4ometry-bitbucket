@@ -38,7 +38,7 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T018_Paraboloid.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T018_Paraboloid.gmad","T018_Paraboloid.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T018_Paraboloid.gmad"),"T018_Paraboloid.gdml")
 
 
     # visualisation

@@ -38,7 +38,7 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T029_Subtraction.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T029_Subtraction.gmad","T029_Subtraction.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T029_Subtraction.gmad"),"T029_Subtraction.gdml")
 
 
     # visualisation

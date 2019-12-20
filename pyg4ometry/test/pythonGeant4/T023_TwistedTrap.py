@@ -50,7 +50,7 @@ def Test(vis = False, interactive = False) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T023_TwistedTrap.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T023_TwistedTrap.gmad","T023_TwistedTrap.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T023_TwistedTrap.gmad"),"T023_TwistedTrap.gdml")
 
 
     # visualisation
