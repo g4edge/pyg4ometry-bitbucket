@@ -35,10 +35,10 @@ Plot: Red
 	basisv: 0 1 0
 	boundaries: 1
 	coord: X-Y
-	extends: 48.2253 26.7154
+	extends: 57.8704 32.0585
 	labels: 1
-	layer: Media
-	origin: 0.594061 1.72838 0
+	layer: 3D
+	origin: 5.54133 8.53314 28
 	subtype: Material
 	title: GeoViewer Red plot
 End
@@ -54,7 +54,7 @@ Plot: Green
 	extends: 100 55.3971
 	labels: 1
 	layer: Media
-	origin: 0 0 0
+	origin: 0 -7 0
 	subtype: Material
 	title: GeoViewer Green plot
 End
@@ -67,10 +67,10 @@ Plot: Blue
 	basisv: 0 1 0
 	boundaries: 1
 	coord: Z-Y
-	extends: 100 55.1935
+	extends: 40.1878 22.181
 	labels: 1
 	layer: Media
-	origin: 4 3 0
+	origin: 0 -2.92361 1.94908
 	subtype: Material
 	title: GeoViewer Blue plot
 End
@@ -86,7 +86,7 @@ Plot: Magenta
 	extends: 100 55.1935
 	labels: 1
 	layer: Media
-	origin: 0 0 0
+	origin: 0 0 -10
 	subtype: Material
 	title: GeoViewer Magenta plot
 End
