@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform trcrotx
+TRC trcx       0 0 0  0 0 10  5 2.5
+$end_transform
+$start_transform trcroty
+TRC trcy       0 0 0  0 0 10  5 2.5
+$end_transform
+$start_transform trcrotz
+TRC trcz       0 0 0  0 0 10  5 2.5
+$end_transform
+END
+trcreg       5 | +trcx | +trcy | +trcz
+END
+GEOEND
+ASSIGNMA         TIN    trcreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, trcrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, trcroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., trcrotz
+STOP
