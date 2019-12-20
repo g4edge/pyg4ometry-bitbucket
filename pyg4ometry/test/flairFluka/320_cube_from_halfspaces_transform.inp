@@ -1,0 +1,43 @@
+TITLE
+wooo a title
+GEOBEGIN                                                              COMBNAME
+    0    0          
+$start_transform rotx
+YZP yzplo1     0.0
+YZP yzphig1    10.
+XYP xyplo1     0.0
+XYP xyphig1    10.
+XZP xzplo1     0.0
+XZP xzphig1    10.
+$end_transform 
+$start_transform roty
+YZP yzplo2     0.0
+YZP yzphig2    10.
+XYP xyplo2     0.0
+XYP xyphig2    10.
+XZP xzplo2     0.0
+XZP xzphig2    10.
+$end_transform 
+$start_transform rotz
+YZP yzplo3     0.0
+YZP yzphig3    10.
+XYP xyplo3     0.0
+XYP xyphig3    10.
+XZP xzplo3     0.0
+XZP xzphig3    10.
+$end_transform 
+END
+cube1        5 +yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1
+cube2        5 +yzphig2 -yzplo2 +xyphig2 -xyplo2 +xzphig2 -xzplo2
+cube3        5 +yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3
+END
+GEOEND
+FREE
+ASSIGNMA  , IRON, cubeinf
+ASSIGNMA  , HYDROGEN, cube1
+ASSIGNMA  , HYDROGEN, cube2
+ASSIGNMA  , HYDROGEN, cube3
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, rotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, roty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., rotz
+STOP
