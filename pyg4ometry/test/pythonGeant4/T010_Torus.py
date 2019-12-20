@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     reg = _g4.Registry()
     
     # defines 
@@ -17,14 +17,14 @@ def Test(vis = False, interactive = False) :
     trmax  = _gd.Constant("rmax","10.0",reg,True)
     trtor  = _gd.Constant("rtor","40.0",reg,True)
     tsphi  = _gd.Constant("sphi","0",reg,True)
-    tdphi  = _gd.Constant("dphi","2*pi",reg,True)
+    tdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
     tm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts = _g4.solid.Torus("ts",trmin,trmax,trtor,tsphi,tdphi,reg,"mm","rad")
+    ts = _g4.solid.Torus("ts",trmin,trmax,trtor,tsphi,tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
