@@ -17,7 +17,6 @@ $end_translat
 $end_transform 
 $end_expansion 
 END
-bbr          5 -bb
 vr           5 +bb -bb1
 bbrr         5 +bb1
 END

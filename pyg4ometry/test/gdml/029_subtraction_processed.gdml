@@ -25,8 +25,7 @@
 		<subtraction name="subtraction1">
 			<first ref="box1"/>
 			<second ref="box1"/>
-			<position unit="mm" x="bx/2" y="bx/2" z="bx/2"/>
-			<rotationref ref="identity"/>
+			<position name="subtraction1_translation" unit="mm" x="bx/2" y="bx/2" z="bx/2"/>
 		</subtraction>
 	</solids>
 	<structure>
@@ -40,7 +39,6 @@
 			<physvol name="box1Vol_PV">
 				<volumeref ref="box1Vol"/>
 				<positionref ref="center"/>
-				<rotationref ref="identity"/>
 			</physvol>
 		</volume>
 	</structure>

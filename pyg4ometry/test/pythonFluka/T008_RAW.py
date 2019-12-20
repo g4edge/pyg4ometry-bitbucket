@@ -1,14 +1,10 @@
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import RAW
-from pyg4ometry.fluka.Region import Region, Zone
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
+import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka.Vector import Three
-import numpy as np
+from pyg4ometry.fluka import RAW, Region, Zone, FlukaRegistry
+
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
     # What I expect to see in the visualiser is a cube formed by the
     # union of two wedeges. with sides equal to 20cm.  The mesh shows
@@ -19,14 +15,14 @@ def Test(vis=False, interactive=False):
               [-20, 0, 0], # one transverse side.
               [0, 0, -20], # length vector.
               [0, -20, 0], # the other transverse side.
-              freg)
+              flukaregistry=freg)
 
     raw2 = RAW("RAW2_BODY",
                [0, 0, 0],
                [20, 0, 0], # one transverse side.
                [0, 0, 20], # length vector.
                [0, 20, 0], # the other transverse side.
-               freg)
+               flukaregistry=freg)
 
     # better test please...?
 
@@ -41,7 +37,7 @@ def Test(vis=False, interactive=False):
     region.addZone(z2)
     freg.addRegion(region)
 
-    greg = freg.toG4Registry()
+    greg = convert.fluka2Geant4(freg)
 
 
     # Test extents??

@@ -1,17 +1,10 @@
-from pyg4ometry.fluka.Vector import Three
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import ARB, RPP
-from pyg4ometry.fluka.Region import Region, Zone
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
+import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka.Vector import Three
-import numpy as np
+from pyg4ometry.fluka import ARB, Region, Zone, FlukaRegistry, Three
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
-
 
     # In FLUKA we can choose: either all of the face numbers must
     # refer to vertices in clockwise or anticlockwise direction.  Here
@@ -46,34 +39,20 @@ def Test(vis=False, interactive=False):
     # face5 = 7843 # top face
     # face6 = 5621 # bottom face
 
-
-    vertex = [vertex1, vertex2, vertex3, vertex4,
-              vertex5, vertex6, vertex7, vertex8]
-
-
-
+    vertices = [vertex1, vertex2, vertex3, vertex4,
+                vertex5, vertex6, vertex7, vertex8]
     facenumbers = [face1, face2, face3, face4, face5, face6]
 
-    arb = ARB("ARB_BODY", vertex, facenumbers, freg)
-
-    rpp = RPP("RPP_BODY", 0, 5, 0, 5, 0, 5, flukaregistry=freg)
+    arb = ARB("ARB_BODY", vertices, facenumbers, flukaregistry=freg)
 
     z = Zone()
     z.addIntersection(arb)
 
-    z2 = Zone()
-    z2.addIntersection(rpp)
-
     region = Region("ARB_REG")
     region.addZone(z)
-    region.addZone(z2)
     freg.addRegion(region)
 
-    greg = freg.toG4Registry()
-
-
-    # Test extents??
-    # clip wv?
+    greg = convert.fluka2Geant4(freg)
 
     if vis:
         v = vi.VtkViewer()
@@ -82,8 +61,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

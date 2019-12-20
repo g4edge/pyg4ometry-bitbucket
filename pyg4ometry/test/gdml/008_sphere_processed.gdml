@@ -4,8 +4,8 @@
 		<constant name="wbx" value="100.0"/>
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
-		<constant name="srmin" value="8.0"/>
-		<constant name="srmax" value="10.0"/>
+		<constant name="srmin" value="40.0"/>
+		<constant name="srmax" value="45.0"/>
 		<constant name="sdphi" value="pi"/>
 		<constant name="sdtheta" value="3*pi/4"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
@@ -30,7 +30,7 @@
 	</materials>
 	<solids>
 		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<sphere aunit="rad" deltaphi="sdphi" deltatheta="sdtheta" lunit="mm" name="sphere1" rmax="srmax" rmin="srmin" startphi="0" starttheta="0"/>
+		<sphere aunit="rad" deltaphi="sdphi" deltatheta="sdtheta" lunit="m" name="sphere1" rmax="srmax" rmin="srmin" startphi="0" starttheta="0"/>
 	</solids>
 	<structure>
 		<volume name="sphere1Vol">

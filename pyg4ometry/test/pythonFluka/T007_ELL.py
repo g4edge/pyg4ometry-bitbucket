@@ -1,24 +1,16 @@
-import numpy as np
-import pyg4ometry.geant4 as g4
-from pyg4ometry.fluka.Body import ELL
-from pyg4ometry.fluka.Region import Region, Zone
-from pyg4ometry.fluka.FlukaRegistry import FlukaRegistry
+import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka.Vector import Three
+from pyg4ometry.fluka import ELL, Region, Zone, FlukaRegistry, Three
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    greg = g4.Registry()
 
-    # construct an ellipsoid with the one of the ends of the
-    # semi-major axis at the origin, and stretching in the i+j+k direction.
-    focus1 = Three([3, 3, 3])
-    focus2 = 8*focus1
-    linear_eccentricity = 0.5*(focus2 - focus1).length()
-    focus1_length = focus1.length()
-
-    length = (linear_eccentricity + focus1_length) * 2
+    # ellipsoid with major axes poining in the y direction, total
+    # legnth=20, offset in x.
+    focus1 = Three([20, 5, 0])
+    focus2 = Three([20, 15, 0])
+    length = 20
 
     ell = ELL("ELL_BODY",
               focus1,
@@ -32,7 +24,7 @@ def Test(vis=False, interactive=False):
     region.addZone(z)
     freg.addRegion(region)
 
-    greg = freg.toG4Registry()
+    greg = convert.fluka2Geant4(freg)
 
 
     # Test extents??
