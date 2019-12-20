@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform sphrotx
+SPH sphx       0 0 0 5
+$end_transform
+$start_transform sphroty
+SPH sphy       0 0 0 5
+$end_transform
+$start_transform sphrotz
+SPH sphz       0 0 0 5
+$end_transform
+END
+sphreg       5 | +sphx | +sphy | +sphz
+END
+GEOEND
+ASSIGNMA         TIN    sphreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, sphrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, sphroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., sphrotz
+STOP
