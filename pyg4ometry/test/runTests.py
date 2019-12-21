@@ -3,10 +3,12 @@
 from freecad                import FreecadLoadingTests
 from pythonGeant4           import PythonTests
 from pythonGeant4           import PythonDefineTests
-from pythonGeant4           import PythonAuthoringTests
+from pythonGeant4           import PythonGeantAuthoringTests
 from pythonCompoundExamples import PythonCompoundExampleTests
 from gdml                   import GdmlLoadTests
-from stl                    import StlLoadingTests
+from stl                    import StlLoadTests
+from pythonFluka            import PythonFlukaAuthoringTests
+from flairFluka             import FlairLoadTests
 
 import unittest as _unittest
 import logging as _log

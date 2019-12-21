@@ -23,18 +23,18 @@ def _pj(filename): # path join
     """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-class StlLoadingTests(_unittest.TestCase) :
-    def testLoadStlDog(self) :
+class StlLoadTests(_unittest.TestCase) :
+    def test_Stl_LoadDog(self) :
         ret,l = LoadStl(_pj("dog.stl"))
         self.assertTrue(ret)
                 
-    def testLoadStlDragon(self) :
+    def test_Stl_LoadDragon(self) :
         self.assertTrue(LoadStl(_pj("dragon.stl")))
 
-    def testLoadStlRobot(self) :
+    def test_Stl_LoadRobot(self) :
         self.assertTrue(LoadStl(_pj("robot.stl")))
 
-    def testLoadStlTeapot(self) :
+    def test_Stl_LoadTeapot(self) :
         self.assertTrue(LoadStl(_pj("utahteapot.stl")))
             
 if __name__ == '__main__':

@@ -23,19 +23,19 @@ def _pj(filename):
     return _os.path.join(_os.path.dirname(__file__), filename)
 
 class FreecadLoadingTests(_unittest.TestCase) :
-    def testFreecadLoadBasicSolids(self) :
+    def test_Freecad_LoadBasicSolids(self) :
         self.assertTrue(LoadFreecad(_pj("01_BasicSolids.step")))
 
-    def testFreecadLoadBooleanSolids(self) :
+    def test_Freecad_LoadBooleanSolids(self) :
         self.assertTrue(LoadFreecad(_pj("02_BooleanSolids.step")))
 
-    def testFreecadLoadSketchPadSolids(self) :
+    def test_Freecad_LoadSketchPadSolids(self) :
         self.assertTrue(LoadFreecad(_pj("03_SketchPad.step")))
 
-    def testFreecadLoadSketchPadSolids(self) :
+    def test_Freecad_LoadSketchPadSolids(self) :
         self.assertTrue(LoadFreecad(_pj("04_Rubik.step")))
 
-    def testFreecadLoadPlacement(self) :
+    def test_Freecad_LoadPlacement(self) :
         self.assertTrue(LoadFreecad(_pj("05_Placement.step")))
             
 if __name__ == '__main__':

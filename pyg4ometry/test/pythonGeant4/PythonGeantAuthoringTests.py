@@ -91,29 +91,29 @@ import logging as _log
 #logger = _log.getLogger()
 #logger.disabled = True
 
-class PythonAuthoringTests(_unittest.TestCase) :
-    def testPlane(self) : 
+class PythonGeantAuthoringTests(_unittest.TestCase) :
+    def test_PythonGeant_Plane(self) :
         p = pyg4ometry.geant4.solid.Plane("plane",[0,0,1],1000)
         str(p)
 
-    def testWedge(self) : 
+    def test_PythonGeant_Wedge(self) :
         w = pyg4ometry.geant4.solid.Wedge("wedge",1000,0,1.5*_np.pi,10000)
         str(w)
 
-    def testSolidBase(self) :         
+    def test_PythonGeant_SolidBase(self) :
         self.assertTrue(T000_SolidBase.Test())
 
-    def testBox(self) :
+    def test_PythonGeant_Box(self) :
         self.assertTrue(T001_Box.Test(False,False)["testStatus"])
 
-    def testTubs(self) :
+    def test_PythonGeant_Tubs(self) :
         self.assertTrue(T002_Tubs.Test(False,False))
 
-    def testCutTubs(self) :
+    def test_PythonGeant_CutTubs(self) :
         self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.normal)["testStatus"])
         self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.flat_ends)["testStatus"])
 
-    def testCons(self) :
+    def test_PythonGeant_Cons(self) :
         try : 
             T004_Cons.Test(False,False,T004_Cons.r1min_gt_r1max)
         except ValueError :
@@ -135,28 +135,28 @@ class PythonAuthoringTests(_unittest.TestCase) :
 
         self.assertTrue(T004_Cons.Test(False,False)["testStatus"])
       
-    def testPara(self) :
+    def test_PythonGeant_Para(self) :
         self.assertTrue(T005_Para.Test(False,False)["testStatus"])
 
-    def testTrd(self) :
+    def test_PythonGeant_Trd(self) :
         self.assertTrue(T006_Trd.Test(False,False)["testStatus"])
 
-    def testTrap(self) :
+    def test_PythonGeant_Trap(self) :
         self.assertTrue(T007_Trap.Test(False,False)["testStatus"])
 
-    def testSphere(self) :
+    def test_PythonGeant_Sphere(self) :
         self.assertTrue(T008_Sphere.Test())
 
-    def testOrb(self) :
+    def test_PythonGeant_Orb(self) :
         self.assertTrue(T009_Orb.Test())
 
-    def testTorus(self) :
+    def test_PythonGeant_Torus(self) :
         self.assertTrue(T010_Torus.Test())
 
-    def testPolycone(self) :
+    def test_PythonGeant_Polycone(self) :
         self.assertTrue(T011_Polycone.Test())
 
-    def testGenericPolycone(self) :
+    def test_PythonGeant_GenericPolycone(self) :
         self.assertTrue(T012_GenericPolycone.Test(False,False,T012_GenericPolycone.normal))
 
         try : 
@@ -164,10 +164,10 @@ class PythonAuthoringTests(_unittest.TestCase) :
         except ValueError : 
             pass
 
-    def testPolyhedra(self) :
+    def test_PythonGeant_Polyhedra(self) :
         self.assertTrue(T013_Polyhedra.Test())
 
-    def testGenericPolyhedra(self) : 
+    def test_PythonGeant_GenericPolyhedra(self) :
         self.assertTrue(T014_GenericPolyhedra.Test(False,False,T014_GenericPolyhedra.normal))
 
         try : 
@@ -175,13 +175,13 @@ class PythonAuthoringTests(_unittest.TestCase) :
         except ValueError : 
             pass
 
-    def testEllipticalTube(self) : 
+    def test_PythonGeant_EllipticalTube(self) :
         self.assertTrue(T015_EllipticalTube.Test())
 
-    def testEllipsoid(self) : 
+    def test_PythonGeant_Ellipsoid(self) :
         self.assertTrue(T016_Ellipsoid.Test())
 
-    def testEllipticalCone(self) : 
+    def test_PythonGeant_EllipticalCone(self) :
         self.assertTrue(T017_EllipticalCone.Test())
         
         try : 
@@ -189,10 +189,10 @@ class PythonAuthoringTests(_unittest.TestCase) :
         except ValueError : 
             pass
 
-    def testParaboloid(self) : 
+    def test_PythonGeant_Paraboloid(self) :
         self.assertTrue(T018_Paraboloid.Test())
 
-    def testHyperboloid(self) : 
+    def test_PythonGeant_Hyperboloid(self) :
         self.assertTrue(T019_Hyperboloid.Test(False,False,T019_Hyperboloid.normal))
         self.assertTrue(T019_Hyperboloid.Test(False,False,T019_Hyperboloid.rmin_eq_zero))
 
@@ -201,34 +201,34 @@ class PythonAuthoringTests(_unittest.TestCase) :
         except ValueError : 
             pass
 
-    def testTet(self) :
+    def test_PythonGeant_Tet(self) :
         self.assertTrue(T020_Tet.Test())        
 
-    def testExtrudedSolid(self) :
+    def test_PythonGeant_ExtrudedSolid(self) :
         self.assertTrue(T021_ExtrudedSolid.Test())        
 
-    def testTwistedBox(self) : 
+    def test_PythonGeant_TwistedBox(self) :
         self.assertTrue(T022_TwistedBox.Test())
 
-    def testTwistedTrap(self) : 
+    def test_PythonGeant_TwistedTrap(self) :
         self.assertTrue(T023_TwistedTrap.Test())
 
-    def testTwistedTrd(self) : 
+    def test_PythonGeant_TwistedTrd(self) :
         self.assertTrue(T024_TwistedTrd.Test())
 
-    def testTwistedTubs(self) : 
+    def test_PythonGeant_TwistedTubs(self) :
         self.assertTrue(T025_TwistedTubs.Test())
 
-    def testGenericTrap(self) : 
+    def test_PythonGeant_GenericTrap(self) :
         self.assertTrue(T026_GenericTrap.Test())
 
-    def testUnion(self) : 
+    def test_PythonGeant_Union(self) :
         self.assertTrue(T028_Union.Test())
 
-    def testSubtraction(self) : 
+    def test_PythonGeant_Subtraction(self) :
         self.assertTrue(T029_Subtraction.Test())
 
-    def testIntersection(self) : 
+    def test_PythonGeant_Intersection(self) :
         self.assertTrue(T030_Intersection.Test(False,False,T030_Intersection.normal))
 
         try : 
@@ -236,145 +236,145 @@ class PythonAuthoringTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.NullMeshError : 
             pass
 
-    def testMultiUnion(self) : 
+    def test_PythonGeant_MultiUnion(self) :
         self.assertTrue(T031_MultiUnion.Test())
 
-    def testScaled(self):
+    def test_PythonGeant_Scaled(self):
         self.assertTrue(T032_Scaled.Test()["testStatus"])
 
-    def testPhysicalLogical(self):
+    def test_PythonGeant_PhysicalLogical(self):
         self.assertTrue(T101_physical_logical.Test()["testStatus"])
 
-    def testOverlapMone(self):
+    def test_PythonGeant_OverlapMone(self):
         self.assertTrue(T102_overlap_none.Test()["testStatus"])
 
-    def testOverlapCopl(self):
+    def test_PythonGeant_OverlapCopl(self):
         self.assertTrue(T103_overlap_copl.Test()["testStatus"])
 
-    def testOverlapVolu(self):
+    def test_PythonGeant_OverlapVolu(self):
         self.assertTrue(T104_overlap_volu.Test()["testStatus"])
 
-    def testAssembly(self):
+    def test_PythonGeant_Assembly(self):
         self.assertTrue(T105_assembly.Test()["testStatus"])
 
-    def testReplicaX(self):
+    def test_PythonGeant_ReplicaX(self):
         self.assertTrue(T106_replica_x.Test()["testStatus"])
 
-    def testReplicaY(self):
+    def test_PythonGeant_ReplicaY(self):
         self.assertTrue(T107_replica_y.Test()["testStatus"])
 
-    def testReplicaZ(self):
+    def test_PythonGeant_ReplicaZ(self):
         self.assertTrue(T108_replica_z.Test()["testStatus"])
 
-    def testReplicaPhi(self):
+    def test_PythonGeant_ReplicaPhi(self):
         self.assertTrue(T109_replica_phi.Test()["testStatus"])
 
-    def testReplicaRho(self):
+    def test_PythonGeant_ReplicaRho(self):
         self.assertTrue(T110_replica_rho.Test()["testStatus"])
 
-    def testDefineTree(self):
+    def test_PythonGeant_DefineTree(self):
         self.assertTrue(T111_DefineTree.Test()["testStatus"])
 
-    def testMergeRegistry(self):
+    def test_PythonGeant_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
 
-    def testMergeRegistry_Box(self):
+    def test_PythonGeant_MergeRegistry_Box(self):
         self.assertTrue(T401_MergeRegistry_Box.Test(False,False)["testStatus"])
 
-    def testMergeRegistry_Tubs(self):
+    def test_PythonGeant_MergeRegistry_Tubs(self):
         self.assertTrue(T402_MergeRegistry_Tubs.Test()["testStatus"])
 
-    def testMergeRegistry_CutTubs(self):
+    def test_PythonGeant_MergeRegistry_CutTubs(self):
         self.assertTrue(T403_MergeRegistry_CutTubs.Test()["testStatus"])
 
-    def testMergeRegistry_Cons(self):
+    def test_PythonGeant_MergeRegistry_Cons(self):
         self.assertTrue(T404_MergeRegistry_Cons.Test()["testStatus"])
 
-    def testMergeRegistry_Para(self):
+    def test_PythonGeant_MergeRegistry_Para(self):
         self.assertTrue(T405_MergeRegistry_Para.Test()["testStatus"])
 
-    def testMergeRegistry_Trd(self):
+    def test_PythonGeant_MergeRegistry_Trd(self):
         self.assertTrue(T406_MergeRegistry_Trd.Test()["testStatus"])
 
-    def testMergeRegistry_Trap(self):
+    def test_PythonGeant_MergeRegistry_Trap(self):
         self.assertTrue(T407_MergeRegistry_Trap.Test()["testStatus"])
 
-    def testMergeRegistry_(self):
+    def test_PythonGeant_MergeRegistry_(self):
         self.assertTrue(T407_MergeRegistry_Trap.Test()["testStatus"])
 
-    def testMergeRegistry_Sphere(self):
+    def test_PythonGeant_MergeRegistry_Sphere(self):
         self.assertTrue(T408_MergeRegistry_Sphere.Test()["testStatus"])
 
-    def testMergeRegistry_Orb(self):
+    def test_PythonGeant_MergeRegistry_Orb(self):
         self.assertTrue(T409_MergeRegistry_Orb.Test()["testStatus"])
 
-    def testMergeRegistry_Torus(self):
+    def test_PythonGeant_MergeRegistry_Torus(self):
         self.assertTrue(T410_MergeRegistry_Torus.Test()["testStatus"])
 
-    def testMergeRegistry_Polycone(self):
+    def test_PythonGeant_MergeRegistry_Polycone(self):
         self.assertTrue(T411_MergeRegistry_Polycone.Test()["testStatus"])
 
-    def testMergeRegistry_GenericPolycone(self):
+    def test_PythonGeant_MergeRegistry_GenericPolycone(self):
         self.assertTrue(T412_MergeRegistry_GenericPolycone.Test()["testStatus"])
 
-    def testMergeRegistry_Polyhedra(self):
+    def test_PythonGeant_MergeRegistry_Polyhedra(self):
         self.assertTrue(T413_MergeRegistry_Polyhedra.Test()["testStatus"])
 
-    def testMergeRegistry_GenericPolyhedra(self):
+    def test_PythonGeant_MergeRegistry_GenericPolyhedra(self):
         self.assertTrue(T414_MergeRegistry_GenericPolyhedra.Test()["testStatus"])
 
-    def testMergeRegistry_GenericPolyhedra(self):
+    def test_PythonGeant_MergeRegistry_GenericPolyhedra(self):
         self.assertTrue(T414_MergeRegistry_GenericPolyhedra.Test()["testStatus"])
 
-    def testMergeRegistry_EllipticalTube(self):
+    def test_PythonGeant_MergeRegistry_EllipticalTube(self):
         self.assertTrue(T415_MergeRegistry_EllipticalTube.Test()["testStatus"])
 
-    def testMergeRegistry_Ellipsoid(self):
+    def test_PythonGeant_MergeRegistry_Ellipsoid(self):
         self.assertTrue(T416_MergeRegistry_Ellipoid.Test()["testStatus"])
 
-    def testMergeRegistry_EllipticalCone(self):
+    def test_PythonGeant_MergeRegistry_EllipticalCone(self):
         self.assertTrue(T417_MergeRegistry_EllipticalCone.Test()["testStatus"])
 
-    def testMergeRegistry_EllipticalParaboloid(self):
+    def test_PythonGeant_MergeRegistry_EllipticalParaboloid(self):
         self.assertTrue(T418_MergeRegistry_Paraboloid.Test()["testStatus"])
 
-    def testMergeRegistry_Hyperboloid(self):
+    def test_PythonGeant_MergeRegistry_Hyperboloid(self):
         self.assertTrue(T419_MergeRegistry_Hyperboloid.Test()["testStatus"])
 
-    def testMergeRegistry_Tet(self):
+    def test_PythonGeant_MergeRegistry_Tet(self):
         self.assertTrue(T420_MergeRegistry_Tet.Test()["testStatus"])
 
-    def testMergeRegistry_ExtrudedSolid(self):
+    def test_PythonGeant_MergeRegistry_ExtrudedSolid(self):
         self.assertTrue(T421_MergeRegistry_ExtrudedSolid.Test()["testStatus"])
 
-    def testMergeRegistry_TwistedBox(self):
+    def test_PythonGeant_MergeRegistry_TwistedBox(self):
         self.assertTrue(T422_MergeRegistry_TwistedBox.Test()["testStatus"])
 
-    def testMergeRegistry_TwistedTrap(self):
+    def test_PythonGeant_MergeRegistry_TwistedTrap(self):
         self.assertTrue(T423_MergeRegistry_TwistedTrap.Test()["testStatus"])
 
-    def testMergeRegistry_TwistedTrd(self):
+    def test_PythonGeant_MergeRegistry_TwistedTrd(self):
         self.assertTrue(T424_MergeRegistry_TwistedTrd.Test()["testStatus"])
 
-    def testMergeRegistry_TwistedTubs(self):
+    def test_PythonGeant_MergeRegistry_TwistedTubs(self):
         self.assertTrue(T425_MergeRegistry_TwistedTubs.Test()["testStatus"])
 
-    def testMergeRegistry_GenericTrap(self):
+    def test_PythonGeant_MergeRegistry_GenericTrap(self):
         self.assertTrue(T426_MergeRegistry_GenericTrap.Test()["testStatus"])
 
-    def testMergeRegistry_Union(self):
+    def test_PythonGeant_MergeRegistry_Union(self):
         self.assertTrue(T428_MergeRegistry_Union.Test()["testStatus"])
 
-    def testMergeRegistry_Subtraction(self):
+    def test_PythonGeant_MergeRegistry_Subtraction(self):
         self.assertTrue(T429_MergeRegistry_Subtraction.Test()["testStatus"])
 
-    def testMergeRegistry_Intersection(self):
+    def test_PythonGeant_MergeRegistry_Intersection(self):
         self.assertTrue(T430_MergeRegistry_Intersection.Test()["testStatus"])
 
-    def testMergeRegistry_MultiUnion(self):
+    def test_PythonGeant_MergeRegistry_MultiUnion(self):
         self.assertTrue(T431_MergeRegistry_MultiUnion.Test()["testStatus"])
 
-    def testMergeRegistryBoxAssemblyConverion(self):
+    def test_PythonGeant_MergeRegistryBoxAssemblyConverion(self):
         self.assertTrue(T432_MergeRegistry_Box_AssemblyConversion.Test()["testStatus"])
 
 if __name__ == '__main__':
