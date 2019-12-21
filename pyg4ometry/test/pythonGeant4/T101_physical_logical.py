@@ -62,7 +62,7 @@ def Test(vis = False, interactive = False) :
     cp1 = _g4.PhysicalVolume([0,0,0],  [0,0,0]  ,  cl, "c_pv1", wl, reg)
 
     # check for overlaps
-    wl.checkOverlaps(True)
+    wl.checkOverlaps(True,True,False)
 
     # set world volume
     reg.setWorld(wl.name)
