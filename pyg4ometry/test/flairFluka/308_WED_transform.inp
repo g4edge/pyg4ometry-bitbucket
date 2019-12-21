@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform wedrotx
+WED wedx       0 0 0   10 0 0    0 10 0     0 0 10
+$end_transform
+$start_transform wedroty
+WED wedy       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+$start_transform wedrotz
+WED wedz       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+END
+wedreg       5 | +wedx | +wedy | +wedz
+END
+GEOEND
+ASSIGNMA         TIN    wedreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, wedrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, wedroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., wedrotz
+STOP

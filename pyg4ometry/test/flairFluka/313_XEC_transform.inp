@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform xecrotx
+XEC xecx       0 0 2.5 5
+$end_transform
+$start_transform xecroty
+XEC xecy       0 0 2.5 5
+$end_transform
+$start_transform xecrotz
+XEC xecz       0 0 2.5 5
+$end_transform
+END
+xecreg       5 | +xecx | +xecy | +xecz
+END
+GEOEND
+ASSIGNMA         TIN    xecreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, xecrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, xecroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., xecrotz
+STOP

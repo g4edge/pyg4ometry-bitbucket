@@ -417,7 +417,8 @@ def _parseRotDefiniCard(card):
     if card.keyword != "ROT-DEFI":
         raise ValueError("Not a ROT-DEFI card.")
 
-    what1 = float(card.what1)
+    card = card.nonesToZero()
+    what1 = int(card.what1)
 
     if what1 > 1000.:
         i = what1 // 1000
@@ -446,6 +447,12 @@ def _parseRotDefiniCard(card):
     theta = np.pi * card.what2 / 180 # polar angle
     phi = np.pi * card.what3 / 180  # azimuthal angle
 
+    if theta < 0 or theta > np.pi:
+        raise ValueError(
+            "WHAT2 must be between 0 and +pi.  WHAT2={}".format(theta))
+    if phi < -np.pi or phi > np.pi:
+        raise ValueError(
+            "WHAT3 must be between -pi and +pi.  WHAT3={}".format(phi))
 
     # the translation coordinates
     tx, ty, tz = card.what4, card.what5, card.what6
@@ -463,6 +470,7 @@ def _parseRotDefiniCard(card):
     cp = np.cos(phi)
     st = np.sin(theta)
     sp = np.sin(phi)
+
     if j == 1: # x
         r1 = np.array([[ ct, st, 0, 0],
                        [-st, ct, 0, 0],

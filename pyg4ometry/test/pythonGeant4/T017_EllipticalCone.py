@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 zcut_outofrange = 2
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, type = normal,n_slice=16) :
     reg = _g4.Registry()
     
     # defines 
@@ -18,7 +18,7 @@ def Test(vis = False, interactive = False, type = normal) :
     edx    = _gd.Constant("eax","0.2",reg,True)
     edy    = _gd.Constant("eby","0.4",reg,True)
     ezmax  = _gd.Constant("ecz","50",reg,True)
-    ezcut  = _gd.Constant("ebc","15",reg,True)
+    ezcut  = _gd.Constant("ebc","0.5",reg,True)
 
     if type == zcut_outofrange : 
         ezcut.setExpression(30)
@@ -28,7 +28,7 @@ def Test(vis = False, interactive = False, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    es = _g4.solid.EllipticalCone("es",edx,edy,ezmax,ezcut,reg,"mm")
+    es = _g4.solid.EllipticalCone("es",edx,edy,ezmax,ezcut,reg,"mm",nslice=n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

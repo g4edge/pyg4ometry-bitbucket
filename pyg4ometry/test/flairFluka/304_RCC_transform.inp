@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform rccrotx
+RCC rccx       0 0 0 0 0 10 5
+$end_transform
+$start_transform rccroty
+RCC rccy       0 0 0 0 0 10 5
+$end_transform
+$start_transform rccrotz
+RCC rccz       0 0 0 0 0 10 5
+$end_transform
+END
+rccreg       5 | +rccx | +rccy | +rccz
+END
+GEOEND
+ASSIGNMA         TIN    rccreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, rccrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, rccroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., rccrotz
+STOP

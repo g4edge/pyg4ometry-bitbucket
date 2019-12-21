@@ -1,7 +1,9 @@
 import glob
 import os
 import sys
+sys.dont_write_bytecode = True
 import importlib
+
 
 def getAllTestModules():
 

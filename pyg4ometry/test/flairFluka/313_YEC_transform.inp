@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform yecrotx
+YEC yecx       0 0 2.5 5
+$end_transform
+$start_transform yecroty
+YEC yecy       0 0 2.5 5
+$end_transform
+$start_transform yecrotz
+YEC yecz       0 0 2.5 5
+$end_transform
+END
+yecreg       5 | +yecx | +yecy | +yecz
+END
+GEOEND
+ASSIGNMA         TIN    yecreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, yecrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, yecroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., yecrotz
+STOP

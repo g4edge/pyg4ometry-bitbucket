@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform ellrotx
+ELL ellx       0 0 5  0 0 15 20
+$end_transform
+$start_transform ellroty
+ELL elly       0 0 5  0 0 15 20
+$end_transform
+$start_transform ellrotz
+ELL ellz       0 0 5  0 0 15 20
+$end_transform
+END
+ellreg       5 | +ellx | +elly | +ellz
+END
+GEOEND
+ASSIGNMA         TIN    ellreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, ellrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, ellroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., ellrotz
+STOP

@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform rawrotx
+RAW rawx       0 0 0   10 0 0    0 10 0     0 0 10
+$end_transform
+$start_transform rawroty
+RAW rawy       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+$start_transform rawrotz
+RAW rawz       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+END
+rawreg       5 | +rawx | +rawy | +rawz
+END
+GEOEND
+ASSIGNMA         TIN    rawreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, rawrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, rawroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., rawrotz
+STOP
