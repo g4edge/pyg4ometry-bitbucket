@@ -13,6 +13,12 @@ import T010_XYP
 import T010_XZP
 import T010_YZP
 import T011_PLA
+import T012_XCC
+import T012_YCC
+import T012_ZCC
+import T013_XEC
+import T013_YEC
+import T013_ZEC
 
 class PythonFlukaAuthoringTests(_unittest.TestCase) :
     def test_PythonFluka_T001_RPP(self):
@@ -44,3 +50,30 @@ class PythonFlukaAuthoringTests(_unittest.TestCase) :
 
     def test_PythonFluka_T010_XYP(self):
         T010_XYP.Test(True,False)
+
+    def test_PythonFluka_T010_XZP(self):
+        T010_XZP.Test(True,False)
+
+    def test_PythonFluka_T010_YZP(self):
+        T010_YZP.Test(True,False)
+
+    def test_PythonFluka_T011_PLA(self):
+        T011_PLA.Test(True,False)
+
+    def test_PythonFluka_T012_XCC(self):
+        T012_XCC.Test(True,False)
+
+    def test_PythonFluka_T012_YCC(self):
+        T012_YCC.Test(True,False)
+
+    def test_PythonFluka_T012_ZCC(self):
+        T012_ZCC.Test(True,False)
+
+    def test_PythonFluka_T013_XEC(self):
+        T013_XEC.Test(True, False)
+
+    def test_PythonFluka_T013_YEC(self):
+        T013_YEC.Test(True, False)
+
+    def test_PythonFluka_T013_ZEC(self):
+        T013_ZEC.Test(True, False)

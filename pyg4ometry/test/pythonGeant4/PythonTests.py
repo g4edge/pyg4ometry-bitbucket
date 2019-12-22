@@ -13,38 +13,38 @@ class PythonTests(_unittest.TestCase) :
     # #############################
     # Transformation
     # #############################
-    def testRad2Deg(self) : 
+    def test_Python_Rad2Deg(self) :
         self.assertEqual(_trans.rad2deg(_np.pi),180)
 
-    def testDeg2Rad(self) :
+    def test_Python_Deg2Rad(self) :
         self.assertEqual(_trans.deg2rad(180),_np.pi)
 
-    def testTbxyz2axisangle(self) :
+    def test_Python_Tbxyz2axisangle(self) :
         self.assertEqual(_trans.tbxyz2axisangle([0.0,_np.pi/2.0,0.0]),
                          [[0.0, 1.0, 0.0], 1.5707963267948966])
 
-    def testMatrix2axisangle(self) :
+    def test_Python_Matrix2axisangle(self) :
         theta = 0.5
         m = _np.array([[_np.cos(theta), -_np.sin(theta),0],[_np.sin(theta),_np.cos(theta),0],[0,0,1]])
         self.assertEqual(_trans.matrix2axisangle(m),
                          [[0.0, 0.0, 1.0000000000000002], 0.4999999999999999])
 
-    def testAxisangle2matrix(self) : 
+    def test_Python_Axisangle2matrix(self) :
         pass
     
-    def testMatrix2tbxyz(self) : 
+    def test_Python_Matrix2tbxyz(self) :
         pass
 
-    def testTbxyz2matrix(self) : 
+    def test_Python_Tbxyz2matrix(self) :
         pass
 
-    def testMatrix_from(self) : 
+    def test_Python_Matrix_from(self) :
         pass 
 
     # #############################
     # Freecad
     # #############################
-    def testFreeCadImportFail(self) :         
+    def test_Python_FreeCadImportFail(self) :
         import sys
         # remove freecad 
         for p in sys.path :
@@ -62,7 +62,7 @@ class PythonTests(_unittest.TestCase) :
     # CSG
     # #############################
 
-    def testExceptionNullMeshErrorIntersection(self) : 
+    def test_Python_ExceptionNullMeshErrorIntersection(self) :
         import pyg4ometry
 
         try :
@@ -75,7 +75,7 @@ class PythonTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.NullMeshError : 
             pass
 
-    def testExceptionNullMeshErrorSubtraction(self) : 
+    def test_Python_ExceptionNullMeshErrorSubtraction(self) :
         import pyg4ometry
 
         try :
@@ -88,7 +88,7 @@ class PythonTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.NullMeshError : 
             pass
 
-    def testExceptionNullMeshErrorOtherSolid(self) : 
+    def test_Python_ExceptionNullMeshErrorOtherSolid(self) :
         import pyg4ometry
 
         try :
@@ -98,7 +98,7 @@ class PythonTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.NullMeshError : 
             pass
 
-    def testExceptionNullMeshErrorBasestring(self) : 
+    def test_Python_ExceptionNullMeshErrorBasestring(self) :
         import pyg4ometry
 
         try :
@@ -106,7 +106,7 @@ class PythonTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.NullMeshError : 
             pass
 
-    def testExceptionIdenticalNameError(self) :
+    def test_Python_ExceptionIdenticalNameError(self) :
         import pyg4ometry 
 
 

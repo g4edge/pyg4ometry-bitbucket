@@ -8,7 +8,7 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Define upgrades
     # #############################
-    def testUpgradeToStringExpression(self) :
+    def test_GdmlDefine_UpgradeToStringExpression(self) :
         r = pyg4ometry.geant4.Registry()
 
         # number to expression string
@@ -30,7 +30,7 @@ class PythonDefineTests(_unittest.TestCase) :
         c = pyg4ometry.gdml.Defines.Constant("c","10",r,True)
         self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"c"),"c")
 
-    def testUpgradeToVector(self) : 
+    def test_GdmlDefine_UpgradeToVector(self) :
         r = pyg4ometry.geant4.Registry() 
 
         v = pyg4ometry.gdml.Defines.Position("v",0,0,0,"mm",r,False)
@@ -60,77 +60,77 @@ class PythonDefineTests(_unittest.TestCase) :
     # ANTLR expressions 
     # #############################
 
-    def testExpressionInt(self) :
+    def test_GdmlDefine_ExpressionInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc",1,r)        
         self.assertEqual(xc.eval(),1)
 
-    def testExpressionFloat(self) :
+    def test_GdmlDefine_ExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc",1.2345,r)        
         self.assertEqual(xc.eval(),1.2345)
 
-    def testExpressionScientific1(self) :
+    def test_GdmlDefine_ExpressionScientific1(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc",1E3,r)        
         self.assertEqual(xc.eval(),1000)
 
-    def testExpressionScientific2(self) :
+    def test_GdmlDefine_ExpressionScientific2(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc",1.2345E3,r)
         self.assertEqual(xc.eval(),1234.5)
 
-    def testExpressionStringInt(self) :
+    def test_GdmlDefine_ExpressionStringInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)        
         self.assertEqual(xc.eval(),1)
 
-    def testExpressionStringFloat(self) :
+    def test_GdmlDefine_ExpressionStringFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1.2345",r)        
         self.assertEqual(xc.eval(),1.2345)
 
-    def testExpressionStringScientific1(self) :
+    def test_GdmlDefine_ExpressionStringScientific1(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1E3",r)        
         self.assertEqual(xc.eval(),1000)
 
-    def testExpressionStringScientific2(self) :
+    def test_GdmlDefine_ExpressionStringScientific2(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1.2345E3",r)
         self.assertEqual(xc.eval(),1234.5)
 
-    def testExpressionOperatorAddIntInt(self) :
+    def test_GdmlDefine_ExpressionOperatorAddIntInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1+2",r)        
         self.assertEqual(xc.eval(),3)        
 
-    def testExpressionOperatorAddIntFloat(self) :
+    def test_GdmlDefine_ExpressionOperatorAddIntFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2.3456+1",r)
         self.assertEqual(xc.eval(),3.3456)        
 
-    def testExpressionOperatorAddFloatFloat(self) :
+    def test_GdmlDefine_ExpressionOperatorAddFloatFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1.2345+2.3456",r)
         self.assertEqual(xc.eval(),3.5801)        
 
-    def testExpressionOperatorAddFloatInt(self) :
+    def test_GdmlDefine_ExpressionOperatorAddFloatInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1+2.3456",r)
         self.assertEqual(xc.eval(),3.3456)        
 
-    def testExpressionOperatorSubIntInt(self) : 
+    def test_GdmlDefine_ExpressionOperatorSubIntInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1-2",r)        
         self.assertEqual(xc.eval(),-1)                
 
-    def testExpressionOperatorSubIntFloat(self) : 
+    def test_GdmlDefine_ExpressionOperatorSubIntFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1-2.3456",r)
         self.assertEqual(xc.eval(),-1.3456000000000001)
 
-    def testExpressionOperatorSubFloatInt(self) : 
+    def test_GdmlDefine_ExpressionOperatorSubFloatInt(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2.3456-1",r)
         self.assertEqual(xc.eval(),1.3456000000000001)
@@ -138,133 +138,133 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Constants 
     # #############################        
-    def testConstantSetName(self) : 
+    def test_GdmlDefine_ConstantSetName(self) :
         r = pyg4ometry.geant4.Registry()
         c = pyg4ometry.gdml.Constant("xc","1",r)
         c.setName("testName") 
         self.assertEqual(c.name,"testName")
         self.assertEqual(c.expr.name,"expr_testName")
         
-    def testConstantOperatorAddExpressionExpression(self) :
+    def test_GdmlDefine_ConstantOperatorAddExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         yc = pyg4ometry.gdml.Constant("yc","2",r)
         self.assertEqual((xc+yc).eval(),3)
 
-    def testConstantOperatorAddExpressionFloat(self) :
+    def test_GdmlDefine_ConstantOperatorAddExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         self.assertEqual((xc+10).eval(),11)
 
-    def testConstantOperatorAddFloatExpression(self) :
+    def test_GdmlDefine_ConstantOperatorAddFloatExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         self.assertEqual((10+xc).eval(),11)
 
-    def testConstantOperatorSubExpressionExpression(self) :
+    def test_GdmlDefine_ConstantOperatorSubExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         yc = pyg4ometry.gdml.Constant("yc","2",r)
         self.assertEqual((xc-yc).eval(),-1)
 
-    def testConstantOperatorSubExpressionFloat(self) : 
+    def test_GdmlDefine_ConstantOperatorSubExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         self.assertEqual((xc-10).eval(),-9)
 
-    def testConstantOperatorSubExpressionFloat(self) : 
+    def test_GdmlDefine_ConstantOperatorSubExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         self.assertEqual((10-xc).eval(),9)
 
-    def testConstantOperatorMulExpressionExpression(self) : 
+    def test_GdmlDefine_ConstantOperatorMulExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         yc = pyg4ometry.gdml.Constant("yc","5",r)
         self.assertEqual((xc*yc).eval(),25)
 
-    def testConstantOperatorMulExpressionFloat(self) : 
+    def test_GdmlDefine_ConstantOperatorMulExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         self.assertEqual((xc*5).eval(),25)
 
-    def testConstantOperatorMulFloatExpression(self) : 
+    def test_GdmlDefine_ConstantOperatorMulFloatExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         self.assertEqual((5*xc).eval(),25)
                 
-    def testConstantOperatorDivExpressionExpression(self) :
+    def test_GdmlDefine_ConstantOperatorDivExpressionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         yc = pyg4ometry.gdml.Constant("yc","10",r)
         self.assertEqual((xc/yc).eval(),0.5)        
 
-    def testConstantOperatorDivExpressionFloat(self) :
+    def test_GdmlDefine_ConstantOperatorDivExpressionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         self.assertEqual((xc/10).eval(),0.5)        
 
-    def testConstantOperatorDivFloatExpression(self) :
+    def test_GdmlDefine_ConstantOperatorDivFloatExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         self.assertEqual((10./xc).eval(),2)        
 
-    def testConstantOperationNegExpression(self) :
+    def test_GdmlDefine_ConstantOperationNegExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         self.assertEqual((-xc).eval(),-5)                
 
-    def testConstantSinExpression(self) :
+    def test_GdmlDefine_ConstantSinExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.sin(xc)).eval(),0.09983341664682815)
 
-    def testConstantCosExpression(self) :
+    def test_GdmlDefine_ConstantCosExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.cos(xc)).eval(),0.9950041652780257) 
 
-    def testConstantTanExpression(self) :
+    def test_GdmlDefine_ConstantTanExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.tan(xc)).eval(),0.10033467208545055) 
 
-    def testConstantExpExpression(self) :
+    def test_GdmlDefine_ConstantExpExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.exp(xc)).eval(),1.1051709180756477) 
 
-    def testConstantLogExpression(self) : 
+    def test_GdmlDefine_ConstantLogExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.log(xc)).eval(),-2.3025850929940455) 
 
-    def testConstantLog10Expression(self) : 
+    def test_GdmlDefine_ConstantLog10Expression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.log10(xc)).eval(),-1.0) 
 
-    def testConstantSqrtExpression(self) : 
+    def test_GdmlDefine_ConstantSqrtExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.sqrt(xc)).eval(),0.31622776601683794) 
 
-    def testConstantArcSinExpression(self) :
+    def test_GdmlDefine_ConstantArcSinExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.asin(xc)).eval(),0.1001674211615598)
 
-    def testConstantArcCosExpression(self) :
+    def test_GdmlDefine_ConstantArcCosExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.acos(xc)).eval(),1.4706289056333368) 
 
-    def testConstantArcTanExpression(self) :
+    def test_GdmlDefine_ConstantArcTanExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
         self.assertEqual((pyg4ometry.gdml.atan(xc)).eval(),0.09966865249116204) 
 
-    def testPowExpression(self) :
+    def test_GdmlDefine_PowExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2",r)
         self.assertEqual((pyg4ometry.gdml.pow(xc,2)).eval(),4) 
@@ -272,7 +272,7 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Quantity
     # #############################        
-    def testQuantity(self) : 
+    def test_GdmlDefine_Quantity(self) :
         r = pyg4ometry.geant4.Registry()
         xq = pyg4ometry.gdml.Quantity("xq","0.1","mass","kg",r)
         self.assertEqual(xq.eval(),0.1)
@@ -282,7 +282,7 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Variable
     # #############################        
-    def testVariable(self) : 
+    def test_GdmlDefine_Variable(self) :
         r = pyg4ometry.geant4.Registry()
         xv = pyg4ometry.gdml.Variable("xv","0.1",r)
         self.assertEqual(xv.eval(), 0.1)
@@ -292,7 +292,7 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Expression
     # #############################        
-    def testExpression(self) : 
+    def test_GdmlDefine_Expression(self) :
         r  = pyg4ometry.geant4.Registry()
         xe = pyg4ometry.gdml.Expression("xe","0.1",r,True)
         self.assertEqual(xe.eval(), 0.1)
@@ -303,13 +303,13 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Position
     # #############################                
-    def testPositionSetName(self) :
+    def test_GdmlDefine_PositionSetName(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p","1","2","3","mm",r)
         v.setName("newName")
         self.assertEqual(v.name,"newName")
 
-    def testPositionGetItem(self) :
+    def test_GdmlDefine_PositionGetItem(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p","1","2","3","mm",r)
 
@@ -322,107 +322,107 @@ class PythonDefineTests(_unittest.TestCase) :
         except IndexError : 
             pass 
         
-    def testPositionConstructorStrStrStr(self) :
+    def test_GdmlDefine_PositionConstructorStrStrStr(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p","1","2","3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorStrStrFloat(self) :
+    def test_GdmlDefine_PositionConstructorStrStrFloat(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p","1","2",3,"mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorStrFloatStr(self) :
+    def test_GdmlDefine_PositionConstructorStrFloatStr(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p","1",2,"3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorFloatStrStr(self) :
+    def test_GdmlDefine_PositionConstructorFloatStrStr(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p",1,"2","3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorStrStrExpression(self) :
+    def test_GdmlDefine_PositionConstructorStrStrExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","3",r)
         v = pyg4ometry.gdml.Position("p","1","2",xc,"mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorStrExpressionStr(self) :
+    def test_GdmlDefine_PositionConstructorStrExpressionStr(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2",r)
         v = pyg4ometry.gdml.Position("p","1",xc,"3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorExpressionStrStr(self) :
+    def test_GdmlDefine_PositionConstructorExpressionStrStr(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         v = pyg4ometry.gdml.Position("p",xc,"2","3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorStrStrExprstr(self) :
+    def test_GdmlDefine_PositionConstructorStrStrExprstr(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","3",r)
         v = pyg4ometry.gdml.Position("p","1","2","xc","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorStrExprstrStr(self) :
+    def test_GdmlDefine_PositionConstructorStrExprstrStr(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2",r)
         v = pyg4ometry.gdml.Position("p","1","xc","3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorExprstrStrStr(self) :
+    def test_GdmlDefine_PositionConstructorExprstrStrStr(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","1",r)
         v = pyg4ometry.gdml.Position("p","xc","2","3","mm",r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionConstructorUnitNone(self) :
+    def test_GdmlDefine_PositionConstructorUnitNone(self) :
         r = pyg4ometry.geant4.Registry()
         v = pyg4ometry.gdml.Position("p","1","2","3",None,r)
         self.assertEqual(v.eval(),[1,2,3])
 
-    def testPositionOperatorAdd(self) : 
+    def test_GdmlDefine_PositionOperatorAdd(self) :
         r = pyg4ometry.geant4.Registry()
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         v2 = pyg4ometry.gdml.Position("v2","11","12","13","mm",r)
         self.assertEqual((v1+v2).eval(),[12,14,16])        
 
-    def testPositionOperatorSub(self) : 
+    def test_GdmlDefine_PositionOperatorSub(self) :
         r = pyg4ometry.geant4.Registry()
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         v2 = pyg4ometry.gdml.Position("v2","11","12","13","mm",r)
         self.assertEqual((v2-v1).eval(),[10,10,10])        
 
-    def testPositionOperatorMulFloatPosition(self) : 
+    def test_GdmlDefine_PositionOperatorMulFloatPosition(self) :
         r = pyg4ometry.geant4.Registry()
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         self.assertEqual((10.*v1).eval(),[10,20,30])        
 
-    def testPositionOperatorMulPositionFloat(self) : 
+    def test_GdmlDefine_PositionOperatorMulPositionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         self.assertEqual((v1*10.).eval(),[10,20,30])        
 
-    def testPositionOperatorMulExpressionPosition(self) : 
+    def test_GdmlDefine_PositionOperatorMulExpressionPosition(self) :
         r = pyg4ometry.geant4.Registry()
         x = pyg4ometry.gdml.Constant("x","1.5",r)
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         self.assertEqual((x*v1).eval(),[1.5,3.0,4.5])            
 
-    def testPositionOperatorMulPositionExpression(self) : 
+    def test_GdmlDefine_PositionOperatorMulPositionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         x = pyg4ometry.gdml.Constant("x","1.5",r)
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         self.assertEqual((v1*x).eval(),[1.5,3.0,4.5])            
 
-    def testPositionOperatorDivPositionFloat(self) : 
+    def test_GdmlDefine_PositionOperatorDivPositionFloat(self) :
         r = pyg4ometry.geant4.Registry()
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
         self.assertEqual((v1/10).eval(),[0.1,0.2,0.3])
 
-    def testPositionOperatorDivPositionExpression(self) : 
+    def test_GdmlDefine_PositionOperatorDivPositionExpression(self) :
         r = pyg4ometry.geant4.Registry()
         x = pyg4ometry.gdml.Constant("x","10.0",r)
         v1 = pyg4ometry.gdml.Position("v1","1","2","3","mm",r)
@@ -431,7 +431,7 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Rotations
     # #############################
-    def testRotation(self) : 
+    def test_GdmlDefine_Rotation(self) :
         r  = pyg4ometry.geant4.Registry()
         r1 = pyg4ometry.gdml.Rotation("r1",1,2,3,"rad",r,True)    
         r2 = pyg4ometry.gdml.Rotation("r2",1,2,3,"deg",r,True)
@@ -442,7 +442,7 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Scale
     # #############################
-    def testScale(self) : 
+    def test_GdmlDefine_Scale(self) :
         r  = pyg4ometry.geant4.Registry()
         s1 = pyg4ometry.gdml.Scale("s1",1,2,3,None,r,True)    
         s2 = pyg4ometry.gdml.Scale("s2",1,2,3,None,r,False)    
@@ -451,36 +451,36 @@ class PythonDefineTests(_unittest.TestCase) :
     # #############################
     # Matrix
     # #############################
-    def testMatrixConstructor1x10(self) : 
+    def test_GdmlDefine_MatrixConstructor1x10(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",1,[1,2,3,4,5,6,7,8,9,10],r,False)
         self.assertTrue((mat.eval() == [1,2,3,4,5,6,7,8,9,10]).all())
 
-    def testMatrixConstructor1x10(self) : 
+    def test_GdmlDefine_MatrixConstructor1x10(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,False)
 
-    def testMatrix1x10Index(self) : 
+    def test_GdmlDefine_Matrix1x10Index(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",1,[1,2,3,4,5,6,7,8,9,10],r,False)
         self.assertEqual(mat[9].eval(),10)
 
-    def testMatrix2x5Index(self) : 
+    def test_GdmlDefine_Matrix2x5Index(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,False)
         self.assertEqual(mat[0][2].eval(),3)
 
-    def testMatrixConstructor1x10AddRegistry(self) : 
+    def test_GdmlDefine_MatrixConstructor1x10AddRegistry(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",1,[1,2,3,4,5,6,7,8,9,10],r,True)
         self.assertTrue((mat.eval() == [1,2,3,4,5,6,7,8,9,10]).all())
 
-    def testMatrixRepr(self) :
+    def test_GdmlDefine_MatrixRepr(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,True)
         str(mat)
 
-    def testMatrixGetItemInRegistry(self) :
+    def test_GdmlDefine_MatrixGetItemInRegistry(self) :
         r = pyg4ometry.geant4.Registry()
         mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,True)
         self.assertEqual(mat[0,0].expr.expression,"mat[1,1]")
