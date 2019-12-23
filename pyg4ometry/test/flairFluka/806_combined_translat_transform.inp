@@ -1,0 +1,34 @@
+GEOBEGIN                                                              COMBNAME
+    0    0          
+* No transforms applied
+RPP rpp0       0.0 10. 0.0 10. 0.0 10.
+* Transform applied
+$start_transform transf1
+RPP rpptrf     0.0 10. 0.0 10. 0.0 10.
+$end_transform 
+$start_transform transf2
+$start_translat 0 0 10
+RPP rpptrflt   0.0 10. 0.0 10. 0.0 10.
+$end_translat 
+$end_transform 
+END
+* No transform or translation
+rpp0         5 | +rpp0
+* Recursively defined transform
+rpptrf       5 | +rpptrf
+* The same transform as above, but defined interms of a transform and a translat
+* rpptrflt and rpptrf should be directly on top of each other.
+rpptrflt     5 | +rpptrflt
+END
+GEOEND
+ASSIGNMA      HELIUM      rpp0
+ASSIGNMA    HYDROGEN  rpptrflt
+ASSIGNMA    MAGNESIU    rpptrf
+FREE
+* translate by 10cm in Z and then rotate by 90 degrees:
+ROT-DEFI  , 0.0, 0.0, 0.0, 0.0, 0.0, 10., transf1
+ROT-DEFI  , 200., 0.0, 90., 0.0, 0.0, 0.0, transf1
+* Just rotate by 90deg:
+ROT-DEFI  , 200., 0.0, 90., 0.0, 0.0, 0.0, transf2
+FREE
+STOP
