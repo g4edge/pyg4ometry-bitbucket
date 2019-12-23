@@ -21,7 +21,7 @@ def main(filein, debug=False):
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
     v = vi.VtkViewer()
-    v.addAxes(length=20)
+    v.addAxes(length=200)
     v.addLogicalVolume(wlv)
     v.view(True)
 
