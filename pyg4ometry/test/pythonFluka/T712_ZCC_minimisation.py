@@ -19,8 +19,7 @@ def Test(vis=False, interactive=False):
     z.addIntersection(xyp_hi)
     z.addSubtraction(xyp_lo)
 
-
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z)
 
     freg.addRegion(region)
@@ -30,7 +29,6 @@ def Test(vis=False, interactive=False):
                                 split_disjoint_unions=False,
                                 minimise_solids=True)
 
-    print "Infinite cylinder length =", greg.solidDict["ZCC_BODY_s"].pDz
     assert greg.solidDict["ZCC_BODY_s"].pDz < INFINITY
 
     if vis:

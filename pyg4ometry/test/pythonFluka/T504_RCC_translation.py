@@ -5,8 +5,6 @@ from pyg4ometry.fluka import RCC, Region, Zone, FlukaRegistry
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    
-
     rcc = RCC("RCC_BODY",
               [20, 20, 20],
               [5, 5, 5], 2.5,
@@ -14,7 +12,7 @@ def Test(vis=False, interactive=False):
               flukaregistry=freg)
     z = Zone()
     z.addIntersection(rcc)
-    region = Region("RCC_REG")
+    region = Region("RCC_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
@@ -27,8 +25,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

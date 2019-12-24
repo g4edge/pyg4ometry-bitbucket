@@ -10,15 +10,12 @@ def Test(vis=False, interactive=False):
     trc = TRC("TRC_BODY", [0, 0, 0], [5, 5, 5], 5, 2, flukaregistry=freg)
     z = Zone()
     z.addIntersection(trc)
-    region = Region("TRC_REG")
+    region = Region("TRC_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
-    # Test extents??
-    # clip wv?
-    
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
@@ -26,13 +23,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-        
-
 
 if __name__ == '__main__':
     Test(True, True)
-
-    
-
-
-    

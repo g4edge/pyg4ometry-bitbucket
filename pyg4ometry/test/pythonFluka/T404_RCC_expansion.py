@@ -12,7 +12,7 @@ def Test(vis=False, interactive=False):
               flukaregistry=freg)
     z = Zone()
     z.addIntersection(rcc)
-    region = Region("RCC_REG")
+    region = Region("RCC_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 

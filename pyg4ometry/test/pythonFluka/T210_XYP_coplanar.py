@@ -46,24 +46,19 @@ def Test(vis=False, interactive=False):
     z1.addSubtraction(z2)
     z3.addIntersection(z2)
 
-    region1 = Region("REG_INF1")
-    region2 = Region("REG_INF2")
+    region1 = Region("REG_INF1", material="COPPER")
+    region2 = Region("REG_INF2", material="COPPER")
     region1.addZone(z1)
     region2.addZone(z3)
-
 
     freg.addRegion(region1)
     freg.addRegion(region2)
 
     greg = convert.fluka2Geant4(freg, with_length_safety=True)
 
-
     wlv = greg.getWorldVolume()
 
     wlv.checkOverlaps()
-    # Test extents??
-    # clip wv?
-    # test writing back to fluka?
 
     if vis:
         v = vi.VtkViewer()
@@ -72,8 +67,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

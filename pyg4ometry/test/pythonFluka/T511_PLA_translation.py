@@ -18,7 +18,7 @@ def Test(vis=False, interactive=False):
 
     z1.addIntersection(pla1)
 
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z1)
 
     freg.addRegion(region)
@@ -32,8 +32,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

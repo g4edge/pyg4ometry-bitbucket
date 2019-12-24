@@ -28,15 +28,13 @@ def Test(vis=False, interactive=False):
                translation=translation,
                flukaregistry=freg)
 
-    # better test please...?
-
     z1 = Zone()
     z1.addIntersection(raw1)
 
     z2 = Zone()
     z2.addIntersection(raw2)
 
-    region = Region("RAW_REG")
+    region = Region("RAW_REG", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
     freg.addRegion(region)
@@ -50,8 +48,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)
