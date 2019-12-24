@@ -223,7 +223,8 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T026_GenericTrap.Test())
 
     def test_PythonGeant_Union(self) :
-        self.assertTrue(T028_Union.Test())
+        self.assertTrue(T028_Union.Test()["testStatus"])
+        self.assertTrue(T028_Union.Test(True,False,True)["testStatus"])
 
     def test_PythonGeant_Subtraction(self) :
         self.assertTrue(T029_Subtraction.Test())

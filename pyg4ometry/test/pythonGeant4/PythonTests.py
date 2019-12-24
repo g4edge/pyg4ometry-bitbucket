@@ -1,7 +1,7 @@
 import unittest as _unittest
 import numpy as _np
 import pyg4ometry.transformation as _trans
-        
+from pyg4ometry.geant4.solid import TwoVector
 
 import logging as _log
 
@@ -9,6 +9,86 @@ import logging as _log
 # logger.disabled = True
 
 class PythonTests(_unittest.TestCase) :
+
+
+    # #############################
+    # solid two vector
+    # #############################
+    def test_Python_TwoVector_T001Constructor(self):
+        v = TwoVector(1,2)
+
+    def test_Python_TwoVector_T002Repr(self):
+        v = TwoVector(1,2)
+        s = str(v)
+
+    def test_Python_TwoVector_T003GetItem(self):
+        v = TwoVector(1,2)
+        self.assertEqual(v[0],1)
+        self.assertEqual(v[1],2)
+        try :
+            print v[2]
+        except IndexError :
+            pass
+
+
+    def test_Python_TwoVector_T004Add(self):
+        v1 = TwoVector(1,2)
+        v2 = TwoVector(3,4)
+
+        i = 5
+        f = 6.0
+        s = "r"
+
+        self.assertEqual((v1+v2)[0],4)
+        self.assertEqual((v1+v2)[1],6)
+
+        self.assertEqual((v1+i)[0],6)
+        self.assertEqual((v1+i)[1],7)
+
+        self.assertEqual((v1+f)[0],7.0)
+        self.assertEqual((v1+f)[1],8.0)
+
+        try :
+            v1+s
+        except ValueError :
+            pass
+
+    def test_Python_TwoVector_T005Sub(self):
+        v1 = TwoVector(1,2)
+        v2 = TwoVector(3,4)
+
+        i = 5
+        f = 6.0
+        s = "r"
+
+        self.assertEqual((v1-v2)[0],-2)
+        self.assertEqual((v1-v2)[1],-2)
+
+        self.assertEqual((v1-i)[0],-4)
+        self.assertEqual((v1-i)[1],-3)
+
+        self.assertEqual((v1-f)[0],-5.0)
+        self.assertEqual((v1-f)[1],-4.0)
+
+        try :
+            v1-s
+        except ValueError :
+            pass
+
+
+    def test_Python_TwoVector_T006Mul(self):
+        v1 = TwoVector(1,2)
+
+        f = 5
+        s = "r"
+
+        self.assertEqual((v1*f)[0],5)
+        self.assertEqual((v1*f)[1],10)
+
+        try :
+            vv = v1*s
+        except ValueError :
+            pass
 
     # #############################
     # Transformation

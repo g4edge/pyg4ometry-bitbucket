@@ -65,7 +65,7 @@ def Test(vis = False, interactive = False, type = normal) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T004_Cons.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T004_Cons.gmad","T004_Cons.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T004_Cons.gmad"),"T004_Cons.gdml")
 
 
     # test __repr__

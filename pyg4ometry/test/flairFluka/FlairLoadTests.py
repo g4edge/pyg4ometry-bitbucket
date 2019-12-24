@@ -119,3 +119,9 @@ class FlairLoadTests(_unittest.TestCase) :
 
     def test_FlairLoad_T103_Union(self):
         flairLoadWriteTest("103_Union.inp",True,False)
+
+    def test_FlairLaod_T301_RPP_transform(self):
+        flairLoadWriteTest("301_RPP_transform.inp",True,False)
+
+if __name__ == '__main__':
+    _unittest.main(verbosity=2)

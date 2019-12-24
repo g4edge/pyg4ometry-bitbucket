@@ -9,6 +9,7 @@ from gdml                   import GdmlLoadTests
 from stl                    import StlLoadTests
 from pythonFluka            import PythonFlukaAuthoringTests
 from flairFluka             import FlairLoadTests
+from bdsim                  import PythonBdsimAuthoringTests
 
 import unittest as _unittest
 import logging as _log

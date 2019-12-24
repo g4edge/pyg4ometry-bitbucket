@@ -30,6 +30,12 @@ class PythonDefineTests(_unittest.TestCase) :
         c = pyg4ometry.gdml.Defines.Constant("c","10",r,True)
         self.assertEqual(pyg4ometry.gdml.upgradeToStringExpression(r,"c"),"c")
 
+        # expression that cannot be evaluated
+        try :
+            pyg4ometry.gdml.upgradeToStringExpression(r,"z")
+        except Exception :
+            pass
+
     def test_GdmlDefine_UpgradeToVector(self) :
         r = pyg4ometry.geant4.Registry() 
 
