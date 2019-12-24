@@ -14,6 +14,9 @@ def Test(vis = False, interactive = False) :
     av1 = l1.assemblyVolume()
     av2 = l2.assemblyVolume()
 
+    av1.checkOverlaps()
+    av2.checkOverlaps()
+
     wx0 = _gd.Constant("wx0", "200", reg0, True)
     wy0 = _gd.Constant("wy0", "200", reg0, True)
     wz0 = _gd.Constant("wz0", "200", reg0, True)
