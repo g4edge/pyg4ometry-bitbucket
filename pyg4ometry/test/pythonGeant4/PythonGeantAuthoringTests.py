@@ -223,11 +223,16 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T026_GenericTrap.Test())
 
     def test_PythonGeant_Union(self) :
-        self.assertTrue(T028_Union.Test()["testStatus"])
+        self.assertTrue(T028_Union.Test(True,False,False)["testStatus"])
         self.assertTrue(T028_Union.Test(True,False,True)["testStatus"])
 
     def test_PythonGeant_Subtraction(self) :
-        self.assertTrue(T029_Subtraction.Test())
+        self.assertTrue(T029_Subtraction.Test(True,False,False)["testStatus"])
+
+        try :
+            T029_Subtraction.Test(True,False,True)
+        except pyg4ometry.exceptions.NullMeshError :
+            pass
 
     def test_PythonGeant_Intersection(self) :
         self.assertTrue(T030_Intersection.Test(False,False,T030_Intersection.normal))
