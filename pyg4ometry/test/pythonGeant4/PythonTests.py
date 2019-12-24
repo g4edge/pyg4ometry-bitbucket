@@ -142,6 +142,22 @@ class PythonTests(_unittest.TestCase) :
     # CSG
     # #############################
 
+    def test_Python_GetLocalMesh(self):
+        import pyg4ometry
+
+        reg = pyg4ometry.geant4.Registry()
+        s1 = pyg4ometry.geant4.solid.Box("s1", 10, 10, 10, reg, "mm")
+        l1 = pyg4ometry.geant4.LogicalVolume(s1, "G4_Galactic", "l1", reg)
+        l1.mesh.getLocalMesh()
+
+    def test_Python_Remesh(self):
+        import pyg4ometry
+
+        reg = pyg4ometry.geant4.Registry()
+        s1 = pyg4ometry.geant4.solid.Box("s1", 10, 10, 10, reg, "mm")
+        l1 = pyg4ometry.geant4.LogicalVolume(s1, "G4_Galactic", "l1", reg)
+        l1.mesh.remesh()
+
     def test_Python_ExceptionNullMeshErrorIntersection(self) :
         import pyg4ometry
 
@@ -189,7 +205,6 @@ class PythonTests(_unittest.TestCase) :
     def test_Python_ExceptionIdenticalNameError(self) :
         import pyg4ometry 
 
-
         try : 
             raise pyg4ometry.exceptions.IdenticalNameError("solid_name")
         except pyg4ometry.exceptions.IdenticalNameError :
@@ -199,8 +214,6 @@ class PythonTests(_unittest.TestCase) :
             raise pyg4ometry.exceptions.IdenticalNameError("solid_name","solid")
         except pyg4ometry.exceptions.IdenticalNameError :
             pass
-
-
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
