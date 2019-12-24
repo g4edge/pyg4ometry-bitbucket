@@ -1,0 +1,15 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_expansion 2.0
+$start_expansion 2.0
+$start_expansion 5.0
+RPP rpp       0.0 1. 0.0 1. 0.0 1.
+$end_expansion
+$end_expansion
+$end_expansion
+END
+rppreg       5 | +rpp 
+END
+GEOEND
+ASSIGNMA         TIN    rppreg
+STOP

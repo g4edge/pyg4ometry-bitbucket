@@ -16,12 +16,14 @@ def main(filein, debug=False):
     r = Reader(filein)
     greg = fluka2Geant4(r.flukaregistry,
                         with_length_safety=True,
-                        split_disjoint_unions=True)
+                        split_disjoint_unions=True,
+                        minimise_solids=True,
+    )
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
     v = vi.VtkViewer()
-    v.addAxes(length=20)
+    v.addAxes(length=200)
     v.addLogicalVolume(wlv)
     v.view(True)
 
