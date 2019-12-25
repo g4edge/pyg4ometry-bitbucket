@@ -7,20 +7,16 @@ def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
     translation = [-10, -10, -10]
-    # translation = [-0, -0, -0]
 
     rpp = RPP("RPP_BODY", 10, 20, 10, 20, 10, 20, flukaregistry=freg,
               translation=translation)
     z = Zone()
     z.addIntersection(rpp)
-    region = Region("RPP_REG")
+    region = Region("RPP_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
-
-    # Test extents??
-    # clip wv?
 
     if vis:
         v = vi.VtkViewer()
@@ -29,8 +25,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

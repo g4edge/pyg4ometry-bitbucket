@@ -8,16 +8,12 @@ def Test(vis=False, interactive=False):
     sph = SPH("SPH_BODY", [10, 10, 10], 10, flukaregistry=freg)
     z = Zone()
     z.addIntersection(sph)
-    region = Region("SPH_REG")
+    region = Region("SPH_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
-
-    # Test extents??
-    # clip wv?
-    
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
@@ -25,13 +21,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-        
-
 
 if __name__ == '__main__':
     Test(True, True)
-
-    
-
-
-    

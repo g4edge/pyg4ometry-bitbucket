@@ -40,7 +40,7 @@ def Test(vis=False, interactive=False):
     z7 = Zone(name="connected_part_7")
     z7.addIntersection(rpp7)
 
-    region = Region("REGION")
+    region = Region("REGION", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
     region.addZone(z3)
@@ -62,7 +62,6 @@ def Test(vis=False, interactive=False):
         # should appear as different colours if  split properly
         v.setRandomColours()
         v.view(interactive=interactive)
-
 
 if __name__ == '__main__':
     Test(True, True)

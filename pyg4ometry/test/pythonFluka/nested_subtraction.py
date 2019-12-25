@@ -21,7 +21,7 @@ def Test(vis=False, interactive=False):
     # Adding zone2 as a subtraction to the first zone.
     z.addSubtraction(z2)
 
-    region = Region("RPP_REG")
+    region = Region("RPP_REG", material="COPPER")
 
     region.addZone(z)
     # region.addZone(z2)
@@ -30,11 +30,6 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
 
-    # from IPython import embed; embed()
-
-    # Test extents??
-    # clip wv?
-
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
@@ -42,8 +37,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True,True)

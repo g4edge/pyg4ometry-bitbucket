@@ -21,7 +21,6 @@ def Test(vis=False, interactive=False):
                15, # length
                flukaregistry=freg)
 
-
     z1 = Zone()
     z1.addIntersection(ell1)
     z1.addSubtraction(ell2)
@@ -29,7 +28,7 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(ell2)
 
-    region = Region("ELL_REG")
+    region = Region("ELL_REG", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
     freg.addRegion(region)
@@ -45,8 +44,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

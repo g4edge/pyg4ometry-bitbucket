@@ -21,12 +21,21 @@ def getAllTestModules():
 
 def main():
     modules = getAllTestModules()
+
+    total = 0
+    passed = 0
+    failed = 0
+
     for name, module in modules:
+        total += 1
         try:
             result = module.Test()
+            passed +=1
         except Exception as e:
             print "------> Test {} FAILED with message {}".format(name, e)
+            failed +=1
             continue
+    print "{} tested.  {} passed.  {} failed.".format(total, passed, failed)
 
 
 if __name__ == '__main__':

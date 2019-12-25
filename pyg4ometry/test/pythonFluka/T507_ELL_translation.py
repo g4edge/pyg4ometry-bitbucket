@@ -21,7 +21,7 @@ def Test(vis=False, interactive=False):
 
     z = Zone()
     z.addIntersection(ell)
-    region = Region("ELL_REG")
+    region = Region("ELL_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
@@ -35,8 +35,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

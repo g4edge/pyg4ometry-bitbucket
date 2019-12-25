@@ -12,7 +12,7 @@ def Test(vis=False, interactive=False):
     z = Zone()
     z.addIntersection(xyp)
 
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z)
 
     freg.addRegion(region)

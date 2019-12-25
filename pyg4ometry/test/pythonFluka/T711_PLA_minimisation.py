@@ -43,7 +43,7 @@ def Test(vis=False, interactive=False):
     z1.addSubtraction(pla_c2)
 
 
-    region1 = Region("REG_INF1")
+    region1 = Region("REG_INF1", material="COPPER")
     region1.addZone(z1)
     
     freg.addRegion(region1)

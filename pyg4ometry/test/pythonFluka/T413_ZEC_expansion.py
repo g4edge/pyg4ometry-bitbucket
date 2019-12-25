@@ -20,14 +20,13 @@ def Test(vis=False, interactive=False):
     z.addIntersection(xyp_hi)
     z.addSubtraction(xyp_lo)
 
-
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z)
 
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
- 
+
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
@@ -35,8 +34,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

@@ -32,10 +32,10 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(wed2)
 
-    region1 = Region("WED_REG1")
+    region1 = Region("WED_REG1", material="COPPER")
     region1.addZone(z1)
 
-    region2 = Region("WED_REG2")
+    region2 = Region("WED_REG2", material="COPPER")
     region2.addZone(z2)
 
     freg.addRegion(region1)
@@ -49,9 +49,6 @@ def Test(vis=False, interactive=False):
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
 
-    # Test extents??
-    # clip wv?
-
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
@@ -60,8 +57,6 @@ def Test(vis=False, interactive=False):
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
 
 if __name__ == '__main__':
     Test(True, True)

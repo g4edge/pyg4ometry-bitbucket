@@ -12,12 +12,12 @@ def Test(vis=False, interactive=False):
               flukaregistry=freg)
     z = Zone()
     z.addIntersection(trc)
-    region = Region("TRC_REG")
+    region = Region("TRC_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
-    
+
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
@@ -28,8 +28,3 @@ def Test(vis=False, interactive=False):
 
 if __name__ == '__main__':
     Test(True, True)
-
-    
-
-
-    
