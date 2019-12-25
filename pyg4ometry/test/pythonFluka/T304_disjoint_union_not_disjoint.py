@@ -23,7 +23,7 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg, split_disjoint_unions=True)
 
-    assert len(greg.greg.logicalVolumeList) == 2
+    assert len(greg.logicalVolumeList) == 2
 
     if vis:
         v = vi.VtkViewer()
