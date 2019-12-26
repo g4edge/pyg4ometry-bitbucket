@@ -99,27 +99,60 @@ class PythonTests(_unittest.TestCase) :
     def test_Python_Deg2Rad(self) :
         self.assertEqual(_trans.deg2rad(180),_np.pi)
 
-    def test_Python_Tbxyz2axisangle(self) :
+    def test_Python_Tbxyz2axisangleX(self) :
+        self.assertEqual(_trans.tbxyz2axisangle([_np.pi/2.0,0.0,0.0]),
+                         [[1.0, 0.0, 0.0], 1.5707963267948966])
+
+    def test_Python_Tbxyz2axisangleY(self) :
         self.assertEqual(_trans.tbxyz2axisangle([0.0,_np.pi/2.0,0.0]),
                          [[0.0, 1.0, 0.0], 1.5707963267948966])
 
-    def test_Python_Matrix2axisangle(self) :
+    def test_Python_Tbxyz2axisangleZ(self) :
+        self.assertEqual(_trans.tbxyz2axisangle([0.0,0.0,_np.pi/2.0]),
+                         [[0.0, 0.0, 1.0], 1.5707963267948966])
+
+    def test_Python_Matrix2axisangleX(self) :
         theta = 0.5
-        m = _np.array([[_np.cos(theta), -_np.sin(theta),0],[_np.sin(theta),_np.cos(theta),0],[0,0,1]])
+        m = _np.array([[             1,              0,              0],
+                       [             0, _np.cos(theta),-_np.sin(theta)],
+                       [             0, _np.sin(theta), _np.cos(theta)]])
+        self.assertEqual(_trans.matrix2axisangle(m),
+                         [[1.0000000000000002,0.0,0.0], 0.4999999999999999])
+
+    def test_Python_Matrix2axisangleY(self) :
+        theta = 0.5
+        m = _np.array([[_np.cos(theta),              0,-_np.sin(theta)],
+                       [             0,              1,              0],
+                       [_np.sin(theta),              0, _np.cos(theta)]])
+        self.assertEqual(_trans.matrix2axisangle(m),
+                         [[0.0, -1.0000000000000002,0.0], 0.4999999999999999])
+
+    def test_Python_Matrix2axisangleZ(self) :
+        theta = 0.5
+        m = _np.array([[_np.cos(theta), -_np.sin(theta),0],
+                       [_np.sin(theta), _np.cos(theta) , 0],
+                       [             0,               0, 1]])
         self.assertEqual(_trans.matrix2axisangle(m),
                          [[0.0, 0.0, 1.0000000000000002], 0.4999999999999999])
 
-    def test_Python_Axisangle2matrix(self) :
-        pass
-    
+
+    def test_Python_Axisangle2matrixX(self) :
+        print _trans.axisangle2matrix([1.0,0,0],_np.pi/2.0)
+
+    def test_Python_Axisangle2matrixY(self) :
+        print _trans.axisangle2matrix([0,1,0],_np.pi/2.0)
+
+    def test_Python_Axisangle2matrixZ(self):
+        print _trans.axisangle2matrix([0, 0, 1], _np.pi / 2.0)
+
     def test_Python_Matrix2tbxyz(self) :
         pass
 
     def test_Python_Tbxyz2matrix(self) :
         pass
 
-    def test_Python_Matrix_from(self) :
-        pass 
+    def test_Python_Matrix_MatrixFromTo(self) :
+        print _trans.matrix_from([0,0,1],[0,1,0])
 
     # #############################
     # Freecad
@@ -215,5 +248,72 @@ class PythonTests(_unittest.TestCase) :
         except pyg4ometry.exceptions.IdenticalNameError :
             pass
 
+    ##############################
+    # VtkVisualisation
+    ##############################
+
+    def test_Python_VisualisationVtk_setOpacity(self):
+        import pyg4ometry.test.pythonGeant4.T001_Box
+
+        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        v  = r['vtkViewer']
+        v.setOpacity(0,0)
+        v.setOpacity(0.5,-1)
+
+    def test_Python_VisualisationVtk_setWireframe(self):
+        import pyg4ometry.test.pythonGeant4.T001_Box
+
+        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        v  = r['vtkViewer']
+        v.setWireframe()
+
+    def test_Python_VisualisationVtk_setSurface(self):
+        import pyg4ometry.test.pythonGeant4.T001_Box
+
+        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        v  = r['vtkViewer']
+        v.setSurface()
+
+    def test_Python_VisualisationVtk_setWireframe_VisualisationOptions(self):
+        import pyg4ometry.test.pythonGeant4.T001_Box
+        import pyg4ometry.visualisation.VtkViewer
+
+        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        lv = r['logicalVolume']
+        dv = lv.daughterVolumes[0]
+        dv.visOptions.representation = "wireframe"
+
+        v = pyg4ometry.visualisation.VtkViewer()
+        v.addLogicalVolume(lv)
+        v.view(interactive=False)
+
+    def test_Python_VisualisationVtk_setOpacityOverlap(self):
+        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+
+        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        v  = r['vtkViewer']
+        v.setOpacityOverlap(0)
+
+    def test_Python_VisualisationVtk_setWireframeOverlap(self):
+        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+
+        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        v  = r['vtkViewer']
+        v.setWireframeOverlap()
+
+    def test_Python_VisualisationVtk_setSurfaceOverlap(self):
+        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+
+        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        v  = r['vtkViewer']
+        v.setSurfaceOverlap()
+
+    def test_Python_VisualisationVtk_setRandomColours(self):
+        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+
+        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        v  = r['vtkViewer']
+        v.setRandomColours()
+
 if __name__ == '__main__':
-    _unittest.main(verbosity=2)        
+    _unittest.main(verbosity=2)
