@@ -11,7 +11,7 @@ import logging as _log
 
 class PythonCompoundExampleTests(_unittest.TestCase) :
     def testCavityBpm(self) :         
-        dipole_cbpm.dipole_cbpm()
+        dipole_cbpm.Test(True,False)
     
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
