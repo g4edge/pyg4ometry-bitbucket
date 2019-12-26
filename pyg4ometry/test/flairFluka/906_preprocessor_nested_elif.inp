@@ -1,0 +1,32 @@
+TITLE
+If this works then there's a box.
+GEOBEGIN                                                              COMBNAME
+    0    0          
+* Set the defaults for precision simulations
+#define first
+#define second
+RPP bb         -200. 200. -200. 200. -200. 200.
+#if first
+#if blah
+TRC bb1        0.0 -35. 0.0 0.0 80. 0.0 100. 5.
+#elif second
+RPP bb1        -50. 50. -50. 50. -50. 50.
+#endif
+#elif sphere 
+SPH bb1        0.0 0.0 0.0 25.
+#else  
+RCC bb1        0.0 -85. 0.0 0.0 190. 0.0 100.
+#endif  
+END
+outside      5 +bb -bb1
+inside       5 +bb1
+END
+GEOEND
+ASSIGNMA    BLCKHOLE   outside
+ASSIGNMA      KAPTON    inside
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START
+STOP
