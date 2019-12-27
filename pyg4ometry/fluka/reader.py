@@ -4,17 +4,18 @@ from operator import mul, add
 import sys
 from warnings import warn
 
-
 import antlr4
 import numpy as np
 
-
 from . import body
+from . preprocessor import preprocess
 from .region import Zone, Region
 from .fluka_registry import FlukaRegistry
 from pyg4ometry.fluka.RegionExpression import (RegionParserVisitor,
                                                RegionParser,
                                                RegionLexer)
+from pyg4ometry.exceptions import FLUKAError
+
 from .vector import Three
 from .card import freeFormatStringSplit, Card
 
@@ -51,24 +52,9 @@ class Reader(object):
 
     def _load(self):
         """Load the FLUKA input file"""
-        with open(self.filename, "r") as f:
-            self._lines = f.readlines()
-
-        # strip comments
-        strippedLines = []
-        for l in self._lines :
-            strippedLine = l.lstrip()
-
-            # if there is nothing on  the line
-            if len(strippedLine) == 0 :
-                continue
-            # skip comment
-            if strippedLine[0] != '*':
-                strippedLines.append(l.rstrip())
-
-        self._lines = strippedLines
 
         # parse file
+        self._lines, self._raw_lines = preprocess(self.filename)
         self._findLines()
         self.cards = self._parseCards()
         self._parseRotDefinis()
@@ -77,22 +63,38 @@ class Reader(object):
         self._material_assignments = self._parseMaterialAssignments()
         self._assignMaterials()
 
+
     def _findLines(self) :
         # find geo(begin/end) lines and bodies/region ends
-        firstEND = True
+        found_geobegin = False
+        found_geoend = False
+        found_first_end = False
+        found_second_end = False
         for i, line in enumerate(self._lines) :
             if "GEOBEGIN" in line:
+                found_geobegin = True
                 self.geobegin = i
                 self.bodiesbegin = i + 2
             elif "GEOEND" in line:
+                found_geoend = True
                 self.geoend = i
             elif "END" in line:
-                if firstEND:
+                if found_first_end:
+                    found_second_end = True
+                    self.regionsend = i
+                else:
                     self.bodiesend = i
                     self.regionsbegin = i + 1
-                    firstEND = False
-                else:
-                    self.regionsend = i
+                    found_first_end = True
+
+        if not found_geobegin:
+            raise FLUKAError("Missing GEOBEGIN card in input.")
+        if not found_geoend:
+            raise FLUKAError("Missing GEOEND card in input.")
+        if not found_first_end:
+            raise FLUKAError("Missing both END cards within geometry section.")
+        if not found_second_end:
+            raise FLUKAError("Missing second END card within geometry section.")
 
     def _parseBodies(self) :
         bodies_block = self._lines[self.bodiesbegin:self.bodiesend+1]
@@ -309,6 +311,7 @@ def _make_body(body_parts, expansion, translation, transform, flukareg):
     name = body_parts[1]
     # WE ARE CONVERTING FROM CENTIMETRES TO MILLIMETRES HERE.
     param = [float(p)*10. for p in body_parts[2:]]
+
 
     # Reduce the stacks of directives into single directives.
     expansion = reduce(mul, expansion, 1.0)

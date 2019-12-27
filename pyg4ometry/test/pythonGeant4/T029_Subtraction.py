@@ -2,8 +2,9 @@ import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
+import pyg4ometry.exceptions
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, nullMesh = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -21,11 +22,17 @@ def Test(vis = False, interactive = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
-    ss = _g4.solid.Subtraction("us",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
-        
+    bs1 = _g4.solid.Box("bs1",2*bx,2*by,2*bz, reg, "mm")
+
+    if not nullMesh :
+        ss = _g4.solid.Subtraction("us",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
+    else :
+        ss = _g4.solid.Subtraction("us",bs,bs1,[[0,0,0],[0,0,0]],reg)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     sl = _g4.LogicalVolume(ss, bm, "ul", reg)
+
     sp = _g4.PhysicalVolume([0,0,0],[0,0,0],  sl, "s_pv1", wl, reg) 
     
     # set world volume
