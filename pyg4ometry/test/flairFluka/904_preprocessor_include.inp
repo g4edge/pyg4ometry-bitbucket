@@ -2,7 +2,7 @@ TITLE
 there will be a cylinder if this works.
 GEOBEGIN                                                              COMBNAME
     0    0          
-#include preprocessor_fragment.inp
+#include preprocessor_fragment.geom
 GEOEND
 ASSIGNMA    BLCKHOLE   outside
 ASSIGNMA      KAPTON    inside
