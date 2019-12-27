@@ -11,6 +11,7 @@ import T003_CutTubs
 import T0031_CutTubs_number
 import T0032_CutTubs_string
 import T0033_CutTubs_expression
+import T0034_CutTubs_DefineTree
 import T004_Cons
 import T005_Para
 import T006_Trd
@@ -112,6 +113,10 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
     def test_PythonGeant_CutTubs(self) :
         self.assertTrue(T003_CutTubs.Test(True, False, T003_CutTubs.normal)["testStatus"])
         self.assertTrue(T003_CutTubs.Test(True, False, T003_CutTubs.flat_ends)["testStatus"])
+        self.assertTrue(T0031_CutTubs_number.Test(True, False)["testStatus"])
+        self.assertTrue(T0032_CutTubs_string.Test(True, False)["testStatus"])
+        self.assertTrue(T0033_CutTubs_expression.Test(True, False)["testStatus"])
+        self.assertTrue(T0034_CutTubs_DefineTree.Test(True,False)["testStatus"])
 
     def test_PythonGeant_Cons(self) :
         try :
