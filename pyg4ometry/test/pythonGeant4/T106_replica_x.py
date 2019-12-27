@@ -45,17 +45,18 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T106_replica_x.gdml"))
 
     # test __repr__
-    str(bs)
+    str(mbl)
 
     # test extent of physical volume
-    wlextent           = wl.extent(True)
-    wlextent_daughters = wl.extent(False)
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
     v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}

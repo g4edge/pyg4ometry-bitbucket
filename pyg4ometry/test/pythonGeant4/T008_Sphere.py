@@ -37,21 +37,25 @@ def Test(vis = False, interactive = False, n_slice=10, n_stack=10) :
     # set world volume
     reg.setWorld(wl.name)
 
-    # test __repr__
-    str(ss)
-    
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T008_Sphere.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T008_Sphere.gmad"),"T008_Sphere.gdml")
 
+    # test __repr__
+    str(ss)
+
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
     v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}

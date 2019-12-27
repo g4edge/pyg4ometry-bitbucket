@@ -52,7 +52,6 @@ import T107_replica_y
 import T108_replica_z
 import T109_replica_phi
 import T110_replica_rho
-import T111_DefineTree
 
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
@@ -282,9 +281,6 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
 
     def test_PythonGeant_ReplicaRho(self):
         self.assertTrue(T110_replica_rho.Test()["testStatus"])
-
-    def test_PythonGeant_DefineTree(self):
-        self.assertTrue(T111_DefineTree.Test()["testStatus"])
 
     def test_PythonGeant_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())

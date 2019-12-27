@@ -41,17 +41,17 @@ def Test(vis = False, interactive = False) :
     str(bs)
 
     # test extent of physical volume
-    wl.extent(True)
-    wl.extent(False)
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
-
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
-    else :
-        v = None
+
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 

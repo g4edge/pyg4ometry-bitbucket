@@ -27,9 +27,17 @@ def pyg4ometryLoadWriteTest(filename, interactive=False):
     reader = pyg4ometry.gdml.Reader(filepath)
     registry = reader.getRegistry()
 
+    # World logical
+    worldLogical = registry.getWorldVolume()
+
+    # test extent of physical volume
+    extentBB = worldLogical.extent(includeBoundingSolid=True)
+
+
     # Visualisation
     v = pyg4ometry.visualisation.VtkViewer()
     v.addLogicalVolume(registry.getWorldVolume())
+    v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
     v.view(interactive=interactive)
 
     # Writing
