@@ -5,13 +5,13 @@ import pyg4ometry.visualisation as _vi
 
 
 import T001_Box
-import T111_DefineTree
+import T0034_CutTubs_DefineTree
 
 def Test(vis = False, interactive = False) :
     reg0 = _g4.Registry()
 
     l1 = T001_Box.Test(False,False)["logicalVolume"]
-    l2 = T111_DefineTree.Test(False,False)["logicalVolume"]
+    l2 = T0034_CutTubs_DefineTree.Test(False,False)["logicalVolume"]
 
     wx0 = _gd.Constant("wx0", "200", reg0, True)
     wy0 = _gd.Constant("wy0", "200", reg0, True)
