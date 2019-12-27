@@ -44,12 +44,13 @@ def Test(vis = False, interactive = False, n_slice=10,n_stack=10) :
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T016_Ellipsoid.gmad"),"T016_Ellipsoid.gdml")
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

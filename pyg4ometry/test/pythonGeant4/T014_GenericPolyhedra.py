@@ -61,12 +61,13 @@ def Test(vis = False, interactive = False, type = normal) :
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T014_GenericPolyhedra.gmad"),"T014_GenericPolyhedra.gdml")
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

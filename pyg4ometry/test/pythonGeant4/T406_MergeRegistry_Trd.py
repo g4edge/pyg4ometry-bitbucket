@@ -35,12 +35,13 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T406_MergeRegistry_Trd.gdml"))
 
     # visualisation
+    v = None
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg0.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus":True, "logicalVolume":wl, "registrty":reg0}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

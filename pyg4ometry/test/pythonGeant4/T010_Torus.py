@@ -45,12 +45,13 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
 
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive = interactive)
 
-    return {"testStatus":True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

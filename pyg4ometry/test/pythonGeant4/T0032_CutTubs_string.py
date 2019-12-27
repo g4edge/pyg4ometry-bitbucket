@@ -64,7 +64,7 @@ def Test(vis = False, interactive = False, type = normal) :
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return True
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

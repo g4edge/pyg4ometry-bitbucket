@@ -53,12 +53,13 @@ def Test(vis=False, interactive=False):
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T600_LVTessellated.gmad","T600_LVTessellated.gdml")
 
     # visualisation
+    v = None
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 
 if __name__ == "__main__":

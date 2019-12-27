@@ -21,4 +21,4 @@ def Test() :
     except ValueError : 
         pass
 
-    return True
+    return {"testStatus":True}
