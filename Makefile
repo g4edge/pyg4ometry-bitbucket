@@ -13,6 +13,10 @@ develop:
 
 build_ext:
 	python setup.py build_ext --inplace
+
+build_ext3:
+    python3 setupy.py build_ext --inplace
+
 # bumpversion is a python utility available via pip.  Make sure to add
 # your pip user install location's bin directory to your PATH.
 bump-major:
