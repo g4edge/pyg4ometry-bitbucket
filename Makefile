@@ -1,6 +1,9 @@
 install:
 	pip install . --user
 
+install3: 
+	pip-3.7 install . --user
+
 uninstall:
 	pip uninstall pyg4ometry
 
