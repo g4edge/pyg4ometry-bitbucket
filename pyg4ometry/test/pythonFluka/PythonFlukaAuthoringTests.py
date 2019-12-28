@@ -320,7 +320,6 @@ class PythonFlukaAuthoringTests(_unittest.TestCase) :
     def test_PythonFluka_T514_QUA_translation(self):
         T514_QUA_translation.Test(True,False)
 
-
     def test_PythonFluka_empyRegistry(self):
 
         import pyg4ometry.convert as convert
