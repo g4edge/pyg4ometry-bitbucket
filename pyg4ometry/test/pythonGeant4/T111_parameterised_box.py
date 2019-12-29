@@ -93,8 +93,9 @@ def Test(vis = False, interactive = False) :
     str(pbv)
 
     # test extent of physical volume
-    extentBB = wl.extent(includeBoundingSolid=True)
-    extent   = wl.extent(includeBoundingSolid=False)
+    extentBB    = wl.extent(includeBoundingSolid=True)
+    extent      = wl.extent(includeBoundingSolid=False)
+    # extentParam = pbv.extent()
 
     # visualisation
     v = None
