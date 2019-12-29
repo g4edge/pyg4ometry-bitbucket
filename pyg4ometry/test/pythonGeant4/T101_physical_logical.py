@@ -73,7 +73,8 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T101_physical_logical.gdml"))
 
     # test __repr__
-    str(bs)
+    str(bl)
+    str(bp1)
 
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
