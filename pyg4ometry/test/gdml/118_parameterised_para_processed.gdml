@@ -45,7 +45,7 @@
 				<parameterised_position_size>
 					<parameters number="1">
 						<position name="para1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<para_dimensions alpha="0.0" aunit="rad" lunit="mm" phi="0.0" theta="0.0" x="0.5" y="1.0" z="1.5"/>
+						<para_dimensions alpha="0.0" aunit="rad" lunit="mm" phi="0.0" theta="0.0" x="0.5" y="1" z="1.5"/>
 					</parameters>
 					<parameters number="2">
 						<position name="para1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
@@ -53,7 +53,7 @@
 					</parameters>
 					<parameters number="3">
 						<position name="para1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<para_dimensions alpha="0.2" aunit="rad" lunit="mm" phi="0.2" theta="0.2" x="1.5" y="2.0" z="2.5"/>
+						<para_dimensions alpha="0.2" aunit="rad" lunit="mm" phi="0.2" theta="0.2" x="1.5" y="2" z="2.5"/>
 					</parameters>
 					<parameters number="4">
 						<position name="para1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>

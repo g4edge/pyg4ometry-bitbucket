@@ -45,38 +45,38 @@
 				<parameterised_position_size>
 					<parameters number="1">
 						<position name="sphere1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="0.628318530718" deltatheta="0.314159265359" lunit="mm" rmax="0.4" rmin="0.2" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.1" deltatheta="pi*0.1" lunit="mm" rmax="0.4" rmin="0.2" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="2">
 						<position name="sphere1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="1.25663706144" deltatheta="0.628318530718" lunit="mm" rmax="0.6" rmin="0.3" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.2" deltatheta="pi*0.2" lunit="mm" rmax="0.6" rmin="0.3" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="3">
 						<position name="sphere1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="1.88495559215" deltatheta="0.942477796077" lunit="mm" rmax="0.8" rmin="0.4" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.3" deltatheta="pi*0.3" lunit="mm" rmax="0.8" rmin="0.4" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="4">
 						<position name="sphere1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="2.51327412287" deltatheta="1.25663706144" lunit="mm" rmax="1.0" rmin="0.5" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.4" deltatheta="pi*0.4" lunit="mm" rmax="1.0" rmin="0.5" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="5">
-						<sphere_dimensions aunit="rad" deltaphi="3.14159265359" deltatheta="1.57079632679" lunit="mm" rmax="1.2" rmin="0.6" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.5" deltatheta="pi*0.5" lunit="mm" rmax="1.2" rmin="0.6" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="6">
 						<position name="sphere1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="3.76991118431" deltatheta="1.88495559215" lunit="mm" rmax="1.4" rmin="0.7" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.6" deltatheta="pi*0.6" lunit="mm" rmax="1.4" rmin="0.7" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="7">
 						<position name="sphere1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="4.39822971503" deltatheta="2.19911485751" lunit="mm" rmax="1.6" rmin="0.8" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.7" deltatheta="pi*0.7" lunit="mm" rmax="1.6" rmin="0.8" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="8">
 						<position name="sphere1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="5.02654824574" deltatheta="2.51327412287" lunit="mm" rmax="1.8" rmin="0.9" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.8" deltatheta="pi*0.8" lunit="mm" rmax="1.8" rmin="0.9" startphi="0" starttheta="0"/>
 					</parameters>
 					<parameters number="9">
 						<position name="sphere1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<sphere_dimensions aunit="rad" deltaphi="5.65486677646" deltatheta="2.82743338823" lunit="mm" rmax="2.0" rmin="1.0" startphi="0.0" starttheta="0.0"/>
+						<sphere_dimensions aunit="rad" deltaphi="2*pi*0.9" deltatheta="pi*0.9" lunit="mm" rmax="2.0" rmin="1.0" startphi="0" starttheta="0"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>
