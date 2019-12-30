@@ -52,13 +52,19 @@ def Test(vis=False, interactive=False):
     w.write(_os.path.join(_os.path.dirname(__file__), "T600_LVTessellated.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T600_LVTessellated.gmad","T600_LVTessellated.gdml")
 
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
+
     # visualisation
+    v = None
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 
 if __name__ == "__main__":

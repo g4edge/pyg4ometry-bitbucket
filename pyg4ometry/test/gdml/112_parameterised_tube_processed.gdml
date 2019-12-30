@@ -46,45 +46,45 @@
 					<parameters number="1">
 						<position name="tub1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
 						<rotation name="tub11Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
-						<tube_dimensions DeltaPhi="0.628318530718" InR="0.1" OutR="1.0" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.1" InR="0.1" OutR="1.0" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="2">
 						<position name="tub1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
 						<rotation name="tub1Vol2Rot" unit="rad" x="0" y="0" z="-0.3"/>
-						<tube_dimensions DeltaPhi="1.25663706144" InR="0.2" OutR="1.2" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.2" InR="0.2" OutR="1.2" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="3">
 						<position name="tub1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
 						<rotation name="tub1Vol3Rot" unit="rad" x="0" y="0" z="-0.2"/>
-						<tube_dimensions DeltaPhi="1.88495559215" InR="0.3" OutR="1.4" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.3" InR="0.3" OutR="1.4" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="4">
 						<position name="tub1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
 						<rotation name="tub1Vol24ot" unit="rad" x="0" y="0" z="-0.1"/>
-						<tube_dimensions DeltaPhi="2.51327412287" InR="0.4" OutR="1.6" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.4" InR="0.4" OutR="1.6" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="5">
-						<tube_dimensions DeltaPhi="3.14159265359" InR="0.5" OutR="1.8" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.5" InR="0.5" OutR="1.8" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="6">
 						<position name="tub1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
 						<rotation name="tub1Vol6Rot" unit="rad" x="0" y="0" z="0.1"/>
-						<tube_dimensions DeltaPhi="3.76991118431" InR="0.6" OutR="2.0" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.6" InR="0.6" OutR="2.0" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="7">
 						<position name="tub1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
 						<rotation name="tub1Vol7Rot" unit="rad" x="0" y="0" z="0.2"/>
-						<tube_dimensions DeltaPhi="4.39822971503" InR="0.7" OutR="2.2" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.7" InR="0.7" OutR="2.2" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="8">
 						<position name="tub1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
 						<rotation name="tub1Vol8Rot" unit="rad" x="0" y="0" z="0.3"/>
-						<tube_dimensions DeltaPhi="5.02654824574" InR="0.8" OutR="2.4" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.8" InR="0.8" OutR="2.4" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="9">
 						<position name="tub1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
 						<rotation name="tub1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
-						<tube_dimensions DeltaPhi="5.65486677646" InR="0.9" OutR="2.6" StartPhi="0.0" aunit="rad" hz="2.5" lunit="mm"/>
+						<tube_dimensions DeltaPhi="2*pi*0.9" InR="0.9" OutR="2.6" StartPhi="0" aunit="rad" hz="2.5" lunit="mm"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

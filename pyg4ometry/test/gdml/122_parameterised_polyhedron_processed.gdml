@@ -49,73 +49,73 @@
 				<parameterised_position_size>
 					<parameters number="1">
 						<position name="polyhedra1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="5.65486677646" startPhi="0.628318530718">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.9" startPhi="2*pi*0.1">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="2">
 						<position name="polyhedra1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="5.02654824574" startPhi="1.25663706144">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.8" startPhi="2*pi*0.2">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="3">
 						<position name="polyhedra1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="4.39822971503" startPhi="1.88495559215">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.7" startPhi="2*pi*0.3">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="4">
 						<position name="polyhedra1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="3.76991118431" startPhi="2.51327412287">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.6" startPhi="2*pi*0.4">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="5">
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="3.14159265359" startPhi="3.14159265359">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.5" startPhi="2*pi*0.5">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="6">
 						<position name="polyhedra1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="2.51327412287" startPhi="3.76991118431">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.4" startPhi="2*pi*0.6">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="7">
 						<position name="polyhedra1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="1.88495559215" startPhi="4.39822971503">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.3" startPhi="2*pi*0.7">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="8">
 						<position name="polyhedra1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="1.25663706144" startPhi="5.02654824574">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.2" startPhi="2*pi*0.8">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 					<parameters number="9">
 						<position name="polyhedra1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5.0" openPhi="0.628318530718" startPhi="5.65486677646">
-							<zplane rmax="10.0" rmin="5.0" z="-2.5"/>
-							<zplane rmax="5.0" rmin="2.0" z="0.0"/>
-							<zplane rmax="10.0" rmin="7.5" z="2.55"/>
+						<polyhedra_dimensions aunit="rad" lunit="mm" numRZ="3" numSide="5" openPhi="2*pi*0.1" startPhi="2*pi*0.9">
+							<zplane rmax="10" rmin="5" z="-2.5"/>
+							<zplane rmax="5" rmin="2" z="0"/>
+							<zplane rmax="10" rmin="7.5" z="2.55"/>
 						</polyhedra_dimensions>
 					</parameters>
 				</parameterised_position_size>

@@ -30,9 +30,6 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, tm, "tl", reg)
     tp = _g4.PhysicalVolume([0,0,0],[0,0,0],  tl, "t_pv1", wl, reg) 
-    
-    # test __repr__
-    str(ts)
 
     # set world volume
     reg.setWorld(wl.name)
@@ -43,14 +40,22 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T010_Torus.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T010_Torus.gmad"),"T010_Torus.gdml")
 
+    # test __repr__
+    str(ts)
+
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive = interactive)
 
-    return {"testStatus":True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

@@ -101,7 +101,7 @@ class VtkViewer:
                 a.GetProperty().SetRepresentationToSurface()
 
     def setOpacityOverlap(self,v, iActor = -1):
-        for a, i in zip(self.actors, range(0, len(self.actors))):
+        for a, i in zip(self.actorsOverlap, range(0, len(self.actorsOverlap))):
             if i == iActor:
                 a.GetProperty().SetOpacity(v)
             elif iActor == -1:
@@ -140,7 +140,7 @@ class VtkViewer:
                              self.localmeshesOverlap, self.filtersOverlap,
                              self.mappersOverlap, self.physicalMapperMapOverlap, self.actorsOverlap,
                              self.physicalActorMapOverlap,
-                             visOptions)
+                             visOptions = visOptions, overlap = True)
 
         # recurse down scene hierarchy
         self.addLogicalVolumeRecursive(logical, mtra, tra)
@@ -191,15 +191,16 @@ class VtkViewer:
                     #mesh = _Mesh(pv.logicalVolume.solid).localmesh
 
                     self.addMesh(pv_name, solid_name, mesh, new_mtra, new_tra, self.localmeshes, self.filters,
-                                 self.mappers, self.physicalMapperMap, self.actors, self.physicalActorMap, pv.visOptions)
+                                 self.mappers, self.physicalMapperMap, self.actors, self.physicalActorMap,
+                                 visOptions = pv.visOptions, overlap = False)
 
                     # overlap meshes
                     for [overlapmesh,overlaptype], i in zip(pv.logicalVolume.mesh.overlapmeshes,range(0,len(pv.logicalVolume.mesh.overlapmeshes))) :
                         visOptions = self.setOverlapVisOptions(overlaptype)
 
-                        self.addMesh(pv_name, solid_name+"_overlap"+str(i), overlapmesh, new_mtra, new_tra, self.localmeshesOverlap, self.filtersOverlap,
-                                     self.mappersOverlap, self.physicalMapperMapOverlap, self.actorsOverlap, self.physicalActorMapOverlap,
-                                     visOptions)
+                        self.addMesh(pv_name, solid_name+"_overlap"+str(i), overlapmesh, new_mtra, new_tra, self.localmeshesOverlap,
+                                     self.filtersOverlap, self.mappersOverlap, self.physicalMapperMapOverlap, self.actorsOverlap,
+                                     self.physicalActorMapOverlap, visOptions = visOptions, overlap =True)
 
                 self.addLogicalVolumeRecursive(pv.logicalVolume,new_mtra,new_tra)
 
@@ -214,7 +215,8 @@ class VtkViewer:
                     new_tra = (_np.array(mtra.dot(pvtra)) + tra)[0]
 
                     self.addMesh(pv_name, mesh.solid.name, mesh.localmesh, new_mtra, new_tra, self.localmeshes, self.filters,
-                                 self.mappers, self.physicalMapperMap, self.actors, self.physicalActorMap, pv.visOptions)
+                                 self.mappers, self.physicalMapperMap, self.actors, self.physicalActorMap,
+                                 visOptions = pv.visOptions, overlap = False)
             elif pv.type == "parametrised":
                 for mesh, trans in zip(pv.meshes, pv.transforms):
                     # pv transform
@@ -227,10 +229,11 @@ class VtkViewer:
 
                     self.addMesh(pv_name, mesh.solid.name, mesh.localmesh, new_mtra, new_tra, self.localmeshes,
                                  self.filters,
-                                 self.mappers, self.physicalMapperMap, self.actors, self.physicalActorMap, pv.visOptions)
+                                 self.mappers, self.physicalMapperMap, self.actors, self.physicalActorMap,
+                                 visOptions = pv.visOptions, overlap = False)
 
     def addMesh(self, pv_name, solid_name, mesh, mtra, tra, localmeshes, filters,
-                mappers, mapperMap, actors, actorMap, visOptions = None):
+                mappers, mapperMap, actors, actorMap, visOptions = None, overlap = False):
         # VtkPolyData : check if mesh is in localmeshes dict
         _log.info('VtkViewer.addLogicalVolume> vtkPD')
 
@@ -286,6 +289,12 @@ class VtkViewer:
 
         vtkActor.SetUserMatrix(vtkTransform)
 
+        vtkTransFLT = _vtk.vtkTransformFilter()
+        vtkTransform1 = _vtk.vtkTransform()
+        vtkTransform1.SetMatrix(vtkTransform)
+        vtkTransFLT.SetTransform(vtkTransform1)
+        vtkTransFLT.SetInputConnection(vtkFLT.GetOutputPort())
+
         def makeCutterPlane(normal,color) :
 
             plane = _vtk.vtkPlane()
@@ -313,49 +322,58 @@ class VtkViewer:
             planeActor.GetProperty().SetRepresentationToSurface()
             self.ren.AddActor(planeActor)
 
+        def makeClipperPlane(normal) :
+            plane = _vtk.vtkPlane()
+            plane.SetOrigin(0, 0, 0)
+            plane.SetNormal(normal[0], normal[1], normal[2])
+            clipper = _vtk.vtkClipPolyData()
+            clipper.SetInputConnection(vtkTransFLT.GetOutputPort())
+            clipper.SetClipFunction(plane)
+            clipper.InsideOutOn()
+
+            clipperMapper = _vtk.vtkPolyDataMapper()
+            clipperMapper.ScalarVisibilityOff()
+            clipperMapper.SetInputConnection(clipper.GetOutputPort())
+
+            clipperActor =_vtk.vtkActor()
+            clipperActor.SetMapper(clipperMapper)
+            clipperActor.GetProperty().SetColor(1.0, 1.0, 1.0)
+            clipperActor.GetProperty().SetOpacity(1.0)
+            clipperActor.SetScale(1, 1, 1)
+
+            vtkActor.GetProperty().SetOpacity(0.0)
+            self.ren.AddActor(clipperActor)  # selection part end
+
         makeCutterPlane([1,0,0],[1,0,0])
         makeCutterPlane([0,1,0],[0,1,0])
         makeCutterPlane([0,0,1],[0,0,1])
 
+        # makeClipperPlane([1,0,0])
+        # makeClipperPlane([0,1,0])
+        # makeClipperPlane([0,0,1])
+
+        if overlap :
+            overlapText = _vtk.vtkVectorText()
+            overlapText.SetText("overlap")
+
+            overlapMapper = _vtk.vtkPolyDataMapper()
+            overlapMapper.SetInputConnection(overlapText.GetOutputPort())
+
+            comFilter = _vtk.vtkCenterOfMass()
+            comFilter.SetInputConnection(vtkTransFLT.GetOutputPort())
+            comFilter.SetUseScalarsAsWeights(False);
+            comFilter.Update()
+
+            overlapActor = _vtk.vtkFollower()
+            overlapActor.GetProperty().SetColor(visOptions.color)
+            overlapActor.SetPosition(comFilter.GetCenter())
+            overlapActor.SetMapper(overlapMapper)
+            self.ren.ResetCameraClippingRange()
+            overlapActor.SetCamera(self.ren.GetActiveCamera());
+            self.ren.AddActor(overlapActor)
 
         if not actorMap.has_key(actorname) :
             actorMap[actorname] = vtkActor
-
-        '''
-        if glyph :
-            # Surface normals
-            vtkNormals = _vtk.vtkPolyDataNormals()
-            vtkNormals.SetInputData(vtkPD)
-
-            #vtkNormals.ComputePointNormalsOff()
-            #vtkNormals.ComputeCellNormalsOn()
-            #vtkNormals.SplittingOff()
-            vtkNormals.FlipNormalsOn()
-            #vtkNormals.ConsistencyOn()
-            #vtkNormals.AutoOrientNormalsOn()
-            vtkNormals.Update()
-
-            glyph = _vtk.vtkGlyph3D()
-            arrow = _vtk.vtkArrowSource()
-            arrow.Update()
-
-            glyph.SetInputData(vtkNormals.GetOutput())
-            glyph.SetSourceData(arrow.GetOutput())
-            glyph.SetVectorModeToUseNormal()
-            glyph.SetScaleModeToScaleByVector()
-            glyph.SetScaleFactor(100)
-            glyph.OrientOn()
-            glyph.Update()
-
-            glyph_mapper = _vtk.vtkPolyDataMapper()
-            glyph_mapper.SetInputData(glyph.GetOutput())
-            # glyph_mapper.ImmediateModeRenderingOn()
-            glyph_actor = _vtk.vtkActor()
-            glyph_actor.SetMapper(glyph_mapper)
-            glyph_actor.GetProperty().SetColor(1, 0.4, 1)
-
-            self.ren.AddActor(glyph_actor)
-        '''
 
         # set visualisation properties
         if visOptions :
@@ -378,11 +396,9 @@ class VtkViewer:
         self.iren.Initialize()
 
         # Camera setup
-        camera =_vtk.vtkCamera();
-        self.ren.SetActiveCamera(camera);
         self.ren.ResetCamera()
 
-        # Render 
+        # Render
         self.renWin.Render()
 
         if interactive : 
@@ -401,3 +417,12 @@ class VtkViewer:
             visOptions.alpha = 1.0
 
         return visOptions
+
+def axesFromExtents(extent) :
+    low  = _np.array(extent[0])
+    high = _np.array(extent[1])
+    diff = high-low
+    centre = (high+low)/2.0
+    length = diff.max()/2
+
+    return length,centre

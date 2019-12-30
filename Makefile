@@ -1,6 +1,9 @@
 install:
 	pip install . --user
 
+install3: 
+	pip-3.7 install . --user
+
 uninstall:
 	pip uninstall pyg4ometry
 
@@ -10,6 +13,10 @@ develop:
 
 build_ext:
 	python setup.py build_ext --inplace
+
+build_ext3:
+	python3.7 setup.py build_ext --inplace
+
 # bumpversion is a python utility available via pip.  Make sure to add
 # your pip user install location's bin directory to your PATH.
 bump-major:

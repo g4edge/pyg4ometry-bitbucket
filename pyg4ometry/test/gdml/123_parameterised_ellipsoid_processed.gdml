@@ -46,7 +46,7 @@
 					<parameters number="1">
 						<position name="ellipsoid1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
 						<rotation name="ellipsoid11Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
-						<ellipsoid_dimensions ax="0.5" by="0.75" cz="1.0" lunit="mm" zcut1="-1.0" zcut2="1.0"/>
+						<ellipsoid_dimensions ax="0.5" by="0.75" cz="1" lunit="mm" zcut1="-1" zcut2="1"/>
 					</parameters>
 					<parameters number="2">
 						<position name="ellipsoid1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
@@ -84,7 +84,7 @@
 					<parameters number="9">
 						<position name="ellipsoid1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
 						<rotation name="ellipsoid1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
-						<ellipsoid_dimensions ax="4.5" by="4.75" cz="5.0" lunit="mm" zcut1="-3.0" zcut2="3.0"/>
+						<ellipsoid_dimensions ax="4.5" by="4.75" cz="5" lunit="mm" zcut1="-3.0" zcut2="3"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

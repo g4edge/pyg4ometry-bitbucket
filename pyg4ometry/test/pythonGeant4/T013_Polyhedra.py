@@ -43,9 +43,6 @@ def Test(vis = False, interactive = False) :
     
     # set world volume
     reg.setWorld(wl.name)
-    
-    # test __repr__
-    str(ps)
 
     # gdml output 
     w = _gd.Writer()
@@ -53,14 +50,22 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T013_Polyhedra.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T013_Polyhedra.gmad"),"T013_Polyhedra.gdml")
 
+    # test __repr__
+    str(ps)
+
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

@@ -11,6 +11,7 @@ import T003_CutTubs
 import T0031_CutTubs_number
 import T0032_CutTubs_string
 import T0033_CutTubs_expression
+import T0034_CutTubs_DefineTree
 import T004_Cons
 import T005_Para
 import T006_Trd
@@ -51,7 +52,7 @@ import T107_replica_y
 import T108_replica_z
 import T109_replica_phi
 import T110_replica_rho
-import T111_DefineTree
+import T111_parameterised_box
 
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
@@ -101,48 +102,52 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         str(w)
 
     def test_PythonGeant_SolidBase(self) :
-        self.assertTrue(T000_SolidBase.Test())
+        self.assertTrue(T000_SolidBase.Test()["testStatus"])
 
     def test_PythonGeant_Box(self) :
-        self.assertTrue(T001_Box.Test(False,False)["testStatus"])
+        self.assertTrue(T001_Box.Test(True,False)["testStatus"])
 
     def test_PythonGeant_Tubs(self) :
-        self.assertTrue(T002_Tubs.Test(False,False))
+        self.assertTrue(T002_Tubs.Test(True,False))
 
     def test_PythonGeant_CutTubs(self) :
-        self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.normal)["testStatus"])
-        self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.flat_ends)["testStatus"])
+        self.assertTrue(T003_CutTubs.Test(True, False, T003_CutTubs.normal)["testStatus"])
+        self.assertTrue(T003_CutTubs.Test(True, False, T003_CutTubs.flat_ends)["testStatus"])
+        self.assertTrue(T0031_CutTubs_number.Test(True, False)["testStatus"])
+        self.assertTrue(T0032_CutTubs_string.Test(True, False)["testStatus"])
+        self.assertTrue(T0033_CutTubs_expression.Test(True, False)["testStatus"])
+        self.assertTrue(T0034_CutTubs_DefineTree.Test(True,False)["testStatus"])
 
     def test_PythonGeant_Cons(self) :
-        try : 
-            T004_Cons.Test(False,False,T004_Cons.r1min_gt_r1max)
+        try :
+            self.assertTrue(T004_Cons.Test(True,False,T004_Cons.r1min_gt_r1max)["testStatus"])
         except ValueError :
             pass
 
         try : 
-            T004_Cons.Test(False,False,T004_Cons.r2min_gt_r2max)
+            self.assertTrue(T004_Cons.Test(True,False,T004_Cons.r2min_gt_r2max)["testStatus"])
         except ValueError : 
             pass
 
         try : 
-            T004_Cons.Test(False,False,T004_Cons.dphi_gt_2pi)
+            self.assertTrue(T004_Cons.Test(True,False,T004_Cons.dphi_gt_2pi)["testStatus"])
         except ValueError : 
             pass
 
-        self.assertTrue(T004_Cons.Test(False,False,T004_Cons.dphi_eq_2pi)["testStatus"])
-        self.assertTrue(T004_Cons.Test(False,False,T004_Cons.cone_up)["testStatus"])
-        self.assertTrue(T004_Cons.Test(False,False,T004_Cons.inner_cylinder)["testStatus"])
+        self.assertTrue(T004_Cons.Test(True,False,T004_Cons.dphi_eq_2pi)["testStatus"])
+        self.assertTrue(T004_Cons.Test(True,False,T004_Cons.cone_up)["testStatus"])
+        self.assertTrue(T004_Cons.Test(True,False,T004_Cons.inner_cylinder)["testStatus"])
 
-        self.assertTrue(T004_Cons.Test(False,False)["testStatus"])
+        self.assertTrue(T004_Cons.Test(True,False)["testStatus"])
       
     def test_PythonGeant_Para(self) :
-        self.assertTrue(T005_Para.Test(False,False)["testStatus"])
+        self.assertTrue(T005_Para.Test(True,False)["testStatus"])
 
     def test_PythonGeant_Trd(self) :
-        self.assertTrue(T006_Trd.Test(False,False)["testStatus"])
+        self.assertTrue(T006_Trd.Test(True,False)["testStatus"])
 
     def test_PythonGeant_Trap(self) :
-        self.assertTrue(T007_Trap.Test(False,False)["testStatus"])
+        self.assertTrue(T007_Trap.Test(True,False)["testStatus"])
 
     def test_PythonGeant_Sphere(self) :
         self.assertTrue(T008_Sphere.Test())
@@ -278,8 +283,8 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
     def test_PythonGeant_ReplicaRho(self):
         self.assertTrue(T110_replica_rho.Test()["testStatus"])
 
-    def test_PythonGeant_DefineTree(self):
-        self.assertTrue(T111_DefineTree.Test()["testStatus"])
+    def test_PythonGeant_T111_parameterised_box(self):
+        self.assertTrue(T111_parameterised_box.Test()["testStatus"])
 
     def test_PythonGeant_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
@@ -389,10 +394,3 @@ if __name__ == '__main__':
     class TracingStreamResult(_testtools.StreamResult):
         def status(self, *args, **kwargs):
             print('{0[test_id]}: {0[test_status]}'.format(kwargs))
-
-    #suite            = _unittest.TestLoader().loadTestsFromTestCase(PythonAuthoringTests)
-    #concurrent_suite = _testtools.ConcurrentStreamTestSuite(lambda: ((case, None) for case in suite))
-    #result = TracingStreamResult()
-    #result.startTestRun()
-    #concurrent_suite.run(result)
-    #result.stopTestRun()

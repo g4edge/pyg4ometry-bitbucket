@@ -45,7 +45,7 @@
 				<parameterised_position_size>
 					<parameters number="1">
 						<position name="trd1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<trd_dimensions lunit="mm" x1="5.0" x2="2.5" y1="5.0" y2="2.5" z="0.5"/>
+						<trd_dimensions lunit="mm" x1="5" x2="2.5" y1="5" y2="2.5" z="0.5"/>
 					</parameters>
 					<parameters number="2">
 						<position name="trd1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
@@ -60,7 +60,7 @@
 						<trd_dimensions lunit="mm" x1="3.5" x2="3.25" y1="6.5" y2="1.75" z="2.0"/>
 					</parameters>
 					<parameters number="5">
-						<trd_dimensions lunit="mm" x1="3.0" x2="3.5" y1="7.0" y2="1.5" z="2.5"/>
+						<trd_dimensions lunit="mm" x1="3.0" x2="3.5" y1="7.0" y2="1.50" z="2.5"/>
 					</parameters>
 					<parameters number="6">
 						<position name="trd1Vol5pos" unit="mm" x="0" y="0" z="2*bx"/>
