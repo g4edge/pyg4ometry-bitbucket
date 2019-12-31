@@ -1,0 +1,39 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0
+SPH black      0.0 0.0 0.0 50.
+RCC target     0.0 0.0 -5. 0.0 0.0 10. 5.
+RCC target2    0.0 0.0 -5. 0.0 0.0 10. 2.5
+$start_transform -Rotdefi1
+RCC repl       0.0 0.0 -5. 0.0 0.0 10. 5.
+RCC repl2      0.0 0.0 -5. 0.0 0.0 10. 2.5
+$end_transform
+END
+TARGET       5 +target -target2
+TARGET2      5 +target2
+REPLICA      5 +repl -repl2
+REPLIC2      5 +repl2
+blckreg      5 +black -target -repl
+END
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....
+LATTICE      REPLICA                                                  Rotdefi1
+LATTICE      REPLIC2                                                  Rotdefi1
+GEOEND
+ASSIGNMA    BLCKHOLE   blckreg
+ASSIGNMA    HYDROGEN    TARGET
+ASSIGNMA    MUSCLEST   TARGET2
+ROT-DEFI         0.0                                     -2.      -30.Rotdefi1
+ROT-DEFI        100.                -45.                  10       10.Rotdefi1
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START
+STOP
