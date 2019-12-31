@@ -53,6 +53,7 @@ import T108_replica_z
 import T109_replica_phi
 import T110_replica_rho
 import T111_parameterised_box
+import T112_parameterised_tube
 
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
@@ -285,6 +286,10 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
 
     def test_PythonGeant_T111_parameterised_box(self):
         self.assertTrue(T111_parameterised_box.Test()["testStatus"])
+
+    def test_PythonGeant_T112_parameterised_tube(self):
+        self.assertTrue(T112_parameterised_tube.Test()["testStatus"])
+
 
     def test_PythonGeant_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
