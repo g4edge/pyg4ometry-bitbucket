@@ -1,0 +1,10 @@
+d1: drift, l=0.2*m, apertureType="rectangular", aper1=5*cm, aper2=15*mm;
+sb1: sbend, l=0.3*m, angle=0.1, e1=0.1, apertureType="rectangular", aper1=5*cm, aper2=15*mm;
+
+l1: line = (sb1);
+
+use, period = l1;
+
+sample, all;
+
+include options.gmad;
