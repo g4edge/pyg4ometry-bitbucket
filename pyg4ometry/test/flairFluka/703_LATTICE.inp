@@ -1,5 +1,5 @@
 TITLE
-
+Prototype consisting of multiple regions (one LATTICE)
 * Set the defaults for precision simulations
 DEFAULTS                                                              PRECISIO
 * Define the beam characteristics
