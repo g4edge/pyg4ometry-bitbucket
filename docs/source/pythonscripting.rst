@@ -112,11 +112,17 @@ So the box example above can be rewritten using constants
    v.view()
 
 .. note::
-   All GDML defines (Constant, Variable, etc) can be used in the construction of other pyg4ometry classes interchangably instead
-   of floats or strings
+   All GDML defines (Constant, Variable, etc) can be used in the construction of other pyg4ometry classes 
+   interchangably instead of floats or strings (where strings are either numbers or a GDML expression)
 
 .. warning::
-   Avoid redefining defines using basic python types 
+   Avoid reassigning variables used as defines, this can have unexpected consequences so for example 
+
+.. code-block :: python
+
+   b1   = pyg4ometry.geant4.solid.Box("b1",bx,by,bz,reg)
+   b1.pX = 20              # do not do this
+   b1.pX.setExpression(20) # rather do this
 
 Solids 
 ------
@@ -131,11 +137,15 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
 
    G4Box(const G4String& pName, G4double  pX, G4double  pY, G4double pZ)
 
+Materials 
+---------
+
+
 Detector contruction 
 --------------------
 
-Materials 
----------
+This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans, logical, physical (replica, division, param) volumes.
+
 
 Optical surfaces 
 ----------------
@@ -143,12 +153,18 @@ Optical surfaces
 Registry and GDML output
 ------------------------
 
+Strictly speaking a registry class to store all of the GDML is not required. 
+As with normal Geant4 given a ``lv`` pointer it should possible to form an aggregration 
+hierarchy that contains all nessessary objects. Now GDML breaks this as the
+structure is built up using ``name`` tags. For example a placement requires 
+a position. In G4 this would just be a pointer to an transformation object, but GDML 
+has two mechanisms to represent this, firstly child nodes of a PhysicalVolume tag 
+or secondly a position define, see below
+
 The registry class is a storage class for a complete GDML file. At the
 construction stage of almost all objects a registry is required. If the 
 object is added to the resistry then it will appear explicitly in the GDML 
 output
-
-
 
 Visualisation
 -------------

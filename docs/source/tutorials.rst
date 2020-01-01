@@ -11,9 +11,6 @@ STL input
 STEP/STP input
 ---------------
 
-FULKA scripting
----------------
-
 FLUKA input 
 -----------
 
