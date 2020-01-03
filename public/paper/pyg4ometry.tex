@@ -507,7 +507,7 @@ QUA (Quadric surface) 					& TessellatedSolid		\\ \hline
 \end{enumerate} 
 
 \section{Geant4 to FLUKA conversion}
-It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG region.
+It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG zone.
 Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. 
 
 
@@ -516,9 +516,9 @@ Some solids in Geant4 directly map to a FLUKA body, others need a construction o
 \begin{tabular}{| l | l | } \hline
 Geant4 solid			& FLUKA region constuction		\\ \hline
 Box					& +2 XYP + 2 XZP + 2 YZP 		\\
-Tube					& +ZCC - 2 XYP	 			\\
-CutTube				& +ZCC - 2 PLA				\\
-Cone				& +TRC -TRC - WED			\\
+Tube					& +ZCC - 2 PLA -2 XYP - ZCC	 	\\
+CutTube				& +ZCC - 4 PLA -ZCC			\\
+Cone				& +TRC - TRC - WED			\\
 Para					& +ARB						\\
 Trd					& +ARB						\\
 Trap					& +ARB						\\
