@@ -55,6 +55,8 @@ import T110_replica_rho
 import T111_parameterised_box
 import T112_parameterised_tube
 
+import T201_Materials
+
 import T400_MergeRegistry
 import T401_MergeRegistry_Box
 import T402_MergeRegistry_Tubs
@@ -290,6 +292,10 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
     def test_PythonGeant_T112_parameterised_tube(self):
         self.assertTrue(T112_parameterised_tube.Test()["testStatus"])
 
+    def test_PythonGeant_T201_Materials(self):
+        T201_Materials.Test_MaterialPredefined()
+        T201_Materials.Test_MaterialSingleElement()
+        T201_Materials.Test_MaterialCompoundMassFraction()
 
     def test_PythonGeant_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
