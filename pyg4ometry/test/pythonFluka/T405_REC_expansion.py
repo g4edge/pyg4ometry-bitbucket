@@ -2,7 +2,7 @@ import numpy as np
 
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import REC, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import REC, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
@@ -18,7 +18,7 @@ def Test(vis=False, interactive=False):
               direction,
               semiminor,
               semimajor,
-              expansion=2.0,
+              transform=Transform(expansion=2.0),
               flukaregistry=freg)
 
     z = Zone()

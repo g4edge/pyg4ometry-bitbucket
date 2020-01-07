@@ -25,9 +25,9 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg,
-                                with_length_safety=True,
-                                split_disjoint_unions=False,
-                                minimise_solids=True)
+                                withLengthSafety=True,
+                                splitDisjointUnions=False,
+                                minimiseSolids=True)
 
     assert greg.solidDict["ZCC_BODY_s"].pDz < INFINITY
 

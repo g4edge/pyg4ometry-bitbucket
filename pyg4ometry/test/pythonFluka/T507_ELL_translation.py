@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import ELL, Region, Zone, FlukaRegistry, Three
+from pyg4ometry.fluka import ELL, Region, Zone, FlukaRegistry, Transform, Three
 
 
 def Test(vis=False, interactive=False):
@@ -16,7 +16,7 @@ def Test(vis=False, interactive=False):
               focus1,
               focus2,
               length,
-              translation=[-20, -20, 20],
+              transform=Transform(translation=[-20, -20, 20]),
               flukaregistry=freg)
 
     z = Zone()

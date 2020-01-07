@@ -11,13 +11,13 @@ def Test(vis=False, interactive=False):
                [0, 0, 0],
                [20, 0, 0],
                [0, 0, 5],
-               [0, 10, 0], 2.5, flukaregistry=freg)
+               [0, 10, 0], flukaregistry=freg)
 
     rec2 = REC("REC_BODY2",
                [5, 0, 0],
                [10, 0, 0],
                [0, 0, 2.5],
-               [0, 5, 0], 2.5, flukaregistry=freg)
+               [0, 5, 0], flukaregistry=freg)
 
     z1 = Zone()
     z2 = Zone()
@@ -38,8 +38,8 @@ def Test(vis=False, interactive=False):
 
     # default is True, but to be explicit:
     greg = convert.fluka2Geant4(freg,
-                                with_length_safety=True,
-                                split_disjoint_unions=False)
+                                withLengthSafety=True,
+                                splitDisjointUnions=False)
 
     wv = greg.getWorldVolume()
     wv.checkOverlaps()

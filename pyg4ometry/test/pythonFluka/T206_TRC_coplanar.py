@@ -33,8 +33,8 @@ def Test(vis=False, interactive=False):
 
     # default is True, but to be explicit:
     greg = convert.fluka2Geant4(freg,
-                                with_length_safety=True,
-                                split_disjoint_unions=False)
+                                withLengthSafety=True,
+                                splitDisjointUnions=False)
 
     wv = greg.getWorldVolume()
     wv.checkOverlaps()

@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import WED, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import WED, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
@@ -10,14 +10,14 @@ def Test(vis=False, interactive=False):
     # union of two wedeges. with sides equal to 20cm.  The mesh shows
     # the two wedges.
 
-    translation = [-20, -20, -20]
+    transform = Translation(translation=[-20, -20, -20])
 
     wed1 = WED("WED1_BODY",
                [40, 40, 40], # vertex position
                [-20, 0, 0], # one transverse side.
                [0, 0, -20], # length vector.
                [0, -20, 0], # the other transverse side.
-               translation=translation,
+               transform=transform,
                flukaregistry=freg)
 
     wed2 = WED("WED2_BODY",
@@ -25,7 +25,7 @@ def Test(vis=False, interactive=False):
                [20, 0, 0], # one transverse side.
                [0, 0, 20], # length vector.
                [0, 20, 0], # the other transverse side.
-               translation=translation,
+               transform=transform,
                flukaregistry=freg)
 
     z1 = Zone()

@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import PLA, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import PLA, Region, Zone, FlukaRegistry, Transform
 import pyg4ometry.fluka.body
 
 
@@ -11,7 +11,7 @@ def Test(vis=False, interactive=False):
     pla1 = PLA("PLA1_BODY",
                [0, 0, 10],
                [0, 0, 10],
-               expansion=2.0,
+               transform=Transform(expansion=2.0),
                flukaregistry=freg)
 
     z1 = Zone()

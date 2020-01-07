@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
