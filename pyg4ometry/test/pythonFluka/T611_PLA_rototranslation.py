@@ -4,7 +4,7 @@ import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
 from pyg4ometry.fluka import PLA, Region, Zone, FlukaRegistry, Transform
 from pyg4ometry.fluka.directive import rotoTranslationFromTra2
-
+import pyg4ometry.fluka.body
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
@@ -12,6 +12,8 @@ def Test(vis=False, interactive=False):
     rtrans = rotoTranslationFromTra2("plaTRF",
                                      [[np.pi/4, np.pi/4, np.pi/4],
                                       [0, 0, 20]])
+
+    transform = Transform(rotoTranslation=rtrans)
 
     pyg4ometry.fluka.body.INFINITY = 30
 
