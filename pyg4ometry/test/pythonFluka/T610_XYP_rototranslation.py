@@ -2,7 +2,9 @@ import numpy as np
 
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import XYP, Region, Zone, FlukaRegistry, Transform
+from pyg4ometry.fluka import (XYP, Region, Zone, FlukaRegistry,
+                              Transform, infinity)
+
 from pyg4ometry.fluka.directive import rotoTranslationFromTra2
 
 import pyg4ometry.fluka.body
@@ -15,21 +17,19 @@ def Test(vis=False, interactive=False):
                                       [0, 0, 20]])
     transform = Transform(rotoTranslation=rtrans)
 
-    pyg4ometry.fluka.body.INFINITY = 30
+    with infinity(30):
+        xyp = XYP("XYP_BODY", 20.0,
+                  transform=transform,
+                  flukaregistry=freg)
 
-    xyp = XYP("XYP_BODY", 20.0,
-              transform=transform,
-              flukaregistry=freg)
+        z = Zone()
+        z.addIntersection(xyp)
 
-    z = Zone()
-    z.addIntersection(xyp)
+        region = Region("REG_INF", material="COPPER")
+        region.addZone(z)
 
-    region = Region("REG_INF", material="COPPER")
-    region.addZone(z)
-
-    freg.addRegion(region)
-
-    greg = convert.fluka2Geant4(freg)
+        freg.addRegion(region)
+        greg = convert.fluka2Geant4(freg)
 
     v = None
     if vis:
