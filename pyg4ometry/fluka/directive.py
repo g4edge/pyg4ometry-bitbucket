@@ -1,4 +1,4 @@
-from collections import MutableSequence
+from collections import MutableSequence, OrderedDict
 import numbers
 from operator import mul
 
@@ -13,7 +13,7 @@ from .card import Card
 class Transform(object):
     """expansion, translation, rotoTranslation can be either a single
     instance of RotoTranslation or a multiple instances of
-    RotoTranslations and RecursiveRotoTranslations"""
+    RotoTranslation and RecursiveRotoTranslation"""
     def __init__(self, expansion=None, translation=None, rotoTranslation=None):
         self.expansion = expansion
         self.translation = translation
@@ -75,12 +75,13 @@ class Transform(object):
 class RotoTranslation(object):
     """translation in mm, angles in degrees"""
     def __init__(self, name, axis=None, polar=0., azimuth=0.,
-                 translation=None, flukaregistry=None):
+                 translation=None, transformationIndex=None, flukaregistry=None):
         self.name = name
         self.axis = axis
         self.polar = polar
         self.azimuth = azimuth
         self.translation = translation
+        self.transformationIndex = transformationIndex
 
         if not axis and any([polar, azimuth]):
             raise TypeError("Axis not set for non-zero polar and/or azimuth.")
@@ -88,9 +89,9 @@ class RotoTranslation(object):
         if flukaregistry is not None:
             flukaregistry.addRotoTranslation(self)
 
-        if len(name) > 8:
+        if len(name) > 10:
             raise ValueError(
-                "Name {} is too long.  Max length = 8.".format(name))
+                "Name {} is too long.  Max length = 10.".format(name))
         if polar < 0 or polar > 180.:
             raise ValueError(
                 "Polar angle must be between 0 and +180 deg: {}".format(polar))
@@ -150,8 +151,8 @@ class RotoTranslation(object):
         return r1.dot(r2)
 
     def toCard(self):
-        index = ["z", "x", "y", "z"].index(self.axis)
-        index += 10000 # see fluka manual on ROT-DEFI
+        index = [None, "x", "y", "z"].index(self.axis)
+        index += self.transformationIndex # see fluka manual on ROT-DEFI
         tx, ty, tz = self.translation
         # CONVERTING TO CENTIMETRES!!
         return Card("ROT-DEFI", index,
@@ -257,6 +258,34 @@ class RecursiveRotoTranslation(MutableSequence):
     def flukaFreeString(self):
         return "\n".join([c.toCard().toFreeString() for c in self])
 
+    def transformationIndex(self):
+        pass
+
+    def _transformationIndices(self):
+        return [rtrans.index for rtrans in self]
+
+    def areAllTheSameTransformationIndices(self):
+        if not self:
+            return True
+        indices = self._transformationIndices()
+        return indices.count(indices[0]) == len(indices)
+
+    @property
+    def transformationIndex(self):
+        if not self: # if empty
+            return None
+        return self[0].transformationIndex
+
+    @transformationIndex.setter
+    def transformationIndex(self, transformationIndex):
+        for rtrans in self:
+            rtrans.transformationIndex = transformationIndex
+
+    @transformationIndex.deleter
+    def transformationIndex(self):
+        for rtrans in self:
+            del rtrans.transformationIndex
+
 
 def rotoTranslationFromTBxyz(name, tbxyz, flukaregistry=None):
     """tbxyz = trait bryan angles in radians"""
@@ -290,7 +319,7 @@ def rotoTranslationFromTra2(name, tra2, flukaregistry=None):
                                       flukaregistry=flukaregistry)
 
     if any(translation): # Don't append a translation of zeros
-        result.append(RotoTranslation(name, axis="x",
+        result.append(RotoTranslation(name,
                                       translation=translation,
                                       flukaregistry=flukaregistry))
     return result
