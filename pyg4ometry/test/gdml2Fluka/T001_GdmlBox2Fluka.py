@@ -27,7 +27,7 @@ def Test() :
     b2p1 = _g4.PhysicalVolume([0,0,0.5],[0,15,0], b2l, "b2_pv1", b1l, reg)
     b2p2 = _g4.PhysicalVolume([0,0,0],[0,-15,0], b2l, "b2_pv2", b1l, reg)
 
-    b1p1 = _g4.PhysicalVolume([0, 0, -0.5],     [0, 0, -50], b1l, "b1_pv1", wl, reg)
+    b1p1 = _g4.PhysicalVolume([0, 0,  -0.5],     [0, 0, -50], b1l, "b1_pv1", wl, reg)
     b1p2 = _g4.PhysicalVolume([0, 0,  0.0],     [0, 0,   0], b1l, "b1_pv2", wl, reg)
     b1p3 = _g4.PhysicalVolume([0, 0,  0.5],     [0, 0,  50], b1l, "b1_pv3", wl, reg)
 
