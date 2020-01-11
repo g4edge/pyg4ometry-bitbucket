@@ -47,7 +47,9 @@ def Test(vis=False, interactive=False):
     
     freg.addRegion(region1)
 
-    greg = convert.fluka2Geant4(freg, True, False)
+    greg = convert.fluka2Geant4(freg,
+                                withLengthSafety=True,
+                                splitDisjointUnions=False)
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
