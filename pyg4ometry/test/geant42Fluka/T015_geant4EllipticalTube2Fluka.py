@@ -5,7 +5,7 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 
 
-def Test() :
+def Test(vis = False, interactive=False) :
 
     reg = _g4.Registry()
 
@@ -34,9 +34,10 @@ def Test() :
     # set world volume
     reg.setWorld(wl.name)
 
-    v = _vi.VtkViewer()
-    v.addLogicalVolume(wl)
-    v.view()
+    if vis :
+        v = _vi.VtkViewer()
+        v.addLogicalVolume(wl)
+        v.view(interactive=interactive)
 
     freg = _convert.geant42FlukaLogical(wl)
 

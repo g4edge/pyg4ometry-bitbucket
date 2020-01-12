@@ -6,7 +6,7 @@ import numpy as _np
 
 import pyg4ometry.test.pythonGeant4.T001_Box as _T001_Box
 
-def Test() :
+def Test(vis = True, interactive = False) :
 
     # registry
     reg = _g4.Registry()
@@ -35,10 +35,11 @@ def Test() :
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
 
-    v = _vi.VtkViewer()
-    v.addLogicalVolume(wl)
-    v.addAxes(_vi.axesFromExtents(extentBB)[0])
-    v.view()
+    if vis :
+        v = _vi.VtkViewer()
+        v.addLogicalVolume(wl)
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
+        v.view(interactive=interactive)
 
     # set world volume
     reg.setWorld(wl.name)
