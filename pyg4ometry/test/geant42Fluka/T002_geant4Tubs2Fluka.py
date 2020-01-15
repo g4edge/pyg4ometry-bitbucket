@@ -41,8 +41,8 @@ def Test(vis = True, interactive = False) :
     # set world volume
     reg.setWorld(wl.name)
 
-    freg = _convert.geant42FlukaLogical(wl)
+    freg = _convert.geant4Logical2Fluka(wl)
 
     w = _fluka.Writer()
     w.addDetector(freg)
-    w.write("T002_GdmlTubs2Fluka.inp")
+    w.write("T002_geant4Tubs2Fluka.inp")

@@ -46,8 +46,8 @@ def Test(vis = True, interactive = False) :
 
     # freg, nfb = _convert.geant42Fluka(wl)
 
-    freg = _convert.geant42FlukaLogical(wl)
+    freg = _convert.geant4Logical2Fluka(wl)
 
     w = _fluka.Writer()
     w.addDetector(freg)
-    w.write("T001_GdmlBox2Fluka.inp")
+    w.write("T001_geant4Box2Fluka.inp")

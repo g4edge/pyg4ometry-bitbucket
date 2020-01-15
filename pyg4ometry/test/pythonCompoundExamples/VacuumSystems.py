@@ -4,7 +4,8 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 import pyg4ometry.transformation as _tr
-
+import pyg4ometry.convert as _convert
+import pyg4ometry.fluka as _fluka
 
 lengthSafety = 1e-5
 
@@ -89,7 +90,7 @@ def CF_BeamPipe(name, bpLength = 500, bpId = 30, bpThickness = 2.5, flange1 = 'D
 
         # union with beam pipe
         bpSolid = _g4.solid.Union(name+"_bp_flange1", bpSolid,flange1Solid,
-                                  [[0,0,0],[0,0,-bpLength/2+flange1['length']/2]],reg)
+                                  [[0,_np.pi,0],[0,0,-bpLength/2+flange1['length']/2]],reg)
 
         length += flange1['length']
 
@@ -130,8 +131,11 @@ def CF_BeamPipe(name, bpLength = 500, bpId = 30, bpThickness = 2.5, flange1 = 'D
     return {'logical':bpLogical, 'length':length, 'innerSolid':bpSolidInner}
 
 
-def CF_Cylindi
+def CF_CylindiricalChamber(name):
+    pass
 
+def CF_CuboidalChamber(name):
+    pass
 
 def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
                         ports = {'port1':{'rotn':[0,         0,0], 'id':30, 'thickness':5, 'length':100, 'flange':'DN40', 'term':'DN40'},
@@ -140,9 +144,10 @@ def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
                                  'port4':{'rotn':[-_np.pi/4.0,-_np.pi/4.0, 0],'id':10,'thickness':2.5, 'length':200, 'flange':'DN16', 'term':'DN16'},
                                  'port5':{'rotn':[-3*_np.pi/4.0,-3*_np.pi/4.0, 0],'id':10,'thickness':2.5, 'length':100, 'flange':'DN16', 'term':'DN16'}
                                  },
-                        vis = True, write = False) :
+                        reg = None, vis = False, write = False) :
 
-    reg = _g4.Registry()
+    if reg == None :
+        reg = _g4.Registry()
 
     chamberSolid      = _g4.solid.Sphere(name+"_sphere",innerRadius,outerRadius,0,"2*pi",0,"pi",reg)
     chamberCutSolid   = _g4.solid.Orb(name+"_sphereInner",innerRadius,reg)
@@ -191,3 +196,43 @@ def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.view()
+
+    return {'logical':chamberLogical}
+
+
+def makeWorld() :
+
+    reg = _g4.Registry()
+
+    #chamber = CF_SphericalChamber("test1", reg=reg)
+    chamber = CF_BeamPipe("test1",reg=reg)
+    # chamber   = CF_BlankFlange("test1",reg=reg)
+
+    log = chamber['logical']
+    extent = log.extent(True)
+
+
+    # create world box
+    ws = _g4.solid.Box("worldSolid",
+                       2*(extent[1][0]-extent[0][0]),
+                       2*(extent[1][1]-extent[0][1]),
+                       2*(extent[1][2]-extent[0][2]),
+                       reg,"mm")
+
+    wm = _g4.MaterialPredefined("G4_Galactic")
+
+    wl = _g4.LogicalVolume(ws, wm, "wl", reg)
+    cp = _g4.PhysicalVolume([0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
+
+    reg.setWorld(wl.name)
+
+    # gdml output
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write("Chamber.gdml")
+
+    freg = _convert.geant4Logical2Fluka(wl)
+
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write("Chamber.inp")
