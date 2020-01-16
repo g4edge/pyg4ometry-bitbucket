@@ -1,29 +1,29 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import PLA, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import (PLA, Region, Zone, FlukaRegistry,
+                              Transform, infinity)
 import pyg4ometry.fluka.body
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    pyg4ometry.fluka.body.INFINITY = 30
+    with infinity(30):
+        pla1 = PLA("PLA1_BODY",
+                   [1, 1, 1],
+                   [20, 20.0, 20],
+                   transform=Transform(translation=[-20, -20, -20]),
+                   flukaregistry=freg)
 
-    pla1 = PLA("PLA1_BODY",
-               [1, 1, 1],
-               [20, 20.0, 20],
-               translation=[-20, -20, -20],
-               flukaregistry=freg)
+        z1 = Zone()
 
-    z1 = Zone()
+        z1.addIntersection(pla1)
 
-    z1.addIntersection(pla1)
+        region = Region("REG_INF", material="COPPER")
+        region.addZone(z1)
 
-    region = Region("REG_INF", material="COPPER")
-    region.addZone(z1)
+        freg.addRegion(region)
 
-    freg.addRegion(region)
-
-    greg = convert.fluka2Geant4(freg)
+        greg = convert.fluka2Geant4(freg)
 
     v = None
     if vis:

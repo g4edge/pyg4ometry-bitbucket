@@ -15,9 +15,9 @@ def main(filein, debug=False):
 
     r = Reader(filein)
     greg = fluka2Geant4(r.flukaregistry,
-                        with_length_safety=True,
-                        split_disjoint_unions=True,
-                        minimise_solids=True,
+                        withLengthSafety=True,
+                        splitDisjointUnions=True,
+                        minimiseSolids=True,
     )
 
     wlv = greg.getWorldVolume()

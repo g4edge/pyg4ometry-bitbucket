@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import TRC, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import TRC, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
@@ -11,7 +11,7 @@ def Test(vis=False, interactive=False):
               [20, 20, 20],
               [5, 5, 5],
               5, 2,
-              translation=[-20, -20, -20],
+              transform=Transform(translation=[-20, -20, -20]),
               flukaregistry=freg)
     z = Zone()
     z.addIntersection(trc)

@@ -1,14 +1,17 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    expansion = 2
 
-    rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg,
-              expansion=expansion)
+    transform = Transform(expansion=2.0)
+
+
+    rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10,
+              flukaregistry=freg,
+              transform=transform)
     z = Zone()
     z.addIntersection(rpp)
     region = Region("RPP_REG", material="COPPER")

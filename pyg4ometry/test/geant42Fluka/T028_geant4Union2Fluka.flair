@@ -1,0 +1,92 @@
+#!/Users/sboogert/Physics/codelocal/flair/flair-install/flair
+# FLUKA Project file
+Version: 2
+Title: 
+Input: T028_geant4Union2Fluka.inp
+Submit: *Default
+Tabs: 0.1 0.32 0.56 0.81 1.0
+Page: Geometry
+DefMain: True
+LinkPrg: lfluka
+F77bound: True
+F77dline: False
+
+# Run information
+Run: <default>
+	Prev:     0
+	Last:     5
+	Status:   0
+	Pid:      0
+	StartRun: 0
+End
+
+# Geometry Information
+Geometry:
+	Frame.bsplit: 0.5
+	Frame.tsplit: 0.5
+	Frame.vsplit: 0.5
+End
+
+# Geometry plot "GeoViewer Red plot"
+Plot: Red
+	Format: .eps
+	Type:   Geometry
+	basisu: 1 0 0
+	basisv: 0 1 0
+	boundaries: 1
+	coord: X-Y
+	extends: 7.78866 4.74884
+	labels: 1
+	layer: Media
+	origin: -0.376339 0.204556 0
+	subtype: Material
+	title: GeoViewer Red plot
+End
+
+# Geometry plot "GeoViewer Green plot"
+Plot: Green
+	Format: .eps
+	Type:   Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	boundaries: 1
+	coord: Z-X
+	extends: 7.78866 4.74884
+	labels: 1
+	layer: Media
+	origin: 0.474982 0.4 -1.483
+	subtype: Material
+	title: GeoViewer Green plot
+End
+
+# Geometry plot "GeoViewer Blue plot"
+Plot: Blue
+	Format: .eps
+	Type:   Geometry
+	basisu: 0 0 1
+	basisv: 0 1 0
+	boundaries: 1
+	coord: Z-Y
+	extends: 9.34638 5.6986
+	labels: 1
+	layer: Media
+	origin: 0 -1.79848 -3.32361
+	subtype: Material
+	title: GeoViewer Blue plot
+End
+
+# Geometry plot "GeoViewer Magenta plot"
+Plot: Magenta
+	Format: .eps
+	Type:   Geometry
+	basisu: -0.791108 0 -0.611677
+	basisv: 0 1 0
+	boundaries: 1
+	coord: U-V
+	extends: 2.17367 1.32531
+	labels: 1
+	layer: 3D
+	origin: 1.12027 0.546309 -1.34261
+	subtype: Material
+	title: GeoViewer Magenta plot
+End

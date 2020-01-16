@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import ARB, Region, Zone, FlukaRegistry, Three
+from pyg4ometry.fluka import ARB, Region, Zone, FlukaRegistry, Transform, Three
 
 
 def Test(vis=False, interactive=False):
@@ -45,7 +45,7 @@ def Test(vis=False, interactive=False):
 
     arb = ARB("ARB_BODY",
               vertices, facenumbers,
-              translation=[10, 10, 10],
+              transform=Transform(translation=[10, 10, 10]),
               flukaregistry=freg)
 
     z = Zone()

@@ -49,8 +49,8 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region1)
 
     greg = convert.fluka2Geant4(freg,
-                                with_length_safety=True,
-                                minimise_solids=True)
+                                withLengthSafety=True,
+                                minimiseSolids=True)
     names = ["PLA_A1_BODY_s", 
              "PLA_A2_BODY_e", 
              "PLA_B1_BODY_s", 

@@ -1,12 +1,12 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import YCC, XZP, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import YCC, XZP, Region, Zone, FlukaRegistry, Transform
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
     ycc = YCC("YCC_BODY", 5, 5, 5,
-              expansion=2.0,
+              transform=Transform(expansion=2.0),
               flukaregistry=freg)
 
     xzp_hi = XZP("XZP1_BODY", 20, flukaregistry=freg)

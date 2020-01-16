@@ -21,7 +21,7 @@ def Test(vis=False, interactive=False):
 
     freg.addRegion(region)
 
-    greg = convert.fluka2Geant4(freg, split_disjoint_unions=True)
+    greg = convert.fluka2Geant4(freg, splitDisjointUnions=True)
 
     assert len(greg.logicalVolumeList) == 2
 

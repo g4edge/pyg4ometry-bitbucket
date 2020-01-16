@@ -1,24 +1,22 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import YZP, Region, Zone, FlukaRegistry
-import pyg4ometry.fluka.body
+from pyg4ometry.fluka import YZP, Region, Zone, FlukaRegistry, infinity
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    pyg4ometry.fluka.body.INFINITY = 30
+    with infinity(30):
+        yzp = YZP("YZP_BODY", 20.0, flukaregistry=freg)
 
-    yzp = YZP("YZP_BODY", 20.0, flukaregistry=freg)
+        z = Zone()
+        z.addIntersection(yzp)
 
-    z = Zone()
-    z.addIntersection(yzp)
+        region = Region("REG_INF", material="COPPER")
+        region.addZone(z)
 
-    region = Region("REG_INF", material="COPPER")
-    region.addZone(z)
+        freg.addRegion(region)
 
-    freg.addRegion(region)
-
-    greg = convert.fluka2Geant4(freg)
+        greg = convert.fluka2Geant4(freg)
 
     v = None
     if vis:

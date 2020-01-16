@@ -1,12 +1,12 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry, Transform
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
     rpp = RPP("RPP_BODY", -20, 20, -20, 20, -20, 20,
-              translation=[-20, -20, -20],
+              transform=Transform(translation=[-20, -20, -20]),
               flukaregistry=freg)
 
     z = Zone()

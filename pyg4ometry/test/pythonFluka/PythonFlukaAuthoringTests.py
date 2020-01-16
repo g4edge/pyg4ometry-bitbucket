@@ -1,4 +1,9 @@
 import unittest as _unittest
+from random import random
+import numpy as np
+
+from pyg4ometry.fluka.fluka_registry import RotoTranslationStore, FlukaRegistry
+from pyg4ometry.fluka.directive import rotoTranslationFromTra2
 
 import T001_RPP
 import T002_BOX
@@ -330,6 +335,84 @@ class PythonFlukaAuthoringTests(_unittest.TestCase) :
             greg = convert.fluka2Geant4(freg)
         except ValueError :
             pass
+
+
+class RotoTranslationStoreTests(_unittest.TestCase):
+    def _makeRotoTranslation(self, name="rppTRF"):
+        angle = random() * np.pi
+        rtrans = rotoTranslationFromTra2(name,
+                                         [[angle, angle, angle],
+                                          [0, 0, 20]])
+        return name, rtrans
+
+    def _makeStore(self):
+        return RotoTranslationStore()
+
+    def test_storeInit(self):
+        self._makeStore()
+
+    def test_gettingRotoTranslation(self):
+        name, rtrans = self._makeRotoTranslation()
+        store = self._makeStore()
+        store[name] = rtrans
+        r = store[name]
+
+    def test_RotoTranslation_fails_setting_with_wrong_name(self):
+        name, rtrans = self._makeRotoTranslation()
+        store = self._makeStore()
+        with self.assertRaises(ValueError):
+            store["asdasd"] = rtrans
+
+    def test_RotoTranslation_fails_without_rotoTranslation(self):
+        name, rtrans = self._makeRotoTranslation()
+        store = self._makeStore()
+        with self.assertRaises(TypeError):
+            store[name] = "something"
+
+    def test_store_len(self):
+        name, rtrans = self._makeRotoTranslation()
+        store = self._makeStore()
+        self.assertEqual(len(store), 0)
+        store[name] = rtrans
+        self.assertEqual(len(store), 1)
+
+    def test_store_del(self):
+        name, rtrans = self._makeRotoTranslation()
+        store = self._makeStore()
+        self.assertEqual(len(store), 0)
+        store[name] = rtrans
+        self.assertEqual(len(store), 1)
+        del store[name]
+        self.assertEqual(len(store), 0)
+
+    def test_addRotoTranslation(self):
+        name1, rtrans1 = self._makeRotoTranslation(name="rtrans1")
+        name2, rtrans2 = self._makeRotoTranslation(name="rtrans2")
+        name3, rtrans3 = self._makeRotoTranslation(name="rtrans3")
+        name4, rtrans4 = self._makeRotoTranslation(name="rtrans4")
+        name5, rtrans5 = self._makeRotoTranslation(name="rtrans5")
+
+        store = self._makeStore()
+
+        store.addRotoTranslation(rtrans1)
+        store.addRotoTranslation(rtrans2)
+        self.assertEqual(rtrans1.transformationIndex, 2000)
+        self.assertEqual(rtrans2.transformationIndex, 3000)
+        del store[name1]
+        store.addRotoTranslation(rtrans3)
+        self.assertEqual(rtrans3.transformationIndex, 4000)
+
+        self.assertEqual(store.allTransformationIndices(), [3000, 4000])
+
+        rtrans4.transformationIndex = 9000
+        store.addRotoTranslation(rtrans4)
+        self.assertEqual(rtrans4.transformationIndex, 9000)
+
+        rtrans5.transformationIndex = 9000
+        with self.assertRaises(KeyError):
+            store.addRotoTranslation(rtrans5)
+
+
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)

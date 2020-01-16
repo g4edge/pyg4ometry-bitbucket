@@ -44,7 +44,7 @@ def Test(vis = False, interactive = False) :
     ptp2 = _gd.Position("bp2",0.,0.,-6*bx,"mm",reg)
     ptr2 = _gd.Rotation("br2",0.,0.,-0.3,"rad",reg)
 
-    ptd3 P _g4.ParameterisedVolume.TubeDimensions(0.3,1.4,2.5,0,"2*pi*0.3","mm","rad")
+    ptd3 = _g4.ParameterisedVolume.TubeDimensions(0.3,1.4,2.5,0,"2*pi*0.3","mm","rad")
     ptp3 = _gd.Position("bp3",0.,0.,-4*bx,"mm",reg)
     ptr3 = _gd.Rotation("br3",0.,0.,-0.2,"rad",reg)
 

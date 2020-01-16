@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import WED, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import WED, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
@@ -11,7 +11,7 @@ def Test(vis=False, interactive=False):
               [5, 0, 0], # one transverse side.
               [0, 0, 10], # length vector.
               [0, 10, 0], # the other transverse side.
-              expansion=2.0,
+              transform=Transform(expansion=2.0),
               flukaregistry=freg)
 
     z = Zone()

@@ -164,14 +164,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.96253025"
-     inkscape:cx="230.37309"
-     inkscape:cy="79.270717"
+     inkscape:zoom="1.3612233"
+     inkscape:cx="292.99364"
+     inkscape:cy="80.00535"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g12948-8-2-3"
      showgrid="false"
      inkscape:window-width="1680"
-     inkscape:window-height="949"
+     inkscape:window-height="1005"
      inkscape:window-x="0"
      inkscape:window-y="1"
      inkscape:window-maximized="1"
@@ -194,7 +194,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -224,7 +224,7 @@
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#040404;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <g
        id="g9225"
-       transform="translate(-18.995262,-4.9679796)">
+       transform="translate(-18.995262,-19.319749)">
       <rect
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#040404;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect12932-9"
@@ -273,21 +273,21 @@
     </g>
     <rect
        rx="1.7018101"
-       y="146.69347"
+       y="132.00806"
        x="48.387184"
        height="16.252975"
        width="16.819941"
        id="rect12932-9-0"
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#040404;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <rect
-       y="149.12585"
+       y="134.44044"
        x="48.402885"
        height="9.0111237"
        width="16.796122"
        id="rect12934-3-5"
        style="opacity:0.95999995;fill:#7892b0;fill-opacity:1;stroke:#040404;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <g
-       transform="translate(-60.687377,140.59227)"
+       transform="translate(-60.687377,125.90679)"
        id="g12948-8-2">
       <text
          xml:space="preserve"
@@ -329,7 +329,7 @@
          style="stroke-width:0.26458332" /></text>
     <g
        id="g9203"
-       transform="translate(-19.38401,-4.9679756)">
+       transform="translate(-19.571751,-0.73084383)">
       <rect
          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#040404;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect12932-9-0-2"
@@ -1639,6 +1639,51 @@
              height="100%" />
         </g>
       </g>
+    </g>
+    <rect
+       rx="1.7018101"
+       y="151.85388"
+       x="48.38718"
+       height="16.252975"
+       width="16.819941"
+       id="rect12932-9-0-7"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#040404;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       y="154.28629"
+       x="48.402882"
+       height="9.0111237"
+       width="16.796122"
+       id="rect12934-3-5-9"
+       style="opacity:0.95999995;fill:#7892b0;fill-opacity:1;stroke:#040404;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <g
+       transform="translate(-60.687385,145.75265)"
+       id="g12948-8-2-3">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.58611107px;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="117.29092"
+         y="12.518188"
+         id="text12940-0-2-8"><tspan
+           sodipodi:role="line"
+           x="117.29092"
+           y="12.518188"
+           style="font-size:3.52777767px;text-align:center;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:0.26458332px"
+           id="tspan12938-2-7-02">STEP<tspan
+   id="tspan12936-4-3-4"
+   style="font-size:3.52777767px;text-align:center;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:0.26458332px" /></tspan></text>
+      <text
+         id="text12946-8-7-8"
+         y="16.308437"
+         x="117.29092"
+         style="font-style:normal;font-weight:normal;font-size:4.58611107px;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan12944-3-9-3"
+           style="font-size:3.52777767px;text-align:center;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:0.26458332px"
+           y="16.308437"
+           x="117.85247"
+           sodipodi:role="line"><tspan
+             style="font-size:3.52777767px;text-align:center;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:0.26458332px"
+             id="tspan12942-9-0-9">FILE </tspan></tspan></text>
     </g>
   </g>
 </svg>

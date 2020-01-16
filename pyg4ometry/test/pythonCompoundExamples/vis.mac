@@ -1,5 +1,7 @@
+/vis/open RayTracer 1200x1200
+#
 # Use this open statement to create an OpenGL view:
-/vis/open OGL 600x600-0+0
+# /vis/open OGL 600x600-0+0
 #
 # Use this open statement to create a .prim file suitable for
 # viewing in DAWN:
@@ -25,7 +27,7 @@
 #/vis/viewer/set/viewpointThetaPhi 90. 0.
 #
 # Specify zoom value:
-/vis/viewer/zoom .4
+/vis/viewer/zoom 1.0
 #
 # Specify style (surface or wireframe):
 #/vis/viewer/set/style wireframe

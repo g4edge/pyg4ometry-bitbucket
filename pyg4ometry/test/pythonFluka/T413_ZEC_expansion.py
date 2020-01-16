@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import ZEC, XYP, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import ZEC, XYP, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
@@ -8,7 +8,7 @@ def Test(vis=False, interactive=False):
 
     zec = ZEC("ZEC_BODY",
               2.5, 5, 2.5, 5,
-              expansion=2.0,
+              transform=Transform(expansion=2.0),
               flukaregistry=freg)
 
     xyp_hi = XYP("XYP1_BODY", 20, flukaregistry=freg)
