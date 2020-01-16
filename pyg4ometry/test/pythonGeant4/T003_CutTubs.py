@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal     = 1 
 flat_ends  = 2
 
-def Test(vis = False, interactive=False, type = normal) :
+def Test(vis = False, interactive=False, type = normal,n_slice=16) :
     reg = _g4.Registry()
     
     # defines 
@@ -40,7 +40,7 @@ def Test(vis = False, interactive=False, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg,"mm")
-    cts = _g4.solid.CutTubs("ts",ctrmin,ctrmax,ctz,ctstartphi,ctdeltaphi,[ctlowx,ctlowy,ctlowz],[cthighx,cthighy,cthighz],reg,"mm","rad")
+    cts = _g4.solid.CutTubs("ts",ctrmin,ctrmax,ctz,ctstartphi,ctdeltaphi,[ctlowx,ctlowy,ctlowz],[cthighx,cthighy,cthighz],reg,"mm","rad",nslice=n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

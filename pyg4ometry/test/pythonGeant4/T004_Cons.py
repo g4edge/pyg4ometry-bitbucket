@@ -12,7 +12,7 @@ dphi_eq_2pi    = 5
 cone_up        = 6
 inner_cylinder = 7
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, type = normal,n_slice = 10) :
     reg = _g4.Registry()
     
     # defines 
@@ -51,7 +51,7 @@ def Test(vis = False, interactive = False, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    cs = _g4.solid.Cons("cs",crmin1,crmax1,crmin2,crmax2,cz,zero,cdp,reg,"mm")
+    cs = _g4.solid.Cons("cs",crmin1,crmax1,crmin2,crmax2,cz,zero,cdp,reg,"mm",nslice=n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
