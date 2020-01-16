@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import ARB, Region, Zone, FlukaRegistry, Three
+from pyg4ometry.fluka import ARB, Region, Zone, FlukaRegistry, Transform, Three
 
 
 def Test(vis=False, interactive=False):
@@ -45,7 +45,7 @@ def Test(vis=False, interactive=False):
 
     arb = ARB("ARB_BODY",
               vertices, facenumbers,
-              expansion=2.0,
+              transform=Transform(expansion=2.0),
               flukaregistry=freg)
 
     z = Zone()
@@ -57,13 +57,14 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
 
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

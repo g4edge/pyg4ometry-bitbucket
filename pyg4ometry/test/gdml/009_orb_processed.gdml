@@ -4,7 +4,7 @@
 		<constant name="wbx" value="100.0"/>
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
-		<constant name="somax" value="10.0"/>
+		<constant name="somax" value="45.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>
@@ -14,10 +14,10 @@
 			<atom value="26.98"/>
 		</material>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
@@ -26,7 +26,7 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<orb lunit="mm" name="orb1" r="somax"/>
 	</solids>
 	<structure>

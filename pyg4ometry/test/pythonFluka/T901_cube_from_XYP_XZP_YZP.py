@@ -16,8 +16,6 @@ def Test(vis=False, interactive=False):
     yzp_lo = YZP("YZP1_BODY", 0, flukaregistry=freg)
     yzp_hi = YZP("YZP2_BODY", 20.0, flukaregistry=freg)
 
-
-
     z = Zone()
 
     z.addIntersection(xyp_hi)
@@ -29,28 +27,21 @@ def Test(vis=False, interactive=False):
     z.addIntersection(yzp_hi)
     z.addSubtraction(yzp_lo)
 
-
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z)
 
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
-
-    # Test extents??
-    # clip wv?
-    # test writing back to fluka?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

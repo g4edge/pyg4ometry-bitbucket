@@ -3,7 +3,8 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-def Test(vis = False, interactive = False) :
+
+def Test(vis = False, interactive = False, disjoint = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -21,8 +22,10 @@ def Test(vis = False, interactive = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
-    us = _g4.solid.Union("us",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
-        
+    if not disjoint :
+        us = _g4.solid.Union("us",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
+    else :
+        us = _g4.solid.Union("us",bs,bs,[[0.1,0.2,0.3],[bx*2,by*2,bz*2]],reg)
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     ul = _g4.LogicalVolume(us, bm, "ul", reg)
@@ -31,23 +34,28 @@ def Test(vis = False, interactive = False) :
     # set world volume
     reg.setWorld(wl.name)
 
-    # test __repr__
-    str(us)
-    
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T028_Union.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T028_Union.gmad","T028_Union.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T028_Union.gmad"),"T028_Union.gdml")
 
+    # test __repr__
+    str(us)
+
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive = interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

@@ -1,13 +1,13 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import XCC, YZP, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import XCC, YZP, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
     xcc = XCC("XCC_BODY", 5, 5, 5,
-              expansion=2.0,
+              transform=Transform(expansion=2.0),
               flukaregistry=freg)
 
     yzp_hi = YZP("YZP1_BODY", 20, flukaregistry=freg)
@@ -19,20 +19,21 @@ def Test(vis=False, interactive=False):
     z.addIntersection(yzp_hi)
     z.addSubtraction(yzp_lo)
 
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z)
 
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 
 

@@ -2,16 +2,16 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define>
 		<constant name="wbx" value="100.0"/>
-		<constant name="bx" value="10.0"/>
+		<constant name="bx" value="40.0"/>
 		<position name="center" unit="mm" x="0" y="0" z="0"/>
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>
 	<materials>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>

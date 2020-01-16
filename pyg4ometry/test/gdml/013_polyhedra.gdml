@@ -35,8 +35,8 @@
 <solids>
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
   <polyhedra name= "polyhedra1" startphi="1" deltaphi="4" numsides="10" aunit="rad" lunit= "mm">
-      <zplane rmin="1" rmax="9" z="10" />
-      <zplane rmin="3" rmax="5" z="12" />
+      <zplane rmin="5" rmax="45" z="-10" />
+      <zplane rmin="15" rmax="25" z="10" />
   </polyhedra>
 
 </solids>

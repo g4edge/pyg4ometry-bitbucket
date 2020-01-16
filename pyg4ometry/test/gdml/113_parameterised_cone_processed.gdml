@@ -16,10 +16,10 @@
 			<atom value="26.98"/>
 		</material>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
@@ -46,45 +46,45 @@
 					<parameters number="1">
 						<position name="cone1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
 						<rotation name="cone11Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
-						<cone_dimensions aunit="rad" deltaphi="0.628318530718" lunit="mm" rmax1="0.2" rmax2="1.0" rmin1="0.1" rmin2="0.5" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.1" lunit="mm" rmax1="0.2" rmax2="1.0" rmin1="0.1" rmin2="0.5" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="2">
 						<position name="cone1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
 						<rotation name="cone1Vol2Rot" unit="rad" x="0" y="0" z="-0.3"/>
-						<cone_dimensions aunit="rad" deltaphi="1.25663706144" lunit="mm" rmax1="0.4" rmax2="1.4" rmin1="0.2" rmin2="0.6" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.2" lunit="mm" rmax1="0.4" rmax2="1.4" rmin1="0.2" rmin2="0.6" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="3">
 						<position name="cone1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
 						<rotation name="cone1Vol3Rot" unit="rad" x="0" y="0" z="-0.2"/>
-						<cone_dimensions aunit="rad" deltaphi="1.88495559215" lunit="mm" rmax1="0.6" rmax2="1.8" rmin1="0.3" rmin2="0.7" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.3" lunit="mm" rmax1="0.6" rmax2="1.8" rmin1="0.3" rmin2="0.7" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="4">
 						<position name="cone1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
 						<rotation name="cone1Vol24ot" unit="rad" x="0" y="0" z="-0.1"/>
-						<cone_dimensions aunit="rad" deltaphi="2.51327412287" lunit="mm" rmax1="0.8" rmax2="2.2" rmin1="0.4" rmin2="0.8" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.4" lunit="mm" rmax1="0.8" rmax2="2.2" rmin1="0.4" rmin2="0.8" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="5">
-						<cone_dimensions aunit="rad" deltaphi="3.14159265359" lunit="mm" rmax1="1.0" rmax2="2.6" rmin1="0.5" rmin2="0.9" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.5" lunit="mm" rmax1="1.0" rmax2="2.6" rmin1="0.5" rmin2="0.9" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="6">
 						<position name="cone1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
 						<rotation name="cone1Vol6Rot" unit="rad" x="0" y="0" z="0.1"/>
-						<cone_dimensions aunit="rad" deltaphi="3.76991118431" lunit="mm" rmax1="1.2" rmax2="3.0" rmin1="0.6" rmin2="1.0" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.6" lunit="mm" rmax1="1.2" rmax2="3.0" rmin1="0.6" rmin2="1.0" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="7">
 						<position name="cone1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
 						<rotation name="cone1Vol7Rot" unit="rad" x="0" y="0" z="0.2"/>
-						<cone_dimensions aunit="rad" deltaphi="4.39822971503" lunit="mm" rmax1="1.4" rmax2="3.4" rmin1="0.7" rmin2="1.1" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.7" lunit="mm" rmax1="1.4" rmax2="3.4" rmin1="0.7" rmin2="1.1" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="8">
 						<position name="cone1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
 						<rotation name="cone1Vol8Rot" unit="rad" x="0" y="0" z="0.3"/>
-						<cone_dimensions aunit="rad" deltaphi="5.02654824574" lunit="mm" rmax1="1.6" rmax2="3.8" rmin1="0.8" rmin2="1.2" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.8" lunit="mm" rmax1="1.6" rmax2="3.8" rmin1="0.8" rmin2="1.2" startphi="0" z="2.5"/>
 					</parameters>
 					<parameters number="9">
 						<position name="cone1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
 						<rotation name="cone1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
-						<cone_dimensions aunit="rad" deltaphi="5.65486677646" lunit="mm" rmax1="1.8" rmax2="4.2" rmin1="0.9" rmin2="1.3" startphi="0.0" z="2.5"/>
+						<cone_dimensions aunit="rad" deltaphi="2*pi*0.9" lunit="mm" rmax1="1.8" rmax2="4.2" rmin1="0.9" rmin2="1.3" startphi="0" z="2.5"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

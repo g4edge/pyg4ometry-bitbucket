@@ -40,7 +40,7 @@ def Test(vis=False, interactive=False):
     z7 = Zone(name="connected_part_7")
     z7.addIntersection(rpp7)
 
-    region = Region("REGION")
+    region = Region("REGION", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
     region.addZone(z3)
@@ -55,6 +55,7 @@ def Test(vis=False, interactive=False):
 
     assert len(greg.logicalVolumeList) == 4
 
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
@@ -62,6 +63,8 @@ def Test(vis=False, interactive=False):
         # should appear as different colours if  split properly
         v.setRandomColours()
         v.view(interactive=interactive)
+
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 
 if __name__ == '__main__':

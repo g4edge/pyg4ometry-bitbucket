@@ -65,19 +65,26 @@ def Test(vis = False, interactive = False, type = normal,n_slice = 10) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T004_Cons.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T004_Cons.gmad","T004_Cons.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T004_Cons.gmad"),"T004_Cons.gdml")
 
 
     # test __repr__
     str(cs)
 
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
+
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
+
 
 if __name__ == "__main__":
     Test()

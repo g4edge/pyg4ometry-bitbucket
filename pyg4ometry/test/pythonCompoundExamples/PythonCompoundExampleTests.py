@@ -10,8 +10,8 @@ import logging as _log
 #logger.disabled = True
 
 class PythonCompoundExampleTests(_unittest.TestCase) :
-    def testCavityBpm(self) :         
-        dipole_cbpm.dipole_cbpm()
+    def test_CavityBpm(self) :
+        dipole_cbpm.Test(True,False)
     
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        

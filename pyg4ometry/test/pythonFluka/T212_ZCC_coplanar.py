@@ -29,32 +29,29 @@ def Test(vis=False, interactive=False):
 
     z1.addSubtraction(z2)
 
-    region1 = Region("REG_INF1")
-    region2 = Region("REG_INF2")
+    region1 = Region("REG_INF1", material="COPPER")
+    region2 = Region("REG_INF2", material="COPPER")
     region1.addZone(z1)
     region2.addZone(z2)
 
     freg.addRegion(region1)
     freg.addRegion(region2)
 
-    greg = convert.fluka2Geant4(freg, True, False)
+    greg = convert.fluka2Geant4(freg,
+                                withLengthSafety=True,
+                                splitDisjointUnions=False)
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
 
-    # Test extents??
-    # clip wv?
-    # test writing back to fluka?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(wlv)
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

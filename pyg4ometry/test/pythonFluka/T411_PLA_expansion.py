@@ -1,37 +1,38 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import PLA, Region, Zone, FlukaRegistry
-import pyg4ometry.fluka.body
-
+from pyg4ometry.fluka import (PLA, Region, Zone, FlukaRegistry,
+                              Transform, infinity)
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
-    pyg4ometry.fluka.body.INFINITY = 30
 
-    pla1 = PLA("PLA1_BODY",
-               [0, 0, 10],
-               [0, 0, 10],
-               expansion=2.0,
-               flukaregistry=freg)
+    with infinity(30):
 
-    z1 = Zone()
+        pla1 = PLA("PLA1_BODY",
+                   [0, 0, 10],
+                   [0, 0, 10],
+                   transform=Transform(expansion=2.0),
+                   flukaregistry=freg)
 
-    z1.addIntersection(pla1)
+        z1 = Zone()
 
-    region = Region("REG_INF")
-    region.addZone(z1)
+        z1.addIntersection(pla1)
 
-    freg.addRegion(region)
+        region = Region("REG_INF", material="COPPER")
+        region.addZone(z1)
 
-    greg = convert.fluka2Geant4(freg)
+        freg.addRegion(region)
 
+        greg = convert.fluka2Geant4(freg)
+
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

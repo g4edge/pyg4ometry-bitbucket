@@ -16,10 +16,10 @@
 			<atom value="26.98"/>
 		</material>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
@@ -45,38 +45,38 @@
 				<parameterised_position_size>
 					<parameters number="1">
 						<position name="hype1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<hype_dimensions aunit="rad" inst="0.1" lunit="mm" outst="0.2" rmax="0.5" rmin="0.25" z="1.0"/>
+						<hype_dimensions aunit="rad" inst="0.1" lunit="mm" outst="0.2" rmax="0.5" rmin="0.25" z="1"/>
 					</parameters>
 					<parameters number="2">
 						<position name="hype1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<hype_dimensions aunit="rad" inst="0.2" lunit="mm" outst="0.3" rmax="1.0" rmin="0.5" z="2.0"/>
+						<hype_dimensions aunit="rad" inst="0.2" lunit="mm" outst="0.3" rmax="1.0" rmin="0.5" z="2"/>
 					</parameters>
 					<parameters number="3">
 						<position name="hype1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<hype_dimensions aunit="rad" inst="0.3" lunit="mm" outst="0.4" rmax="1.5" rmin="0.75" z="3.0"/>
+						<hype_dimensions aunit="rad" inst="0.3" lunit="mm" outst="0.4" rmax="1.5" rmin="0.75" z="3"/>
 					</parameters>
 					<parameters number="4">
 						<position name="hype1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<hype_dimensions aunit="rad" inst="0.4" lunit="mm" outst="0.5" rmax="2.0" rmin="1.0" z="4.0"/>
+						<hype_dimensions aunit="rad" inst="0.4" lunit="mm" outst="0.5" rmax="2.0" rmin="1.0" z="4"/>
 					</parameters>
 					<parameters number="5">
-						<hype_dimensions aunit="rad" inst="0.5" lunit="mm" outst="0.6" rmax="2.5" rmin="1.25" z="5.0"/>
+						<hype_dimensions aunit="rad" inst="0.5" lunit="mm" outst="0.6" rmax="2.5" rmin="1.25" z="5"/>
 					</parameters>
 					<parameters number="6">
 						<position name="hype1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<hype_dimensions aunit="rad" inst="0.6" lunit="mm" outst="0.7" rmax="3.0" rmin="1.5" z="6.0"/>
+						<hype_dimensions aunit="rad" inst="0.6" lunit="mm" outst="0.7" rmax="3.0" rmin="1.5" z="6"/>
 					</parameters>
 					<parameters number="7">
 						<position name="hype1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<hype_dimensions aunit="rad" inst="0.7" lunit="mm" outst="0.8" rmax="4.5" rmin="1.75" z="7.0"/>
+						<hype_dimensions aunit="rad" inst="0.7" lunit="mm" outst="0.8" rmax="4.5" rmin="1.75" z="7"/>
 					</parameters>
 					<parameters number="8">
 						<position name="hype1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<hype_dimensions aunit="rad" inst="0.8" lunit="mm" outst="0.9" rmax="5.0" rmin="2.0" z="8.0"/>
+						<hype_dimensions aunit="rad" inst="0.8" lunit="mm" outst="0.9" rmax="5.0" rmin="2.0" z="8"/>
 					</parameters>
 					<parameters number="9">
 						<position name="hype1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<hype_dimensions aunit="rad" inst="0.9" lunit="mm" outst="1.0" rmax="5.5" rmin="2.25" z="9.0"/>
+						<hype_dimensions aunit="rad" inst="0.9" lunit="mm" outst="1.0" rmax="5.5" rmin="2.25" z="9"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

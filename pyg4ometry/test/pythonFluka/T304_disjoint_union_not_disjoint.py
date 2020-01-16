@@ -15,16 +15,17 @@ def Test(vis=False, interactive=False):
     z1.addIntersection(rpp)
     z2.addIntersection(rcc)
 
-    region = Region("REG")
+    region = Region("REG", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
 
     freg.addRegion(region)
 
-    greg = convert.fluka2Geant4(freg, split_disjoint_unions=True)
+    greg = convert.fluka2Geant4(freg, splitDisjointUnions=True)
 
-    assert len(greg.greg.logicalVolumeList) == 2
+    assert len(greg.logicalVolumeList) == 2
 
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
@@ -33,7 +34,7 @@ def Test(vis=False, interactive=False):
         v.setRandomColours()
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

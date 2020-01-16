@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import RAW, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import RAW, Region, Zone, FlukaRegistry, Transform
 
 
 def Test(vis=False, interactive=False):
@@ -10,14 +10,14 @@ def Test(vis=False, interactive=False):
     # union of two wedeges. with sides equal to 20cm.  The mesh shows
     # the two wedges.
 
-    translation = [-20, -20, -20]
+    transform = Transform([-20, -20, -20])
 
     raw1 = RAW("RAW1_BODY",
                [40, 40, 40], # vertex position
                [-20, 0, 0], # one transverse side.
                [0, 0, -20], # length vector.
                [0, -20, 0], # the other transverse side.
-               translation=translation,
+               transform=transform,
                flukaregistry=freg)
 
     raw2 = RAW("RAW2_BODY",
@@ -25,10 +25,8 @@ def Test(vis=False, interactive=False):
                [20, 0, 0], # one transverse side.
                [0, 0, 20], # length vector.
                [0, 20, 0], # the other transverse side.
-               translation=translation,
+               transform=transform,
                flukaregistry=freg)
-
-    # better test please...?
 
     z1 = Zone()
     z1.addIntersection(raw1)
@@ -36,22 +34,21 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(raw2)
 
-    region = Region("RAW_REG")
+    region = Region("RAW_REG", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

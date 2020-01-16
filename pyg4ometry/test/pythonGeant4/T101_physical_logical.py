@@ -62,7 +62,7 @@ def Test(vis = False, interactive = False) :
     cp1 = _g4.PhysicalVolume([0,0,0],  [0,0,0]  ,  cl, "c_pv1", wl, reg)
 
     # check for overlaps
-    wl.checkOverlaps(True)
+    wl.checkOverlaps(True,True,False)
 
     # set world volume
     reg.setWorld(wl.name)
@@ -73,19 +73,22 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T101_physical_logical.gdml"))
 
     # test __repr__
-    str(bs)
+    str(bl)
+    str(bp1)
 
     # test extent of physical volume
-    wlextent           = wl.extent(True)
-    wlextent_daughters = wl.extent(False)
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
 
     # visualisation
+    v = None
     if vis : 
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume":wl}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vis
 
 from os import path as _path
 
-def dipole_cbpm(interactive = False) :
+def Test(vis = True, interactive = False) :
     
     reg = _g4.Registry()
     
@@ -113,13 +113,15 @@ def dipole_cbpm(interactive = False) :
     ################################
     # visualisation 
     ################################
-    v = _vis.VtkViewer()
-    v.addLogicalVolume(world_logical)
-    v.addAxes(100)
-    v.setOpacity(0.25)
-    v.view(interactive=interactive)
+    v = None
+    if vis :
+        v = _vis.VtkViewer()
+        v.addLogicalVolume(world_logical)
+        v.addAxes(100)
+        v.setOpacity(0.25)
+        v.view(interactive=interactive)
 
-    return reg
+    return {"logicalVolume":world_logical, "vtkViewer":v}
     
 if __name__ == '__main__':
     dipole()

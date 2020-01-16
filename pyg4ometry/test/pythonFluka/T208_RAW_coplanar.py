@@ -31,10 +31,10 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(raw2)
 
-    region1 = Region("RAW_REG1")
+    region1 = Region("RAW_REG1", material="COPPER")
     region1.addZone(z1)
 
-    region2 = Region("RAW_REG2")
+    region2 = Region("RAW_REG2", material="COPPER")
     region2.addZone(z2)
 
     freg.addRegion(region1)
@@ -42,16 +42,14 @@ def Test(vis=False, interactive=False):
 
     # default is True, but to be explicit:
     greg = convert.fluka2Geant4(freg,
-                                with_length_safety=True,
-                                split_disjoint_unions=False)
+                                withLengthSafety=True,
+                                splitDisjointUnions=False)
 
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
 
-    # Test extents??
-    # clip wv?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
@@ -59,9 +57,7 @@ def Test(vis=False, interactive=False):
         v.setRandomColours()
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

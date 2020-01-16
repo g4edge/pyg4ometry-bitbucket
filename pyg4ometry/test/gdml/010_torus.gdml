@@ -8,7 +8,7 @@
 
   <constant name="trmin" value="8.0"/>
   <constant name="trmax" value="10.0"/>
-  <constant name="trtor" value="50"/>
+  <constant name="trtor" value="35"/>
   <constant name="tsphi" value="0"/>
   <constant name="tdphi" value="2*pi"/>
 

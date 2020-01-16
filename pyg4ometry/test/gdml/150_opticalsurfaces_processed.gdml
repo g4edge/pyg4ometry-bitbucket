@@ -9,10 +9,10 @@
 	</define>
 	<materials>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="0.00129"/>

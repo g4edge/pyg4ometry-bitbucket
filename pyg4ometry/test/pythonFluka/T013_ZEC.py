@@ -21,28 +21,21 @@ def Test(vis=False, interactive=False):
     z.addIntersection(xyp_hi)
     z.addSubtraction(xyp_lo)
 
-
-    region = Region("REG_INF")
+    region = Region("REG_INF", material="COPPER")
     region.addZone(z)
 
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
-
-    # Test extents??
-    # clip wv?
-    # test writing back to fluka?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

@@ -14,6 +14,9 @@ def Test(vis = False, interactive = False) :
     av1 = l1.assemblyVolume()
     av2 = l2.assemblyVolume()
 
+    av1.checkOverlaps()
+    av2.checkOverlaps()
+
     wx0 = _gd.Constant("wx0", "200", reg0, True)
     wy0 = _gd.Constant("wy0", "200", reg0, True)
     wz0 = _gd.Constant("wz0", "200", reg0, True)
@@ -35,13 +38,19 @@ def Test(vis = False, interactive = False) :
     w.addDetector(reg0)
     w.write(_os.path.join(_os.path.dirname(__file__), "T432_MergeRegistry_Box_AssemblyConversion.gdml"))
 
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
+
     # visualisation
+    v = None
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg0.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
-    return {"testStatus":True, "logicalVolume":wl, "registrty":reg0}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

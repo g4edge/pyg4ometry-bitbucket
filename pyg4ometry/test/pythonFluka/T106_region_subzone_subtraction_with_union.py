@@ -31,7 +31,7 @@ def Test(vis=False, interactive=False):
     z3 = Zone()
     z3.addIntersection(rppunion)
 
-    region = Region("RPP_REG")
+    region = Region("RPP_REG", material="COPPER")
 
     region.addZone(z)
     region.addZone(z3)
@@ -40,19 +40,14 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
 
-
-    # Test extents??
-    # clip wv?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True,True)

@@ -17,8 +17,8 @@ def Test(vis=False, interactive=False):
 
     z2.addIntersection(rpp2)
 
-    region1 = Region("RPP_REG1")
-    region2 = Region("RPP_REG2")
+    region1 = Region("RPP_REG1", material="COPPER")
+    region2 = Region("RPP_REG2", material="COPPER")
 
     region1.addZone(z1)
     region2.addZone(z2)
@@ -26,24 +26,19 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region1)
     freg.addRegion(region2)
 
-    greg = convert.fluka2Geant4(freg, with_length_safety=True)
-
+    greg = convert.fluka2Geant4(freg, withLengthSafety=True)
 
     wlv = greg.getWorldVolume()
     wlv.checkOverlaps()
 
-    # Test extents??
-    # clip wv?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(wlv)
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

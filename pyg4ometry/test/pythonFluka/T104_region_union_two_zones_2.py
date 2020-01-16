@@ -17,25 +17,21 @@ def Test(vis=False, interactive=False):
     z.addIntersection(trc)
     z2.addIntersection(trc2)
 
-    region = Region("TRC_REG")
+    region = Region("TRC_REG", material="COPPER")
     region.addZone(z)
     region.addZone(z2)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
-    # Test extents??
-    # clip wv?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

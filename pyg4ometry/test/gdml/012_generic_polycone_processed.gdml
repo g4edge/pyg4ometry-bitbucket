@@ -13,10 +13,10 @@
 			<atom value="26.98"/>
 		</material>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
@@ -25,11 +25,11 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<genericPolycone aunit="rad" deltaphi="4" lunit="mm" name="genpoly1" startphi="1">
-			<rzpoint r="1" z="5"/>
-			<rzpoint r="3" z="10"/>
-			<rzpoint r="2" z="12"/>
+			<rzpoint r="10" z="-25"/>
+			<rzpoint r="30" z="0"/>
+			<rzpoint r="20" z="25"/>
 		</genericPolycone>
 	</solids>
 	<structure>

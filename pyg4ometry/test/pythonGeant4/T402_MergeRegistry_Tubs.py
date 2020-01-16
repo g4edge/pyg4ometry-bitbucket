@@ -34,10 +34,15 @@ def Test(vis = False, interactive = False) :
     w.addDetector(reg0)
     w.write(_os.path.join(_os.path.dirname(__file__), "T402_MergeRegistry_Tubs.gdml"))
 
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+    extent   = wl.extent(includeBoundingSolid=False)
+
     # visualisation
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg0.getWorldVolume())
+        v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
     return {"testStatus":True, "logicalVolume":wl, "registrty":reg0}

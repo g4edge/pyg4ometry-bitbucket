@@ -16,10 +16,10 @@
 			<atom value="26.98"/>
 		</material>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
@@ -46,45 +46,45 @@
 					<parameters number="1">
 						<position name="bol1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
 						<rotation name="bol1Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
-						<box_dimensions lunit="mm" x="4.0" y="4.0" z="2.0"/>
+						<box_dimensions lunit="mm" x="bx*0.80" y="by*0.80" z="bz*0.40"/>
 					</parameters>
 					<parameters number="2">
 						<position name="bol1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
 						<rotation name="bol1Vol2Rot" unit="rad" x="0" y="0" z="-0.3"/>
-						<box_dimensions lunit="mm" x="4.25" y="4.25" z="2.5"/>
+						<box_dimensions lunit="mm" x="bx*0.85" y="by*0.85" z="bz*0.5"/>
 					</parameters>
 					<parameters number="3">
 						<position name="bol1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
 						<rotation name="bol1Vol3Rot" unit="rad" x="0" y="0" z="-0.2"/>
-						<box_dimensions lunit="mm" x="4.5" y="4.5" z="3.0"/>
+						<box_dimensions lunit="mm" x="bx*0.90" y="by*0.90" z="bz*0.6"/>
 					</parameters>
 					<parameters number="4">
 						<position name="bol1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
 						<rotation name="bol1Vol24ot" unit="rad" x="0" y="0" z="-0.1"/>
-						<box_dimensions lunit="mm" x="4.75" y="4.75" z="3.5"/>
+						<box_dimensions lunit="mm" x="bx*0.95" y="by*0.95" z="bz*0.7"/>
 					</parameters>
 					<parameters number="5">
-						<box_dimensions lunit="mm" x="5.0" y="5.0" z="4.0"/>
+						<box_dimensions lunit="mm" x="bx" y="by" z="0.8*bz"/>
 					</parameters>
 					<parameters number="6">
 						<position name="bol1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
 						<rotation name="bol1Vol6Rot" unit="rad" x="0" y="0" z="0.1"/>
-						<box_dimensions lunit="mm" x="5.25" y="5.25" z="4.5"/>
+						<box_dimensions lunit="mm" x="bx*1.05" y="by*1.05" z="0.9*bz"/>
 					</parameters>
 					<parameters number="7">
 						<position name="bol1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
 						<rotation name="bol1Vol7Rot" unit="rad" x="0" y="0" z="0.2"/>
-						<box_dimensions lunit="mm" x="5.5" y="5.5" z="5.0"/>
+						<box_dimensions lunit="mm" x="bx*1.1" y="by*1.1" z="1.0*bz"/>
 					</parameters>
 					<parameters number="8">
 						<position name="bol1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
 						<rotation name="bol1Vol8Rot" unit="rad" x="0" y="0" z="0.3"/>
-						<box_dimensions lunit="mm" x="5.75" y="5.75" z="5.5"/>
+						<box_dimensions lunit="mm" x="bx*1.15" y="by*1.15" z="1.1*bz"/>
 					</parameters>
 					<parameters number="9">
 						<position name="bol1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
 						<rotation name="bol1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
-						<box_dimensions lunit="mm" x="6.0" y="6.0" z="6.0"/>
+						<box_dimensions lunit="mm" x="bx*1.2" y="by*1.2" z="1.2*bz"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

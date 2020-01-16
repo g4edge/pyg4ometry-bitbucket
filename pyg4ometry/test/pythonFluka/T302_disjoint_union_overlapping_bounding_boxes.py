@@ -17,7 +17,7 @@ def Test(vis=False, interactive=False):
     z1.addSubtraction(rpp2)
     z2.addIntersection(rpp3)
 
-    region = Region("RPP_REG")
+    region = Region("RPP_REG", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
 
@@ -28,6 +28,7 @@ def Test(vis=False, interactive=False):
 
     assert len(greg.logicalVolumeList) == 3
 
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
@@ -36,9 +37,7 @@ def Test(vis=False, interactive=False):
         v.setRandomColours()
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

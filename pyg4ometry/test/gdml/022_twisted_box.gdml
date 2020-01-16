@@ -7,9 +7,9 @@
   <constant name="wbz" value="100.0"/>
 
   <constant name="tbtwist" value="1.0"/>
-  <constant name="tbx" value="10.0"/>
-  <constant name="tby" value="20.0"/>
-  <constant name="tbz" value="30.0"/>
+  <constant name="tbx" value="20.0"/>
+  <constant name="tby" value="40.0"/>
+  <constant name="tbz" value="60.0"/>
 
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
@@ -39,7 +39,7 @@
 
 <solids>
   <box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
-<twistedbox name = "twistbox1" PhiTwist= "tbtwist" x= "tbx" y= "tby" z= "tbz"/>
+<twistedbox name = "twistbox1" PhiTwist= "tbtwist" x="tbx" y="tby" z="tbz"/>
 </solids>
 
 <structure>

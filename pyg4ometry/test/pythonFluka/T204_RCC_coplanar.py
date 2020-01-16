@@ -10,7 +10,6 @@ def Test(vis=False, interactive=False):
     rcc1 = RCC("RCC_BODY1", [0, 0, 0], [20, 0, 0], 10, flukaregistry=freg)
     rcc2 = RCC("RCC_BODY2", [5, 0, 0], [10, 0, 0], 5, flukaregistry=freg)
 
-
     z1 = Zone()
     z2 = Zone()
 
@@ -19,8 +18,8 @@ def Test(vis=False, interactive=False):
 
     z2.addIntersection(rcc2)
 
-    region1 = Region("RCC_REG1")
-    region2 = Region("RCC_REG2")
+    region1 = Region("RCC_REG1", material="COPPER")
+    region2 = Region("RCC_REG2", material="COPPER")
 
     region1.addZone(z1)
     region2.addZone(z2)
@@ -30,25 +29,20 @@ def Test(vis=False, interactive=False):
 
     # default is True, but to be explicit:
     greg = convert.fluka2Geant4(freg,
-                                with_length_safety=True,
-                                split_disjoint_unions=False)
+                                withLengthSafety=True,
+                                splitDisjointUnions=False)
 
     wv = greg.getWorldVolume()
     wv.checkOverlaps()
 
-    # Test extents??
-    # clip wv?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes(length=20)
         v.addLogicalVolume(wv)
         v.view(interactive=interactive)
 
-
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

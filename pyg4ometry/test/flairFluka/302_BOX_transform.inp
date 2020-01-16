@@ -1,0 +1,21 @@
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform boxrotx
+BOX boxx       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+$start_transform boxroty
+BOX boxy       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+$start_transform boxrotz
+BOX boxz       0 0 0 10 0 0 0 10 0 0 0 10
+$end_transform
+END
+boxreg       5 | +boxx | +boxy | +boxz
+END
+GEOEND
+ASSIGNMA         TIN    boxreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, boxrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, boxroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., boxrotz
+STOP

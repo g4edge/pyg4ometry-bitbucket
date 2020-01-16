@@ -24,10 +24,10 @@
 			<atom value="26.98"/>
 		</material>
 		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14"/>
+			<atom value="14.01"/>
 		</element>
 		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16"/>
+			<atom value="16.0"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
@@ -36,7 +36,7 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
+		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
 		<trap alpha1="talp1" alpha2="talp2" aunit="rad" lunit="mm" name="trap1" phi="tphi" theta="ttheta" x1="tx1" x2="tx2" x3="tx3" x4="tx4" y1="ty1" y2="ty2" z="tz"/>
 	</solids>
 	<structure>

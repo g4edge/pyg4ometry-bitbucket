@@ -13,15 +13,15 @@ def Test(vis=False, interactive=False):
     raw1 = RAW("RAW1_BODY",
               [20, 20, 20], # vertex position
               [-20, 0, 0], # one transverse side.
-              [0, 0, -20], # length vector.
-              [0, -20, 0], # the other transverse side.
+              [0, 0, -20], # the other transverse side.
+              [0, -20, 0], # length vector.
               flukaregistry=freg)
 
     raw2 = RAW("RAW2_BODY",
                [0, 0, 0],
                [20, 0, 0], # one transverse side.
-               [0, 0, 20], # length vector.
-               [0, 20, 0], # the other transverse side.
+               [0, 0, 20], # the other transverse side.
+               [0, 20, 0], # length vector.
                flukaregistry=freg)
 
     # better test please...?
@@ -32,26 +32,21 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(raw2)
 
-    region = Region("RAW_REG")
+    region = Region("RAW_REG", material="COPPER")
     region.addZone(z1)
     region.addZone(z2)
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)
 
-
-    # Test extents??
-    # clip wv?
-
+    v = None
     if vis:
         v = vi.VtkViewer()
         v.addAxes()
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
-    return {"testStatus": True, "logicalVolume": greg.getWorldVolume()}
-
-
+    return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer": v}
 
 if __name__ == '__main__':
     Test(True, True)

@@ -3,7 +3,7 @@
 
 <define>
   <constant name="wbx" value="100.0"/>
-  <constant name="bx"  value="10.0"/>
+  <constant name="bx"  value="40.0"/>
   <position name="center" x="0" y="0" z="0"/>
   <rotation name="identity" x="0" y="0" z="0"/>
 </define>
