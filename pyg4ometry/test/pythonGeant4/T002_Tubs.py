@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, n_slice = 16) :
     reg = _g4.Registry()
     
     # defines 
@@ -24,7 +24,7 @@ def Test(vis = False, interactive = False) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts = _g4.solid.Tubs("ts",trmin,trmax,tz,tstartphi,tdeltaphi,reg, "mm","rad")
+    ts = _g4.solid.Tubs("ts",trmin,trmax,tz,tstartphi,tdeltaphi,reg, "mm","rad",nslice=n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
