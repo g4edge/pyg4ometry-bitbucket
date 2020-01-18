@@ -2,7 +2,7 @@ import unittest as _unittest
 
 import pyg4ometry
 
-import dipole_cbpm
+import DipoleCbpm
 
 import logging as _log
 
@@ -11,7 +11,7 @@ import logging as _log
 
 class PythonCompoundExampleTests(_unittest.TestCase) :
     def test_CavityBpm(self) :
-        dipole_cbpm.Test(True,False)
+        DipoleCbpm.Test(True,False)
     
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        
