@@ -140,6 +140,67 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
 Materials 
 ---------
 
+As with solids materials are defined in a similar way to Geant4 C++. Python
+does not have overloaded contrcutors, so unique signatures are needed, in 
+constrast to Geant4.  
+
+To define a material from the Geant4 predefined materials 
+
+.. code-block :: python
+   :emphasize-lines: 2-3
+
+   import pyg4ometry.geant4 as _g4
+   wm = _g4.MaterialPredefined("G4_Galactic")
+   bm = _g4.MaterialPredefined("G4_Fe")
+
+
+To define a single element in terms of atomic number, atmoic mass and density.
+
+.. code-block :: python
+   :emphasize-lines: 2-3
+
+   import pyg4ometry.geant4 as _g4
+   wm = _g4.MaterialSingleElement("galactic",1,1.008,1e-25,reg)   # low density hydrogen
+   bm = _g4.MaterialSingleElement("iron",26,55.8452,7.874,reg)    # iron at near room temp
+
+To define a compound two elements using the mass fraction
+
+.. code-block :: python
+   :emphasize-lines: 2
+
+   import pyg4ometry.geant4 as _g4
+   wm = _g4.MaterialCompound("air",1.290e-3,2,reg)
+   ne = _g4.ElementSimple("nitrogen","N",7,14.01)
+   oe = _g4.ElementSimple("oxygen","O",8,16.0)
+   wm.add_element_massfraction(ne,0.7)
+   wm.add_element_massfraction(oe,0.3)
+   bm = _g4.MaterialSingleElement("iron",26,55.8452,7.874,reg)    # iron at near room temp
+
+To define a compound using number of atoms 
+
+.. code-block :: python
+   :emphasize-lines: 2
+
+   import pyg4ometry.geant4 as _g4
+   bm = _g4.MaterialCompound("plastic",1.38,3,reg)    # Generic PET C_10 H_8 O_4
+   he = _g4.ElementSimple("hydrogen","H",1,1.008)
+   ce = _g4.ElementSimple("carbon","C",6,12.0096)
+   oe = _g4.ElementSimple("oxygen","O",8,16.0)
+   bm.add_element_natoms(he,8)
+   bm.add_element_natoms(ce,10)
+   bm.add_element_natoms(oe,4)
+
+Material as a mixture of materials 
+
+.. code-block :: python
+   :emphasize-lines: 2
+
+   import pyg4ometry.geant4 as _g4
+   bm     = _g4.MaterialCompound("YellowBrass_C26800", 8.14, 2, reg)
+   copper = _g4.MaterialPredefined("G4_Cu")
+   zinc   = _g4.MaterialPredefined("G4_Zn")
+   bm.add_material(copper, 0.67)
+   bm.add_material(zinc, 0.33)
 
 Detector contruction 
 --------------------
@@ -187,6 +248,18 @@ To exit render window ``q``, to restart interaction with the visualiser
 
 Overlap checking
 ----------------
+
+GDML output 
+-----------
+
+To write an GDML file file 
+
+.. code-block :: python
+
+   w = _gdml.Writer()
+   w.addDetector(pyg.geant4.registry)
+   w.write('./file.gdml')
+   w.writeGmadTester('./file.gmad')  
 
 
 
