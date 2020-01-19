@@ -60,7 +60,6 @@ In directory ``pyg4ometry/pyg4ometry/test/freecad``
 .. figure:: tutorials/tutorial3.png
    :alt: Example of STEP loading in pyg4ometry
 
-
 FLUKA loading 
 -------------
 
@@ -69,6 +68,10 @@ Merging geometry
 
 Assembly conversion
 -------------------
+
+Given two sources of geometry, placement of top level world logical volume solids will 
+likely result in an overlap. To avoid these types of problems, it might required to convert
+one of the logical volumes to an AssemblyVolume.
 
 STL output
 ----------
@@ -81,3 +84,5 @@ To write an STL file from ``m = volume.pycsgmesh()``
     vtkPD        =  vtkConverter.MeshListToPolyData(m)
     r = vtk.WriteSTL("file.stl",vtkPD)
 
+Fluka output
+------------
