@@ -1,0 +1,90 @@
+# flair project file
+Version: 300
+Mode: fluka
+md5: f1a04c37ffac52691f141e4917844cca
+Input:
+GEOBEGIN COMBNAME
+RPP BLKBODY -10.0 10.0 -10.0 10.0 -10.0 10.0
+RPP B0000_01 -5.0 5.0 -5.0 5.0 -5.0 5.0
+SPH B0002_01 0.0 0.0 0.0 1.0
+SPH B0002_02 0.0 0.0 0.0 0.8
+PLA B0002_03 -1.8369701987210297e-16 -1.0 0.0 0.0 0.0 0.0
+PLA B0002_04 -0.7071067811865472 -0.7071067811865479 0.0 0.0 0.0 0.0
+TRC B0002_05 0.0 0.0 1.0 0.0 0.0 -1.0 1.0 0
+XYP B0002_06 0
+END
+REGION R0002 5
+	|  +B0002_01 -B0002_02 -( +B0002_04 -B0002_03) -B0002_05 -B0002_06
+REGION BLKHOLE 5
+	|  +BLKBODY -( +B0000_01)
+REGION R0000 5
+	|  +B0000_01 -( +B0002_01 -B0002_02 -( +B0002_04 -B0002_03) -B0002_05 -B0002_06)
+	@select=1
+END
+GEOEND
+ASSIGNMA , BERYLLIU R0002
+ASSIGNMA , BLCKHOLE BLKHOLE
+ASSIGNMA , AIR R0000
+FREE
+END
+EndInput
+
+Page: Geometry
+F77bound: True
+F77dline: False
+Tabs: 0.1 0.32 0.56 0.81 1.0
+
+# Run information
+Run: <default>
+	Last:     5
+End
+Geometry: Geometry
+	Frame.bsplit: 0.499601593625498
+	Frame.vsplit: 0.44380069524913096
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	cbtics: 1
+	coord: X-Y
+	extends: 4.50733 2.56229
+	layer: Media
+	origin: -0.172873 -0.95246 0
+	subtype: Material
+	title: GeoViewer Red plot
+End
+Plot: Green
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	cbtics: 1
+	coord: Z-X
+	extends: 6.49055 3.69558
+	layer: Media
+	origin: 0.562107 0 -0.864345
+	subtype: Material
+	title: GeoViewer Green plot
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	cbtics: 1
+	coord: Z-Y
+	extends: 7.78866 5.63963
+	layer: Media
+	origin: 0 -0.00189303 0.887284
+	subtype: Material
+	title: GeoViewer Blue plot
+End
+Plot: Magenta
+	Type: Geometry
+	basisu: 0.0153499 -0.230759 -0.97289
+	basisv: 0.827603 0.548953 -0.117148
+	cbtics: 1
+	extends: 2.6084 1.88569
+	layer: 3D
+	origin: 1.40951 -1.67116 -0.641371
+	subtype: Material
+	title: GeoViewer Magenta plot
+End
