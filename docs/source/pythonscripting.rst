@@ -40,7 +40,7 @@ To make a simple geometery of a box located at the origin
 Here is the vtk visualiser output of the above example
 
 .. figure:: pythonscripting/pythonscripting1.tiff
-   :alt: map to buried treasure
+   :alt: Simple python scripting example
 
 GDML defines 
 ------------
@@ -202,6 +202,19 @@ Material as a mixture of materials
    bm.add_material(copper, 0.67)
    bm.add_material(zinc, 0.33)
 
+Example of elements formed by isotopes
+
+.. code-block :: python
+
+   import pyg4ometry.geant4 as _g4
+    u235 = _g4.Isotope("U235", 92, 235, 235.044)
+    u238 = _g4.Isotope("U238", 92, 238, 238.051)
+    uranium = _g4.ElementIsotopeMixture("uranium", "U", 2)
+    uranium.add_isotope(u235, 0.00716)
+    uranium.add_isotope(u238, 0.99284)
+    bm = _g4.MaterialCompound("natural_uranium", 19.1, 2, reg)
+    bm.add_element_massfraction(uranium, 1) 
+
 Detector contruction 
 --------------------
 
@@ -249,17 +262,42 @@ To exit render window ``q``, to restart interaction with the visualiser
 Overlap checking
 ----------------
 
+Given all the PVs (daughters) of a LV (mother) should be bounded by the LV/mother solid. It is
+possible check between all daugher solid meshes and between daughers and the mother solid mesh.
+Given an ``LV`` this check can be performed by calling the following code.
+
+.. code-block :: python
+   :emphasize-lines: 5
+
+   # cd pyg4ometry/pyg4ometry/test/pythonGeant4
+   import pyg4ometry
+   r  = pyg4ometry.freecad.Reader("./T103_overlap_copl.gdml")
+   l = r.getRegistry().getWorldVolume()
+   l.checkOverlaps(recursive=False,coplanar=True,debugIO=False)   
+   v = pyg4ometry.visualisation.VtkViewer() 
+   v.addLogicalVolume(l)
+   v.view()
+
+.. figure:: pythonscripting/pythonscripting2.png
+   :alt: Example overlap visualisation
+
+There is no output when ``checkOverlaps`` is called but a overlap, protrusion or 
+coplanar meshes are computed and stored in the logical volume instance and displayed
+by the ``VtkViewer``
+
 GDML output 
 -----------
 
-To write an GDML file file 
+To write an GDML file file given a ``pyg4ometry.geant4.registy reg``   
 
 .. code-block :: python
+   :emphasize-lines: 3
 
-   w = _gdml.Writer()
-   w.addDetector(pyg.geant4.registry)
+   import pyg4ometry
+   w = p4gometry.gdml.Writer()
+   w.addDetector(reg)
    w.write('./file.gdml')
-   w.writeGmadTester('./file.gmad')  
+   w.writeGmadTester('./file.gmad')
 
 
 

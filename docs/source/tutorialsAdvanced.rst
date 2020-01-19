@@ -7,13 +7,13 @@ Edit existing geometry
 
 After loading some geometry it is possible to modify the memory resident geometry.
 This could adjusting the parameter of a given solid or PV, or replacing entirely the
-type of solid used for an LV.  
+type of solid used for an LV.
 
 Complex geometry builder
 ------------------------
 
 Having access to geometry contruction in python allows the rapid contruction of 
-geometry using functions which return an appropriate LV. An example of this available in 
+geometry using functions which return an appropriate LV. Examples of this available in 
 ``pyg4ometry/pyg4ometry/test/pythonCompoundExamples``
 
 Fluka geometry scripting

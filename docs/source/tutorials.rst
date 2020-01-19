@@ -60,8 +60,8 @@ In directory ``pyg4ometry/pyg4ometry/test/freecad``
 .. figure:: tutorials/tutorial3.png
    :alt: Example of STEP loading in pyg4ometry
 
-FLUKA loading 
--------------
+Fluka loading and conversion to Geant4
+--------------------------------------
 
 Merging geometry
 ----------------
@@ -84,5 +84,18 @@ To write an STL file from ``m = volume.pycsgmesh()``
     vtkPD        =  vtkConverter.MeshListToPolyData(m)
     r = vtk.WriteSTL("file.stl",vtkPD)
 
-Fluka output
-------------
+Conversion to Fluka and output
+------------------------------
+
+It is possible convert a pyg4ometry geometry to Fluka. This is currently a work in 
+progress and not all geant4-GDML constructions are implemented, although they can
+be quickly added. Given a LV variable named ``logical``  
+
+.. code-block :: python
+
+   import pyg4ometry
+   freg = _convert.geant4Logical2Fluka(logical)
+   w = pyg4ometry.fluka.Writer()
+   w.addDetector(freg)
+   w.write("FileName.inp")
+
