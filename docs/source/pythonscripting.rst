@@ -119,6 +119,7 @@ So the box example above can be rewritten using constants
    Avoid reassigning variables used as defines, this can have unexpected consequences so for example 
 
 .. code-block :: python
+   :linenos:
 
    b1   = pyg4ometry.geant4.solid.Box("b1",bx,by,bz,reg)
    b1.pX = 20              # do not do this
@@ -148,6 +149,7 @@ To define a material from the Geant4 predefined materials
 
 .. code-block :: python
    :emphasize-lines: 2-3
+   :linenos:
 
    import pyg4ometry.geant4 as _g4
    wm = _g4.MaterialPredefined("G4_Galactic")
@@ -158,6 +160,7 @@ To define a single element in terms of atomic number, atmoic mass and density.
 
 .. code-block :: python
    :emphasize-lines: 2-3
+   :linenos:
 
    import pyg4ometry.geant4 as _g4
    wm = _g4.MaterialSingleElement("galactic",1,1.008,1e-25,reg)   # low density hydrogen
@@ -167,6 +170,7 @@ To define a compound two elements using the mass fraction
 
 .. code-block :: python
    :emphasize-lines: 2
+   :linenos:
 
    import pyg4ometry.geant4 as _g4
    wm = _g4.MaterialCompound("air",1.290e-3,2,reg)
@@ -180,6 +184,7 @@ To define a compound using number of atoms
 
 .. code-block :: python
    :emphasize-lines: 2
+   :linenos:
 
    import pyg4ometry.geant4 as _g4
    bm = _g4.MaterialCompound("plastic",1.38,3,reg)    # Generic PET C_10 H_8 O_4
@@ -194,6 +199,7 @@ Material as a mixture of materials
 
 .. code-block :: python
    :emphasize-lines: 2
+   :linenos:
 
    import pyg4ometry.geant4 as _g4
    bm     = _g4.MaterialCompound("YellowBrass_C26800", 8.14, 2, reg)
@@ -205,15 +211,17 @@ Material as a mixture of materials
 Example of elements formed by isotopes
 
 .. code-block :: python
+   :emphasize-lines: 4
+   :linenos:
 
    import pyg4ometry.geant4 as _g4
-    u235 = _g4.Isotope("U235", 92, 235, 235.044)
-    u238 = _g4.Isotope("U238", 92, 238, 238.051)
-    uranium = _g4.ElementIsotopeMixture("uranium", "U", 2)
-    uranium.add_isotope(u235, 0.00716)
-    uranium.add_isotope(u238, 0.99284)
-    bm = _g4.MaterialCompound("natural_uranium", 19.1, 2, reg)
-    bm.add_element_massfraction(uranium, 1) 
+   u235 = _g4.Isotope("U235", 92, 235, 235.044)
+   u238 = _g4.Isotope("U238", 92, 238, 238.051)
+   uranium = _g4.ElementIsotopeMixture("uranium", "U", 2)
+   uranium.add_isotope(u235, 0.00716)
+   uranium.add_isotope(u238, 0.99284)
+   bm = _g4.MaterialCompound("natural_uranium", 19.1, 2, reg)
+   bm.add_element_massfraction(uranium, 1) 
 
 Detector contruction 
 --------------------
@@ -246,6 +254,7 @@ Visualisation
 Any logical volume ``lv`` can be visualised using 
 
 .. code-block :: python
+   :linenos:
 
    v = pyg4ometry.visualisation.VtkViewer()
    v.addLogicalVolume(lv)
@@ -268,6 +277,7 @@ Given an ``LV`` this check can be performed by calling the following code.
 
 .. code-block :: python
    :emphasize-lines: 5
+   :linenos:
 
    # cd pyg4ometry/pyg4ometry/test/pythonGeant4
    import pyg4ometry
@@ -292,6 +302,7 @@ To write an GDML file file given a ``pyg4ometry.geant4.registy reg``
 
 .. code-block :: python
    :emphasize-lines: 3
+   :linenos:
 
    import pyg4ometry
    w = p4gometry.gdml.Writer()
