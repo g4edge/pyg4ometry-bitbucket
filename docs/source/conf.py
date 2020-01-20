@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'pyg4ometry'
-copyright = u'Royal Holloway, University of London 2019'
+copyright = u'Royal Holloway, University of London 2020'
 author = u'S Boogert, A Abramov, A Butcher, S Walker, L Nevay'
 
 # The version info for the project you're documenting, acts as replacement for
