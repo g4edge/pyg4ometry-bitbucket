@@ -39,16 +39,25 @@ def Test(vis = True, interactive = False) :
     tl = _g4.LogicalVolume(ts, bm, "tl", reg)
     tp = _g4.PhysicalVolume([0, 0.0, 0.0], [0, 0, 0], tl, "t_pv1", wl, reg)
 
+    # set world volume
+    reg.setWorld(wl.name)
+
+    # gdml output
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write(_os.path.join(_os.path.dirname(__file__), "T003_geant4CutTubs2Fluka.gdml"))
+
+    # fluka conversion
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write("T003_geant4CutTubs2Fluka.inp")
+
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(wl)
         v.view(interactive=interactive)
 
-    # set world volume
-    reg.setWorld(wl.name)
 
-    freg = _convert.geant4Logical2Fluka(wl)
 
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T003_geant4CutTubs2Fluka.inp")
+

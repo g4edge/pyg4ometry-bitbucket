@@ -1,3 +1,4 @@
+import os as _os
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.gdml as _gd
 import pyg4ometry.convert as _convert
@@ -33,16 +34,20 @@ def Test(vis = True, interactive = False) :
     tl = _g4.LogicalVolume(ts, bm, "tl", reg)
     tp = _g4.PhysicalVolume([0, 0.0, 0.0], [0, 0, 0], tl, "t_pv1", wl, reg)
 
+    # set world volume
+    reg.setWorld(wl.name)
+
+    # gdml output
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write(_os.path.join(_os.path.dirname(__file__), "T002_geant4Tubs2Fluka.gdml"))
+
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write("T002_geant4Tubs2Fluka.inp")
+
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(wl)
         v.view(interactive=interactive)
-
-    # set world volume
-    reg.setWorld(wl.name)
-
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T002_geant4Tubs2Fluka.inp")

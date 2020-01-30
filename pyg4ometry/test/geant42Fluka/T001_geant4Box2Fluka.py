@@ -1,3 +1,4 @@
+import os as _os
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.convert as _convert
 import pyg4ometry.fluka as _fluka
@@ -32,22 +33,25 @@ def Test(vis = True, interactive = False) :
     b1p2 = _g4.PhysicalVolume([0, 0,  0],     [0, 0,   0], b1l, "b1_pv2", wl, reg)
     b1p3 = _g4.PhysicalVolume([0, 0,  _np.pi/4.0],     [0, 0,  50], b1l, "b1_pv3", wl, reg)
 
+    # set world volume
+    reg.setWorld(wl.name)
+
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
+
+    # gdml output
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write(_os.path.join(_os.path.dirname(__file__), "T001_geant4Box2Fluka.gdml"))
+
+    # fluka conversion
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write("T001_geant4Box2Fluka.inp")
 
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(wl)
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
-
-    # set world volume
-    reg.setWorld(wl.name)
-
-    # freg, nfb = _convert.geant42Fluka(wl)
-
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T001_geant4Box2Fluka.inp")
