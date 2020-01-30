@@ -15,7 +15,8 @@ def main(filein, debug=False):
 
     r = Reader(filein)
     arb = r.flukaregistry.bodyDict["arb"]
-    arb._verticesAreClockwise()
+    # arb._verticesAreClockwise()
+    arb.geant4Solid(None)
     from IPython import embed; embed()
     # greg = fluka2Geant4(r.flukaregistry,
     #                     with_length_safety=True,
