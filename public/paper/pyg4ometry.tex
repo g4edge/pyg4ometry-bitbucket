@@ -519,29 +519,29 @@ Geant4 solid			& FLUKA region constuction		\\ \hline
 Box					& +2 XYP + 2 XZP + 2 YZP 		\\
 Tube					& +ZCC - 2 PLA -2 XYP - ZCC	 	\\
 CutTube				& +ZCC - 4 PLA -ZCC			\\
-Cone				& +TRC - TRC - WED			\\
-Para					& +ARB						\\
-Trd					& +ARB						\\
-Trap					& +ARB						\\
-Sphere				& +SPH - SPH  - WED - TRC		\\
+Cone				& +TRC - TRC - 2 PLA 			\\
+Para					& + 8 PLA						\\
+Trd					& + 8 PLA						\\
+Trap					& + 8 PLA						\\
+Sphere				& +SPH - SPH  - 2 PLA - 2 TRC	\\
 Orb					& +SPH						\\
 Torus				& +$N$ ZCC  - $N$ PLA			\\
-Polycone				& +$N$ ARB					\\
+Polycone				& +$N$ TRC					\\
 GenericPolycone		& +$N$ ARB					\\
-Polyhedra				& +$N$ ARB					\\
+Polyhedra				& +$N$ PLA					\\
 Eltube				& +ZEC  - 2 XYP				\\
 Ellipsoid				& +ELL - 2 XYP		 			\\
 Elcone				& +QUA - 2 XYP				\\
 Paraboloid			& +QUA - 2 XYP				\\
-Hype					& +QUA - 2 XYP				\\
-Tet					& +ARB						\\
-Xtru					& +$N_{\rm plane} N_{\rm point}$ PLA					\\
-TwistedBox			& +$N$ ARB					\\
-TwistedTtap			& +$N$ ARB					\\
-TwistedTrd			& +$N$ ARB				 	\\
-TwistedTube			& +$N$ ARB					\\
-Arb8					& +ARB						\\
-Tessellated			& N/A					 	\\
+Hype					& +QUA - QUA - 2 XYP			\\
+Tet					& +4 PLA						\\
+Xtru					& +$N_{\rm plane} N_{\rm point}$ PLA \\
+TwistedBox			& +$N$ PLA					\\
+TwistedTtap			& +$N$ PLA					\\
+TwistedTrd			& +$N$ PLA				 	\\
+TwistedTube			& +$N$ PLA					\\
+Arb8					& +$N$ PLA					\\
+Tessellated			& +$N$ PLA				 	\\
 Union				& $R_1 \cup R_2$				\\
 Subtraction			& $R_1 - R_2$					\\
 Intersection			& $R_1 \cap R_2$				\\

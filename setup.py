@@ -12,8 +12,10 @@ setup(
                       "networkx",
                       "numpy",
                       "vtk",
+                      "Cython",
                       "GitPython",
                       "testtools"],
+    # cython, pyqt5
 
     ext_modules=cythonize(["pyg4ometry/pycsg/geom.pyx","pyg4ometry/pycsg/core.pyx"]),
 

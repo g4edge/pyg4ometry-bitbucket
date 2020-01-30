@@ -3,10 +3,12 @@ import numpy as _np
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.gdml as _gdml
 import pyg4ometry.visualisation as _vis
+import pyg4ometry.convert as _convert
+import pyg4ometry.fluka as _fluka
 
 from os import path as _path
 
-def Test(vis = True, interactive = False) :
+def Test(vis = True, interactive = False, gdml = True, fluka = True) :
     
     reg = _g4.Registry()
     
@@ -103,12 +105,6 @@ def Test(vis = True, interactive = False) :
     # register the world volume
     reg.setWorld('world_logical')
 
-    ################################
-    # write gdml
-    ################################
-    w = _gdml.Writer() 
-    w.addDetector(reg)
-    w.write(_path.join(_path.dirname(_path.abspath(__file__)), "dipole_cbpm.gdml"))
 
     ################################
     # visualisation 
@@ -120,6 +116,25 @@ def Test(vis = True, interactive = False) :
         v.addAxes(100)
         v.setOpacity(0.25)
         v.view(interactive=interactive)
+
+    ################################
+    # write gdml
+    ################################
+    if gdml:
+        w = _gdml.Writer()
+        w.addDetector(reg)
+        w.write(_path.join(_path.dirname(_path.abspath(__file__)), "DipoleCbpm.gdml"))
+
+
+    ################################
+    # write fluka
+    ################################        
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(world_logical)
+
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_path.join(_path.dirname(_path.abspath(__file__)),"DipoleCbpm.inp"))
 
     return {"logicalVolume":world_logical, "vtkViewer":v}
     

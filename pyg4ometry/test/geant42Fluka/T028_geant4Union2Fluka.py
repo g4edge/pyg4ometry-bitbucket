@@ -1,3 +1,4 @@
+import numpy as _np
 import pyg4ometry.gdml as _gd
 import pyg4ometry.convert as _convert
 import pyg4ometry.geant4 as _g4
@@ -13,9 +14,9 @@ def Test(vis = False, interactive = False, disjoint = False) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
 
-    bx = _gd.Constant("bx","10",reg,True)
+    bx = _gd.Constant("bx","5",reg,True)
     by = _gd.Constant("by","10",reg,True)
-    bz = _gd.Constant("bz","10",reg,True)
+    bz = _gd.Constant("bz","15",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
     bm = _g4.MaterialPredefined("G4_Fe") 
@@ -24,12 +25,13 @@ def Test(vis = False, interactive = False, disjoint = False) :
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
     if not disjoint :
-        us = _g4.solid.Union("us",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
+        us1 = _g4.solid.Union("us1",bs,bs,[[0.0,_np.pi/4,_np.pi/4],[bx/2,by/2,bz/2]],reg)
+        us2 = _g4.solid.Union("us2",bs,us1,[[0.0,_np.pi/4,_np.pi/4],[bx/2,by/2,bz/2]],reg)
     else :
-        us = _g4.solid.Union("us",bs,bs,[[0.1,0.2,0.3],[bx*2,by*2,bz*2]],reg)
+        us = _g4.solid.Union("us",bs,bs,[[0.0,0.0,0.0],[bx*2,by*2,bz*2]],reg)
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
-    ul = _g4.LogicalVolume(us, bm, "ul", reg)
+    ul = _g4.LogicalVolume(us2, bm, "ul", reg)
     up = _g4.PhysicalVolume([0,0,0],[0,0,0],  ul, "u_pv1", wl, reg) 
     
     # set world volume

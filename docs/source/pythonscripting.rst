@@ -40,7 +40,7 @@ To make a simple geometery of a box located at the origin
 Here is the vtk visualiser output of the above example
 
 .. figure:: pythonscripting/pythonscripting1.tiff
-   :alt: map to buried treasure
+   :alt: Simple python scripting example
 
 GDML defines 
 ------------
@@ -119,6 +119,7 @@ So the box example above can be rewritten using constants
    Avoid reassigning variables used as defines, this can have unexpected consequences so for example 
 
 .. code-block :: python
+   :linenos:
 
    b1   = pyg4ometry.geant4.solid.Box("b1",bx,by,bz,reg)
    b1.pX = 20              # do not do this
@@ -140,6 +141,87 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
 Materials 
 ---------
 
+As with solids materials are defined in a similar way to Geant4 C++. Python
+does not have overloaded contrcutors, so unique signatures are needed, in 
+constrast to Geant4.  
+
+To define a material from the Geant4 predefined materials 
+
+.. code-block :: python
+   :emphasize-lines: 2-3
+   :linenos:
+
+   import pyg4ometry.geant4 as _g4
+   wm = _g4.MaterialPredefined("G4_Galactic")
+   bm = _g4.MaterialPredefined("G4_Fe")
+
+
+To define a single element in terms of atomic number, atmoic mass and density.
+
+.. code-block :: python
+   :emphasize-lines: 2-3
+   :linenos:
+
+   import pyg4ometry.geant4 as _g4
+   wm = _g4.MaterialSingleElement("galactic",1,1.008,1e-25,reg)   # low density hydrogen
+   bm = _g4.MaterialSingleElement("iron",26,55.8452,7.874,reg)    # iron at near room temp
+
+To define a compound two elements using the mass fraction
+
+.. code-block :: python
+   :emphasize-lines: 2
+   :linenos:
+
+   import pyg4ometry.geant4 as _g4
+   wm = _g4.MaterialCompound("air",1.290e-3,2,reg)
+   ne = _g4.ElementSimple("nitrogen","N",7,14.01)
+   oe = _g4.ElementSimple("oxygen","O",8,16.0)
+   wm.add_element_massfraction(ne,0.7)
+   wm.add_element_massfraction(oe,0.3)
+   bm = _g4.MaterialSingleElement("iron",26,55.8452,7.874,reg)    # iron at near room temp
+
+To define a compound using number of atoms 
+
+.. code-block :: python
+   :emphasize-lines: 2
+   :linenos:
+
+   import pyg4ometry.geant4 as _g4
+   bm = _g4.MaterialCompound("plastic",1.38,3,reg)    # Generic PET C_10 H_8 O_4
+   he = _g4.ElementSimple("hydrogen","H",1,1.008)
+   ce = _g4.ElementSimple("carbon","C",6,12.0096)
+   oe = _g4.ElementSimple("oxygen","O",8,16.0)
+   bm.add_element_natoms(he,8)
+   bm.add_element_natoms(ce,10)
+   bm.add_element_natoms(oe,4)
+
+Material as a mixture of materials 
+
+.. code-block :: python
+   :emphasize-lines: 2
+   :linenos:
+
+   import pyg4ometry.geant4 as _g4
+   bm     = _g4.MaterialCompound("YellowBrass_C26800", 8.14, 2, reg)
+   copper = _g4.MaterialPredefined("G4_Cu")
+   zinc   = _g4.MaterialPredefined("G4_Zn")
+   bm.add_material(copper, 0.67)
+   bm.add_material(zinc, 0.33)
+
+Example of elements formed by isotopes
+
+.. code-block :: python
+   :emphasize-lines: 4
+   :linenos:
+
+   import pyg4ometry.geant4 as _g4
+   u235 = _g4.Isotope("U235", 92, 235, 235.044)
+   u238 = _g4.Isotope("U238", 92, 238, 238.051)
+   uranium = _g4.ElementIsotopeMixture("uranium", "U", 2)
+   uranium.add_isotope(u235, 0.00716)
+   uranium.add_isotope(u238, 0.99284)
+   bm = _g4.MaterialCompound("natural_uranium", 19.1, 2, reg)
+   bm.add_element_massfraction(uranium, 1) 
 
 Detector contruction 
 --------------------
@@ -172,6 +254,7 @@ Visualisation
 Any logical volume ``lv`` can be visualised using 
 
 .. code-block :: python
+   :linenos:
 
    v = pyg4ometry.visualisation.VtkViewer()
    v.addLogicalVolume(lv)
@@ -187,6 +270,45 @@ To exit render window ``q``, to restart interaction with the visualiser
 
 Overlap checking
 ----------------
+
+Given all the PVs (daughters) of a LV (mother) should be bounded by the LV/mother solid. It is
+possible check between all daugher solid meshes and between daughers and the mother solid mesh.
+Given an ``LV`` this check can be performed by calling the following code.
+
+.. code-block :: python
+   :emphasize-lines: 5
+   :linenos:
+
+   # cd pyg4ometry/pyg4ometry/test/pythonGeant4
+   import pyg4ometry
+   r  = pyg4ometry.freecad.Reader("./T103_overlap_copl.gdml")
+   l = r.getRegistry().getWorldVolume()
+   l.checkOverlaps(recursive=False,coplanar=True,debugIO=False)   
+   v = pyg4ometry.visualisation.VtkViewer() 
+   v.addLogicalVolume(l)
+   v.view()
+
+.. figure:: pythonscripting/pythonscripting2.png
+   :alt: Example overlap visualisation
+
+There is no output when ``checkOverlaps`` is called but a overlap, protrusion or 
+coplanar meshes are computed and stored in the logical volume instance and displayed
+by the ``VtkViewer``
+
+GDML output 
+-----------
+
+To write an GDML file file given a ``pyg4ometry.geant4.registy reg``   
+
+.. code-block :: python
+   :emphasize-lines: 3
+   :linenos:
+
+   import pyg4ometry
+   w = p4gometry.gdml.Writer()
+   w.addDetector(reg)
+   w.write('./file.gdml')
+   w.writeGmadTester('./file.gmad')
 
 
 
