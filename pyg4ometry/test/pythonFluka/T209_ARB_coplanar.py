@@ -30,8 +30,8 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(arbInner)
 
-    region = Region("ARB_REG")
-    region2 = Region("ARB_REG2")
+    region = Region("ARB_REG", material="COPPER")
+    region2 = Region("ARB_REG2", material="COPPER")
 
     region.addZone(z1)
     region2.addZone(z2)
@@ -40,6 +40,8 @@ def Test(vis=False, interactive=False):
     freg.addRegion(region2)
 
     greg = convert.fluka2Geant4(freg)
+    wlv = greg.getWorldVolume()
+    wlv.checkOverlaps()
 
     v = None
     if vis:
