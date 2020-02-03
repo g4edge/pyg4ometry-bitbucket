@@ -222,7 +222,7 @@ def makeWorld() :
     wm = _g4.MaterialPredefined("G4_Galactic")
 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
-    cp = _g4.PhysicalVolume([0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
+    cp = _g4.PhysicalVolume([_np.pi/4.0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
 
     reg.setWorld(wl.name)
 
