@@ -45,13 +45,13 @@ def Test(vis=False, interactive=False):
 
     arb = ARB("ARB_BODY",
               vertices, facenumbers,
-              transform=Transform(expansion=2.0),
+              transform=Transform(expansion=0.5),
               flukaregistry=freg)
 
     z = Zone()
     z.addIntersection(arb)
 
-    region = Region("ARB_REG")
+    region = Region("ARB_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 

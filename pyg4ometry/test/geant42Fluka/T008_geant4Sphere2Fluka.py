@@ -13,14 +13,14 @@ def Test(vis = False, interactive = False, n_slice=10, n_stack=10) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
 
-    # pi     = _gd.Constant("pi","3.1415926",reg,True)
-    srmin  = _gd.Constant("rmin","8",reg,True)    
-    srmax  = _gd.Constant("rmax","10",reg,True)
-    ssphi  = _gd.Constant("sphi","0",reg,True)
+    # pi    = _gd.Constant("pi","3.1415926",reg,True)
+    srmin   = _gd.Constant("rmin","8",reg,True)
+    srmax   = _gd.Constant("rmax","10",reg,True)
+    ssphi   = _gd.Constant("sphi","0",reg,True)
     # sdphi  = _gd.Constant("dphi","2*pi",reg,True)
-    sdphi = _gd.Constant("dphi", "1.75*pi", reg, True)
-    sstheta= _gd.Constant("stheta","0.1*pi",reg,True)
-    sdtheta= _gd.Constant("dtheta","0.5*pi",reg,True)
+    sdphi   = _gd.Constant("dphi", "1.75*pi", reg, True)
+    sstheta = _gd.Constant("stheta","0.1*pi",reg,True)
+    sdtheta = _gd.Constant("dtheta","0.5*pi",reg,True)
     # sdtheta = _gd.Constant("dtheta", "pi", reg, True)
 
     wm = _g4.MaterialPredefined("G4_Galactic") 
@@ -42,6 +42,17 @@ def Test(vis = False, interactive = False, n_slice=10, n_stack=10) :
     extentBB = wl.extent(includeBoundingSolid=True)
     extent   = wl.extent(includeBoundingSolid=False)
 
+    # gdml output
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write(_os.path.join(_os.path.dirname(__file__), "T008_geant4Sphere2Fluka.gdml"))
+
+    # fluka conversion
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write("T008_geant4Sphere2Fluka.inp")
+
     # visualisation
     v = None
     if vis : 
@@ -49,13 +60,6 @@ def Test(vis = False, interactive = False, n_slice=10, n_stack=10) :
         v.addLogicalVolume(reg.getWorldVolume())
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
-
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T008_geant4Sphere2Fluka.inp")
-
 
 if __name__ == "__main__":
     Test()

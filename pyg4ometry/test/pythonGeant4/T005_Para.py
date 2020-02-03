@@ -14,11 +14,11 @@ def Test(vis = False, interactive= False) :
 
     # pi     = _gd.Constant("pi","3.1415926",reg,True)
     px     = _gd.Constant("px","10",reg,True)
-    py     = _gd.Constant("py","10",reg,True)
-    pz     = _gd.Constant("pz","10",reg,True)
-    pAlpha = _gd.Constant("pAlpha","1",reg,True)
-    pTheta = _gd.Constant("pTheta","1",reg,True)
-    pPhi   = _gd.Constant("pPhi","1",reg,True)
+    py     = _gd.Constant("py","20",reg,True)
+    pz     = _gd.Constant("pz","30",reg,True)
+    pAlpha = _gd.Constant("pAlpha","0.2",reg,True)
+    pTheta = _gd.Constant("pTheta","0.3",reg,True)
+    pPhi   = _gd.Constant("pPhi","0.4",reg,True)
 
     wm = _g4.MaterialPredefined("G4_Galactic") 
     pm = _g4.MaterialPredefined("G4_Fe") 

@@ -66,6 +66,18 @@ def Test(vis = False, interactive = False, type = normal) :
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
 
+
+    # gdml output
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write(_os.path.join(_os.path.dirname(__file__), "T004_geant4Cons2Fluka.gdml"))
+
+    # fluka conversion
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write("T004_geant4Cons2Fluka.inp")
+
     # visualisation
     v = None
     if vis : 
@@ -73,14 +85,6 @@ def Test(vis = False, interactive = False, type = normal) :
         v.addLogicalVolume(reg.getWorldVolume())
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
-
-
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T004_geant4Cons2Fluka.inp")
-
 
 if __name__ == "__main__":
     Test()
