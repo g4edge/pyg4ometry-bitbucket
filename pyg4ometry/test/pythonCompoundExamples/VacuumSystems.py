@@ -40,7 +40,7 @@ def CF_BlankFlange(name = "flange1", cf_dn = 'DN16', reg = None, vis=True, write
     # subtract bolt holes
     dPhi = 2*_np.pi/data['holeNumber']
     for i in range(0,data['holeNumber'],1) :
-        holeSolid   = _g4.solid.Tubs(name+"_hole_"+str(i),0,data['holeDiameter']/2.0,data['height'],0,"2*pi",reg,"mm","rad")
+        holeSolid   = _g4.solid.Tubs(name+"_hole_"+str(i),0,data['holeDiameter']/2.0,data['height']*1.05,0,"2*pi",reg,"mm","rad")
 
         x = data['holeCircleDiameter']/2.0*_np.cos(i*dPhi)
         y = data['holeCircleDiameter']/2.0*_np.sin(i*dPhi)
@@ -204,9 +204,9 @@ def makeWorld() :
 
     reg = _g4.Registry()
 
-    #chamber = CF_SphericalChamber("test1", reg=reg)
-    chamber = CF_BeamPipe("test1",reg=reg)
-    # chamber   = CF_BlankFlange("test1",reg=reg)
+    chamber = CF_SphericalChamber("test1", vis=True,reg=reg)
+    #chamber = CF_BeamPipe("test1",reg=reg)
+    #chamber   = CF_BlankFlange("test1",reg=reg)
 
     log = chamber['logical']
     extent = log.extent(True)

@@ -50,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'pyg4ometry'
-copyright = u'Royal Holloway, University of London 2018'
-author = u'S Boogert, A Abramov, A Butcher, S Walker, L Nevay'
+copyright = u'Royal Holloway, University of London 2020'
+author = u'S Boogert, A Abramov, A Butcher, L Nevay, W Shields, S Walker'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -99,6 +99,8 @@ html_theme = "sphinx_rtd_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+html_last_updated_fmt = '%b %d, %Y'
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.

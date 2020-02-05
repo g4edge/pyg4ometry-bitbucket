@@ -1,0 +1,679 @@
+GEOBEGIN                                                              COMBNAME
+    0    0                                                                    
+RPP BLKBODY -60.002081528 60.002081528 -73.078383798 73.078383798 -52.8 52.8
+RPP B0000_01 -30.001040764 30.001040764 -36.539191899 36.539191899 -26.400000000000002 26.400000000000002
+SPH B0002_01 0.0 0.0 0.0 10.7
+SPH B0002_02 0.0 0.0 0.0 10.0
+$Start_transform T0003
+ZCC B0003_01 0 0 0.5
+$End_transform
+$Start_transform T0003
+XYP B0003_02 -0.7
+$End_transform
+$Start_transform T0003
+XYP B0003_03 0.7
+$End_transform
+$Start_transform T0004
+ZCC B0004_01 0 0 0.75
+$End_transform
+$Start_transform T0004
+XYP B0004_02 -10.0
+$End_transform
+$Start_transform T0004
+XYP B0004_03 10.0
+$End_transform
+$Start_transform T0004
+ZCC B0004_04 0 0 0.5
+$End_transform
+$Start_transform T0005
+ZCC B0005_01 0 0 1.7
+$End_transform
+$Start_transform T0005
+XYP B0005_02 -0.375
+$End_transform
+$Start_transform T0005
+XYP B0005_03 0.375
+$End_transform
+$Start_transform T0006
+ZCC B0006_01 0 0 0.215
+$End_transform
+$Start_transform T0006
+XYP B0006_02 -0.39375
+$End_transform
+$Start_transform T0006
+XYP B0006_03 0.39375
+$End_transform
+$Start_transform T0007
+ZCC B0007_01 0 0 0.215
+$End_transform
+$Start_transform T0007
+XYP B0007_02 -0.39375
+$End_transform
+$Start_transform T0007
+XYP B0007_03 0.39375
+$End_transform
+$Start_transform T0008
+ZCC B0008_01 0 0 0.215
+$End_transform
+$Start_transform T0008
+XYP B0008_02 -0.39375
+$End_transform
+$Start_transform T0008
+XYP B0008_03 0.39375
+$End_transform
+$Start_transform T0009
+ZCC B0009_01 0 0 0.215
+$End_transform
+$Start_transform T0009
+XYP B0009_02 -0.39375
+$End_transform
+$Start_transform T0009
+XYP B0009_03 0.39375
+$End_transform
+$Start_transform T0010
+ZCC B0010_01 0 0 0.215
+$End_transform
+$Start_transform T0010
+XYP B0010_02 -0.39375
+$End_transform
+$Start_transform T0010
+XYP B0010_03 0.39375
+$End_transform
+$Start_transform T0011
+ZCC B0011_01 0 0 0.215
+$End_transform
+$Start_transform T0011
+XYP B0011_02 -0.39375
+$End_transform
+$Start_transform T0011
+XYP B0011_03 0.39375
+$End_transform
+$Start_transform T0012
+ZCC B0012_01 0 0 1.065
+$End_transform
+$Start_transform T0012
+XYP B0012_02 -0.07
+$End_transform
+$Start_transform T0012
+XYP B0012_03 0.07
+$End_transform
+$Start_transform T0013
+ZCC B0013_01 0 0 0.5
+$End_transform
+$Start_transform T0013
+XYP B0013_02 -10.0
+$End_transform
+$Start_transform T0013
+XYP B0013_03 10.0
+$End_transform
+$Start_transform T0014
+SPH B0014_01 0.0 2.842170943040401e-14 -2.1316282072803006e-14 10.0
+$End_transform
+$Start_transform T0015
+ZCC B0015_01 0 0 0.5
+$End_transform
+$Start_transform T0015
+XYP B0015_02 -0.7
+$End_transform
+$Start_transform T0015
+XYP B0015_03 0.7
+$End_transform
+$Start_transform T0016
+ZCC B0016_01 0 0 0.75
+$End_transform
+$Start_transform T0016
+XYP B0016_02 -5.0
+$End_transform
+$Start_transform T0016
+XYP B0016_03 5.0
+$End_transform
+$Start_transform T0016
+ZCC B0016_04 0 0 0.5
+$End_transform
+$Start_transform T0017
+ZCC B0017_01 0 0 1.7
+$End_transform
+$Start_transform T0017
+XYP B0017_02 -0.375
+$End_transform
+$Start_transform T0017
+XYP B0017_03 0.375
+$End_transform
+$Start_transform T0018
+ZCC B0018_01 0 0 0.215
+$End_transform
+$Start_transform T0018
+XYP B0018_02 -0.39375
+$End_transform
+$Start_transform T0018
+XYP B0018_03 0.39375
+$End_transform
+$Start_transform T0019
+ZCC B0019_01 0 0 0.215
+$End_transform
+$Start_transform T0019
+XYP B0019_02 -0.39375
+$End_transform
+$Start_transform T0019
+XYP B0019_03 0.39375
+$End_transform
+$Start_transform T0020
+ZCC B0020_01 0 0 0.215
+$End_transform
+$Start_transform T0020
+XYP B0020_02 -0.39375
+$End_transform
+$Start_transform T0020
+XYP B0020_03 0.39375
+$End_transform
+$Start_transform T0021
+ZCC B0021_01 0 0 0.215
+$End_transform
+$Start_transform T0021
+XYP B0021_02 -0.39375
+$End_transform
+$Start_transform T0021
+XYP B0021_03 0.39375
+$End_transform
+$Start_transform T0022
+ZCC B0022_01 0 0 0.215
+$End_transform
+$Start_transform T0022
+XYP B0022_02 -0.39375
+$End_transform
+$Start_transform T0022
+XYP B0022_03 0.39375
+$End_transform
+$Start_transform T0023
+ZCC B0023_01 0 0 0.215
+$End_transform
+$Start_transform T0023
+XYP B0023_02 -0.39375
+$End_transform
+$Start_transform T0023
+XYP B0023_03 0.39375
+$End_transform
+$Start_transform T0024
+ZCC B0024_01 0 0 1.065
+$End_transform
+$Start_transform T0024
+XYP B0024_02 -0.07
+$End_transform
+$Start_transform T0024
+XYP B0024_03 0.07
+$End_transform
+$Start_transform T0025
+ZCC B0025_01 0 0 0.5
+$End_transform
+$Start_transform T0025
+XYP B0025_02 -5.0
+$End_transform
+$Start_transform T0025
+XYP B0025_03 5.0
+$End_transform
+$Start_transform T0026
+SPH B0026_01 0.0 0.0 0.0 10.0
+$End_transform
+$Start_transform T0027
+ZCC B0027_01 0 0 1.5
+$End_transform
+$Start_transform T0027
+XYP B0027_02 -0.7
+$End_transform
+$Start_transform T0027
+XYP B0027_03 0.7
+$End_transform
+$Start_transform T0028
+ZCC B0028_01 0 0 2.0
+$End_transform
+$Start_transform T0028
+XYP B0028_02 -7.5
+$End_transform
+$Start_transform T0028
+XYP B0028_03 7.5
+$End_transform
+$Start_transform T0028
+ZCC B0028_04 0 0 1.5
+$End_transform
+$Start_transform T0029
+ZCC B0029_01 0 0 3.475
+$End_transform
+$Start_transform T0029
+XYP B0029_02 -0.65
+$End_transform
+$Start_transform T0029
+XYP B0029_03 0.65
+$End_transform
+$Start_transform T0030
+ZCC B0030_01 0 0 0.33
+$End_transform
+$Start_transform T0030
+XYP B0030_02 -0.6825
+$End_transform
+$Start_transform T0030
+XYP B0030_03 0.6825
+$End_transform
+$Start_transform T0031
+ZCC B0031_01 0 0 0.33
+$End_transform
+$Start_transform T0031
+XYP B0031_02 -0.6825
+$End_transform
+$Start_transform T0031
+XYP B0031_03 0.6825
+$End_transform
+$Start_transform T0032
+ZCC B0032_01 0 0 0.33
+$End_transform
+$Start_transform T0032
+XYP B0032_02 -0.6825
+$End_transform
+$Start_transform T0032
+XYP B0032_03 0.6825
+$End_transform
+$Start_transform T0033
+ZCC B0033_01 0 0 0.33
+$End_transform
+$Start_transform T0033
+XYP B0033_02 -0.6825
+$End_transform
+$Start_transform T0033
+XYP B0033_03 0.6825
+$End_transform
+$Start_transform T0034
+ZCC B0034_01 0 0 0.33
+$End_transform
+$Start_transform T0034
+XYP B0034_02 -0.6825
+$End_transform
+$Start_transform T0034
+XYP B0034_03 0.6825
+$End_transform
+$Start_transform T0035
+ZCC B0035_01 0 0 0.33
+$End_transform
+$Start_transform T0035
+XYP B0035_02 -0.6825
+$End_transform
+$Start_transform T0035
+XYP B0035_03 0.6825
+$End_transform
+$Start_transform T0036
+ZCC B0036_01 0 0 2.405
+$End_transform
+$Start_transform T0036
+XYP B0036_02 -0.07
+$End_transform
+$Start_transform T0036
+XYP B0036_03 0.07
+$End_transform
+$Start_transform T0037
+ZCC B0037_01 0 0 1.5
+$End_transform
+$Start_transform T0037
+XYP B0037_02 -7.5
+$End_transform
+$Start_transform T0037
+XYP B0037_03 7.5
+$End_transform
+$Start_transform T0038
+SPH B0038_01 0.0 0.0 4.796568507851836e-14 10.0
+$End_transform
+$Start_transform T0039
+ZCC B0039_01 0 0 1.5
+$End_transform
+$Start_transform T0039
+XYP B0039_02 -0.7
+$End_transform
+$Start_transform T0039
+XYP B0039_03 0.7
+$End_transform
+$Start_transform T0040
+ZCC B0040_01 0 0 2.0
+$End_transform
+$Start_transform T0040
+XYP B0040_02 -10.0
+$End_transform
+$Start_transform T0040
+XYP B0040_03 10.0
+$End_transform
+$Start_transform T0040
+ZCC B0040_04 0 0 1.5
+$End_transform
+$Start_transform T0041
+ZCC B0041_01 0 0 3.475
+$End_transform
+$Start_transform T0041
+XYP B0041_02 -0.65
+$End_transform
+$Start_transform T0041
+XYP B0041_03 0.65
+$End_transform
+$Start_transform T0042
+ZCC B0042_01 0 0 0.33
+$End_transform
+$Start_transform T0042
+XYP B0042_02 -0.6825
+$End_transform
+$Start_transform T0042
+XYP B0042_03 0.6825
+$End_transform
+$Start_transform T0043
+ZCC B0043_01 0 0 0.33
+$End_transform
+$Start_transform T0043
+XYP B0043_02 -0.6825
+$End_transform
+$Start_transform T0043
+XYP B0043_03 0.6825
+$End_transform
+$Start_transform T0044
+ZCC B0044_01 0 0 0.33
+$End_transform
+$Start_transform T0044
+XYP B0044_02 -0.6825
+$End_transform
+$Start_transform T0044
+XYP B0044_03 0.6825
+$End_transform
+$Start_transform T0045
+ZCC B0045_01 0 0 0.33
+$End_transform
+$Start_transform T0045
+XYP B0045_02 -0.6825
+$End_transform
+$Start_transform T0045
+XYP B0045_03 0.6825
+$End_transform
+$Start_transform T0046
+ZCC B0046_01 0 0 0.33
+$End_transform
+$Start_transform T0046
+XYP B0046_02 -0.6825
+$End_transform
+$Start_transform T0046
+XYP B0046_03 0.6825
+$End_transform
+$Start_transform T0047
+ZCC B0047_01 0 0 0.33
+$End_transform
+$Start_transform T0047
+XYP B0047_02 -0.6825
+$End_transform
+$Start_transform T0047
+XYP B0047_03 0.6825
+$End_transform
+$Start_transform T0048
+ZCC B0048_01 0 0 2.405
+$End_transform
+$Start_transform T0048
+XYP B0048_02 -0.07
+$End_transform
+$Start_transform T0048
+XYP B0048_03 0.07
+$End_transform
+$Start_transform T0049
+ZCC B0049_01 0 0 1.5
+$End_transform
+$Start_transform T0049
+XYP B0049_02 -10.0
+$End_transform
+$Start_transform T0049
+XYP B0049_03 10.0
+$End_transform
+$Start_transform T0050
+SPH B0050_01 0.0 0.0 4.796568507851836e-14 10.0
+$End_transform
+$Start_transform T0051
+ZCC B0051_01 0 0 1.5
+$End_transform
+$Start_transform T0051
+XYP B0051_02 -0.7
+$End_transform
+$Start_transform T0051
+XYP B0051_03 0.7
+$End_transform
+$Start_transform T0052
+ZCC B0052_01 0 0 2.0
+$End_transform
+$Start_transform T0052
+XYP B0052_02 -5.0
+$End_transform
+$Start_transform T0052
+XYP B0052_03 5.0
+$End_transform
+$Start_transform T0052
+ZCC B0052_04 0 0 1.5
+$End_transform
+$Start_transform T0053
+ZCC B0053_01 0 0 3.475
+$End_transform
+$Start_transform T0053
+XYP B0053_02 -0.65
+$End_transform
+$Start_transform T0053
+XYP B0053_03 0.65
+$End_transform
+$Start_transform T0054
+ZCC B0054_01 0 0 0.33
+$End_transform
+$Start_transform T0054
+XYP B0054_02 -0.6825
+$End_transform
+$Start_transform T0054
+XYP B0054_03 0.6825
+$End_transform
+$Start_transform T0055
+ZCC B0055_01 0 0 0.33
+$End_transform
+$Start_transform T0055
+XYP B0055_02 -0.6825
+$End_transform
+$Start_transform T0055
+XYP B0055_03 0.6825
+$End_transform
+$Start_transform T0056
+ZCC B0056_01 0 0 0.33
+$End_transform
+$Start_transform T0056
+XYP B0056_02 -0.6825
+$End_transform
+$Start_transform T0056
+XYP B0056_03 0.6825
+$End_transform
+$Start_transform T0057
+ZCC B0057_01 0 0 0.33
+$End_transform
+$Start_transform T0057
+XYP B0057_02 -0.6825
+$End_transform
+$Start_transform T0057
+XYP B0057_03 0.6825
+$End_transform
+$Start_transform T0058
+ZCC B0058_01 0 0 0.33
+$End_transform
+$Start_transform T0058
+XYP B0058_02 -0.6825
+$End_transform
+$Start_transform T0058
+XYP B0058_03 0.6825
+$End_transform
+$Start_transform T0059
+ZCC B0059_01 0 0 0.33
+$End_transform
+$Start_transform T0059
+XYP B0059_02 -0.6825
+$End_transform
+$Start_transform T0059
+XYP B0059_03 0.6825
+$End_transform
+$Start_transform T0060
+ZCC B0060_01 0 0 2.405
+$End_transform
+$Start_transform T0060
+XYP B0060_02 -0.07
+$End_transform
+$Start_transform T0060
+XYP B0060_03 0.07
+$End_transform
+$Start_transform T0061
+ZCC B0061_01 0 0 1.5
+$End_transform
+$Start_transform T0061
+XYP B0061_02 -5.0
+$End_transform
+$Start_transform T0061
+XYP B0061_03 5.0
+$End_transform
+SPH B0062_01 0.0 0.0 0.0 10.0
+END
+R0002 5 |  +B0002_01 -B0002_02 -( +B0003_01 +B0003_03 -B0003_02) -( +B0015_01 +B0015_03 -B0015_02) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0004_01 +B0004_03 -B0004_02 -B0004_04 -( +B0014_01) -( +B0015_01 +B0015_03 -B0015_02) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0005_01 +B0005_03 -B0005_02 -( +B0006_01 +B0006_03 -B0006_02) -( +B0007_01 +B0007_03 -B0007_02) -( +B0008_01 +B0008_03 -B0008_02) -( +B0009_01 +B0009_03 -B0009_02) -( +B0010_01 +B0010_03 -B0010_02) -( +B0011_01 +B0011_03 -B0011_02) -( +B0012_01 +B0012_03 -B0012_02) -( +B0013_01 +B0013_03 -B0013_02) -( +B0014_01) -( +B0015_01 +B0015_03 -B0015_02) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0016_01 +B0016_03 -B0016_02 -B0016_04 -( +B0026_01) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0017_01 +B0017_03 -B0017_02 -( +B0018_01 +B0018_03 -B0018_02) -( +B0019_01 +B0019_03 -B0019_02) -( +B0020_01 +B0020_03 -B0020_02) -( +B0021_01 +B0021_03 -B0021_02) -( +B0022_01 +B0022_03 -B0022_02) -( +B0023_01 +B0023_03 -B0023_02) -( +B0024_01 +B0024_03 -B0024_02) -( +B0025_01 +B0025_03 -B0025_02) -( +B0026_01) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0028_01 +B0028_03 -B0028_02 -B0028_04 -( +B0038_01) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0029_01 +B0029_03 -B0029_02 -( +B0030_01 +B0030_03 -B0030_02) -( +B0031_01 +B0031_03 -B0031_02) -( +B0032_01 +B0032_03 -B0032_02) -( +B0033_01 +B0033_03 -B0033_02) -( +B0034_01 +B0034_03 -B0034_02) -( +B0035_01 +B0035_03 -B0035_02) -( +B0036_01 +B0036_03 -B0036_02) -( +B0037_01 +B0037_03 -B0037_02) -( +B0038_01) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02) |  +B0040_01 +B0040_03 -B0040_02 -B0040_04 -( +B0050_01) -( +B0051_01 +B0051_03 -B0051_02) |  +B0041_01 +B0041_03 -B0041_02 -( +B0042_01 +B0042_03 -B0042_02) -( +B0043_01 +B0043_03 -B0043_02) -( +B0044_01 +B0044_03 -B0044_02) -( +B0045_01 +B0045_03 -B0045_02) -( +B0046_01 +B0046_03 -B0046_02) -( +B0047_01 +B0047_03 -B0047_02) -( +B0048_01 +B0048_03 -B0048_02) -( +B0049_01 +B0049_03 -B0049_02) -( +B0050_01) -( +B0051_01 +B0051_03 -B0051_02) |  +B0052_01 +B0052_03 -B0052_02 -B0052_04 -( +B0062_01) |  +B0053_01 +B0053_03 -B0053_02 -( +B0054_01 +B0054_03 -B0054_02) -( +B0055_01 +B0055_03 -B0055_02) -( +B0056_01 +B0056_03 -B0056_02) -( +B0057_01 +B0057_03 -B0057_02) -( +B0058_01 +B0058_03 -B0058_02) -( +B0059_01 +B0059_03 -B0059_02) -( +B0060_01 +B0060_03 -B0060_02) -( +B0061_01 +B0061_03 -B0061_02) -( +B0062_01)
+BLKHOLE 5 |  +BLKBODY -( +B0000_01)
+R0000 5 |  +B0000_01 -( +B0002_01 -B0002_02 -( +B0003_01 +B0003_03 -B0003_02) -( +B0015_01 +B0015_03 -B0015_02) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0004_01 +B0004_03 -B0004_02 -B0004_04 -( +B0014_01) -( +B0015_01 +B0015_03 -B0015_02) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0005_01 +B0005_03 -B0005_02 -( +B0006_01 +B0006_03 -B0006_02) -( +B0007_01 +B0007_03 -B0007_02) -( +B0008_01 +B0008_03 -B0008_02) -( +B0009_01 +B0009_03 -B0009_02) -( +B0010_01 +B0010_03 -B0010_02) -( +B0011_01 +B0011_03 -B0011_02) -( +B0012_01 +B0012_03 -B0012_02) -( +B0013_01 +B0013_03 -B0013_02) -( +B0014_01) -( +B0015_01 +B0015_03 -B0015_02) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0016_01 +B0016_03 -B0016_02 -B0016_04 -( +B0026_01) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0017_01 +B0017_03 -B0017_02 -( +B0018_01 +B0018_03 -B0018_02) -( +B0019_01 +B0019_03 -B0019_02) -( +B0020_01 +B0020_03 -B0020_02) -( +B0021_01 +B0021_03 -B0021_02) -( +B0022_01 +B0022_03 -B0022_02) -( +B0023_01 +B0023_03 -B0023_02) -( +B0024_01 +B0024_03 -B0024_02) -( +B0025_01 +B0025_03 -B0025_02) -( +B0026_01) -( +B0027_01 +B0027_03 -B0027_02) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0028_01 +B0028_03 -B0028_02 -B0028_04 -( +B0038_01) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0029_01 +B0029_03 -B0029_02 -( +B0030_01 +B0030_03 -B0030_02) -( +B0031_01 +B0031_03 -B0031_02) -( +B0032_01 +B0032_03 -B0032_02) -( +B0033_01 +B0033_03 -B0033_02) -( +B0034_01 +B0034_03 -B0034_02) -( +B0035_01 +B0035_03 -B0035_02) -( +B0036_01 +B0036_03 -B0036_02) -( +B0037_01 +B0037_03 -B0037_02) -( +B0038_01) -( +B0039_01 +B0039_03 -B0039_02) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0040_01 +B0040_03 -B0040_02 -B0040_04 -( +B0050_01) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0041_01 +B0041_03 -B0041_02 -( +B0042_01 +B0042_03 -B0042_02) -( +B0043_01 +B0043_03 -B0043_02) -( +B0044_01 +B0044_03 -B0044_02) -( +B0045_01 +B0045_03 -B0045_02) -( +B0046_01 +B0046_03 -B0046_02) -( +B0047_01 +B0047_03 -B0047_02) -( +B0048_01 +B0048_03 -B0048_02) -( +B0049_01 +B0049_03 -B0049_02) -( +B0050_01) -( +B0051_01 +B0051_03 -B0051_02)) -( +B0052_01 +B0052_03 -B0052_02 -B0052_04 -( +B0062_01)) -( +B0053_01 +B0053_03 -B0053_02 -( +B0054_01 +B0054_03 -B0054_02) -( +B0055_01 +B0055_03 -B0055_02) -( +B0056_01 +B0056_03 -B0056_02) -( +B0057_01 +B0057_03 -B0057_02) -( +B0058_01 +B0058_03 -B0058_02) -( +B0059_01 +B0059_03 -B0059_02) -( +B0060_01 +B0060_03 -B0060_02) -( +B0061_01 +B0061_03 -B0061_02) -( +B0062_01))
+END
+GEOEND
+FREE
+ROT-DEFI, 50000.0, 0.0, 0.0, 0.0, 0.0, 10.0, T0051
+ROT-DEFI, 59000.0, 0.0, 0.0, 0.0, 0.0, 15.7, T0060
+ROT-DEFI, 28002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0029
+ROT-DEFI, 28000.0, 0.0, 0.0, 17.55, 0.0, -1.92256955876e-15, T0029
+ROT-DEFI, 51000.0, 0.0, 0.0, 0.0, 0.0, 10.7, T0052
+ROT-DEFI, 27002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0028
+ROT-DEFI, 27000.0, 0.0, 0.0, 10.7, 0.0, 7e-16, T0028
+ROT-DEFI, 11001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0012
+ROT-DEFI, 11002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0012
+ROT-DEFI, 11000.0, 0.0, 0.0, -10.35, 14.6371103706, 10.35, T0012
+ROT-DEFI, 12001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0013
+ROT-DEFI, 12002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0013
+ROT-DEFI, 12000.0, 0.0, 0.0, -10.1625, 14.3719453276, 10.1625, T0013
+ROT-DEFI, 9001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0010
+ROT-DEFI, 9002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0010
+ROT-DEFI, 9000.0, 0.0, 0.0, -11.2243642249, 13.5452425394, 10.2697700703, T0010
+ROT-DEFI, 10001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0011
+ROT-DEFI, 10002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0011
+ROT-DEFI, 10000.0, 0.0, 0.0, -10.2697700703, 13.5452425394, 11.2243642249, T0011
+ROT-DEFI, 15001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0016
+ROT-DEFI, 15002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0016
+ROT-DEFI, 15003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0016
+ROT-DEFI, 15000.0, 0.0, 0.0, 5.35, 7.5660425587, 5.35, T0016
+ROT-DEFI, 16001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0017
+ROT-DEFI, 16002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0017
+ROT-DEFI, 16003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0017
+ROT-DEFI, 16000.0, 0.0, 0.0, 7.6625, 10.8364114217, 7.6625, T0017
+ROT-DEFI, 13001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0014
+ROT-DEFI, 13002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0014
+ROT-DEFI, 13000.0, 0.0, 0.0, 0.0, 2.84217094304e-15, -2.13162820728e-15, T0014
+ROT-DEFI, 14001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0015
+ROT-DEFI, 14002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0015
+ROT-DEFI, 14003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0015
+ROT-DEFI, 14000.0, 0.0, 0.0, 5.0, 7.07106781187, 5.0, T0015
+ROT-DEFI, 29002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0030
+ROT-DEFI, 29000.0, 0.0, 0.0, 17.55, 0.0, -2.935, T0030
+ROT-DEFI, 30002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0031
+ROT-DEFI, 30000.0, 0.0, 0.0, 17.55, 2.54178456011, -1.4675, T0031
+ROT-DEFI, 17001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0018
+ROT-DEFI, 17002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0018
+ROT-DEFI, 17003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0018
+ROT-DEFI, 17000.0, 0.0, 0.0, 6.7079058454, 10.8364114217, 8.6170941546, T0018
+ROT-DEFI, 18001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0019
+ROT-DEFI, 18002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0019
+ROT-DEFI, 18003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0019
+ROT-DEFI, 18000.0, 0.0, 0.0, 7.76977007025, 10.0097086335, 8.72436422486, T0019
+ROT-DEFI, 33002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0034
+ROT-DEFI, 33000.0, 0.0, 0.0, 17.55, -2.54178456011, 1.4675, T0034
+ROT-DEFI, 31002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0032
+ROT-DEFI, 31000.0, 0.0, 0.0, 17.55, 2.54178456011, 1.4675, T0032
+ROT-DEFI, 35002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0036
+ROT-DEFI, 35000.0, 0.0, 0.0, 18.2, 0.0, -2.1714265242e-15, T0036
+ROT-DEFI, 36002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0037
+ROT-DEFI, 36000.0, 0.0, 0.0, 17.55, 0.0, -1.92256955876e-15, T0037
+ROT-DEFI, 32002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0033
+ROT-DEFI, 32000.0, 0.0, 0.0, 17.55, 4e-16, 2.935, T0033
+ROT-DEFI, 57000.0, 0.0, 0.0, -1.4675, -2.54178456011, 15.05, T0058
+ROT-DEFI, 58000.0, 0.0, 0.0, 1.4675, -2.54178456011, 15.05, T0059
+ROT-DEFI, 55000.0, 0.0, 0.0, -1.4675, 2.54178456011, 15.05, T0056
+ROT-DEFI, 56000.0, 0.0, 0.0, -2.935, 4e-16, 15.05, T0057
+ROT-DEFI, 53000.0, 0.0, 0.0, 2.935, 0.0, 15.05, T0054
+ROT-DEFI, 54000.0, 0.0, 0.0, 1.4675, 2.54178456011, 15.05, T0055
+ROT-DEFI, 26002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0027
+ROT-DEFI, 26000.0, 0.0, 0.0, 10.0, 0.0, 6e-16, T0027
+ROT-DEFI, 52000.0, 0.0, 0.0, 0.0, 0.0, 15.05, T0053
+ROT-DEFI, 49001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0050
+ROT-DEFI, 49000.0, 0.0, 0.0, 0.0, 0.0, 4.79656850785e-15, T0050
+ROT-DEFI, 34002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0035
+ROT-DEFI, 34000.0, 0.0, 0.0, 17.55, -2.54178456011, -1.4675, T0035
+ROT-DEFI, 25001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0026
+ROT-DEFI, 25002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0026
+ROT-DEFI, 25003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0026
+ROT-DEFI, 2001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0003
+ROT-DEFI, 2002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0003
+ROT-DEFI, 2000.0, 0.0, 0.0, -5.0, 7.07106781187, 5.0, T0003
+ROT-DEFI, 4001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0005
+ROT-DEFI, 4002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0005
+ROT-DEFI, 4000.0, 0.0, 0.0, -10.1625, 14.3719453276, 10.1625, T0005
+ROT-DEFI, 3001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0004
+ROT-DEFI, 3002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0004
+ROT-DEFI, 3000.0, 0.0, 0.0, -5.35, 7.5660425587, 5.35, T0004
+ROT-DEFI, 6001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0007
+ROT-DEFI, 6002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0007
+ROT-DEFI, 6000.0, 0.0, 0.0, -9.10063577514, 15.1986481158, 10.0552299297, T0007
+ROT-DEFI, 5001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0006
+ROT-DEFI, 5002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0006
+ROT-DEFI, 5000.0, 0.0, 0.0, -9.2079058454, 14.3719453276, 11.1170941546, T0006
+ROT-DEFI, 8001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0009
+ROT-DEFI, 8002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0009
+ROT-DEFI, 8000.0, 0.0, 0.0, -11.1170941546, 14.3719453276, 9.2079058454, T0009
+ROT-DEFI, 7001.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0008
+ROT-DEFI, 7002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0008
+ROT-DEFI, 7000.0, 0.0, 0.0, -10.0552299297, 15.1986481158, 9.10063577514, T0008
+ROT-DEFI, 24001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0025
+ROT-DEFI, 24002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0025
+ROT-DEFI, 24003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0025
+ROT-DEFI, 24000.0, 0.0, 0.0, 7.6625, 10.8364114217, 7.6625, T0025
+ROT-DEFI, 23001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0024
+ROT-DEFI, 23002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0024
+ROT-DEFI, 23003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0024
+ROT-DEFI, 23000.0, 0.0, 0.0, 7.85, 11.1015764646, 7.85, T0024
+ROT-DEFI, 22001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0023
+ROT-DEFI, 22002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0023
+ROT-DEFI, 22003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0023
+ROT-DEFI, 22000.0, 0.0, 0.0, 6.60063577514, 11.6631142099, 7.55522992975, T0023
+ROT-DEFI, 21001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0022
+ROT-DEFI, 21002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0022
+ROT-DEFI, 21003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0022
+ROT-DEFI, 21000.0, 0.0, 0.0, 7.55522992975, 11.6631142099, 6.60063577514, T0022
+ROT-DEFI, 20001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0021
+ROT-DEFI, 20002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0021
+ROT-DEFI, 20003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0021
+ROT-DEFI, 20000.0, 0.0, 0.0, 8.6170941546, 10.8364114217, 6.7079058454, T0021
+ROT-DEFI, 19001.0, 0.0, -45.0, 0.0, 0.0, 0.0, T0020
+ROT-DEFI, 19002.0, 0.0, 45.0, 0.0, 0.0, 0.0, T0020
+ROT-DEFI, 19003.0, 0.0, -180.0, 0.0, 0.0, 0.0, T0020
+ROT-DEFI, 19000.0, 0.0, 0.0, 8.72436422486, 10.0097086335, 7.76977007025, T0020
+ROT-DEFI, 37002.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0038
+ROT-DEFI, 37000.0, 0.0, 0.0, 0.0, 0.0, 4.79656850785e-15, T0038
+ROT-DEFI, 48001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0049
+ROT-DEFI, 48000.0, 0.0, 0.0, 0.0, -20.05, -2.8797117335e-15, T0049
+ROT-DEFI, 47001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0048
+ROT-DEFI, 47000.0, 0.0, 0.0, 0.0, -20.7, -3.12856869893e-15, T0048
+ROT-DEFI, 38001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0039
+ROT-DEFI, 38000.0, 0.0, 0.0, 0.0, -10.0, 6e-16, T0039
+ROT-DEFI, 44001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0045
+ROT-DEFI, 44000.0, 0.0, 0.0, -2.935, -20.05, -2.4797117335e-15, T0045
+ROT-DEFI, 43001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0044
+ROT-DEFI, 43000.0, 0.0, 0.0, -1.4675, -20.05, 2.54178456011, T0044
+ROT-DEFI, 46001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0047
+ROT-DEFI, 46000.0, 0.0, 0.0, 1.4675, -20.05, -2.54178456011, T0047
+ROT-DEFI, 45001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0046
+ROT-DEFI, 45000.0, 0.0, 0.0, -1.4675, -20.05, -2.54178456011, T0046
+ROT-DEFI, 40001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0041
+ROT-DEFI, 40000.0, 0.0, 0.0, 0.0, -20.05, -2.8797117335e-15, T0041
+ROT-DEFI, 39001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0040
+ROT-DEFI, 39000.0, 0.0, 0.0, 0.0, -10.7, 7e-16, T0040
+ROT-DEFI, 42001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0043
+ROT-DEFI, 42000.0, 0.0, 0.0, 1.4675, -20.05, 2.54178456011, T0043
+ROT-DEFI, 41001.0, 0.0, -90.0, 0.0, 0.0, 0.0, T0042
+ROT-DEFI, 41000.0, 0.0, 0.0, 2.935, -20.05, -2.8797117335e-15, T0042
+ROT-DEFI, 60000.0, 0.0, 0.0, 0.0, 0.0, 15.05, T0061
+END

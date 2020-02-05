@@ -25,6 +25,10 @@ directory::
   cd pyg4ometry
   make install
 
+.. note::
+   To build using the git directory and not installing into /usr/local use ``make develop`` 
+   instead of ``make install``
+
 To build pycsg with cpython::
 
   make build_ext

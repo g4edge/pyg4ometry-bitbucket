@@ -2,7 +2,7 @@
 Licence & Disclaimer
 ====================
 
-pyg4ometry Copyright (C) Royal Holloway, University of London 2015 - 2019.
+pyg4ometry Copyright (C) Royal Holloway, University of London 2015 - 2020.
 
 This file is part of pyg4ometry.
 

@@ -17,11 +17,10 @@ vr           5 +bb -bb1
 bbrr         5 +bb1
 END
 GEOEND
-ASSIGNMA    BLCKHOLE       bbr
 ASSIGNMA      VACUUM        vr
 ASSIGNMA    BERYLLIU      bbrr
 ROT-DEFI                   45.       45.       50.       50.       50.bb1rotdefi
-ROT-DEFI                  -30.      -30.       50.       50.       50.bb1rotdefi
+ROT-DEFI                   30.      -30.       50.       50.       50.bb1rotdefi
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
 RANDOMIZ          1.

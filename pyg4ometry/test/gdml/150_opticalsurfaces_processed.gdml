@@ -50,7 +50,7 @@
 		</skinsurface>
 		<bordersurface name="bordersrf1" surfaceproperty="surf1">
 			<physvolref ref="pv1"/>
-			<physvolref ref="pv1"/>
+			<physvolref ref="pv2"/>
 		</bordersurface>
 	</structure>
 	<userinfo/>
