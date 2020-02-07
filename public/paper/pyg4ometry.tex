@@ -475,27 +475,27 @@ solid and a FLUKA region is represented by a Geant4 CSG tree is formed using the
 \begin{table}[hbt!]
 \centering
 \begin{tabular}{|l|l|} \hline
-FLUKA body							& pyg4ometry class 		\\ \hline
-RPP 	(Rectangular parallelepiped)			& Box				\\
-BOX	(General rectangular parallelepiped)		& Box				\\
-SPH 	(Sphere)							& Orb				\\
-RCC (Right circular cylinder)				& Cone				\\
-REC (Right elliptical cylinder)				& EllipticalTube			\\
-TRC (Truncated Right Angle Cone)			& Cone				\\
-ELL (Ellipsoid of Revolution) 				& Ellipsoid				\\
-WED/RAW (Right Angle Wedge)			& ExtrudedSolid		\\
-ARB	(Arbitrary Convex Polyhedron)			& TessellatedSolid		\\
-XYP 	($X$-$Y$ Infinite half-space)			& Box				\\
-XZP 	($X$-$Z$ Infinite half-space)			& Box				\\
-YZP 	($Y$-$Z$ Infinite half-space)			& Box				\\
-PLA (Generic infinite half-space)			& Box				\\
-XCC ($X$-axis Infinite Circular Cylinder)		& Tubs				\\
-YCC ($Y$-axis Infinite Circular Cylinder)		& Tubs				\\
-ZCC 	($Z$-axis Infinite Circular Cylinder)		& Tubs				\\
-XEC 	($X$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
-YEC 	($Y$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
-ZEC ($Z$-axis Infinite Elliptical Cylinder)		& EllipticalTube			\\
-QUA (Quadric surface) 					& TessellatedSolid		\\ \hline
+FLUKA body						& pyg4ometry class \\ \hline
+RPP (Rectangular parallelepiped)			& Box \\
+BOX (General rectangular parallelepiped)		& Box \\
+SPH (Sphere)    					& Orb \\
+RCC (Right circular cylinder)				& Tubs \\
+REC (Right elliptical cylinder)				& EllipticalTube \\
+TRC (Truncated Right Angle Cone)			& Cons \\
+ELL (Ellipsoid of Revolution) 				& Ellipsoid \\
+WED/RAW (Right Angle Wedge)		         	& ExtrudedSolid \\
+ARB	(Arbitrary Convex Polyhedron)			& TessellatedSolid \\
+XYP 	($X$-$Y$ Infinite half-space)			& Box \\
+XZP 	($X$-$Z$ Infinite half-space)			& Box \\
+YZP 	($Y$-$Z$ Infinite half-space)			& Box \\
+PLA (Generic infinite half-space)			& Box \\
+XCC ($X$-axis Infinite Circular Cylinder)		& Tubs \\
+YCC ($Y$-axis Infinite Circular Cylinder)		& Tubs \\
+ZCC 	($Z$-axis Infinite Circular Cylinder)		& Tubs \\
+XEC 	($X$-axis Infinite Elliptical Cylinder)		& EllipticalTube \\
+YEC 	($Y$-axis Infinite Elliptical Cylinder)		& EllipticalTube \\
+ZEC ($Z$-axis Infinite Elliptical Cylinder)		& EllipticalTube \\
+QUA (Quadric surface) 					& TessellatedSolid \\ \hline
 \end{tabular}
 \caption{FLUKA geometry directives pyg4ometry classes.} \label{tab:Fluka2Geant4}
 \end{table}
