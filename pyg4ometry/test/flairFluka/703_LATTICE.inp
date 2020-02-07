@@ -19,7 +19,6 @@ END
 TARGET       5 +target -target2
 TARGET2      5 +target2
 REPLICA      5 +repl
-REPLIC2      5
 blckreg      5 +black -target -repl
 END
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7....

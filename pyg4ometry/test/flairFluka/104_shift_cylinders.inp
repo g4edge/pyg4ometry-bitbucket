@@ -1,0 +1,15 @@
+TITLE
+Correctly shift the cylinder alon its axis.
+DEFAULTS                                                              PRECISIO
+GEOBEGIN                                                  1.          COMBNAME
+    0    0          a beam line
+$start_translat 0.0 0.0 -3000.0
+RPP yoke   -10.0 10.0 -10.0 10.0 -8.5 8.5
+ZEC bp    0.0 0.0 3.0 1.5
+$end_translat 
+END
+BPVC     5 +yoke +bp
+END
+GEOEND
+START         5000.0
+STOP
