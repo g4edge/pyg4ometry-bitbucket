@@ -6,6 +6,7 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 import pyg4ometry.gdml as _gdml
 from pyg4ometry.convert import fluka2Geant4 as _fluka2Geant4
+import pyg4ometry.geant4.solid
 
 
 def _pj(filename):
@@ -38,8 +39,9 @@ def flairLoadWriteTest(fileName, vis=True, interactive=False) :
     w.write(_os.path.join(_os.path.dirname(__file__), gdmlFileName))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),gmadFileName),gdmlFileName)
 
-class FlairLoadTests(_unittest.TestCase) :
+    return r.flukaregistry, greg
 
+class FlairLoadTests(_unittest.TestCase) :
     def test_FlairLoad_T001_RPP(self):
         flairLoadWriteTest("001_RPP.inp", True, False)
 
@@ -233,25 +235,42 @@ class FlairLoadTests(_unittest.TestCase) :
         flairLoadWriteTest("806_combined_translat_transform.inp", True, False)
 
     def test_FlairLoad_T901_preprocessor_if(self):
-        flairLoadWriteTest("901_preprocessor_if.inp", True, False)
+        freg, greg = flairLoadWriteTest("901_preprocessor_if.inp", True, False)
+        solids = greg.solidDict
+        self.assertIsInstance(solids["bb1_s"], pyg4ometry.geant4.solid.Cons)
 
     def test_FlairLoad_T902_preprocessor_elif(self):
-        flairLoadWriteTest("902_preprocessor_elif.inp", True, False)
+        freg, greg = flairLoadWriteTest("902_preprocessor_elif.inp",
+                                        True, False)
+        solids = greg.solidDict
+        self.assertIsInstance(solids["bb1_s"], pyg4ometry.geant4.solid.Box)
 
     def test_FlairLoad_T903_preprocessor_else(self):
-        flairLoadWriteTest("903_preprocessor_else.inp", True, False)
+        freg, greg = flairLoadWriteTest("903_preprocessor_else.inp",
+                                        True, False)
+        solids = greg.solidDict
+        self.assertIsInstance(solids["bb1_s"], pyg4ometry.geant4.solid.Tubs)
 
     def test_FlairLoad_T904_preprocessor_include(self):
         flairLoadWriteTest("904_preprocessor_include.inp", True, False)
 
     def test_FlairLoad_T905_preprocessor_nested_if(self):
-        flairLoadWriteTest("905_preprocessor_nested_if.inp", True, False)
+        freg, greg = flairLoadWriteTest("905_preprocessor_nested_if.inp",
+                           True, False)
+        solids = greg.solidDict
+        self.assertIsInstance(solids["bb1_s"], pyg4ometry.geant4.solid.Cons)
 
     def test_FlairLoad_T906_preprocessor_nested_elif(self):
-        flairLoadWriteTest("906_preprocessor_nested_elif.inp", True, False)
+        freg, greg = flairLoadWriteTest("906_preprocessor_nested_elif.inp",
+                                        True, False)
+        solids = greg.solidDict
+        self.assertIsInstance(solids["bb1_s"], pyg4ometry.geant4.solid.Box)
 
     def test_FlairLoad_T907_preprocessor_nested_else(self):
-        flairLoadWriteTest("907_preprocessor_nested_else.inp", True, False)
+        freg, greg = flairLoadWriteTest("907_preprocessor_nested_else.inp",
+                                        True, False)
+        solids = greg.solidDict
+        self.assertIsInstance(solids["bb1_s"], pyg4ometry.geant4.solid.Box)
 
     def test_FlairLoad_T908_preprocessor_define(self):
         flairLoadWriteTest("908_preprocessor_define.inp", True, False)
