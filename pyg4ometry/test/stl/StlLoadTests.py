@@ -26,7 +26,7 @@ def _pj(filename): # path join
 
 class StlLoadTests(_unittest.TestCase) :
     def test_StlLoad_Dog(self) :
-        ret,l = LoadStl(_pj("dog.stl"))
+        ret,s = LoadStl(_pj("dog.stl"))
         self.assertTrue(ret)
                 
     def test_StlLoad_Dragon(self) :
