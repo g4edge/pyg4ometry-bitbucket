@@ -12,10 +12,10 @@ logger.disabled = True
 
 def LoadStl(fileName) : 
     reg = _g4.Registry()
-    r = _stl.Reader(fileName)    
-    l = r.logicalVolume("test","G4_Cu",reg)
+    r = _stl.Reader(fileName, registry=reg)
+    s = r.getSolid()
         
-    return True,l
+    return True, s
 
 def _pj(filename): # path join
     """
@@ -26,7 +26,7 @@ def _pj(filename): # path join
 
 class StlLoadTests(_unittest.TestCase) :
     def test_StlLoad_Dog(self) :
-        ret,l = LoadStl(_pj("dog.stl"))
+        ret,s = LoadStl(_pj("dog.stl"))
         self.assertTrue(ret)
                 
     def test_StlLoad_Dragon(self) :

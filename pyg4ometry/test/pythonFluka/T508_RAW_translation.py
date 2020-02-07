@@ -10,7 +10,7 @@ def Test(vis=False, interactive=False):
     # union of two wedeges. with sides equal to 20cm.  The mesh shows
     # the two wedges.
 
-    transform = Transform([-20, -20, -20])
+    transform = Transform(translation=[-20, -20, -20])
 
     raw1 = RAW("RAW1_BODY",
                [40, 40, 40], # vertex position
