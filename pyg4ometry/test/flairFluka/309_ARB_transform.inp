@@ -1,0 +1,46 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0
+$start_transform arbrotx
+ARB arbx       0.0 0.0 0.0 20.0 0.0 0.0
+    	       10.0 20.0 0.0 0.0 20.0 0.0
+	       0.0 0.0 20.0 20.0 0.0 20.0
+	       10.0 20.0 20.0 0.0 20.0 20.0
+	       4321 5678 2376 1584 3487 1265
+$end_transform
+$start_transform arbroty
+ARB arby       0.0 0.0 0.0 20.0 0.0 0.0
+    	       10.0 20.0 0.0 0.0 20.0 0.0
+	       0.0 0.0 20.0 20.0 0.0 20.0
+	       10.0 20.0 20.0 0.0 20.0 20.0
+	       4321 5678 2376 1584 3487 1265
+$end_transform
+$start_transform arbrotz
+ARB arbz       0.0 0.0 0.0 20.0 0.0 0.0
+    	       10.0 20.0 0.0 0.0 20.0 0.0
+	       0.0 0.0 20.0 20.0 0.0 20.0
+	       10.0 20.0 20.0 0.0 20.0 20.0
+	       4321 5678 2376 1584 3487 1265
+$end_transform
+END
+arbreg       5 | +arbx | +arby | +arbz
+END
+GEOEND
+ASSIGNMA    BERYLLIU    arbreg
+FREE
+ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, arbrotx
+ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, arbroty
+ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., arbrotz
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START
+STOP
