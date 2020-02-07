@@ -12,10 +12,10 @@ logger.disabled = True
 
 def LoadStl(fileName) : 
     reg = _g4.Registry()
-    r = _stl.Reader(fileName)    
-    l = r.logicalVolume("test","G4_Cu",reg)
+    r = _stl.Reader(fileName, registry=reg)
+    s = r.getSolid()
         
-    return True,l
+    return True, s
 
 def _pj(filename): # path join
     """
