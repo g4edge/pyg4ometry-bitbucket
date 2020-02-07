@@ -55,8 +55,6 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
 
-    from IPython import embed; embed()
-
     assert len(greg.solidDict) == 4 # world, rpp, plaDoesInt, and rpp+plaDoesInt
 
     greg.getWorldVolume().clipSolid()
