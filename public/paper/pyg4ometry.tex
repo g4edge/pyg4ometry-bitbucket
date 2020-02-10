@@ -35,7 +35,11 @@
 \usepackage{amssymb}
 \usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
-\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{hyperref}
+
+\usepackage{lineno}
+\modulolinenumbers[5]
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -146,13 +150,15 @@ Geant; Monte Carlo; Particle; Transport; Geometry;
 % Computer program descriptions should contain the following
 % PROGRAM SUMMARY.
 
-{\bf PROGRAM SUMMARY/NEW VERSION PROGRAM SUMMARY}
+\linenumbers
+
+{\bf PROGRAM SUMMARY}
   %Delete as appropriate.
 
 \begin{small}
 \noindent
 {\em Program Title: pyg4ometry }                                         		\\
-{\em Licensing provisions(please choose one): GPLv3 }			\\
+{\em Licensing provisions: GPLv3 }			\\
 {\em Programming language: python, C/C++}                         		\\
 
 {\em Supplementary material:}                                 				\\
@@ -174,15 +180,15 @@ Creating computer readable geometry descriptions for Monte Carlo radiation trans
   %Provide any additional comments here.
    \\
 
-\begin{thebibliography}{0}
-\bibitem{1}Reference 1         % This list should only contain those items referenced in the                 
-\bibitem{2}Reference 2         % Program Summary section.   
-\bibitem{3}Reference 3         % Type references in text as [1], [2], etc.
+%\begin{thebibliography}{0}
+%\bibitem{1}Reference 1         % This list should only contain those items referenced in the                 
+%\bibitem{2}Reference 2         % Program Summary section.   
+%\bibitem{3}Reference 3         % Type references in text as [1], [2], etc.
                                % This list is different from the bibliography at the end of 
                                % the Long Write-Up.
-\end{thebibliography}
-* Items marked with an asterisk are only required for new versions
-of programs previously published in the CPC Program Library.\\
+%\end{thebibliography}
+%* Items marked with an asterisk are only required for new versions
+%of programs previously published in the CPC Program Library.\\
 \end{small}
 
 
@@ -391,7 +397,7 @@ RT simulation. This algorithm clearly favours geometry descriptions which have a
 \begin{center}
 \includegraphics[width=8cm]{./diagrams/overlap.pdf}
 \caption{Placement of physical volume inside a logical volume}
-\label{fig:lvToPv}
+\label{fig:overlap}
 \end{center}
 \end{figure} 
 
