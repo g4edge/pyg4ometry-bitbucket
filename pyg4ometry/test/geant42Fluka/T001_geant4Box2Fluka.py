@@ -52,6 +52,10 @@ def Test(vis = True, interactive = False) :
     w.addDetector(freg)
     w.write("T001_geant4Box2Fluka.inp")
 
+    # flair output file
+    f = _fluka.Flair("T001_geant4Box2Fluka.inp",extentBB)
+    f.write("T001_geant4Box2Fluka.flair")
+
     if vis :
         v = _vi.VtkViewer()
         v.addLogicalVolume(wl)
