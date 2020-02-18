@@ -46,3 +46,5 @@ pyg4ometry/test/root/
 *.inp
 *.mtl
 *.obj
+low_poly_human.zip
+low_poly_human
