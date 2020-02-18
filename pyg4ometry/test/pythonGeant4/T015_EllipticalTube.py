@@ -35,7 +35,7 @@ def Test(vis = False, interactive = False, n_slice = 30) :
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T015_EllipticalTube.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T015_EllipticalTube.gmad"),"T015_EllipticalTube.gdml")
+    # w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T015_EllipticalTube.gmad"),"T015_EllipticalTube.gdml")
 
     # test __repr__
     str(es)

@@ -1,3 +1,5 @@
+import os as _os
+
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.gdml as _gd
 import pyg4ometry.convert as _convert
@@ -34,13 +36,21 @@ def Test(vis = False, interactive=False) :
     # set world volume
     reg.setWorld(wl.name)
 
-    if vis :
-        v = _vi.VtkViewer()
-        v.addLogicalVolume(wl)
-        v.view(interactive=interactive)
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+
 
     freg = _convert.geant4Logical2Fluka(wl)
 
     w = _fluka.Writer()
     w.addDetector(freg)
-    w.write("T015_geant4EllipticalTube2Fluka.inp")
+    w.write(_os.path.join(_os.path.dirname(__file__),"T015_geant4EllipticalTube2Fluka.inp"))
+
+    # flair output file
+    f = _fluka.Flair("T015_geant4EllipticalTube2Fluka.inp",extentBB)
+    f.write(_os.path.join(_os.path.dirname(_os.path.dirname(__file__)),"T015_geant4EllipticalTube2Fluka.flair"))
+
+    if vis :
+        v = _vi.VtkViewer()
+        v.addLogicalVolume(wl)
+        v.view(interactive=interactive)
