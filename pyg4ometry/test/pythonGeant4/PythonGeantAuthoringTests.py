@@ -108,61 +108,61 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T000_SolidBase.Test()["testStatus"])
 
     def test_PythonGeant_T001_Box(self) :
-        self.assertTrue(T001_Box.Test(True,False)["testStatus"])
+        self.assertTrue(T001_Box.Test(False,False)["testStatus"])
 
     def test_PythonGeant_T002_Tubs(self) :
-        self.assertTrue(T002_Tubs.Test(True,False))
+        self.assertTrue(T002_Tubs.Test(False,False))
 
     def test_PythonGeant_T003_CutTubs(self) :
-        self.assertTrue(T003_CutTubs.Test(True, False, T003_CutTubs.normal)["testStatus"])
-        self.assertTrue(T003_CutTubs.Test(True, False, T003_CutTubs.flat_ends)["testStatus"])
-        self.assertTrue(T0031_CutTubs_number.Test(True, False)["testStatus"])
-        self.assertTrue(T0032_CutTubs_string.Test(True, False)["testStatus"])
-        self.assertTrue(T0033_CutTubs_expression.Test(True, False)["testStatus"])
-        self.assertTrue(T0034_CutTubs_DefineTree.Test(True,False)["testStatus"])
+        self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.normal)["testStatus"])
+        self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.flat_ends)["testStatus"])
+        self.assertTrue(T0031_CutTubs_number.Test(False, False)["testStatus"])
+        self.assertTrue(T0032_CutTubs_string.Test(False, False)["testStatus"])
+        self.assertTrue(T0033_CutTubs_expression.Test(False, False)["testStatus"])
+        self.assertTrue(T0034_CutTubs_DefineTree.Test(False,False)["testStatus"])
 
     def test_PythonGeant_T004_Cons(self) :
         try :
-            self.assertTrue(T004_Cons.Test(True,False,T004_Cons.r1min_gt_r1max)["testStatus"])
+            self.assertTrue(T004_Cons.Test(False,False,T004_Cons.r1min_gt_r1max)["testStatus"])
         except ValueError :
             pass
 
         try : 
-            self.assertTrue(T004_Cons.Test(True,False,T004_Cons.r2min_gt_r2max)["testStatus"])
+            self.assertTrue(T004_Cons.Test(False,False,T004_Cons.r2min_gt_r2max)["testStatus"])
         except ValueError : 
             pass
 
         try : 
-            self.assertTrue(T004_Cons.Test(True,False,T004_Cons.dphi_gt_2pi)["testStatus"])
+            self.assertTrue(T004_Cons.Test(False,False,T004_Cons.dphi_gt_2pi)["testStatus"])
         except ValueError : 
             pass
 
-        self.assertTrue(T004_Cons.Test(True,False,T004_Cons.dphi_eq_2pi)["testStatus"])
-        self.assertTrue(T004_Cons.Test(True,False,T004_Cons.cone_up)["testStatus"])
-        self.assertTrue(T004_Cons.Test(True,False,T004_Cons.inner_cylinder)["testStatus"])
+        self.assertTrue(T004_Cons.Test(False,False,T004_Cons.dphi_eq_2pi)["testStatus"])
+        self.assertTrue(T004_Cons.Test(False,False,T004_Cons.cone_up)["testStatus"])
+        self.assertTrue(T004_Cons.Test(False,False,T004_Cons.inner_cylinder)["testStatus"])
 
-        self.assertTrue(T004_Cons.Test(True,False)["testStatus"])
+        self.assertTrue(T004_Cons.Test(False,False)["testStatus"])
       
     def test_PythonGeant_T005_Para(self) :
-        self.assertTrue(T005_Para.Test(True,False)["testStatus"])
+        self.assertTrue(T005_Para.Test(False,False)["testStatus"])
 
     def test_PythonGeant_T006_Trd(self) :
-        self.assertTrue(T006_Trd.Test(True,False)["testStatus"])
+        self.assertTrue(T006_Trd.Test(False,False)["testStatus"])
 
     def test_PythonGeant_T007_Trap(self) :
-        self.assertTrue(T007_Trap.Test(True,False)["testStatus"])
+        self.assertTrue(T007_Trap.Test(False,False)["testStatus"])
 
     def test_PythonGeant_T008_Sphere(self) :
-        self.assertTrue(T008_Sphere.Test())
+        self.assertTrue(T008_Sphere.Test(False,False))
 
     def test_PythonGeant_T009_Orb(self) :
-        self.assertTrue(T009_Orb.Test())
+        self.assertTrue(T009_Orb.Test(False,False))
 
     def test_PythonGeant_T010_Torus(self) :
-        self.assertTrue(T010_Torus.Test())
+        self.assertTrue(T010_Torus.Test(False,False))
 
     def test_PythonGeant_T011_Polycone(self) :
-        self.assertTrue(T011_Polycone.Test())
+        self.assertTrue(T011_Polycone.Test(False,False))
 
     def test_PythonGeant_T012_GenericPolycone(self) :
         self.assertTrue(T012_GenericPolycone.Test(False,False,T012_GenericPolycone.normal))
@@ -231,14 +231,14 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T026_GenericTrap.Test())
 
     def test_PythonGeant_T028_Union(self) :
-        self.assertTrue(T028_Union.Test(True,False,False)["testStatus"])
-        self.assertTrue(T028_Union.Test(True,False,True)["testStatus"])
+        self.assertTrue(T028_Union.Test(False,False,False)["testStatus"])
+        self.assertTrue(T028_Union.Test(False,False,True)["testStatus"])
 
     def test_PythonGeant_T029_Subtraction(self) :
-        self.assertTrue(T029_Subtraction.Test(True,False,False)["testStatus"])
+        self.assertTrue(T029_Subtraction.Test(False,False,False)["testStatus"])
 
         try :
-            T029_Subtraction.Test(True,False,True)
+            T029_Subtraction.Test(False,False,True)
         except pyg4ometry.exceptions.NullMeshError :
             pass
 
