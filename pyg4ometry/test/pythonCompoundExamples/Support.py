@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vis
 import numpy as _np
 
 
-lengthSafety = 1e-5
+lengthSafety = 1e-8
 
 
 def SupportTable(name = "support",
@@ -115,4 +115,4 @@ def Test(vis = True, interactive = False ) :
     ################################
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write("SupportTable.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__),"SupportTable.gdml"))
