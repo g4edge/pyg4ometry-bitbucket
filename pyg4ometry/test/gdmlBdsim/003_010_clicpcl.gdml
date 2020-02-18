@@ -1,0 +1,2325 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    <matrix coldim="2" name="RINDEX0x7faf3ac55a80" values="2e-06 1 7e-06 1 7.14e-06 1"/>
+    <matrix coldim="2" name="GROUPVEL0x7faf3ac55eb0" values="2e-06 299.792 4.5e-06 299.792 7.14e-06 299.792"/>
+    <matrix coldim="2" name="RINDEX0x7faf3ac52aa0" values="2e-06 1.00029 7e-06 1.00029 7.14e-06 1.00029"/>
+    <matrix coldim="2" name="GROUPVEL0x7faf3ac521b0" values="2e-06 299.705 4.5e-06 299.705 7.14e-06 299.705"/>
+  </define>
+
+  <materials>
+    <isotope N="1" Z="1" name="H10x7faf3ac1a3c0">
+      <atom unit="g/mole" value="1.00782503081372"/>
+    </isotope>
+    <isotope N="2" Z="1" name="H20x7faf3ac1a400">
+      <atom unit="g/mole" value="2.01410199966617"/>
+    </isotope>
+    <element name="H0x7faf3ac1a8f0">
+      <fraction n="0.999885" ref="H10x7faf3ac1a3c0"/>
+      <fraction n="0.000115" ref="H20x7faf3ac1a400"/>
+    </element>
+    <isotope N="12" Z="6" name="C120x7faf3ac12000">
+      <atom unit="g/mole" value="12"/>
+    </isotope>
+    <isotope N="13" Z="6" name="C130x7faf3ac12060">
+      <atom unit="g/mole" value="13.0034"/>
+    </isotope>
+    <element name="C0x7faf3ac120a0">
+      <fraction n="0.9893" ref="C120x7faf3ac12000"/>
+      <fraction n="0.0107" ref="C130x7faf3ac12060"/>
+    </element>
+    <isotope N="16" Z="8" name="O160x7faf3ac1b590">
+      <atom unit="g/mole" value="15.9949"/>
+    </isotope>
+    <isotope N="17" Z="8" name="O170x7faf3ac1ba00">
+      <atom unit="g/mole" value="16.9991"/>
+    </isotope>
+    <isotope N="18" Z="8" name="O180x7faf3ac1ba50">
+      <atom unit="g/mole" value="17.9992"/>
+    </isotope>
+    <element name="O0x7faf3ac1bab0">
+      <fraction n="0.99757" ref="O160x7faf3ac1b590"/>
+      <fraction n="0.00038" ref="O170x7faf3ac1ba00"/>
+      <fraction n="0.00205" ref="O180x7faf3ac1ba50"/>
+    </element>
+    <material name="vacuum0x7faf3ac54fa0" state="gas">
+      <property name="RINDEX" ref="RINDEX0x7faf3ac55a80"/>
+      <property name="GROUPVEL" ref="GROUPVEL0x7faf3ac55eb0"/>
+      <T unit="K" value="300"/>
+      <P unit="pascal" value="1e-07"/>
+      <MEE unit="eV" value="32.8733620641992"/>
+      <D unit="g/cm3" value="1.1633578301787e-15"/>
+      <fraction n="0.482" ref="H0x7faf3ac1a8f0"/>
+      <fraction n="0.221" ref="C0x7faf3ac120a0"/>
+      <fraction n="0.297" ref="O0x7faf3ac1bab0"/>
+    </material>
+    <isotope N="55" Z="25" name="Mn550x7faf3ac1ee30">
+      <atom unit="g/mole" value="54.938"/>
+    </isotope>
+    <element name="Mn0x7faf3ac16990">
+      <fraction n="1" ref="Mn550x7faf3ac1ee30"/>
+    </element>
+    <isotope N="28" Z="14" name="Si280x7faf3ac16050">
+      <atom unit="g/mole" value="27.9769"/>
+    </isotope>
+    <isotope N="29" Z="14" name="Si290x7faf3ac16090">
+      <atom unit="g/mole" value="28.9765"/>
+    </isotope>
+    <isotope N="30" Z="14" name="Si300x7faf3ac160d0">
+      <atom unit="g/mole" value="29.9738"/>
+    </isotope>
+    <element name="Si0x7faf3ac16110">
+      <fraction n="0.922296077703922" ref="Si280x7faf3ac16050"/>
+      <fraction n="0.0468319531680468" ref="Si290x7faf3ac16090"/>
+      <fraction n="0.0308719691280309" ref="Si300x7faf3ac160d0"/>
+    </element>
+    <isotope N="31" Z="15" name="P310x7faf3ac16b50">
+      <atom unit="g/mole" value="30.9738"/>
+    </isotope>
+    <element name="P0x7faf3ac1ee70">
+      <fraction n="1" ref="P310x7faf3ac16b50"/>
+    </element>
+    <isotope N="32" Z="16" name="S320x7faf3ac1f040">
+      <atom unit="g/mole" value="31.9721"/>
+    </isotope>
+    <isotope N="33" Z="16" name="S330x7faf3ac1f080">
+      <atom unit="g/mole" value="32.9715"/>
+    </isotope>
+    <isotope N="34" Z="16" name="S340x7faf3ac1f0d0">
+      <atom unit="g/mole" value="33.9679"/>
+    </isotope>
+    <isotope N="36" Z="16" name="S360x7faf3ac1f130">
+      <atom unit="g/mole" value="35.9671"/>
+    </isotope>
+    <element name="S0x7faf3ac1f170">
+      <fraction n="0.9493" ref="S320x7faf3ac1f040"/>
+      <fraction n="0.0076" ref="S330x7faf3ac1f080"/>
+      <fraction n="0.0429" ref="S340x7faf3ac1f0d0"/>
+      <fraction n="0.0002" ref="S360x7faf3ac1f130"/>
+    </element>
+    <isotope N="50" Z="24" name="Cr500x7faf3ac123e0">
+      <atom unit="g/mole" value="49.946"/>
+    </isotope>
+    <isotope N="52" Z="24" name="Cr520x7faf3ac12420">
+      <atom unit="g/mole" value="51.9405"/>
+    </isotope>
+    <isotope N="53" Z="24" name="Cr530x7faf3ac129c0">
+      <atom unit="g/mole" value="52.9407"/>
+    </isotope>
+    <isotope N="54" Z="24" name="Cr540x7faf3ac12a00">
+      <atom unit="g/mole" value="53.9389"/>
+    </isotope>
+    <element name="Cr0x7faf3ac12a40">
+      <fraction n="0.04345" ref="Cr500x7faf3ac123e0"/>
+      <fraction n="0.83789" ref="Cr520x7faf3ac12420"/>
+      <fraction n="0.09501" ref="Cr530x7faf3ac129c0"/>
+      <fraction n="0.02365" ref="Cr540x7faf3ac12a00"/>
+    </element>
+    <isotope N="92" Z="42" name="Mo920x7faf3ac20f40">
+      <atom unit="g/mole" value="91.9068"/>
+    </isotope>
+    <isotope N="94" Z="42" name="Mo940x7faf3ac20f80">
+      <atom unit="g/mole" value="93.9051"/>
+    </isotope>
+    <isotope N="95" Z="42" name="Mo950x7faf3ac20fc0">
+      <atom unit="g/mole" value="94.9058"/>
+    </isotope>
+    <isotope N="96" Z="42" name="Mo960x7faf3ac21000">
+      <atom unit="g/mole" value="95.9047"/>
+    </isotope>
+    <isotope N="97" Z="42" name="Mo970x7faf3ac21040">
+      <atom unit="g/mole" value="96.906"/>
+    </isotope>
+    <isotope N="98" Z="42" name="Mo980x7faf3ac210c0">
+      <atom unit="g/mole" value="97.9054"/>
+    </isotope>
+    <isotope N="100" Z="42" name="Mo1000x7faf3ac21100">
+      <atom unit="g/mole" value="99.9075"/>
+    </isotope>
+    <element name="Mo0x7faf3ac21140">
+      <fraction n="0.1484" ref="Mo920x7faf3ac20f40"/>
+      <fraction n="0.0925" ref="Mo940x7faf3ac20f80"/>
+      <fraction n="0.1592" ref="Mo950x7faf3ac20fc0"/>
+      <fraction n="0.1668" ref="Mo960x7faf3ac21000"/>
+      <fraction n="0.0955" ref="Mo970x7faf3ac21040"/>
+      <fraction n="0.2413" ref="Mo980x7faf3ac210c0"/>
+      <fraction n="0.0963" ref="Mo1000x7faf3ac21100"/>
+    </element>
+    <isotope N="58" Z="28" name="Ni580x7faf3ac13180">
+      <atom unit="g/mole" value="57.9353"/>
+    </isotope>
+    <isotope N="60" Z="28" name="Ni600x7faf3ac156f0">
+      <atom unit="g/mole" value="59.9308"/>
+    </isotope>
+    <isotope N="61" Z="28" name="Ni610x7faf3ac15730">
+      <atom unit="g/mole" value="60.9311"/>
+    </isotope>
+    <isotope N="62" Z="28" name="Ni620x7faf3ac15770">
+      <atom unit="g/mole" value="61.9283"/>
+    </isotope>
+    <isotope N="64" Z="28" name="Ni640x7faf3ac157b0">
+      <atom unit="g/mole" value="63.928"/>
+    </isotope>
+    <element name="Ni0x7faf3ac15830">
+      <fraction n="0.680769" ref="Ni580x7faf3ac13180"/>
+      <fraction n="0.262231" ref="Ni600x7faf3ac156f0"/>
+      <fraction n="0.011399" ref="Ni610x7faf3ac15730"/>
+      <fraction n="0.036345" ref="Ni620x7faf3ac15770"/>
+      <fraction n="0.009256" ref="Ni640x7faf3ac157b0"/>
+    </element>
+    <isotope N="14" Z="7" name="N140x7faf3ac1ac20">
+      <atom unit="g/mole" value="14.0031"/>
+    </isotope>
+    <isotope N="15" Z="7" name="N150x7faf3ac1ac60">
+      <atom unit="g/mole" value="15.0001"/>
+    </isotope>
+    <element name="N0x7faf3ac1b1c0">
+      <fraction n="0.99632" ref="N140x7faf3ac1ac20"/>
+      <fraction n="0.00368" ref="N150x7faf3ac1ac60"/>
+    </element>
+    <isotope N="54" Z="26" name="Fe540x7faf3ac13a30">
+      <atom unit="g/mole" value="53.9396"/>
+    </isotope>
+    <isotope N="56" Z="26" name="Fe560x7faf3ac13a70">
+      <atom unit="g/mole" value="55.9349"/>
+    </isotope>
+    <isotope N="57" Z="26" name="Fe570x7faf3ac13ab0">
+      <atom unit="g/mole" value="56.9354"/>
+    </isotope>
+    <isotope N="58" Z="26" name="Fe580x7faf3ac13af0">
+      <atom unit="g/mole" value="57.9333"/>
+    </isotope>
+    <element name="Fe0x7faf3ac13b30">
+      <fraction n="0.05845" ref="Fe540x7faf3ac13a30"/>
+      <fraction n="0.91754" ref="Fe560x7faf3ac13a70"/>
+      <fraction n="0.02119" ref="Fe570x7faf3ac13ab0"/>
+      <fraction n="0.00282" ref="Fe580x7faf3ac13af0"/>
+    </element>
+    <material name="stainlesssteel0x7faf3ac20330" state="solid">
+      <T unit="K" value="295"/>
+      <MEE unit="eV" value="284.400996182192"/>
+      <D unit="g/cm3" value="8"/>
+      <fraction n="0.0003" ref="C0x7faf3ac120a0"/>
+      <fraction n="0.02" ref="Mn0x7faf3ac16990"/>
+      <fraction n="0.0075" ref="Si0x7faf3ac16110"/>
+      <fraction n="0.00045" ref="P0x7faf3ac1ee70"/>
+      <fraction n="0.0003" ref="S0x7faf3ac1f170"/>
+      <fraction n="0.17" ref="Cr0x7faf3ac12a40"/>
+      <fraction n="0.025" ref="Mo0x7faf3ac21140"/>
+      <fraction n="0.12" ref="Ni0x7faf3ac15830"/>
+      <fraction n="0.001" ref="N0x7faf3ac1b1c0"/>
+      <fraction n="0.65545" ref="Fe0x7faf3ac13b30"/>
+    </material>
+    <material name="G4_Galactic0x7faefb06fa50" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <MEE unit="eV" value="21.8"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <fraction n="1" ref="H0x7faf3ac1a8f0"/>
+    </material>
+    <material name="G4_Fe0x7faf3ac13940" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="286"/>
+      <D unit="g/cm3" value="7.874"/>
+      <fraction n="1" ref="Fe0x7faf3ac13b30"/>
+    </material>
+    <isotope N="63" Z="29" name="Cu630x7faf3ac131c0">
+      <atom unit="g/mole" value="62.9296"/>
+    </isotope>
+    <isotope N="65" Z="29" name="Cu650x7faf3ac12980">
+      <atom unit="g/mole" value="64.9278"/>
+    </isotope>
+    <element name="Cu0x7faf3ac13280">
+      <fraction n="0.6917" ref="Cu630x7faf3ac131c0"/>
+      <fraction n="0.3083" ref="Cu650x7faf3ac12980"/>
+    </element>
+    <material name="G4_Cu0x7faf3ac13090" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="322"/>
+      <D unit="g/cm3" value="8.96"/>
+      <fraction n="1" ref="Cu0x7faf3ac13280"/>
+    </material>
+    <isotope N="36" Z="18" name="Ar360x7faf3ac51c40">
+      <atom unit="g/mole" value="35.9675"/>
+    </isotope>
+    <isotope N="38" Z="18" name="Ar380x7faf3ac51c80">
+      <atom unit="g/mole" value="37.9627"/>
+    </isotope>
+    <isotope N="40" Z="18" name="Ar400x7faf3ac51cc0">
+      <atom unit="g/mole" value="39.9624"/>
+    </isotope>
+    <element name="Ar0x7faf3ac51d20">
+      <fraction n="0.003365" ref="Ar360x7faf3ac51c40"/>
+      <fraction n="0.000632" ref="Ar380x7faf3ac51c80"/>
+      <fraction n="0.996003" ref="Ar400x7faf3ac51cc0"/>
+    </element>
+    <material name="G4_AIR0x7faf3ac51b30" state="gas">
+      <property name="RINDEX" ref="RINDEX0x7faf3ac52aa0"/>
+      <property name="GROUPVEL" ref="GROUPVEL0x7faf3ac521b0"/>
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="85.7"/>
+      <D unit="g/cm3" value="0.00120479"/>
+      <fraction n="0.000124000124000124" ref="C0x7faf3ac120a0"/>
+      <fraction n="0.755267755267755" ref="N0x7faf3ac1b1c0"/>
+      <fraction n="0.231781231781232" ref="O0x7faf3ac1bab0"/>
+      <fraction n="0.0128270128270128" ref="Ar0x7faf3ac51d20"/>
+    </material>
+  </materials>
+
+  <solids>
+    <xtru lunit="mm" name="d1_vacuum_solid0x7faf3b078800">
+      <twoDimVertex x="-30" y="28"/>
+      <twoDimVertex x="-29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="-28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="-26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="-24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="-21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="-17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="-13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="-9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="-4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="0" y="46"/>
+      <twoDimVertex x="4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="30" y="28"/>
+      <twoDimVertex x="30" y="6.12323399573677e-15"/>
+      <twoDimVertex x="29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="28.5316954888546" y="-30.9016994374947"/>
+      <twoDimVertex x="26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="21.2132034355964" y="-70.7106781186547"/>
+      <twoDimVertex x="17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="9.27050983124843" y="-95.1056516295154"/>
+      <twoDimVertex x="4.69303395120693" y="-98.7688340595138"/>
+      <twoDimVertex x="3.67394039744206e-15" y="-100"/>
+      <twoDimVertex x="-4.69303395120692" y="-98.7688340595138"/>
+      <twoDimVertex x="-9.27050983124842" y="-95.1056516295154"/>
+      <twoDimVertex x="-13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="-17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="-21.2132034355964" y="-70.7106781186548"/>
+      <twoDimVertex x="-24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="-26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="-28.5316954888546" y="-30.9016994374948"/>
+      <twoDimVertex x="-29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="-30" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-99.999999"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="99.999999"/>
+    </xtru>
+    <xtru lunit="mm" name="d1_bp_outer_solid0x7faf3b0b6000">
+      <twoDimVertex x="-34.001" y="28"/>
+      <twoDimVertex x="-33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="-32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="-30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="-27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="-24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="-19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="-15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="-10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="-5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="0" y="50.001"/>
+      <twoDimVertex x="5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="34.001" y="28"/>
+      <twoDimVertex x="34.001" y="6.36822458790619e-15"/>
+      <twoDimVertex x="33.5823912685753" y="-16.269340798649"/>
+      <twoDimVertex x="32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="15.4361309816443" y="-92.6655695221144"/>
+      <twoDimVertex x="10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="4.16392158178092e-15" y="-104.001"/>
+      <twoDimVertex x="-5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="-10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="-15.4361309816443" y="-92.6655695221145"/>
+      <twoDimVertex x="-19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="-24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="-27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="-30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="-32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="-33.5823912685753" y="-16.2693407986491"/>
+      <twoDimVertex x="-34.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-99.999996"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="99.999996"/>
+    </xtru>
+    <xtru lunit="mm" name="d1_bp_inner_solid0x7faf3b0a6400">
+      <twoDimVertex x="-30.001" y="28"/>
+      <twoDimVertex x="-29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="-28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="-26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="-24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="-21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="-17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="-13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="-9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="-4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="0" y="46.001"/>
+      <twoDimVertex x="4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="30.001" y="28"/>
+      <twoDimVertex x="30.001" y="6.12329522807672e-15"/>
+      <twoDimVertex x="29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="21.2139105423776" y="-70.7113852254359"/>
+      <twoDimVertex x="17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="9.2708188482428" y="-95.1066026860316"/>
+      <twoDimVertex x="4.69319038567197" y="-98.7698217478544"/>
+      <twoDimVertex x="3.67406286212197e-15" y="-100.001"/>
+      <twoDimVertex x="-4.69319038567196" y="-98.7698217478544"/>
+      <twoDimVertex x="-9.27081884824279" y="-95.1066026860317"/>
+      <twoDimVertex x="-13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="-17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="-21.2139105423776" y="-70.711385225436"/>
+      <twoDimVertex x="-24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="-26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="-28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="-29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="-30.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-400"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="400"/>
+    </xtru>
+    <subtraction name="d1_pipe_solid0x7faefb0a1880">
+      <first ref="d1_bp_outer_solid0x7faf3b0b6000"/>
+      <second ref="d1_bp_inner_solid0x7faf3b0a6400"/>
+    </subtraction>
+    <xtru lunit="mm" name="d1_container_solid0x7faf3b0b9200">
+      <twoDimVertex x="-34.002" y="28"/>
+      <twoDimVertex x="-33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="-32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="-30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="-27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="-24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="-19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="-15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="-10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="-5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="0" y="50.002"/>
+      <twoDimVertex x="5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="34.002" y="28"/>
+      <twoDimVertex x="34.002" y="6.36828582024615e-15"/>
+      <twoDimVertex x="33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="30.2960038354529" y="-47.2159199539123"/>
+      <twoDimVertex x="27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="10.507195842737" y="-98.9117798077285"/>
+      <twoDimVertex x="5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="4.16404404646083e-15" y="-104.002"/>
+      <twoDimVertex x="-5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="-10.507195842737" y="-98.9117798077286"/>
+      <twoDimVertex x="-15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="-19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="-24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="-27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="-30.2960038354529" y="-47.2159199539124"/>
+      <twoDimVertex x="-32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="-33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="-34.002" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-100"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="100"/>
+    </xtru>
+    <xtru lunit="mm" name="d1_mod_0_straight_vacuum_solid0x7faf3b0bf600">
+      <twoDimVertex x="-30" y="28"/>
+      <twoDimVertex x="-29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="-28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="-26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="-24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="-21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="-17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="-13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="-9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="-4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="0" y="46"/>
+      <twoDimVertex x="4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="30" y="28"/>
+      <twoDimVertex x="30" y="6.12323399573677e-15"/>
+      <twoDimVertex x="29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="28.5316954888546" y="-30.9016994374947"/>
+      <twoDimVertex x="26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="21.2132034355964" y="-70.7106781186547"/>
+      <twoDimVertex x="17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="9.27050983124843" y="-95.1056516295154"/>
+      <twoDimVertex x="4.69303395120693" y="-98.7688340595138"/>
+      <twoDimVertex x="3.67394039744206e-15" y="-100"/>
+      <twoDimVertex x="-4.69303395120692" y="-98.7688340595138"/>
+      <twoDimVertex x="-9.27050983124842" y="-95.1056516295154"/>
+      <twoDimVertex x="-13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="-17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="-21.2132034355964" y="-70.7106781186548"/>
+      <twoDimVertex x="-24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="-26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="-28.5316954888546" y="-30.9016994374948"/>
+      <twoDimVertex x="-29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="-30" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-149.999999"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="149.999999"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0998334166468282" highY="0" highZ="0.995004165278026" lowX="-0" lowY="0" lowZ="-1" lunit="mm" name="d1_mod_0_face_solid0x7faefaf76930" rmax="124.8" rmin="0" startphi="0" z="199.999998"/>
+    <intersection name="d1_mod_0_vacuum_solid0x7faefaf73f00">
+      <first ref="d1_mod_0_straight_vacuum_solid0x7faf3b0bf600"/>
+      <second ref="d1_mod_0_face_solid0x7faefaf76930"/>
+    </intersection>
+    <xtru lunit="mm" name="d1_mod_0_straight_bp_outer_solid0x7faf3d138a00">
+      <twoDimVertex x="-34.001" y="28"/>
+      <twoDimVertex x="-33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="-32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="-30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="-27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="-24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="-19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="-15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="-10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="-5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="0" y="50.001"/>
+      <twoDimVertex x="5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="34.001" y="28"/>
+      <twoDimVertex x="34.001" y="6.36822458790619e-15"/>
+      <twoDimVertex x="33.5823912685753" y="-16.269340798649"/>
+      <twoDimVertex x="32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="15.4361309816443" y="-92.6655695221144"/>
+      <twoDimVertex x="10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="4.16392158178092e-15" y="-104.001"/>
+      <twoDimVertex x="-5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="-10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="-15.4361309816443" y="-92.6655695221145"/>
+      <twoDimVertex x="-19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="-24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="-27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="-30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="-32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="-33.5823912685753" y="-16.2693407986491"/>
+      <twoDimVertex x="-34.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-149.999996"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="149.999996"/>
+    </xtru>
+    <xtru lunit="mm" name="d1_mod_0_straight_bp_inner_solid0x7faf3b0cc800">
+      <twoDimVertex x="-30.001" y="28"/>
+      <twoDimVertex x="-29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="-28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="-26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="-24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="-21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="-17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="-13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="-9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="-4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="0" y="46.001"/>
+      <twoDimVertex x="4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="30.001" y="28"/>
+      <twoDimVertex x="30.001" y="6.12329522807672e-15"/>
+      <twoDimVertex x="29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="21.2139105423776" y="-70.7113852254359"/>
+      <twoDimVertex x="17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="9.2708188482428" y="-95.1066026860316"/>
+      <twoDimVertex x="4.69319038567197" y="-98.7698217478544"/>
+      <twoDimVertex x="3.67406286212197e-15" y="-100.001"/>
+      <twoDimVertex x="-4.69319038567196" y="-98.7698217478544"/>
+      <twoDimVertex x="-9.27081884824279" y="-95.1066026860317"/>
+      <twoDimVertex x="-13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="-17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="-21.2139105423776" y="-70.711385225436"/>
+      <twoDimVertex x="-24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="-26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="-28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="-29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="-30.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-600"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="600"/>
+    </xtru>
+    <subtraction name="d1_mod_0_straight_pipe_solid0x7faefaf4f9b0">
+      <first ref="d1_mod_0_straight_bp_outer_solid0x7faf3d138a00"/>
+      <second ref="d1_mod_0_straight_bp_inner_solid0x7faf3b0cc800"/>
+    </subtraction>
+    <intersection name="d1_mod_0_pipe_solid0x7faefaf77f40">
+      <first ref="d1_mod_0_straight_pipe_solid0x7faefaf4f9b0"/>
+      <second ref="d1_mod_0_face_solid0x7faefaf76930"/>
+    </intersection>
+    <xtru lunit="mm" name="d1_mod_0_straight_container_solid0x7faf2b19ce00">
+      <twoDimVertex x="-34.002" y="28"/>
+      <twoDimVertex x="-33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="-32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="-30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="-27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="-24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="-19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="-15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="-10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="-5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="0" y="50.002"/>
+      <twoDimVertex x="5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="34.002" y="28"/>
+      <twoDimVertex x="34.002" y="6.36828582024615e-15"/>
+      <twoDimVertex x="33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="30.2960038354529" y="-47.2159199539123"/>
+      <twoDimVertex x="27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="10.507195842737" y="-98.9117798077285"/>
+      <twoDimVertex x="5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="4.16404404646083e-15" y="-104.002"/>
+      <twoDimVertex x="-5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="-10.507195842737" y="-98.9117798077286"/>
+      <twoDimVertex x="-15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="-19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="-24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="-27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="-30.2960038354529" y="-47.2159199539124"/>
+      <twoDimVertex x="-32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="-33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="-34.002" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-150"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="150"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0998334166468282" highY="0" highZ="0.995004165278026" lowX="-0" lowY="0" lowZ="-1" lunit="mm" name="d1_mod_0_cont_face_solid0x7faefaf76a40" rmax="124.8" rmin="0" startphi="0" z="200"/>
+    <intersection name="d1_mod_0_container_solid0x7faefaf7c130">
+      <first ref="d1_mod_0_straight_container_solid0x7faf2b19ce00"/>
+      <second ref="d1_mod_0_cont_face_solid0x7faefaf76a40"/>
+    </intersection>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0998334332302309" highY="0" highZ="0.995004163614135" lowX="0.0998334000634254" lowY="0" lowZ="-0.995004166941916" lunit="mm" name="sb1_e1_fringe_bp_container_solid0x7faefb0f3270" rmax="30" rmin="0" startphi="0" z="9.8e-05"/>
+    <xtru lunit="mm" name="sb1_1_bp_straight_vacuum_solid0x7faf3b0cce00">
+      <twoDimVertex x="-30" y="28"/>
+      <twoDimVertex x="-29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="-28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="-26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="-24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="-21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="-17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="-13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="-9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="-4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="0" y="46"/>
+      <twoDimVertex x="4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="30" y="28"/>
+      <twoDimVertex x="30" y="6.12323399573677e-15"/>
+      <twoDimVertex x="29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="28.5316954888546" y="-30.9016994374947"/>
+      <twoDimVertex x="26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="21.2132034355964" y="-70.7106781186547"/>
+      <twoDimVertex x="17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="9.27050983124843" y="-95.1056516295154"/>
+      <twoDimVertex x="4.69303395120693" y="-98.7688340595138"/>
+      <twoDimVertex x="3.67394039744206e-15" y="-100"/>
+      <twoDimVertex x="-4.69303395120692" y="-98.7688340595138"/>
+      <twoDimVertex x="-9.27050983124842" y="-95.1056516295154"/>
+      <twoDimVertex x="-13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="-17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="-21.2132034355964" y="-70.7106781186548"/>
+      <twoDimVertex x="-24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="-26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="-28.5316954888546" y="-30.9016994374948"/>
+      <twoDimVertex x="-29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="-30" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425706059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425706059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0737425225368659" highY="0" highZ="0.997277313674537" lowX="0.0927237600833767" lowY="0" lowZ="-0.995691872175324" lunit="mm" name="sb1_1_bp_face_solid0x7faefb151de0" rmax="124.8" rmin="0" startphi="0" z="42.8567601412358"/>
+    <intersection name="sb1_1_bp_vacuum_solid0x7faefb14f110">
+      <first ref="sb1_1_bp_straight_vacuum_solid0x7faf3b0cce00"/>
+      <second ref="sb1_1_bp_face_solid0x7faefb151de0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_1_bp_straight_bp_outer_solid0x7faf3b0d5800">
+      <twoDimVertex x="-34.001" y="28"/>
+      <twoDimVertex x="-33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="-32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="-30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="-27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="-24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="-19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="-15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="-10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="-5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="0" y="50.001"/>
+      <twoDimVertex x="5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="34.001" y="28"/>
+      <twoDimVertex x="34.001" y="6.36822458790619e-15"/>
+      <twoDimVertex x="33.5823912685753" y="-16.269340798649"/>
+      <twoDimVertex x="32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="15.4361309816443" y="-92.6655695221144"/>
+      <twoDimVertex x="10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="4.16392158178092e-15" y="-104.001"/>
+      <twoDimVertex x="-5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="-10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="-15.4361309816443" y="-92.6655695221145"/>
+      <twoDimVertex x="-19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="-24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="-27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="-30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="-32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="-33.5823912685753" y="-16.2693407986491"/>
+      <twoDimVertex x="-34.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425676059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425676059268"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_1_bp_straight_bp_inner_solid0x7faf3b0d2600">
+      <twoDimVertex x="-30.001" y="28"/>
+      <twoDimVertex x="-29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="-28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="-26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="-24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="-21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="-17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="-13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="-9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="-4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="0" y="46.001"/>
+      <twoDimVertex x="4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="30.001" y="28"/>
+      <twoDimVertex x="30.001" y="6.12329522807672e-15"/>
+      <twoDimVertex x="29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="21.2139105423776" y="-70.7113852254359"/>
+      <twoDimVertex x="17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="9.2708188482428" y="-95.1066026860316"/>
+      <twoDimVertex x="4.69319038567197" y="-98.7698217478544"/>
+      <twoDimVertex x="3.67406286212197e-15" y="-100.001"/>
+      <twoDimVertex x="-4.69319038567196" y="-98.7698217478544"/>
+      <twoDimVertex x="-9.27081884824279" y="-95.1066026860317"/>
+      <twoDimVertex x="-13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="-17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="-21.2139105423776" y="-70.711385225436"/>
+      <twoDimVertex x="-24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="-26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="-28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="-29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="-30.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-128.570286423707"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="128.570286423707"/>
+    </xtru>
+    <subtraction name="sb1_1_bp_straight_pipe_solid0x7faefb129ec0">
+      <first ref="sb1_1_bp_straight_bp_outer_solid0x7faf3b0d5800"/>
+      <second ref="sb1_1_bp_straight_bp_inner_solid0x7faf3b0d2600"/>
+    </subtraction>
+    <intersection name="sb1_1_bp_pipe_solid0x7faefb1533f0">
+      <first ref="sb1_1_bp_straight_pipe_solid0x7faefb129ec0"/>
+      <second ref="sb1_1_bp_face_solid0x7faefb151de0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_1_bp_straight_container_solid0x7faf3b0d8a00">
+      <twoDimVertex x="-34.002" y="28"/>
+      <twoDimVertex x="-33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="-32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="-30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="-27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="-24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="-19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="-15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="-10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="-5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="0" y="50.002"/>
+      <twoDimVertex x="5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="34.002" y="28"/>
+      <twoDimVertex x="34.002" y="6.36828582024615e-15"/>
+      <twoDimVertex x="33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="30.2960038354529" y="-47.2159199539123"/>
+      <twoDimVertex x="27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="10.507195842737" y="-98.9117798077285"/>
+      <twoDimVertex x="5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="4.16404404646083e-15" y="-104.002"/>
+      <twoDimVertex x="-5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="-10.507195842737" y="-98.9117798077286"/>
+      <twoDimVertex x="-15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="-19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="-24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="-27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="-30.2960038354529" y="-47.2159199539124"/>
+      <twoDimVertex x="-32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="-33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="-34.002" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425716059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425716059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0737425225368659" highY="0" highZ="0.997277313674537" lowX="0.0927237600833767" lowY="0" lowZ="-0.995691872175324" lunit="mm" name="sb1_1_bp_cont_face_solid0x7faefb151ef0" rmax="124.8" rmin="0" startphi="0" z="42.8567621412358"/>
+    <intersection name="sb1_1_bp_container_solid0x7faefb157690">
+      <first ref="sb1_1_bp_straight_container_solid0x7faf3b0d8a00"/>
+      <second ref="sb1_1_bp_cont_face_solid0x7faefb151ef0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_1_outer_yoke_sq_solid0x7faf3b0df200">
+      <twoDimVertex x="-107.999" y="104.004"/>
+      <twoDimVertex x="-107.999" y="162"/>
+      <twoDimVertex x="-354.001" y="162"/>
+      <twoDimVertex x="-354.001" y="-162"/>
+      <twoDimVertex x="-107.999" y="-162"/>
+      <twoDimVertex x="-107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="104.004"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-99.3854675750112"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="99.3854675750112"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0737425225368659" highY="0" highZ="0.997277313674537" lowX="0.0927237600833767" lowY="0" lowZ="-0.995691872175324" lunit="mm" name="sb1_1_outer_angled_face_solid0x7faefb166870" rmax="545.43625402619" rmin="0" startphi="0" z="42.8527621412358"/>
+    <intersection name="sb1_1_outer_yoke_solid0x7faefb166c90">
+      <first ref="sb1_1_outer_yoke_sq_solid0x7faf3b0df200"/>
+      <second ref="sb1_1_outer_angled_face_solid0x7faefb166870"/>
+    </intersection>
+    <box lunit="mm" name="sb1_1_outer_coil_solid0x7faefb1667d0" x="159.898" y="46.3956" z="198.768935150022"/>
+    <intersection name="sb1_1_outer_pole_solid_00x7faefb166f00">
+      <first ref="sb1_1_outer_angled_face_solid0x7faefb166870"/>
+      <second ref="sb1_1_outer_coil_solid0x7faefb1667d0"/>
+      <position name="sb1_1_outer_pole_solid_00x7faefb166f00_pos" unit="mm" x="187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_1_outer_pole_solid_10x7faefb167090">
+      <first ref="sb1_1_outer_angled_face_solid0x7faefb166870"/>
+      <second ref="sb1_1_outer_coil_solid0x7faefb1667d0"/>
+      <position name="sb1_1_outer_pole_solid_10x7faefb167090_pos" unit="mm" x="-187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_1_outer_pole_solid_20x7faefb167270">
+      <first ref="sb1_1_outer_angled_face_solid0x7faefb166870"/>
+      <second ref="sb1_1_outer_coil_solid0x7faefb1667d0"/>
+      <position name="sb1_1_outer_pole_solid_20x7faefb167270_pos" unit="mm" x="187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_1_outer_pole_solid_30x7faefb167450">
+      <first ref="sb1_1_outer_angled_face_solid0x7faefb166870"/>
+      <second ref="sb1_1_outer_coil_solid0x7faefb1667d0"/>
+      <position name="sb1_1_outer_pole_solid_30x7faefb167450_pos" unit="mm" x="-187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_1_outer_outer_sq_container_solid0x7faf3b0e1e00">
+      <twoDimVertex x="-354" y="104.003"/>
+      <twoDimVertex x="-354" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="156.2023"/>
+      <twoDimVertex x="267.902" y="156.2023"/>
+      <twoDimVertex x="267.902" y="104.003"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-99.3864665750112"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="99.3864665750112"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0737425225368659" highY="0" highZ="0.997277313674537" lowX="0.0927237600833767" lowY="0" lowZ="-0.995691872175324" lunit="mm" name="sb1_1_outer_angled_face_cont_solid0x7faefb166980" rmax="545.43625402619" rmin="0" startphi="0" z="42.8547621412358"/>
+    <intersection name="sb1_1_outer_outer_container_solid0x7faefb166d30">
+      <first ref="sb1_1_outer_outer_sq_container_solid0x7faf3b0e1e00"/>
+      <second ref="sb1_1_outer_angled_face_cont_solid0x7faefb166980"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_1_outer_sq_container_solid0x7faf3b0e2a00">
+      <twoDimVertex x="108.001" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="156.2033"/>
+      <twoDimVertex x="267.904" y="156.2033"/>
+      <twoDimVertex x="267.904" y="104.002"/>
+      <twoDimVertex x="108.001" y="104.002"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-99.3864675750112"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="99.3864675750112"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0737425225368659" highY="0" highZ="0.997277313674537" lowX="0.0927237600833767" lowY="0" lowZ="-0.995691872175324" lunit="mm" name="sb1_1_outer_angled_face_mag_cont_solid0x7faefb166b20" rmax="545.43625402619" rmin="0" startphi="0" z="42.8567641412358"/>
+    <intersection name="sb1_1_outer_container_solid0x7faefb1582d0">
+      <first ref="sb1_1_outer_sq_container_solid0x7faf3b0e2a00"/>
+      <second ref="sb1_1_outer_angled_face_mag_cont_solid0x7faefb166b20"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_2_bp_straight_vacuum_solid0x7faf3d139000">
+      <twoDimVertex x="-30" y="28"/>
+      <twoDimVertex x="-29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="-28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="-26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="-24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="-21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="-17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="-13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="-9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="-4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="0" y="46"/>
+      <twoDimVertex x="4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="30" y="28"/>
+      <twoDimVertex x="30" y="6.12323399573677e-15"/>
+      <twoDimVertex x="29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="28.5316954888546" y="-30.9016994374947"/>
+      <twoDimVertex x="26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="21.2132034355964" y="-70.7106781186547"/>
+      <twoDimVertex x="17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="9.27050983124843" y="-95.1056516295154"/>
+      <twoDimVertex x="4.69303395120693" y="-98.7688340595138"/>
+      <twoDimVertex x="3.67394039744206e-15" y="-100"/>
+      <twoDimVertex x="-4.69303395120692" y="-98.7688340595138"/>
+      <twoDimVertex x="-9.27050983124842" y="-95.1056516295154"/>
+      <twoDimVertex x="-13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="-17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="-21.2132034355964" y="-70.7106781186548"/>
+      <twoDimVertex x="-24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="-26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="-28.5316954888546" y="-30.9016994374948"/>
+      <twoDimVertex x="-29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="-30" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425706059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425706059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0404651368303121" highY="0" highZ="0.999180950929963" lowX="0.0594886684850591" lowY="0" lowZ="-0.998228980906623" lunit="mm" name="sb1_2_bp_face_solid0x7faf3c8e4cc0" rmax="124.8" rmin="0" startphi="0" z="42.8567601412358"/>
+    <intersection name="sb1_2_bp_vacuum_solid0x7faf3c8e1ff0">
+      <first ref="sb1_2_bp_straight_vacuum_solid0x7faf3d139000"/>
+      <second ref="sb1_2_bp_face_solid0x7faf3c8e4cc0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_2_bp_straight_bp_outer_solid0x7faf3d16ca00">
+      <twoDimVertex x="-34.001" y="28"/>
+      <twoDimVertex x="-33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="-32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="-30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="-27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="-24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="-19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="-15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="-10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="-5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="0" y="50.001"/>
+      <twoDimVertex x="5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="34.001" y="28"/>
+      <twoDimVertex x="34.001" y="6.36822458790619e-15"/>
+      <twoDimVertex x="33.5823912685753" y="-16.269340798649"/>
+      <twoDimVertex x="32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="15.4361309816443" y="-92.6655695221144"/>
+      <twoDimVertex x="10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="4.16392158178092e-15" y="-104.001"/>
+      <twoDimVertex x="-5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="-10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="-15.4361309816443" y="-92.6655695221145"/>
+      <twoDimVertex x="-19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="-24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="-27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="-30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="-32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="-33.5823912685753" y="-16.2693407986491"/>
+      <twoDimVertex x="-34.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425676059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425676059268"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_2_bp_straight_bp_inner_solid0x7faf3d0fec00">
+      <twoDimVertex x="-30.001" y="28"/>
+      <twoDimVertex x="-29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="-28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="-26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="-24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="-21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="-17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="-13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="-9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="-4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="0" y="46.001"/>
+      <twoDimVertex x="4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="30.001" y="28"/>
+      <twoDimVertex x="30.001" y="6.12329522807672e-15"/>
+      <twoDimVertex x="29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="21.2139105423776" y="-70.7113852254359"/>
+      <twoDimVertex x="17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="9.2708188482428" y="-95.1066026860316"/>
+      <twoDimVertex x="4.69319038567197" y="-98.7698217478544"/>
+      <twoDimVertex x="3.67406286212197e-15" y="-100.001"/>
+      <twoDimVertex x="-4.69319038567196" y="-98.7698217478544"/>
+      <twoDimVertex x="-9.27081884824279" y="-95.1066026860317"/>
+      <twoDimVertex x="-13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="-17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="-21.2139105423776" y="-70.711385225436"/>
+      <twoDimVertex x="-24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="-26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="-28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="-29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="-30.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-128.570286423707"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="128.570286423707"/>
+    </xtru>
+    <subtraction name="sb1_2_bp_straight_pipe_solid0x7faf3c8bd0b0">
+      <first ref="sb1_2_bp_straight_bp_outer_solid0x7faf3d16ca00"/>
+      <second ref="sb1_2_bp_straight_bp_inner_solid0x7faf3d0fec00"/>
+    </subtraction>
+    <intersection name="sb1_2_bp_pipe_solid0x7faf3c8e62d0">
+      <first ref="sb1_2_bp_straight_pipe_solid0x7faf3c8bd0b0"/>
+      <second ref="sb1_2_bp_face_solid0x7faf3c8e4cc0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_2_bp_straight_container_solid0x7faf3d14e600">
+      <twoDimVertex x="-34.002" y="28"/>
+      <twoDimVertex x="-33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="-32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="-30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="-27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="-24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="-19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="-15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="-10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="-5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="0" y="50.002"/>
+      <twoDimVertex x="5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="34.002" y="28"/>
+      <twoDimVertex x="34.002" y="6.36828582024615e-15"/>
+      <twoDimVertex x="33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="30.2960038354529" y="-47.2159199539123"/>
+      <twoDimVertex x="27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="10.507195842737" y="-98.9117798077285"/>
+      <twoDimVertex x="5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="4.16404404646083e-15" y="-104.002"/>
+      <twoDimVertex x="-5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="-10.507195842737" y="-98.9117798077286"/>
+      <twoDimVertex x="-15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="-19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="-24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="-27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="-30.2960038354529" y="-47.2159199539124"/>
+      <twoDimVertex x="-32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="-33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="-34.002" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425716059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425716059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0404651368303121" highY="0" highZ="0.999180950929963" lowX="0.0594886684850591" lowY="0" lowZ="-0.998228980906623" lunit="mm" name="sb1_2_bp_cont_face_solid0x7faf3c8e4dd0" rmax="124.8" rmin="0" startphi="0" z="42.8567621412358"/>
+    <intersection name="sb1_2_bp_container_solid0x7faf3c8ea570">
+      <first ref="sb1_2_bp_straight_container_solid0x7faf3d14e600"/>
+      <second ref="sb1_2_bp_cont_face_solid0x7faf3c8e4dd0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_2_outer_yoke_sq_solid0x7faf3d16fc00">
+      <twoDimVertex x="-107.999" y="104.004"/>
+      <twoDimVertex x="-107.999" y="162"/>
+      <twoDimVertex x="-354.001" y="162"/>
+      <twoDimVertex x="-354.001" y="-162"/>
+      <twoDimVertex x="-107.999" y="-162"/>
+      <twoDimVertex x="-107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="104.004"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-72.428032937957"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="72.428032937957"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0404651368303121" highY="0" highZ="0.999180950929963" lowX="0.0594886684850591" lowY="0" lowZ="-0.998228980906623" lunit="mm" name="sb1_2_outer_angled_face_solid0x7faf3c8f9710" rmax="545.43625402619" rmin="0" startphi="0" z="42.8527621412358"/>
+    <intersection name="sb1_2_outer_yoke_solid0x7faf3c8f9b30">
+      <first ref="sb1_2_outer_yoke_sq_solid0x7faf3d16fc00"/>
+      <second ref="sb1_2_outer_angled_face_solid0x7faf3c8f9710"/>
+    </intersection>
+    <box lunit="mm" name="sb1_2_outer_coil_solid0x7faf3c8f9670" x="159.898" y="46.3956" z="144.854065875914"/>
+    <intersection name="sb1_2_outer_pole_solid_00x7faf3c8f9da0">
+      <first ref="sb1_2_outer_angled_face_solid0x7faf3c8f9710"/>
+      <second ref="sb1_2_outer_coil_solid0x7faf3c8f9670"/>
+      <position name="sb1_2_outer_pole_solid_00x7faf3c8f9da0_pos" unit="mm" x="187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_2_outer_pole_solid_10x7faf3c8f9f30">
+      <first ref="sb1_2_outer_angled_face_solid0x7faf3c8f9710"/>
+      <second ref="sb1_2_outer_coil_solid0x7faf3c8f9670"/>
+      <position name="sb1_2_outer_pole_solid_10x7faf3c8f9f30_pos" unit="mm" x="-187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_2_outer_pole_solid_20x7faf3c8fa110">
+      <first ref="sb1_2_outer_angled_face_solid0x7faf3c8f9710"/>
+      <second ref="sb1_2_outer_coil_solid0x7faf3c8f9670"/>
+      <position name="sb1_2_outer_pole_solid_20x7faf3c8fa110_pos" unit="mm" x="187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_2_outer_pole_solid_30x7faf3c8fa2f0">
+      <first ref="sb1_2_outer_angled_face_solid0x7faf3c8f9710"/>
+      <second ref="sb1_2_outer_coil_solid0x7faf3c8f9670"/>
+      <position name="sb1_2_outer_pole_solid_30x7faf3c8fa2f0_pos" unit="mm" x="-187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_2_outer_outer_sq_container_solid0x7faf3d172800">
+      <twoDimVertex x="-354" y="104.003"/>
+      <twoDimVertex x="-354" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="156.2023"/>
+      <twoDimVertex x="267.902" y="156.2023"/>
+      <twoDimVertex x="267.902" y="104.003"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-72.429031937957"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="72.429031937957"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0404651368303121" highY="0" highZ="0.999180950929963" lowX="0.0594886684850591" lowY="0" lowZ="-0.998228980906623" lunit="mm" name="sb1_2_outer_angled_face_cont_solid0x7faf3c8f9820" rmax="545.43625402619" rmin="0" startphi="0" z="42.8547621412358"/>
+    <intersection name="sb1_2_outer_outer_container_solid0x7faf3c8f9bd0">
+      <first ref="sb1_2_outer_outer_sq_container_solid0x7faf3d172800"/>
+      <second ref="sb1_2_outer_angled_face_cont_solid0x7faf3c8f9820"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_2_outer_sq_container_solid0x7faf3d173400">
+      <twoDimVertex x="108.001" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="156.2033"/>
+      <twoDimVertex x="267.904" y="156.2033"/>
+      <twoDimVertex x="267.904" y="104.002"/>
+      <twoDimVertex x="108.001" y="104.002"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-72.429032937957"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="72.429032937957"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0404651368303121" highY="0" highZ="0.999180950929963" lowX="0.0594886684850591" lowY="0" lowZ="-0.998228980906623" lunit="mm" name="sb1_2_outer_angled_face_mag_cont_solid0x7faf3c8f99c0" rmax="545.43625402619" rmin="0" startphi="0" z="42.8567641412358"/>
+    <intersection name="sb1_2_outer_container_solid0x7faefb18e0b0">
+      <first ref="sb1_2_outer_sq_container_solid0x7faf3d173400"/>
+      <second ref="sb1_2_outer_angled_face_mag_cont_solid0x7faf3c8f99c0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_3_bp_straight_vacuum_solid0x7faf3d174000">
+      <twoDimVertex x="-30" y="28"/>
+      <twoDimVertex x="-29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="-28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="-26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="-24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="-21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="-17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="-13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="-9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="-4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="0" y="46"/>
+      <twoDimVertex x="4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="30" y="28"/>
+      <twoDimVertex x="30" y="6.12323399573677e-15"/>
+      <twoDimVertex x="29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="28.5316954888546" y="-30.9016994374947"/>
+      <twoDimVertex x="26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="21.2132034355964" y="-70.7106781186547"/>
+      <twoDimVertex x="17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="9.27050983124843" y="-95.1056516295154"/>
+      <twoDimVertex x="4.69303395120693" y="-98.7688340595138"/>
+      <twoDimVertex x="3.67394039744206e-15" y="-100"/>
+      <twoDimVertex x="-4.69303395120692" y="-98.7688340595138"/>
+      <twoDimVertex x="-9.27050983124842" y="-95.1056516295154"/>
+      <twoDimVertex x="-13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="-17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="-21.2132034355964" y="-70.7106781186548"/>
+      <twoDimVertex x="-24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="-26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="-28.5316954888546" y="-30.9016994374948"/>
+      <twoDimVertex x="-29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="-30" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425706059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425706059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="0.0261874844862093" lowY="0" lowZ="-0.999657049020455" lunit="mm" name="sb1_3_bp_face_solid0x7faefb257260" rmax="124.8" rmin="0" startphi="0" z="42.8567601412358"/>
+    <intersection name="sb1_3_bp_vacuum_solid0x7faefb254590">
+      <first ref="sb1_3_bp_straight_vacuum_solid0x7faf3d174000"/>
+      <second ref="sb1_3_bp_face_solid0x7faefb257260"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_3_bp_straight_bp_outer_solid0x7faf3d178c00">
+      <twoDimVertex x="-34.001" y="28"/>
+      <twoDimVertex x="-33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="-32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="-30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="-27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="-24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="-19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="-15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="-10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="-5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="0" y="50.001"/>
+      <twoDimVertex x="5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="34.001" y="28"/>
+      <twoDimVertex x="34.001" y="6.36822458790619e-15"/>
+      <twoDimVertex x="33.5823912685753" y="-16.269340798649"/>
+      <twoDimVertex x="32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="15.4361309816443" y="-92.6655695221144"/>
+      <twoDimVertex x="10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="4.16392158178092e-15" y="-104.001"/>
+      <twoDimVertex x="-5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="-10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="-15.4361309816443" y="-92.6655695221145"/>
+      <twoDimVertex x="-19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="-24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="-27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="-30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="-32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="-33.5823912685753" y="-16.2693407986491"/>
+      <twoDimVertex x="-34.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425676059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425676059268"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_3_bp_straight_bp_inner_solid0x7faf3d175600">
+      <twoDimVertex x="-30.001" y="28"/>
+      <twoDimVertex x="-29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="-28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="-26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="-24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="-21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="-17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="-13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="-9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="-4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="0" y="46.001"/>
+      <twoDimVertex x="4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="30.001" y="28"/>
+      <twoDimVertex x="30.001" y="6.12329522807672e-15"/>
+      <twoDimVertex x="29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="21.2139105423776" y="-70.7113852254359"/>
+      <twoDimVertex x="17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="9.2708188482428" y="-95.1066026860316"/>
+      <twoDimVertex x="4.69319038567197" y="-98.7698217478544"/>
+      <twoDimVertex x="3.67406286212197e-15" y="-100.001"/>
+      <twoDimVertex x="-4.69319038567196" y="-98.7698217478544"/>
+      <twoDimVertex x="-9.27081884824279" y="-95.1066026860317"/>
+      <twoDimVertex x="-13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="-17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="-21.2139105423776" y="-70.711385225436"/>
+      <twoDimVertex x="-24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="-26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="-28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="-29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="-30.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-128.570286423707"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="128.570286423707"/>
+    </xtru>
+    <subtraction name="sb1_3_bp_straight_pipe_solid0x7faefb22f340">
+      <first ref="sb1_3_bp_straight_bp_outer_solid0x7faf3d178c00"/>
+      <second ref="sb1_3_bp_straight_bp_inner_solid0x7faf3d175600"/>
+    </subtraction>
+    <intersection name="sb1_3_bp_pipe_solid0x7faefb258870">
+      <first ref="sb1_3_bp_straight_pipe_solid0x7faefb22f340"/>
+      <second ref="sb1_3_bp_face_solid0x7faefb257260"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_3_bp_straight_container_solid0x7faf3d17c200">
+      <twoDimVertex x="-34.002" y="28"/>
+      <twoDimVertex x="-33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="-32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="-30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="-27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="-24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="-19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="-15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="-10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="-5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="0" y="50.002"/>
+      <twoDimVertex x="5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="34.002" y="28"/>
+      <twoDimVertex x="34.002" y="6.36828582024615e-15"/>
+      <twoDimVertex x="33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="30.2960038354529" y="-47.2159199539123"/>
+      <twoDimVertex x="27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="10.507195842737" y="-98.9117798077285"/>
+      <twoDimVertex x="5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="4.16404404646083e-15" y="-104.002"/>
+      <twoDimVertex x="-5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="-10.507195842737" y="-98.9117798077286"/>
+      <twoDimVertex x="-15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="-19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="-24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="-27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="-30.2960038354529" y="-47.2159199539124"/>
+      <twoDimVertex x="-32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="-33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="-34.002" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425716059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425716059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="0.0261874844862093" lowY="0" lowZ="-0.999657049020455" lunit="mm" name="sb1_3_bp_cont_face_solid0x7faefb257370" rmax="124.8" rmin="0" startphi="0" z="42.8567621412358"/>
+    <intersection name="sb1_3_bp_container_solid0x7faefb25cb10">
+      <first ref="sb1_3_bp_straight_container_solid0x7faf3d17c200"/>
+      <second ref="sb1_3_bp_cont_face_solid0x7faefb257370"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_3_outer_yoke_sq_solid0x7faf2b815e00">
+      <twoDimVertex x="-107.999" y="104.004"/>
+      <twoDimVertex x="-107.999" y="162"/>
+      <twoDimVertex x="-354.001" y="162"/>
+      <twoDimVertex x="-354.001" y="-162"/>
+      <twoDimVertex x="-107.999" y="-162"/>
+      <twoDimVertex x="-107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="104.004"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-45.5604393017686"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="45.5604393017686"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="0.0261874844862093" lowY="0" lowZ="-0.999657049020455" lunit="mm" name="sb1_3_outer_angled_face_solid0x7faf2ac27f20" rmax="545.43625402619" rmin="0" startphi="0" z="42.8527621412358"/>
+    <intersection name="sb1_3_outer_yoke_solid0x7faf2ac28340">
+      <first ref="sb1_3_outer_yoke_sq_solid0x7faf2b815e00"/>
+      <second ref="sb1_3_outer_angled_face_solid0x7faf2ac27f20"/>
+    </intersection>
+    <box lunit="mm" name="sb1_3_outer_coil_solid0x7faf2ac27e80" x="159.898" y="46.3956" z="91.1188786035372"/>
+    <intersection name="sb1_3_outer_pole_solid_00x7faf2ac285b0">
+      <first ref="sb1_3_outer_angled_face_solid0x7faf2ac27f20"/>
+      <second ref="sb1_3_outer_coil_solid0x7faf2ac27e80"/>
+      <position name="sb1_3_outer_pole_solid_00x7faf2ac285b0_pos" unit="mm" x="187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_3_outer_pole_solid_10x7faf2ac28740">
+      <first ref="sb1_3_outer_angled_face_solid0x7faf2ac27f20"/>
+      <second ref="sb1_3_outer_coil_solid0x7faf2ac27e80"/>
+      <position name="sb1_3_outer_pole_solid_10x7faf2ac28740_pos" unit="mm" x="-187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_3_outer_pole_solid_20x7faf2ac28920">
+      <first ref="sb1_3_outer_angled_face_solid0x7faf2ac27f20"/>
+      <second ref="sb1_3_outer_coil_solid0x7faf2ac27e80"/>
+      <position name="sb1_3_outer_pole_solid_20x7faf2ac28920_pos" unit="mm" x="187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_3_outer_pole_solid_30x7faf2ac28b00">
+      <first ref="sb1_3_outer_angled_face_solid0x7faf2ac27f20"/>
+      <second ref="sb1_3_outer_coil_solid0x7faf2ac27e80"/>
+      <position name="sb1_3_outer_pole_solid_30x7faf2ac28b00_pos" unit="mm" x="-187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_3_outer_outer_sq_container_solid0x7faf2b818200">
+      <twoDimVertex x="-354" y="104.003"/>
+      <twoDimVertex x="-354" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="156.2023"/>
+      <twoDimVertex x="267.902" y="156.2023"/>
+      <twoDimVertex x="267.902" y="104.003"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-45.5614383017686"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="45.5614383017686"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="0.0261874844862093" lowY="0" lowZ="-0.999657049020455" lunit="mm" name="sb1_3_outer_angled_face_cont_solid0x7faf2ac28030" rmax="545.43625402619" rmin="0" startphi="0" z="42.8547621412358"/>
+    <intersection name="sb1_3_outer_outer_container_solid0x7faf2ac283e0">
+      <first ref="sb1_3_outer_outer_sq_container_solid0x7faf2b818200"/>
+      <second ref="sb1_3_outer_angled_face_cont_solid0x7faf2ac28030"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_3_outer_sq_container_solid0x7faf2b811e00">
+      <twoDimVertex x="108.001" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="156.2033"/>
+      <twoDimVertex x="267.904" y="156.2033"/>
+      <twoDimVertex x="267.904" y="104.002"/>
+      <twoDimVertex x="108.001" y="104.002"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-45.5614393017686"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="45.5614393017686"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="0.0261874844862093" lowY="0" lowZ="-0.999657049020455" lunit="mm" name="sb1_3_outer_angled_face_mag_cont_solid0x7faf2ac281d0" rmax="545.43625402619" rmin="0" startphi="0" z="42.8567641412358"/>
+    <intersection name="sb1_3_outer_container_solid0x7faf2ac19c20">
+      <first ref="sb1_3_outer_sq_container_solid0x7faf2b811e00"/>
+      <second ref="sb1_3_outer_angled_face_mag_cont_solid0x7faf2ac281d0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_bp_straight_vacuum_solid0x7faf3c04e800">
+      <twoDimVertex x="-30" y="28"/>
+      <twoDimVertex x="-29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="-28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="-26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="-24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="-21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="-17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="-13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="-9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="-4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="0" y="46"/>
+      <twoDimVertex x="4.69303395120693" y="45.7783901307125"/>
+      <twoDimVertex x="9.27050983124842" y="45.1190172933128"/>
+      <twoDimVertex x="13.6197149921864" y="44.0381174353906"/>
+      <twoDimVertex x="17.6335575687742" y="42.5623058987491"/>
+      <twoDimVertex x="21.2132034355964" y="40.7279220613579"/>
+      <twoDimVertex x="24.2705098312484" y="38.5801345412645"/>
+      <twoDimVertex x="26.730195725651" y="36.1718289953118"/>
+      <twoDimVertex x="28.5316954888546" y="33.5623058987491"/>
+      <twoDimVertex x="29.6306502178541" y="30.8158203707242"/>
+      <twoDimVertex x="30" y="28"/>
+      <twoDimVertex x="30" y="6.12323399573677e-15"/>
+      <twoDimVertex x="29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="28.5316954888546" y="-30.9016994374947"/>
+      <twoDimVertex x="26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="21.2132034355964" y="-70.7106781186547"/>
+      <twoDimVertex x="17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="9.27050983124843" y="-95.1056516295154"/>
+      <twoDimVertex x="4.69303395120693" y="-98.7688340595138"/>
+      <twoDimVertex x="3.67394039744206e-15" y="-100"/>
+      <twoDimVertex x="-4.69303395120692" y="-98.7688340595138"/>
+      <twoDimVertex x="-9.27050983124842" y="-95.1056516295154"/>
+      <twoDimVertex x="-13.6197149921864" y="-89.1006524188368"/>
+      <twoDimVertex x="-17.6335575687742" y="-80.9016994374947"/>
+      <twoDimVertex x="-21.2132034355964" y="-70.7106781186548"/>
+      <twoDimVertex x="-24.2705098312484" y="-58.7785252292473"/>
+      <twoDimVertex x="-26.730195725651" y="-45.3990499739547"/>
+      <twoDimVertex x="-28.5316954888546" y="-30.9016994374948"/>
+      <twoDimVertex x="-29.6306502178541" y="-15.6434465040231"/>
+      <twoDimVertex x="-30" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425706059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425706059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="-0.0071427940235393" lowY="0" lowZ="-0.999974489921387" lunit="mm" name="sb1_even_ang_bp_face_solid0x7faf3afc2b30" rmax="124.8" rmin="0" startphi="0" z="42.8567601412358"/>
+    <intersection name="sb1_even_ang_bp_vacuum_solid0x7faf3afbfe60">
+      <first ref="sb1_even_ang_bp_straight_vacuum_solid0x7faf3c04e800"/>
+      <second ref="sb1_even_ang_bp_face_solid0x7faf3afc2b30"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_bp_straight_bp_outer_solid0x7faf3c07d600">
+      <twoDimVertex x="-34.001" y="28"/>
+      <twoDimVertex x="-33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="-32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="-30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="-27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="-24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="-19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="-15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="-10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="-5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="0" y="50.001"/>
+      <twoDimVertex x="5.31892824583289" y="49.7301311814336"/>
+      <twoDimVertex x="10.5068868257426" y="48.9241944150097"/>
+      <twoDimVertex x="15.4361309816443" y="47.6030345386683"/>
+      <twoDimVertex x="19.9852863631964" y="45.7991828932432"/>
+      <twoDimVertex x="24.0423376671238" y="43.5570562928852"/>
+      <twoDimVertex x="27.5073868257426" y="40.9318633356867"/>
+      <twoDimVertex x="30.2951128289287" y="37.9882449847698"/>
+      <twoDimVertex x="32.3368726105515" y="34.7986828932432"/>
+      <twoDimVertex x="33.5823912685753" y="31.4417146653501"/>
+      <twoDimVertex x="34.001" y="28"/>
+      <twoDimVertex x="34.001" y="6.36822458790619e-15"/>
+      <twoDimVertex x="33.5823912685753" y="-16.269340798649"/>
+      <twoDimVertex x="32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="15.4361309816443" y="-92.6655695221144"/>
+      <twoDimVertex x="10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="4.16392158178092e-15" y="-104.001"/>
+      <twoDimVertex x="-5.31892824583289" y="-102.720575110235"/>
+      <twoDimVertex x="-10.5068868257426" y="-98.9108287512123"/>
+      <twoDimVertex x="-15.4361309816443" y="-92.6655695221145"/>
+      <twoDimVertex x="-19.9852863631964" y="-84.1385764319889"/>
+      <twoDimVertex x="-24.0423376671238" y="-73.5398123501821"/>
+      <twoDimVertex x="-27.5073868257426" y="-61.1302540236695"/>
+      <twoDimVertex x="-30.2951128289287" y="-47.2154659634126"/>
+      <twoDimVertex x="-32.3368726105515" y="-32.1380764319889"/>
+      <twoDimVertex x="-33.5823912685753" y="-16.2693407986491"/>
+      <twoDimVertex x="-34.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425676059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425676059268"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_even_ang_bp_straight_bp_inner_solid0x7faf3c06d000">
+      <twoDimVertex x="-30.001" y="28"/>
+      <twoDimVertex x="-29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="-28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="-26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="-24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="-21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="-17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="-13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="-9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="-4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="0" y="46.001"/>
+      <twoDimVertex x="4.69319038567197" y="45.7793778190531"/>
+      <twoDimVertex x="9.2708188482428" y="45.1199683498291"/>
+      <twoDimVertex x="13.6201689826861" y="44.0390084419148"/>
+      <twoDimVertex x="17.6341453540265" y="42.5631149157434"/>
+      <twoDimVertex x="21.2139105423776" y="40.728629168139"/>
+      <twoDimVertex x="24.2713188482428" y="38.5807223265168"/>
+      <twoDimVertex x="26.7310867321752" y="36.1722829858116"/>
+      <twoDimVertex x="28.5326465453709" y="33.5626149157434"/>
+      <twoDimVertex x="29.6316379061947" y="30.8159768051892"/>
+      <twoDimVertex x="30.001" y="28"/>
+      <twoDimVertex x="30.001" y="6.12329522807672e-15"/>
+      <twoDimVertex x="29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="21.2139105423776" y="-70.7113852254359"/>
+      <twoDimVertex x="17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="9.2708188482428" y="-95.1066026860316"/>
+      <twoDimVertex x="4.69319038567197" y="-98.7698217478544"/>
+      <twoDimVertex x="3.67406286212197e-15" y="-100.001"/>
+      <twoDimVertex x="-4.69319038567196" y="-98.7698217478544"/>
+      <twoDimVertex x="-9.27081884824279" y="-95.1066026860317"/>
+      <twoDimVertex x="-13.6201689826861" y="-89.101543425361"/>
+      <twoDimVertex x="-17.6341453540265" y="-80.9025084544891"/>
+      <twoDimVertex x="-21.2139105423776" y="-70.711385225436"/>
+      <twoDimVertex x="-24.2713188482428" y="-58.7791130144996"/>
+      <twoDimVertex x="-26.7310867321752" y="-45.3995039644544"/>
+      <twoDimVertex x="-28.5326465453709" y="-30.9020084544891"/>
+      <twoDimVertex x="-29.6316379061947" y="-15.6436029384881"/>
+      <twoDimVertex x="-30.001" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-128.570286423707"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="128.570286423707"/>
+    </xtru>
+    <subtraction name="sb1_even_ang_bp_straight_pipe_solid0x7faf3af9ae40">
+      <first ref="sb1_even_ang_bp_straight_bp_outer_solid0x7faf3c07d600"/>
+      <second ref="sb1_even_ang_bp_straight_bp_inner_solid0x7faf3c06d000"/>
+    </subtraction>
+    <intersection name="sb1_even_ang_bp_pipe_solid0x7faf3afc4140">
+      <first ref="sb1_even_ang_bp_straight_pipe_solid0x7faf3af9ae40"/>
+      <second ref="sb1_even_ang_bp_face_solid0x7faf3afc2b30"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_bp_straight_container_solid0x7faf3c08d200">
+      <twoDimVertex x="-34.002" y="28"/>
+      <twoDimVertex x="-33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="-32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="-30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="-27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="-24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="-19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="-15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="-10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="-5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="0" y="50.002"/>
+      <twoDimVertex x="5.31908468029793" y="49.7311188697742"/>
+      <twoDimVertex x="10.507195842737" y="48.925145471526"/>
+      <twoDimVertex x="15.4365849721441" y="47.6039255451925"/>
+      <twoDimVertex x="19.9858741484487" y="45.7999919102376"/>
+      <twoDimVertex x="24.043044773905" y="43.5577633996664"/>
+      <twoDimVertex x="27.508195842737" y="40.932451120939"/>
+      <twoDimVertex x="30.2960038354529" y="37.9886989752695"/>
+      <twoDimVertex x="32.3378236670678" y="34.7989919102376"/>
+      <twoDimVertex x="33.5833789569159" y="31.4418710998152"/>
+      <twoDimVertex x="34.002" y="28"/>
+      <twoDimVertex x="34.002" y="6.36828582024615e-15"/>
+      <twoDimVertex x="33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="30.2960038354529" y="-47.2159199539123"/>
+      <twoDimVertex x="27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="10.507195842737" y="-98.9117798077285"/>
+      <twoDimVertex x="5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="4.16404404646083e-15" y="-104.002"/>
+      <twoDimVertex x="-5.31908468029793" y="-102.721562798576"/>
+      <twoDimVertex x="-10.507195842737" y="-98.9117798077286"/>
+      <twoDimVertex x="-15.4365849721441" y="-92.6664605286386"/>
+      <twoDimVertex x="-19.9858741484487" y="-84.1393854489833"/>
+      <twoDimVertex x="-24.043044773905" y="-73.5405194569633"/>
+      <twoDimVertex x="-27.508195842737" y="-61.1308418089218"/>
+      <twoDimVertex x="-30.2960038354529" y="-47.2159199539124"/>
+      <twoDimVertex x="-32.3378236670678" y="-32.1383854489833"/>
+      <twoDimVertex x="-33.5833789569159" y="-16.2694972331141"/>
+      <twoDimVertex x="-34.002" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.1425716059268"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.1425716059268"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="-0.0071427940235393" lowY="0" lowZ="-0.999974489921387" lunit="mm" name="sb1_even_ang_bp_cont_face_solid0x7faf3afc2c40" rmax="124.8" rmin="0" startphi="0" z="42.8567621412358"/>
+    <intersection name="sb1_even_ang_bp_container_solid0x7faf3afc8330">
+      <first ref="sb1_even_ang_bp_straight_container_solid0x7faf3c08d200"/>
+      <second ref="sb1_even_ang_bp_cont_face_solid0x7faf3afc2c40"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_yoke_sq_solid0x7faf3c092e00">
+      <twoDimVertex x="-107.999" y="104.004"/>
+      <twoDimVertex x="-107.999" y="162"/>
+      <twoDimVertex x="-354.001" y="162"/>
+      <twoDimVertex x="-354.001" y="-162"/>
+      <twoDimVertex x="-107.999" y="-162"/>
+      <twoDimVertex x="-107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-104.004"/>
+      <twoDimVertex x="107.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="104.004"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-42.8557621412358"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="42.8557621412358"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="-0.0071427940235393" lowY="0" lowZ="-0.999974489921387" lunit="mm" name="sb1_even_ang_outer_angled_face_solid0x7faf3afd7340" rmax="545.43625402619" rmin="0" startphi="0" z="42.8527621412358"/>
+    <intersection name="sb1_even_ang_outer_yoke_solid0x7faf3afd7790">
+      <first ref="sb1_even_ang_outer_yoke_sq_solid0x7faf3c092e00"/>
+      <second ref="sb1_even_ang_outer_angled_face_solid0x7faf3afd7340"/>
+    </intersection>
+    <box lunit="mm" name="sb1_even_ang_outer_coil_solid0x7faf3afd5150" x="159.898" y="46.3956" z="85.7095242824716"/>
+    <intersection name="sb1_even_ang_outer_pole_solid_00x7faf3afd7a30">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7faf3afd7340"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7faf3afd5150"/>
+      <position name="sb1_even_ang_outer_pole_solid_00x7faf3afd7a30_pos" unit="mm" x="187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_even_ang_outer_pole_solid_10x7faf3afd7be0">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7faf3afd7340"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7faf3afd5150"/>
+      <position name="sb1_even_ang_outer_pole_solid_10x7faf3afd7be0_pos" unit="mm" x="-187.951" y="133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_even_ang_outer_pole_solid_20x7faf3afd7d90">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7faf3afd7340"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7faf3afd5150"/>
+      <position name="sb1_even_ang_outer_pole_solid_20x7faf3afd7d90_pos" unit="mm" x="187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <intersection name="sb1_even_ang_outer_pole_solid_30x7faf3afd7f70">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7faf3afd7340"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7faf3afd5150"/>
+      <position name="sb1_even_ang_outer_pole_solid_30x7faf3afd7f70_pos" unit="mm" x="-187.951" y="-133.0025" z="0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_outer_sq_container_solid0x7faf3c095a00">
+      <twoDimVertex x="-354" y="104.003"/>
+      <twoDimVertex x="-354" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-104.003"/>
+      <twoDimVertex x="267.902" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-156.2023"/>
+      <twoDimVertex x="108.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="156.2023"/>
+      <twoDimVertex x="267.902" y="156.2023"/>
+      <twoDimVertex x="267.902" y="104.003"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-42.8567611412358"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="42.8567611412358"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="-0.0071427940235393" lowY="0" lowZ="-0.999974489921387" lunit="mm" name="sb1_even_ang_outer_angled_face_cont_solid0x7faf3afd74e0" rmax="545.43625402619" rmin="0" startphi="0" z="42.8547621412358"/>
+    <intersection name="sb1_even_ang_outer_outer_container_solid0x7faf3afd7830">
+      <first ref="sb1_even_ang_outer_outer_sq_container_solid0x7faf3c095a00"/>
+      <second ref="sb1_even_ang_outer_angled_face_cont_solid0x7faf3afd74e0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_sq_container_solid0x7faf3c096600">
+      <twoDimVertex x="108.001" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-104.002"/>
+      <twoDimVertex x="267.904" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-156.2033"/>
+      <twoDimVertex x="108.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="156.2033"/>
+      <twoDimVertex x="267.904" y="156.2033"/>
+      <twoDimVertex x="267.904" y="104.002"/>
+      <twoDimVertex x="108.001" y="104.002"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-42.8567621412358"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="42.8567621412358"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="-0.0071427940235393" lowY="0" lowZ="-0.999974489921387" lunit="mm" name="sb1_even_ang_outer_angled_face_mag_cont_solid0x7faf3afd7620" rmax="545.43625402619" rmin="0" startphi="0" z="42.8567641412358"/>
+    <intersection name="sb1_even_ang_outer_container_solid0x7faefb1b2940">
+      <first ref="sb1_even_ang_outer_sq_container_solid0x7faf3c096600"/>
+      <second ref="sb1_even_ang_outer_angled_face_mag_cont_solid0x7faf3afd7620"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_1_outer_end_coil_in_solid0x7faf3b0e3600">
+      <twoDimVertex x="267.899" y="24.9480821293703"/>
+      <twoDimVertex x="266.733148968279" y="5.56569713250604"/>
+      <twoDimVertex x="263.252596606426" y="-13.7511886938502"/>
+      <twoDimVertex x="257.508097205398" y="-32.7208916565116"/>
+      <twoDimVertex x="249.583418501948" y="-51.0667907702314"/>
+      <twoDimVertex x="239.594120156396" y="-68.5213615145646"/>
+      <twoDimVertex x="227.685868632559" y="-84.8300769437886"/>
+      <twoDimVertex x="214.032313052703" y="-99.7551192629163"/>
+      <twoDimVertex x="198.832553002312" y="-113.078847746666"/>
+      <twoDimVertex x="182.308235209799" y="-124.606972431322"/>
+      <twoDimVertex x="164.700321438101" y="-134.171387299906"/>
+      <twoDimVertex x="146.26557471958" y="-141.632621646446"/>
+      <twoDimVertex x="127.272815172826" y="-146.881873872934"/>
+      <twoDimVertex x="107.999" y="-149.842598061621"/>
+      <twoDimVertex x="-107.999" y="-169.957401938379"/>
+      <twoDimVertex x="-127.272815172826" y="-170.586424063624"/>
+      <twoDimVertex x="-146.265574719581" y="-168.874571566406"/>
+      <twoDimVertex x="-164.700321438102" y="-164.84680711089"/>
+      <twoDimVertex x="-182.308235209799" y="-158.561864572574"/>
+      <twoDimVertex x="-198.832553002312" y="-150.111392566125"/>
+      <twoDimVertex x="-214.032313052703" y="-139.618618002202"/>
+      <twoDimVertex x="-227.685868632559" y="-127.236549161618"/>
+      <twoDimVertex x="-239.594120156396" y="-113.145744490059"/>
+      <twoDimVertex x="-249.583418501948" y="-97.5516796493658"/>
+      <twoDimVertex x="-257.508097205398" y="-80.6817512196913"/>
+      <twoDimVertex x="-263.252596606426" y="-62.7819607453108"/>
+      <twoDimVertex x="-266.733148968279" y="-44.1133274781584"/>
+      <twoDimVertex x="-267.899" y="-24.9480821293704"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-23.1978"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="23.1978"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_1_outer_end_coil_in_solid0x7faf3b0e5c00">
+      <twoDimVertex x="268.901" y="-156.2013"/>
+      <twoDimVertex x="-267.901" y="-156.2013"/>
+      <twoDimVertex x="-267.901" y="-109.8017"/>
+      <twoDimVertex x="267.901" y="-109.8017"/>
+      <twoDimVertex x="267.901" y="109.8017"/>
+      <twoDimVertex x="-267.901" y="109.8017"/>
+      <twoDimVertex x="-267.901" y="156.2013"/>
+      <twoDimVertex x="268.901" y="156.2013"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.902"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.902"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0927237600833767" highY="-0" highZ="0.995691872175324" lowX="0.0927237600833767" lowY="0" lowZ="-0.995691872175324" lunit="mm" name="sb1_1_outer_angled_face_solid0x7faefb18cf70" rmax="310.112547186808" rmin="0" startphi="0" z="159.901"/>
+    <intersection name="sb1_1_outer_end_coil_cont_solid0x7faefb18c950">
+      <first ref="sb1_1_outer_end_coil_in_solid0x7faf3b0e5c00"/>
+      <second ref="sb1_1_outer_angled_face_solid0x7faefb18cf70"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_end_coil_out_solid0x7faf3b0ed000">
+      <twoDimVertex x="-267.899" y="-1.91359619210143"/>
+      <twoDimVertex x="-266.733148968279" y="17.3685466269453"/>
+      <twoDimVertex x="-263.252596606426" y="36.3861676765274"/>
+      <twoDimVertex x="-257.508097205398" y="54.8619472177888"/>
+      <twoDimVertex x="-249.583418501948" y="72.5264667811856"/>
+      <twoDimVertex x="-239.594120156396" y="89.1221378944496"/>
+      <twoDimVertex x="-227.685868632559" y="104.406958302553"/>
+      <twoDimVertex x="-214.032313052703" y="118.158040905526"/>
+      <twoDimVertex x="-198.832553002312" y="130.174863954278"/>
+      <twoDimVertex x="-182.308235209799" y="140.282195109229"/>
+      <twoDimVertex x="-164.700321438102" y="148.33264672241"/>
+      <twoDimVertex x="-146.265574719581" y="154.208825081265"/>
+      <twoDimVertex x="-127.272815172826" y="157.82504227332"/>
+      <twoDimVertex x="-107.999" y="159.128565708902"/>
+      <twoDimVertex x="107.999" y="160.671434291098"/>
+      <twoDimVertex x="127.272815172826" y="159.643255663238"/>
+      <twoDimVertex x="146.26557471958" y="156.298368131586"/>
+      <twoDimVertex x="164.700321438101" y="150.685547688385"/>
+      <twoDimVertex x="182.308235209799" y="142.886641894668"/>
+      <twoDimVertex x="198.832553002312" y="133.015376358513"/>
+      <twoDimVertex x="214.032313052703" y="121.215696359592"/>
+      <twoDimVertex x="227.685868632559" y="107.659667802854"/>
+      <twoDimVertex x="239.594120156396" y="92.5449681101741"/>
+      <twoDimVertex x="249.583418501948" y="76.0920036384116"/>
+      <twoDimVertex x="257.508097205398" y="58.5406956584142"/>
+      <twoDimVertex x="263.252596606426" y="40.1469817626336"/>
+      <twoDimVertex x="266.733148968279" y="21.179083718707"/>
+      <twoDimVertex x="267.899" y="1.91359619210151"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-23.1978"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="23.1978"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_even_ang_outer_end_coil_out_solid0x7faf3b0f0c00">
+      <twoDimVertex x="268.901" y="-156.2013"/>
+      <twoDimVertex x="-267.901" y="-156.2013"/>
+      <twoDimVertex x="-267.901" y="-109.8017"/>
+      <twoDimVertex x="267.901" y="-109.8017"/>
+      <twoDimVertex x="267.901" y="109.8017"/>
+      <twoDimVertex x="-267.901" y="109.8017"/>
+      <twoDimVertex x="-267.901" y="156.2013"/>
+      <twoDimVertex x="268.901" y="156.2013"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.901"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.901"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0071427940235393" highY="0" highZ="0.999974489921387" lowX="0.0071427940235393" lowY="-0" lowZ="-0.999974489921387" lunit="mm" name="sb1_even_ang_outer_angled_face_solid0x7faefb1d5c30" rmax="310.112547186808" rmin="0" startphi="0" z="159.901"/>
+    <intersection name="sb1_even_ang_outer_end_coil_cont_solid0x7faefb1d5d40">
+      <first ref="sb1_even_ang_outer_end_coil_out_solid0x7faf3b0f0c00"/>
+      <second ref="sb1_even_ang_outer_angled_face_solid0x7faefb1d5c30"/>
+    </intersection>
+    <box lunit="mm" name="World_solid0x7faf2ac5c260" x="15244.5960391401" y="15000" z="14286.1776605944"/>
+  </solids>
+
+  <structure>
+    <volume name="d1_vacuum_lv0x7faefb0c6620">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="d1_vacuum_solid0x7faf3b078800"/>
+    </volume>
+    <volume name="d1_beampipe_lv0x7faefb0ca900">
+      <materialref ref="stainlesssteel0x7faf3ac20330"/>
+      <solidref ref="d1_pipe_solid0x7faefb0a1880"/>
+    </volume>
+    <volume name="d1_container_lv0x7faefb0c92f0">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="d1_container_solid0x7faf3b0b9200"/>
+      <physvol name="d1_vacuum_pv0x7faefb0c9430">
+        <volumeref ref="d1_vacuum_lv0x7faefb0c6620"/>
+      </physvol>
+      <physvol name="d1_beampipe_pipe_pv0x7faefb0c94c0">
+        <volumeref ref="d1_beampipe_lv0x7faefb0ca900"/>
+      </physvol>
+    </volume>
+    <volume name="d1_mod_0_vacuum_lv0x7faefaf7c1d0">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="d1_mod_0_vacuum_solid0x7faefaf73f00"/>
+    </volume>
+    <volume name="d1_mod_0_beampipe_lv0x7faefaf7c270">
+      <materialref ref="stainlesssteel0x7faf3ac20330"/>
+      <solidref ref="d1_mod_0_pipe_solid0x7faefaf77f40"/>
+    </volume>
+    <volume name="d1_mod_0_container_lv0x7faefaf7c310">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="d1_mod_0_container_solid0x7faefaf7c130"/>
+      <physvol name="d1_mod_0_vacuum_pv0x7faefaf7c420">
+        <volumeref ref="d1_mod_0_vacuum_lv0x7faefaf7c1d0"/>
+      </physvol>
+      <physvol name="d1_mod_0_beampipe_pipe_pv0x7faefb0edae0">
+        <volumeref ref="d1_mod_0_beampipe_lv0x7faefaf7c270"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_e1_fringe_bp_container_lv0x7faefb0f3460">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="sb1_e1_fringe_bp_container_solid0x7faefb0f3270"/>
+    </volume>
+    <volume name="sb1_1_bp_vacuum_lv0x7faefb157730">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="sb1_1_bp_vacuum_solid0x7faefb14f110"/>
+    </volume>
+    <volume name="sb1_1_bp_beampipe_lv0x7faefb1577d0">
+      <materialref ref="stainlesssteel0x7faf3ac20330"/>
+      <solidref ref="sb1_1_bp_pipe_solid0x7faefb1533f0"/>
+    </volume>
+    <volume name="sb1_1_bp_container_lv0x7faefb157870">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_1_bp_container_solid0x7faefb157690"/>
+      <physvol name="sb1_1_bp_vacuum_pv0x7faefb157980">
+        <volumeref ref="sb1_1_bp_vacuum_lv0x7faefb157730"/>
+      </physvol>
+      <physvol name="sb1_1_bp_beampipe_pipe_pv0x7faefb1579d0">
+        <volumeref ref="sb1_1_bp_beampipe_lv0x7faefb1577d0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_1_outer_yoke_lv0x7faefb1676d0">
+      <materialref ref="G4_Fe0x7faf3ac13940"/>
+      <solidref ref="sb1_1_outer_yoke_solid0x7faefb166c90"/>
+    </volume>
+    <volume name="sb1_1_outer_coil_solid_00x7faefb167a40">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_1_outer_pole_solid_00x7faefb166f00"/>
+    </volume>
+    <volume name="sb1_1_outer_coil_solid_10x7faefb167b70">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_1_outer_pole_solid_10x7faefb167090"/>
+    </volume>
+    <volume name="sb1_1_outer_coil_solid_20x7faefb167ca0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_1_outer_pole_solid_20x7faefb167270"/>
+    </volume>
+    <volume name="sb1_1_outer_coil_solid_30x7faefb167dd0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_1_outer_pole_solid_30x7faefb167450"/>
+    </volume>
+    <volume name="sb1_1_outer_container_lv0x7faefb1677a0">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="sb1_1_outer_outer_container_solid0x7faefb166d30"/>
+      <physvol name="sb1_1_outer_yoke_pv0x7faefb167f00">
+        <volumeref ref="sb1_1_outer_yoke_lv0x7faefb1676d0"/>
+      </physvol>
+      <physvol name="sb1_1_outer_coil_0_pv0x7faefb167f50">
+        <volumeref ref="sb1_1_outer_coil_solid_00x7faefb167a40"/>
+      </physvol>
+      <physvol name="sb1_1_outer_coil_1_pv0x7faefb168210">
+        <volumeref ref="sb1_1_outer_coil_solid_10x7faefb167b70"/>
+      </physvol>
+      <physvol name="sb1_1_outer_coil_2_pv0x7faefb168260">
+        <volumeref ref="sb1_1_outer_coil_solid_20x7faefb167ca0"/>
+      </physvol>
+      <physvol name="sb1_1_outer_coil_3_pv0x7faefb1684e0">
+        <volumeref ref="sb1_1_outer_coil_solid_30x7faefb167dd0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_1_container_lv0x7faefb168670">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_1_outer_container_solid0x7faefb1582d0"/>
+      <physvol name="sb1_1_beampipe_pv0x7faefb1581f0">
+        <volumeref ref="sb1_1_bp_container_lv0x7faefb157870"/>
+      </physvol>
+      <physvol name="sb1_1_outer_pv0x7faf3ac76a00">
+        <volumeref ref="sb1_1_outer_container_lv0x7faefb1677a0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_2_bp_vacuum_lv0x7faf3c8ea610">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="sb1_2_bp_vacuum_solid0x7faf3c8e1ff0"/>
+    </volume>
+    <volume name="sb1_2_bp_beampipe_lv0x7faf3c8ea6b0">
+      <materialref ref="stainlesssteel0x7faf3ac20330"/>
+      <solidref ref="sb1_2_bp_pipe_solid0x7faf3c8e62d0"/>
+    </volume>
+    <volume name="sb1_2_bp_container_lv0x7faf3c8ea750">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_2_bp_container_solid0x7faf3c8ea570"/>
+      <physvol name="sb1_2_bp_vacuum_pv0x7faf3c8ea860">
+        <volumeref ref="sb1_2_bp_vacuum_lv0x7faf3c8ea610"/>
+      </physvol>
+      <physvol name="sb1_2_bp_beampipe_pipe_pv0x7faf3c8ea8b0">
+        <volumeref ref="sb1_2_bp_beampipe_lv0x7faf3c8ea6b0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_2_outer_yoke_lv0x7faf3c8fa570">
+      <materialref ref="G4_Fe0x7faf3ac13940"/>
+      <solidref ref="sb1_2_outer_yoke_solid0x7faf3c8f9b30"/>
+    </volume>
+    <volume name="sb1_2_outer_coil_solid_00x7faf3c8fa8e0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_2_outer_pole_solid_00x7faf3c8f9da0"/>
+    </volume>
+    <volume name="sb1_2_outer_coil_solid_10x7faf3c8faa10">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_2_outer_pole_solid_10x7faf3c8f9f30"/>
+    </volume>
+    <volume name="sb1_2_outer_coil_solid_20x7faf3c8fab40">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_2_outer_pole_solid_20x7faf3c8fa110"/>
+    </volume>
+    <volume name="sb1_2_outer_coil_solid_30x7faf3c8fac70">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_2_outer_pole_solid_30x7faf3c8fa2f0"/>
+    </volume>
+    <volume name="sb1_2_outer_container_lv0x7faf3c8fa640">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="sb1_2_outer_outer_container_solid0x7faf3c8f9bd0"/>
+      <physvol name="sb1_2_outer_yoke_pv0x7faf3c8fada0">
+        <volumeref ref="sb1_2_outer_yoke_lv0x7faf3c8fa570"/>
+      </physvol>
+      <physvol name="sb1_2_outer_coil_0_pv0x7faf3c8fadf0">
+        <volumeref ref="sb1_2_outer_coil_solid_00x7faf3c8fa8e0"/>
+      </physvol>
+      <physvol name="sb1_2_outer_coil_1_pv0x7faf3c8fb0b0">
+        <volumeref ref="sb1_2_outer_coil_solid_10x7faf3c8faa10"/>
+      </physvol>
+      <physvol name="sb1_2_outer_coil_2_pv0x7faf3c8fb100">
+        <volumeref ref="sb1_2_outer_coil_solid_20x7faf3c8fab40"/>
+      </physvol>
+      <physvol name="sb1_2_outer_coil_3_pv0x7faf3c8fb380">
+        <volumeref ref="sb1_2_outer_coil_solid_30x7faf3c8fac70"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_2_container_lv0x7faefb158440">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_2_outer_container_solid0x7faefb18e0b0"/>
+      <physvol name="sb1_2_beampipe_pv0x7faefb1a6e50">
+        <volumeref ref="sb1_2_bp_container_lv0x7faf3c8ea750"/>
+      </physvol>
+      <physvol name="sb1_2_outer_pv0x7faefb158510">
+        <volumeref ref="sb1_2_outer_container_lv0x7faf3c8fa640"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_3_bp_vacuum_lv0x7faefb25cbb0">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="sb1_3_bp_vacuum_solid0x7faefb254590"/>
+    </volume>
+    <volume name="sb1_3_bp_beampipe_lv0x7faefb25cc50">
+      <materialref ref="stainlesssteel0x7faf3ac20330"/>
+      <solidref ref="sb1_3_bp_pipe_solid0x7faefb258870"/>
+    </volume>
+    <volume name="sb1_3_bp_container_lv0x7faefb25ccf0">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_3_bp_container_solid0x7faefb25cb10"/>
+      <physvol name="sb1_3_bp_vacuum_pv0x7faefb25ce00">
+        <volumeref ref="sb1_3_bp_vacuum_lv0x7faefb25cbb0"/>
+      </physvol>
+      <physvol name="sb1_3_bp_beampipe_pipe_pv0x7faefb300040">
+        <volumeref ref="sb1_3_bp_beampipe_lv0x7faefb25cc50"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_3_outer_yoke_lv0x7faf2ac28d80">
+      <materialref ref="G4_Fe0x7faf3ac13940"/>
+      <solidref ref="sb1_3_outer_yoke_solid0x7faf2ac28340"/>
+    </volume>
+    <volume name="sb1_3_outer_coil_solid_00x7faf2ac290f0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_3_outer_pole_solid_00x7faf2ac285b0"/>
+    </volume>
+    <volume name="sb1_3_outer_coil_solid_10x7faf2ac29220">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_3_outer_pole_solid_10x7faf2ac28740"/>
+    </volume>
+    <volume name="sb1_3_outer_coil_solid_20x7faf2ac29350">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_3_outer_pole_solid_20x7faf2ac28920"/>
+    </volume>
+    <volume name="sb1_3_outer_coil_solid_30x7faf2ac29480">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_3_outer_pole_solid_30x7faf2ac28b00"/>
+    </volume>
+    <volume name="sb1_3_outer_container_lv0x7faf2ac28e50">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="sb1_3_outer_outer_container_solid0x7faf2ac283e0"/>
+      <physvol name="sb1_3_outer_yoke_pv0x7faf2ac295b0">
+        <volumeref ref="sb1_3_outer_yoke_lv0x7faf2ac28d80"/>
+      </physvol>
+      <physvol name="sb1_3_outer_coil_0_pv0x7faf2ac29600">
+        <volumeref ref="sb1_3_outer_coil_solid_00x7faf2ac290f0"/>
+      </physvol>
+      <physvol name="sb1_3_outer_coil_1_pv0x7faf2ac298c0">
+        <volumeref ref="sb1_3_outer_coil_solid_10x7faf2ac29220"/>
+      </physvol>
+      <physvol name="sb1_3_outer_coil_2_pv0x7faf2ac29910">
+        <volumeref ref="sb1_3_outer_coil_solid_20x7faf2ac29350"/>
+      </physvol>
+      <physvol name="sb1_3_outer_coil_3_pv0x7faf2ac29b90">
+        <volumeref ref="sb1_3_outer_coil_solid_30x7faf2ac29480"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_3_container_lv0x7faf2ac29d20">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_3_outer_container_solid0x7faf2ac19c20"/>
+      <physvol name="sb1_3_beampipe_pv0x7faf2ac19840">
+        <volumeref ref="sb1_3_bp_container_lv0x7faefb25ccf0"/>
+      </physvol>
+      <physvol name="sb1_3_outer_pv0x7faefaf741a0">
+        <volumeref ref="sb1_3_outer_container_lv0x7faf2ac28e50"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_bp_vacuum_lv0x7faf3afc83d0">
+      <materialref ref="vacuum0x7faf3ac54fa0"/>
+      <solidref ref="sb1_even_ang_bp_vacuum_solid0x7faf3afbfe60"/>
+    </volume>
+    <volume name="sb1_even_ang_bp_beampipe_lv0x7faf3afc8470">
+      <materialref ref="stainlesssteel0x7faf3ac20330"/>
+      <solidref ref="sb1_even_ang_bp_pipe_solid0x7faf3afc4140"/>
+    </volume>
+    <volume name="sb1_even_ang_bp_container_lv0x7faf3afc8510">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_even_ang_bp_container_solid0x7faf3afc8330"/>
+      <physvol name="sb1_even_ang_bp_vacuum_pv0x7faf3afc8670">
+        <volumeref ref="sb1_even_ang_bp_vacuum_lv0x7faf3afc83d0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_bp_beampipe_pipe_pv0x7faf3ac76350">
+        <volumeref ref="sb1_even_ang_bp_beampipe_lv0x7faf3afc8470"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_outer_yoke_lv0x7faf3afd81f0">
+      <materialref ref="G4_Fe0x7faf3ac13940"/>
+      <solidref ref="sb1_even_ang_outer_yoke_solid0x7faf3afd7790"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_00x7faf3afd8590">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_00x7faf3afd7a30"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_10x7faf3afd86c0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_10x7faf3afd7be0"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_20x7faf3afd87f0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_20x7faf3afd7d90"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_30x7faf3afd8920">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_30x7faf3afd7f70"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_container_lv0x7faf3afd82f0">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="sb1_even_ang_outer_outer_container_solid0x7faf3afd7830"/>
+      <physvol name="sb1_even_ang_outer_yoke_pv0x7faf3afd8a50">
+        <volumeref ref="sb1_even_ang_outer_yoke_lv0x7faf3afd81f0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_0_pv0x7faefb18e250">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_00x7faf3afd8590"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_1_pv0x7faefb18e390">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_10x7faf3afd86c0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_2_pv0x7faefb18e3e0">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_20x7faf3afd87f0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_3_pv0x7faefb0719c0">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_30x7faf3afd8920"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_container_lv0x7faefb1b1fa0">
+      <materialref ref="G4_Galactic0x7faefb06fa50"/>
+      <solidref ref="sb1_even_ang_outer_container_solid0x7faefb1b2940"/>
+      <physvol name="sb1_even_ang_beampipe_pv0x7faefb1c9a70">
+        <volumeref ref="sb1_even_ang_bp_container_lv0x7faf3afc8510"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_pv0x7faf2ac29780">
+        <volumeref ref="sb1_even_ang_outer_container_lv0x7faf3afd82f0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_1_outer_end_coil_in_lv0x7faefb18d230">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_1_outer_end_coil_in_solid0x7faf3b0e3600"/>
+    </volume>
+    <volume name="sb1_1_outer_end_cont_in_lv0x7faefb18d2d0">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="sb1_1_outer_end_coil_cont_solid0x7faefb18c950"/>
+      <physvol name="sb1_1_outer_end_piece_in_top_pv0x7faefb18d750">
+        <volumeref ref="sb1_1_outer_end_coil_in_lv0x7faefb18d230"/>
+        <position name="sb1_1_outer_end_piece_in_top_pv0x7faefb18d750_pos" unit="mm" x="0" y="133.0015" z="79.95"/>
+        <rotation name="sb1_1_outer_end_piece_in_top_pv0x7faefb18d750_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sb1_1_outer_end_piece_in_low_pv0x7faefb18d7a0">
+        <volumeref ref="sb1_1_outer_end_coil_in_lv0x7faefb18d230"/>
+        <position name="sb1_1_outer_end_piece_in_low_pv0x7faefb18d7a0_pos" unit="mm" x="0" y="-133.0015" z="79.95"/>
+        <rotation name="sb1_1_outer_end_piece_in_low_pv0x7faefb18d7a0_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_outer_end_coil_out_lv0x7faefb1d5fb0">
+      <materialref ref="G4_Cu0x7faf3ac13090"/>
+      <solidref ref="sb1_even_ang_outer_end_coil_out_solid0x7faf3b0ed000"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_end_cont_out_lv0x7faefb1d60b0">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="sb1_even_ang_outer_end_coil_cont_solid0x7faefb1d5d40"/>
+      <physvol name="sb1_even_ang_outer_end_piece_out_top_pv0x7faefb1d62e0">
+        <volumeref ref="sb1_even_ang_outer_end_coil_out_lv0x7faefb1d5fb0"/>
+        <position name="sb1_even_ang_outer_end_piece_out_top_pv0x7faefb1d62e0_pos" unit="mm" x="0" y="133.0025" z="-79.95"/>
+        <rotation name="sb1_even_ang_outer_end_piece_out_top_pv0x7faefb1d62e0_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_end_piece_out_low_pv0x7faefb1d64b0">
+        <volumeref ref="sb1_even_ang_outer_end_coil_out_lv0x7faefb1d5fb0"/>
+        <position name="sb1_even_ang_outer_end_piece_out_low_pv0x7faefb1d64b0_pos" unit="mm" x="0" y="-133.0025" z="-79.95"/>
+        <rotation name="sb1_even_ang_outer_end_piece_out_low_pv0x7faefb1d64b0_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="World_lv0x7faf2ac5c2d0">
+      <materialref ref="G4_AIR0x7faf3ac51b30"/>
+      <solidref ref="World_solid0x7faf2ac5c260"/>
+      <physvol name="d1_0_pv0x7faf2ac5f3b0">
+        <volumeref ref="d1_container_lv0x7faefb0c92f0"/>
+        <position name="d1_0_pv0x7faf2ac5f3b0_pos" unit="mm" x="0" y="0" z="100"/>
+      </physvol>
+      <physvol name="d1_mod_0_0_pv0x7faf2ac5f430">
+        <volumeref ref="d1_mod_0_container_lv0x7faefaf7c310"/>
+        <position name="d1_mod_0_0_pv0x7faf2ac5f430_pos" unit="mm" x="0" y="0" z="300.000003"/>
+      </physvol>
+      <physvol name="sb1_e1_fringe_0_pv0x7faf3ac8fcb0">
+        <volumeref ref="sb1_e1_fringe_bp_container_lv0x7faefb0f3460"/>
+        <position name="sb1_e1_fringe_0_pv0x7faf3ac8fcb0_pos" unit="mm" x="-8.33333333333333e-13" y="0" z="400.000056"/>
+        <rotation name="sb1_e1_fringe_0_pv0x7faf3ac8fcb0_rot" unit="deg" x="0" y="9.54929658551372e-07" z="0"/>
+      </physvol>
+      <physvol name="sb1_1_0_pv0x7faf3ac8fd50">
+        <volumeref ref="sb1_1_container_lv0x7faefb168670"/>
+        <position name="sb1_1_0_pv0x7faf3ac8fd50_pos" unit="mm" x="-0.153059233651074" y="0" z="421.427944425805"/>
+        <rotation name="sb1_1_0_pv0x7faf3ac8fd50_rot" unit="deg" x="0" y="0.409257341391383" z="0"/>
+      </physvol>
+      <physvol name="sb1_2_0_pv0x7faefb254830">
+        <volumeref ref="sb1_2_container_lv0x7faefb158440"/>
+        <position name="sb1_2_0_pv0x7faefb254830_pos" unit="mm" x="-0.76526354655547" y="0" z="464.279245316552"/>
+        <rotation name="sb1_2_0_pv0x7faefb254830_rot" unit="deg" x="0" y="1.22776820445551" z="0"/>
+      </physvol>
+      <physvol name="sb1_3_0_pv0x7faefaf7c470">
+        <volumeref ref="sb1_3_container_lv0x7faf2ac29d20"/>
+        <position name="sb1_3_0_pv0x7faefaf7c470_pos" unit="mm" x="-1.9895458063942" y="0" z="507.117428227343"/>
+        <rotation name="sb1_3_0_pv0x7faefaf7c470_rot" unit="deg" x="0" y="2.04627906751964" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_0_pv0x7faefb06ff90">
+        <volumeref ref="sb1_even_ang_container_lv0x7faefb1b1fa0"/>
+        <position name="sb1_even_ang_0_pv0x7faefb06ff90_pos" unit="mm" x="-3.82565616406061" y="0" z="549.933750826377"/>
+        <rotation name="sb1_even_ang_0_pv0x7faefb06ff90_rot" unit="deg" x="0" y="2.86478993058377" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="sb1_even_ang_1_pv0x7faefaf7c6d0">
+        <volumeref ref="sb1_even_ang_container_lv0x7faefb1b1fa0"/>
+        <position name="sb1_even_ang_1_pv0x7faefaf7c6d0_pos" unit="mm" x="-6.27321990977764" y="0" z="592.719475243065"/>
+        <rotation name="sb1_even_ang_1_pv0x7faefaf7c6d0_rot" unit="deg" x="0" y="3.68330079364791" z="0"/>
+      </physvol>
+      <physvol copynumber="2" name="sb1_even_ang_2_pv0x7faefaf7c860">
+        <volumeref ref="sb1_even_ang_container_lv0x7faefb1b1fa0"/>
+        <position name="sb1_even_ang_2_pv0x7faefaf7c860_pos" unit="mm" x="-9.33173754956793" y="0" z="635.465869851233"/>
+        <rotation name="sb1_even_ang_2_pv0x7faefaf7c860_rot" unit="deg" x="0" y="4.50181165671204" z="0"/>
+      </physvol>
+      <physvol copynumber="3" name="sb1_even_ang_3_pv0x7faefaf7c980">
+        <volumeref ref="sb1_even_ang_container_lv0x7faefb1b1fa0"/>
+        <position name="sb1_even_ang_3_pv0x7faefaf7c980_pos" unit="mm" x="-13.0005849927989" y="0" z="678.164212047386"/>
+        <rotation name="sb1_even_ang_3_pv0x7faefaf7c980_rot" unit="deg" x="0" y="5.32032251977617" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="d1_1_pv0x7faefaf7ca20">
+        <volumeref ref="d1_container_lv0x7faefb0c92f0"/>
+        <position name="d1_1_pv0x7faefaf7ca20_pos" unit="mm" x="-24.9708472149063" y="0" z="799.000698416787"/>
+        <rotation name="d1_1_pv0x7faefaf7ca20_rot" unit="deg" x="0" y="5.72957795130823" z="0"/>
+      </physvol>
+      <physvol name="sb1_1_outer_end_piece_in_0_pv0x7faefaf7cac0">
+        <volumeref ref="sb1_1_outer_end_cont_in_lv0x7faefb18d2d0"/>
+        <position name="sb1_1_outer_end_piece_in_0_pv0x7faefaf7cac0_pos" unit="mm" x="0.571086904180606" y="0" z="320.049648613597"/>
+        <rotation name="sb1_1_outer_end_piece_in_0_pv0x7faefaf7cac0_rot" unit="deg" x="0" y="0.409257341391383" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_end_piece_out_0_pv0x7faefb071a10">
+        <volumeref ref="sb1_even_ang_outer_end_cont_out_lv0x7faefb1d60b0"/>
+        <position name="sb1_even_ang_outer_end_piece_out_0_pv0x7faefb071a10_pos" unit="mm" x="-22.4008164096071" y="0" z="779.106343922397"/>
+        <rotation name="sb1_even_ang_outer_end_piece_out_0_pv0x7faefb071a10_rot" unit="deg" x="0" y="5.32032251977617" z="0"/>
+      </physvol>
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="World_lv0x7faf2ac5c2d0"/>
+  </setup>
+
+</gdml>

@@ -1,0 +1,2171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    <matrix coldim="2" name="RINDEX0x7fc133c8f980" values="2e-06 1 7e-06 1 7.14e-06 1"/>
+    <matrix coldim="2" name="GROUPVEL0x7fc133c8fdb0" values="2e-06 299.792 4.5e-06 299.792 7.14e-06 299.792"/>
+    <matrix coldim="2" name="RINDEX0x7fc133c8c9a0" values="2e-06 1.00029 7e-06 1.00029 7.14e-06 1.00029"/>
+    <matrix coldim="2" name="GROUPVEL0x7fc133c8c0b0" values="2e-06 299.705 4.5e-06 299.705 7.14e-06 299.705"/>
+  </define>
+
+  <materials>
+    <isotope N="1" Z="1" name="H10x7fc133c54520">
+      <atom unit="g/mole" value="1.00782503081372"/>
+    </isotope>
+    <isotope N="2" Z="1" name="H20x7fc133c54560">
+      <atom unit="g/mole" value="2.01410199966617"/>
+    </isotope>
+    <element name="H0x7fc133c54a20">
+      <fraction n="0.999885" ref="H10x7fc133c54520"/>
+      <fraction n="0.000115" ref="H20x7fc133c54560"/>
+    </element>
+    <isotope N="12" Z="6" name="C120x7fc133c27dc0">
+      <atom unit="g/mole" value="12"/>
+    </isotope>
+    <isotope N="13" Z="6" name="C130x7fc133c27e20">
+      <atom unit="g/mole" value="13.0034"/>
+    </isotope>
+    <element name="C0x7fc133c4f140">
+      <fraction n="0.9893" ref="C120x7fc133c27dc0"/>
+      <fraction n="0.0107" ref="C130x7fc133c27e20"/>
+    </element>
+    <isotope N="16" Z="8" name="O160x7fc133c55a50">
+      <atom unit="g/mole" value="15.9949"/>
+    </isotope>
+    <isotope N="17" Z="8" name="O170x7fc133c55a90">
+      <atom unit="g/mole" value="16.9991"/>
+    </isotope>
+    <isotope N="18" Z="8" name="O180x7fc133c55ad0">
+      <atom unit="g/mole" value="17.9992"/>
+    </isotope>
+    <element name="O0x7fc133c55b10">
+      <fraction n="0.99757" ref="O160x7fc133c55a50"/>
+      <fraction n="0.00038" ref="O170x7fc133c55a90"/>
+      <fraction n="0.00205" ref="O180x7fc133c55ad0"/>
+    </element>
+    <material name="vacuum0x7fc133c8eea0" state="gas">
+      <property name="RINDEX" ref="RINDEX0x7fc133c8f980"/>
+      <property name="GROUPVEL" ref="GROUPVEL0x7fc133c8fdb0"/>
+      <T unit="K" value="300"/>
+      <P unit="pascal" value="1e-07"/>
+      <MEE unit="eV" value="32.8733620641992"/>
+      <D unit="g/cm3" value="1.1633578301787e-15"/>
+      <fraction n="0.482" ref="H0x7fc133c54a20"/>
+      <fraction n="0.221" ref="C0x7fc133c4f140"/>
+      <fraction n="0.297" ref="O0x7fc133c55b10"/>
+    </material>
+    <isotope N="55" Z="25" name="Mn550x7fc133c58dc0">
+      <atom unit="g/mole" value="54.938"/>
+    </isotope>
+    <element name="Mn0x7fc133c50ca0">
+      <fraction n="1" ref="Mn550x7fc133c58dc0"/>
+    </element>
+    <isotope N="28" Z="14" name="Si280x7fc133c22c50">
+      <atom unit="g/mole" value="27.9769"/>
+    </isotope>
+    <isotope N="29" Z="14" name="Si290x7fc133c219b0">
+      <atom unit="g/mole" value="28.9765"/>
+    </isotope>
+    <isotope N="30" Z="14" name="Si300x7fc133c21a70">
+      <atom unit="g/mole" value="29.9738"/>
+    </isotope>
+    <element name="Si0x7fc133c50970">
+      <fraction n="0.922296077703922" ref="Si280x7fc133c22c50"/>
+      <fraction n="0.0468319531680468" ref="Si290x7fc133c219b0"/>
+      <fraction n="0.0308719691280309" ref="Si300x7fc133c21a70"/>
+    </element>
+    <isotope N="31" Z="15" name="P310x7fc133c50e60">
+      <atom unit="g/mole" value="30.9738"/>
+    </isotope>
+    <element name="P0x7fc133c58e00">
+      <fraction n="1" ref="P310x7fc133c50e60"/>
+    </element>
+    <isotope N="32" Z="16" name="S320x7fc133c58fb0">
+      <atom unit="g/mole" value="31.9721"/>
+    </isotope>
+    <isotope N="33" Z="16" name="S330x7fc133c58ff0">
+      <atom unit="g/mole" value="32.9715"/>
+    </isotope>
+    <isotope N="34" Z="16" name="S340x7fc133c59030">
+      <atom unit="g/mole" value="33.9679"/>
+    </isotope>
+    <isotope N="36" Z="16" name="S360x7fc133c59090">
+      <atom unit="g/mole" value="35.9671"/>
+    </isotope>
+    <element name="S0x7fc133c590d0">
+      <fraction n="0.9493" ref="S320x7fc133c58fb0"/>
+      <fraction n="0.0076" ref="S330x7fc133c58ff0"/>
+      <fraction n="0.0429" ref="S340x7fc133c59030"/>
+      <fraction n="0.0002" ref="S360x7fc133c59090"/>
+    </element>
+    <isotope N="50" Z="24" name="Cr500x7fc133c28700">
+      <atom unit="g/mole" value="49.946"/>
+    </isotope>
+    <isotope N="52" Z="24" name="Cr520x7fc133c28800">
+      <atom unit="g/mole" value="51.9405"/>
+    </isotope>
+    <isotope N="53" Z="24" name="Cr530x7fc133c28910">
+      <atom unit="g/mole" value="52.9407"/>
+    </isotope>
+    <isotope N="54" Z="24" name="Cr540x7fc133c28960">
+      <atom unit="g/mole" value="53.9389"/>
+    </isotope>
+    <element name="Cr0x7fc133c4f480">
+      <fraction n="0.04345" ref="Cr500x7fc133c28700"/>
+      <fraction n="0.83789" ref="Cr520x7fc133c28800"/>
+      <fraction n="0.09501" ref="Cr530x7fc133c28910"/>
+      <fraction n="0.02365" ref="Cr540x7fc133c28960"/>
+    </element>
+    <isotope N="92" Z="42" name="Mo920x7fc133c5aea0">
+      <atom unit="g/mole" value="91.9068"/>
+    </isotope>
+    <isotope N="94" Z="42" name="Mo940x7fc133c5aee0">
+      <atom unit="g/mole" value="93.9051"/>
+    </isotope>
+    <isotope N="95" Z="42" name="Mo950x7fc133c5af20">
+      <atom unit="g/mole" value="94.9058"/>
+    </isotope>
+    <isotope N="96" Z="42" name="Mo960x7fc133c5af60">
+      <atom unit="g/mole" value="95.9047"/>
+    </isotope>
+    <isotope N="97" Z="42" name="Mo970x7fc133c5afa0">
+      <atom unit="g/mole" value="96.906"/>
+    </isotope>
+    <isotope N="98" Z="42" name="Mo980x7fc133c5b020">
+      <atom unit="g/mole" value="97.9054"/>
+    </isotope>
+    <isotope N="100" Z="42" name="Mo1000x7fc133c5b060">
+      <atom unit="g/mole" value="99.9075"/>
+    </isotope>
+    <element name="Mo0x7fc133c5b0a0">
+      <fraction n="0.1484" ref="Mo920x7fc133c5aea0"/>
+      <fraction n="0.0925" ref="Mo940x7fc133c5aee0"/>
+      <fraction n="0.1592" ref="Mo950x7fc133c5af20"/>
+      <fraction n="0.1668" ref="Mo960x7fc133c5af60"/>
+      <fraction n="0.0955" ref="Mo970x7fc133c5afa0"/>
+      <fraction n="0.2413" ref="Mo980x7fc133c5b020"/>
+      <fraction n="0.0963" ref="Mo1000x7fc133c5b060"/>
+    </element>
+    <isotope N="58" Z="28" name="Ni580x7fc133c292d0">
+      <atom unit="g/mole" value="57.9353"/>
+    </isotope>
+    <isotope N="60" Z="28" name="Ni600x7fc133c24100">
+      <atom unit="g/mole" value="59.9308"/>
+    </isotope>
+    <isotope N="61" Z="28" name="Ni610x7fc133c23170">
+      <atom unit="g/mole" value="60.9311"/>
+    </isotope>
+    <isotope N="62" Z="28" name="Ni620x7fc133c22d10">
+      <atom unit="g/mole" value="61.9283"/>
+    </isotope>
+    <isotope N="64" Z="28" name="Ni640x7fc133c22dd0">
+      <atom unit="g/mole" value="63.928"/>
+    </isotope>
+    <element name="Ni0x7fc133c50600">
+      <fraction n="0.680769" ref="Ni580x7fc133c292d0"/>
+      <fraction n="0.262231" ref="Ni600x7fc133c24100"/>
+      <fraction n="0.011399" ref="Ni610x7fc133c23170"/>
+      <fraction n="0.036345" ref="Ni620x7fc133c22d10"/>
+      <fraction n="0.009256" ref="Ni640x7fc133c22dd0"/>
+    </element>
+    <isotope N="14" Z="7" name="N140x7fc133c54d10">
+      <atom unit="g/mole" value="14.0031"/>
+    </isotope>
+    <isotope N="15" Z="7" name="N150x7fc133c54d50">
+      <atom unit="g/mole" value="15.0001"/>
+    </isotope>
+    <element name="N0x7fc133c55280">
+      <fraction n="0.99632" ref="N140x7fc133c54d10"/>
+      <fraction n="0.00368" ref="N150x7fc133c54d50"/>
+    </element>
+    <isotope N="54" Z="26" name="Fe540x7fc133c29840">
+      <atom unit="g/mole" value="53.9396"/>
+    </isotope>
+    <isotope N="56" Z="26" name="Fe560x7fc133c293e0">
+      <atom unit="g/mole" value="55.9349"/>
+    </isotope>
+    <isotope N="57" Z="26" name="Fe570x7fc133c29510">
+      <atom unit="g/mole" value="56.9354"/>
+    </isotope>
+    <isotope N="58" Z="26" name="Fe580x7fc133c29380">
+      <atom unit="g/mole" value="57.9333"/>
+    </isotope>
+    <element name="Fe0x7fc133c4fae0">
+      <fraction n="0.05845" ref="Fe540x7fc133c29840"/>
+      <fraction n="0.91754" ref="Fe560x7fc133c293e0"/>
+      <fraction n="0.02119" ref="Fe570x7fc133c29510"/>
+      <fraction n="0.00282" ref="Fe580x7fc133c29380"/>
+    </element>
+    <material name="stainlesssteel0x7fc133c5a290" state="solid">
+      <T unit="K" value="295"/>
+      <MEE unit="eV" value="284.400996182192"/>
+      <D unit="g/cm3" value="8"/>
+      <fraction n="0.0003" ref="C0x7fc133c4f140"/>
+      <fraction n="0.02" ref="Mn0x7fc133c50ca0"/>
+      <fraction n="0.0075" ref="Si0x7fc133c50970"/>
+      <fraction n="0.00045" ref="P0x7fc133c58e00"/>
+      <fraction n="0.0003" ref="S0x7fc133c590d0"/>
+      <fraction n="0.17" ref="Cr0x7fc133c4f480"/>
+      <fraction n="0.025" ref="Mo0x7fc133c5b0a0"/>
+      <fraction n="0.12" ref="Ni0x7fc133c50600"/>
+      <fraction n="0.001" ref="N0x7fc133c55280"/>
+      <fraction n="0.65545" ref="Fe0x7fc133c4fae0"/>
+    </material>
+    <material name="G4_Galactic0x7fc133e5c400" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <MEE unit="eV" value="21.8"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <fraction n="1" ref="H0x7fc133c54a20"/>
+    </material>
+    <material name="G4_Fe0x7fc133c4f9f0" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="286"/>
+      <D unit="g/cm3" value="7.874"/>
+      <fraction n="1" ref="Fe0x7fc133c4fae0"/>
+    </material>
+    <isotope N="63" Z="29" name="Cu630x7fc133c28b50">
+      <atom unit="g/mole" value="62.9296"/>
+    </isotope>
+    <isotope N="65" Z="29" name="Cu650x7fc133c28750">
+      <atom unit="g/mole" value="64.9278"/>
+    </isotope>
+    <element name="Cu0x7fc133c4f7f0">
+      <fraction n="0.6917" ref="Cu630x7fc133c28b50"/>
+      <fraction n="0.3083" ref="Cu650x7fc133c28750"/>
+    </element>
+    <material name="G4_Cu0x7fc133c4f680" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="322"/>
+      <D unit="g/cm3" value="8.96"/>
+      <fraction n="1" ref="Cu0x7fc133c4f7f0"/>
+    </material>
+    <isotope N="36" Z="18" name="Ar360x7fc133c8bb40">
+      <atom unit="g/mole" value="35.9675"/>
+    </isotope>
+    <isotope N="38" Z="18" name="Ar380x7fc133c8bb80">
+      <atom unit="g/mole" value="37.9627"/>
+    </isotope>
+    <isotope N="40" Z="18" name="Ar400x7fc133c8bbc0">
+      <atom unit="g/mole" value="39.9624"/>
+    </isotope>
+    <element name="Ar0x7fc133c8bc20">
+      <fraction n="0.003365" ref="Ar360x7fc133c8bb40"/>
+      <fraction n="0.000632" ref="Ar380x7fc133c8bb80"/>
+      <fraction n="0.996003" ref="Ar400x7fc133c8bbc0"/>
+    </element>
+    <material name="G4_AIR0x7fc133c8ba30" state="gas">
+      <property name="RINDEX" ref="RINDEX0x7fc133c8c9a0"/>
+      <property name="GROUPVEL" ref="GROUPVEL0x7fc133c8c0b0"/>
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="85.7"/>
+      <D unit="g/cm3" value="0.00120479"/>
+      <fraction n="0.000124000124000124" ref="C0x7fc133c4f140"/>
+      <fraction n="0.755267755267755" ref="N0x7fc133c55280"/>
+      <fraction n="0.231781231781232" ref="O0x7fc133c55b10"/>
+      <fraction n="0.0128270128270128" ref="Ar0x7fc133c8bc20"/>
+    </material>
+  </materials>
+
+  <solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="d1_vacuum_solid0x7fc133e5dae0" rmax="25" rmin="0" startphi="0" z="999.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="d1_pipe_solid0x7fc133e5dee0" rmax="27.501" rmin="25.001" startphi="0" z="999.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="d1_container_solid0x7fc133e5dfc0" rmax="27.502" rmin="0" startphi="0" z="1000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="q1_bp_vacuum_solid0x7fc133e5fe30" rmax="25" rmin="0" startphi="0" z="499.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="q1_bp_pipe_solid0x7fc133e5ff10" rmax="27.501" rmin="25.001" startphi="0" z="499.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="q1_bp_container_solid0x7fc133e5fff0" rmax="27.502" rmin="0" startphi="0" z="499.999998"/>
+    <box lunit="mm" name="q1_outer_yoke_outer_solid0x7fc133e6af30" x="599.999998" y="599.999998" z="499.999996"/>
+    <box lunit="mm" name="q1_outer_yoke_inner_solid0x7fc133e6bae0" x="436.5012012" y="436.5012012" z="999.999996"/>
+    <subtraction name="q1_outer_yoke_solid0x7fc133e6bb80">
+      <first ref="q1_outer_yoke_outer_solid0x7fc133e6af30"/>
+      <second ref="q1_outer_yoke_inner_solid0x7fc133e6bae0"/>
+    </subtraction>
+    <xtru lunit="mm" name="q1_outer_pole_raw_solid0x7fc114028800">
+      <twoDimVertex x="-7.38730038702528" y="28.1519610815665"/>
+      <twoDimVertex x="-14.2711684607659" y="30.057547620817"/>
+      <twoDimVertex x="-20.1824799881263" y="33.0888980442323"/>
+      <twoDimVertex x="-24.7183888574211" y="37.03943083"/>
+      <twoDimVertex x="-27.5697803751516" y="41.6399236973342"/>
+      <twoDimVertex x="-49.582697426604" y="80.911608448"/>
+      <twoDimVertex x="-49.582697426604" y="327.3758994"/>
+      <twoDimVertex x="49.582697426604" y="327.3758994"/>
+      <twoDimVertex x="49.582697426604" y="80.911608448"/>
+      <twoDimVertex x="27.5697803751516" y="41.6399236973342"/>
+      <twoDimVertex x="24.7183888574211" y="37.03943083"/>
+      <twoDimVertex x="20.1824799881263" y="33.0888980442323"/>
+      <twoDimVertex x="14.2711684607659" y="30.057547620817"/>
+      <twoDimVertex x="7.38730038702528" y="28.1519610815665"/>
+      <twoDimVertex x="0" y="27.502001"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <box lunit="mm" name="q1_outer_pole_intersection_solid0x7fc133e6c040" x="436.5011992" y="436.5011992" z="999.999996"/>
+    <intersection name="q1_outer_pole_solid0x7fc133e6c2a0">
+      <first ref="q1_outer_pole_raw_solid0x7fc114028800"/>
+      <second ref="q1_outer_pole_intersection_solid0x7fc133e6c040"/>
+      <rotation name="q1_outer_pole_solid0x7fc133e6c2a0_rot" unit="deg" x="0" y="0" z="-135"/>
+    </intersection>
+    <intersection name="q1_outer_pole_solid0x7fc133e6c4d0">
+      <first ref="q1_outer_pole_raw_solid0x7fc114028800"/>
+      <second ref="q1_outer_pole_intersection_solid0x7fc133e6c040"/>
+      <rotation name="q1_outer_pole_solid0x7fc133e6c4d0_rot" unit="deg" x="0" y="0" z="-45"/>
+    </intersection>
+    <intersection name="q1_outer_pole_solid0x7fc133e6c700">
+      <first ref="q1_outer_pole_raw_solid0x7fc114028800"/>
+      <second ref="q1_outer_pole_intersection_solid0x7fc133e6c040"/>
+      <rotation name="q1_outer_pole_solid0x7fc133e6c700_rot" unit="deg" x="0" y="0" z="45"/>
+    </intersection>
+    <intersection name="q1_outer_pole_solid0x7fc133e6c930">
+      <first ref="q1_outer_pole_raw_solid0x7fc114028800"/>
+      <second ref="q1_outer_pole_intersection_solid0x7fc133e6c040"/>
+      <rotation name="q1_outer_pole_solid0x7fc133e6c930_rot" unit="deg" x="0" y="0" z="135"/>
+    </intersection>
+    <xtru lunit="mm" name="q1_outer_coil_left_solid0x7fc114029600">
+      <twoDimVertex x="49.583697426604" y="185.478801568727"/>
+      <twoDimVertex x="97.54146601056" y="185.478801568727"/>
+      <twoDimVertex x="97.54146601056" y="108.3794066784"/>
+      <twoDimVertex x="49.583697426604" y="108.3794066784"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <xtru lunit="mm" name="q1_outer_coil_right_solid0x7fc114029c00">
+      <twoDimVertex x="-97.54146601056" y="108.3794066784"/>
+      <twoDimVertex x="-97.54146601056" y="185.478801568727"/>
+      <twoDimVertex x="-49.583697426604" y="185.478801568727"/>
+      <twoDimVertex x="-49.583697426604" y="108.3794066784"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <box lunit="mm" name="q1_outer_container_outer_solid0x7fc133e6bc20" x="599.999998" y="599.999998" z="499.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="q1_outer_container_inner_solid0x7fc133e6bf60" rmax="27.502001" rmin="0" startphi="0" z="999.999996"/>
+    <subtraction name="q1_outer_outer_container_solid0x7fc133e6c140">
+      <first ref="q1_outer_container_outer_solid0x7fc133e6bc20"/>
+      <second ref="q1_outer_container_inner_solid0x7fc133e6bf60"/>
+    </subtraction>
+    <box lunit="mm" name="q1_outer_container_solid0x7fc133e77050" x="600.001998" y="600.001998" z="500"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sex1_bp_vacuum_solid0x7fc133e781a0" rmax="25" rmin="0" startphi="0" z="499.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sex1_bp_pipe_solid0x7fc133e78280" rmax="27.501" rmin="25.001" startphi="0" z="499.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sex1_bp_container_solid0x7fc133e78360" rmax="27.502" rmin="0" startphi="0" z="499.999998"/>
+    <box lunit="mm" name="sex1_outer_yoke_outer_solid0x7fc133e80800" x="599.999998" y="599.999998" z="499.999996"/>
+    <box lunit="mm" name="sex1_outer_yoke_inner_solid0x7fc133e813b0" x="436.5012012" y="436.5012012" z="999.999996"/>
+    <subtraction name="sex1_outer_yoke_solid0x7fc133e81450">
+      <first ref="sex1_outer_yoke_outer_solid0x7fc133e80800"/>
+      <second ref="sex1_outer_yoke_inner_solid0x7fc133e813b0"/>
+    </subtraction>
+    <xtru lunit="mm" name="sex1_outer_pole_raw_solid0x7fc11402a800">
+      <twoDimVertex x="-4.62747272762104" y="28.1519610815665"/>
+      <twoDimVertex x="-8.93959083611496" y="30.057547620817"/>
+      <twoDimVertex x="-12.6424906025" y="33.0888980442323"/>
+      <twoDimVertex x="-15.4838255270282" y="37.03943083"/>
+      <twoDimVertex x="-17.269963330121" y="41.6399236973342"/>
+      <twoDimVertex x="-37.6489939139674" y="98.078982342"/>
+      <twoDimVertex x="-37.6489939139674" y="327.3758994"/>
+      <twoDimVertex x="37.6489939139674" y="327.3758994"/>
+      <twoDimVertex x="37.6489939139674" y="98.078982342"/>
+      <twoDimVertex x="17.269963330121" y="41.6399236973342"/>
+      <twoDimVertex x="15.4838255270282" y="37.03943083"/>
+      <twoDimVertex x="12.6424906025" y="33.0888980442323"/>
+      <twoDimVertex x="8.93959083611496" y="30.057547620817"/>
+      <twoDimVertex x="4.62747272762104" y="28.1519610815665"/>
+      <twoDimVertex x="0" y="27.502001"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <box lunit="mm" name="sex1_outer_pole_intersection_solid0x7fc133e81970" x="436.5011992" y="436.5011992" z="999.999996"/>
+    <intersection name="sex1_outer_pole_solid0x7fc133e81c30">
+      <first ref="sex1_outer_pole_raw_solid0x7fc11402a800"/>
+      <second ref="sex1_outer_pole_intersection_solid0x7fc133e81970"/>
+      <rotation name="sex1_outer_pole_solid0x7fc133e81c30_rot" unit="deg" x="0" y="0" z="-120"/>
+    </intersection>
+    <intersection name="sex1_outer_pole_solid0x7fc133e81e30">
+      <first ref="sex1_outer_pole_raw_solid0x7fc11402a800"/>
+      <second ref="sex1_outer_pole_intersection_solid0x7fc133e81970"/>
+      <rotation name="sex1_outer_pole_solid0x7fc133e81e30_rot" unit="deg" x="0" y="0" z="-60"/>
+    </intersection>
+    <intersection name="sex1_outer_pole_solid0x7fc133e82060">
+      <first ref="sex1_outer_pole_raw_solid0x7fc11402a800"/>
+      <second ref="sex1_outer_pole_intersection_solid0x7fc133e81970"/>
+    </intersection>
+    <intersection name="sex1_outer_pole_solid0x7fc133e82290">
+      <first ref="sex1_outer_pole_raw_solid0x7fc11402a800"/>
+      <second ref="sex1_outer_pole_intersection_solid0x7fc133e81970"/>
+      <rotation name="sex1_outer_pole_solid0x7fc133e82290_rot" unit="deg" x="0" y="0" z="60"/>
+    </intersection>
+    <intersection name="sex1_outer_pole_solid0x7fc133e824c0">
+      <first ref="sex1_outer_pole_raw_solid0x7fc11402a800"/>
+      <second ref="sex1_outer_pole_intersection_solid0x7fc133e81970"/>
+      <rotation name="sex1_outer_pole_solid0x7fc133e824c0_rot" unit="deg" x="0" y="0" z="120"/>
+    </intersection>
+    <intersection name="sex1_outer_pole_solid0x7fc133e82730">
+      <first ref="sex1_outer_pole_raw_solid0x7fc11402a800"/>
+      <second ref="sex1_outer_pole_intersection_solid0x7fc133e81970"/>
+      <rotation name="sex1_outer_pole_solid0x7fc133e82730_rot" unit="deg" x="0" y="0" z="180"/>
+    </intersection>
+    <xtru lunit="mm" name="sex1_outer_coil_left_solid0x7fc11402ae00">
+      <twoDimVertex x="37.6499939139674" y="198.382148619181"/>
+      <twoDimVertex x="63.451934974413" y="198.382148619181"/>
+      <twoDimVertex x="63.451934974413" y="122.1133057936"/>
+      <twoDimVertex x="37.6499939139674" y="122.1133057936"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <xtru lunit="mm" name="sex1_outer_coil_right_solid0x7fc11402b400">
+      <twoDimVertex x="-63.451934974413" y="122.1133057936"/>
+      <twoDimVertex x="-63.451934974413" y="198.382148619181"/>
+      <twoDimVertex x="-37.6499939139674" y="198.382148619181"/>
+      <twoDimVertex x="-37.6499939139674" y="122.1133057936"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <box lunit="mm" name="sex1_outer_container_outer_solid0x7fc133e814f0" x="599.999998" y="599.999998" z="499.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sex1_outer_container_inner_solid0x7fc133e81860" rmax="27.502001" rmin="0" startphi="0" z="999.999996"/>
+    <subtraction name="sex1_outer_outer_container_solid0x7fc133e81a70">
+      <first ref="sex1_outer_container_outer_solid0x7fc133e814f0"/>
+      <second ref="sex1_outer_container_inner_solid0x7fc133e81860"/>
+    </subtraction>
+    <box lunit="mm" name="sex1_outer_container_solid0x7fc133e8d3a0" x="600.001998" y="600.001998" z="500"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="oct1_bp_vacuum_solid0x7fc133e8ef00" rmax="25" rmin="0" startphi="0" z="499.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="oct1_bp_pipe_solid0x7fc133e8efe0" rmax="27.501" rmin="25.001" startphi="0" z="499.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="oct1_bp_container_solid0x7fc133e8f0c0" rmax="27.502" rmin="0" startphi="0" z="499.999998"/>
+    <box lunit="mm" name="oct1_outer_yoke_outer_solid0x7fc133e97260" x="599.999998" y="599.999998" z="499.999996"/>
+    <box lunit="mm" name="oct1_outer_yoke_inner_solid0x7fc133e97e10" x="436.5012012" y="436.5012012" z="999.999996"/>
+    <subtraction name="oct1_outer_yoke_solid0x7fc133e97eb0">
+      <first ref="oct1_outer_yoke_outer_solid0x7fc133e97260"/>
+      <second ref="oct1_outer_yoke_inner_solid0x7fc133e97e10"/>
+    </subtraction>
+    <xtru lunit="mm" name="oct1_outer_pole_raw_solid0x7fc11402c000">
+      <twoDimVertex x="-3.39985558842846" y="28.1519610815665"/>
+      <twoDimVertex x="-6.56801663703254" y="30.057547620817"/>
+      <twoDimVertex x="-9.28857820598354" y="33.0888980442323"/>
+      <twoDimVertex x="-11.376138520298" y="37.03943083"/>
+      <twoDimVertex x="-12.688433794412" y="41.6399236973342"/>
+      <twoDimVertex x="-32.5028339990927" y="115.246356236"/>
+      <twoDimVertex x="-32.5028339990927" y="327.3758994"/>
+      <twoDimVertex x="32.5028339990927" y="327.3758994"/>
+      <twoDimVertex x="32.5028339990927" y="115.246356236"/>
+      <twoDimVertex x="12.688433794412" y="41.6399236973342"/>
+      <twoDimVertex x="11.376138520298" y="37.03943083"/>
+      <twoDimVertex x="9.28857820598354" y="33.0888980442323"/>
+      <twoDimVertex x="6.56801663703254" y="30.057547620817"/>
+      <twoDimVertex x="3.39985558842846" y="28.1519610815665"/>
+      <twoDimVertex x="0" y="27.502001"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <box lunit="mm" name="oct1_outer_pole_intersection_solid0x7fc133e983d0" x="436.5011992" y="436.5011992" z="999.999996"/>
+    <intersection name="oct1_outer_pole_solid0x7fc133e98690">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e98690_rot" unit="deg" x="0" y="0" z="-112.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e98890">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e98890_rot" unit="deg" x="0" y="0" z="-67.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e98ac0">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e98ac0_rot" unit="deg" x="0" y="0" z="-22.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e98cf0">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e98cf0_rot" unit="deg" x="0" y="0" z="22.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e98f20">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e98f20_rot" unit="deg" x="0" y="0" z="67.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e99150">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e99150_rot" unit="deg" x="0" y="0" z="112.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e99380">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e99380_rot" unit="deg" x="0" y="0" z="157.5"/>
+    </intersection>
+    <intersection name="oct1_outer_pole_solid0x7fc133e995b0">
+      <first ref="oct1_outer_pole_raw_solid0x7fc11402c000"/>
+      <second ref="oct1_outer_pole_intersection_solid0x7fc133e983d0"/>
+      <rotation name="oct1_outer_pole_solid0x7fc133e995b0_rot" unit="deg" x="0" y="0" z="-157.5"/>
+    </intersection>
+    <xtru lunit="mm" name="oct1_outer_coil_left_solid0x7fc11402d800">
+      <twoDimVertex x="32.5038339990927" y="201.679056428738"/>
+      <twoDimVertex x="50.6427792153317" y="201.679056428738"/>
+      <twoDimVertex x="50.6427792153317" y="135.8472049088"/>
+      <twoDimVertex x="32.5038339990927" y="135.8472049088"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <xtru lunit="mm" name="oct1_outer_coil_right_solid0x7fc11402de00">
+      <twoDimVertex x="-50.6427792153317" y="135.8472049088"/>
+      <twoDimVertex x="-50.6427792153317" y="201.679056428738"/>
+      <twoDimVertex x="-32.5038339990927" y="201.679056428738"/>
+      <twoDimVertex x="-32.5038339990927" y="135.8472049088"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-249.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="249.999998"/>
+    </xtru>
+    <box lunit="mm" name="oct1_outer_container_outer_solid0x7fc133e97f50" x="599.999998" y="599.999998" z="499.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="oct1_outer_container_inner_solid0x7fc133e982c0" rmax="27.502001" rmin="0" startphi="0" z="999.999996"/>
+    <subtraction name="oct1_outer_outer_container_solid0x7fc133e984d0">
+      <first ref="oct1_outer_container_outer_solid0x7fc133e97f50"/>
+      <second ref="oct1_outer_container_inner_solid0x7fc133e982c0"/>
+    </subtraction>
+    <box lunit="mm" name="oct1_outer_container_solid0x7fc133ea49f0" x="600.001998" y="600.001998" z="500"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_fringe_in_bp_container_solid0x7fc133ea7a60" rmax="25" rmin="0" startphi="0" z="9.8e-05"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_centre_bp_vacuum_solid0x7fc133ea80e0" rmax="25" rmin="0" startphi="0" z="499.999796"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_centre_bp_pipe_solid0x7fc133ea81c0" rmax="27.501" rmin="25.001" startphi="0" z="499.999796"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_centre_bp_container_solid0x7fc133ea82a0" rmax="27.502" rmin="0" startphi="0" z="499.999798"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_centre_outer_yoke_solid0x7fc133e5dbc0" rmax="300" rmin="27.504" startphi="0" z="499.999796"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_centre_outer_container_solid0x7fc133e5dca0" rmax="300.001" rmin="27.503" startphi="0" z="499.999798"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_centre_outer_container_solid0x7fc133ea9500" rmax="300.002" rmin="0" startphi="0" z="499.9998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sol1_fringe_out_bp_container_solid0x7fc133ea9740" rmax="25" rmin="0" startphi="0" z="9.8e-05"/>
+    <box lunit="mm" name="c1_outer_solid0x7fc133eab250" x="599.999998" y="599.999998" z="999.999998"/>
+    <box lunit="mm" name="c1_inner_solid0x7fc133eab2c0" x="10" y="10" z="2000"/>
+    <subtraction name="c1_collimator_solid0x7fc133eab3a0">
+      <first ref="c1_outer_solid0x7fc133eab250"/>
+      <second ref="c1_inner_solid0x7fc133eab2c0"/>
+    </subtraction>
+    <box lunit="mm" name="c1_vacuum_solid0x7fc133eab330" x="9.999998" y="9.999998" z="1000"/>
+    <box lunit="mm" name="c1_container_solid0x7fc133eaae00" x="600" y="600" z="1000"/>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_bp_vacuum_solid0x7fc133ead210" rmax="25" rmin="0" startphi="0" z="159.999036001728"/>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_bp_pipe_outer_solid0x7fc133ead430" rmax="27.501" rmin="0" startphi="0" z="159.999036001728"/>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_bp_pipe_inner_solid0x7fc133ead320" rmax="25.001" rmin="0" startphi="0" z="319.998076003456"/>
+    <subtraction name="sb1_even_ang_bp_pipe_solid0x7fc133eac180">
+      <first ref="sb1_even_ang_bp_pipe_outer_solid0x7fc133ead430"/>
+      <second ref="sb1_even_ang_bp_pipe_inner_solid0x7fc133ead320"/>
+    </subtraction>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_bp_container_solid0x7fc133ead540" rmax="27.502" rmin="0" startphi="0" z="159.999038001728"/>
+    <xtru lunit="mm" name="sb1_even_ang_outer_yoke_sq_solid0x7fc11402ea00">
+      <twoDimVertex x="-107.999" y="27.504"/>
+      <twoDimVertex x="-107.999" y="162"/>
+      <twoDimVertex x="-354.001" y="162"/>
+      <twoDimVertex x="-354.001" y="-162"/>
+      <twoDimVertex x="-107.999" y="-162"/>
+      <twoDimVertex x="-107.999" y="-27.504"/>
+      <twoDimVertex x="107.999" y="-27.504"/>
+      <twoDimVertex x="107.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="-299.999"/>
+      <twoDimVertex x="-491.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="299.999"/>
+      <twoDimVertex x="107.999" y="27.504"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.998038001728"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.998038001728"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_outer_angled_face_solid0x7fc133ebbc90" rmax="545.43625402619" rmin="0" startphi="0" z="159.995038001728"/>
+    <intersection name="sb1_even_ang_outer_yoke_solid0x7fc133ebc0e0">
+      <first ref="sb1_even_ang_outer_yoke_sq_solid0x7fc11402ea00"/>
+      <second ref="sb1_even_ang_outer_angled_face_solid0x7fc133ebbc90"/>
+    </intersection>
+    <box lunit="mm" name="sb1_even_ang_outer_coil_solid0x7fc133eba570" x="159.898" y="107.5956" z="319.994076003456"/>
+    <intersection name="sb1_even_ang_outer_pole_solid_00x7fc133ebc380">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7fc133ebbc90"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7fc133eba570"/>
+      <position name="sb1_even_ang_outer_pole_solid_00x7fc133ebc380_pos" unit="mm" x="187.951" y="94.7525" z="0"/>
+    </intersection>
+    <intersection name="sb1_even_ang_outer_pole_solid_10x7fc133ebc530">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7fc133ebbc90"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7fc133eba570"/>
+      <position name="sb1_even_ang_outer_pole_solid_10x7fc133ebc530_pos" unit="mm" x="-187.951" y="94.7525" z="0"/>
+    </intersection>
+    <intersection name="sb1_even_ang_outer_pole_solid_20x7fc133ebc6e0">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7fc133ebbc90"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7fc133eba570"/>
+      <position name="sb1_even_ang_outer_pole_solid_20x7fc133ebc6e0_pos" unit="mm" x="187.951" y="-94.7525" z="0"/>
+    </intersection>
+    <intersection name="sb1_even_ang_outer_pole_solid_30x7fc133ebc8c0">
+      <first ref="sb1_even_ang_outer_angled_face_solid0x7fc133ebbc90"/>
+      <second ref="sb1_even_ang_outer_coil_solid0x7fc133eba570"/>
+      <position name="sb1_even_ang_outer_pole_solid_30x7fc133ebc8c0_pos" unit="mm" x="-187.951" y="-94.7525" z="0"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_outer_sq_container_solid0x7fc114030800">
+      <twoDimVertex x="-354" y="27.503"/>
+      <twoDimVertex x="-354" y="-27.503"/>
+      <twoDimVertex x="267.902" y="-27.503"/>
+      <twoDimVertex x="267.902" y="-148.5523"/>
+      <twoDimVertex x="108.001" y="-148.5523"/>
+      <twoDimVertex x="108.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="-300.001"/>
+      <twoDimVertex x="-492.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="300.001"/>
+      <twoDimVertex x="108.001" y="148.5523"/>
+      <twoDimVertex x="267.902" y="148.5523"/>
+      <twoDimVertex x="267.902" y="27.503"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.999037001728"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.999037001728"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_outer_angled_face_cont_solid0x7fc133ebbe30" rmax="545.43625402619" rmin="0" startphi="0" z="159.997038001728"/>
+    <intersection name="sb1_even_ang_outer_outer_container_solid0x7fc133ebc180">
+      <first ref="sb1_even_ang_outer_outer_sq_container_solid0x7fc114030800"/>
+      <second ref="sb1_even_ang_outer_angled_face_cont_solid0x7fc133ebbe30"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_sq_container_solid0x7fc114031400">
+      <twoDimVertex x="108.001" y="-27.502"/>
+      <twoDimVertex x="267.904" y="-27.502"/>
+      <twoDimVertex x="267.904" y="-148.5533"/>
+      <twoDimVertex x="108.002" y="-148.5533"/>
+      <twoDimVertex x="108.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="-300.002"/>
+      <twoDimVertex x="-492.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="300.002"/>
+      <twoDimVertex x="108.002" y="148.5533"/>
+      <twoDimVertex x="267.904" y="148.5533"/>
+      <twoDimVertex x="267.904" y="27.502"/>
+      <twoDimVertex x="108.001" y="27.502"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.999038001728"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.999038001728"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_outer_angled_face_mag_cont_solid0x7fc133ebbf70" rmax="545.43625402619" rmin="0" startphi="0" z="159.999040001728"/>
+    <intersection name="sb1_even_ang_outer_container_solid0x7fc133ed5020">
+      <first ref="sb1_even_ang_outer_sq_container_solid0x7fc114031400"/>
+      <second ref="sb1_even_ang_outer_angled_face_mag_cont_solid0x7fc133ebbf70"/>
+    </intersection>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="rb1_e1_fringe_bp_container_solid0x7fc133eeb370" rmax="25" rmin="0" startphi="0" z="9.8e-05"/>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_centre_bp_vacuum_solid0x7fc133eeb840" rmax="25" rmin="0" startphi="0" z="9999.99979998668"/>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_centre_bp_pipe_outer_solid0x7fc133eeba60" rmax="27.501" rmin="0" startphi="0" z="9999.99979998668"/>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_centre_bp_pipe_inner_solid0x7fc133eeb950" rmax="25.001" rmin="0" startphi="0" z="19999.9996039734"/>
+    <subtraction name="rb1_centre_bp_pipe_solid0x7fc133eebb70">
+      <first ref="rb1_centre_bp_pipe_outer_solid0x7fc133eeba60"/>
+      <second ref="rb1_centre_bp_pipe_inner_solid0x7fc133eeb950"/>
+    </subtraction>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_centre_bp_container_solid0x7fc133eebc10" rmax="27.502" rmin="0" startphi="0" z="9999.99980198668"/>
+    <xtru lunit="mm" name="rb1_outer_yoke_sq_solid0x7fc114037000">
+      <twoDimVertex x="-107.999" y="27.504"/>
+      <twoDimVertex x="-107.999" y="299.999"/>
+      <twoDimVertex x="491.999" y="299.999"/>
+      <twoDimVertex x="491.999" y="-299.999"/>
+      <twoDimVertex x="-107.999" y="-299.999"/>
+      <twoDimVertex x="-107.999" y="-27.504"/>
+      <twoDimVertex x="107.999" y="-27.504"/>
+      <twoDimVertex x="107.999" y="-162"/>
+      <twoDimVertex x="354.001" y="-162"/>
+      <twoDimVertex x="354.001" y="162"/>
+      <twoDimVertex x="107.999" y="162"/>
+      <twoDimVertex x="107.999" y="27.504"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-9999.99880198668"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="9999.99880198668"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_outer_angled_face_solid0x7fc133efa690" rmax="545.43625402619" rmin="0" startphi="0" z="9999.99580198668"/>
+    <intersection name="rb1_outer_yoke_solid0x7fc133efaab0">
+      <first ref="rb1_outer_yoke_sq_solid0x7fc114037000"/>
+      <second ref="rb1_outer_angled_face_solid0x7fc133efa690"/>
+    </intersection>
+    <box lunit="mm" name="rb1_outer_coil_solid0x7fc133efa5f0" x="159.898" y="107.5956" z="19999.9956039734"/>
+    <intersection name="rb1_outer_pole_solid_00x7fc133efac90">
+      <first ref="rb1_outer_angled_face_solid0x7fc133efa690"/>
+      <second ref="rb1_outer_coil_solid0x7fc133efa5f0"/>
+      <position name="rb1_outer_pole_solid_00x7fc133efac90_pos" unit="mm" x="187.951" y="94.7525" z="0"/>
+    </intersection>
+    <intersection name="rb1_outer_pole_solid_10x7fc133efae70">
+      <first ref="rb1_outer_angled_face_solid0x7fc133efa690"/>
+      <second ref="rb1_outer_coil_solid0x7fc133efa5f0"/>
+      <position name="rb1_outer_pole_solid_10x7fc133efae70_pos" unit="mm" x="-187.951" y="94.7525" z="0"/>
+    </intersection>
+    <intersection name="rb1_outer_pole_solid_20x7fc133efb050">
+      <first ref="rb1_outer_angled_face_solid0x7fc133efa690"/>
+      <second ref="rb1_outer_coil_solid0x7fc133efa5f0"/>
+      <position name="rb1_outer_pole_solid_20x7fc133efb050_pos" unit="mm" x="187.951" y="-94.7525" z="0"/>
+    </intersection>
+    <intersection name="rb1_outer_pole_solid_30x7fc133efb230">
+      <first ref="rb1_outer_angled_face_solid0x7fc133efa690"/>
+      <second ref="rb1_outer_coil_solid0x7fc133efa5f0"/>
+      <position name="rb1_outer_pole_solid_30x7fc133efb230_pos" unit="mm" x="-187.951" y="-94.7525" z="0"/>
+    </intersection>
+    <xtru lunit="mm" name="rb1_outer_outer_sq_container_solid0x7fc114039000">
+      <twoDimVertex x="-267.902" y="27.503"/>
+      <twoDimVertex x="-267.902" y="148.5523"/>
+      <twoDimVertex x="-108.001" y="148.5523"/>
+      <twoDimVertex x="-108.001" y="300.001"/>
+      <twoDimVertex x="492.001" y="300.001"/>
+      <twoDimVertex x="492.001" y="-300.001"/>
+      <twoDimVertex x="-108.001" y="-300.001"/>
+      <twoDimVertex x="-108.001" y="-148.5523"/>
+      <twoDimVertex x="-267.902" y="-148.5523"/>
+      <twoDimVertex x="-267.902" y="-27.503"/>
+      <twoDimVertex x="354" y="-27.503"/>
+      <twoDimVertex x="354" y="27.503"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-9999.99980098668"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="9999.99980098668"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_outer_angled_face_cont_solid0x7fc133efa7a0" rmax="545.43625402619" rmin="0" startphi="0" z="9999.99780198668"/>
+    <intersection name="rb1_outer_outer_container_solid0x7fc133efab50">
+      <first ref="rb1_outer_outer_sq_container_solid0x7fc114039000"/>
+      <second ref="rb1_outer_angled_face_cont_solid0x7fc133efa7a0"/>
+    </intersection>
+    <xtru lunit="mm" name="rb1_outer_sq_container_solid0x7fc114039c00">
+      <twoDimVertex x="-108.001" y="27.502"/>
+      <twoDimVertex x="-267.904" y="27.502"/>
+      <twoDimVertex x="-267.904" y="148.5533"/>
+      <twoDimVertex x="-108.002" y="148.5533"/>
+      <twoDimVertex x="-108.002" y="300.002"/>
+      <twoDimVertex x="492.002" y="300.002"/>
+      <twoDimVertex x="492.002" y="-300.002"/>
+      <twoDimVertex x="-108.002" y="-300.002"/>
+      <twoDimVertex x="-108.002" y="-148.5533"/>
+      <twoDimVertex x="-267.904" y="-148.5533"/>
+      <twoDimVertex x="-267.904" y="-27.502"/>
+      <twoDimVertex x="-108.001" y="-27.502"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-9999.99980198668"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="9999.99980198668"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_outer_angled_face_mag_cont_solid0x7fc133efa940" rmax="545.43625402619" rmin="0" startphi="0" z="9999.99980398668"/>
+    <intersection name="rb1_outer_container_solid0x7fc103c17f10">
+      <first ref="rb1_outer_sq_container_solid0x7fc114039c00"/>
+      <second ref="rb1_outer_angled_face_mag_cont_solid0x7fc133efa940"/>
+    </intersection>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="rb1_e2_fringe_bp_container_solid0x7fc133eec690" rmax="25" rmin="0" startphi="0" z="9.8e-05"/>
+    <xtru lunit="mm" name="q1_outer_end_coil_solid0x7fc11402a200">
+      <twoDimVertex x="-97.54146601056" y="2.9365051571896e-15"/>
+      <twoDimVertex x="-96.6199901494521" y="9.35590142589693"/>
+      <twoDimVertex x="-93.8909743667012" y="18.3522608068466"/>
+      <twoDimVertex x="-89.4592932083888" y="26.6433530970556"/>
+      <twoDimVertex x="-83.4952536961133" y="33.9105562695093"/>
+      <twoDimVertex x="-76.2280505236595" y="39.8745957817848"/>
+      <twoDimVertex x="-67.9369582334506" y="44.3062769400972"/>
+      <twoDimVertex x="-58.9405988525009" y="47.0352927228481"/>
+      <twoDimVertex x="-49.584697426604" y="47.956768583956"/>
+      <twoDimVertex x="49.584697426604" y="47.956768583956"/>
+      <twoDimVertex x="58.9405988525009" y="47.0352927228481"/>
+      <twoDimVertex x="67.9369582334506" y="44.3062769400972"/>
+      <twoDimVertex x="76.2280505236596" y="39.8745957817848"/>
+      <twoDimVertex x="83.4952536961133" y="33.9105562695093"/>
+      <twoDimVertex x="89.4592932083888" y="26.6433530970556"/>
+      <twoDimVertex x="93.8909743667012" y="18.3522608068466"/>
+      <twoDimVertex x="96.6199901494521" y="9.35590142589692"/>
+      <twoDimVertex x="97.54146601056" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-38.5496974451636"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="38.5496974451636"/>
+    </xtru>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="q1_outer_end_container_solid0x7fc133e6d5b0" rmax="218.2506006" rmin="108.3784066784" startphi="0" z="47.956768583956"/>
+    <xtru lunit="mm" name="sex1_outer_end_coil_solid0x7fc11402ba00">
+      <twoDimVertex x="-63.451934974413" y="1.57985199423321e-15"/>
+      <twoDimVertex x="-62.9561771266038" y="5.03351389980148"/>
+      <twoDimVertex x="-61.4879552792432" y="9.87359268326071"/>
+      <twoDimVertex x="-59.1036923745369" y="14.3342348370768"/>
+      <twoDimVertex x="-55.8950142988029" y="18.2440203848355"/>
+      <twoDimVertex x="-51.9852287510442" y="21.4526984605695"/>
+      <twoDimVertex x="-47.5245865972281" y="23.8369613652758"/>
+      <twoDimVertex x="-42.6845078137689" y="25.3051832126364"/>
+      <twoDimVertex x="-37.6509939139674" y="25.8009410604456"/>
+      <twoDimVertex x="37.6509939139674" y="25.8009410604456"/>
+      <twoDimVertex x="42.6845078137689" y="25.3051832126364"/>
+      <twoDimVertex x="47.5245865972281" y="23.8369613652758"/>
+      <twoDimVertex x="51.9852287510442" y="21.4526984605695"/>
+      <twoDimVertex x="55.8950142988029" y="18.2440203848355"/>
+      <twoDimVertex x="59.1036923745369" y="14.3342348370768"/>
+      <twoDimVertex x="61.4879552792432" y="9.87359268326071"/>
+      <twoDimVertex x="62.9561771266038" y="5.03351389980148"/>
+      <twoDimVertex x="63.451934974413" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-38.1344214127906"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="38.1344214127906"/>
+    </xtru>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="sex1_outer_end_container_solid0x7fc133e836b0" rmax="218.2506006" rmin="122.1123057936" startphi="0" z="25.8009410604456"/>
+    <xtru lunit="mm" name="oct1_outer_end_coil_solid0x7fc11402e400">
+      <twoDimVertex x="-50.6427792153317" y="1.11062882760885e-15"/>
+      <twoDimVertex x="-50.2942636839401" y="3.53853757294695"/>
+      <twoDimVertex x="-49.2621103461869" y="6.94109113140028"/>
+      <twoDimVertex x="-47.5859842760037" y="10.0769024502826"/>
+      <twoDimVertex x="-45.3302980582854" y="12.8254640591927"/>
+      <twoDimVertex x="-42.5817364493754" y="15.081150276911"/>
+      <twoDimVertex x="-39.445925130493" y="16.7572763470942"/>
+      <twoDimVertex x="-36.0433715720397" y="17.7894296848473"/>
+      <twoDimVertex x="-32.5048339990927" y="18.1379452162389"/>
+      <twoDimVertex x="32.5048339990927" y="18.1379452162389"/>
+      <twoDimVertex x="36.0433715720397" y="17.7894296848473"/>
+      <twoDimVertex x="39.445925130493" y="16.7572763470942"/>
+      <twoDimVertex x="42.5817364493754" y="15.081150276911"/>
+      <twoDimVertex x="45.3302980582854" y="12.8254640591927"/>
+      <twoDimVertex x="47.5859842760037" y="10.0769024502826"/>
+      <twoDimVertex x="49.2621103461869" y="6.94109113140028"/>
+      <twoDimVertex x="50.2942636839401" y="3.53853757294695"/>
+      <twoDimVertex x="50.6427792153317" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-32.915925759969"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="32.915925759969"/>
+    </xtru>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="oct1_outer_end_container_solid0x7fc133e9a6f0" rmax="218.2506006" rmin="135.8462049088" startphi="0" z="18.1379452162389"/>
+    <xtru lunit="mm" name="sb1_even_ang_outer_end_coil_in_solid0x7fc114032800">
+      <twoDimVertex x="267.899" y="-1.60741328900582"/>
+      <twoDimVertex x="266.733148968279" y="-20.8742332716992"/>
+      <twoDimVertex x="263.252596606426" y="-39.846109253679"/>
+      <twoDimVertex x="257.508097205398" y="-58.2463885621839"/>
+      <twoDimVertex x="249.583418501948" y="-75.8067536910752"/>
+      <twoDimVertex x="239.594120156396" y="-92.2711349742753"/>
+      <twoDimVertex x="227.685868632559" y="-107.399444658117"/>
+      <twoDimVertex x="214.032313052703" y="-120.971077921424"/>
+      <twoDimVertex x="198.832553002312" y="-132.78812979056"/>
+      <twoDimVertex x="182.308235209799" y="-142.678281039589"/>
+      <twoDimVertex x="164.700321438101" y="-150.49731099262"/>
+      <twoDimVertex x="146.26557471958" y="-156.131200586016"/>
+      <twoDimVertex x="127.272815172826" y="-159.49779502309"/>
+      <twoDimVertex x="107.999" y="-160.54800177604"/>
+      <twoDimVertex x="-107.999" y="-159.25199822396"/>
+      <twoDimVertex x="-127.272815172826" y="-157.970502913467"/>
+      <twoDimVertex x="-146.265574719581" y="-154.375992626835"/>
+      <twoDimVertex x="-164.700321438102" y="-148.520883418175"/>
+      <twoDimVertex x="-182.308235209799" y="-140.490555964307"/>
+      <twoDimVertex x="-198.832553002312" y="-130.402110522232"/>
+      <twoDimVertex x="-214.032313052703" y="-118.402659343694"/>
+      <twoDimVertex x="-227.685868632559" y="-104.667181447289"/>
+      <twoDimVertex x="-239.594120156396" y="-89.3959710303483"/>
+      <twoDimVertex x="-249.583418501948" y="-72.811716728522"/>
+      <twoDimVertex x="-257.508097205398" y="-55.1562543140191"/>
+      <twoDimVertex x="-263.252596606426" y="-36.687040185482"/>
+      <twoDimVertex x="-266.733148968279" y="-17.6733970739532"/>
+      <twoDimVertex x="-267.899" y="1.60741328900574"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-53.7978"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="53.7978"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_even_ang_outer_end_coil_in_solid0x7fc114034e00">
+      <twoDimVertex x="268.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="148.5513"/>
+      <twoDimVertex x="268.901" y="148.5513"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.902"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.902"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="0.0059999640000648" highY="-0" highZ="0.999982000054" lowX="-0.0059999640000648" lowY="0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_outer_angled_face_solid0x7fc133ee1310" rmax="306.330596794852" rmin="0" startphi="0" z="159.901"/>
+    <intersection name="sb1_even_ang_outer_end_coil_cont_solid0x7fc133ee1420">
+      <first ref="sb1_even_ang_outer_end_coil_in_solid0x7fc114034e00"/>
+      <second ref="sb1_even_ang_outer_angled_face_solid0x7fc133ee1310"/>
+    </intersection>
+    <xtru lunit="mm" name="sb1_even_ang_outer_end_coil_out_solid0x7fc114032e00">
+      <twoDimVertex x="-267.899" y="-1.60741328900574"/>
+      <twoDimVertex x="-266.733148968279" y="17.6733970739532"/>
+      <twoDimVertex x="-263.252596606426" y="36.687040185482"/>
+      <twoDimVertex x="-257.508097205398" y="55.1562543140191"/>
+      <twoDimVertex x="-249.583418501948" y="72.811716728522"/>
+      <twoDimVertex x="-239.594120156396" y="89.3959710303483"/>
+      <twoDimVertex x="-227.685868632559" y="104.667181447289"/>
+      <twoDimVertex x="-214.032313052703" y="118.402659343694"/>
+      <twoDimVertex x="-198.832553002312" y="130.402110522232"/>
+      <twoDimVertex x="-182.308235209799" y="140.490555964307"/>
+      <twoDimVertex x="-164.700321438102" y="148.520883418175"/>
+      <twoDimVertex x="-146.265574719581" y="154.375992626835"/>
+      <twoDimVertex x="-127.272815172826" y="157.970502913467"/>
+      <twoDimVertex x="-107.999" y="159.25199822396"/>
+      <twoDimVertex x="107.999" y="160.54800177604"/>
+      <twoDimVertex x="127.272815172826" y="159.49779502309"/>
+      <twoDimVertex x="146.26557471958" y="156.131200586016"/>
+      <twoDimVertex x="164.700321438101" y="150.49731099262"/>
+      <twoDimVertex x="182.308235209799" y="142.678281039589"/>
+      <twoDimVertex x="198.832553002312" y="132.78812979056"/>
+      <twoDimVertex x="214.032313052703" y="120.971077921424"/>
+      <twoDimVertex x="227.685868632559" y="107.399444658117"/>
+      <twoDimVertex x="239.594120156396" y="92.2711349742753"/>
+      <twoDimVertex x="249.583418501948" y="75.8067536910752"/>
+      <twoDimVertex x="257.508097205398" y="58.2463885621839"/>
+      <twoDimVertex x="263.252596606426" y="39.846109253679"/>
+      <twoDimVertex x="266.733148968279" y="20.8742332716992"/>
+      <twoDimVertex x="267.899" y="1.60741328900582"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-53.7978"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="53.7978"/>
+    </xtru>
+    <xtru lunit="mm" name="sb1_even_ang_outer_end_coil_out_solid0x7fc114036a00">
+      <twoDimVertex x="268.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="148.5513"/>
+      <twoDimVertex x="268.901" y="148.5513"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.901"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.901"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.0059999640000648" highY="0" highZ="0.999982000054" lowX="0.0059999640000648" lowY="-0" lowZ="-0.999982000054" lunit="mm" name="sb1_even_ang_outer_angled_face_solid0x7fc133ee14c0" rmax="306.330596794852" rmin="0" startphi="0" z="159.901"/>
+    <intersection name="sb1_even_ang_outer_end_coil_cont_solid0x7fc133ee15d0">
+      <first ref="sb1_even_ang_outer_end_coil_out_solid0x7fc114036a00"/>
+      <second ref="sb1_even_ang_outer_angled_face_solid0x7fc133ee14c0"/>
+    </intersection>
+    <xtru lunit="mm" name="rb1_outer_end_coil_in_solid0x7fc11403a800">
+      <twoDimVertex x="267.899" y="54.3058158027378"/>
+      <twoDimVertex x="266.733148968279" y="34.7956709258736"/>
+      <twoDimVertex x="263.252596606426" y="15.0973684862582"/>
+      <twoDimVertex x="257.508097205398" y="-4.50184590982463"/>
+      <twoDimVertex x="249.583418501948" y="-23.7161715828929"/>
+      <twoDimVertex x="239.594120156396" y="-42.2654203977398"/>
+      <twoDimVertex x="227.685868632559" y="-59.8791025373742"/>
+      <twoDimVertex x="214.032313052703" y="-76.3003708536423"/>
+      <twoDimVertex x="198.832553002312" y="-91.2897662770171"/>
+      <twoDimVertex x="182.308235209799" y="-104.628709669047"/>
+      <twoDimVertex x="164.700321438101" y="-116.122689198391"/>
+      <twoDimVertex x="146.26557471958" y="-125.604096761323"/>
+      <twoDimVertex x="127.272815172826" y="-132.934672085307"/>
+      <twoDimVertex x="107.999" y="-138.007518875099"/>
+      <twoDimVertex x="-107.999" y="-181.792481124901"/>
+      <twoDimVertex x="-127.272815172826" y="-184.533625851251"/>
+      <twoDimVertex x="-146.265574719581" y="-184.903096451528"/>
+      <twoDimVertex x="-164.700321438102" y="-182.895505212405"/>
+      <twoDimVertex x="-182.308235209799" y="-178.54012733485"/>
+      <twoDimVertex x="-198.832553002312" y="-171.900474035774"/>
+      <twoDimVertex x="-214.032313052703" y="-163.073366411476"/>
+      <twoDimVertex x="-227.685868632559" y="-152.187523568032"/>
+      <twoDimVertex x="-239.594120156396" y="-139.401685606884"/>
+      <twoDimVertex x="-249.583418501948" y="-124.902298836704"/>
+      <twoDimVertex x="-257.508097205398" y="-108.900796966378"/>
+      <twoDimVertex x="-263.252596606426" y="-91.6305179254193"/>
+      <twoDimVertex x="-266.733148968279" y="-73.343301271526"/>
+      <twoDimVertex x="-267.899" y="-54.3058158027379"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-53.7978"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="53.7978"/>
+    </xtru>
+    <xtru lunit="mm" name="rb1_outer_end_coil_in_solid0x7fc11403be00">
+      <twoDimVertex x="268.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="148.5513"/>
+      <twoDimVertex x="268.901" y="148.5513"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.902"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.902"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="-0.198669330795061" highY="-0" highZ="0.980066577841242" lowX="0.198669330795061" lowY="0" lowZ="-0.980066577841242" lunit="mm" name="rb1_outer_angled_face_solid0x7fc103c23ca0" rmax="306.330596794852" rmin="0" startphi="0" z="159.901"/>
+    <intersection name="rb1_outer_end_coil_cont_solid0x7fc103c23db0">
+      <first ref="rb1_outer_end_coil_in_solid0x7fc11403be00"/>
+      <second ref="rb1_outer_angled_face_solid0x7fc103c23ca0"/>
+    </intersection>
+    <xtru lunit="mm" name="rb1_outer_end_coil_out_solid0x7fc11403ae00">
+      <twoDimVertex x="-267.899" y="54.3058158027379"/>
+      <twoDimVertex x="-266.733148968279" y="73.343301271526"/>
+      <twoDimVertex x="-263.252596606426" y="91.6305179254193"/>
+      <twoDimVertex x="-257.508097205398" y="108.900796966378"/>
+      <twoDimVertex x="-249.583418501948" y="124.902298836704"/>
+      <twoDimVertex x="-239.594120156396" y="139.401685606884"/>
+      <twoDimVertex x="-227.685868632559" y="152.187523568032"/>
+      <twoDimVertex x="-214.032313052703" y="163.073366411476"/>
+      <twoDimVertex x="-198.832553002312" y="171.900474035774"/>
+      <twoDimVertex x="-182.308235209799" y="178.54012733485"/>
+      <twoDimVertex x="-164.700321438102" y="182.895505212405"/>
+      <twoDimVertex x="-146.265574719581" y="184.903096451528"/>
+      <twoDimVertex x="-127.272815172826" y="184.533625851251"/>
+      <twoDimVertex x="-107.999" y="181.792481124901"/>
+      <twoDimVertex x="107.999" y="138.007518875099"/>
+      <twoDimVertex x="127.272815172826" y="132.934672085307"/>
+      <twoDimVertex x="146.26557471958" y="125.604096761323"/>
+      <twoDimVertex x="164.700321438101" y="116.122689198391"/>
+      <twoDimVertex x="182.308235209799" y="104.628709669047"/>
+      <twoDimVertex x="198.832553002312" y="91.2897662770171"/>
+      <twoDimVertex x="214.032313052703" y="76.3003708536423"/>
+      <twoDimVertex x="227.685868632559" y="59.8791025373742"/>
+      <twoDimVertex x="239.594120156396" y="42.2654203977398"/>
+      <twoDimVertex x="249.583418501948" y="23.7161715828929"/>
+      <twoDimVertex x="257.508097205398" y="4.50184590982463"/>
+      <twoDimVertex x="263.252596606426" y="-15.0973684862582"/>
+      <twoDimVertex x="266.733148968279" y="-34.7956709258736"/>
+      <twoDimVertex x="267.899" y="-54.3058158027378"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-53.7978"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="53.7978"/>
+    </xtru>
+    <xtru lunit="mm" name="rb1_outer_end_coil_out_solid0x7fc11403da00">
+      <twoDimVertex x="268.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-148.5513"/>
+      <twoDimVertex x="-267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="-40.9517"/>
+      <twoDimVertex x="267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="40.9517"/>
+      <twoDimVertex x="-267.901" y="148.5513"/>
+      <twoDimVertex x="268.901" y="148.5513"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-159.901"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="159.901"/>
+    </xtru>
+    <cutTube aunit="deg" deltaphi="360" highX="0.198669330795061" highY="0" highZ="0.980066577841242" lowX="-0.198669330795061" lowY="-0" lowZ="-0.980066577841242" lunit="mm" name="rb1_outer_angled_face_solid0x7fc103c23e50" rmax="306.330596794852" rmin="0" startphi="0" z="159.901"/>
+    <intersection name="rb1_outer_end_coil_cont_solid0x7fc103c23f60">
+      <first ref="rb1_outer_end_coil_out_solid0x7fc11403da00"/>
+      <second ref="rb1_outer_angled_face_solid0x7fc103c23e50"/>
+    </intersection>
+    <box lunit="mm" name="World_solid0x7fc103c4a3e0" x="18753.7565784136" y="60170.4791343938" z="15000"/>
+  </solids>
+
+  <structure>
+    <volume name="d1_vacuum_lv0x7fc133e5e180">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="d1_vacuum_solid0x7fc133e5dae0"/>
+    </volume>
+    <volume name="d1_beampipe_lv0x7fc133e5e570">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="d1_pipe_solid0x7fc133e5dee0"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="d1_container_lv0x7fc133e5e640">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="d1_container_solid0x7fc133e5dfc0"/>
+      <physvol name="d1_vacuum_pv0x7fc133e5e890">
+        <volumeref ref="d1_vacuum_lv0x7fc133e5e180"/>
+      </physvol>
+      <physvol name="d1_beampipe_pipe_pv0x7fc133e5ec00">
+        <volumeref ref="d1_beampipe_lv0x7fc133e5e570"/>
+      </physvol>
+    </volume>
+    <volume name="q1_bp_vacuum_lv0x7fc133e5f590">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="q1_bp_vacuum_solid0x7fc133e5fe30"/>
+    </volume>
+    <volume name="q1_bp_beampipe_lv0x7fc133e601b0">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="q1_bp_pipe_solid0x7fc133e5ff10"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="q1_bp_container_lv0x7fc133e60250">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="q1_bp_container_solid0x7fc133e5fff0"/>
+      <physvol name="q1_bp_vacuum_pv0x7fc133e60440">
+        <volumeref ref="q1_bp_vacuum_lv0x7fc133e5f590"/>
+      </physvol>
+      <physvol name="q1_bp_beampipe_pipe_pv0x7fc133e60490">
+        <volumeref ref="q1_bp_beampipe_lv0x7fc133e601b0"/>
+      </physvol>
+    </volume>
+    <volume name="q1_outer_yoke_lv0x7fc133e6cf80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="q1_outer_yoke_solid0x7fc133e6bb80"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="q1_outer_pole_lv0x7fc133e6cb80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="q1_outer_pole_solid0x7fc133e6c2a0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="q1_outer_pole_lv0x7fc133e6cc80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="q1_outer_pole_solid0x7fc133e6c4d0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="q1_outer_pole_lv0x7fc133e6cd80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="q1_outer_pole_solid0x7fc133e6c700"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="q1_outer_pole_lv0x7fc133e6ce80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="q1_outer_pole_solid0x7fc133e6c930"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="q1_outer_coil_left_lv0x7fc133e6d1f0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="q1_outer_coil_left_solid0x7fc114029600"/>
+    </volume>
+    <volume name="q1_outer_coil_right_lv0x7fc133e6d2c0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="q1_outer_coil_right_solid0x7fc114029c00"/>
+    </volume>
+    <volume name="q1_outer_container_lv0x7fc133e6d050">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="q1_outer_outer_container_solid0x7fc133e6c140"/>
+      <physvol name="q1_outer_yoke_pv0x7fc133e6e020">
+        <volumeref ref="q1_outer_yoke_lv0x7fc133e6cf80"/>
+      </physvol>
+      <physvol name="q1_outer_pole_0_pv0x7fc133e75910">
+        <volumeref ref="q1_outer_pole_lv0x7fc133e6cb80"/>
+        <rotation name="q1_outer_pole_0_pv0x7fc133e75910_rot" unit="deg" x="0" y="0" z="-135"/>
+      </physvol>
+      <physvol copynumber="1" name="q1_outer_pole_1_pv0x7fc133e759b0">
+        <volumeref ref="q1_outer_pole_lv0x7fc133e6cc80"/>
+        <rotation name="q1_outer_pole_1_pv0x7fc133e759b0_rot" unit="deg" x="0" y="0" z="-45"/>
+      </physvol>
+      <physvol copynumber="2" name="q1_outer_pole_2_pv0x7fc133e75ab0">
+        <volumeref ref="q1_outer_pole_lv0x7fc133e6cd80"/>
+        <rotation name="q1_outer_pole_2_pv0x7fc133e75ab0_rot" unit="deg" x="0" y="0" z="45"/>
+      </physvol>
+      <physvol copynumber="3" name="q1_outer_pole_3_pv0x7fc133e75bb0">
+        <volumeref ref="q1_outer_pole_lv0x7fc133e6ce80"/>
+        <rotation name="q1_outer_pole_3_pv0x7fc133e75bb0_rot" unit="deg" x="0" y="0" z="135"/>
+      </physvol>
+      <physvol name="q1_outer_coil_0_left_pv0x7fc133e75d90">
+        <volumeref ref="q1_outer_coil_left_lv0x7fc133e6d1f0"/>
+        <rotation name="q1_outer_coil_0_left_pv0x7fc133e75d90_rot" unit="deg" x="0" y="0" z="135"/>
+      </physvol>
+      <physvol name="q1_outer_coil_0_right_pv0x7fc133e75de0">
+        <volumeref ref="q1_outer_coil_right_lv0x7fc133e6d2c0"/>
+        <rotation name="q1_outer_coil_0_right_pv0x7fc133e75de0_rot" unit="deg" x="0" y="0" z="135"/>
+      </physvol>
+      <physvol copynumber="1" name="q1_outer_coil_1_left_pv0x7fc133e76010">
+        <volumeref ref="q1_outer_coil_left_lv0x7fc133e6d1f0"/>
+        <rotation name="q1_outer_coil_1_left_pv0x7fc133e76010_rot" unit="deg" x="0" y="0" z="-135"/>
+      </physvol>
+      <physvol copynumber="1" name="q1_outer_coil_1_right_pv0x7fc133e76060">
+        <volumeref ref="q1_outer_coil_right_lv0x7fc133e6d2c0"/>
+        <rotation name="q1_outer_coil_1_right_pv0x7fc133e76060_rot" unit="deg" x="0" y="0" z="-135"/>
+      </physvol>
+      <physvol copynumber="2" name="q1_outer_coil_2_left_pv0x7fc133e762e0">
+        <volumeref ref="q1_outer_coil_left_lv0x7fc133e6d1f0"/>
+        <rotation name="q1_outer_coil_2_left_pv0x7fc133e762e0_rot" unit="deg" x="0" y="0" z="-45"/>
+      </physvol>
+      <physvol copynumber="2" name="q1_outer_coil_2_right_pv0x7fc133e76330">
+        <volumeref ref="q1_outer_coil_right_lv0x7fc133e6d2c0"/>
+        <rotation name="q1_outer_coil_2_right_pv0x7fc133e76330_rot" unit="deg" x="0" y="0" z="-45"/>
+      </physvol>
+      <physvol copynumber="3" name="q1_outer_coil_3_left_pv0x7fc133e76560">
+        <volumeref ref="q1_outer_coil_left_lv0x7fc133e6d1f0"/>
+        <rotation name="q1_outer_coil_3_left_pv0x7fc133e76560_rot" unit="deg" x="0" y="0" z="45"/>
+      </physvol>
+      <physvol copynumber="3" name="q1_outer_coil_3_right_pv0x7fc133e765b0">
+        <volumeref ref="q1_outer_coil_right_lv0x7fc133e6d2c0"/>
+        <rotation name="q1_outer_coil_3_right_pv0x7fc133e765b0_rot" unit="deg" x="0" y="0" z="45"/>
+      </physvol>
+    </volume>
+    <volume name="q1_container_lv0x7fc133e6d430">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="q1_outer_container_solid0x7fc133e77050"/>
+      <physvol name="q1_beampipe_pv0x7fc133e769f0">
+        <volumeref ref="q1_bp_container_lv0x7fc133e60250"/>
+      </physvol>
+      <physvol name="q1_outer_pv0x7fc133e6d500">
+        <volumeref ref="q1_outer_container_lv0x7fc133e6d050"/>
+      </physvol>
+    </volume>
+    <volume name="sex1_bp_vacuum_lv0x7fc133e78520">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="sex1_bp_vacuum_solid0x7fc133e781a0"/>
+    </volume>
+    <volume name="sex1_bp_beampipe_lv0x7fc133e785c0">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="sex1_bp_pipe_solid0x7fc133e78280"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="sex1_bp_container_lv0x7fc133e78660">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="sex1_bp_container_solid0x7fc133e78360"/>
+      <physvol name="sex1_bp_vacuum_pv0x7fc133e78880">
+        <volumeref ref="sex1_bp_vacuum_lv0x7fc133e78520"/>
+      </physvol>
+      <physvol name="sex1_bp_beampipe_pipe_pv0x7fc133e788d0">
+        <volumeref ref="sex1_bp_beampipe_lv0x7fc133e785c0"/>
+      </physvol>
+    </volume>
+    <volume name="sex1_outer_yoke_lv0x7fc133e82fc0">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_yoke_solid0x7fc133e81450"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_pole_lv0x7fc133e82980">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_pole_solid0x7fc133e81c30"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_pole_lv0x7fc133e82a80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_pole_solid0x7fc133e81e30"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_pole_lv0x7fc133e82b80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_pole_solid0x7fc133e82060"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_pole_lv0x7fc133e82c80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_pole_solid0x7fc133e82290"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_pole_lv0x7fc133e82d80">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_pole_solid0x7fc133e824c0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_pole_lv0x7fc133e82ec0">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sex1_outer_pole_solid0x7fc133e82730"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_coil_left_lv0x7fc133e83290">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sex1_outer_coil_left_solid0x7fc11402ae00"/>
+    </volume>
+    <volume name="sex1_outer_coil_right_lv0x7fc133e83390">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sex1_outer_coil_right_solid0x7fc11402b400"/>
+    </volume>
+    <volume name="sex1_outer_container_lv0x7fc133e83090">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="sex1_outer_outer_container_solid0x7fc133e81a70"/>
+      <physvol name="sex1_outer_yoke_pv0x7fc133e84150">
+        <volumeref ref="sex1_outer_yoke_lv0x7fc133e82fc0"/>
+      </physvol>
+      <physvol name="sex1_outer_pole_0_pv0x7fc133e8ba70">
+        <volumeref ref="sex1_outer_pole_lv0x7fc133e82980"/>
+        <rotation name="sex1_outer_pole_0_pv0x7fc133e8ba70_rot" unit="deg" x="0" y="0" z="-120"/>
+      </physvol>
+      <physvol copynumber="1" name="sex1_outer_pole_1_pv0x7fc133e8bb70">
+        <volumeref ref="sex1_outer_pole_lv0x7fc133e82a80"/>
+        <rotation name="sex1_outer_pole_1_pv0x7fc133e8bb70_rot" unit="deg" x="0" y="0" z="-60"/>
+      </physvol>
+      <physvol copynumber="2" name="sex1_outer_pole_2_pv0x7fc133e8bc70">
+        <volumeref ref="sex1_outer_pole_lv0x7fc133e82b80"/>
+      </physvol>
+      <physvol copynumber="3" name="sex1_outer_pole_3_pv0x7fc133e8bd70">
+        <volumeref ref="sex1_outer_pole_lv0x7fc133e82c80"/>
+        <rotation name="sex1_outer_pole_3_pv0x7fc133e8bd70_rot" unit="deg" x="0" y="0" z="60"/>
+      </physvol>
+      <physvol copynumber="4" name="sex1_outer_pole_4_pv0x7fc133e8beb0">
+        <volumeref ref="sex1_outer_pole_lv0x7fc133e82d80"/>
+        <rotation name="sex1_outer_pole_4_pv0x7fc133e8beb0_rot" unit="deg" x="0" y="0" z="120"/>
+      </physvol>
+      <physvol copynumber="5" name="sex1_outer_pole_5_pv0x7fc133e8bfb0">
+        <volumeref ref="sex1_outer_pole_lv0x7fc133e82ec0"/>
+        <rotation name="sex1_outer_pole_5_pv0x7fc133e8bfb0_rot" unit="deg" x="0" y="0" z="180"/>
+      </physvol>
+      <physvol name="sex1_outer_coil_0_left_pv0x7fc133e8c150">
+        <volumeref ref="sex1_outer_coil_left_lv0x7fc133e83290"/>
+        <rotation name="sex1_outer_coil_0_left_pv0x7fc133e8c150_rot" unit="deg" x="0" y="0" z="120"/>
+      </physvol>
+      <physvol name="sex1_outer_coil_0_right_pv0x7fc133e8c1a0">
+        <volumeref ref="sex1_outer_coil_right_lv0x7fc133e83390"/>
+        <rotation name="sex1_outer_coil_0_right_pv0x7fc133e8c1a0_rot" unit="deg" x="0" y="0" z="120"/>
+      </physvol>
+      <physvol copynumber="1" name="sex1_outer_coil_1_left_pv0x7fc133e8c420">
+        <volumeref ref="sex1_outer_coil_left_lv0x7fc133e83290"/>
+        <rotation name="sex1_outer_coil_1_left_pv0x7fc133e8c420_rot" unit="deg" x="0" y="0" z="180"/>
+      </physvol>
+      <physvol copynumber="1" name="sex1_outer_coil_1_right_pv0x7fc133e8c470">
+        <volumeref ref="sex1_outer_coil_right_lv0x7fc133e83390"/>
+        <rotation name="sex1_outer_coil_1_right_pv0x7fc133e8c470_rot" unit="deg" x="0" y="0" z="180"/>
+      </physvol>
+      <physvol copynumber="2" name="sex1_outer_coil_2_left_pv0x7fc133e8c6a0">
+        <volumeref ref="sex1_outer_coil_left_lv0x7fc133e83290"/>
+        <rotation name="sex1_outer_coil_2_left_pv0x7fc133e8c6a0_rot" unit="deg" x="0" y="0" z="-120"/>
+      </physvol>
+      <physvol copynumber="2" name="sex1_outer_coil_2_right_pv0x7fc133e8c6f0">
+        <volumeref ref="sex1_outer_coil_right_lv0x7fc133e83390"/>
+        <rotation name="sex1_outer_coil_2_right_pv0x7fc133e8c6f0_rot" unit="deg" x="0" y="0" z="-120"/>
+      </physvol>
+      <physvol copynumber="3" name="sex1_outer_coil_3_left_pv0x7fc133e8c920">
+        <volumeref ref="sex1_outer_coil_left_lv0x7fc133e83290"/>
+        <rotation name="sex1_outer_coil_3_left_pv0x7fc133e8c920_rot" unit="deg" x="0" y="0" z="-60"/>
+      </physvol>
+      <physvol copynumber="3" name="sex1_outer_coil_3_right_pv0x7fc133e8c970">
+        <volumeref ref="sex1_outer_coil_right_lv0x7fc133e83390"/>
+        <rotation name="sex1_outer_coil_3_right_pv0x7fc133e8c970_rot" unit="deg" x="0" y="0" z="-60"/>
+      </physvol>
+      <physvol copynumber="4" name="sex1_outer_coil_4_left_pv0x7fc133e8cba0">
+        <volumeref ref="sex1_outer_coil_left_lv0x7fc133e83290"/>
+        <rotation name="sex1_outer_coil_4_left_pv0x7fc133e8cba0_rot" unit="deg" x="0" y="0" z="-1.40334185970698e-14"/>
+      </physvol>
+      <physvol copynumber="4" name="sex1_outer_coil_4_right_pv0x7fc133e8cbf0">
+        <volumeref ref="sex1_outer_coil_right_lv0x7fc133e83390"/>
+        <rotation name="sex1_outer_coil_4_right_pv0x7fc133e8cbf0_rot" unit="deg" x="0" y="0" z="-1.40334185970698e-14"/>
+      </physvol>
+      <physvol copynumber="5" name="sex1_outer_coil_5_left_pv0x7fc133e8cee0">
+        <volumeref ref="sex1_outer_coil_left_lv0x7fc133e83290"/>
+        <rotation name="sex1_outer_coil_5_left_pv0x7fc133e8cee0_rot" unit="deg" x="0" y="0" z="60"/>
+      </physvol>
+      <physvol copynumber="5" name="sex1_outer_coil_5_right_pv0x7fc133e8cf30">
+        <volumeref ref="sex1_outer_coil_right_lv0x7fc133e83390"/>
+        <rotation name="sex1_outer_coil_5_right_pv0x7fc133e8cf30_rot" unit="deg" x="0" y="0" z="60"/>
+      </physvol>
+    </volume>
+    <volume name="sex1_container_lv0x7fc133e83530">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="sex1_outer_container_solid0x7fc133e8d3a0"/>
+      <physvol name="sex1_beampipe_pv0x7fc133e835d0">
+        <volumeref ref="sex1_bp_container_lv0x7fc133e78660"/>
+      </physvol>
+      <physvol name="sex1_outer_pv0x7fc133e83620">
+        <volumeref ref="sex1_outer_container_lv0x7fc133e83090"/>
+      </physvol>
+    </volume>
+    <volume name="oct1_bp_vacuum_lv0x7fc133e8f280">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="oct1_bp_vacuum_solid0x7fc133e8ef00"/>
+    </volume>
+    <volume name="oct1_bp_beampipe_lv0x7fc133e8f320">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="oct1_bp_pipe_solid0x7fc133e8efe0"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="oct1_bp_container_lv0x7fc133e8f3c0">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="oct1_bp_container_solid0x7fc133e8f0c0"/>
+      <physvol name="oct1_bp_vacuum_pv0x7fc133e8f550">
+        <volumeref ref="oct1_bp_vacuum_lv0x7fc133e8f280"/>
+      </physvol>
+      <physvol name="oct1_bp_beampipe_pipe_pv0x7fc133e8f5a0">
+        <volumeref ref="oct1_bp_beampipe_lv0x7fc133e8f320"/>
+      </physvol>
+    </volume>
+    <volume name="oct1_outer_yoke_lv0x7fc133e9a000">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_yoke_solid0x7fc133e97eb0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99800">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e98690"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99900">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e98890"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99a00">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e98ac0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99b00">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e98cf0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99c00">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e98f20"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99d00">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e99150"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99e00">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e99380"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_pole_lv0x7fc133e99f00">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="oct1_outer_pole_solid0x7fc133e995b0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_coil_left_lv0x7fc133e9a2d0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="oct1_outer_coil_left_solid0x7fc11402d800"/>
+    </volume>
+    <volume name="oct1_outer_coil_right_lv0x7fc133e9a3d0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="oct1_outer_coil_right_solid0x7fc11402de00"/>
+    </volume>
+    <volume name="oct1_outer_container_lv0x7fc133e9a0d0">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="oct1_outer_outer_container_solid0x7fc133e984d0"/>
+      <physvol name="oct1_outer_yoke_pv0x7fc133ea29e0">
+        <volumeref ref="oct1_outer_yoke_lv0x7fc133e9a000"/>
+      </physvol>
+      <physvol name="oct1_outer_pole_0_pv0x7fc133ea2a80">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99800"/>
+        <rotation name="oct1_outer_pole_0_pv0x7fc133ea2a80_rot" unit="deg" x="0" y="0" z="-112.5"/>
+      </physvol>
+      <physvol copynumber="1" name="oct1_outer_pole_1_pv0x7fc133ea2b80">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99900"/>
+        <rotation name="oct1_outer_pole_1_pv0x7fc133ea2b80_rot" unit="deg" x="0" y="0" z="-67.5"/>
+      </physvol>
+      <physvol copynumber="2" name="oct1_outer_pole_2_pv0x7fc133ea2c80">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99a00"/>
+        <rotation name="oct1_outer_pole_2_pv0x7fc133ea2c80_rot" unit="deg" x="0" y="0" z="-22.5"/>
+      </physvol>
+      <physvol copynumber="3" name="oct1_outer_pole_3_pv0x7fc133ea2d80">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99b00"/>
+        <rotation name="oct1_outer_pole_3_pv0x7fc133ea2d80_rot" unit="deg" x="0" y="0" z="22.5"/>
+      </physvol>
+      <physvol copynumber="4" name="oct1_outer_pole_4_pv0x7fc133ea2ec0">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99c00"/>
+        <rotation name="oct1_outer_pole_4_pv0x7fc133ea2ec0_rot" unit="deg" x="0" y="0" z="67.5"/>
+      </physvol>
+      <physvol copynumber="5" name="oct1_outer_pole_5_pv0x7fc133ea2fc0">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99d00"/>
+        <rotation name="oct1_outer_pole_5_pv0x7fc133ea2fc0_rot" unit="deg" x="0" y="0" z="112.5"/>
+      </physvol>
+      <physvol copynumber="6" name="oct1_outer_pole_6_pv0x7fc133ea30c0">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99e00"/>
+        <rotation name="oct1_outer_pole_6_pv0x7fc133ea30c0_rot" unit="deg" x="0" y="0" z="157.5"/>
+      </physvol>
+      <physvol copynumber="7" name="oct1_outer_pole_7_pv0x7fc133ea31c0">
+        <volumeref ref="oct1_outer_pole_lv0x7fc133e99f00"/>
+        <rotation name="oct1_outer_pole_7_pv0x7fc133ea31c0_rot" unit="deg" x="0" y="0" z="-157.5"/>
+      </physvol>
+      <physvol name="oct1_outer_coil_0_left_pv0x7fc133ea33e0">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_0_left_pv0x7fc133ea33e0_rot" unit="deg" x="0" y="0" z="112.5"/>
+      </physvol>
+      <physvol name="oct1_outer_coil_0_right_pv0x7fc133ea3430">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_0_right_pv0x7fc133ea3430_rot" unit="deg" x="0" y="0" z="112.5"/>
+      </physvol>
+      <physvol copynumber="1" name="oct1_outer_coil_1_left_pv0x7fc133ea3630">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_1_left_pv0x7fc133ea3630_rot" unit="deg" x="0" y="0" z="157.5"/>
+      </physvol>
+      <physvol copynumber="1" name="oct1_outer_coil_1_right_pv0x7fc133ea3680">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_1_right_pv0x7fc133ea3680_rot" unit="deg" x="0" y="0" z="157.5"/>
+      </physvol>
+      <physvol copynumber="2" name="oct1_outer_coil_2_left_pv0x7fc133ea38b0">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_2_left_pv0x7fc133ea38b0_rot" unit="deg" x="0" y="0" z="-157.5"/>
+      </physvol>
+      <physvol copynumber="2" name="oct1_outer_coil_2_right_pv0x7fc133ea3900">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_2_right_pv0x7fc133ea3900_rot" unit="deg" x="0" y="0" z="-157.5"/>
+      </physvol>
+      <physvol copynumber="3" name="oct1_outer_coil_3_left_pv0x7fc133ea3b30">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_3_left_pv0x7fc133ea3b30_rot" unit="deg" x="0" y="0" z="-112.5"/>
+      </physvol>
+      <physvol copynumber="3" name="oct1_outer_coil_3_right_pv0x7fc133ea3b80">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_3_right_pv0x7fc133ea3b80_rot" unit="deg" x="0" y="0" z="-112.5"/>
+      </physvol>
+      <physvol copynumber="4" name="oct1_outer_coil_4_left_pv0x7fc133ea3e30">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_4_left_pv0x7fc133ea3e30_rot" unit="deg" x="0" y="0" z="-67.5"/>
+      </physvol>
+      <physvol copynumber="4" name="oct1_outer_coil_4_right_pv0x7fc133ea3e80">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_4_right_pv0x7fc133ea3e80_rot" unit="deg" x="0" y="0" z="-67.5"/>
+      </physvol>
+      <physvol copynumber="5" name="oct1_outer_coil_5_left_pv0x7fc133ea40f0">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_5_left_pv0x7fc133ea40f0_rot" unit="deg" x="0" y="0" z="-22.5"/>
+      </physvol>
+      <physvol copynumber="5" name="oct1_outer_coil_5_right_pv0x7fc133ea4140">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_5_right_pv0x7fc133ea4140_rot" unit="deg" x="0" y="0" z="-22.5"/>
+      </physvol>
+      <physvol copynumber="6" name="oct1_outer_coil_6_left_pv0x7fc133ea4370">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_6_left_pv0x7fc133ea4370_rot" unit="deg" x="0" y="0" z="22.5"/>
+      </physvol>
+      <physvol copynumber="6" name="oct1_outer_coil_6_right_pv0x7fc133ea43c0">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_6_right_pv0x7fc133ea43c0_rot" unit="deg" x="0" y="0" z="22.5"/>
+      </physvol>
+      <physvol copynumber="7" name="oct1_outer_coil_7_left_pv0x7fc133ea45f0">
+        <volumeref ref="oct1_outer_coil_left_lv0x7fc133e9a2d0"/>
+        <rotation name="oct1_outer_coil_7_left_pv0x7fc133ea45f0_rot" unit="deg" x="0" y="0" z="67.5"/>
+      </physvol>
+      <physvol copynumber="7" name="oct1_outer_coil_7_right_pv0x7fc133ea4640">
+        <volumeref ref="oct1_outer_coil_right_lv0x7fc133e9a3d0"/>
+        <rotation name="oct1_outer_coil_7_right_pv0x7fc133ea4640_rot" unit="deg" x="0" y="0" z="67.5"/>
+      </physvol>
+    </volume>
+    <volume name="oct1_container_lv0x7fc133ea4ae0">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="oct1_outer_container_solid0x7fc133ea49f0"/>
+      <physvol name="oct1_beampipe_pv0x7fc133e9a5a0">
+        <volumeref ref="oct1_bp_container_lv0x7fc133e8f3c0"/>
+      </physvol>
+      <physvol name="oct1_outer_pv0x7fc133e9a620">
+        <volumeref ref="oct1_outer_container_lv0x7fc133e9a0d0"/>
+      </physvol>
+    </volume>
+    <volume name="sol1_fringe_in_bp_container_lv0x7fc133ea7ce0">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="sol1_fringe_in_bp_container_solid0x7fc133ea7a60"/>
+    </volume>
+    <volume name="sol1_centre_bp_vacuum_lv0x7fc133ea8460">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="sol1_centre_bp_vacuum_solid0x7fc133ea80e0"/>
+    </volume>
+    <volume name="sol1_centre_bp_beampipe_lv0x7fc133ea8500">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="sol1_centre_bp_pipe_solid0x7fc133ea81c0"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="sol1_centre_bp_container_lv0x7fc133ea85a0">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="sol1_centre_bp_container_solid0x7fc133ea82a0"/>
+      <physvol name="sol1_centre_bp_vacuum_pv0x7fc133ea87f0">
+        <volumeref ref="sol1_centre_bp_vacuum_lv0x7fc133ea8460"/>
+      </physvol>
+      <physvol name="sol1_centre_bp_beampipe_pipe_pv0x7fc133ea8840">
+        <volumeref ref="sol1_centre_bp_beampipe_lv0x7fc133ea8500"/>
+      </physvol>
+    </volume>
+    <volume name="sol1_centre_outer_yoke_lv0x7fc133e5ddb0">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sol1_centre_outer_yoke_solid0x7fc133e5dbc0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sol1_centre_outer_outer_container_lv0x7fc133ea8e40">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="sol1_centre_outer_container_solid0x7fc133e5dca0"/>
+      <physvol name="sol1_centre_outer_yoke_pv0x7fc133ea9200">
+        <volumeref ref="sol1_centre_outer_yoke_lv0x7fc133e5ddb0"/>
+      </physvol>
+    </volume>
+    <volume name="sol1_centre_container_lv0x7fc133ea9080">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="sol1_centre_outer_container_solid0x7fc133ea9500"/>
+      <physvol name="sol1_centre_beampipe_pv0x7fc133ea9180">
+        <volumeref ref="sol1_centre_bp_container_lv0x7fc133ea85a0"/>
+      </physvol>
+      <physvol name="sol1_centre_outer_pv0x7fc133ea9640">
+        <volumeref ref="sol1_centre_outer_outer_container_lv0x7fc133ea8e40"/>
+      </physvol>
+    </volume>
+    <volume name="sol1_fringe_out_bp_container_lv0x7fc133ea9990">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="sol1_fringe_out_bp_container_solid0x7fc133ea9740"/>
+    </volume>
+    <volume name="c1_collimator_lv0x7fc133eab440">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="c1_collimator_solid0x7fc133eab3a0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="c1_vacuum_lv0x7fc133eab700">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="c1_vacuum_solid0x7fc133eab330"/>
+    </volume>
+    <volume name="c1_container_lv0x7fc133eab1b0">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="c1_container_solid0x7fc133eaae00"/>
+      <physvol name="c1_collimator_pv0x7fc133eab680">
+        <volumeref ref="c1_collimator_lv0x7fc133eab440"/>
+      </physvol>
+      <physvol name="c1_vacuum_pv0x7fc133eab830">
+        <volumeref ref="c1_vacuum_lv0x7fc133eab700"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_bp_vacuum_lv0x7fc133ead760">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="sb1_even_ang_bp_vacuum_solid0x7fc133ead210"/>
+    </volume>
+    <volume name="sb1_even_ang_bp_beampipe_lv0x7fc133ead860">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="sb1_even_ang_bp_pipe_solid0x7fc133eac180"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="sb1_even_ang_bp_container_lv0x7fc133ead960">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="sb1_even_ang_bp_container_solid0x7fc133ead540"/>
+      <physvol name="sb1_even_ang_bp_vacuum_pv0x7fc133eadbe0">
+        <volumeref ref="sb1_even_ang_bp_vacuum_lv0x7fc133ead760"/>
+      </physvol>
+      <physvol name="sb1_even_ang_bp_beampipe_pipe_pv0x7fc133eadc50">
+        <volumeref ref="sb1_even_ang_bp_beampipe_lv0x7fc133ead860"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_outer_yoke_lv0x7fc133ebcb40">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="sb1_even_ang_outer_yoke_solid0x7fc133ebc0e0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_00x7fc133ebcee0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_00x7fc133ebc380"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_10x7fc133ebd010">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_10x7fc133ebc530"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_20x7fc133ebd140">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_20x7fc133ebc6e0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_coil_solid_30x7fc133ebd270">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sb1_even_ang_outer_pole_solid_30x7fc133ebc8c0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_container_lv0x7fc133ebcc40">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="sb1_even_ang_outer_outer_container_solid0x7fc133ebc180"/>
+      <physvol name="sb1_even_ang_outer_yoke_pv0x7fc133ebd3a0">
+        <volumeref ref="sb1_even_ang_outer_yoke_lv0x7fc133ebcb40"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_0_pv0x7fc133ebd3f0">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_00x7fc133ebcee0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_1_pv0x7fc133ebd470">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_10x7fc133ebd010"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_2_pv0x7fc133e5e910">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_20x7fc133ebd140"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_coil_3_pv0x7fc133e5e990">
+        <volumeref ref="sb1_even_ang_outer_coil_solid_30x7fc133ebd270"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_container_lv0x7fc133e5ea50">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="sb1_even_ang_outer_container_solid0x7fc133ed5020"/>
+      <physvol name="sb1_even_ang_beampipe_pv0x7fc133e97fc0">
+        <volumeref ref="sb1_even_ang_bp_container_lv0x7fc133ead960"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_pv0x7fc133e5eb80">
+        <volumeref ref="sb1_even_ang_outer_container_lv0x7fc133ebcc40"/>
+      </physvol>
+    </volume>
+    <volume name="rb1_e1_fringe_bp_container_lv0x7fc133eeb530">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="rb1_e1_fringe_bp_container_solid0x7fc133eeb370"/>
+    </volume>
+    <volume name="rb1_centre_bp_vacuum_lv0x7fc133eebe00">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="rb1_centre_bp_vacuum_solid0x7fc133eeb840"/>
+    </volume>
+    <volume name="rb1_centre_bp_beampipe_lv0x7fc133eebea0">
+      <materialref ref="stainlesssteel0x7fc133c5a290"/>
+      <solidref ref="rb1_centre_bp_pipe_solid0x7fc133eebb70"/>
+      <auxiliary auxtype="SensDet" auxvalue="aperture_complete"/>
+    </volume>
+    <volume name="rb1_centre_bp_container_lv0x7fc133eebf40">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="rb1_centre_bp_container_solid0x7fc133eebc10"/>
+      <physvol name="rb1_centre_bp_vacuum_pv0x7fc133eadca0">
+        <volumeref ref="rb1_centre_bp_vacuum_lv0x7fc133eebe00"/>
+      </physvol>
+      <physvol name="rb1_centre_bp_beampipe_pipe_pv0x7fc133eada60">
+        <volumeref ref="rb1_centre_bp_beampipe_lv0x7fc133eebea0"/>
+      </physvol>
+    </volume>
+    <volume name="rb1_outer_yoke_lv0x7fc133efb4b0">
+      <materialref ref="G4_Fe0x7fc133c4f9f0"/>
+      <solidref ref="rb1_outer_yoke_solid0x7fc133efaab0"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_coil_solid_00x7fc133efb7c0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="rb1_outer_pole_solid_00x7fc133efac90"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_coil_solid_10x7fc133efb8c0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="rb1_outer_pole_solid_10x7fc133efae70"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_coil_solid_20x7fc133efb9c0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="rb1_outer_pole_solid_20x7fc133efb050"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_coil_solid_30x7fc133efbac0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="rb1_outer_pole_solid_30x7fc133efb230"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_container_lv0x7fc133efb580">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="rb1_outer_outer_container_solid0x7fc133efab50"/>
+      <physvol name="rb1_outer_yoke_pv0x7fc133efbbc0">
+        <volumeref ref="rb1_outer_yoke_lv0x7fc133efb4b0"/>
+      </physvol>
+      <physvol name="rb1_outer_coil_0_pv0x7fc133efbc10">
+        <volumeref ref="rb1_outer_coil_solid_00x7fc133efb7c0"/>
+      </physvol>
+      <physvol name="rb1_outer_coil_1_pv0x7fc133efbc90">
+        <volumeref ref="rb1_outer_coil_solid_10x7fc133efb8c0"/>
+      </physvol>
+      <physvol name="rb1_outer_coil_2_pv0x7fc133efbd10">
+        <volumeref ref="rb1_outer_coil_solid_20x7fc133efb9c0"/>
+      </physvol>
+      <physvol name="rb1_outer_coil_3_pv0x7fc133efbd90">
+        <volumeref ref="rb1_outer_coil_solid_30x7fc133efbac0"/>
+      </physvol>
+    </volume>
+    <volume name="rb1_centre_container_lv0x7fc133efbe50">
+      <materialref ref="G4_Galactic0x7fc133e5c400"/>
+      <solidref ref="rb1_outer_container_solid0x7fc103c17f10"/>
+      <physvol name="rb1_centre_beampipe_pv0x7fc133ebbda0">
+        <volumeref ref="rb1_centre_bp_container_lv0x7fc133eebf40"/>
+      </physvol>
+      <physvol name="rb1_centre_outer_pv0x7fc133efbf80">
+        <volumeref ref="rb1_outer_container_lv0x7fc133efb580"/>
+      </physvol>
+    </volume>
+    <volume name="rb1_e2_fringe_bp_container_lv0x7fc103c00860">
+      <materialref ref="vacuum0x7fc133c8eea0"/>
+      <solidref ref="rb1_e2_fringe_bp_container_solid0x7fc133eec690"/>
+    </volume>
+    <volume name="q1_outer_end_coil_lv0x7fc133e6df50">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="q1_outer_end_coil_solid0x7fc11402a200"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="q1_outer_end_container_lv0x7fc133e6d690">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="q1_outer_end_container_solid0x7fc133e6d5b0"/>
+      <physvol name="q1_outer_end_piece_coil_pv0x7fc133e75e30">
+        <volumeref ref="q1_outer_end_coil_lv0x7fc133e6df50"/>
+        <position name="q1_outer_end_piece_coil_pv0x7fc133e75e30_pos" unit="mm" x="-103.894565879436" y="-103.894565879436" z="23.978384291978"/>
+        <rotation name="q1_outer_end_piece_coil_pv0x7fc133e75e30_rot" unit="deg" x="-90" y="45" z="180"/>
+      </physvol>
+      <physvol copynumber="1" name="q1_outer_end_piece_coil_pv0x7fc133e76130">
+        <volumeref ref="q1_outer_end_coil_lv0x7fc133e6df50"/>
+        <position name="q1_outer_end_piece_coil_pv0x7fc133e76130_pos" unit="mm" x="103.894565879436" y="-103.894565879436" z="23.978384291978"/>
+        <rotation name="q1_outer_end_piece_coil_pv0x7fc133e76130_rot" unit="deg" x="-90" y="-45" z="180"/>
+      </physvol>
+      <physvol copynumber="2" name="q1_outer_end_piece_coil_pv0x7fc133e76380">
+        <volumeref ref="q1_outer_end_coil_lv0x7fc133e6df50"/>
+        <position name="q1_outer_end_piece_coil_pv0x7fc133e76380_pos" unit="mm" x="103.894565879436" y="103.894565879436" z="23.978384291978"/>
+        <rotation name="q1_outer_end_piece_coil_pv0x7fc133e76380_rot" unit="deg" x="90" y="-45" z="0"/>
+      </physvol>
+      <physvol copynumber="3" name="q1_outer_end_piece_coil_pv0x7fc133e76600">
+        <volumeref ref="q1_outer_end_coil_lv0x7fc133e6df50"/>
+        <position name="q1_outer_end_piece_coil_pv0x7fc133e76600_pos" unit="mm" x="-103.894565879436" y="103.894565879436" z="23.978384291978"/>
+        <rotation name="q1_outer_end_piece_coil_pv0x7fc133e76600_rot" unit="deg" x="90" y="45" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="sex1_outer_end_coil_lv0x7fc133e899b0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sex1_outer_end_coil_solid0x7fc11402ba00"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sex1_outer_end_container_lv0x7fc133e83790">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="sex1_outer_end_container_solid0x7fc133e836b0"/>
+      <physvol name="sex1_outer_end_piece_coil_pv0x7fc133e8c270">
+        <volumeref ref="sex1_outer_end_coil_lv0x7fc133e899b0"/>
+        <position name="sex1_outer_end_piece_coil_pv0x7fc133e8c270_pos" unit="mm" x="-138.778602659453" y="-80.1238636031952" z="12.9004705302228"/>
+        <rotation name="sex1_outer_end_piece_coil_pv0x7fc133e8c270_rot" unit="deg" x="-90" y="60" z="180"/>
+      </physvol>
+      <physvol copynumber="1" name="sex1_outer_end_piece_coil_pv0x7fc133e8c4c0">
+        <volumeref ref="sex1_outer_end_coil_lv0x7fc133e899b0"/>
+        <position name="sex1_outer_end_piece_coil_pv0x7fc133e8c4c0_pos" unit="mm" x="-1.96246866193944e-14" y="-160.247727206391" z="12.9004705302228"/>
+        <rotation name="sex1_outer_end_piece_coil_pv0x7fc133e8c4c0_rot" unit="deg" x="-90" y="0" z="180"/>
+      </physvol>
+      <physvol copynumber="2" name="sex1_outer_end_piece_coil_pv0x7fc133e8c740">
+        <volumeref ref="sex1_outer_end_coil_lv0x7fc133e899b0"/>
+        <position name="sex1_outer_end_piece_coil_pv0x7fc133e8c740_pos" unit="mm" x="138.778602659453" y="-80.1238636031953" z="12.9004705302228"/>
+        <rotation name="sex1_outer_end_piece_coil_pv0x7fc133e8c740_rot" unit="deg" x="-90" y="-60" z="180"/>
+      </physvol>
+      <physvol copynumber="3" name="sex1_outer_end_piece_coil_pv0x7fc133e8c9c0">
+        <volumeref ref="sex1_outer_end_coil_lv0x7fc133e899b0"/>
+        <position name="sex1_outer_end_piece_coil_pv0x7fc133e8c9c0_pos" unit="mm" x="138.778602659453" y="80.1238636031952" z="12.9004705302228"/>
+        <rotation name="sex1_outer_end_piece_coil_pv0x7fc133e8c9c0_rot" unit="deg" x="90" y="-60" z="0"/>
+      </physvol>
+      <physvol copynumber="4" name="sex1_outer_end_piece_coil_pv0x7fc133e8c1f0">
+        <volumeref ref="sex1_outer_end_coil_lv0x7fc133e899b0"/>
+        <position name="sex1_outer_end_piece_coil_pv0x7fc133e8c1f0_pos" unit="mm" x="3.92493732387889e-14" y="160.247727206391" z="12.9004705302228"/>
+        <rotation name="sex1_outer_end_piece_coil_pv0x7fc133e8c1f0_rot" unit="deg" x="90" y="-1.40334185970698e-14" z="0"/>
+      </physvol>
+      <physvol copynumber="5" name="sex1_outer_end_piece_coil_pv0x7fc133e8cf80">
+        <volumeref ref="sex1_outer_end_coil_lv0x7fc133e899b0"/>
+        <position name="sex1_outer_end_piece_coil_pv0x7fc133e8cf80_pos" unit="mm" x="-138.778602659453" y="80.1238636031954" z="12.9004705302228"/>
+        <rotation name="sex1_outer_end_piece_coil_pv0x7fc133e8cf80_rot" unit="deg" x="90" y="60" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="oct1_outer_end_coil_lv0x7fc133ea02f0">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="oct1_outer_end_coil_solid0x7fc11402e400"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="oct1_outer_end_container_lv0x7fc133e9a7d0">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="oct1_outer_end_container_solid0x7fc133e9a6f0"/>
+      <physvol name="oct1_outer_end_piece_coil_pv0x7fc133ea3480">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea3480_pos" unit="mm" x="-155.916802267404" y="-64.5828541010027" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea3480_rot" unit="deg" x="-90" y="67.5" z="180"/>
+      </physvol>
+      <physvol copynumber="1" name="oct1_outer_end_piece_coil_pv0x7fc133ea36d0">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea36d0_pos" unit="mm" x="-64.5828541010027" y="-155.916802267404" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea36d0_rot" unit="deg" x="-90" y="22.5" z="180"/>
+      </physvol>
+      <physvol copynumber="2" name="oct1_outer_end_piece_coil_pv0x7fc133ea3950">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea3950_pos" unit="mm" x="64.5828541010027" y="-155.916802267404" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea3950_rot" unit="deg" x="-90" y="-22.5" z="180"/>
+      </physvol>
+      <physvol copynumber="3" name="oct1_outer_end_piece_coil_pv0x7fc133ea3210">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea3210_pos" unit="mm" x="155.916802267404" y="-64.5828541010028" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea3210_rot" unit="deg" x="-90" y="-67.5" z="180"/>
+      </physvol>
+      <physvol copynumber="4" name="oct1_outer_end_piece_coil_pv0x7fc133ea3ed0">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea3ed0_pos" unit="mm" x="155.916802267404" y="64.5828541010027" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea3ed0_rot" unit="deg" x="90" y="-67.5" z="0"/>
+      </physvol>
+      <physvol copynumber="5" name="oct1_outer_end_piece_coil_pv0x7fc133ea4190">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea4190_pos" unit="mm" x="64.5828541010028" y="155.916802267404" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea4190_rot" unit="deg" x="90" y="-22.5" z="0"/>
+      </physvol>
+      <physvol copynumber="6" name="oct1_outer_end_piece_coil_pv0x7fc133ea4410">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea4410_pos" unit="mm" x="-64.5828541010027" y="155.916802267404" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea4410_rot" unit="deg" x="90" y="22.5" z="0"/>
+      </physvol>
+      <physvol copynumber="7" name="oct1_outer_end_piece_coil_pv0x7fc133ea4690">
+        <volumeref ref="oct1_outer_end_coil_lv0x7fc133ea02f0"/>
+        <position name="oct1_outer_end_piece_coil_pv0x7fc133ea4690_pos" unit="mm" x="-155.916802267404" y="64.5828541010028" z="9.06897260811947"/>
+        <rotation name="oct1_outer_end_piece_coil_pv0x7fc133ea4690_rot" unit="deg" x="90" y="67.5" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_outer_end_coil_in_lv0x7fc133ee1670">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sb1_even_ang_outer_end_coil_in_solid0x7fc114032800"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_end_cont_in_lv0x7fc133ee1740">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="sb1_even_ang_outer_end_coil_cont_solid0x7fc133ee1420"/>
+      <physvol name="sb1_even_ang_outer_end_piece_in_top_pv0x7fc133ee1bc0">
+        <volumeref ref="sb1_even_ang_outer_end_coil_in_lv0x7fc133ee1670"/>
+        <position name="sb1_even_ang_outer_end_piece_in_top_pv0x7fc133ee1bc0_pos" unit="mm" x="0" y="94.7515" z="79.95"/>
+        <rotation name="sb1_even_ang_outer_end_piece_in_top_pv0x7fc133ee1bc0_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_end_piece_in_low_pv0x7fc133ee1c40">
+        <volumeref ref="sb1_even_ang_outer_end_coil_in_lv0x7fc133ee1670"/>
+        <position name="sb1_even_ang_outer_end_piece_in_low_pv0x7fc133ee1c40_pos" unit="mm" x="0" y="-94.7515" z="79.95"/>
+        <rotation name="sb1_even_ang_outer_end_piece_in_low_pv0x7fc133ee1c40_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="sb1_even_ang_outer_end_coil_out_lv0x7fc133ee1840">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="sb1_even_ang_outer_end_coil_out_solid0x7fc114032e00"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="sb1_even_ang_outer_end_cont_out_lv0x7fc133ee1940">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="sb1_even_ang_outer_end_coil_cont_solid0x7fc133ee15d0"/>
+      <physvol name="sb1_even_ang_outer_end_piece_out_top_pv0x7fc133ee1b70">
+        <volumeref ref="sb1_even_ang_outer_end_coil_out_lv0x7fc133ee1840"/>
+        <position name="sb1_even_ang_outer_end_piece_out_top_pv0x7fc133ee1b70_pos" unit="mm" x="0" y="94.7525" z="-79.95"/>
+        <rotation name="sb1_even_ang_outer_end_piece_out_top_pv0x7fc133ee1b70_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_end_piece_out_low_pv0x7fc133ee1d40">
+        <volumeref ref="sb1_even_ang_outer_end_coil_out_lv0x7fc133ee1840"/>
+        <position name="sb1_even_ang_outer_end_piece_out_low_pv0x7fc133ee1d40_pos" unit="mm" x="0" y="-94.7525" z="-79.95"/>
+        <rotation name="sb1_even_ang_outer_end_piece_out_low_pv0x7fc133ee1d40_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="rb1_outer_end_coil_in_lv0x7fc103c24000">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="rb1_outer_end_coil_in_solid0x7fc11403a800"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_end_cont_in_lv0x7fc103c240a0">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="rb1_outer_end_coil_cont_solid0x7fc103c23db0"/>
+      <physvol name="rb1_outer_end_piece_in_top_pv0x7fc103c24490">
+        <volumeref ref="rb1_outer_end_coil_in_lv0x7fc103c24000"/>
+        <position name="rb1_outer_end_piece_in_top_pv0x7fc103c24490_pos" unit="mm" x="0" y="94.7515" z="79.95"/>
+        <rotation name="rb1_outer_end_piece_in_top_pv0x7fc103c24490_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+      <physvol name="rb1_outer_end_piece_in_low_pv0x7fc103c244e0">
+        <volumeref ref="rb1_outer_end_coil_in_lv0x7fc103c24000"/>
+        <position name="rb1_outer_end_piece_in_low_pv0x7fc103c244e0_pos" unit="mm" x="0" y="-94.7515" z="79.95"/>
+        <rotation name="rb1_outer_end_piece_in_low_pv0x7fc103c244e0_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="rb1_outer_end_coil_out_lv0x7fc103c24140">
+      <materialref ref="G4_Cu0x7fc133c4f680"/>
+      <solidref ref="rb1_outer_end_coil_out_solid0x7fc11403ae00"/>
+      <auxiliary auxtype="SensDet" auxvalue="general"/>
+    </volume>
+    <volume name="rb1_outer_end_cont_out_lv0x7fc103c24210">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="rb1_outer_end_coil_cont_solid0x7fc103c23f60"/>
+      <physvol name="rb1_outer_end_piece_out_top_pv0x7fc103c24440">
+        <volumeref ref="rb1_outer_end_coil_out_lv0x7fc103c24140"/>
+        <position name="rb1_outer_end_piece_out_top_pv0x7fc103c24440_pos" unit="mm" x="0" y="94.7525" z="-79.95"/>
+        <rotation name="rb1_outer_end_piece_out_top_pv0x7fc103c24440_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+      <physvol name="rb1_outer_end_piece_out_low_pv0x7fc103c24580">
+        <volumeref ref="rb1_outer_end_coil_out_lv0x7fc103c24140"/>
+        <position name="rb1_outer_end_piece_out_low_pv0x7fc103c24580_pos" unit="mm" x="0" y="-94.7525" z="-79.95"/>
+        <rotation name="rb1_outer_end_piece_out_low_pv0x7fc103c24580_rot" unit="deg" x="-90" y="0" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="World_lv0x7fc103c4a450">
+      <materialref ref="G4_AIR0x7fc133c8ba30"/>
+      <solidref ref="World_solid0x7fc103c4a3e0"/>
+      <physvol name="d1_0_pv0x7fc103c4d040">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_0_pv0x7fc103c4d040_pos" unit="mm" x="0" y="500" z="3.06161699786838e-14"/>
+        <rotation name="d1_0_pv0x7fc103c4d040_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="q1_0_pv0x7fc103c4d0e0">
+        <volumeref ref="q1_container_lv0x7fc133e6d430"/>
+        <position name="q1_0_pv0x7fc103c4d0e0_pos" unit="mm" x="0" y="1250.000003" z="7.65404251304066e-14"/>
+        <rotation name="q1_0_pv0x7fc103c4d0e0_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="d1_1_pv0x7fc103c4d180">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_1_pv0x7fc103c4d180_pos" unit="mm" x="0" y="2000.000006" z="1.22464680282129e-13"/>
+        <rotation name="d1_1_pv0x7fc103c4d180_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sex1_0_pv0x7fc103c4d220">
+        <volumeref ref="sex1_container_lv0x7fc133e83530"/>
+        <position name="sex1_0_pv0x7fc103c4d220_pos" unit="mm" x="0" y="2750.000009" z="1.68388935433852e-13"/>
+        <rotation name="sex1_0_pv0x7fc103c4d220_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="2" name="d1_2_pv0x7fc103c4d2c0">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_2_pv0x7fc103c4d2c0_pos" unit="mm" x="0" y="3500.000012" z="2.14313190585575e-13"/>
+        <rotation name="d1_2_pv0x7fc103c4d2c0_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="oct1_0_pv0x7fc103c4d3a0">
+        <volumeref ref="oct1_container_lv0x7fc133ea4ae0"/>
+        <position name="oct1_0_pv0x7fc103c4d3a0_pos" unit="mm" x="0" y="4250.000015" z="2.60237445737298e-13"/>
+        <rotation name="oct1_0_pv0x7fc103c4d3a0_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="3" name="d1_3_pv0x7fc103c4d440">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_3_pv0x7fc103c4d440_pos" unit="mm" x="0" y="5000.000018" z="3.0616170088902e-13"/>
+        <rotation name="d1_3_pv0x7fc103c4d440_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sol1_fringe_in_0_pv0x7fc103c4d4e0">
+        <volumeref ref="sol1_fringe_in_bp_container_lv0x7fc133ea7ce0"/>
+        <position name="sol1_fringe_in_0_pv0x7fc103c4d4e0_pos" unit="mm" x="0" y="5500.000071" z="3.36777874113018e-13"/>
+        <rotation name="sol1_fringe_in_0_pv0x7fc103c4d4e0_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sol1_centre_0_pv0x7fc103c4d580">
+        <volumeref ref="sol1_centre_container_lv0x7fc133ea9080"/>
+        <position name="sol1_centre_0_pv0x7fc103c4d580_pos" unit="mm" x="0" y="5750.000024" z="3.5208595622444e-13"/>
+        <rotation name="sol1_centre_0_pv0x7fc103c4d580_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sol1_fringe_out_0_pv0x7fc103c4d6a0">
+        <volumeref ref="sol1_fringe_out_bp_container_lv0x7fc133ea9990"/>
+        <position name="sol1_fringe_out_0_pv0x7fc103c4d6a0_pos" unit="mm" x="0" y="5999.999977" z="3.67394038335862e-13"/>
+        <rotation name="sol1_fringe_out_0_pv0x7fc103c4d6a0_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="c1_0_pv0x7fc103c4d740">
+        <volumeref ref="c1_container_lv0x7fc133eab1b0"/>
+        <position name="c1_0_pv0x7fc103c4d740_pos" unit="mm" x="0" y="6500.00003" z="3.9801021155986e-13"/>
+        <rotation name="c1_0_pv0x7fc103c4d740_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="4" name="d1_4_pv0x7fc103c4d7e0">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_4_pv0x7fc103c4d7e0_pos" unit="mm" x="0" y="7500.000033" z="4.59242551700925e-13"/>
+        <rotation name="d1_4_pv0x7fc103c4d7e0_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_0_pv0x7fc103c4d880">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_0_pv0x7fc103c4d880_pos" unit="mm" x="-0.479994240027648" y="8079.99811601383" z="4.94757191494649e-13"/>
+        <rotation name="sb1_even_ang_0_pv0x7fc103c4d880_rot" unit="deg" x="90" y="0.343774677078494" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="sb1_even_ang_1_pv0x7fc103c4d920">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_1_pv0x7fc103c4d920_pos" unit="mm" x="-2.39990211779624" y="8239.98275945597" z="5.04553425569856e-13"/>
+        <rotation name="sb1_even_ang_1_pv0x7fc103c4d920_rot" unit="deg" x="90" y="1.03132403123548" z="0"/>
+      </physvol>
+      <physvol copynumber="2" name="sb1_even_ang_2_pv0x7fc103c4d9c0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_2_pv0x7fc103c4d9c0_pos" unit="mm" x="-6.2394414099166" y="8399.93284580041" z="5.14347543633109e-13"/>
+        <rotation name="sb1_even_ang_2_pv0x7fc103c4d9c0_rot" unit="deg" x="90" y="1.71887338539247" z="0"/>
+      </physvol>
+      <physvol copynumber="3" name="sb1_even_ang_3_pv0x7fc103c4da60">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_3_pv0x7fc103c4da60_pos" unit="mm" x="-11.9980592293654" y="8559.82534251111" z="5.24138135348331e-13"/>
+        <rotation name="sb1_even_ang_3_pv0x7fc103c4da60_rot" unit="deg" x="90" y="2.40642273954946" z="0"/>
+      </physvol>
+      <physvol copynumber="4" name="sb1_even_ang_4_pv0x7fc103c4db00">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_4_pv0x7fc103c4db00_pos" unit="mm" x="-19.6749263451274" y="8719.63722534482" z="5.33923790887232e-13"/>
+        <rotation name="sb1_even_ang_4_pv0x7fc103c4db00_rot" unit="deg" x="90" y="3.09397209370645" z="0"/>
+      </physvol>
+      <physvol copynumber="5" name="sb1_even_ang_5_pv0x7fc103c4dca0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_5_pv0x7fc103c4dca0_pos" unit="mm" x="-29.2689373016035" y="8879.34548166658" z="5.43703101132324e-13"/>
+        <rotation name="sb1_even_ang_5_pv0x7fc103c4dca0_rot" unit="deg" x="90" y="3.78152144786343" z="0"/>
+      </physvol>
+      <physvol copynumber="6" name="sb1_even_ang_6_pv0x7fc103c4dd40">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_6_pv0x7fc103c4dd40_pos" unit="mm" x="-40.7787105777945" y="9038.92711376345" z="5.53474657879831e-13"/>
+        <rotation name="sb1_even_ang_6_pv0x7fc103c4dd40_rot" unit="deg" x="90" y="4.46907080202042" z="0"/>
+      </physvol>
+      <physvol copynumber="7" name="sb1_even_ang_7_pv0x7fc103c4dde0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_7_pv0x7fc103c4dde0_pos" unit="mm" x="-54.2025887862372" y="9198.35914215616" z="5.63237054042467e-13"/>
+        <rotation name="sb1_even_ang_7_pv0x7fc103c4dde0_rot" unit="deg" x="90" y="5.15662015617741" z="0"/>
+      </physvol>
+      <physvol copynumber="8" name="sb1_even_ang_8_pv0x7fc103c4de80">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_8_pv0x7fc103c4de80_pos" unit="mm" x="-69.5386389116661" y="9357.61860890812" z="5.72988883852052e-13"/>
+        <rotation name="sb1_even_ang_8_pv0x7fc103c4de80_rot" unit="deg" x="90" y="5.8441695103344" z="0"/>
+        <scale name="sb1_even_ang_8_pv0x7fc103c4de80_scl" x="1" y="1" z="1"/>
+      </physvol>
+      <physvol copynumber="9" name="sb1_even_ang_9_pv0x7fc103c4df20">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_9_pv0x7fc103c4df20_pos" unit="mm" x="-86.7846525893636" y="9516.68258093133" z="5.82728743061946e-13"/>
+        <rotation name="sb1_even_ang_9_pv0x7fc103c4df20_rot" unit="deg" x="90" y="6.53171886449139" z="0"/>
+        <scale name="sb1_even_ang_9_pv0x7fc103c4df20_scl" x="1" y="1" z="1"/>
+      </physvol>
+      <physvol copynumber="10" name="sb1_even_ang_10_pv0x7fc103c4dfc0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_10_pv0x7fc103c4dfc0_pos" unit="mm" x="-105.938146423161" y="9675.52815328866" z="5.92455229149253e-13"/>
+        <rotation name="sb1_even_ang_10_pv0x7fc103c4dfc0_rot" unit="deg" x="90" y="7.21926821864837" z="0"/>
+        <scale name="sb1_even_ang_10_pv0x7fc103c4dfc0_scl" x="1" y="1" z="1"/>
+      </physvol>
+      <physvol copynumber="11" name="sb1_even_ang_11_pv0x7fc103c4e060">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_11_pv0x7fc103c4e060_pos" unit="mm" x="-126.996362343044" y="9834.13245249218" z="6.02166941516783e-13"/>
+        <rotation name="sb1_even_ang_11_pv0x7fc103c4e060_rot" unit="deg" x="90" y="7.90681757280536" z="0"/>
+        <scale name="sb1_even_ang_11_pv0x7fc103c4e060_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="12" name="sb1_even_ang_12_pv0x7fc103c4e100">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_12_pv0x7fc103c4e100_pos" unit="mm" x="-149.956268002307" y="9992.47263979688" z="6.11862481694738e-13"/>
+        <rotation name="sb1_even_ang_12_pv0x7fc103c4e100_rot" unit="deg" x="90" y="8.59436692696235" z="0"/>
+        <scale name="sb1_even_ang_12_pv0x7fc103c4e100_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="13" name="sb1_even_ang_13_pv0x7fc103c4e1a0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_13_pv0x7fc103c4e1a0_pos" unit="mm" x="-174.814557214211" y="10150.5259144894" z="6.21540453542085e-13"/>
+        <rotation name="sb1_even_ang_13_pv0x7fc103c4e1a0_rot" unit="deg" x="90" y="9.28191628111934" z="0"/>
+        <scale name="sb1_even_ang_13_pv0x7fc103c4e1a0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="14" name="sb1_even_ang_14_pv0x7fc103c4e240">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_14_pv0x7fc103c4e240_pos" unit="mm" x="-201.567650428064" y="10308.2695171713" z="6.31199463447602e-13"/>
+        <rotation name="sb1_even_ang_14_pv0x7fc103c4e240_rot" unit="deg" x="90" y="9.96946563527633" z="0"/>
+        <scale name="sb1_even_ang_14_pv0x7fc103c4e240_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="15" name="sb1_even_ang_15_pv0x7fc103c4e2e0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_15_pv0x7fc103c4e2e0_pos" unit="mm" x="-230.211695244673" y="10465.6807330363" z="6.40838120530553e-13"/>
+        <rotation name="sb1_even_ang_15_pv0x7fc103c4e2e0_rot" unit="deg" x="90" y="10.6570149894333" z="0"/>
+        <scale name="sb1_even_ang_15_pv0x7fc103c4e2e0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="16" name="sb1_even_ang_16_pv0x7fc103c4e380">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_16_pv0x7fc103c4e380_pos" unit="mm" x="-260.74256697108" y="10622.7368951415" z="6.50455036840975e-13"/>
+        <rotation name="sb1_even_ang_16_pv0x7fc103c4e380_rot" unit="deg" x="90" y="11.3445643435903" z="0"/>
+        <scale name="sb1_even_ang_16_pv0x7fc103c4e380_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="17" name="sb1_even_ang_17_pv0x7fc103c4e420">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_17_pv0x7fc103c4e420_pos" unit="mm" x="-293.155869214513" y="10779.4153876707" z="6.60048827559535e-13"/>
+        <rotation name="sb1_even_ang_17_pv0x7fc103c4e420_rot" unit="deg" x="90" y="12.0321136977473" z="0"/>
+        <scale name="sb1_even_ang_17_pv0x7fc103c4e420_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="18" name="sb1_even_ang_18_pv0x7fc103c4e4c0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_18_pv0x7fc103c4e4c0_pos" unit="mm" x="-327.446934515461" y="10935.693649192" z="6.69618111196949e-13"/>
+        <rotation name="sb1_even_ang_18_pv0x7fc103c4e4c0_rot" unit="deg" x="90" y="12.7196630519043" z="0"/>
+        <scale name="sb1_even_ang_18_pv0x7fc103c4e4c0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="19" name="sb1_even_ang_19_pv0x7fc103c4e560">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_19_pv0x7fc103c4e560_pos" unit="mm" x="-363.610825019773" y="11091.5491759055" z="6.79161509792908e-13"/>
+        <rotation name="sb1_even_ang_19_pv0x7fc103c4e560_rot" unit="deg" x="90" y="13.4072124060613" z="0"/>
+        <scale name="sb1_even_ang_19_pv0x7fc103c4e560_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="20" name="sb1_even_ang_20_pv0x7fc103c4e600">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_20_pv0x7fc103c4e600_pos" unit="mm" x="-401.642333189709" y="11246.9595248849" z="6.88677649114506e-13"/>
+        <rotation name="sb1_even_ang_20_pv0x7fc103c4e600_rot" unit="deg" x="90" y="14.0947617602183" z="0"/>
+        <scale name="sb1_even_ang_20_pv0x7fc103c4e600_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="21" name="sb1_even_ang_21_pv0x7fc103c4dba0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_21_pv0x7fc103c4dba0_pos" unit="mm" x="-441.53598255381" y="11401.9023173084" z="6.98165158854124e-13"/>
+        <rotation name="sb1_even_ang_21_pv0x7fc103c4dba0_rot" unit="deg" x="90" y="14.7823111143752" z="0"/>
+        <scale name="sb1_even_ang_21_pv0x7fc103c4dba0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="22" name="sb1_even_ang_22_pv0x7fc103c4dc40">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_22_pv0x7fc103c4dc40_pos" unit="mm" x="-483.286028495503" y="11556.3552416816" z="7.07622672826754e-13"/>
+        <rotation name="sb1_even_ang_22_pv0x7fc103c4dc40_rot" unit="deg" x="90" y="15.4698604685322" z="0"/>
+        <scale name="sb1_even_ang_22_pv0x7fc103c4dc40_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="23" name="sb1_even_ang_23_pv0x7fc103c4e8f0">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_23_pv0x7fc103c4e8f0_pos" unit="mm" x="-526.886459080317" y="11710.2960570503" z="7.17048829166726e-13"/>
+        <rotation name="sb1_even_ang_23_pv0x7fc103c4e8f0_rot" unit="deg" x="90" y="16.1574098226892" z="0"/>
+        <scale name="sb1_even_ang_23_pv0x7fc103c4e8f0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="24" name="sb1_even_ang_24_pv0x7fc103c4e990">
+        <volumeref ref="sb1_even_ang_container_lv0x7fc133e5ea50"/>
+        <position name="sb1_even_ang_24_pv0x7fc103c4e990_pos" unit="mm" x="-572.330995921589" y="11863.7025962031" z="7.26442270523816e-13"/>
+        <rotation name="sb1_even_ang_24_pv0x7fc103c4e990_rot" unit="deg" x="90" y="16.8449591768462" z="0"/>
+        <scale name="sb1_even_ang_24_pv0x7fc103c4e990_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="5" name="d1_5_pv0x7fc103c4ea30">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_5_pv0x7fc103c4ea30_pos" unit="mm" x="-743.273593264946" y="12417.9377765262" z="7.60379387501688e-13"/>
+        <rotation name="d1_5_pv0x7fc103c4ea30_rot" unit="deg" x="90" y="17.1887338539247" z="0"/>
+        <scale name="d1_5_pv0x7fc103c4ea30_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol name="rb1_e1_fringe_0_pv0x7fc103c4ead0">
+        <volumeref ref="rb1_e1_fringe_bp_container_lv0x7fc133eeb530"/>
+        <position name="rb1_e1_fringe_0_pv0x7fc103c4ead0_pos" unit="mm" x="-891.033712258187" y="12895.6060717218" z="7.89628134939964e-13"/>
+        <rotation name="rb1_e1_fringe_0_pv0x7fc103c4ead0_rot" unit="deg" x="90" y="17.1887337400955" z="0"/>
+        <scale name="rb1_e1_fringe_0_pv0x7fc103c4ead0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol name="rb1_centre_0_pv0x7fc103c4eb70">
+        <volumeref ref="rb1_centre_container_lv0x7fc133efbe50"/>
+        <position name="rb1_centre_0_pv0x7fc103c4eb70_pos" unit="mm" x="-1390.20080137056" y="17870.6268512277" z="1.09426029860564e-12"/>
+        <rotation name="rb1_centre_0_pv0x7fc103c4eb70_rot" unit="deg" x="90" y="5.72957795130822" z="0"/>
+        <scale name="rb1_centre_0_pv0x7fc103c4eb70_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol name="rb1_e2_fringe_0_pv0x7fc103c4ec10">
+        <volumeref ref="rb1_e2_fringe_bp_container_lv0x7fc103c00860"/>
+        <position name="rb1_e2_fringe_0_pv0x7fc103c4ec10_pos" unit="mm" x="-1889.36786952919" y="22845.647632836" z="1.39889246240005e-12"/>
+        <rotation name="rb1_e2_fringe_0_pv0x7fc103c4ec10_rot" unit="deg" x="90" y="-5.7295778374791" z="0"/>
+        <scale name="rb1_e2_fringe_0_pv0x7fc103c4ec10_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol copynumber="6" name="d1_6_pv0x7fc103c4ecb0">
+        <volumeref ref="d1_container_lv0x7fc133e5e640"/>
+        <position name="d1_6_pv0x7fc103c4ecb0_pos" unit="mm" x="-1839.45115581477" y="23343.1497692053" z="1.42935568234373e-12"/>
+        <rotation name="d1_6_pv0x7fc103c4ecb0_rot" unit="deg" x="90" y="-5.72957795130824" z="0"/>
+        <scale name="d1_6_pv0x7fc103c4ecb0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol name="q1_outer_end_piece_0_pv0x7fc103c4d620">
+        <volumeref ref="q1_outer_end_container_lv0x7fc133e6d690"/>
+        <position name="q1_outer_end_piece_0_pv0x7fc103c4d620_pos" unit="mm" x="0" y="976.019618708022" z="5.976396509779e-14"/>
+        <rotation name="q1_outer_end_piece_0_pv0x7fc103c4d620_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="q1_outer_end_piece_1_pv0x7fc103c4eda0">
+        <volumeref ref="q1_outer_end_container_lv0x7fc133e6d690"/>
+        <position name="q1_outer_end_piece_1_pv0x7fc103c4eda0_pos" unit="mm" x="0" y="1523.97839029198" z="9.33167628820403e-14"/>
+        <rotation name="q1_outer_end_piece_1_pv0x7fc103c4eda0_rot" unit="deg" x="-90" y="0" z="180"/>
+      </physvol>
+      <physvol name="sex1_outer_end_piece_0_pv0x7fc103c4ee40">
+        <volumeref ref="sex1_outer_end_container_lv0x7fc133e83790"/>
+        <position name="sex1_outer_end_piece_0_pv0x7fc103c4ee40_pos" unit="mm" x="0" y="2487.09753846978" z="1.52290801982714e-13"/>
+        <rotation name="sex1_outer_end_piece_0_pv0x7fc103c4ee40_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="sex1_outer_end_piece_1_pv0x7fc103c4eee0">
+        <volumeref ref="sex1_outer_end_container_lv0x7fc133e83790"/>
+        <position name="sex1_outer_end_piece_1_pv0x7fc103c4eee0_pos" unit="mm" x="0" y="3012.90048253022" z="1.84486946604008e-13"/>
+        <rotation name="sex1_outer_end_piece_1_pv0x7fc103c4eee0_rot" unit="deg" x="-90" y="0" z="180"/>
+      </physvol>
+      <physvol name="oct1_outer_end_piece_0_pv0x7fc103c4ef80">
+        <volumeref ref="oct1_outer_end_container_lv0x7fc133e9a7d0"/>
+        <position name="oct1_outer_end_piece_0_pv0x7fc103c4ef80_pos" unit="mm" x="0" y="3990.92904239188" z="2.44373923869471e-13"/>
+        <rotation name="oct1_outer_end_piece_0_pv0x7fc103c4ef80_rot" unit="deg" x="90" y="0" z="0"/>
+      </physvol>
+      <physvol copynumber="1" name="oct1_outer_end_piece_1_pv0x7fc103c4f020">
+        <volumeref ref="oct1_outer_end_container_lv0x7fc133e9a7d0"/>
+        <position name="oct1_outer_end_piece_1_pv0x7fc103c4f020_pos" unit="mm" x="0" y="4509.06899060812" z="2.76100845324141e-13"/>
+        <rotation name="oct1_outer_end_piece_1_pv0x7fc103c4f020_rot" unit="deg" x="-90" y="0" z="180"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_end_piece_in_0_pv0x7fc103c4f0c0">
+        <volumeref ref="sb1_even_ang_outer_end_cont_in_lv0x7fc133ee1740"/>
+        <position name="sb1_even_ang_outer_end_piece_in_0_pv0x7fc103c4f0c0_pos" unit="mm" x="0.479712121715181" y="7920.04897514068" z="4.84963131324816e-13"/>
+        <rotation name="sb1_even_ang_outer_end_piece_in_0_pv0x7fc103c4f0c0_rot" unit="deg" x="90" y="0.343774677078494" z="0"/>
+      </physvol>
+      <physvol name="sb1_even_ang_outer_end_piece_out_0_pv0x7fc103c4f190">
+        <volumeref ref="sb1_even_ang_outer_end_cont_out_lv0x7fc133ee1940"/>
+        <position name="sb1_even_ang_outer_end_piece_out_0_pv0x7fc103c4f190_pos" unit="mm" x="-618.681777885048" y="12016.7895481924" z="7.35816142811058e-13"/>
+        <rotation name="sb1_even_ang_outer_end_piece_out_0_pv0x7fc103c4f190_rot" unit="deg" x="90" y="16.8449591768462" z="0"/>
+        <scale name="sb1_even_ang_outer_end_piece_out_0_pv0x7fc103c4f190_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol name="rb1_outer_end_piece_in_0_pv0x7fc103c4f230">
+        <volumeref ref="rb1_outer_end_cont_in_lv0x7fc103c240a0"/>
+        <position name="rb1_outer_end_piece_in_0_pv0x7fc103c4f230_pos" unit="mm" x="-883.051796676302" y="12816.0530518302" z="7.84756917381329e-13"/>
+        <rotation name="rb1_outer_end_piece_in_0_pv0x7fc103c4f230_rot" unit="deg" x="90" y="5.72957795130822" z="0"/>
+        <scale name="rb1_outer_end_piece_in_0_pv0x7fc103c4f230_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+      <physvol name="rb1_outer_end_piece_out_0_pv0x7fc103c4f2d0">
+        <volumeref ref="rb1_outer_end_cont_out_lv0x7fc103c24210"/>
+        <position name="rb1_outer_end_piece_out_0_pv0x7fc103c4f2d0_pos" unit="mm" x="-1897.34960669748" y="22925.1986636019" z="1.40376355815986e-12"/>
+        <rotation name="rb1_outer_end_piece_out_0_pv0x7fc103c4f2d0_rot" unit="deg" x="90" y="5.72957795130822" z="0"/>
+        <scale name="rb1_outer_end_piece_out_0_pv0x7fc103c4f2d0_scl" x="0.999999999999999" y="0.999999999999999" z="1"/>
+      </physvol>
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="World_lv0x7fc103c4a450"/>
+  </setup>
+
+</gdml>
