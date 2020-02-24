@@ -4,39 +4,39 @@
 		<position name="det_163517544inWorld_163515704p" unit="mm" x="0" y="0" z="0"/>
 	</define>
 	<materials>
-		<material Z="13" name="Al">
-			<D value="2.7"/>
-			<atom value="26.98"/>
-		</material>
-		<element Z="1" formula="H" name="Hydrogen">
-			<atom value="1.0"/>
-		</element>
-		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16.0"/>
-		</element>
-		<material name="Water">
-			<D value="1.0"/>
-			<composite n="2" ref="Hydrogen"/>
-			<composite n="1" ref="Oxygen"/>
-		</material>
-		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14.01"/>
-		</element>
-		<material name="Air_163514448">
-			<D value="0.001289"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
-		</material>
 		<isotope N="235" Z="92" name="U235">
 			<atom value="235.01"/>
 		</isotope>
 		<isotope N="238" Z="92" name="U238">
 			<atom value="235.03"/>
 		</isotope>
+		<element Z="1" formula="H" name="Hydrogen">
+			<atom value="1.0"/>
+		</element>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16.0"/>
+		</element>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14.01"/>
+		</element>
 		<element formula="" name="EnrichedUranium">
 			<fraction n="0.9" ref="U235"/>
 			<fraction n="0.1" ref="U238"/>
 		</element>
+		<material Z="13" name="Al">
+			<D value="2.7"/>
+			<atom value="26.98"/>
+		</material>
+		<material name="Water">
+			<D value="1.0"/>
+			<composite n="2" ref="Hydrogen"/>
+			<composite n="1" ref="Oxygen"/>
+		</material>
+		<material name="Air_163514448">
+			<D value="0.001289"/>
+			<fraction n="0.7" ref="Nitrogen"/>
+			<fraction n="0.3" ref="Oxygen"/>
+		</material>
 		<material name="WetEnrichedUranium">
 			<D value="0.001289"/>
 			<fraction n="0.9" ref="EnrichedUranium"/>
@@ -61,7 +61,6 @@
 			</physvol>
 		</volume>
 	</structure>
-	<userinfo/>
 	<setup name="Default" version="1.0">
 		<world ref="World_163515704"/>
 	</setup>

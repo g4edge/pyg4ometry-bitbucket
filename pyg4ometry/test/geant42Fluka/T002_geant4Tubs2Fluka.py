@@ -37,6 +37,9 @@ def Test(vis = True, interactive = False) :
     # set world volume
     reg.setWorld(wl.name)
 
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg)
@@ -45,7 +48,11 @@ def Test(vis = True, interactive = False) :
     freg = _convert.geant4Logical2Fluka(wl)
     w = _fluka.Writer()
     w.addDetector(freg)
-    w.write("T002_geant4Tubs2Fluka.inp")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T002_geant4Tubs2Fluka.inp"))
+
+    # flair output file
+    f = _fluka.Flair("T002_geant4Tubs2Fluka.inp",extentBB)
+    f.write(_os.path.join(_os.path.dirname(__file__), "T002_geant4Tubs2Fluka.flair"))
 
     if vis :
         v = _vi.VtkViewer()

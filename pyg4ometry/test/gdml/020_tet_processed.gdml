@@ -16,16 +16,16 @@
 		<position name="tet1_v4" x="0" y="0" z="10"/>
 	</define>
 	<materials>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16.0"/>
+		</element>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14.01"/>
+		</element>
 		<material Z="13" name="Al">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
-		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14.01"/>
-		</element>
-		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16.0"/>
-		</element>
 		<material name="Air">
 			<D value="1.29"/>
 			<fraction n="0.7" ref="Nitrogen"/>
@@ -51,7 +51,6 @@
 			</physvol>
 		</volume>
 	</structure>
-	<userinfo/>
 	<setup name="Default" version="1.0">
 		<world ref="World"/>
 	</setup>

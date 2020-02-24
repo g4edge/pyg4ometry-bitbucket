@@ -41,7 +41,6 @@
 			</physvol>
 		</volume>
 	</structure>
-	<userinfo/>
 	<setup name="Default" version="1.0">
 		<world ref="TOP"/>
 	</setup>

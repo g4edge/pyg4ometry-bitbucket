@@ -1,4 +1,5 @@
 import os as _os
+from os import path as _path
 import numpy as _np
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
@@ -6,6 +7,7 @@ import pyg4ometry.visualisation as _vi
 import pyg4ometry.transformation as _tr
 import pyg4ometry.convert as _convert
 import pyg4ometry.fluka as _fluka
+import pyg4ometry.visualisation as _vis
 
 lengthSafety = 1e-5
 
@@ -200,17 +202,16 @@ def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
     return {'logical':chamberLogical}
 
 
-def makeWorld() :
+def Test(vis = True, interactive = False):
 
     reg = _g4.Registry()
 
-    chamber = CF_SphericalChamber("test1", vis=True,reg=reg)
+    chamber = CF_SphericalChamber("test1", vis=False,reg=reg)
     #chamber = CF_BeamPipe("test1",reg=reg)
     #chamber   = CF_BlankFlange("test1",reg=reg)
 
     log = chamber['logical']
     extent = log.extent(True)
-
 
     # create world box
     ws = _g4.solid.Box("worldSolid",
@@ -222,17 +223,44 @@ def makeWorld() :
     wm = _g4.MaterialPredefined("G4_Galactic")
 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
-    cp = _g4.PhysicalVolume([0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
+    cp = _g4.PhysicalVolume([_np.pi/4.0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
 
     reg.setWorld(wl.name)
 
-    # gdml output
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+
+    ################################
+    # visualisation
+    ################################
+    v = None
+    if vis :
+        v = _vis.VtkViewer()
+        v.addLogicalVolume(wl)
+        v.setOpacity(0.25)
+        v.view(interactive=interactive)
+
+    ################################
+    # export as obj
+    ################################
+    _vis.pycsgMeshToObj(log.mesh.localmesh,_path.join(_path.dirname(__file__),"SphericalChamber"))
+
+    ################################
+    # write gdml
+    ################################
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write("Chamber.gdml")
+    w.write(_path.join(_path.dirname(__file__),"SphericalChamber.gdml"))
 
+    ################################
+    # write fluka
+    ################################
     freg = _convert.geant4Logical2Fluka(wl)
 
     w = _fluka.Writer()
     w.addDetector(freg)
-    w.write("Chamber.inp")
+    w.write(_path.join(_os.path.dirname(__file__),"SphericalChamber.inp"))
+
+    # flair output file
+    f = _fluka.Flair("SphericalChamber.inp",extentBB)
+    f.write(_path.join(_path.dirname(__file__),"SphericalChamber.flair"))

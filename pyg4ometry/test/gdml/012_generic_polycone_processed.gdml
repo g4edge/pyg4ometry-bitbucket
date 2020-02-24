@@ -8,16 +8,16 @@
 		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
 	</define>
 	<materials>
+		<element Z="8" formula="O" name="Oxygen">
+			<atom value="16.0"/>
+		</element>
+		<element Z="7" formula="N" name="Nitrogen">
+			<atom value="14.01"/>
+		</element>
 		<material Z="13" name="Al">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
-		<element Z="7" formula="N" name="Nitrogen">
-			<atom value="14.01"/>
-		</element>
-		<element Z="8" formula="O" name="Oxygen">
-			<atom value="16.0"/>
-		</element>
 		<material name="Air">
 			<D value="1.29"/>
 			<fraction n="0.7" ref="Nitrogen"/>
@@ -26,10 +26,12 @@
 	</materials>
 	<solids>
 		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<genericPolycone aunit="rad" deltaphi="4" lunit="mm" name="genpoly1" startphi="1">
+		<genericPolycone aunit="rad" deltaphi="3.1415926" lunit="mm" name="genpoly1" startphi="0">
 			<rzpoint r="10" z="-25"/>
 			<rzpoint r="30" z="0"/>
-			<rzpoint r="20" z="25"/>
+			<rzpoint r="25" z="25"/>
+			<rzpoint r="20" z="50"/>
+			<rzpoint r="15" z="40"/>
 		</genericPolycone>
 	</solids>
 	<structure>
@@ -47,7 +49,6 @@
 			</physvol>
 		</volume>
 	</structure>
-	<userinfo/>
 	<setup name="Default" version="1.0">
 		<world ref="World"/>
 	</setup>
