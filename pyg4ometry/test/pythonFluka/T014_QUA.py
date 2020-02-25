@@ -1,28 +1,39 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import QUA, Region, Zone, FlukaRegistry
+from pyg4ometry.fluka import QUA, Region, Zone, FlukaRegistry, Extent, XYP, XZP
 
 def Test(vis=False, interactive=False) :
     freg = FlukaRegistry()
 
-    qua = QUA("QUA_BODY",10,10,0,0,10,0,0,0,0,-1, flukaregistry=freg)
+
+
+    parabolicCylinder = QUA("parab",
+                            0.006, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, -20,
+                            flukaregistry=freg)
+
+    end1 = XYP("end1", 20, flukaregistry=freg)
+    end2 = XYP("end2",  0, flukaregistry=freg)
+    end3 = XZP("end3", -30, flukaregistry=freg)
+
     z = Zone()
-    z.addIntersection(qua)
+    z.addIntersection(parabolicCylinder)
+    z.addIntersection(end1)
+    z.addSubtraction(end2)
+    z.addSubtraction(end3)
+
     region = Region("QUA_REG", material="COPPER")
     region.addZone(z)
     freg.addRegion(region)
 
-    greg = convert.fluka2Geant4(freg)
+    quaExtent = {"QUA_REG": Extent([-150., 0., 0], [150., 200., 200.])}
 
-    greg.getWorldVolume().clipSolid()
-
-    # test extent of physical volume
-    extentBB = greg.getWorldVolume().extent(includeBoundingSolid=True)
+    greg = convert.fluka2Geant4(freg,
+                                quadricRegionExtents=quaExtent)
 
     v = None
     if vis:
         v = vi.VtkViewer()
-        v.addAxes(length=vi.axesFromExtents(extentBB)[0])
+        v.addAxes(length=20)
         v.addLogicalVolume(greg.getWorldVolume())
         v.view(interactive=interactive)
 
