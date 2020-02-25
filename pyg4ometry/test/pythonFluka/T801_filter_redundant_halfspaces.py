@@ -10,7 +10,7 @@ def Test(vis=False, interactive=False):
 
     rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg)
 
-    logging.getLogger("pyg4ometry.convert.fluka2Geant4").setLevel(logging.DEBUG)
+    # logging.getLogger("pyg4ometry.convert.fluka2Geant4").setLevel(logging.DEBUG)
 
     faraway = 10000
 
