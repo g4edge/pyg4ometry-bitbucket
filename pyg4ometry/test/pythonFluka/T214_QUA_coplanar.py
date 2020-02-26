@@ -51,8 +51,8 @@ def Test(vis=False, interactive=False) :
     freg.addRegion(r1)
     freg.addRegion(r2)
 
-    quaExtent = {"OUTER": Extent([-200., 0., 0.], [200, 200, 1000]),
-                 "INNER": Extent([-100., 50., 250], [100., 150., 750.])}
+    quaExtent = {"OUTER": Extent([-200., 0., 0.], [200, 200, 1100]),
+                 "INNER": Extent([-100., 50., 250], [100., 150., 850.])}
 
     greg = convert.fluka2Geant4(freg,
                                 quadricRegionExtents=quaExtent)
