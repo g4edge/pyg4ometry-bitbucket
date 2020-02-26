@@ -1,0 +1,179 @@
+* sigma in mm
+#define fwhm -.235482
+*#define quad-on 
+#define DFFD 
+*#define FDDF 
+TITLE
+Play with Geometry
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+DEFAULTS                                                              PRECISIO
+BEAM             1.0                         $fwhm     $fwhm          PROTON
+BEAMPOS          0.0       0.0    -250.0
+GEOBEGIN                                                  1.          COMBNAME
+    0    0          a beam line
+* outer blackhole
+SPH outer      0.0 0.0 0.0 1.0E4
+* outer vacuum
+SPH inner      0.0 0.0 0.0 2.0E3
+* parking
+RPP parking    -300.0 300.0 -300.0 300.0 -3300.0 -2700.0
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+* dipole
+* ------------------------------------------------------------------------
+*   . yoke
+RPP dipyoke    -200.0 20. -10.0 10.0 -200.0 20.0
+YCC dipyokeo   -200.0 -200.0 210.0
+YCC dipyokei   -200.0 -200.0 190.0
+*   . pipe
+XZP dip_bpu    1.5
+XZP dip_bpd    -1.5
+YCC dip_bpo    -200.0 -200.0 203.0
+YCC dip_bpi    -200.0 -200.0 197.0
+* ------------------------------------------------------------------------
+* quadrupole
+* ------------------------------------------------------------------------
+$start_translat 0.0 0.0 -3000.0
+*   . yoke
+RPP quadyoke   -10.0 10.0 -10.0 10.0 -8.5 8.5
+*   . pipe
+ZEC quad_bp    0.0 0.0 3.0 1.5
+$end_translat 
+* ------------------------------------------------------------------------
+* line
+* ------------------------------------------------------------------------
+*
+* elements:
+$start_transform -QUAD___1
+$start_translat 0.0 0.0 -3000.0
+RPP quad___1   -10.0 10.0 -10.0 10.0 -8.5 8.5
+$end_translat 
+$end_transform 
+*
+$start_transform -QUAD___2
+$start_translat 0.0 0.0 -3000.0
+RPP quad___2   -10.0 10.0 -10.0 10.0 -8.5 8.5
+$end_translat 
+$end_transform 
+*
+$start_transform -QUAD___3
+$start_translat 0.0 0.0 -3000.0
+RPP quad___3   -10.0 10.0 -10.0 10.0 -8.5 8.5
+$end_translat 
+$end_transform 
+*
+$start_transform -QUAD___4
+$start_translat 0.0 0.0 -3000.0
+RPP quad___4   -10.0 10.0 -10.0 10.0 -8.5 8.5
+$end_translat 
+$end_transform 
+END
+* outer blackhole:
+OUTERBLK     5 +outer -inner -parking
+* outer vacuum:
+OUTERVAC     5 +inner -dipyoke -quad___1 -quad___2 -quad___3 -quad___4
+* ------------------------------------------------------------------------
+* parking
+* ------------------------------------------------------------------------
+PARKING      5 +parking -quadyoke
+* quadrupole:
+*   . yoke
+QUADYOKE     5 +quadyoke -quad_bp
+*   . pipe
+QUADBPVC     5 +quadyoke +quad_bp
+* ------------------------------------------------------------------------
+* line
+* ------------------------------------------------------------------------
+* dipole:
+*   . yoke
+DIP_YOKE     5 | +dipyoke +dipyokeo -dipyokei -dip_bpu
+               | +dipyoke +dip_bpu -dip_bpd +dipyokeo -dip_bpo
+               | +dipyoke +dip_bpu -dip_bpd +dip_bpi -dipyokei
+               | +dipyoke +dipyokeo -dipyokei +dip_bpd
+*   . pipe
+DIP_BPVC     5 +dipyoke +dip_bpu -dip_bpd +dip_bpo -dip_bpi
+*   . out
+DIP_OUT_     5 | +dipyoke -dipyokeo
+               | +dipyoke +dipyokei
+* quadrupoles:
+QUAD___1     5 +quad___1
+QUAD___2     5 +quad___2
+QUAD___3     5 +quad___3
+QUAD___4     5 +quad___4
+END
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+LATTICE     QUAD___1                      QUAD___1                    QUAD___1
+LATTICE     QUAD___2                      QUAD___2                    QUAD___2
+LATTICE     QUAD___3                      QUAD___3                    QUAD___3
+LATTICE     QUAD___4                      QUAD___4                    QUAD___4
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+GEOEND
+ASSIGNMA    BLCKHOLE  OUTERBLK
+ASSIGNMA      VACUUM  OUTERVAC
+ASSIGNMA      VACUUM   PARKING
+* dipole:
+ASSIGNMA        IRON  DIP_YOKE
+ASSIGNMA      VACUUM  DIP_BPVC                           1.0
+ASSIGNMA      VACUUM  DIP_OUT_
+* quadrupole:
+ASSIGNMA        IRON  QUADYOKE
+#if quad-on 
+ASSIGNMA      VACUUM  QUADBPVC                            1.
+MGNFIELD        30.0     0.001      0.01       0.0       0.0       0.0
+#else  
+ASSIGNMA      VACUUM  QUADBPVC
+MGNFIELD        30.0     0.001      0.01       0.0   1.66782       0.0
+#endif  
+ASSIGNMA      VACUUM  QUAD___1
+ASSIGNMA      VACUUM  QUAD___2
+ASSIGNMA      VACUUM  QUAD___3
+ASSIGNMA      VACUUM  QUAD___4
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+* Transformation for quad 1:
+ROT-DEFI        200.       0.0     -90.0     300.0       0.0       0.0QUAD___1
+#if DFFD 
+ROT-DEFI         0.0       0.0      90.0       0.0       0.0       0.0QUAD___1
+#endif  
+ROT-DEFI         0.0       0.0       0.0       0.0       0.0   -3000.0QUAD___1
+* Transformation for quad 2:
+ROT-DEFI        200.       0.0     -90.0     500.0       0.0       0.0QUAD___2
+#if FDDF 
+ROT-DEFI         0.0       0.0      90.0       0.0       0.0       0.0QUAD___2
+#endif  
+ROT-DEFI         0.0       0.0       0.0       0.0       0.0   -3000.0QUAD___2
+* Transformation for quad 3:
+ROT-DEFI        200.       0.0     -90.0     700.0       0.0       0.0QUAD___3
+#if FDDF 
+ROT-DEFI         0.0       0.0      90.0       0.0       0.0       0.0QUAD___3
+#endif  
+ROT-DEFI         0.0       0.0       0.0       0.0       0.0   -3000.0QUAD___3
+* Transformation for quad 4:
+ROT-DEFI        200.       0.0     -90.0     900.0       0.0       0.0QUAD___4
+#if DFFD 
+ROT-DEFI         0.0       0.0      90.0       0.0       0.0       0.0QUAD___4
+#endif  
+ROT-DEFI         0.0       0.0       0.0       0.0       0.0   -3000.0QUAD___4
+* Transformation for scorings:
+ROT-DEFI         0.0       0.0       0.0       0.0       0.0     210.0beamupst
+ROT-DEFI        200.       0.0     -90.0     210.0       0.0       0.0beamdown
+ROT-DEFI        200.       0.0     -90.0    1100.0       0.0       0.0beam_end
+ROT-DEFI        200.       0.0     -90.0     600.0       0.0       0.0beam_tri
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ROTPRBIN              beamupst            beamupst
+USRBIN          10.0  BEAMPART     -21.0       2.0       2.0       1.0beamupst
+USRBIN          -2.0      -2.0       0.0      41.0      41.0       1.0 &
+ROTPRBIN              beamdown            beamdown
+USRBIN          10.0  BEAMPART     -22.0       2.0       2.0       1.0beamdown
+USRBIN          -2.0      -2.0       0.0      41.0      41.0       1.0 &
+ROTPRBIN              beam_end            beam_end
+USRBIN          10.0  BEAMPART     -23.0       2.0       2.0       1.0beam_end
+USRBIN          -2.0      -2.0       0.0      41.0      41.0       1.0 &
+ROTPRBIN              beam_tri            beam_tri
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+USRBIN          10.0  BEAMPART     -31.0       2.0       2.0     600.0beam_tri
+USRBIN          -2.0      -2.0    -600.0      41.0      41.0     240.0 &
+USRBIN           10.  BEAMPART      -32.       50.       50.       50.everywhere
+USRBIN        -1300.      -50.      -50.      400.      100.      100. &
+*---+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+RANDOMIZ         1.0       1.0
+START         5000.0
+STOP
