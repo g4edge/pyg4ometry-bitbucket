@@ -1,0 +1,50 @@
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7...
+TITLE
+FLUKA Course Exercise
+*
+DEFAULTS                                                              NEW-DEFA
+*
+* beam definition
+BEAM            -3.5      -0.8      -1.7                              PROTON
+BEAMPOS                             -0.1
+*
+* Geometry
+* --------
+* use names everywhere and free format for geometry (conventional format)
+GEOBEGIN                                                              COMBNAME
+    0    0             Cylindrical Target
+*
+* Bodies
+* ------
+*
+* Blackhole to include geometry
+SPH BLK     0.0 0.0 0.0 10000.0
+* Void sphere
+SPH VOID    0.0 0.0 0.0 1000.0
+* Cylindrical target:
+RCC TARG    0.0 0.0 0.0 0.0 0.0 10. 5.
+*
+END
+*
+* Regions
+* -------
+*
+* Blackhole
+BLKHOLE      5 +BLK -VOID
+* Void
+VOID         5 +VOID -TARG
+* Target
+TARGET       5 +TARG
+*
+END
+GEOEND
+*
+* Assign materials
+* ----------------
+ASSIGNMA    BLCKHOLE   BLKHOLE
+ASSIGNMA      VACUUM      VOID
+ASSIGNMA        LEAD    TARGET
+*
+RANDOMIZ         1.0
+START         1000.0                                     0.0
+STOP

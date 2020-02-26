@@ -1,0 +1,14 @@
+TITLE
+
+GLOBAL         5000.       0.0       0.0       0.0        1.
+DEFAULTS                                                              PRECISIO
+GEOBEGIN                                                              COMBNAME
+    0    0                   MC-CAD
+XYP plane   100000.
+RPP box   -10 10 -10 10 -10 10
+END
+reg          5 +plane +box
+END
+GEOEND
+ASSIGNMA    ALUMINUM       reg
+STOP
