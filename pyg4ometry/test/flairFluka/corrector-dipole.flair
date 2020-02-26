@@ -1,15 +1,59 @@
 # flair project file
 Version: 300
 Mode: fluka
-md5: ef18bda394d5104a75cbac2f1752b9b8
+md5: e8234d2453353d0ee2b4d8ae8b3b6c3d
 Input:
-GEOBEGIN COMBNAME
-RPP yoke -50 50 -50 50 -50 50
-	@select=8
 ASSIGNMA , IRON yoke
+ROT-DEFI roto 300 0 -90 0. 0. 0.
+ASSIGNMA , VACUUM airgap
+ASSIGNMA , BLCKHOLE blckhole
+ASSIGNMA , VACUUM void
+ASSIGNMA , COPPER coil
+GEOBEGIN COMBNAME
+$start_transform roto
+RPP yoke -38.0 45.0 -50.0 50.0 -50.0 50.0
+RPP gap1 -12.0 20.0 -28.0 32.0 -74.0 74.0
+RPP gap2 20.0 45.0 -8.0 8.0 -75.0 75.0
+	@select=1
+SPH blcksph 0. 0. 0. 1000.0
+RPP void -100. 100. -100. 100. -100. 100.
+RPP coil1 -10.0 18.0 12.0 30.0 -70. 70.0
+RPP coil2 46.0 74.0 12.0 30.0 -70.0 70.0
+RPP coil3 -10.0 18.0 -26.0 -8.0 -70. 70.
+RPP coil4 46.0 74.0 -26.0 -8.0 -70.0 70.
+RPP coil5 -10.0 74.0 12.0 30.0 51.0 70.0
+RPP coil6 -10.0 74.0 12.0 30.0 -70.0 70.0
+RPP coil7 -10.0 18.0 12.0 30.0 -60. 60.
+RPP coil8 46.0 74.0 12.0 30.0 -70.0 70.0
+RPP coil9 -10.0 18.0 -26.0 -8.0 -70. 70.
+RPP coil10 46.0 74.0 -26.0 -8.0 -70.0 70.
+RPP coil11 -10.0 74.0 -26.0 -8.0 51.0 70.0
+RPP coil12 -10.0 74.0 12.0 30.0 -69.99975144703 -50.77126634058
+RPP coil13 -10.0 74.0 -26.0 -8.0 -69.99975144703 -50.77126634058
+$end_transform
 END
-REGION yoke
-	+yoke
+REGION yoke 5
+	+yoke -gap1 -gap2
+REGION airgap 5
+	+gap1 -coil1 -coil3 -coil5 -coil11 -coil12 -coil13
+	| +gap2 -coil3 -coil1
+REGION blckhole 5
+	+blcksph -void
+REGION void 5
+	+void -yoke -coil1 -coil2 -coil3 -coil4 -gap1 -gap2 -coil5 -coil11 -coil12 -coil13
+REGION coil 5
+	+coil7
+	| +coil8
+	| +coil9
+	| +coil10
+	| +coil11
+	| +coil1
+	| +coil2
+	| +coil3
+	| +coil4
+	| +coil5
+	| +coil12
+	| +coil13
 END
 GEOEND
 STOP
@@ -25,33 +69,35 @@ End
 Plot: Red
 	Type: Geometry
 	basisu: 0 0 1
-	basisv: 1 0 0
-	coord: Z-X
-	extends: 120 91.1732
+	basisv: 0.999597 -0.0283913 -0
+	extends: 168 127.642
 	kind: Material
 	layer: Media
-	origin: 6.14525 0 -1.56425
+	origin: 35 -15 -58
 End
 Plot: Green
 	Type: Geometry
-	basisu: 0.836516 0.0173376 0.547668
-	basisv: 0.224144 0.901221 -0.370891
-	extends: 100 76.1905
+	basisu: -0.605635 0.628594 -0.487929
+	basisv: 0.724555 0.68912 -0.0115585
+	extends: 248.832 189.586
 	kind: Material
 	layer: 3D
+	origin: -41.3186 18.8684 -84.298
 End
 Plot: Blue
 	Type: Geometry
 	basisu: 0 0 1
 	coord: Z-Y
-	extends: 100 75.6983
+	extends: 144 109.006
 	kind: Material
 	layer: Media
+	origin: -0.833334 -31.1366 44.907
 End
 Plot: Magenta
 	Type: Geometry
 	coord: X-Y
-	extends: 100 75.9104
+	extends: 144 109.311
 	kind: Material
 	layer: Media
+	origin: -0.833334 -15 10
 End

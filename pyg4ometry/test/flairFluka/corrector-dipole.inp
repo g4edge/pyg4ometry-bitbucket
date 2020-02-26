@@ -1,9 +1,49 @@
 ASSIGNMA        IRON      yoke
+ROT-DEFI         300        0.      -90.        0.        0.        0.roto
+ASSIGNMA      VACUUM    airgap
+ASSIGNMA    BLCKHOLE  blckhole
+ASSIGNMA      VACUUM      void
+ASSIGNMA      COPPER      coil
 GEOBEGIN                                                              COMBNAME
     0    0          
-RPP yoke       -50. 50. -50. 50. -50. 50.
+$start_transform roto
+RPP yoke       -38.0 45.0 -50.0 50.0 -50.0 50.0
+RPP gap1       -12.0 20.0 -28.0 32.0 -74.0 74.0
+RPP gap2       20.0 45.0 -8.0 8.0 -75.0 75.0
+SPH blcksph    0. 0. 0. 1000.0
+RPP void       -100. 100. -100. 100. -100. 100.
+RPP coil1      -10.0 18.0 12.0 30.0 -70. 70.0
+RPP coil2      46.0 74.0 12.0 30.0 -70.0 70.0
+RPP coil3      -10.0 18.0 -26.0 -8.0 -70. 70.
+RPP coil4      46.0 74.0 -26.0 -8.0 -70.0 70.
+RPP coil5      -10.0 74.0 12.0 30.0 51.0 70.0
+RPP coil6      -10.0 74.0 12.0 30.0 -70.0 70.0
+RPP coil7      -10.0 18.0 12.0 30.0 -60. 60.
+RPP coil8      46.0 74.0 12.0 30.0 -70.0 70.0
+RPP coil9      -10.0 18.0 -26.0 -8.0 -70. 70.
+RPP coil10     46.0 74.0 -26.0 -8.0 -70.0 70.
+RPP coil11     -10.0 74.0 -26.0 -8.0 51.0 70.0
+RPP coil12     -10.0 74.0 12.0 30.0 -69.99975144703 -50.77126634058
+RPP coil13     -10.0 74.0 -26.0 -8.0 -69.99975144703 -50.77126634058
+$end_transform
 END
-yoke         5 +yoke
+yoke         5 +yoke -gap1 -gap2
+airgap       5 +gap1 -coil1 -coil3 -coil5 -coil11 -coil12 -coil13
+               | +gap2 -coil3 -coil1
+blckhole     5 +blcksph -void
+void         5 +void -yoke -coil1 -coil2 -coil3 -coil4 -gap1 -gap2 -coil5 -coil11 -coil12 -coil13
+coil         5 +coil7
+               | +coil8
+               | +coil9
+               | +coil10
+               | +coil11
+               | +coil1
+               | +coil2
+               | +coil3
+               | +coil4
+               | +coil5
+               | +coil12
+               | +coil13
 END
 GEOEND
 STOP
