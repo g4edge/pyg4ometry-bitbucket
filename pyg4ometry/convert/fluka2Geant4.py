@@ -35,18 +35,22 @@ def fluka2Geant4(flukareg,
     # Bomb if we have quadrics but no quadricReferenceExtents
     quadricRegionExtents = _checkQuadricRegionExtents(flukareg,
                                                       quadricRegionExtents)
+    quadricRegionExtents = _getMaximalQuadricRegionExtents(flukareg,
+                                                           quadricRegionExtents)
+
     # If we have quadricReferenceExtents then use them
     if quadricRegionExtents:
         flukareg = _makeUniqueQuadricRegions(flukareg, quadricRegionExtents)
 
-    # Filter on selected regions
+    # Filter on selected regions (regions and omitRegions)
     regions = _getSelectedRegions(flukareg, regions, omitRegions)
 
-    # Filter BLCKHOLE regions
+    # Filter BLCKHOLE regions from the FlukaRegistry
     if omitBlackholeRegions:
         flukareg = _filterBlackHoleRegions(flukareg, regions)
 
-    # Make a new registry with automatic length safety applied.
+    # Make a new FlukaRegistry with length safety applied to all of
+    # the regions.
     if withLengthSafety:
         flukareg = _makeLengthSafetyRegistry(flukareg, regions)
     # set world dimensions
@@ -222,6 +226,11 @@ def _getRegionExtents(flukareg, regions, quadricRegionExtents):
         if name not in regions:
             continue
         regionExtents[name] = region.extent(referenceExtent=referenceExtent)
+    # XXX: We choose to use the quadricRegionExtents rather than the
+    # newly caclulated ones as each quadric must be evaluated with
+    # exactly the same extent in all its uses.  Could go again with
+    # getMaximalQuadricRegionExtents here, and ideally would.
+    regionExtents.update(quadricRegionExtents)
     return regionExtents
 
 def _makeBodyMinimumReferenceExtentMap(flukareg, regionExtents, regions):
@@ -337,6 +346,11 @@ def _isTransformedCellRegionIntersectingWithRegion(region, lattice):
     return areOverlapping(cellRegion, region)
 
 def _checkQuadricRegionExtents(flukareg, quadricRegionExtents):
+    """Loop over the regions looking for quadrics and for any quadrics we
+    find, make sure that that whregion has a defined region extent in
+    quadricRegionExtents.
+
+    """
     for regionName, region in flukareg.regionDict.iteritems():
         regionBodies = region.bodies()
         quadrics = {r for r in regionBodies if isinstance(r, fluka.QUA)}
@@ -346,14 +360,13 @@ def _checkQuadricRegionExtents(flukareg, quadricRegionExtents):
             continue
         elif quadricRegionExtents is None:
             msg = "quadricRegionExtents must be set for regions with QUAs."
+            raise ValueError(msg)
         elif regionName in quadricRegionExtents:
             continue
 
         raise ValueError(
             "QUA region missing from quadricRegionExtents: {}".format(
                 regionName))
-
-
     if not quadricRegionExtents:
         return {}
     return quadricRegionExtents
@@ -361,6 +374,10 @@ def _checkQuadricRegionExtents(flukareg, quadricRegionExtents):
 
 
 def _getWorldDimensions(worldDimensions):
+    """Get world dimensinos and if None then return the global constant
+    WORLD_DIMENSIONS.
+
+    """
     if worldDimensions is None:
         return WORLD_DIMENSIONS
     return worldDimensions
@@ -382,26 +399,38 @@ def _getSelectedRegions(flukareg, regions, omitRegions):
     return regions
 
 def _filterHalfSpaces(flukareg, extents):
+    """Filter redundant half spaces from the regions of the
+    FlukaRegistry instance.  Extents is a dictionary of region names
+    to region extents."""
     fout = fluka.FlukaRegistry()
     logger.debug("Filtering half spaces")
 
     for region_name, region in flukareg.regionDict.iteritems():
         regionOut = deepcopy(region)
         regionExtent = extents[region_name]
+        # Loop over the bodies of this region
         for body in regionOut.bodies():
+            # Only potentially omit half spaces
             if isinstance(body, (fluka.XYP, fluka.XZP,
                                  fluka.YZP, fluka.PLA)):
                 normal, pointOnPlane = body.toPlane()
                 extentCornerDistance = regionExtent.cornerDistance()
                 d = _distanceFromPointToPlane(normal, pointOnPlane,
                                               regionExtent.centre)
-                if d > 1.1 * extentCornerDistance:
+                # If the distance from the point on the plane closest
+                # to the centre of the extent is greater than the
+                # maximum distance from centre to corner, then we
+                # remove it (accounting for some tolerance) from the
+                # region.
+                if d > 1.025 * extentCornerDistance:
                     logger.debug(
                         ("Filtering %s from region %s."
                          "  extent = %s, extentMax = %s, d=%s"),
                         body, region_name, regionExtent,
                         extentCornerDistance, d)
                     regionOut.removeBody(body.name)
+        # add this region to the output fluka registry along with the
+        # filtered bodies.
         fout.addRegion(regionOut)
         regionOut.allBodiesToRegistry(fout)
 
@@ -449,6 +478,9 @@ def _makeUniqueQuadricRegions(flukareg, quadricRegionExtents):
     return flukareg
 
 def _makeQuadricRegionBodyExtentMap(flukareg, quadricRegionExtents):
+    """Given a map of regions featuring quadrics to their extents, we
+    loop over the bodies of the region and set their extents equal to
+    the region extent."""
     if quadricRegionExtents is None:
         return {}
     if quadricRegionExtents is not None:
@@ -459,3 +491,26 @@ def _makeQuadricRegionBodyExtentMap(flukareg, quadricRegionExtents):
             for body in flukareg.regionDict[regionName].bodies():
                 quadricRegionBodyExtentMap[body.name] = extent
         return quadricRegionBodyExtentMap
+
+def _getMaximalQuadricRegionExtents(freg, quadricRegionExtents):
+    # Loop over the regions.  If a QUA in this region is present in
+    # another region, then do max(currentExtent, otherExtent) for this
+    # region's extent.
+
+    regionSharedExtents = {}
+    bodiesToRegions = freg.getBodyToRegionsMap()
+    for regionName, regionExtent in quadricRegionExtents.iteritems():
+        region = freg.regionDict[regionName]
+        for body in region.bodies():
+            if not isinstance(body, fluka.QUA):
+                continue
+
+            regionSharedExtents[regionName] = regionExtent
+            otherRegions = bodiesToRegions[body.name]
+            for otherRegion in otherRegions:
+                if otherRegion in quadricRegionExtents:
+                    otherExtent = quadricRegionExtents[otherRegion]
+                    currentExtent = regionSharedExtents[regionName]
+                    regionSharedExtents[regionName] = \
+                        _getMaximalOfTwoExtents(otherExtent, currentExtent)
+    return regionSharedExtents

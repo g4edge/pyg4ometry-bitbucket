@@ -105,9 +105,6 @@ class FlairLoadTests(_unittest.TestCase) :
     def test_FlairLoad_T021_QUA(self):
         flairLoadWriteTest("021_QUA.inp", False, False)
 
-    def test_FlairLoad_T021_QUA_hyperboloid(self):
-        flairLoadWriteTest("021_QUA_hyperboloid.inp", False, False)
-
     def test_FlairLoad_T050_RPP_Translate(self):
         flairLoadWriteTest("050_RPP_Translate.inp", False, False)
 
@@ -197,9 +194,6 @@ class FlairLoadTests(_unittest.TestCase) :
 
     def test_FlairLoad_T313_ZEC_transform(self):
         flairLoadWriteTest("313_ZEC_transform.inp", False, False)
-
-    def test_FlairLoad_T314_QUA_transform(self):
-        flairLoadWriteTest("314_QUA_transform.inp", False, False)
 
     def test_FlairLoad_T320_cube_from_halfspaces_transform(self):
         flairLoadWriteTest("320_cube_from_halfspaces_transform.inp", False, False)
