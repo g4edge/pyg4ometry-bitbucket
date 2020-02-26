@@ -1,0 +1,9 @@
+ASSIGNMA        IRON      yoke
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RPP yoke       -50. 50. -50. 50. -50. 50.
+END
+yoke         5 +yoke
+END
+GEOEND
+STOP
