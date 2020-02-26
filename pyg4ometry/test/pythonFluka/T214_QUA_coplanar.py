@@ -62,7 +62,6 @@ def Test(vis=False, interactive=False) :
         v = vi.VtkViewer()
         v.addAxes(origin=[0, 100, 0], length=100)
         v.addLogicalVolume(greg.getWorldVolume())
-        v.setRandomColours()
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer":v}
