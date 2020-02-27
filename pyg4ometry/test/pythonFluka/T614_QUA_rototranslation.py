@@ -15,8 +15,6 @@ def Test(vis=False, interactive=False) :
                                       [0, 0, 0]])
     transform = Transform(rotoTranslation=rtrans)
 
-
-
     parabolicCylinder = QUA("parab",
                             0.006, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, -200,
                             transform=transform,

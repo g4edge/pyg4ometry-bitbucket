@@ -16,10 +16,12 @@ def _pj(filename):
     """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-def flairLoadWriteTest(fileName, vis=True, interactive=False) :
+def flairLoadWriteTest(fileName, vis=True, interactive=False,
+                       quadricRegionExtents=None):
     r = _fluka.Reader(_pj(fileName))
 
-    greg = _fluka2Geant4(r.flukaregistry)
+    greg = _fluka2Geant4(r.flukaregistry,
+                         quadricRegionExtents=quadricRegionExtents)
 
     wlv = greg.getWorldVolume()
 
@@ -103,7 +105,10 @@ class FlairLoadTests(_unittest.TestCase) :
         flairLoadWriteTest("020_ZEC.inp", False, False)
 
     def test_FlairLoad_T021_QUA(self):
-        flairLoadWriteTest("021_QUA.inp", False, False)
+        quaExtent = {"QUA_REG": _fluka.Extent([-150., 100., 0],
+                                              [150., 200., 1000.])}
+        flairLoadWriteTest("021_QUA.inp", False, False,
+                           quadricRegionExtents=quaExtent)
 
     def test_FlairLoad_T050_RPP_Translate(self):
         flairLoadWriteTest("050_RPP_Translate.inp", False, False)
@@ -195,11 +200,41 @@ class FlairLoadTests(_unittest.TestCase) :
     def test_FlairLoad_T313_ZEC_transform(self):
         flairLoadWriteTest("313_ZEC_transform.inp", False, False)
 
+    def test_FlairLoad_T314_QUA_transform(self):
+        quaExtent = {"QUA_REG": _fluka.Extent([-190., 40., 0],
+                                              [50., 200., 1000.])}
+        flairLoadWriteTest("314_QUA_transform.inp", False, False,
+                           quadricRegionExtents=quaExtent)
+
     def test_FlairLoad_T320_cube_from_halfspaces_transform(self):
         flairLoadWriteTest("320_cube_from_halfspaces_transform.inp", False, False)
 
     def test_FlairLoad_T321_cube_from_plas_transform(self):
         flairLoadWriteTest("321_cube_from_plas_transform.inp", False, False)
+
+    def test_FlairLoad_514_QUA_expansion(self):
+        quaExtent = {"QUA_REG": _fluka.Extent([-70., 50., 0],
+                                              [70., 100., 500.])}
+        flairLoadWriteTest("514_QUA_expansion.inp", False, False,
+                           quadricRegionExtents=quaExtent)
+
+    def test_FlairLoad_514_QUA_translation(self):
+        quaExtent = {"QUA_REG": _fluka.Extent([-150., 100., -1000.],
+                                              [150., 200., 0.])}
+        flairLoadWriteTest("514_QUA_translation.inp", False, False,
+                           quadricRegionExtents=quaExtent)
+
+    def test_FlairLoad_514_QUA_rototranslation(self):
+        quaExtent = {"QUA_REG": _fluka.Extent([-190., 40., 0],
+                                              [50., 200., 1000.])}
+        flairLoadWriteTest("514_QUA_rototranslation.inp", False, False,
+                           quadricRegionExtents=quaExtent)
+
+    def test_FlairLoad_514_QUA_coplanar(self):
+        quaExtent = {"OUTER": Extent([-200., 0., 0.], [200, 200, 1100]),
+                     "INNER": Extent([-100., 50., 250], [100., 150., 850.])}
+        flairLoadWriteTest("514_QUA_coplanar.inp", False, False,
+                           quadricRegionExtents=quaExtent)
 
     def test_FlairLoad_T601_filter_redundant_halfspaces(self):
         flairLoadWriteTest("601_filter_redundant_halfspaces.inp", False, False)

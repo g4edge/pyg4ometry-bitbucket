@@ -15,12 +15,10 @@ XYP end2       0.0
 XZP end3       10
 $end_transform
 END
-vr           5 +parab +end1 -end2 -end3
+QUA_REG      5 +parab +end1 -end2 -end3
 END
 GEOEND
-ASSIGNMA    BLCKHOLE       bbr
-ASSIGNMA        GOLD        vr
-ASSIGNMA    BERYLLIU      bbrr
+ASSIGNMA        GOLD   QUA_REG
 FREE
 ROT-DEFI, 3.0, 0.0, -45.0, 0.0, 0.0, 0.0, quaTRF
 FIXED
