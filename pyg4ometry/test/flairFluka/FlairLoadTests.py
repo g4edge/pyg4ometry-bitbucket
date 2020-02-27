@@ -290,6 +290,8 @@ class FlairLoadTests(_unittest.TestCase) :
     def test_FlairLoad_TmanualSimpleFileFree(self):
         flairLoadWriteTest("manualSimpleFileFree.inp", False, False)
 
+    def test_FlairLoad_TcorrectorDipole(self):
+        flairLoadWriteTest("corrector-dipole.inp", False, False)
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
