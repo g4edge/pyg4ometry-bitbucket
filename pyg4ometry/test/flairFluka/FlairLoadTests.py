@@ -231,8 +231,8 @@ class FlairLoadTests(_unittest.TestCase) :
                            quadricRegionExtents=quaExtent)
 
     def test_FlairLoad_514_QUA_coplanar(self):
-        quaExtent = {"OUTER": Extent([-200., 0., 0.], [200, 200, 1100]),
-                     "INNER": Extent([-100., 50., 250], [100., 150., 850.])}
+        quaExtent = {"OUTER": _fluka.Extent([-200., 0., 0.], [200, 200, 1100]),
+                     "INNER": _fluka.Extent([-100., 50., 250], [100., 150., 850.])}
         flairLoadWriteTest("514_QUA_coplanar.inp", False, False,
                            quadricRegionExtents=quaExtent)
 
