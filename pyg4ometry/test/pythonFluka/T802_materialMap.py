@@ -14,7 +14,7 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg, materialMap={"COPPER": "G4_Cu"})
 
-    assert greg.logicalVolumeDict["RPP_REG_lv"].material == "G4_Cu"
+    assert greg.logicalVolumeDict["RPP_REG_lv"].material.name == "G4_Cu"
 
     greg.getWorldVolume().clipSolid()
 
