@@ -37,6 +37,7 @@
 \usepackage[T1]{fontenc}
 \PassOptionsToPackage{hyphens}{url}
 \usepackage{hyperref}
+\usepackage{todonotes}
 
 \usepackage{lineno}
 \modulolinenumbers[5]
@@ -115,7 +116,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Pyg4ometry: a python library for the creation of Monte Carlo radiation transport physical geometries}
+\title{Pyg4ometry: a Python library for the creation of Monte Carlo radiation transport physical geometries}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{<author name>}
@@ -473,14 +474,56 @@ collection of part features. A part feature can be used to create  a triangular 
 and visualisation attributes. 
 
 \section{FLUKA to Geant4 conversion}
-FLUKA geometry is based upon a limited set of primitive volumes which can be combined using logical operations. Many FLUKA primitives are infinite in extent, so 
-to emulate FLUKA geometry construction large but finite extent Geant4 primitive solids are used. Table \ref{tab:Fluka2Geant4} shows the mapping between FLUKA and Geant4 objects.
-An ANTLR based expression parser is used to load and comprehend the FLUKA input syntax, an example is shown in XXX. Each FLUKA body is matched to a Geant4 
-solid and a FLUKA region is represented by a Geant4 CSG tree is formed using the pyg4ometry classes. 
+FLUKA geometry is based upon a limited set of primitives (referred to
+as \textit{bodies} which can be combined using Boolean operations.  A
+\textit{zone} consists of one or more bodies combined using
+intersections and subtractions.  Zones may then be further combined
+using union operations to form \textit{regions}, which is defined as
+the combination of one or more zones as well as a material.  \todo{nested zones.}
+
+Translating FLUKA geometry to GDML first starts with 
+
+Translating FLUKA geometry to GDML first starts with a mapping of
+FLUKA bodies to GDML solids, which is shown in
+Table~\ref{tab:Fluka2Geant4}.  
+
+It is notable that FLUKA makes
+widespread use of primitives that are infinite in extent, where Geant4 
+
+FLUKA geometry makes widespread use of primitives that are infinite in
+extent, with this feature distinguishing it most from Geant4 where all
+primitives are finite.
+
+FLUKA geometry is most distinuished from Geant4 by its use of
+primitives infinite in extent.
+
+Bodies can be combined into
+\textit{zones} using intersections and subtractions, with 
+
+Bodies may be
+combined into \textit{zones} intersections and subtractions, and these
+zones may then be combined into \textit{regions} with union
+operations.  The most important difference between Geant4 and FLUKA's
+implementation of CSG is that FLUKA makes widespread use of primitives
+that are infinite in extent, whereas all Geant4 primitives are finite.
+Whereas some FLUKA primitives have trivial Geant4 analogues, for
+example a sphere, translating the infinite bodies to Geant4 solids is
+more involved.  The mapping between FLUKA bodies and Geant4 solids is
+shown in Table~\ref{tab:Fluka2Geant4}.
+
+Many FLUKA primitives are infinite in extent, so to emulate
+FLUKA geometry construction large but finite extent Geant4 primitive
+solids are used.  shows the mapping
+between FLUKA and Geant4 objects.  An ANTLR based expression parser is
+used to load and comprehend the FLUKA input syntax, an example is
+shown in XXX. Each FLUKA body is matched to a Geant4 solid and a FLUKA
+region is represented by a Geant4 CSG tree is formed using the
+pyg4ometry classes.
 
 \begin{table}[hbt!]
+\caption{FLUKA bodies and their corresponding Geant4 solids.} \label{tab:Fluka2Geant4}
 \centering
-\begin{tabular}{|l|l|} \hline
+\begin{tabular}{ll} \hline
 FLUKA body						& pyg4ometry class \\ \hline
 RPP (Rectangular parallelepiped)			& Box \\
 BOX (General rectangular parallelepiped)		& Box \\
@@ -503,7 +546,6 @@ YEC 	($Y$-axis Infinite Elliptical Cylinder)		& EllipticalTube \\
 ZEC ($Z$-axis Infinite Elliptical Cylinder)		& EllipticalTube \\
 QUA (Quadric surface) 					& TessellatedSolid \\ \hline
 \end{tabular}
-\caption{FLUKA geometry directives pyg4ometry classes.} \label{tab:Fluka2Geant4}
 \end{table}
 
 \begin{enumerate} 

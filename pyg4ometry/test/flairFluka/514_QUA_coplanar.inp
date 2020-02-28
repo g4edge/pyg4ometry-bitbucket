@@ -1,0 +1,36 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+* Outer cut parabolic cylidner
+QUA parabo     0.06 0.0 0.0 0.0 0.0 0.0 0.0 1. 0.0 -20.
+XYP end1o      100.
+XYP end2o      0.0
+XZP end3o      0.
+* Inner cut parabolic cylidner
+QUA parabi     0.12 0.0 0.0 0.0 0.0 0.0 0.0 1. 0.0 -15.
+XYP end1i      75.
+XYP end2i      25.
+XZP end3i      5.
+END
+OUTER        5 +parabo +end1o -end2o -end3o
+INNER        5 +parabi +end1i -end2i -end3i
+END
+GEOEND
+ASSIGNMA        GOLD     INNER
+ASSIGNMA      SILVER     OUTER
+FREE
+ROT-DEFI  , 3.0, 0.0, -45.0, 0.0, 0.0, 0.0, quaTRF
+FIXED
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START
+STOP

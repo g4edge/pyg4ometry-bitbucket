@@ -1,0 +1,27 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+$start_expansion 0.5
+QUA parab      0.06 0.0 0.0 0.0 0.0 0.0 0.0 1. 0.0 -20.
+XYP end1       100.
+XYP end2       0.0
+XZP end3       10
+$end_expansion
+END
+QUA_REG           5 +parab +end1 -end2 -end3
+END
+GEOEND
+ASSIGNMA        GOLD   QUA_REG
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START
+STOP
