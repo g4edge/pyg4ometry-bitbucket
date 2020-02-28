@@ -212,25 +212,25 @@ class FlairLoadTests(_unittest.TestCase) :
     def test_FlairLoad_T321_cube_from_plas_transform(self):
         flairLoadWriteTest("321_cube_from_plas_transform.inp", False, False)
 
-    def test_FlairLoad_514_QUA_expansion(self):
+    def test_FlairLoad_T514_QUA_expansion(self):
         quaExtent = {"QUA_REG": _fluka.Extent([-70., 50., 0],
                                               [70., 100., 500.])}
         flairLoadWriteTest("514_QUA_expansion.inp", False, False,
                            quadricRegionExtents=quaExtent)
 
-    def test_FlairLoad_514_QUA_translation(self):
+    def test_FlairLoad_T514_QUA_translation(self):
         quaExtent = {"QUA_REG": _fluka.Extent([-150., 100., -1000.],
                                               [150., 200., 0.])}
         flairLoadWriteTest("514_QUA_translation.inp", False, False,
                            quadricRegionExtents=quaExtent)
 
-    def test_FlairLoad_514_QUA_rototranslation(self):
+    def test_FlairLoad_T514_QUA_rototranslation(self):
         quaExtent = {"QUA_REG": _fluka.Extent([-190., 40., 0],
                                               [50., 200., 1000.])}
         flairLoadWriteTest("514_QUA_rototranslation.inp", False, False,
                            quadricRegionExtents=quaExtent)
 
-    def test_FlairLoad_514_QUA_coplanar(self):
+    def test_FlairLoad_T514_QUA_coplanar(self):
         quaExtent = {"OUTER": _fluka.Extent([-200., 0., 0.], [200, 200, 1100]),
                      "INNER": _fluka.Extent([-100., 50., 250], [100., 150., 850.])}
         flairLoadWriteTest("514_QUA_coplanar.inp", False, False,
