@@ -576,6 +576,22 @@ information is computationally very expensive, so to resolve this the
 user must provide the approximate axis-aligned bounding box of any
 region in which a quadric is used.
 
+\subsection{Removing redundant half-spaces}
+
+The above algorithm for replacing infinite FLUKA bodies with finite
+Geant4 solids works well in most cases, but additional care must be
+taken for redundant infinite half spaces.  A redundant infinite half
+space is defined as one which has no affect on the topology of the
+final Boolean solid.  Whilst this may be true of arbitrary bodies, it
+is most problematic for half spaces as after the infinite-body
+reduction has been performed, if the half-space is far away from the
+region's AABB, then it can result in a malformed Boolean.  This is
+demonstrated in Figure~\ref{fig:redundant-halfspace}.  Such
+half-spaces are filtered from their respective regions during the
+conversion process by calculating the nearest distance from the centre
+of the AABB to the half-space face.  If this distance is greater than
+the centre-to-corner distance of the AABB, then that half-space is
+removed from the region during conversion.
 
 \subsection{Coplanar faces}
 
@@ -587,19 +603,21 @@ robustly to ensure the resulting geometry is usable.  Coplanar faces
 are resolved automatically by slightly decreasing the size of every
 body that is used in an intersection, and increasing the size of every
 body used in a subtraction.  These rules are inverted for nested
-subtractions and work well for guaranteeing well-formed geometry free
-from overlaps.
-
-\subsection{Removing redundant half-spaces}
-
+subtractions and work well for guaranteeing well-formed geometry that
+is free from overlaps.
 
 
 \subsection{Disjoint unions}
 
+A disjoint union in FLUKA is a union of two or more zones that are not
+connected.  This is a valid construct in FLUKA but is explicitly
+forbidden in Geant4 and must be removed during the conversion
+process.  Disjoint unions are detected by checking for overlaps
+between all zones within a union.
+
 \subsection{Lattice}
 
-\subsection{Conclusion?}
-
+Description of how we translate lattices into one LV with multiple PVs.
 
 \begin{itemize}
 \item \item disjoint subtractions?
