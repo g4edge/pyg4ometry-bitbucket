@@ -38,6 +38,7 @@
 \PassOptionsToPackage{hyphens}{url}
 \usepackage{hyperref}
 \usepackage{todonotes}
+\usepackage{siunitx}
 
 \usepackage{lineno}
 \modulolinenumbers[5]
@@ -473,52 +474,44 @@ is based on OpenCASCADE. A STEP CAD file could be considered as a hierarchical t
 collection of part features. A part feature can be used to create  a triangular mesh which can used to create a pyg4ometry tessellated solid. Assignment of materials 
 and visualisation attributes. 
 
-\section{FLUKA to Geant4 conversion}
+\section{FLUKA to GDML conversion}
 FLUKA geometry is based upon a limited set of primitives (referred to
 as \textit{bodies} which can be combined using Boolean operations.  A
-\textit{zone} consists of one or more bodies combined using
-intersections and subtractions.  Zones may then be further combined
-using union operations to form \textit{regions}, which is defined as
-the combination of one or more zones as well as a material.  \todo{nested zones.}
+\textit{zone} consists of one or more bodies or \textit{subzones}
+combined using intersections and subtractions.  Zones may then be
+further combined using union operations to form \textit{regions},
+which is defined as the union of one or more zones, as well as a
+material.
 
-Translating FLUKA geometry to GDML first starts with 
+Each FLUKA body is represented in Pyg4ometry with a corresponding
+class, and in turn each class has methods which returns a GDML
+primitive solid and that solid's rotation and position such that it
+matches its FLUKA equivalent.  The expansion, translation and
+transform geometry directives are each folded into one or more of
+these three methods.  The mapping of FLUKA bodies to GDML solids is
+shown in Table~\ref{tab:Fluka2Geant4}.  It is worth noting that many
+of the FLUKA bodies are infinite in extent, but are mapped to finite
+GDML solids.  The translation of infinite bodies to equivalent finite
+solids is one of the main steps involved in the conversion process.
+This mapping is possible because whilst FLUKA bodies can be infinite
+in extent, all zones and regions must be finite.  Zones and regions
+are then composed by instantiating these classes and adding body
+instances to them.  Each Zone and Region instance can then return its
+equivalent GDML Boolean solid.
 
-Translating FLUKA geometry to GDML first starts with a mapping of
-FLUKA bodies to GDML solids, which is shown in
-Table~\ref{tab:Fluka2Geant4}.  
+The FLUKA CSG ASCII format is parsed using an ANTLR4-generated parser,
+producing an abstract syntax tree (AST).  The resulting AST is then
+walked to populate Region instances with zones and bodies.  An example
+FLUKA region with the corresponding abstract syntax tree is shown in
+Figure~\ref{fig:region-ast}.
 
-It is notable that FLUKA makes
-widespread use of primitives that are infinite in extent, where Geant4 
-
-FLUKA geometry makes widespread use of primitives that are infinite in
-extent, with this feature distinguishing it most from Geant4 where all
-primitives are finite.
-
-FLUKA geometry is most distinuished from Geant4 by its use of
-primitives infinite in extent.
-
-Bodies can be combined into
-\textit{zones} using intersections and subtractions, with 
-
-Bodies may be
-combined into \textit{zones} intersections and subtractions, and these
-zones may then be combined into \textit{regions} with union
-operations.  The most important difference between Geant4 and FLUKA's
-implementation of CSG is that FLUKA makes widespread use of primitives
-that are infinite in extent, whereas all Geant4 primitives are finite.
-Whereas some FLUKA primitives have trivial Geant4 analogues, for
-example a sphere, translating the infinite bodies to Geant4 solids is
-more involved.  The mapping between FLUKA bodies and Geant4 solids is
-shown in Table~\ref{tab:Fluka2Geant4}.
-
-Many FLUKA primitives are infinite in extent, so to emulate
-FLUKA geometry construction large but finite extent Geant4 primitive
-solids are used.  shows the mapping
-between FLUKA and Geant4 objects.  An ANTLR based expression parser is
-used to load and comprehend the FLUKA input syntax, an example is
-shown in XXX. Each FLUKA body is matched to a Geant4 solid and a FLUKA
-region is represented by a Geant4 CSG tree is formed using the
-pyg4ometry classes.
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=7cm]{./diagrams/rapidModelling.pdf}
+\caption{FLUKA input with an AST.}
+\label{fig:region-ast}
+\end{center}
+\end{figure}
 
 \begin{table}[hbt!]
 \caption{FLUKA bodies and their corresponding Geant4 solids.} \label{tab:Fluka2Geant4}
@@ -548,12 +541,89 @@ QUA (Quadric surface) 					& TessellatedSolid \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{enumerate} 
-\item length safety
-\item infinite planes
-\item disjoint unions 
-\end{enumerate} 
+\subsection{Infinite bodies}
 
+The majority of bodies in FLUKA are infinite in extent, and fall
+broadly into four categories, half-spaces, infinitely long cylinders,
+infinitely long elliptical cylinders and quadric surfaces.
+Translating these bodies to Geant4 requires generating the equivalent
+finite solid whilst retaining the same final finite Boolean shape.
+This is achieved with the use of axis-aligned bounding boxes (AABB),
+in which the FLUKA body is translated to a finite solid with with
+dimensions slightly larger than the AABB.  The lengths of infinite
+(elliptical) cylinders are reduced to finite equivalents with lengths
+slightly greater than the bounding box.  Similarly, half spaces are
+reduced to boxes with one face acting as that of the half-space face,
+and quadric surfaces are sampled only over the volume denoted by the
+AABB.  Furthermore, the positions of these solids are moved as close
+to the bounding box as possible whilst retaining an identical final
+Boolean geometry.
+
+Generating these bounding boxes over which the bodies should be
+translated involves first evaluating each region with very large Tubs,
+EllipticalTubes and Boxes (by default \SI{50}{\km} in length), such
+that they are effectively infinite for most reasonable use cases.
+Pyg4ometry's CSG meshing is then used to generate a mesh for each
+region, from which the axis-aligned bounding box can be extracted.
+Each region is then evaluated a second time with respect to its
+respective bounding box, with all of its constituent infinite solids
+being reduced as described above.  This algorithm works robustly for
+infinite (elliptical) cylinders and half spaces as the number of
+facets is independent of the size of the solid, so generating the
+initial mesh from large solids works well.  Generating a quadric
+surface over a very large volume in space whilst retaining topological
+information is computationally very expensive, so to resolve this the
+user must provide the approximate axis-aligned bounding box of any
+region in which a quadric is used.
+
+\subsection{Removing redundant half-spaces}
+
+The above algorithm for replacing infinite FLUKA bodies with finite
+Geant4 solids works well in most cases, but additional care must be
+taken for redundant infinite half spaces.  A redundant infinite half
+space is defined as one which has no affect on the topology of the
+final Boolean solid.  Whilst this may be true of arbitrary bodies, it
+is most problematic for half spaces as after the infinite-body
+reduction has been performed, if the half-space is far away from the
+region's AABB, then it can result in a malformed Boolean.  This is
+demonstrated in Figure~\ref{fig:redundant-halfspace}.  Such
+half-spaces are filtered from their respective regions during the
+conversion process by calculating the nearest distance from the centre
+of the AABB to the half-space face.  If this distance is greater than
+the centre-to-corner distance of the AABB, then that half-space is
+removed from the region during conversion.
+
+\subsection{Coplanar faces}
+
+Coplanar faces, in which the faces of two union components or that of
+two regions are perfectly coplanar in FLUKA are ubiquitous and present
+no difficulties to the operation of the program.  However, in Geant4
+these will generally result in tracking errors.  These must be handled
+robustly to ensure the resulting geometry is usable.  Coplanar faces
+are resolved automatically by slightly decreasing the size of every
+body that is used in an intersection, and increasing the size of every
+body used in a subtraction.  These rules are inverted for nested
+subtractions and work well for guaranteeing well-formed geometry that
+is free from overlaps.
+
+
+\subsection{Disjoint unions}
+
+A disjoint union in FLUKA is a union of two or more zones that are not
+connected.  This is a valid construct in FLUKA but is explicitly
+forbidden in Geant4 and must be removed during the conversion
+process.  Disjoint unions are detected by checking for overlaps
+between all zones within a union.
+
+\subsection{Lattice}
+
+Description of how we translate lattices into one LV with multiple PVs.
+
+\begin{itemize}
+\item \item disjoint subtractions?
+\item quadric specialisation
+\item second order lattice
+\end{itemize}
 \section{Geant4 to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG region.
 Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
