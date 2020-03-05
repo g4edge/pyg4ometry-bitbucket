@@ -25,6 +25,7 @@ To make a simple geometery of a box located at the origin
    # world solid and logical
    ws   = pyg4ometry.geant4.solid.Box("ws",50,50,50,reg)
    wl   = pyg4ometry.geant4.LogicalVolume(ws,"G4_Galactic","wl",reg)
+   reg.setWorld(wl.name)
 
    # box placed at origin
    b1   = pyg4ometry.geant4.solid.Box("b1",10,10,10,reg)

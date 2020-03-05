@@ -10,7 +10,7 @@ In directory ``pyg4ometry/pyg4ometry/test/gdmlG4examples/ChargeExchangeMC/``
 .. code-block :: python
 
    import pyg4ometry
-   r = pyg4ometry.gdml.Reader("lht_fixed.gdml")
+   r = pyg4ometry.gdml.Reader("lht.gdml")
    l = r.getRegistry().getWorldVolume()
    v = pyg4ometry.visualisation.VtkViewer()
    v.addLogicalVolume(l)
