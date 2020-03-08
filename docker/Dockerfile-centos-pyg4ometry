@@ -9,27 +9,39 @@ RUN yum -y install epel-release git.x86_64 make.x86_64 \
     xerces-c-devel.x86_64 zlib-devel.x86_64 wget.x86_64 \
     openssl-devel.x86_64
 
+RUN yum -y install python2-pip
+
 # CMake (3.16.4 from source)
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz && \
-    tar zxf cmake-3.16.4.tar.gz && rm -rfv cmake-3.16.4.tar.gz && cd cmake-3.16.4 && \
-    ./bootstrap && make install && cd ../ && rm -rfv cmake-3.16.4  
-# CMake (XXX from yum/epel)
+#RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz && \
+#    tar zxf cmake-3.16.4.tar.gz && rm -rfv cmake-3.16.4.tar.gz && cd cmake-3.16.4 && \
+#    ./bootstrap && make install && cd ../ && rm -rfv cmake-3.16.4  
+# CMake (XXX from yum/epel) 
+RUN yum -y install centos-release-scl
+RUN yum -y install cmake3
+
 
 # X11 
 RUN yum -y install xorg-x11-server-Xorg xorg-x11-xauth libX11-devel.x86_64 \
     libXpm-devel.x86_64 libXft-devel.x86_64 libXext-devel.x86_64 libXt-devel.x86_64
 
 # python
-RUN yum -y install python2-pip python-devel.x86_64 python-ipython.noarch
+RUN yum -y install python-devel.x86_64 
+RUN yum -y install python-ipython.noarch
+RUN pip install cython
+
+# OpenGL
+RUN yum -y install mesa-libGL-devel.x86_64
 
 # VTK (8.2 from source)
-#RUN yum install mesa-libGL-devel.x86_64 && \
-#    wget https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz && tar zxf VTK-8.2.0.tar.gz && \ 
-#    mkdir VTK-8.2.0-build && cd VTK-8.2.0-build && cmake ../VTK-8.2.0/ && make -j6 && make install
+RUN wget https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz && tar zxf VTK-8.2.0.tar.gz 
+RUN mkdir VTK-8.2.0-build && cd VTK-8.2.0-build && cmake3 -DVTK_WRAP_PYTHON=ON ../VTK-8.2.0/ && make -j6 && make install
 #   && cd ../ && rm -rfv VTK-8.2.0 VTK-8.2.0-build
 
 # VTK (6.1 from yum/epel)
-RUN yum -y install vtk.x86_64 vtk-python.x86_64 vtk-qt.x86_64 vtk-qt-python.x86_64
+#RUN yum -y install vtk.x86_64 vtk-python.x86_64 vtk-qt.x86_64 vtk-qt-python.x86_64
+
+# export PYTHONPATH=/usr/local/lib64/python./site-packages/:/usr/local/lib64/python./site-packages/vtkmodules/:/usr/local/lib64/
+# export LD_LIBRARY_PATH=/usr/local/lib64/python./site-packages/vtkmodules/:/usr/local/lib64/
 
 # pyg4ometry
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && cd pyg4ometry && git checkout develop 

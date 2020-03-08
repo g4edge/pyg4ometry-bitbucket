@@ -12,7 +12,7 @@ setup(
                       "networkx == 2.2",
                       "numpy",
                       "vtk",
-                      "Cython",
+                      "cython",
                       "GitPython",
                       "testtools"],
     # cython, pyqt5

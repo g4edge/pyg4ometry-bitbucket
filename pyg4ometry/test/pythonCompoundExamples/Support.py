@@ -8,6 +8,10 @@ import numpy as _np
 
 lengthSafety = 1e-8
 
+def SupportMagnet(name = "supportMagnet", shape = "polygonal", parameters = {"nface":3, "thickness":10, "angles":[-45,0,45],"distances":[300,300,300]}) :
+
+    pass
+
 
 def SupportTable(name = "support",
                  length = 4, width = 2.0, height = 1.5, thickness = 0.05,
@@ -37,7 +41,7 @@ def SupportTable(name = "support",
     tableTopSolid    = _g4.solid.Box(name+"_tableTopSolid",tableX,tableY,tableZ,reg,lunit="m")
     tableTopMaterial = _g4.MaterialPredefined("G4_STAINLESS-STEEL")
     tableTopLogical  = _g4.LogicalVolume(tableTopSolid,tableTopMaterial, name+"_tableTopLogical",reg)
-    tableTopPhysical = _g4.PhysicalVolume([0,0,0],[0,1000*vHeight/2,0],tableTopLogical,name+"_tableTopPhysical",supportLogical,reg)
+    tableTopPhysical = _g4.PhysicalVolume([0,0,0],[0,vHeight/2,0,"m"],tableTopLogical,name+"_tableTopPhysical",supportLogical,reg)
 
 
     # build support
@@ -73,20 +77,24 @@ def SupportTable(name = "support",
     supportYSectionMaterial = _g4.MaterialPredefined("G4_STAINLESS-STEEL")
     supportYSectionLogical  = _g4.LogicalVolume(supportYSection,supportYSectionMaterial, name+"_supportYSectionLogical",reg)
 
-    supportZSectionPhysical1 = _g4.PhysicalVolume([0, 0, 0], [1000*(horizontalPad*vWidth/2 - vSectionSize),  1000*(verticalPad*vHeight/2 - vSectionSize),  0], supportZSectionLogical,name + "_supportZSectionPhysical1", supportLogical, reg)
-    supportZSectionPhysical2 = _g4.PhysicalVolume([0, 0, 0], [1000*(horizontalPad*vWidth/2 - vSectionSize), -1000*(verticalPad*vHeight/2 - vSectionSize), 0], supportZSectionLogical,name + "_supportZSectionPhysical2", supportLogical, reg)
-    supportZSectionPhysical3 = _g4.PhysicalVolume([0, 0, 0], [-1000*(horizontalPad*vWidth/2 - vSectionSize), 1000*(verticalPad*vHeight/2 - vSectionSize),  0], supportZSectionLogical,name + "_supportZSectionPhysical3", supportLogical, reg)
-    supportZSectionPhysical4 = _g4.PhysicalVolume([0, 0, 0], [-1000*(horizontalPad*vWidth/2 - vSectionSize),-1000*(verticalPad*vHeight/2 - vSectionSize), 0], supportZSectionLogical,name + "_supportZSectionPhysical4", supportLogical, reg)
+    supportZSectionPhysical1 = _g4.PhysicalVolume([0, 0, 0], [horizontalPad*vWidth/2 - vSectionSize,  verticalPad*vHeight/2 - vSectionSize,  0, "m"], 
+                                                  supportZSectionLogical,name + "_supportZSectionPhysical1", supportLogical, reg)
+    supportZSectionPhysical2 = _g4.PhysicalVolume([0, 0, 0], [horizontalPad*vWidth/2 - vSectionSize, -(verticalPad*vHeight/2 - vSectionSize), 0, "m"],
+                                                  supportZSectionLogical,name + "_supportZSectionPhysical2", supportLogical, reg)
+    supportZSectionPhysical3 = _g4.PhysicalVolume([0, 0, 0], [-(horizontalPad*vWidth/2 - vSectionSize), verticalPad*vHeight/2 - vSectionSize, 0, "m"],
+                                                  supportZSectionLogical,name + "_supportZSectionPhysical3", supportLogical, reg)
+    supportZSectionPhysical4 = _g4.PhysicalVolume([0, 0, 0], [-(horizontalPad*vWidth/2 - vSectionSize),-(verticalPad*vHeight/2 - vSectionSize), 0, "m"],
+                                                  supportZSectionLogical,name + "_supportZSectionPhysical4", supportLogical, reg)
 
 
     for iSupport in range(0,nSupport,1) :
 
-        z = 1000*( iSupport * (supportZ-sectionSize)/(nSupport-1) - (supportZ-sectionSize)/2.0)
-        supportXSectionPhysical1 = _g4.PhysicalVolume([0,_np.pi/2.0,0],[0, 1000*(verticalPad*vHeight/2-vSectionSize),z],supportXSectionLogical,name+"_supportXSectionPhysical1_"+str(iSupport),supportLogical,reg)
-        supportXSectionPhysical2 = _g4.PhysicalVolume([0,_np.pi/2.0,0],[0,-1000*(verticalPad*vHeight/2-vSectionSize),z],supportXSectionLogical,name+"_supportXSectionPhysical2_"+str(iSupport),supportLogical,reg)
+        z = iSupport * (supportZ-sectionSize)/(nSupport-1) - (supportZ-sectionSize)/2.0
+        supportXSectionPhysical1 = _g4.PhysicalVolume([0,_np.pi/2.0,0],[0, verticalPad*vHeight/2-vSectionSize,z,"m"],supportXSectionLogical,name+"_supportXSectionPhysical1_"+str(iSupport),supportLogical,reg)
+        supportXSectionPhysical2 = _g4.PhysicalVolume([0,_np.pi/2.0,0],[0,-(verticalPad*vHeight/2-vSectionSize),z,"m"],supportXSectionLogical,name+"_supportXSectionPhysical2_"+str(iSupport),supportLogical,reg)
 
-        supportYSectionPhysical1 = _g4.PhysicalVolume([_np.pi/2.0,0,0],[ 1000*(horizontalPad*vWidth/2-vSectionSize),0,z],supportYSectionLogical,name+"_supportYSectionPhysical1_"+str(iSupport),supportLogical,reg)
-        supportYSectionPhysical2 = _g4.PhysicalVolume([_np.pi/2.0,0,0],[-1000*(horizontalPad*vWidth/2-vSectionSize),0,z],supportYSectionLogical,name+"_supportYSectionPhysical2_"+str(iSupport),supportLogical,reg)
+        supportYSectionPhysical1 = _g4.PhysicalVolume([_np.pi/2.0,0,0],[ horizontalPad*vWidth/2-vSectionSize,0,z,"m"],supportYSectionLogical,name+"_supportYSectionPhysical1_"+str(iSupport),supportLogical,reg)
+        supportYSectionPhysical2 = _g4.PhysicalVolume([_np.pi/2.0,0,0],[-(horizontalPad*vWidth/2-vSectionSize),0,z,"m"],supportYSectionLogical,name+"_supportYSectionPhysical2_"+str(iSupport),supportLogical,reg)
 
 
 
