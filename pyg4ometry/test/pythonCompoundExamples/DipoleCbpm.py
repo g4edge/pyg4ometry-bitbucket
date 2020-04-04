@@ -137,11 +137,11 @@ def Test(vis = True, interactive = False, gdml = True, fluka = True) :
 
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write(_path.join(_path.dirname(_path.dirname(__file__)),"DipoleCbpm.inp"))
+        w.write(_path.join(_path.dirname(_path.abspath(__file__)),"DipoleCbpm.inp"))
 
         # flair output file
         f = _fluka.Flair("DipoleCbpm.inp",extentBB)
-        f.write(_path.join(_path.dirname(_path.dirname(__file__)),"DipoleCbpm.flair"))
+        f.write(_path.join(_path.dirname(_path.abspath(__file__)),"DipoleCbpm.flair"))
 
 
     return {"logicalVolume":world_logical, "vtkViewer":v}
