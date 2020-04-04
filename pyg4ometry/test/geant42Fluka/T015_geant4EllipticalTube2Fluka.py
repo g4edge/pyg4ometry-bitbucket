@@ -48,7 +48,7 @@ def Test(vis = False, interactive=False) :
 
     # flair output file
     f = _fluka.Flair("T015_geant4EllipticalTube2Fluka.inp",extentBB)
-    f.write(_os.path.join(_os.path.dirname(_os.path.dirname(__file__)),"T015_geant4EllipticalTube2Fluka.flair"))
+    f.write(_os.path.join(_os.path.dirname(__file__),"T015_geant4EllipticalTube2Fluka.flair"))
 
     if vis :
         v = _vi.VtkViewer()
