@@ -54,7 +54,7 @@ def Test(vis = True, interactive = False) :
 
     # flair output file
     f = _fluka.Flair("T001_geant4Box2Fluka.inp",extentBB)
-    f.write(_os.path.join(_os.path.dirname(_os.path.dirname(__file__)),"T001_geant4Box2Fluka.flair"))
+    f.write(_os.path.join(_os.path.dirname(__file__),"T001_geant4Box2Fluka.flair"))
 
     if vis :
         v = _vi.VtkViewer()
