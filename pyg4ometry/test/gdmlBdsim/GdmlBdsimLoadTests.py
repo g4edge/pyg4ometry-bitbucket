@@ -1,7 +1,11 @@
-import unittest as _unittest
 import os as _os
+from os import path as _path
+import unittest as _unittest
 
 import pyg4ometry
+import pyg4ometry.convert as _convert
+import pyg4ometry.fluka as _fluka
+
 
 def localPath(filename):
     """
@@ -31,8 +35,21 @@ def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
     if vis :
         v = pyg4ometry.visualisation.VtkViewer()
         v.addLogicalVolume(registry.getWorldVolume())
+        v.setRandomColours()
         v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
+
+    # Fluka writer
+    freg = _convert.geant4Logical2Fluka(worldLogical)
+
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write(_path.join(_os.path.dirname(__file__),_path.basename(filename).split(".")[0]+".inp"))
+
+    # flair output file
+    f = _fluka.Flair(_path.basename(filename).split(".")[0]+".inp",extentBB)
+    f.write(_path.join(_path.dirname(__file__),_path.basename(filename).split(".")[0]+".flair"))
+
 
     # Render writer
     rw = pyg4ometry.visualisation.RenderWriter()
