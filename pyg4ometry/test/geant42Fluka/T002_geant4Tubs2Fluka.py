@@ -8,6 +8,7 @@ import pyg4ometry.visualisation as _vi
 
 def Test(vis = True, interactive = False) :
 
+    # registry
     reg = _g4.Registry()
 
     # defines
