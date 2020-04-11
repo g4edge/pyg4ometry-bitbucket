@@ -627,7 +627,7 @@ into one LV with multiple PVs.
 \item second order lattice
 \item Materials 
 \end{itemize}
-\section{Geant4 to FLUKA conversion}
+\section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG region.
 Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
 lists the mapping between geant4 solids and the bodies used to compose a fluka region.
@@ -720,7 +720,7 @@ There are still a few outstanding issues with Geant4/GDML to Fluka conversion.
 \item Materials 
 \end{itemize}
 
-\section{CAD to Geant4 conversion }
+\section{CAD to GDML conversion }
 STEP and IGES files can be loaded into pyg4ometry, via an interface based on FreeCAD. FreeCAD is an open source CAD/CAM program, which in turn 
 is based on OpenCASCADE. A STEP CAD file could be considered as a hierarchical tree of {\it part assemblies} and {\it part features}, where a part assembly is a 
 collection of part features. A part feature can be used to create  a triangular mesh which can used to create a pyg4ometry tessellated solid. Assignment of materials 
@@ -735,7 +735,7 @@ possible applications.
 \subsection{Mixing geometry sources}
 It is possible to mix different geometries from STL, STEP, GDML and FLUKA in single GDML file for use in Geant4 and ROOT. 
 
-\subsection{Editing existing models}
+\subsection{Modifying existing models}
 Often existing CAD models have either missing details or too many details. Examples of too potentially superfluous detail are gaskets and bolts 
 
 \subsection{Overlap checking in geometry}
