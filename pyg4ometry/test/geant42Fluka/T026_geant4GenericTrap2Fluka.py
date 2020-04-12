@@ -72,10 +72,10 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T026_geant4GenericTrap2Fluka.gdml"))
 
     # fluka conversion
-    #freg = _convert.geant4Logical2Fluka(wl)
-    #w = _fluka.Writer()
-    #w.addDetector(freg)
-    #w.write(_os.path.join(_os.path.dirname(__file__),"T026_geant4GenericTrap2Fluka.inp"))
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write(_os.path.join(_os.path.dirname(__file__),"T026_geant4GenericTrap2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T026_geant4GenericTrap2Fluka.inp",extentBB)
