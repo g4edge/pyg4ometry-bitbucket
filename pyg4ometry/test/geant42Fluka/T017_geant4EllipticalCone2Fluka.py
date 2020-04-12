@@ -52,10 +52,10 @@ def Test(vis = False, interactive = False, type = normal, n_slice=16) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T017_geant4EllipticalCone2Fluka.gdml"))
 
     # fluka conversion
-    #freg = _convert.geant4Logical2Fluka(wl)
-    #w = _fluka.Writer()
-    #w.addDetector(freg)
-    #w.write(_os.path.join(_os.path.dirname(__file__),"T017_geant4EllipticalCone2Fluka.inp"))
+    freg = _convert.geant4Logical2Fluka(wl)
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write(_os.path.join(_os.path.dirname(__file__),"T017_geant4EllipticalCone2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T017_geant4EllipticalCone2Fluka.inp",extentBB)
