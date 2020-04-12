@@ -64,7 +64,7 @@ def Test(vis = False, interactive = False, n_slice = 10) :
     freg = _convert.geant4Logical2Fluka(wl)
     w = _fluka.Writer()
     w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T001_geant4Box2Fluka.inp"))
+    w.write(_os.path.join(_os.path.dirname(__file__),"T011_geant4Polycone2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T011_geant4Polycone2Fluka.inp",extentBB)
