@@ -6,9 +6,8 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 import numpy as _np
 
-import pyg4ometry.test.pythonGeant4.T001_Box as _T001_Box
 
-def Test(vis = True, interactive = False) :
+def Test(vis = False, interactive = False) :
 
     # registry
     reg = _g4.Registry()
