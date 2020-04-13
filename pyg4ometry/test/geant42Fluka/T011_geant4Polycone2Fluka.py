@@ -7,7 +7,7 @@ import pyg4ometry.visualisation as _vi
 import numpy as _np
 
 
-def Test(vis = False, interactive = False, n_slice = 10) :
+def Test(vis = False, interactive = False, fluka = True, n_slice = 10) :
 
     # registry
     reg = _g4.Registry()
@@ -21,7 +21,7 @@ def Test(vis = False, interactive = False, n_slice = 10) :
     psphi  = _gd.Constant("sphi","0",reg,True)
     pdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
 
-    prmin1 = _gd.Constant("prmin1","1",reg,True)
+    prmin1 = _gd.Constant("prmin1","0",reg,True)
     prmax1 = _gd.Constant("prmax1","9",reg,True)
     pz1    = _gd.Constant("z1","-10",reg,True)
 
@@ -61,10 +61,11 @@ def Test(vis = False, interactive = False, n_slice = 10) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T011_geant4Polycone2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T011_geant4Polycone2Fluka.inp"))
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T011_geant4Polycone2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T011_geant4Polycone2Fluka.inp",extentBB)
