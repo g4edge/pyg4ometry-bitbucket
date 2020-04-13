@@ -26,7 +26,7 @@ def Test(vis = False, interactive = False, type = normal) :
     pr2    = _gd.Constant("pr2","2",reg,True)
     pz2    = _gd.Constant("pz2","0",reg,True)
 
-    pr3    = _gd.Constant("pr3","3",reg,True)
+    pr3    = _gd.Constant("pr3","1",reg,True)
     pz3    = _gd.Constant("pz3","10",reg,True)
 
     pr     = [pr1,pr2,pr3]
