@@ -21,7 +21,7 @@ def Test(vis = False, interactive = False, fluka = True, n_slice = 10) :
     psphi  = _gd.Constant("sphi","0",reg,True)
     pdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
 
-    prmin1 = _gd.Constant("prmin1","0",reg,True)
+    prmin1 = _gd.Constant("prmin1","7",reg,True)
     prmax1 = _gd.Constant("prmax1","9",reg,True)
     pz1    = _gd.Constant("z1","-10",reg,True)
 
@@ -29,7 +29,7 @@ def Test(vis = False, interactive = False, fluka = True, n_slice = 10) :
     prmax2 = _gd.Constant("prmax2","9",reg,True)
     pz2    = _gd.Constant("z2","0",reg,True)
 
-    prmin3 = _gd.Constant("prmin3","3",reg,True)
+    prmin3 = _gd.Constant("prmin3","4",reg,True)
     prmax3 = _gd.Constant("prmax3","5",reg,True)
     pz3    = _gd.Constant("z3","10",reg,True)
 

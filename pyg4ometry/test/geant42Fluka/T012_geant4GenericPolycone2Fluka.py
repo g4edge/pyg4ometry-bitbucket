@@ -8,7 +8,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 two_planes = 2
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, fluka = True, type = normal) :
 
     # registry
     reg = _g4.Registry()
@@ -63,10 +63,11 @@ def Test(vis = False, interactive = False, type = normal) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T012_geant4GenericPolycone2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T012_geant4GenericPolycone2Fluka.inp"))
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T012_geant4GenericPolycone2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T012_geant4GenericPolycone2Fluka.inp",extentBB)
