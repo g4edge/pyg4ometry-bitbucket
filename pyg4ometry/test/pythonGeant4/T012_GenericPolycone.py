@@ -22,14 +22,23 @@ def Test(vis = False, interactive = False, type = normal) :
     pr1    = _gd.Constant("pr1","5",reg,True)
     pz1    = _gd.Constant("z1","-10",reg,True)
 
-    pr2    = _gd.Constant("pr2","2",reg,True)
-    pz2    = _gd.Constant("z2","0",reg,True)
+    pr2    = _gd.Constant("pr2","7.5",reg,True)
+    pz2    = _gd.Constant("z2","-10",reg,True)
 
-    pr3    = _gd.Constant("pr3","8",reg,True)
-    pz3    = _gd.Constant("z3","10",reg,True)
+    pr3    = _gd.Constant("pr3","10",reg,True)
+    pz3    = _gd.Constant("z3","0",reg,True)
 
-    pr    = [pr1,pr2,pr3]
-    pz    = [pz1,pz2,pz3]
+    pr4    = _gd.Constant("pr4","7.5",reg,True)
+    pz4    = _gd.Constant("z4","10",reg,True)
+
+    pr5    = _gd.Constant("pr5","5",reg,True)
+    pz5    = _gd.Constant("z5","10",reg,True)
+
+    pr6    = _gd.Constant("pr6","2",reg,True)
+    pz6    = _gd.Constant("z6","5",reg,True)
+
+    pr    = [pr1,pr2,pr3,pr4,pr5,pr6]
+    pz    = [pz1,pz2,pz3,pz4,pz5,pz6]
 
     if type == two_planes : 
         pr  = [pr1,pr2]
