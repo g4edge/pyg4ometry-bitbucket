@@ -7,7 +7,7 @@ import pyg4ometry.fluka as _fluka
 normal = 1
 non_intersecting = 2 
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, fluka = True, type = normal) :
     reg = _g4.Registry()
     
     # defines 
@@ -51,11 +51,11 @@ def Test(vis = False, interactive = False, type = normal) :
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive = interactive)
 
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T030_geant4Intersection2Fluka.inp")
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write("T030_geant4Intersection2Fluka.inp")
 
 if __name__ == "__main__":
     Test()

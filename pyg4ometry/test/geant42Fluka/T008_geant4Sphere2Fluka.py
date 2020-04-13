@@ -5,7 +5,7 @@ import pyg4ometry.visualisation as _vi
 import pyg4ometry.convert as _convert
 import pyg4ometry.fluka as _fluka
 
-def Test(vis = False, interactive = False, n_slice=10, n_stack=10) :
+def Test(vis = False, interactive = False, fluka = True, n_slice=10, n_stack=10) :
     reg = _g4.Registry()
     
     # defines 
@@ -46,10 +46,11 @@ def Test(vis = False, interactive = False, n_slice=10, n_stack=10) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T008_geant4Sphere2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T008_geant4Sphere2Fluka.inp")
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write("T008_geant4Sphere2Fluka.inp")
 
     # visualisation
     v = None

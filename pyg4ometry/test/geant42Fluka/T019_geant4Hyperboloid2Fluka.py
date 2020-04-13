@@ -10,7 +10,7 @@ normal = 1
 rmin_eq_zero = 2
 rmin_gt_rmax = 3
 
-def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack = 16) :
+def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice = 16, n_stack = 16) :
 
     # registry
     reg = _g4.Registry()
@@ -58,10 +58,11 @@ def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack 
     w.write(_os.path.join(_os.path.dirname(__file__), "T019_geant4Hyperboloid2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T019_geant4Hyperboloid2Fluka.inp"))
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T019_geant4Hyperboloid2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T019_geant4Box2Fluka.inp",extentBB)

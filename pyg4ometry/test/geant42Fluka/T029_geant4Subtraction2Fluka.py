@@ -4,7 +4,7 @@ import pyg4ometry.visualisation as _vi
 import pyg4ometry.convert as _convert
 import pyg4ometry.fluka as _fluka
 
-def Test(vis = False, interactive = False, nullMesh = False) :
+def Test(vis = False, interactive = False, fluka = True, nullMesh = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -53,11 +53,11 @@ def Test(vis = False, interactive = False, nullMesh = False) :
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive = interactive)
 
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T029_geant4Subtraction2Fluka.inp")
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write("T029_geant4Subtraction2Fluka.inp")
 
 if __name__ == "__main__":
     Test()

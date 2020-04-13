@@ -9,7 +9,7 @@ import numpy as _np
 normal = 1
 zcut_outofrange = 2
 
-def Test(vis = False, interactive = False, type = normal, n_slice=16) :
+def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice=16) :
 
     # registry
     reg = _g4.Registry()
@@ -52,10 +52,11 @@ def Test(vis = False, interactive = False, type = normal, n_slice=16) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T017_geant4EllipticalCone2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T017_geant4EllipticalCone2Fluka.inp"))
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T017_geant4EllipticalCone2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T017_geant4EllipticalCone2Fluka.inp",extentBB)

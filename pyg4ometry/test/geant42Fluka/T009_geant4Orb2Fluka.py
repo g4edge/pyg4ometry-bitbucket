@@ -6,7 +6,7 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False, n_slice=16, n_stack=16) :
+def Test(vis = False, interactive = False, fluka = True, n_slice=16, n_stack=16) :
 
     # registry
     reg = _g4.Registry()
@@ -42,10 +42,11 @@ def Test(vis = False, interactive = False, n_slice=16, n_stack=16) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T009_geant4Orb2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T009_geant4Orb2Fluka.inp"))
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T009_geant4Orb2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T0019_geant4Orb2Fluka.inp",extentBB)

@@ -6,7 +6,7 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive= False) :
+def Test(vis = False, interactive= False, fluka = True) :
     reg = _g4.Registry()
     
     # defines 
@@ -66,10 +66,11 @@ def Test(vis = False, interactive= False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T005_geant4Para2Fluka.gdml"))
 
     # fluka conversion
-    freg = _convert.geant4Logical2Fluka(wl)
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write("T005_geant4Para2Fluka.inp")
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write("T005_geant4Para2Fluka.inp")
 
     # visualisation
     v = None

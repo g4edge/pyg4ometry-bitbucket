@@ -7,7 +7,7 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive=False) :
+def Test(vis = False, interactive=False, fluka = True) :
 
     reg = _g4.Registry()
 
@@ -39,12 +39,11 @@ def Test(vis = False, interactive=False) :
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
 
-
-    freg = _convert.geant4Logical2Fluka(wl)
-
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_os.path.join(_os.path.dirname(__file__),"T015_geant4EllipticalTube2Fluka.inp"))
+    if fluka :
+        freg = _convert.geant4Logical2Fluka(wl)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T015_geant4EllipticalTube2Fluka.inp"))
 
     # flair output file
     f = _fluka.Flair("T015_geant4EllipticalTube2Fluka.inp",extentBB)
