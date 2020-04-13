@@ -7,7 +7,7 @@ import pyg4ometry.visualisation as _vi
 import numpy as _np
 
 
-def Test(vis = False, interactive = False, fluka = True, fluka = True, n_slice = 10) :
+def Test(vis = False, interactive = False, fluka = True, n_slice = 10) :
 
     # registry
     reg = _g4.Registry()
