@@ -285,6 +285,7 @@ Solid  			& Box					& geant4.solid.Box				\\
 	  			& Polycone				& geant4.solid.Polycone			\\
 	  			& GenericPolycone			& geant4.solid.GenericPolycone	\\
 	  			& Polyhedra				& geant4.solid.Polyhedra			\\
+				& GenericPolyhedra                  & geant4.solid.GenericPolyhedra	\\ 
 	  			& Eltube					& geant4.solid.EllipticalTube		\\
 	  			& Ellipsoid					& geant4.solid.Ellipsoid			\\
 	  			& Elcone					& geant4.solid.EllipticalCone		\\
@@ -648,7 +649,6 @@ Sphere				& +SPH - SPH  - 2 PLA - 2 TRC	\\
 Orb					& +SPH						\\
 Torus				& +$N$ ZCC  - $N$ PLA			\\
 Polycone				& +$N$ TRC -2 PLA				\\
-GenericPolycone		& +$N$ ARB					\\
 Polyhedra				& +$N$ PLA					\\
 Eltube				& +ZEC  - 2 XYP				\\
 Ellipsoid				& +ELL - 2 XYP		 			\\
@@ -714,6 +714,7 @@ There are still a few outstanding issues with Geant4/GDML to Fluka conversion.
 \subsection{TODO}
 \begin{itemize}
 \item Non-convex solids, convex decomposition (Polyhedron, Xtru, TwistedBox, TwistedTrap, TwistedTrd, TwistedTube)
+\item Non-convex 2D section (GenericPolycone, GenericPolyhedra)
 \item Scaled solid 
 \item Placement scale 
 \item Replica, Division, Parameterised
