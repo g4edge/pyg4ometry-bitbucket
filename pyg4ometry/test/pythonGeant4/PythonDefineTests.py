@@ -273,7 +273,12 @@ class PythonDefineTests(_unittest.TestCase) :
     def test_GdmlDefine_PowExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","2",r)
-        self.assertEqual((pyg4ometry.gdml.pow(xc,2)).eval(),4) 
+        self.assertEqual((pyg4ometry.gdml.pow(xc,2)).eval(),4)
+
+    def test_GdmlDefine_AbsExpression(self):
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc", "-2", r)
+        self.assertEqual((pyg4ometry.gdml.abs(xc)).eval(), 2)
 
     # #############################
     # Quantity
