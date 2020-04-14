@@ -141,6 +141,11 @@ class PythonDefineTests(_unittest.TestCase) :
         xc = pyg4ometry.gdml.Constant("xc","2.3456-1",r)
         self.assertEqual(xc.eval(),1.3456000000000001)
 
+    def test_GdmlDefine_FuncAbs(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","abs(-1)",r)
+        self.assertEqual(xc.eval(), 1.)
+
     # #############################
     # Constants 
     # #############################        
