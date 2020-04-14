@@ -32,17 +32,20 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
     pr3    = _gd.Constant("pr3","10",reg,True)
     pz3    = _gd.Constant("z3","0",reg,True)
 
-    pr4    = _gd.Constant("pr4","7.5",reg,True)
-    pz4    = _gd.Constant("z4","10",reg,True)
+    pr4    = _gd.Constant("pr4","20",reg,True)
+    pz4    = _gd.Constant("z4","-5",reg,True)
 
-    pr5    = _gd.Constant("pr5","5",reg,True)
+    pr5    = _gd.Constant("pr5","7.5",reg,True)
     pz5    = _gd.Constant("z5","10",reg,True)
 
-    pr6    = _gd.Constant("pr6","2",reg,True)
-    pz6    = _gd.Constant("z6","5",reg,True)
+    pr6    = _gd.Constant("pr6","5",reg,True)
+    pz6    = _gd.Constant("z6","10",reg,True)
 
-    pr    = [pr1,pr2,pr3,pr4,pr5,pr6]
-    pz    = [pz1,pz2,pz3,pz4,pz5,pz6]
+    pr7    = _gd.Constant("pr7","2",reg,True)
+    pz7    = _gd.Constant("z7","5",reg,True)
+
+    pr    = [pr1,pr2,pr3,pr4,pr5,pr6,pr7]
+    pz    = [pz1,pz2,pz3,pz4,pz5,pz6,pz7]
 
     if type == two_planes : 
         pr  = [pr1,pr2]
