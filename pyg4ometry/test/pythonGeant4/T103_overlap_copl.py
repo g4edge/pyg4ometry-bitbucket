@@ -54,7 +54,7 @@ def Test(vis = False, interactive = False) :
 
 
     # check for overlaps
-    wl.checkOverlaps(True,True,False)
+    wl.checkOverlaps(recursive = True,coplanar = True, debugIO = False)
 
     # set world volume
     reg.setWorld(wl.name)
