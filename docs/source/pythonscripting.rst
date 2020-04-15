@@ -81,6 +81,16 @@ The constant ``x`` can of course be changed and ``y`` re-evaluated
 
    >> 20
 
+.. note::
+   Standard mathematical functions can be used with GDML defines (Constant, Variable, etc). So sin, cos, tan, 
+   exp and so on, but pyg4ometry functions have to be used
+
+.. code-block :: python
+   :linenos:
+   
+   x  = pyg4ometry.gdml.Constant("x",10,reg)
+   cx = pyg4ometry.gdml.cos(x)
+   
 So the box example above can be rewritten using constants
 
 .. code-block :: python
@@ -138,6 +148,9 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
 .. code-block :: c++
 
    G4Box(const G4String& pName, G4double  pX, G4double  pY, G4double pZ)
+
+.. warning::
+   The parameters stick to the GDML convention of **full** lengths opposed to half lengths.
 
 Materials 
 ---------
@@ -229,6 +242,9 @@ Detector contruction
 
 This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans, logical, physical (replica, division, param) volumes.
 
+
+Transformations 
+---------------
 
 Optical surfaces 
 ----------------
