@@ -68,6 +68,10 @@ Fluka loading and conversion to Geant4
 Merging geometry
 ----------------
 
+There are ways to incorperate geometry from multiple sources in GDML. This has potentially 
+lots of problems as each file needs to be a well formed GDML file and care has to be taken 
+with degenerate names from the different sources. 
+
 Assembly conversion
 -------------------
 
@@ -87,8 +91,8 @@ To write an STL file from ``m = volume.pycsgmesh()``
     vtkPD        =  vtkConverter.MeshListToPolyData(m)
     r = vtk.WriteSTL("file.stl",vtkPD)
 
-Conversion to Fluka and output
-------------------------------
+GDML Conversion to Fluka
+------------------------
 
 It is possible convert a pyg4ometry geometry to Fluka. This is currently a work in 
 progress and not all geant4-GDML constructions are implemented, although they can
@@ -120,6 +124,12 @@ method
 
 .. figure:: tutorials/tutorial8b.png
    :alt: GDML CutTubs converted to Fluka
+
+.. note::
+   All GDML placements are respected in the conversion from GDML to Fluka, for both Placements and 
+   Boolean Solids. So for example a tree of LV-PV placements are reduced into a single transformation 
+   of a LV into a global coordinate space for FLUKA. A similar process is used for a tree of CGS 
+   operations.
 
 .. warning::
 

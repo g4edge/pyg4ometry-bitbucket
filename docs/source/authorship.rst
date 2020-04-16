@@ -10,4 +10,5 @@ The following people have contributed to pyg4ometry:
 * Laurie Nevay
 * William Shields
 * Stuart Walker
+* Ben Shellswell
 
