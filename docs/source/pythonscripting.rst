@@ -240,11 +240,15 @@ Example of elements formed by isotopes
 Detector contruction 
 --------------------
 
-This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans, logical, physical (replica, division, param) volumes.
-
+This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans, logical, 
+physical (replica, division, param) volumes.
 
 Transformations 
 ---------------
+
+Transformations in 3D are essential for the easy placement of solids in a CSG tree or LV placement. 
+There is not a specific transformation classes like in Geant4, matricies and vectors used for placements
+are typically numpy arrays or matrices. 
 
 Optical surfaces 
 ----------------
@@ -282,9 +286,21 @@ which will open a Vtk render window. The render window now receives keyboard and
 To exit render window ``q``, to restart interaction with the visualiser 
 
 .. code-block :: python
+   :linenos:
 
    v.start()
 
+There are also convenience methods of ``pyg4ometry.visualisation.VtkViewer()`` the allow changing 
+of the viewing parameters. So if the viewer is active then render window needs to be stopped ``q`` 
+and then commands can be typed into the terminal, for example  
+
+.. code-block :: python
+   :linenos:
+
+   v.setOpactity(0.1)
+   v.setWirefrace()   
+   v.start()
+   
 Overlap checking
 ----------------
 
