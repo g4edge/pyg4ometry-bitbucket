@@ -135,7 +135,7 @@ def loadChecksumTable():
 def writeChecksumTable(checksum_table):
     checksum_filepath = _pj("processed_file_checksums.dat")
     with open(checksum_filepath, "w") as checksum_file:
-        for filename, checksum in checksum_table.iteritems():
+        for filename, checksum in checksum_table.items():
             checksum_file.write("{}\t{}\n".format(filename, checksum))
 
 
@@ -333,7 +333,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("106_replica_x.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "replica":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -342,7 +342,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("107_replica_y.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "replica":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -351,7 +351,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("108_replica_z.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "replica":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -360,7 +360,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("109_replica_phi.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "replica":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -369,7 +369,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("110_replica_rho.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "replica":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -378,7 +378,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("111_parameterised_box.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -387,7 +387,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("112_parameterised_tube.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -396,7 +396,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("113_parameterised_cone.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -405,7 +405,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("114_parameterised_orb.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -414,7 +414,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("115_parameterised_sphere.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -423,7 +423,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("116_parameterised_torus.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -432,7 +432,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("117_parameterised_hype.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -441,7 +441,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("118_parameterised_para.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -450,7 +450,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("119_parameterised_trd.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -459,7 +459,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("120_parameterised_trap.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -468,7 +468,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("121_parameterised_polycone.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -477,7 +477,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("122_parameterised_polyhedron.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -486,7 +486,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("123_parameterised_ellipsoid.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "parametrised":
                 solid= volume.meshes[0].solid
 
@@ -494,7 +494,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("124_division_box_x.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -503,7 +503,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("125_division_box_y.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -512,7 +512,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("126_division_box_z.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -521,7 +521,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("127_division_tubs_rho.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -530,7 +530,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("128_division_tubs_phi.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -539,7 +539,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("129_division_tubs_z.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -548,7 +548,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("130_division_cons_rho.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -557,7 +557,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("131_division_cons_phi.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -566,7 +566,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("132_division_cons_z.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -575,7 +575,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("133_division_trd_x.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -584,7 +584,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("134_division_trd_y.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -593,7 +593,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("135_division_trd_z.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -602,7 +602,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("136_division_para_x.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename))  # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -611,7 +611,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("137_division_para_y.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -620,7 +620,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("138_division_para_z.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -629,7 +629,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("139_division_polycone_rho.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -638,7 +638,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("140_division_polycone_phi.gdml")
         self.assertTrue(geant4LoadTest(writtenFilename))
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -647,7 +647,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("141_division_polycone_z.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -656,7 +656,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("142_division_polyhedra_rho.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -665,7 +665,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("143_division_polyhedra_phi.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename))   # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)
@@ -674,7 +674,7 @@ class GdmlLoadTests(_unittest.TestCase) :
         registry, writtenFilename = pyg4ometryLoadWriteTest("144_division_polyhedra_z.gdml")
         #self.assertTrue(geant4LoadTest(writtenFilename)) # Faulty in Geant4
 
-        for volname, volume in registry.physicalVolumeDict.iteritems():
+        for volname, volume in registry.physicalVolumeDict.items():
             if volume.type == "division":
                 solid= volume.meshes[0].solid
         #self.assertEqual(getSolidChecksum(solid), -1)

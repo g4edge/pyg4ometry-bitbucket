@@ -59,7 +59,7 @@ class Model(object):
             # Always set BLCKHOLE to None.  We always omit regions with material
             # BLCKHOLE.
             fluka_g4_material_map["BLCKHOLE"] = None
-            for region_name, region in self.regions.iteritems():
+            for region_name, region in self.regions.items():
                 fluka_material = materials[region_name]
                 try:
                     g4_material = fluka_g4_material_map[fluka_material]
@@ -77,7 +77,7 @@ class Model(object):
                 " will still be omitted from both conversion and viewing."))
             print(msg, '\n')
 
-            for region_name, region in self.regions.iteritems():
+            for region_name, region in self.regions.items():
                 fluka_material = materials.get(region_name)
                 if fluka_material == "BLCKHOLE":
                     fluka_material = None
@@ -249,7 +249,7 @@ class Model(object):
             return [world_mesh[0]]
         # Else if just_bounding_box is the name of a region, then
         # remove all daughterVolumes that don't have that name.
-        elif isinstance(just_bounding_box, basestring):
+        elif isinstance(just_bounding_box, str):
             self._world_volume.daughterVolumes = (
                 [element for element in
                  self._world_volume.daughterVolumes
@@ -338,11 +338,11 @@ class Model(object):
         if regions is None: # add all regions by default.
             regions = self.regions.keys()
         # Else if regions is the name of a single region
-        elif isinstance(regions, basestring):
+        elif isinstance(regions, str):
             regions = [regions]
         # Else if we have a map of region names with lists of zone numbers
         elif isinstance(regions, dict):
-            for region_name, zone_nos in regions.iteritems():
+            for region_name, zone_nos in regions.items():
                 region = self.regions[region_name]
                 print("Adding region: \"{}\"  ...".format(region_name))
                 if region.material is None: # omit BLCKHOLE
@@ -497,7 +497,7 @@ class Model(object):
         """
         if regions is None:
             regions = self.regions
-        elif isinstance(regions, basestring):
+        elif isinstance(regions, str):
             regions = collections.OrderedDict(regions, self.regions[regions])
         # good regions, bad regions, bad subtractions, bad intersections
         output = {key:[] for key in ["good", "bad", "subs", "ints"]}
@@ -548,7 +548,7 @@ class Model(object):
             self.regions[region_name].view_debug()
             return
 
-        for region in self.regions.itervalues():
+        for region in self.regions.values():
             try:
                 region.gdml_solid.pycsgmesh()
             except pyg4ometry.exceptions.NullMeshError:
@@ -564,7 +564,7 @@ class Model(object):
         regions = {region_name: {"extents": {},
                                  "connected_zones": None}
                    for region_name in self.regions}
-        for region_name, region in self.regions.iteritems():
+        for region_name, region in self.regions.items():
             if connected_zones:
                 regions[region_name]["connected_zones"] = list(
                     region.connected_zones(verbose=True))
@@ -633,7 +633,7 @@ class Model(object):
         # an overlap is reported for x with y and y with x.  oh well.
         for region_name in output.keys():
             # delete those regions which overlap with nothing
-            if not any(output[region_name].itervalues()):
+            if not any(output[region_name].values()):
                 del output[region_name]
                 continue
             # For regions that do overlap with something, delete
@@ -650,12 +650,12 @@ class Model(object):
         return "<Model: \"{}\">".format(self._filename)
 
     def __iter__(self):
-        return self.regions.itervalues()
+        return self.regions.values()
 
     def _get_region_booleans_and_extents(self, optimise):
         """Return the meshes and extents of all regions of this model."""
         out = {}
-        for name, region in self.regions.iteritems():
+        for name, region in self.regions.items():
             print("Evaluating region {}".format(name))
             boolean, extent = region.evaluate_with_extent(optimise)
             out[name] = (boolean, extent)

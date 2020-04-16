@@ -28,7 +28,7 @@
 				<volumeref ref="lvTube"/>
 				<replicate_along_axis>
 					<direction phi="1"/>
-					<width unit="mm" value="0.785398163397"/>
+					<width unit="mm" value="0.7853981633974483"/>
 					<offset unit="mm" value="0.0"/>
 				</replicate_along_axis>
 			</replicavol>

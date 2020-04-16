@@ -105,7 +105,7 @@ class Writer(object):
 
         s = 'e1: element, geometry="gdml:'
         s += str(self.filename)
-        if self.registry.parameterDict.has_key("GDML_Size_position_z"):
+        if "GDML_Size_position_z" in self.registry.parameterDict:
             s += '", l=' + str(self.registry.parameterDict['GDML_Size_position_z'].value) + '*mm;\n'
         else:
             # be super tolerant incase the meshing fails - still write out

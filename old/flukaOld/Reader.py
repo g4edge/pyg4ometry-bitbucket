@@ -65,7 +65,7 @@ class Reader(object):
             # Always set BLCKHOLE to None.  We always omit regions with material
             # BLCKHOLE.
             fluka_g4_material_map["BLCKHOLE"] = None
-            for region_name, region in self.regions.iteritems():
+            for region_name, region in self.regions.items():
                 fluka_material = regions_and_materials[region_name]
                 try:
                     g4_material = fluka_g4_material_map[fluka_material]
@@ -83,7 +83,7 @@ class Reader(object):
                 " will still be omitted from both conversion and viewing."))
             print(msg, '\n')
 
-            for region_name, region in self.regions.iteritems():
+            for region_name, region in self.regions.items():
                 fluka_material = regions_and_materials.get(region_name)
                 if fluka_material == "BLCKHOLE":
                     fluka_material = None
