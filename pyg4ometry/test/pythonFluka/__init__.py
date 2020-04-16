@@ -1,1 +1,1 @@
-from PythonFlukaAuthoringTests import *
+from .PythonFlukaAuthoringTests import *

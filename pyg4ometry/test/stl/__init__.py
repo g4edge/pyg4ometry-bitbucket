@@ -1,1 +1,1 @@
-from StlLoadTests import *
+from .StlLoadTests import *

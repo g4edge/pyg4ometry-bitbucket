@@ -1,1 +1,1 @@
-from PythonBdsimAuthoringTests import *
+from .PythonBdsimAuthoringTests import *

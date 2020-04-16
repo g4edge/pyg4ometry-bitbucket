@@ -1,2 +1,1 @@
-from PythonCompoundExampleTests import *
-
+from .PythonCompoundExampleTests import *

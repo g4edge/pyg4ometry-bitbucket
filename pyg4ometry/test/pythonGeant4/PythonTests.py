@@ -26,7 +26,7 @@ class PythonTests(_unittest.TestCase) :
         self.assertEqual(v[0],1)
         self.assertEqual(v[1],2)
         try :
-            print v[2]
+            print(v[2])
         except IndexError :
             pass
 
@@ -137,13 +137,13 @@ class PythonTests(_unittest.TestCase) :
 
 
     def test_Python_Axisangle2matrixX(self) :
-        print _trans.axisangle2matrix([1.0,0,0],_np.pi/2.0)
+        print(_trans.axisangle2matrix([1.0,0,0],_np.pi/2.0))
 
     def test_Python_Axisangle2matrixY(self) :
-        print _trans.axisangle2matrix([0,1,0],_np.pi/2.0)
+        print(_trans.axisangle2matrix([0,1,0],_np.pi/2.0))
 
     def test_Python_Axisangle2matrixZ(self):
-        print _trans.axisangle2matrix([0, 0, 1], _np.pi / 2.0)
+        print(_trans.axisangle2matrix([0, 0, 1], _np.pi / 2.0))
 
     def test_Python_Matrix2tbxyz(self) :
         pass
@@ -152,7 +152,7 @@ class PythonTests(_unittest.TestCase) :
         pass
 
     def test_Python_Matrix_MatrixFromTo(self) :
-        print _trans.matrix_from([0,0,1],[0,1,0])
+        print(_trans.matrix_from([0,0,1],[0,1,0]))
 
     # #############################
     # Freecad

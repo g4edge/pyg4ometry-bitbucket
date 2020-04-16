@@ -1,1 +1,1 @@
-from FlairLoadTests import *
+from .FlairLoadTests import *
