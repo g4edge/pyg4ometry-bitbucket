@@ -4,8 +4,8 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-import T001_Box
-import T007_Trap
+from . import T001_Box
+from . import T007_Trap
 
 def Test(vis = False, interactive = False) :
     reg0 = _g4.Registry()

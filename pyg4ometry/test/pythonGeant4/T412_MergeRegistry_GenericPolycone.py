@@ -4,8 +4,8 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-import T001_Box
-import T012_GenericPolycone
+from . import T001_Box
+from . import T012_GenericPolycone
 
 def Test(vis = False, interactive = False) :
     reg0 = _g4.Registry()

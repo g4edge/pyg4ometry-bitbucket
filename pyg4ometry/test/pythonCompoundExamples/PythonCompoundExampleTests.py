@@ -2,9 +2,9 @@ import unittest as _unittest
 
 import pyg4ometry
 
-import DipoleCbpm
-import VacuumSystems
-import Support
+from . import DipoleCbpm
+from . import VacuumSystems
+from . import Support
 
 import logging as _log
 

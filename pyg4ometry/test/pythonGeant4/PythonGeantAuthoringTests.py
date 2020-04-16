@@ -4,91 +4,87 @@ import numpy as _np
 
 import pyg4ometry
 
-import T000_SolidBase
-import T001_Box
-import T002_Tubs
-import T003_CutTubs
-import T0031_CutTubs_number
-import T0032_CutTubs_string
-import T0033_CutTubs_expression
-import T0034_CutTubs_DefineTree
-import T004_Cons
-import T005_Para
-import T006_Trd
-import T007_Trap
-import T008_Sphere
-import T009_Orb
-import T010_Torus
-import T011_Polycone
-import T012_GenericPolycone
-import T013_Polyhedra
-import T014_GenericPolyhedra
-import T015_EllipticalTube
-import T016_Ellipsoid
-import T017_EllipticalCone
-import T018_Paraboloid
-import T019_Hyperboloid
-import T020_Tet
-import T021_ExtrudedSolid
-import T022_TwistedBox
-import T023_TwistedTrap
-import T024_TwistedTrd
-import T025_TwistedTubs
-import T026_GenericTrap
-
-import T028_Union
-import T029_Subtraction
-import T030_Intersection
-import T031_MultiUnion
-import T032_Scaled
-
-import T101_physical_logical
-import T102_overlap_none
-import T103_overlap_copl
-import T104_overlap_volu
-import T105_assembly
-import T106_replica_x
-import T107_replica_y
-import T108_replica_z
-import T109_replica_phi
-import T110_replica_rho
-import T111_parameterised_box
-import T112_parameterised_tube
-
-import T201_Materials
-
-import T400_MergeRegistry
-import T401_MergeRegistry_Box
-import T402_MergeRegistry_Tubs
-import T403_MergeRegistry_CutTubs
-import T404_MergeRegistry_Cons
-import T405_MergeRegistry_Para
-import T406_MergeRegistry_Trd
-import T407_MergeRegistry_Trap
-import T408_MergeRegistry_Sphere
-import T409_MergeRegistry_Orb
-import T410_MergeRegistry_Torus
-import T411_MergeRegistry_Polycone
-import T412_MergeRegistry_GenericPolycone
-import T413_MergeRegistry_Polyhedra
-import T414_MergeRegistry_GenericPolyhedra
-import T415_MergeRegistry_EllipticalTube
-import T416_MergeRegistry_Ellipoid
-import T417_MergeRegistry_EllipticalCone
-import T418_MergeRegistry_Paraboloid
-import T419_MergeRegistry_Hyperboloid
-import T420_MergeRegistry_Tet
-import T421_MergeRegistry_ExtrudedSolid
-import T422_MergeRegistry_TwistedBox
-import T423_MergeRegistry_TwistedTrap
-import T424_MergeRegistry_TwistedTrd
-import T425_MergeRegistry_TwistedTubs
-import T426_MergeRegistry_GenericTrap
-import T428_MergeRegistry_Union
-import T429_MergeRegistry_Subtraction
-import T430_MergeRegistry_Intersection
-import T431_MergeRegistry_MultiUnion
-import T432_MergeRegistry_Box_AssemblyConversion
+from . import T000_SolidBase
+from . import T001_Box
+from . import T002_Tubs
+from . import T003_CutTubs
+from . import T0031_CutTubs_number
+from . import T0032_CutTubs_string
+from . import T0033_CutTubs_expression
+from . import T0034_CutTubs_DefineTree
+from . import T004_Cons
+from . import T005_Para
+from . import T006_Trd
+from . import T007_Trap
+from . import T008_Sphere
+from . import T009_Orb
+from . import T010_Torus
+from . import T011_Polycone
+from . import T012_GenericPolycone
+from . import T013_Polyhedra
+from . import T014_GenericPolyhedra
+from . import T015_EllipticalTube
+from . import T016_Ellipsoid
+from . import T017_EllipticalCone
+from . import T018_Paraboloid
+from . import T019_Hyperboloid
+from . import T020_Tet
+from . import T021_ExtrudedSolid
+from . import T022_TwistedBox
+from . import T023_TwistedTrap
+from . import T024_TwistedTrd
+from . import T025_TwistedTubs
+from . import T026_GenericTrap
+from . import T028_Union
+from . import T029_Subtraction
+from . import T030_Intersection
+from . import T031_MultiUnion
+from . import T032_Scaled
+from . import T101_physical_logical
+from . import T102_overlap_none
+from . import T103_overlap_copl
+from . import T104_overlap_volu
+from . import T105_assembly
+from . import T106_replica_x
+from . import T107_replica_y
+from . import T108_replica_z
+from . import T109_replica_phi
+from . import T110_replica_rho
+from . import T111_parameterised_box
+from . import T112_parameterised_tube
+from . import T201_Materials
+from . import T400_MergeRegistry
+from . import T401_MergeRegistry_Box
+from . import T402_MergeRegistry_Tubs
+from . import T403_MergeRegistry_CutTubs
+from . import T404_MergeRegistry_Cons
+from . import T405_MergeRegistry_Para
+from . import T406_MergeRegistry_Trd
+from . import T407_MergeRegistry_Trap
+from . import T408_MergeRegistry_Sphere
+from . import T409_MergeRegistry_Orb
+from . import T410_MergeRegistry_Torus
+from . import T411_MergeRegistry_Polycone
+from . import T412_MergeRegistry_GenericPolycone
+from . import T413_MergeRegistry_Polyhedra
+from . import T414_MergeRegistry_GenericPolyhedra
+from . import T415_MergeRegistry_EllipticalTube
+from . import T416_MergeRegistry_Ellipoid
+from . import T417_MergeRegistry_EllipticalCone
+from . import T418_MergeRegistry_Paraboloid
+from . import T419_MergeRegistry_Hyperboloid
+from . import T420_MergeRegistry_Tet
+from . import T421_MergeRegistry_ExtrudedSolid
+from . import T422_MergeRegistry_TwistedBox
+from . import T423_MergeRegistry_TwistedTrap
+from . import T424_MergeRegistry_TwistedTrd
+from . import T425_MergeRegistry_TwistedTubs
+from . import T426_MergeRegistry_GenericTrap
+from . import T428_MergeRegistry_Union
+from . import T429_MergeRegistry_Subtraction
+from . import T430_MergeRegistry_Intersection
+from . import T431_MergeRegistry_MultiUnion
+from . import T432_MergeRegistry_Box_AssemblyConversion
 
 import logging as _log
 

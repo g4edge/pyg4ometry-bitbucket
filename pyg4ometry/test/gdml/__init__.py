@@ -1,1 +1,1 @@
-from GdmlLoadTests import *
+from .GdmlLoadTests import *

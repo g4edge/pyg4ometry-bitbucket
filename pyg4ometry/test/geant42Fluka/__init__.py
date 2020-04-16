@@ -1,1 +1,1 @@
-from Geant42FlukaConversion import *
+from .Geant42FlukaConversion import *

@@ -2,16 +2,18 @@ from setuptools import setup, find_packages
 from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
 from Cython.Build import cythonize
-
+import os
+os.environ["CC"] = "gcc-9" 
+os.environ["CXX"] = "g++-9"
 
 class ctypes(Extension): pass
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx","pyg4ometry/pycsg/core.pyx"])
 exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal', 
                    sources=['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
-                   include_dirs = ['/opt/local/include'],
-                   library_dirs = ['/opt/local/lib'],
-                   libraries = ['CGAL','mpfr','gmp','boost_thread-mt','stdc++']))
+                   include_dirs = ['/opt/local/include', '/usr/local/include'],
+                   library_dirs = ['/usr/local/lib'],
+                   libraries = ['mpfr','gmp','boost_thread-mt','stdc++']))
 
 #try:
 #    import pypandoc
@@ -27,7 +29,7 @@ setup(
     packages=find_packages(exclude=["docs", "tests"]),
 
     # Only tested with version 4.7.
-    install_requires=["antlr4-python2-runtime == 4.7",
+    install_requires=["antlr4-python3-runtime == 4.7",
                       "matplotlib",
                       "networkx == 2.2",
                       "numpy",
@@ -40,7 +42,7 @@ setup(
     
     ext_modules=exts,
 
-    python_requires="==2.7.*", # refer to pep440 for writing these correctly
+    #python_requires="==2.7.*", # refer to pep440 for writing these correctly
 
     author="Stewart T. Boogert",
     author_email="stewart.boogert@rhul.ac.uk",
