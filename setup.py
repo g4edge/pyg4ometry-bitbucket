@@ -13,9 +13,17 @@ exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal',
                    library_dirs = ['/opt/local/lib'],
                    libraries = ['CGAL','mpfr','gmp','boost_thread-mt','stdc++']))
 
+#try:
+#    import pypandoc
+#    long_description = pypandoc.convert_file("README.md", "rst")
+#except ImportError:
+#    print ("Warning: pypandoc module not found, could not convert"
+#           " Markdown to reStructuredText." )
+#    long_description = ""
+
 setup(
     name="pyg4ometry",
-    version="0.9.0",
+    version="0.9.1",
     packages=find_packages(exclude=["docs", "tests"]),
 
     # Only tested with version 4.7.
@@ -26,7 +34,8 @@ setup(
                       "vtk",
                       "cython",
                       "GitPython",
-                      "testtools"],
+                      "testtools",
+                      "pypandoc"],
     # cython, pyqt5
     
     ext_modules=exts,
@@ -35,8 +44,9 @@ setup(
 
     author="Stewart T. Boogert",
     author_email="stewart.boogert@rhul.ac.uk",
-    description='Geometry package for high energy physics',
+    description='Geometry package for high energy physics (Geant4, Fluka)',
     license='GPL3',
+#   long_description=long_description,
     url='https://bitbucket.org/jairhul/pyg4ometry/',
     keywords='geometry bdsim particle physics accelerators',
 )
