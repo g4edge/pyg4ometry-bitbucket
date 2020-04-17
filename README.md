@@ -12,3 +12,31 @@ Stuart Walker         <Stuart.Walker.2011@live.rhul.ac.uk>
 Installation guide
 ==================
 
+  * Required libraries VTK and CGAL
+  * Optional libraries FreeCAD
+  * clone repo
+  * cd pyg4ometry 
+  * make install or make develop
+
+
+Documentation 
+=============
+
+Main online manual can be found at http://www.pp.rhul.ac.uk/bdsim/pyg4ometry/
+
+To build manual within this repo
+
+  * cd pyg4ometry/docs/
+  * make html
+  * open build/html/index.html
+
+
+Issues, bugs and feature requests 
+============================
+
+  * For bug reports please use the bitbucket issue trackers
+
+Citation and academic credit 
+=======================
+
+  * It pyg4ometry has been useful for your work, please in the first instance cite...
