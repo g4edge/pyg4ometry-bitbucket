@@ -61,7 +61,7 @@ class Writer(object):
 
         # loop over logical volumes
         for logicalName in registry.logicalVolumeList  :
-            print "writer", logicalName
+            print("writer", logicalName)
             logical = registry.logicalVolumeDict[logicalName]
             self.writeLogicalVolume(logical)
             self.writeMaterial(logical.material)
@@ -333,7 +333,7 @@ class Writer(object):
             func = getattr(self, 'write'+solid.type) # get the member function
             func(solid) # call it with the solid instance as an argument
         except AttributeError:
-            print solid.name
+            print(solid.name)
             raise ValueError("No such solid "+solid.type)
 
     def writeBox(self, instance):

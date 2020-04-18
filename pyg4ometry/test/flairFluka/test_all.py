@@ -40,11 +40,11 @@ def run_all_tests(vis=False, interactive=False):
             run_one_test(f, vis=vis, interactive=interactive)
             passed += 1
         except Exception as e:
-            print "------> Test {} FAILED with message: {}".format(f, e)
+            print("------> Test {} FAILED with message: {}".format(f, e))
             failed += 1
             continue
 
-    print "{} tested.  {} passed.  {} failed.".format(total, passed, failed)
+    print("{} tested.  {} passed.  {} failed.".format(total, passed, failed))
 
 if __name__ == '__main__':
     run_all_tests()

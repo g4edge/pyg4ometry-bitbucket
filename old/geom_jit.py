@@ -77,7 +77,7 @@ class Vector(object):
     def __truediv__(self, a):
         return self.dividedBy(float(a))
 
-    def __div__(self, a):
+    def __truediv__(self, a):
         return self.dividedBy(float(a))
     
     def dot(self, a):
