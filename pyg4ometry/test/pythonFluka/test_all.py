@@ -32,10 +32,10 @@ def main():
             result = module.Test()
             passed +=1
         except Exception as e:
-            print "------> Test {} FAILED with message {}".format(name, e)
+            print("------> Test {} FAILED with message {}".format(name, e))
             failed +=1
             continue
-    print "{} tested.  {} passed.  {} failed.".format(total, passed, failed)
+    print("{} tested.  {} passed.  {} failed.".format(total, passed, failed))
 
 
 if __name__ == '__main__':
