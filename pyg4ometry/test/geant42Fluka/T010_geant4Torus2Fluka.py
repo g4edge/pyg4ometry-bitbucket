@@ -7,15 +7,15 @@ import pyg4ometry.visualisation as _vi
 import numpy as _np
 
 
-def Test(vis = False, interactive = False, fluka = True, n_slice = 20, n_stack = 20) :
+def Test(vis = False, interactive = False, fluka = True, n_slice = 30, n_stack = 30) :
 
     # registry
     reg = _g4.Registry()
     
     # defines 
-    wx = _gd.Constant("wx","100",reg,True)
-    wy = _gd.Constant("wy","100",reg,True)
-    wz = _gd.Constant("wz","100",reg,True)
+    wx = _gd.Constant("wx","200",reg,True)
+    wy = _gd.Constant("wy","200",reg,True)
+    wz = _gd.Constant("wz","200",reg,True)
 
     # pi     = _gd.Constant("pi","3.1415926",reg,True)
     trmin  = _gd.Constant("rmin","8.0",reg,True)
