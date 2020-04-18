@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
 from Cython.Build import cythonize
-
+import os as _os
 
 class ctypes(Extension): pass
 
@@ -12,6 +12,9 @@ exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal',
                    include_dirs = ['/opt/local/include'],
                    library_dirs = ['/opt/local/lib'],
                    libraries = ['CGAL','mpfr','gmp','boost_thread-mt','stdc++']))
+
+# _os.environ["CC"] = "g++"
+# _os.environ["CXX"] = "g++"
 
 #try:
 #    import pypandoc
