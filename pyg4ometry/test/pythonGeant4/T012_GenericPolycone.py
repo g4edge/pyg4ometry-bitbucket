@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 two_planes = 2
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, type = normal, n_slice = 64) :
     reg = _g4.Registry()
     
     # defines 
@@ -52,7 +52,7 @@ def Test(vis = False, interactive = False, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ps = _g4.solid.GenericPolycone("ps",psphi,pdphi,pr,pz,reg,"mm","rad")
+    ps = _g4.solid.GenericPolycone("ps",psphi,pdphi,pr,pz,reg,"mm","rad", nslice=n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
