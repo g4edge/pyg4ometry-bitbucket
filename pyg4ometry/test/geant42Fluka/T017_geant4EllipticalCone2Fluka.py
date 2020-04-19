@@ -13,33 +13,33 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice=
 
     # registry
     reg = _g4.Registry()
-    
-    # defines 
+
+    # defines
     wx = _gd.Constant("wx","100",reg,True)
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
-    
-    # pi     = _gd.Constant("pi","3.1415926",reg,True)
-    edx    = _gd.Constant("eax","0.2",reg,True)
-    edy    = _gd.Constant("eby","0.4",reg,True)
-    ezmax  = _gd.Constant("ecz","50",reg,True)
-    ezcut  = _gd.Constant("ebc","0.5",reg,True)
 
-    if type == zcut_outofrange : 
+    # pi     = _gd.Constant("pi","3.1415926",reg,True)
+    edx    = _gd.Constant("eax","0.5",reg,True)
+    edy    = _gd.Constant("eby","1",reg,True)
+    ezmax  = _gd.Constant("ecz","40",reg,True)
+    ezcut  = _gd.Constant("ebc","20",reg,True)
+
+    if type == zcut_outofrange :
         ezcut.setExpression(30)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    em = _g4.MaterialPredefined("G4_Fe") 
+    wm = _g4.MaterialPredefined("G4_Galactic")
+    em = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     es = _g4.solid.EllipticalCone("es",edx,edy,ezmax,ezcut,reg,"mm",nslice=n_slice)
-        
-    # structure 
+
+    # structure
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     el = _g4.LogicalVolume(es, em, "el", reg)
-    ep = _g4.PhysicalVolume([0,0,0],[0,0,0],  el, "e_pv1", wl, reg) 
-    
+    ep = _g4.PhysicalVolume([0,0,0],[0,0,0],  el, "e_pv1", wl, reg)
+
     # set world volume
     reg.setWorld(wl.name)
 
@@ -50,6 +50,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice=
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T017_geant4EllipticalCone2Fluka.gdml"))
+    w.writeGMADTesterNoBeamline("T017_geant4EllipticalCone2Fluka.gmad", "T017_geant4EllipticalCone2Fluka.gdml")
 
     # fluka conversion
     if fluka :
@@ -60,7 +61,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice=
 
     # flair output file
     f = _fluka.Flair("T017_geant4EllipticalCone2Fluka.inp",extentBB)
-    f.write(_os.path.join(_os.path.dirname(__file__),"T017_geant4Elliptical2Fluka.flair"))
+    f.write(_os.path.join(_os.path.dirname(__file__),"T017_geant4EllipticalCone2Fluka.flair"))
 
     if vis :
         v = _vi.VtkViewer()
