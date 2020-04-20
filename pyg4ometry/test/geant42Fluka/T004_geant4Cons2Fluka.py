@@ -77,7 +77,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
         freg = _convert.geant4Logical2Fluka(wl)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write("T004_geant4Cons2Fluka.inp")
+        w.write(_os.path.join(_os.path.dirname(__file__),"T004_geant4Cons2Fluka.inp"))
 
     # visualisation
     v = None

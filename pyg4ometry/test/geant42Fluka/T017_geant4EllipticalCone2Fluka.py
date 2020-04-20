@@ -50,7 +50,6 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice=
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T017_geant4EllipticalCone2Fluka.gdml"))
-    w.writeGMADTesterNoBeamline("T017_geant4EllipticalCone2Fluka.gmad", "T017_geant4EllipticalCone2Fluka.gdml")
 
     # fluka conversion
     if fluka :
