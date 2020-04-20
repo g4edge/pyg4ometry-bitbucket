@@ -2,7 +2,7 @@
 Version: 300
 Mode: fluka
 md5: b1165f4a3f8dc908bbd24e2dcb35ab08
-Input: T019_geant4Box2Fluka.inp
+Input: T019_geant4Hyperboloid2Fluka.inp
 Page: Flair
 # Run information
 Run: <default>
