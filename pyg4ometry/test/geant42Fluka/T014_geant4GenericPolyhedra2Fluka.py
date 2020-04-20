@@ -18,7 +18,6 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
 
-    
     # pi     = _gd.Constant("pi","3.1415926",reg,True)
     psphi  = _gd.Constant("sphi","1",reg,True)
     pdphi  = _gd.Constant("dphi","4",reg,True)
@@ -57,7 +56,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pz,pr,reg,"mm","rad")
+    ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pr,pz,reg,"mm","rad")
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

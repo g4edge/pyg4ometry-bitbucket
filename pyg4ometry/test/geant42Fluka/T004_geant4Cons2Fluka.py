@@ -28,7 +28,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
     crmin2 = _gd.Constant("crmin2","5",reg,True)
     crmax2 = _gd.Constant("crmax2","10",reg,True)
     cz     = _gd.Constant("cz","100",reg,True)
-    cdp    = _gd.Constant("cdp","1.5*pi",reg,True)
+    cdp    = _gd.Constant("cdp","1.2*pi",reg,True)
     zero   = _gd.Constant("zero","0.0",reg,False)
 
     if type == r1min_gt_r1max : 
