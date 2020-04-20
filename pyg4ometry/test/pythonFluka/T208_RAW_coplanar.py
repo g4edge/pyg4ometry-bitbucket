@@ -47,7 +47,7 @@ def Test(vis=False, interactive=False):
 
 
     wlv = greg.getWorldVolume()
-    wlv.checkOverlaps()
+    wlv.checkOverlaps(recursive = False, coplanar = True, debugIO = False)
 
     v = None
     if vis:
