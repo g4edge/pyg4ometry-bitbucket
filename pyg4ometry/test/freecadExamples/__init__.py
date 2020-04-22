@@ -1,1 +1,1 @@
-from FreecadLoadingTests import *
+from FreeCADLoadingTests import *

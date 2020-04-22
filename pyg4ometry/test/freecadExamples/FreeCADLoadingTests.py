@@ -101,33 +101,33 @@ def LoadFreecad_withPlacement(fileName, interactive=False):
 
     return True
 
-class FreeCadLoadingTests(_unittest.TestCase):
+class FreeCADLoadingTests(_unittest.TestCase):
 
-    def test_Freecad_T001_LoadBasicSolids(self) :
+    def test_FreecCAD_T001_LoadBasicSolids(self) :
         self.assertTrue(LoadFreecad(_pj("01_BasicSolids.step")))
 
-    def test_Freecad_T002LoadBooleanSolids(self):
+    def test_FreeCAD_T002LoadBooleanSolids(self):
         self.assertTrue(LoadFreecad(_pj("02_BooleanSolids.step")))
 
-    def test_Freecad_T003_LoadSketchPadSolids(self):
+    def test_FreeCAD_T003_LoadSketchPadSolids(self):
         self.assertTrue(LoadFreecad(_pj("03_SketchPad.step")))
 
-    def test_Freecad_T004_LoadRubik(self):
+    def test_FreeCAD_T004_LoadRubik(self):
         self.assertTrue(LoadFreecad(_pj("04_Rubik.step")))
 
-    def test_Freecad_T004_LoadRubikColour(self):
+    def test_FreeCAD_T004_LoadRubikColour(self):
         self.assertTrue(LoadFreecad(_pj("04_Rubik_Colour.step")))
 
-    def test_Freecad_T005_LoadPlacement(self):
+    def test_FreeCAD_T005_LoadPlacement(self):
         self.assertTrue(LoadFreecad(_pj("05_Placement.step")))
 
-    def test_Freecad_T006_LoadMeshing(self):
+    def test_FreeCAD_T006_LoadMeshing(self):
         self.assertTrue(LoadFreecad(_pj("06_Meshing.step")))
 
-    def test_Freecad_T007_LoadMeshShrink(self):
+    def test_FreeCAD_T007_LoadMeshShrink(self):
         self.assertTrue(LoadFreecad(_pj("07_MeshShrink.step")))
 
-    def test_Freecad_T008_LoadAshTray(self):
+    def test_FreeCAD_T008_LoadAshTray(self):
         self.assertTrue(LoadFreecad(_pj("08_AshTray.step")))
 
     def test_Freecad_T009_LoadSmallSectorBend(self):
