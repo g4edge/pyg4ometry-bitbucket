@@ -50,7 +50,7 @@ def Test(vis = False, interactive = False, fluka = True, n_slice=10, n_stack=10)
         freg = _convert.geant4Logical2Fluka(wl)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write("T008_geant4Sphere2Fluka.inp")
+        w.write(_os.path.join(_os.path.dirname(__file__),"T008_geant4Sphere2Fluka.inp"))
 
     # visualisation
     v = None

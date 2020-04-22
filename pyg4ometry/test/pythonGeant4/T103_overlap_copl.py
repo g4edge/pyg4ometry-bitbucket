@@ -52,6 +52,8 @@ def Test(vis = False, interactive = False) :
     bp13 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2     ,2*bx+2*bx/4,0] ,   bl, "b_pv13", wl, reg)
 
 
+    bp14 = _g4.PhysicalVolume([0,0,0]        ,  [+1.5*wx/2-bx/4      ,0,0],     bl, "b_pv14", wl, reg)
+
 
     # check for overlaps
     wl.checkOverlaps(recursive = True,coplanar = True, debugIO = False)

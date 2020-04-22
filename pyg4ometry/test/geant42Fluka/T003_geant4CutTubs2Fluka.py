@@ -20,7 +20,7 @@ def Test(vis = True, interactive = False, fluka = True) :
     trmax = _gd.Constant("trmax", "10.0", reg, True)
     tz = _gd.Constant("tz", "50", reg, True)
     tstartphi = _gd.Constant("startphi", "0", reg, True)
-    tdeltaphi = _gd.Constant("deltaphi", "1.5*pi", reg, True)
+    tdeltaphi = _gd.Constant("deltaphi", "1.3*pi", reg, True)
     tlowx     = _gd.Constant("ctlowx","-1",reg,True)
     tlowy     = _gd.Constant("ctlowy","-1",reg,True)
     tlowz     = _gd.Constant("ctlowz","-1",reg,True)

@@ -35,7 +35,7 @@ def Test(vis=False, interactive=False):
 
     greg = convert.fluka2Geant4(freg)
     wlv = greg.getWorldVolume()
-    wlv.checkOverlaps()
+    wlv.checkOverlaps(recursive = False, coplanar = True, debugIO = False)
 
     v = None
     if vis:

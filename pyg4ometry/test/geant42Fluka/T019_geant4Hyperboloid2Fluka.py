@@ -65,7 +65,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice 
         w.write(_os.path.join(_os.path.dirname(__file__),"T019_geant4Hyperboloid2Fluka.inp"))
 
     # flair output file
-    f = _fluka.Flair("T019_geant4Box2Fluka.inp",extentBB)
+    f = _fluka.Flair("T019_geant4Hyperboloid2Fluka.inp",extentBB)
     f.write(_os.path.join(_os.path.dirname(__file__),"T019_geant4Hyperboloid2Fluka.flair"))
 
     if vis :
