@@ -43,8 +43,15 @@ RUN mkdir VTK-8.2.0-build && cd VTK-8.2.0-build && cmake3 -DVTK_WRAP_PYTHON=ON .
 # export PYTHONPATH=/usr/local/lib64/python./site-packages/:/usr/local/lib64/python./site-packages/vtkmodules/:/usr/local/lib64/
 # export LD_LIBRARY_PATH=/usr/local/lib64/python./site-packages/vtkmodules/:/usr/local/lib64/
 
+# CGAL
+RUN wget http://springdale.princeton.edu/data/springdale/7/x86_64/os/Computational/CGAL-4.11.1-1.sdl7.x86_64.rpm && \
+    wget http://springdale.princeton.edu/data/springdale/7/x86_64/os/Computational/CGAL-devel-4.11.1-1.sdl7.x86_64.rpm && \
+    yum install -y CGAL-4.11.1-1.sdl7.x86_64.rpm CGAL-devel-4.11.1-1.sdl7.x86_64.rpm 
+
 # pyg4ometry
-RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && cd pyg4ometry && git checkout develop 
+ARG PYG4OMETRY_VER=unknown
+RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && cd pyg4ometry && git checkout develop
+RUN cd pyg4ometry && make develop
 
 # Blender 
 
