@@ -10,6 +10,7 @@ exts = cythonize(["pyg4ometry/pycsg/geom.pyx","pyg4ometry/pycsg/core.pyx"])
 exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal', 
                    sources=['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
                    include_dirs = ['/opt/local/include'],
+                   extra_compile_args = ["-std=c++11","-g0","-O0","-DNDEBUG0"],
                    library_dirs = ['/opt/local/lib'],
                    libraries = ['CGAL','mpfr','gmp','boost_thread-mt','stdc++']))
 
