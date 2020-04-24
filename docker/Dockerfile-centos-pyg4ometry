@@ -53,6 +53,9 @@ ARG PYG4OMETRY_VER=unknown
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && cd pyg4ometry && git checkout develop
 RUN cd pyg4ometry && make develop
 
+# emacs
+RUN yum install -y emacs 
+
 # Blender 
 
 # Gaffer 
