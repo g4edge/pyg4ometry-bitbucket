@@ -1,0 +1,106 @@
+# flair project file
+Version: 300
+Mode: fluka
+md5: 5247f1be5fd49ca72af752745c4b87bc
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+*Define the beam characteristics
+BEAM
+ASSIGNMA , BLCKHOLE bh
+ASSIGNMA , AIR tuAir
+ASSIGNMA , PORTLAND tuConc
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+RPP bh_outer -2000.0 2000 -2000 2000 -2000 2000
+	@select=8
+RPP bh_inner -1500 1500 -1500 1500 -1500 1400.0
+	@select=8
+ZCC tu_cut 0. 0. 200
+	@select=8
+XYP tu_cut1 -750
+	@select=8
+XYP tu_cut2 750
+	@select=8
+XZP tu_cut3 -80
+	@select=9
+END
+REGION bh
+	+bh_outer -bh_inner
+*Tunnel air
+REGION tuAir
+	+tu_cut +bh_inner -tu_cut1 +tu_cut2 -tu_cut3
+REGION tuConc
+	+tu_cut +bh_inner +tu_cut1
+	| +tu_cut +bh_inner -tu_cut2
+	| +tu_cut +tu_cut3 -tu_cut1 +tu_cut2
+	| +bh_inner -tu_cut
+END
+GEOEND
+MATERIAL POTASSIU 19,, 0.862
+*Concrete portland
+*Concrete has a wide variation in density and composition.
+MATERIAL PORTLAND,,, 2.3
+COMPOUND PORTLAND -0.01 HYDROGEN -0.001 CARBON -0.529107 OXYGEN -0.016 SODIUM -0.002 \
+	 MAGNESIU -0.033872 ALUMINUM -0.337021 SILICON -0.013 POTASSIU \
+	 -0.044 CALCIUM -0.014 IRON
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+*Set the random number seed
+RANDOMIZ , 1.0
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Page: Flair
+
+# Run information
+Run: <default>
+	Last:     5
+End
+
+# Custom materials information
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	coord: Z-X
+	extends: 429.981 276.728
+	layer: Media
+	origin: -44.6126 0 235.986
+	subtype: Material
+	title: GeoViewer Red plot
+End
+Plot: Green
+	Type: Geometry
+	basisu: 0.997812 -0.00838233 0.0655834
+	basisv: 0.0120404 0.998381 -0.0555825
+	extends: 358.318 230.997
+	layer: 3D
+	origin: 101.861 38.7747 580.542
+	subtype: Material
+	title: GeoViewer Green plot
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 1540.7 991.566
+	layer: Media
+	origin: 0 -110.289 1108.3
+	subtype: Material
+	title: GeoViewer Blue plot
+End
+Plot: Magenta
+	Type: Geometry
+	basisv: -0 0.999998 -0.0018125
+	extends: 429.982 277.197
+	layer: Media
+	origin: -76.9068 -72.0795 13.8103
+	subtype: Material
+	title: GeoViewer Magenta plot
+End

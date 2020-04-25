@@ -1,0 +1,55 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+* Black body
+SPH blkbody    0.0 0.0 0.0 100000.0
+* Void sphere
+SPH void       0.0 0.0 0.0 10000.0
+RPP poleTop    -10.0 10.0 15.0 35.0 -5.0 15.0
+RPP poleTop1   -50.0 10.0 35.0 55.0 -5.0 15.0
+RPP poleTop2   -50.0 -30.0 0. 35.0 -5.0 15.0
+RPP coilLeft   -19.0 -11.0 17.5 32.5 -6.238350874312 15.98463492223
+RPP coilRigh   10.826716425742 18.826716425742 17.628723740172 32.628723740172
+              -6.510166123106 15.839301343173
+RPP coilBack   -18.9895324585 18.812253279994 17.539016722636 32.539016722636
+              -14.01895140076 -6.018951400769
+RPP coilFron   -19.00661742653 18.822925666778 17.538476251261 32.538476251261
+              15.818328213204 23.818328213195
+RPP poleBot2   -50.0 -30.0 -35.0 0. -5.0 15.0
+RPP poleBot1   -50.0 10.0 -55.0 -35.0 -5.0 15.0
+RPP poleTop    -10.0 10.0 15.0 35.0 -5.0 15.0
+RPP poleBot    -10.0 10.0 -35.0 -15.0 -5.0 15.0
+END
+* Black hole
+BLKBODY      5 +blkbody -void
+VOID         5 +void -poleTop -poleTop1 -poleTop2 -coilLeft -coilRigh -coilBack -coilFron -poleBot2 -poleBot1
+               -poleBot
+yoke         5 +poleTop
+               | +poleTop1
+               | +poleTop2
+               | +poleBot2
+               | +poleBot1
+               | +poleBot
+coilTop      5 +coilLeft
+               | +coilRigh
+               | +coilBack
+               | +coilFron
+END
+GEOEND
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA    BLCKHOLE   BLKBODY
+ASSIGNMA      VACUUM      VOID
+ASSIGNMA        IRON      yoke
+ASSIGNMA      COPPER   coilTop
+* Set the random number seed
+RANDOMIZ         1.0
+* Set the number of primary histories to be simulated in the run
+START
+STOP
