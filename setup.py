@@ -38,6 +38,7 @@ setup(
                       "vtk",
                       "cython",
                       "GitPython",
+                      "configparser",
                       "testtools",
                       "pypandoc"],
     # cython, pyqt5
