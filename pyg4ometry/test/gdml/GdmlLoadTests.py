@@ -20,7 +20,7 @@ def _pj(filename):
     """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-def pyg4ometryLoadWriteTest(filename, interactive=False):
+def pyg4ometryLoadWriteTest(filename, vis=False, interactive=False):
     filepath = _pj(filename)
 
     # Loading
@@ -35,10 +35,11 @@ def pyg4ometryLoadWriteTest(filename, interactive=False):
 
 
     # Visualisation
-    v = pyg4ometry.visualisation.VtkViewer()
-    v.addLogicalVolume(registry.getWorldVolume())
-    v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
-    v.view(interactive=interactive)
+    if vis : 
+        v = pyg4ometry.visualisation.VtkViewer()
+        v.addLogicalVolume(registry.getWorldVolume())
+        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
+        v.view(interactive=interactive)
 
     # Writing
     newFilename = filepath.replace(".gdml", "_processed.gdml")
