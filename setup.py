@@ -3,17 +3,17 @@ from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
 from Cython.Build import cythonize
 import os
-os.environ["CC"] = "gcc-9"
-os.environ["CXX"] = "g++-9"
+#os.environ["CC"] = "gcc-9"
+#os.environ["CXX"] = "g++-9"
 
 class ctypes(Extension): pass
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx","pyg4ometry/pycsg/core.pyx"])
-exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal', 
-                   sources=['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
-                   include_dirs = ['/opt/local/include', '/usr/local/include'],
-                   library_dirs = ['/usr/local/lib'],
-                   libraries = ['mpfr','gmp','boost_thread-mt','stdc++']))
+#exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal', 
+#                   sources=['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
+#                   include_dirs = ['/opt/local/include', '/usr/local/include'],
+#                   library_dirs = ['/usr/local/lib'],
+#                   libraries = ['mpfr','gmp','boost_thread-mt','stdc++']))
 
 #try:
 #    import pypandoc
