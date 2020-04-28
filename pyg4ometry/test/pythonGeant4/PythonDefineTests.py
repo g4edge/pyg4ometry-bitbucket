@@ -285,9 +285,14 @@ class PythonDefineTests(_unittest.TestCase) :
         xc = pyg4ometry.gdml.Constant("xc", "-2", r)
         self.assertEqual((pyg4ometry.gdml.abs(xc)).eval(), 2)
 
+    def test_GdmlDefine_PowerOperator(self):
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc", "-2", r)
+        self.assertEqual((xc**2).eval(),4)
+
     # #############################
     # Quantity
-    # #############################        
+    # #############################
     def test_GdmlDefine_Quantity(self) :
         r = pyg4ometry.geant4.Registry()
         xq = pyg4ometry.gdml.Quantity("xq","0.1","mass","kg",r)

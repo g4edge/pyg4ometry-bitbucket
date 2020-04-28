@@ -59,14 +59,14 @@ class Geant42FlukaConversionTests(_unittest.TestCase) :
     def test_Geant42FlukaConversion_T010_Torus(self):
         T010_geant4Torus2Fluka.Test(False,False,True)
 
-    #def test_Geant42FlukaConversion_T011_Polycone(self):
-    #    T011_geant4Polycone2Fluka.Test(False,False,True)
+    def test_Geant42FlukaConversion_T011_Polycone(self):
+        T011_geant4Polycone2Fluka.Test(False,False,True)
 
     def test_Geant42FlukaConversion_T012_GenericPolycone(self):
         T012_geant4GenericPolycone2Fluka.Test(False,False,True)
 
-    #def test_Geant42FlukaConversion_T013_Polyhedra(self):
-    #    T013_geant4Polyhedra2Fluka.Test(False,False,True)
+    def test_Geant42FlukaConversion_T013_Polyhedra(self):
+        T013_geant4Polyhedra2Fluka.Test(False,False,True)
 
     def test_Geant42FlukaConversion_T014_GenericPolyhedra(self):
         T014_geant4GenericPolyhedra2Fluka.Test(False,False,True)

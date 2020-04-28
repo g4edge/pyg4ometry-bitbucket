@@ -58,6 +58,7 @@ managed within pyg4ometry from the vtkViwer class, once a geometry is created
 
 .. code-block :: python
    :linenos:
+   :emphasize-lines: 6
 
    import pyg4ometry
    r = pyg4ometry.gdml.Reader("./Chamber.gdml")
@@ -68,10 +69,12 @@ managed within pyg4ometry from the vtkViwer class, once a geometry is created
 
 ``obj`` files are written ``Chamber.obj`` and ``Chamber.mtl``.
 
-For a Fluka file, first it must be converted to geant4 and then the same process should be followed.
+For a Fluka file, first it must be converted to geant4 and then the same process should be 
+followed.
 
 .. code-block :: python
    :linenos:
+   :emphasize-lines: 3
 
    import pyg4ometry
    r = pyg4ometry.fluka.Reader("./Chamber.inp")
@@ -83,3 +86,25 @@ For a Fluka file, first it must be converted to geant4 and then the same process
 
 As the meshing might need to changed for the visualisation application, 
 the parameters for the meshing for each solid might need to changed. 
+
+An ``obj`` file for an entire experiment does not help with work flows where meshes
+have to be UVed and textured. Tools like Blender and Gaffer can be used for this workload 
+but require meshes for each object and their placement. To enable there is a special 
+writer 
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 4-6
+
+   import pyg4ometry
+   r = pyg4ometry.gdml.Reader("./Chamber.gdml")
+   l = r.getRegistry().getWorldVolume()
+   w = pyg4ometry.visualisation.RenderWriter()
+   w.addLogicalVolumeRecursive(l)
+   w.write("./SphericalChamber")   
+
+The directory ``SphericalChamber`` contains all the meshes in OBJ format along
+with an instance file ``0_instances.dat`` which contains a row for each 
+instance of a mesh.  
+
+ 

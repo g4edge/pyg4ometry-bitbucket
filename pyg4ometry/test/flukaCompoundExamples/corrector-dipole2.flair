@@ -1,0 +1,122 @@
+# flair project file
+Version: 300
+Mode: fluka
+md5: 5d6f8f93090923fabcd19fe48c71f63d
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+*Define the beam characteristics
+BEAM
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+*Black body
+SPH blkbody 0.0 0.0 0.0 100000.0
+*Void sphere
+SPH void 0.0 0.0 0.0 10000.0
+RPP poleTop -10.0 10.0 15.0 35.0 -5.0 15.0
+	@select=8
+RPP poleTop1 -50.0 10.0 35.0 55.0 -5.0 15.0
+	@select=8
+RPP poleTop2 -50.0 -30.0 0. 35.0 -5.0 15.0
+	@select=8
+RPP coilLeft -19.0 -11.0 17.5 32.5 -6.238350874312 15.98463492223
+	@select=8
+RPP coilRigh 10.826716425742 18.826716425742 17.628723740172 32.628723740172 \
+	 -6.510166123106 15.839301343173
+	@select=8
+RPP coilBack -18.9895324585 18.812253279994 17.539016722636 32.539016722636 \
+	 -14.01895140076 -6.018951400769
+	@select=8
+RPP coilFron -19.00661742653 18.822925666778 17.538476251261 32.538476251261 \
+	 15.818328213204 23.818328213195
+	@select=8
+RPP poleBot2 -50.0 -30.0 -35.0 0. -5.0 15.0
+	@select=8
+RPP poleBot1 -50.0 10.0 -55.0 -35.0 -5.0 15.0
+	@select=8
+RPP poleTop -10.0 10.0 15.0 35.0 -5.0 15.0
+	@select=8
+RPP poleBot -10.0 10.0 -35.0 -15.0 -5.0 15.0
+	@select=8
+END
+*Black hole
+REGION BLKBODY 5
+	+blkbody -void
+REGION VOID 5
+	+void -poleTop -poleTop1 -poleTop2 -coilLeft -coilRigh -coilBack -coilFron -poleBot2 -poleBot1 -poleBot
+	@select=1
+REGION yoke
+	+poleTop
+	| +poleTop1
+	| +poleTop2
+	| +poleBot2
+	| +poleBot1
+	| +poleBot
+REGION coilTop
+	+coilLeft
+	| +coilRigh
+	| +coilBack
+	| +coilFron
+END
+GEOEND
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA , BLCKHOLE BLKBODY
+ASSIGNMA , VACUUM VOID
+ASSIGNMA , IRON yoke
+ASSIGNMA , COPPER coilTop
+*Set the random number seed
+RANDOMIZ , 1.0
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Page: Flair
+
+# Run information
+Run: <default>
+	Last:     5
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: -0.999957 0.00926833 0
+	basisv: 0 0 1
+	extends: 74.1126 47.6975
+	layer: Media
+	origin: -25.6227 25 0.730452
+	subtype: Material
+	title: GeoViewer Red plot
+End
+Plot: Green
+	Type: Geometry
+	basisu: -0.572885 0.024369 -0.819274
+	basisv: 0.00183093 0.999593 0.0284523
+	extends: 83.3333 53.7225
+	layer: 3D
+	origin: 12.7591 -4.18383 -26.0114
+	subtype: Material
+	title: GeoViewer Green plot
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 172.8 111.211
+	layer: Media
+	origin: 0 8.08287 -18.537
+	subtype: Material
+	title: GeoViewer Blue plot
+End
+Plot: Magenta
+	Type: Geometry
+	coord: X-Y
+	extends: 515.978 332.636
+	layer: Media
+	origin: 18.5654 -131.966 0
+	subtype: Material
+	title: GeoViewer Magenta plot
+End

@@ -69,7 +69,7 @@ def Test(vis = False, interactive=False, type = normal) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T0034_DefineTree.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T0034_CutTubs_DefineTree.gdml"))
 
     # test __repr__
     str(cts)

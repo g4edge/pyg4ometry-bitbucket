@@ -1,10 +1,6 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages
 from distutils.core import setup, Extension
-from distutils.command.build_ext import build_ext
 from Cython.Build import cythonize
-import os
-#os.environ["CC"] = "gcc-9"
-#os.environ["CXX"] = "g++-9"
 
 class ctypes(Extension): pass
 
@@ -29,13 +25,14 @@ setup(
     packages=find_packages(exclude=["docs", "tests"]),
 
     # Only tested with version 4.7.
-    install_requires=["antlr4-python3-runtime == 4.7",
+    install_requires=["antlr4-python3-runtime >= 4.7",
                       "matplotlib",
                       "networkx == 2.2",
                       "numpy",
                       "vtk",
                       "cython",
                       "GitPython",
+                      "configparser",
                       "testtools",
                       "pypandoc"],
     # cython, pyqt5

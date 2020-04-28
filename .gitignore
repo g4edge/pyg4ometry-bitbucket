@@ -43,8 +43,10 @@ gdmlLoader_4.10.5.1
 *interp
 pyg4ometry/visualisation/vtk/
 pyg4ometry/test/root/
+*.stl
 *.inp
 *.mtl
 *.obj
+0_instances.dat
 low_poly_human.zip
 low_poly_human

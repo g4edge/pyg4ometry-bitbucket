@@ -1,0 +1,43 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+ASSIGNMA    BLCKHOLE        bh
+ASSIGNMA         AIR     tuAir
+ASSIGNMA    PORTLAND    tuConc
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RPP bh_outer   -2000.0 2000. -2000. 2000. -2000. 2000.
+RPP bh_inner   -1500. 1500. -1500. 1500. -1500. 1400.0
+ZCC tu_cut     0. 0. 200.
+XYP tu_cut1    -750.
+XYP tu_cut2    750.
+XZP tu_cut3    -80.
+END
+bh           5 +bh_outer -bh_inner
+* Tunnel air
+tuAir        5 +tu_cut +bh_inner -tu_cut1 +tu_cut2 -tu_cut3
+tuConc       5 +tu_cut +bh_inner +tu_cut1
+               | +tu_cut +bh_inner -tu_cut2
+               | +tu_cut +tu_cut3 -tu_cut1 +tu_cut2
+               | +bh_inner -tu_cut
+END
+GEOEND
+MATERIAL         19.               0.862                              POTASSIU
+* Concrete portland
+* Concrete has a wide variation in density and composition.
+MATERIAL                             2.3                              PORTLAND
+COMPOUND       -0.01  HYDROGEN    -0.001    CARBON -0.529107    OXYGENPORTLAND
+COMPOUND      -0.016    SODIUM    -0.002  MAGNESIU -0.033872  ALUMINUMPORTLAND
+COMPOUND   -0.337021   SILICON    -0.013  POTASSIU    -0.044   CALCIUMPORTLAND
+COMPOUND      -0.014      IRON                                        PORTLAND
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ         1.0
+* Set the number of primary histories to be simulated in the run
+START
+STOP
