@@ -22,7 +22,7 @@ from . import T019_geant4Hyperboloid2Fluka
 from . import T020_geant4Tet2Fluka
 from . import T021_geant4ExtrudedSolid2Fluka
 from . import T026_geant4GenericTrap2Fluka
-from .
+
 from . import T028_geant4Union2Fluka
 from . import T029_geant4Subtraction2Fluka
 from . import T030_geant4Intersection2Fluka

@@ -26,7 +26,7 @@ Build the docker container
   * cd pyg4ometry/docker/
   * docker build --build-arg PYG4OMETRY_VER=0 -t centos-pyg4ometry -f Dockerfile-centos-pyg4ometry .
 
-If the pyg4ometry git repository has changed change the value of PYG4OMETRY_VER variable
+If the *pyg4ometry* `git` repository has changed change the value of PYG4OMETRY_VER variable
 as this will for a clone and install 
 
 Run an image (here is my script for Mac and Docker Desktop)
@@ -49,11 +49,11 @@ To build manual within this repo
 
 
 Issues, bugs and feature requests 
-============================
+=================================
 
   * For bug reports please use the bitbucket issue trackers
 
 Citation and academic credit 
-=======================
+============================
 
   * It pyg4ometry has been useful for your work, please in the first instance cite...
