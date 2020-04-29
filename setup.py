@@ -33,6 +33,7 @@ setup(
     # Only tested with version 4.7.
     install_requires=["antlr4-python2-runtime == 4.7",
                       "matplotlib",
+                      "pandas",
                       "networkx == 2.2",
                       "numpy",
                       "vtk",
