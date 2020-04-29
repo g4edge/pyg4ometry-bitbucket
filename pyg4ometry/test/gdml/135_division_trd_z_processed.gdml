@@ -13,7 +13,7 @@
 	</materials>
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<trd lunit="mm" name="Trd" x1="30" x2="10" y1="40" y2="15" z="60"/>
+		<trd lunit="mm" name="Trd" x1="15.0" x2="10.0" y1="21.25" y2="15.0" z="15.0"/>
 	</solids>
 	<structure>
 		<volume name="lvTrd">

@@ -13,7 +13,7 @@
 	</materials>
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<tube aunit="rad" deltaphi="pi" lunit="mm" name="tube" rmax="50" rmin="25" startphi="pi" z="100"/>
+		<tube aunit="rad" deltaphi="0.19634954084936207" lunit="mm" name="tube" rmax="50" rmin="25" startphi="3.5342917352885177" z="100"/>
 	</solids>
 	<structure>
 		<volume name="lvTube">
@@ -23,7 +23,7 @@
 		<volume name="lvDivision">
 			<materialref ref="AIR"/>
 			<solidref ref="tube"/>
-			<divisionvol axis="kPhi" number="3" offset="0.196349540849" unit="rad" width="0.196349540849">
+			<divisionvol axis="kPhi" number="3" offset="0.19634954084936207" unit="rad" width="0.19634954084936207">
 				<volumeref ref="lvTube"/>
 			</divisionvol>
 		</volume>

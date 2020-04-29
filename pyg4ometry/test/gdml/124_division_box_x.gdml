@@ -29,7 +29,7 @@
       <volume name="lvDivision">
          <materialref ref="AIR"/>
          <solidref ref="MotherCube"/>
-         <divisionvol axis="kXAxis" number="3" unit="mm" width="30" offset="0">
+         <divisionvol axis="kXAxis" number="8" unit="mm" width="100" offset="0">
             <volumeref ref="lvCube"/>
          </divisionvol>
       </volume>
