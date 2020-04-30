@@ -50,3 +50,4 @@ pyg4ometry/test/root/
 0_instances.dat
 low_poly_human.zip
 low_poly_human
+.coverage
