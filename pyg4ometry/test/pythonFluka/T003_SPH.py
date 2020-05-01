@@ -8,7 +8,7 @@ def Test(vis=False, interactive=False):
     sph = SPH("SPH_BODY", [10, 10, 10], 10, flukaregistry=freg)
     z = Zone()
     z.addIntersection(sph)
-    region = Region("SPH_REG", material="COPPER")
+    region = Region("SPH_REG")
     region.addZone(z)
     freg.addRegion(region)
 

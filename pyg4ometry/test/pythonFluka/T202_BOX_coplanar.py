@@ -28,8 +28,8 @@ def Test(vis=False, interactive=False):
     z1.addSubtraction(box2)
     z2.addIntersection(box2)
 
-    region1 = Region("BOX_REG1", material="COPPER")
-    region2 = Region("BOX_REG2", material="COPPER")
+    region1 = Region("BOX_REG1")
+    region2 = Region("BOX_REG2")
 
     region1.addZone(z1)
     region2.addZone(z2)

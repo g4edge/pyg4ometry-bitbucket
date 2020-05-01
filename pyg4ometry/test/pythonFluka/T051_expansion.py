@@ -14,7 +14,7 @@ def Test(vis=False, interactive=False):
               transform=transform)
     z = Zone()
     z.addIntersection(rpp)
-    region = Region("RPP_REG", material="COPPER")
+    region = Region("RPP_REG")
     region.addZone(z)
     freg.addRegion(region)
 

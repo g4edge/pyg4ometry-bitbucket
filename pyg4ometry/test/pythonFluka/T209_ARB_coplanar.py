@@ -30,8 +30,8 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(arbInner)
 
-    region = Region("ARB_REG", material="COPPER")
-    region2 = Region("ARB_REG2", material="COPPER")
+    region = Region("ARB_REG")
+    region2 = Region("ARB_REG2")
 
     region.addZone(z1)
     region2.addZone(z2)

@@ -8,7 +8,7 @@ def Test(vis=False, interactive=False):
     rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg)
     z = Zone()
     z.addIntersection(rpp)
-    region = Region("RPP_REG", material="COPPER")
+    region = Region("RPP_REG")
     region.addZone(z)
     freg.addRegion(region)
 

@@ -22,7 +22,7 @@ def Test(vis=False, interactive=False):
         z = Zone()
         z.addIntersection(xzp)
 
-        region = Region("REG_INF", material="COPPER")
+        region = Region("REG_INF")
         region.addZone(z)
 
         freg.addRegion(region)

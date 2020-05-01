@@ -8,7 +8,7 @@ def Test(vis=False, interactive=False):
     rcc = RCC("RCC_BODY", [0, 0, 0], [5, 5, 5], 2.5, flukaregistry=freg)
     z = Zone()
     z.addIntersection(rcc)
-    region = Region("RCC_REG", material="COPPER")
+    region = Region("RCC_REG")
     region.addZone(z)
     freg.addRegion(region)
 

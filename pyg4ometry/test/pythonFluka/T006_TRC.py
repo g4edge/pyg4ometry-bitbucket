@@ -10,7 +10,7 @@ def Test(vis=False, interactive=False):
     trc = TRC("TRC_BODY", [0, 0, 0], [5, 5, 5], 5, 2, flukaregistry=freg)
     z = Zone()
     z.addIntersection(trc)
-    region = Region("TRC_REG", material="COPPER")
+    region = Region("TRC_REG")
     region.addZone(z)
     freg.addRegion(region)
 

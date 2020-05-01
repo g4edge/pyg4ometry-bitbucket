@@ -34,9 +34,9 @@ def Test(vis=False, interactive=False, write=False):
     zrepl = Zone()
     zrepl.addIntersection(targRepl)
 
-    targetRegion = Region("TARGET", material="COPPER")
+    targetRegion = Region("TARGET")
     targetRegion.addZone(ztarget)
-    replicaRegion = Region("REPLICA", material="COPPER")
+    replicaRegion = Region("REPLICA")
     replicaRegion.addZone(zrepl)
 
     lattice = Lattice(replicaRegion, rotoTranslation=rtrans, flukaregistry=freg)

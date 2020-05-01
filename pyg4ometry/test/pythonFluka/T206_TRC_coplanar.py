@@ -19,9 +19,9 @@ def Test(vis=False, interactive=False):
     z2.addIntersection(trc2)
     z3.addIntersection(trc3)
 
-    region1 = Region("TRC_REG1", material="COPPER")
-    region2 = Region("TRC_REG2", material="COPPER")
-    region3 = Region("TRC_REG3", material="COPPER")
+    region1 = Region("TRC_REG1")
+    region2 = Region("TRC_REG2")
+    region3 = Region("TRC_REG3")
 
     region1.addZone(z1)
     region2.addZone(z2)

@@ -46,7 +46,7 @@ def Test(vis=False, interactive=False):
     z.addSubtraction(xypsub)
     z.addSubtraction(plasub)
 
-    region = Region("RPP_REG", material="COPPER")
+    region = Region("RPP_REG")
     region.addZone(z)
 
     assert len(region.bodies()) == 10

@@ -19,7 +19,7 @@ def Test(vis=False, interactive=False):
     z2.addSubtraction(rpp)
 
 
-    region = Region("REG_INF", material="COPPER")
+    region = Region("REG_INF")
     region.addZone(z1)
     region.addZone(z2)
 
