@@ -21,7 +21,7 @@ def Test(vis=False, interactive=False):
     region.addZone(z1)
     region.addZone(z2)
 
-    cz = region.get_connected_zones()
+    cz = region.connectedZones()
     freg.addRegion(region)
 
     greg = convert.fluka2Geant4(freg)

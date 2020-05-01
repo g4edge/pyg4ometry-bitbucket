@@ -30,6 +30,7 @@ setup(
     packages=find_packages(exclude=["docs", "tests"]),
     install_requires=["antlr4-python3-runtime==4.7.1",  # Generated with 4.7.1 - this avoids warnings
                       "matplotlib",
+                      "pandas",
                       "networkx == 2.2",
                       "numpy",
                       "vtk",
