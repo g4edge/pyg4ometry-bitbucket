@@ -4,6 +4,7 @@ import pyg4ometry.convert as _convert
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
+import os as _os
 
 
 def Test(vis = False, interactive = False, fluka = True, disjoint = False) :
@@ -53,7 +54,7 @@ def Test(vis = False, interactive = False, fluka = True, disjoint = False) :
         freg = _convert.geant4Logical2Fluka(wl)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write("T028_geant4Union2Fluka.inp")
+        w.write(_os.path.join(_os.path.dirname(__file__),"T028_geant4Union2Fluka.inp"))
 
 if __name__ == "__main__":
     Test()

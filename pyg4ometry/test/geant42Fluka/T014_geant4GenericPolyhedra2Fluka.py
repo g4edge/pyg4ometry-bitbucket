@@ -18,23 +18,34 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
     wy = _gd.Constant("wy","100",reg,True)
     wz = _gd.Constant("wz","100",reg,True)
 
-    
-    pi     = _gd.Constant("pi","3.1415926",reg,True)
+    # pi     = _gd.Constant("pi","3.1415926",reg,True)
     psphi  = _gd.Constant("sphi","1",reg,True)
     pdphi  = _gd.Constant("dphi","4",reg,True)
-    pnsid  = _gd.Constant("pnsid","4",reg,True) 
+    pnsid  = _gd.Constant("pnsid","4",reg,True)
     
-    pr1    = _gd.Constant("pr1","1",reg,True)
-    pz1    = _gd.Constant("pz1","-10",reg,True)
+    pr1    = _gd.Constant("pr1","5",reg,True)
+    pz1    = _gd.Constant("z1","-10",reg,True)
 
-    pr2    = _gd.Constant("pr2","2",reg,True)
-    pz2    = _gd.Constant("pz2","0",reg,True)
+    pr2    = _gd.Constant("pr2","7",reg,True)
+    pz2    = _gd.Constant("z2","-10",reg,True)
 
-    pr3    = _gd.Constant("pr3","3",reg,True)
-    pz3    = _gd.Constant("pz3","10",reg,True)
+    pr3    = _gd.Constant("pr3","7",reg,True)
+    pz3    = _gd.Constant("z3","0",reg,True)
 
-    pr     = [pr1,pr2,pr3]
-    pz     = [pz1,pz2,pz3]
+    pr4    = _gd.Constant("pr4","7",reg,True)
+    pz4    = _gd.Constant("z4","5",reg,True)
+
+    pr5    = _gd.Constant("pr5","7",reg,True)
+    pz5    = _gd.Constant("z5","10",reg,True)
+
+    pr6    = _gd.Constant("pr6","5",reg,True)
+    pz6    = _gd.Constant("z6","10",reg,True)
+
+    pr7    = _gd.Constant("pr7","2",reg,True)
+    pz7    = _gd.Constant("z7","5",reg,True)
+
+    pr    = [pr1,pr2,pr3,pr4,pr5,pr6,pr7]
+    pz    = [pz1,pz2,pz3,pz4,pz5,pz6,pz7]
 
     if type == two_planes : 
         pr = [pr1,pr2]
@@ -45,7 +56,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pz,pr,reg,"mm","rad")
+    ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pr,pz,reg,"mm","rad")
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

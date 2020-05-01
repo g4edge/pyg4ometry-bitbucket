@@ -43,8 +43,63 @@ RUN mkdir VTK-8.2.0-build && cd VTK-8.2.0-build && cmake3 -DVTK_WRAP_PYTHON=ON .
 # export PYTHONPATH=/usr/local/lib64/python./site-packages/:/usr/local/lib64/python./site-packages/vtkmodules/:/usr/local/lib64/
 # export LD_LIBRARY_PATH=/usr/local/lib64/python./site-packages/vtkmodules/:/usr/local/lib64/
 
+# CGAL
+RUN wget http://springdale.princeton.edu/data/springdale/7/x86_64/os/Computational/CGAL-4.11.1-1.sdl7.x86_64.rpm && \
+    wget http://springdale.princeton.edu/data/springdale/7/x86_64/os/Computational/CGAL-devel-4.11.1-1.sdl7.x86_64.rpm && \
+    yum install -y CGAL-4.11.1-1.sdl7.x86_64.rpm CGAL-devel-4.11.1-1.sdl7.x86_64.rpm 
+
+# emacs
+RUN yum install -y emacs 
+
+# FreeCAD deps 
+RUN yum install -y OCE-devel.x86_64 swig.x86_64 eigen3-devel.noarch qt-devel.x86_64 Coin3-devel.x86_64 \
+     shiboken-python2-devel.x86_64 python-pyside-devel.x86_64 pyside-tools.x86_64
+
+# FreeCAD Boost 1.67
+RUN wget https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz && \ 
+    tar zxf boost_1_67_0.tar.gz && \
+    cd boost_1_67_0 && \
+    ./bootstrap.sh && \
+    ./b2  --prefix=/tmp/boost_1_67_0-install/ install
+RUN ln -s /tmp/boost_1_67_0-install/lib/libboost_python27.so /tmp/boost_1_67_0-install/lib/libboost_python.so
+
+# FreeCAD build (0.17)
+# RUN wget https://github.com/FreeCAD/FreeCAD/archive/0.17.tar.gz
+
+#RUN tar xfz 0.17.tar.gz && \
+#    mkdir FreeCAD-0.17-build && \
+#    cd FreeCAD-0.17-build && \
+#    cmake3 ../FreeCAD-0.17 -DBUILD_FEM=0 -DBUILD_MATERIAL=0 -DBUILD_SHIP=0 -DBUILD_DRAFT=0 -DBUILD_TUX=0 -DBUILD_ARCH=0 \
+#    -DBUILD_PLOT=0 -DBUILD_OPENSCAD=0 -DBOOST_ROOT=/tmp/boost_1_67_0-install/ -DBOOST_LIBRARYDIR=/tmp/boogert_1_67_0-install/lib/ && \
+#    make -j6
+
+
+# FreeCAD build (0.18.4)
+#RUN wget https://github.com/FreeCAD/FreeCAD/archive/0.18.4.tar.gz
+
+#RUN tar xfz 0.18.4.tar.gz && \
+#    mkdir FreeCAD-0.18.4-build && \
+#    cd FreeCAD-0.18.4-build && \
+#    cmake3 ../FreeCAD-0.18.4 -DBUILD_FEM=0 -DBUILD_MATERIAL=0 -DBUILD_SHIP=0 -DBUILD_DRAFT=0 -DBUILD_TUX=0 -DBUILD_ARCH=0 \
+#    -DBUILD_PLOT=0 -DBUILD_OPENSCAD=0 -DBOOST_ROOT=/tmp/boost_1_67_0-install/ -DBOOST_LIBRARYDIR=/tmp/boogert_1_67_0-install/lib/ && \
+#    make -j6
+
+# FreeCAD build (0.19_pre)
+RUN wget https://github.com/FreeCAD/FreeCAD/archive/0.19_pre.tar.gz
+
+RUN tar xfz 0.19_pre.tar.gz && \
+    mkdir FreeCAD-0.19_pre-build && \
+    cd FreeCAD-0.19_pre-build && \
+    cmake3 ../FreeCAD-0.19_pre -DBUILD_FEM=0 -DBUILD_MATERIAL=0 -DBUILD_SHIP=0 -DBUILD_DRAFT=0 -DBUILD_TUX=0 -DBUILD_ARCH=0 \
+    -DBUILD_PLOT=0 -DBUILD_OPENSCAD=0 -DBUILD_TECHDRAW=0 -DBOOST_ROOT=/tmp/boost_1_67_0-install/ -DBOOST_LIBRARYDIR=/tmp/boogert_1_67_0-install/lib/ && \
+    make -j6
+
+ENV PYTHONPATH=/tmp/FreeCAD-0.19_pre-build/lib
+
 # pyg4ometry
-RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && cd pyg4ometry && git checkout develop 
+ARG PYG4OMETRY_VER=unknown
+RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && cd pyg4ometry && git checkout develop
+RUN cd pyg4ometry && make develop
 
 # Blender 
 

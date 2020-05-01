@@ -97,7 +97,7 @@
 	    </polycone_dimensions>
 	  </parameters>
 	  <parameters number="6">
-	    <position name="polycone1Vol5pos" x="0" y="0" z="2*bx"/>
+	    <position name="polycone1Vol6pos" x="0" y="0" z="2*bx"/>
 	    <polycone_dimensions startPhi="2*pi*0.6" openPhi="2*pi*0.4" numRZ="3" aunit="rad" lunit="mm">
 	      <zplane rmin="6" rmax="14" z="-2.5" />
 	      <zplane rmin="7" rmax="10" z="0" />

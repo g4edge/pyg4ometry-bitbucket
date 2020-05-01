@@ -18,9 +18,9 @@
 			<D value="0.00129"/>
 			<fraction n="0.7" ref="Nitrogen"/>
 			<fraction n="0.3" ref="Oxygen"/>
-			<property name="RINDEX" value="RINDEX"/>
 			<property name="myproperty1" value="prop1"/>
 			<property name="myproperty2" value="prop2"/>
+			<property name="RINDEX" value="RINDEX"/>
 		</material>
 	</materials>
 	<solids>

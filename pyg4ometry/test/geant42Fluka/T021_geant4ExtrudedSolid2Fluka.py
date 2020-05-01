@@ -82,7 +82,7 @@ def Test(vis = False, interactive = False, fluka = True) :
         freg = _convert.geant4Logical2Fluka(wl)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write("T021_geant4ExtrudedSolid2Fluka.inp")
+        w.write(_os.path.join(_os.path.dirname(__file__),"T021_geant4ExtrudedSolid2Fluka.inp"))
 
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)

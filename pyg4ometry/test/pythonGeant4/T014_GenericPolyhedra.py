@@ -41,7 +41,7 @@ def Test(vis = False, interactive = False, type = normal) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pz,pr,reg,"mm","rad")
+    ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pr,pz,reg,"mm","rad")
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

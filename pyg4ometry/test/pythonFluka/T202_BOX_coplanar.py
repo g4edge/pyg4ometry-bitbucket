@@ -43,7 +43,7 @@ def Test(vis=False, interactive=False):
                                 splitDisjointUnions=False)
 
     wv = greg.getWorldVolume()
-    wv.checkOverlaps()
+    wv.checkOverlaps(recursive = False, coplanar = True, debugIO = False)
 
     v = None
     if vis:

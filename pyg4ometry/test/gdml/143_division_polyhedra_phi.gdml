@@ -18,7 +18,7 @@
    <solids>
       <box name="WorldBox" x="1000" y="1000" z="1000"/>
       <polyhedra name= "Polyh" startphi="-pi/4" deltaphi="4*pi/4" numsides="3" aunit="rad" lunit= "mm">
-        <zplane rmin="0" rmax="0" z="0" />
+        <zplane rmin="0" rmax="5" z="0" />
         <zplane rmin="0" rmax="15" z="5" />
         <zplane rmin="0" rmax="15" z="8" />
         <zplane rmin="0" rmax="4" z="13" />

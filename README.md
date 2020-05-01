@@ -18,6 +18,23 @@ Installation guide
   * cd pyg4ometry 
   * make install or make develop
 
+Instllation guide container
+===========================
+ 
+Build the docker container
+
+  * cd pyg4ometry/docker/
+  * docker build --build-arg PYG4OMETRY_VER=0 -t centos-pyg4ometry -f Dockerfile-centos-pyg4ometry .
+
+If the *pyg4ometry* `git` repository has changed change the value of PYG4OMETRY_VER variable
+as this will for a clone and install 
+
+Run an image (here is my script for Mac and Docker Desktop)
+
+  * export ip=`(ifconfig en0 | grep inet | awk '$1 == "inet" {print $2}')`
+  * xhost +$ip
+  * docker run -ti -v /tmp/.X11-unix:/tmp/.X11-unix -v /Users/sboogert/Physics:/tmp/Physics -e DISPLAY=$ip:0 centos-bdsim 
+
 
 Documentation 
 =============
@@ -32,11 +49,11 @@ To build manual within this repo
 
 
 Issues, bugs and feature requests 
-============================
+=================================
 
   * For bug reports please use the bitbucket issue trackers
 
 Citation and academic credit 
-=======================
+============================
 
   * It pyg4ometry has been useful for your work, please in the first instance cite...

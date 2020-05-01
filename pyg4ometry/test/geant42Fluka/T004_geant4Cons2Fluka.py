@@ -28,7 +28,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
     crmin2 = _gd.Constant("crmin2","5",reg,True)
     crmax2 = _gd.Constant("crmax2","10",reg,True)
     cz     = _gd.Constant("cz","100",reg,True)
-    cdp    = _gd.Constant("cdp","1.5*pi",reg,True)
+    cdp    = _gd.Constant("cdp","1.2*pi",reg,True)
     zero   = _gd.Constant("zero","0.0",reg,False)
 
     if type == r1min_gt_r1max : 
@@ -77,7 +77,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
         freg = _convert.geant4Logical2Fluka(wl)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write("T004_geant4Cons2Fluka.inp")
+        w.write(_os.path.join(_os.path.dirname(__file__),"T004_geant4Cons2Fluka.inp"))
 
     # visualisation
     v = None

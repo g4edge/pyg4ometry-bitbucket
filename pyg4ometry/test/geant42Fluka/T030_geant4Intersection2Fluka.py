@@ -3,6 +3,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 import pyg4ometry.convert as _convert
 import pyg4ometry.fluka as _fluka
+import os as _os
 
 normal = 1
 non_intersecting = 2 
@@ -55,7 +56,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal) :
         freg = _convert.geant4Logical2Fluka(wl)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write("T030_geant4Intersection2Fluka.inp")
+        w.write(_os.path.join(_os.path.dirname(__file__),"T030_geant4Intersection2Fluka.inp"))
 
 if __name__ == "__main__":
     Test()

@@ -14,6 +14,9 @@ develop:
 build_ext:
 	python setup.py build_ext --inplace
 
+build_clean:
+	python setup.py clean --all
+
 build_ext3:
 	python3.7 setup.py build_ext --inplace
 
