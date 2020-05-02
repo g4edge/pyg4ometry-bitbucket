@@ -25,6 +25,7 @@ def Test(vis=False, interactive=False):
     # material instance or maybe either?
     region.addZone(zone)
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     freg.addMaterialAssignments(fr, region)
 

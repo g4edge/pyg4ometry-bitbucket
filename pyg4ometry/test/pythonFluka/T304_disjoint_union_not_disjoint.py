@@ -20,6 +20,7 @@ def Test(vis=False, interactive=False):
     region.addZone(z2)
 
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg, splitDisjointUnions=True)
 

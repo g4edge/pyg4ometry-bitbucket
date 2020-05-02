@@ -29,6 +29,7 @@ def Test(vis=False, interactive=False):
 
     freg.addRegion(region1)
     freg.addRegion(region2)
+    freg.assignma("COPPER", region1, region2)
     freg.addRegion(region3)
 
     # default is True, but to be explicit:

@@ -36,6 +36,7 @@ def Test(vis=False, interactive=False):
 
     freg.addRegion(region1)
     freg.addRegion(region2)
+    freg.assignma("COPPER", region1, region2)
 
     greg = convert.fluka2Geant4(freg,
                                 withLengthSafety=True,

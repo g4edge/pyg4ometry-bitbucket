@@ -30,14 +30,15 @@ def Test(vis=False, interactive=False):
     z2 = Zone()
     z2.addIntersection(arbInner)
 
-    region = Region("ARB_REG")
+    region1 = Region("ARB_REG")
     region2 = Region("ARB_REG2")
 
-    region.addZone(z1)
+    region1.addZone(z1)
     region2.addZone(z2)
 
-    freg.addRegion(region)
+    freg.addRegion(region1)
     freg.addRegion(region2)
+    freg.assignma("COPPER", region1, region2)
 
     greg = convert.fluka2Geant4(freg)
     wlv = greg.getWorldVolume()

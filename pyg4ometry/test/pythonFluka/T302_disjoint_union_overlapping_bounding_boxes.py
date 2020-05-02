@@ -23,6 +23,7 @@ def Test(vis=False, interactive=False):
 
     cz = region.connectedZones()
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
 

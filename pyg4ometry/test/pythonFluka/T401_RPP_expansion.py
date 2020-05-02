@@ -14,6 +14,7 @@ def Test(vis=False, interactive=False):
     region = Region("RPP_REG")
     region.addZone(z)
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
     

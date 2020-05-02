@@ -24,6 +24,7 @@ def Test(vis=False, interactive=False) :
     region = Region("QUA_REG")
     region.addZone(z)
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     quaExtent = {"QUA_REG": Extent([-150., 100., 0], [150., 200., 1000.])}
 
