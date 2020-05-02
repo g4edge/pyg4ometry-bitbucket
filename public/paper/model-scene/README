@@ -1,0 +1,4 @@
+https://www.lewvac.co.uk
+
+bdsim --file=quad_triplet.gmad --exportGeometryTo=quad_triplet.gdml
+

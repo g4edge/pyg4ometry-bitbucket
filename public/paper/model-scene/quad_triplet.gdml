@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    <matrix coldim="2" name="RINDEX0x7fa380852ac0" values="2e-06 1 7e-06 1 7.14e-06 1"/>
+    <matrix coldim="2" name="GROUPVEL0x7fa380852ef0" values="2e-06 299.792 4.5e-06 299.792 7.14e-06 299.792"/>
+    <matrix coldim="2" name="RINDEX0x7fa38084fae0" values="2e-06 1.00029 7e-06 1.00029 7.14e-06 1.00029"/>
+    <matrix coldim="2" name="GROUPVEL0x7fa38084f1f0" values="2e-06 299.705 4.5e-06 299.705 7.14e-06 299.705"/>
+  </define>
+
+  <materials>
+    <isotope N="1" Z="1" name="H10x7fa376e24420">
+      <atom unit="g/mole" value="1.00782503081372"/>
+    </isotope>
+    <isotope N="2" Z="1" name="H20x7fa376e24460">
+      <atom unit="g/mole" value="2.01410199966617"/>
+    </isotope>
+    <element name="H0x7fa376e24950">
+      <fraction n="0.999885" ref="H10x7fa376e24420"/>
+      <fraction n="0.000115" ref="H20x7fa376e24460"/>
+    </element>
+    <isotope N="12" Z="6" name="C120x7fa376e1c060">
+      <atom unit="g/mole" value="12"/>
+    </isotope>
+    <isotope N="13" Z="6" name="C130x7fa376e1c0c0">
+      <atom unit="g/mole" value="13.0034"/>
+    </isotope>
+    <element name="C0x7fa376e1c100">
+      <fraction n="0.9893" ref="C120x7fa376e1c060"/>
+      <fraction n="0.0107" ref="C130x7fa376e1c0c0"/>
+    </element>
+    <isotope N="16" Z="8" name="O160x7fa376e255f0">
+      <atom unit="g/mole" value="15.9949"/>
+    </isotope>
+    <isotope N="17" Z="8" name="O170x7fa376e25a60">
+      <atom unit="g/mole" value="16.9991"/>
+    </isotope>
+    <isotope N="18" Z="8" name="O180x7fa376e25ab0">
+      <atom unit="g/mole" value="17.9992"/>
+    </isotope>
+    <element name="O0x7fa376e25b10">
+      <fraction n="0.99757" ref="O160x7fa376e255f0"/>
+      <fraction n="0.00038" ref="O170x7fa376e25a60"/>
+      <fraction n="0.00205" ref="O180x7fa376e25ab0"/>
+    </element>
+    <material name="vacuum0x7fa380851fe0" state="gas">
+      <property name="RINDEX" ref="RINDEX0x7fa380852ac0"/>
+      <property name="GROUPVEL" ref="GROUPVEL0x7fa380852ef0"/>
+      <T unit="K" value="300"/>
+      <P unit="pascal" value="1e-07"/>
+      <MEE unit="eV" value="32.8733620641992"/>
+      <D unit="g/cm3" value="1.1633578301787e-15"/>
+      <fraction n="0.482" ref="H0x7fa376e24950"/>
+      <fraction n="0.221" ref="C0x7fa376e1c100"/>
+      <fraction n="0.297" ref="O0x7fa376e25b10"/>
+    </material>
+    <isotope N="55" Z="25" name="Mn550x7fa376e28e90">
+      <atom unit="g/mole" value="54.938"/>
+    </isotope>
+    <element name="Mn0x7fa376e209f0">
+      <fraction n="1" ref="Mn550x7fa376e28e90"/>
+    </element>
+    <isotope N="28" Z="14" name="Si280x7fa376e200b0">
+      <atom unit="g/mole" value="27.9769"/>
+    </isotope>
+    <isotope N="29" Z="14" name="Si290x7fa376e200f0">
+      <atom unit="g/mole" value="28.9765"/>
+    </isotope>
+    <isotope N="30" Z="14" name="Si300x7fa376e20130">
+      <atom unit="g/mole" value="29.9738"/>
+    </isotope>
+    <element name="Si0x7fa376e20170">
+      <fraction n="0.922296077703922" ref="Si280x7fa376e200b0"/>
+      <fraction n="0.0468319531680468" ref="Si290x7fa376e200f0"/>
+      <fraction n="0.0308719691280309" ref="Si300x7fa376e20130"/>
+    </element>
+    <isotope N="31" Z="15" name="P310x7fa376e20bb0">
+      <atom unit="g/mole" value="30.9738"/>
+    </isotope>
+    <element name="P0x7fa376e28ed0">
+      <fraction n="1" ref="P310x7fa376e20bb0"/>
+    </element>
+    <isotope N="32" Z="16" name="S320x7fa376e290a0">
+      <atom unit="g/mole" value="31.9721"/>
+    </isotope>
+    <isotope N="33" Z="16" name="S330x7fa376e290e0">
+      <atom unit="g/mole" value="32.9715"/>
+    </isotope>
+    <isotope N="34" Z="16" name="S340x7fa376e29130">
+      <atom unit="g/mole" value="33.9679"/>
+    </isotope>
+    <isotope N="36" Z="16" name="S360x7fa376e29190">
+      <atom unit="g/mole" value="35.9671"/>
+    </isotope>
+    <element name="S0x7fa376e291d0">
+      <fraction n="0.9493" ref="S320x7fa376e290a0"/>
+      <fraction n="0.0076" ref="S330x7fa376e290e0"/>
+      <fraction n="0.0429" ref="S340x7fa376e29130"/>
+      <fraction n="0.0002" ref="S360x7fa376e29190"/>
+    </element>
+    <isotope N="50" Z="24" name="Cr500x7fa376e1c440">
+      <atom unit="g/mole" value="49.946"/>
+    </isotope>
+    <isotope N="52" Z="24" name="Cr520x7fa376e1c480">
+      <atom unit="g/mole" value="51.9405"/>
+    </isotope>
+    <isotope N="53" Z="24" name="Cr530x7fa376e1ca20">
+      <atom unit="g/mole" value="52.9407"/>
+    </isotope>
+    <isotope N="54" Z="24" name="Cr540x7fa376e1ca60">
+      <atom unit="g/mole" value="53.9389"/>
+    </isotope>
+    <element name="Cr0x7fa376e1caa0">
+      <fraction n="0.04345" ref="Cr500x7fa376e1c440"/>
+      <fraction n="0.83789" ref="Cr520x7fa376e1c480"/>
+      <fraction n="0.09501" ref="Cr530x7fa376e1ca20"/>
+      <fraction n="0.02365" ref="Cr540x7fa376e1ca60"/>
+    </element>
+    <isotope N="92" Z="42" name="Mo920x7fa376e2afa0">
+      <atom unit="g/mole" value="91.9068"/>
+    </isotope>
+    <isotope N="94" Z="42" name="Mo940x7fa376e2afe0">
+      <atom unit="g/mole" value="93.9051"/>
+    </isotope>
+    <isotope N="95" Z="42" name="Mo950x7fa376e2b020">
+      <atom unit="g/mole" value="94.9058"/>
+    </isotope>
+    <isotope N="96" Z="42" name="Mo960x7fa376e2b060">
+      <atom unit="g/mole" value="95.9047"/>
+    </isotope>
+    <isotope N="97" Z="42" name="Mo970x7fa376e2b0a0">
+      <atom unit="g/mole" value="96.906"/>
+    </isotope>
+    <isotope N="98" Z="42" name="Mo980x7fa376e2b120">
+      <atom unit="g/mole" value="97.9054"/>
+    </isotope>
+    <isotope N="100" Z="42" name="Mo1000x7fa376e2b160">
+      <atom unit="g/mole" value="99.9075"/>
+    </isotope>
+    <element name="Mo0x7fa376e2b1a0">
+      <fraction n="0.1484" ref="Mo920x7fa376e2afa0"/>
+      <fraction n="0.0925" ref="Mo940x7fa376e2afe0"/>
+      <fraction n="0.1592" ref="Mo950x7fa376e2b020"/>
+      <fraction n="0.1668" ref="Mo960x7fa376e2b060"/>
+      <fraction n="0.0955" ref="Mo970x7fa376e2b0a0"/>
+      <fraction n="0.2413" ref="Mo980x7fa376e2b120"/>
+      <fraction n="0.0963" ref="Mo1000x7fa376e2b160"/>
+    </element>
+    <isotope N="58" Z="28" name="Ni580x7fa376e1d1e0">
+      <atom unit="g/mole" value="57.9353"/>
+    </isotope>
+    <isotope N="60" Z="28" name="Ni600x7fa376e1f750">
+      <atom unit="g/mole" value="59.9308"/>
+    </isotope>
+    <isotope N="61" Z="28" name="Ni610x7fa376e1f790">
+      <atom unit="g/mole" value="60.9311"/>
+    </isotope>
+    <isotope N="62" Z="28" name="Ni620x7fa376e1f7d0">
+      <atom unit="g/mole" value="61.9283"/>
+    </isotope>
+    <isotope N="64" Z="28" name="Ni640x7fa376e1f810">
+      <atom unit="g/mole" value="63.928"/>
+    </isotope>
+    <element name="Ni0x7fa376e1f890">
+      <fraction n="0.680769" ref="Ni580x7fa376e1d1e0"/>
+      <fraction n="0.262231" ref="Ni600x7fa376e1f750"/>
+      <fraction n="0.011399" ref="Ni610x7fa376e1f790"/>
+      <fraction n="0.036345" ref="Ni620x7fa376e1f7d0"/>
+      <fraction n="0.009256" ref="Ni640x7fa376e1f810"/>
+    </element>
+    <isotope N="14" Z="7" name="N140x7fa376e24c80">
+      <atom unit="g/mole" value="14.0031"/>
+    </isotope>
+    <isotope N="15" Z="7" name="N150x7fa376e24cc0">
+      <atom unit="g/mole" value="15.0001"/>
+    </isotope>
+    <element name="N0x7fa376e25220">
+      <fraction n="0.99632" ref="N140x7fa376e24c80"/>
+      <fraction n="0.00368" ref="N150x7fa376e24cc0"/>
+    </element>
+    <isotope N="54" Z="26" name="Fe540x7fa376e1da90">
+      <atom unit="g/mole" value="53.9396"/>
+    </isotope>
+    <isotope N="56" Z="26" name="Fe560x7fa376e1dad0">
+      <atom unit="g/mole" value="55.9349"/>
+    </isotope>
+    <isotope N="57" Z="26" name="Fe570x7fa376e1db10">
+      <atom unit="g/mole" value="56.9354"/>
+    </isotope>
+    <isotope N="58" Z="26" name="Fe580x7fa376e1db50">
+      <atom unit="g/mole" value="57.9333"/>
+    </isotope>
+    <element name="Fe0x7fa376e1db90">
+      <fraction n="0.05845" ref="Fe540x7fa376e1da90"/>
+      <fraction n="0.91754" ref="Fe560x7fa376e1dad0"/>
+      <fraction n="0.02119" ref="Fe570x7fa376e1db10"/>
+      <fraction n="0.00282" ref="Fe580x7fa376e1db50"/>
+    </element>
+    <material name="stainlesssteel0x7fa376e2a390" state="solid">
+      <T unit="K" value="295"/>
+      <MEE unit="eV" value="284.400996182192"/>
+      <D unit="g/cm3" value="8"/>
+      <fraction n="0.0003" ref="C0x7fa376e1c100"/>
+      <fraction n="0.02" ref="Mn0x7fa376e209f0"/>
+      <fraction n="0.0075" ref="Si0x7fa376e20170"/>
+      <fraction n="0.00045" ref="P0x7fa376e28ed0"/>
+      <fraction n="0.0003" ref="S0x7fa376e291d0"/>
+      <fraction n="0.17" ref="Cr0x7fa376e1caa0"/>
+      <fraction n="0.025" ref="Mo0x7fa376e2b1a0"/>
+      <fraction n="0.12" ref="Ni0x7fa376e1f890"/>
+      <fraction n="0.001" ref="N0x7fa376e25220"/>
+      <fraction n="0.65545" ref="Fe0x7fa376e1db90"/>
+    </material>
+    <material name="G4_Galactic0x7fa3279df850" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <MEE unit="eV" value="21.8"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <fraction n="1" ref="H0x7fa376e24950"/>
+    </material>
+    <material name="G4_Fe0x7fa376e1d9a0" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="286"/>
+      <D unit="g/cm3" value="7.874"/>
+      <fraction n="1" ref="Fe0x7fa376e1db90"/>
+    </material>
+    <isotope N="63" Z="29" name="Cu630x7fa376e1d220">
+      <atom unit="g/mole" value="62.9296"/>
+    </isotope>
+    <isotope N="65" Z="29" name="Cu650x7fa376e1c9e0">
+      <atom unit="g/mole" value="64.9278"/>
+    </isotope>
+    <element name="Cu0x7fa376e1d2e0">
+      <fraction n="0.6917" ref="Cu630x7fa376e1d220"/>
+      <fraction n="0.3083" ref="Cu650x7fa376e1c9e0"/>
+    </element>
+    <material name="G4_Cu0x7fa376e1d0f0" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="322"/>
+      <D unit="g/cm3" value="8.96"/>
+      <fraction n="1" ref="Cu0x7fa376e1d2e0"/>
+    </material>
+    <isotope N="36" Z="18" name="Ar360x7fa38084ec80">
+      <atom unit="g/mole" value="35.9675"/>
+    </isotope>
+    <isotope N="38" Z="18" name="Ar380x7fa38084ecc0">
+      <atom unit="g/mole" value="37.9627"/>
+    </isotope>
+    <isotope N="40" Z="18" name="Ar400x7fa38084ed00">
+      <atom unit="g/mole" value="39.9624"/>
+    </isotope>
+    <element name="Ar0x7fa38084ed60">
+      <fraction n="0.003365" ref="Ar360x7fa38084ec80"/>
+      <fraction n="0.000632" ref="Ar380x7fa38084ecc0"/>
+      <fraction n="0.996003" ref="Ar400x7fa38084ed00"/>
+    </element>
+    <material name="G4_AIR0x7fa38084eb70" state="gas">
+      <property name="RINDEX" ref="RINDEX0x7fa38084fae0"/>
+      <property name="GROUPVEL" ref="GROUPVEL0x7fa38084f1f0"/>
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="85.7"/>
+      <D unit="g/cm3" value="0.00120479"/>
+      <fraction n="0.000124000124000124" ref="C0x7fa376e1c100"/>
+      <fraction n="0.755267755267755" ref="N0x7fa376e25220"/>
+      <fraction n="0.231781231781232" ref="O0x7fa376e25b10"/>
+      <fraction n="0.0128270128270128" ref="Ar0x7fa38084ed60"/>
+    </material>
+  </materials>
+
+  <solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="d1_vacuum_solid0x7fa3279e15e0" rmax="25" rmin="0" startphi="0" z="499.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="d1_pipe_solid0x7fa3279e19e0" rmax="26.501" rmin="25.001" startphi="0" z="499.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="d1_container_solid0x7fa3279e1ac0" rmax="26.502" rmin="0" startphi="0" z="500"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_bp_vacuum_solid0x7fa327a68950" rmax="25" rmin="0" startphi="0" z="149.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_bp_pipe_solid0x7fa327a68a30" rmax="26.501" rmin="25.001" startphi="0" z="149.999996"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_bp_container_solid0x7fa327a68b10" rmax="26.502" rmin="0" startphi="0" z="149.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_outer_yoke_solid0x7fa327a74730" rmax="199.999999" rmin="147.9506006" startphi="0" z="149.999996"/>
+    <xtru lunit="mm" name="m1_outer_pole_raw_solid0x7fa381146200">
+      <twoDimVertex x="-6.1295665844674" y="26.9158270577497"/>
+      <twoDimVertex x="-11.8414133357911" y="28.1291036690432"/>
+      <twoDimVertex x="-16.7462873371414" y="30.0591480378551"/>
+      <twoDimVertex x="-20.5099295310138" y="32.57443083"/>
+      <twoDimVertex x="-22.8758539216088" y="35.5035396798947"/>
+      <twoDimVertex x="-33.83210896" y="60.507608448"/>
+      <twoDimVertex x="-33.83210896" y="162.74565956"/>
+      <twoDimVertex x="33.83210896" y="162.74565956"/>
+      <twoDimVertex x="33.83210896" y="60.507608448"/>
+      <twoDimVertex x="22.8758539216088" y="35.5035396798947"/>
+      <twoDimVertex x="20.5099295310138" y="32.57443083"/>
+      <twoDimVertex x="16.7462873371414" y="30.0591480378551"/>
+      <twoDimVertex x="11.8414133357911" y="28.1291036690432"/>
+      <twoDimVertex x="6.1295665844674" y="26.9158270577497"/>
+      <twoDimVertex x="0" y="26.502001"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-74.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="74.999998"/>
+    </xtru>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_outer_yoke_intersection_solid0x7fa327a74810" rmax="147.9496006" rmin="0" startphi="0" z="299.999996"/>
+    <intersection name="m1_outer_pole_solid0x7fa327a74d70">
+      <first ref="m1_outer_pole_raw_solid0x7fa381146200"/>
+      <second ref="m1_outer_yoke_intersection_solid0x7fa327a74810"/>
+    </intersection>
+    <xtru lunit="mm" name="m1_outer_coil_left_solid0x7fa38114ee00">
+      <twoDimVertex x="33.83310896" y="123.725672866032"/>
+      <twoDimVertex x="70.19658601056" y="123.725672866032"/>
+      <twoDimVertex x="70.19658601056" y="77.9962066784"/>
+      <twoDimVertex x="33.83310896" y="77.9962066784"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-74.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="74.999998"/>
+    </xtru>
+    <xtru lunit="mm" name="m1_outer_coil_right_solid0x7fa38114f400">
+      <twoDimVertex x="-70.19658601056" y="77.9962066784"/>
+      <twoDimVertex x="-70.19658601056" y="123.725672866032"/>
+      <twoDimVertex x="-33.83310896" y="123.725672866032"/>
+      <twoDimVertex x="-33.83310896" y="77.9962066784"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-74.999998"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="74.999998"/>
+    </xtru>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_outer_outer_container_solid0x7fa327a74bb0" rmax="200" rmin="26.502001" startphi="0" z="149.999998"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_outer_container_solid0x7fa327a7ec80" rmax="200.001999" rmin="0" startphi="0" z="150"/>
+    <xtru lunit="mm" name="m1_outer_end_coil_solid0x7fa38114fa00">
+      <twoDimVertex x="-70.19658601056" y="2.22655955645187e-15"/>
+      <twoDimVertex x="-69.4978912101895" y="7.09396735709782"/>
+      <twoDimVertex x="-67.4286572584238" y="13.9153175270051"/>
+      <twoDimVertex x="-64.0684036555893" y="20.2019098481495"/>
+      <twoDimVertex x="-59.5462630631912" y="25.7121541031912"/>
+      <twoDimVertex x="-54.0360188081495" y="30.2342946955893"/>
+      <twoDimVertex x="-47.7494264870051" y="33.5945482984237"/>
+      <twoDimVertex x="-40.9280763170978" y="35.6637822501895"/>
+      <twoDimVertex x="-33.83410896" y="36.36247705056"/>
+      <twoDimVertex x="33.83410896" y="36.36247705056"/>
+      <twoDimVertex x="40.9280763170978" y="35.6637822501895"/>
+      <twoDimVertex x="47.7494264870051" y="33.5945482984237"/>
+      <twoDimVertex x="54.0360188081496" y="30.2342946955893"/>
+      <twoDimVertex x="59.5462630631912" y="25.7121541031912"/>
+      <twoDimVertex x="64.0684036555893" y="20.2019098481495"/>
+      <twoDimVertex x="67.4286572584238" y="13.9153175270051"/>
+      <twoDimVertex x="69.4978912101895" y="7.09396735709782"/>
+      <twoDimVertex x="70.19658601056" y="0"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="0" zPosition="-22.8647330938161"/>
+      <section scalingFactor="1" xOffset="0" yOffset="0" zOrder="1" zPosition="22.8647330938161"/>
+    </xtru>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="m1_outer_end_container_solid0x7fa327a755e0" rmax="147.9506006" rmin="77.9952066784" startphi="0" z="36.36247705056"/>
+    <box lunit="mm" name="World_solid0x7fa3279eb760" x="15000" y="15000" z="16900.000053"/>
+  </solids>
+
+  <structure>
+    <volume name="d1_vacuum_lv0x7fa3279e1c80">
+      <materialref ref="vacuum0x7fa380851fe0"/>
+      <solidref ref="d1_vacuum_solid0x7fa3279e15e0"/>
+    </volume>
+    <volume name="d1_beampipe_lv0x7fa3279e2040">
+      <materialref ref="stainlesssteel0x7fa376e2a390"/>
+      <solidref ref="d1_pipe_solid0x7fa3279e19e0"/>
+    </volume>
+    <volume name="d1_container_lv0x7fa3279e2110">
+      <materialref ref="G4_Galactic0x7fa3279df850"/>
+      <solidref ref="d1_container_solid0x7fa3279e1ac0"/>
+      <physvol name="d1_vacuum_pv0x7fa3279e2360">
+        <volumeref ref="d1_vacuum_lv0x7fa3279e1c80"/>
+      </physvol>
+      <physvol name="d1_beampipe_pipe_pv0x7fa3279e26f0">
+        <volumeref ref="d1_beampipe_lv0x7fa3279e2040"/>
+      </physvol>
+    </volume>
+    <volume name="m1_bp_vacuum_lv0x7fa327a68d30">
+      <materialref ref="vacuum0x7fa380851fe0"/>
+      <solidref ref="m1_bp_vacuum_solid0x7fa327a68950"/>
+    </volume>
+    <volume name="m1_bp_beampipe_lv0x7fa327a68e00">
+      <materialref ref="stainlesssteel0x7fa376e2a390"/>
+      <solidref ref="m1_bp_pipe_solid0x7fa327a68a30"/>
+    </volume>
+    <volume name="m1_bp_container_lv0x7fa327a68ed0">
+      <materialref ref="G4_Galactic0x7fa3279df850"/>
+      <solidref ref="m1_bp_container_solid0x7fa327a68b10"/>
+      <physvol name="m1_bp_vacuum_pv0x7fa327a69120">
+        <volumeref ref="m1_bp_vacuum_lv0x7fa327a68d30"/>
+      </physvol>
+      <physvol name="m1_bp_beampipe_pipe_pv0x7fa327a69170">
+        <volumeref ref="m1_bp_beampipe_lv0x7fa327a68e00"/>
+      </physvol>
+    </volume>
+    <volume name="m1_outer_yoke_lv0x7fa327a74ee0">
+      <materialref ref="G4_Fe0x7fa376e1d9a0"/>
+      <solidref ref="m1_outer_yoke_solid0x7fa327a74730"/>
+    </volume>
+    <volume name="m1_outer_pole_lv0x7fa327a74e10">
+      <materialref ref="G4_Fe0x7fa376e1d9a0"/>
+      <solidref ref="m1_outer_pole_solid0x7fa327a74d70"/>
+    </volume>
+    <volume name="m1_outer_coil_left_lv0x7fa327a75220">
+      <materialref ref="G4_Cu0x7fa376e1d0f0"/>
+      <solidref ref="m1_outer_coil_left_solid0x7fa38114ee00"/>
+    </volume>
+    <volume name="m1_outer_coil_right_lv0x7fa327a752f0">
+      <materialref ref="G4_Cu0x7fa376e1d0f0"/>
+      <solidref ref="m1_outer_coil_right_solid0x7fa38114f400"/>
+    </volume>
+    <volume name="m1_outer_outer_container_lv0x7fa327a74fb0">
+      <materialref ref="G4_AIR0x7fa38084eb70"/>
+      <solidref ref="m1_outer_outer_container_solid0x7fa327a74bb0"/>
+      <physvol name="m1_outer_yoke_pv0x7fa327a76080">
+        <volumeref ref="m1_outer_yoke_lv0x7fa327a74ee0"/>
+      </physvol>
+      <physvol name="m1_outer_pole_0_pv0x7fa327a7d960">
+        <volumeref ref="m1_outer_pole_lv0x7fa327a74e10"/>
+        <rotation name="m1_outer_pole_0_pv0x7fa327a7d960_rot" unit="deg" x="0" y="0" z="135"/>
+      </physvol>
+      <physvol copynumber="1" name="m1_outer_pole_1_pv0x7fa327a7da60">
+        <volumeref ref="m1_outer_pole_lv0x7fa327a74e10"/>
+        <rotation name="m1_outer_pole_1_pv0x7fa327a7da60_rot" unit="deg" x="0" y="0" z="-135"/>
+      </physvol>
+      <physvol copynumber="2" name="m1_outer_pole_2_pv0x7fa327a7db60">
+        <volumeref ref="m1_outer_pole_lv0x7fa327a74e10"/>
+        <rotation name="m1_outer_pole_2_pv0x7fa327a7db60_rot" unit="deg" x="0" y="0" z="-45"/>
+      </physvol>
+      <physvol copynumber="3" name="m1_outer_pole_3_pv0x7fa327a7dc60">
+        <volumeref ref="m1_outer_pole_lv0x7fa327a74e10"/>
+        <rotation name="m1_outer_pole_3_pv0x7fa327a7dc60_rot" unit="deg" x="0" y="0" z="45"/>
+      </physvol>
+      <physvol name="m1_outer_coil_0_left_pv0x7fa327a7de40">
+        <volumeref ref="m1_outer_coil_left_lv0x7fa327a75220"/>
+        <rotation name="m1_outer_coil_0_left_pv0x7fa327a7de40_rot" unit="deg" x="0" y="0" z="135"/>
+      </physvol>
+      <physvol name="m1_outer_coil_0_right_pv0x7fa327a7de90">
+        <volumeref ref="m1_outer_coil_right_lv0x7fa327a752f0"/>
+        <rotation name="m1_outer_coil_0_right_pv0x7fa327a7de90_rot" unit="deg" x="0" y="0" z="135"/>
+      </physvol>
+      <physvol copynumber="1" name="m1_outer_coil_1_left_pv0x7fa327a7e0c0">
+        <volumeref ref="m1_outer_coil_left_lv0x7fa327a75220"/>
+        <rotation name="m1_outer_coil_1_left_pv0x7fa327a7e0c0_rot" unit="deg" x="0" y="0" z="-135"/>
+      </physvol>
+      <physvol copynumber="1" name="m1_outer_coil_1_right_pv0x7fa327a7e110">
+        <volumeref ref="m1_outer_coil_right_lv0x7fa327a752f0"/>
+        <rotation name="m1_outer_coil_1_right_pv0x7fa327a7e110_rot" unit="deg" x="0" y="0" z="-135"/>
+      </physvol>
+      <physvol copynumber="2" name="m1_outer_coil_2_left_pv0x7fa327a7e390">
+        <volumeref ref="m1_outer_coil_left_lv0x7fa327a75220"/>
+        <rotation name="m1_outer_coil_2_left_pv0x7fa327a7e390_rot" unit="deg" x="0" y="0" z="-45"/>
+      </physvol>
+      <physvol copynumber="2" name="m1_outer_coil_2_right_pv0x7fa327a7e3e0">
+        <volumeref ref="m1_outer_coil_right_lv0x7fa327a752f0"/>
+        <rotation name="m1_outer_coil_2_right_pv0x7fa327a7e3e0_rot" unit="deg" x="0" y="0" z="-45"/>
+      </physvol>
+      <physvol copynumber="3" name="m1_outer_coil_3_left_pv0x7fa327a7e610">
+        <volumeref ref="m1_outer_coil_left_lv0x7fa327a75220"/>
+        <rotation name="m1_outer_coil_3_left_pv0x7fa327a7e610_rot" unit="deg" x="0" y="0" z="45"/>
+      </physvol>
+      <physvol copynumber="3" name="m1_outer_coil_3_right_pv0x7fa327a7e660">
+        <volumeref ref="m1_outer_coil_right_lv0x7fa327a752f0"/>
+        <rotation name="m1_outer_coil_3_right_pv0x7fa327a7e660_rot" unit="deg" x="0" y="0" z="45"/>
+      </physvol>
+    </volume>
+    <volume name="m1_container_lv0x7fa327a75460">
+      <materialref ref="G4_Galactic0x7fa3279df850"/>
+      <solidref ref="m1_outer_container_solid0x7fa327a7ec80"/>
+      <physvol name="m1_beampipe_pv0x7fa327a75500">
+        <volumeref ref="m1_bp_container_lv0x7fa327a68ed0"/>
+      </physvol>
+      <physvol name="m1_outer_pv0x7fa327a75580">
+        <volumeref ref="m1_outer_outer_container_lv0x7fa327a74fb0"/>
+      </physvol>
+    </volume>
+    <volume name="m1_outer_end_coil_lv0x7fa327a77510">
+      <materialref ref="G4_Cu0x7fa376e1d0f0"/>
+      <solidref ref="m1_outer_end_coil_solid0x7fa38114fa00"/>
+    </volume>
+    <volume name="m1_outer_end_container_lv0x7fa327a756c0">
+      <materialref ref="G4_AIR0x7fa38084eb70"/>
+      <solidref ref="m1_outer_end_container_solid0x7fa327a755e0"/>
+      <physvol name="m1_outer_end_piece_coil_pv0x7fa327a7dee0">
+        <volumeref ref="m1_outer_end_coil_lv0x7fa327a77510"/>
+        <position name="m1_outer_end_piece_coil_pv0x7fa327a7dee0_pos" unit="mm" x="-71.3194544697819" y="-71.3194544697819" z="18.18123852528"/>
+        <rotation name="m1_outer_end_piece_coil_pv0x7fa327a7dee0_rot" unit="deg" x="-90" y="45" z="180"/>
+      </physvol>
+      <physvol copynumber="1" name="m1_outer_end_piece_coil_pv0x7fa327a7e1e0">
+        <volumeref ref="m1_outer_end_coil_lv0x7fa327a77510"/>
+        <position name="m1_outer_end_piece_coil_pv0x7fa327a7e1e0_pos" unit="mm" x="71.3194544697819" y="-71.3194544697819" z="18.18123852528"/>
+        <rotation name="m1_outer_end_piece_coil_pv0x7fa327a7e1e0_rot" unit="deg" x="-90" y="-45" z="180"/>
+      </physvol>
+      <physvol copynumber="2" name="m1_outer_end_piece_coil_pv0x7fa327a7e430">
+        <volumeref ref="m1_outer_end_coil_lv0x7fa327a77510"/>
+        <position name="m1_outer_end_piece_coil_pv0x7fa327a7e430_pos" unit="mm" x="71.3194544697819" y="71.3194544697819" z="18.18123852528"/>
+        <rotation name="m1_outer_end_piece_coil_pv0x7fa327a7e430_rot" unit="deg" x="90" y="-45" z="0"/>
+      </physvol>
+      <physvol copynumber="3" name="m1_outer_end_piece_coil_pv0x7fa327a7e6b0">
+        <volumeref ref="m1_outer_end_coil_lv0x7fa327a77510"/>
+        <position name="m1_outer_end_piece_coil_pv0x7fa327a7e6b0_pos" unit="mm" x="-71.3194544697819" y="71.3194544697819" z="18.18123852528"/>
+        <rotation name="m1_outer_end_piece_coil_pv0x7fa327a7e6b0_rot" unit="deg" x="90" y="45" z="0"/>
+      </physvol>
+    </volume>
+    <volume name="World_lv0x7fa3279eb7d0">
+      <materialref ref="G4_AIR0x7fa38084eb70"/>
+      <solidref ref="World_solid0x7fa3279eb760"/>
+      <physvol name="d1_0_pv0x7fa3279eeb00">
+        <volumeref ref="d1_container_lv0x7fa3279e2110"/>
+        <position name="d1_0_pv0x7fa3279eeb00_pos" unit="mm" x="0" y="0" z="250"/>
+      </physvol>
+      <physvol name="m1_0_pv0x7fa3279eeb50">
+        <volumeref ref="m1_container_lv0x7fa327a75460"/>
+        <position name="m1_0_pv0x7fa3279eeb50_pos" unit="mm" x="0" y="0" z="575.000003"/>
+      </physvol>
+      <physvol copynumber="1" name="d1_1_pv0x7fa3279eeba0">
+        <volumeref ref="d1_container_lv0x7fa3279e2110"/>
+        <position name="d1_1_pv0x7fa3279eeba0_pos" unit="mm" x="0" y="0" z="900.000006"/>
+      </physvol>
+      <physvol copynumber="1" name="m1_1_pv0x7fa3279eec30">
+        <volumeref ref="m1_container_lv0x7fa327a75460"/>
+        <position name="m1_1_pv0x7fa3279eec30_pos" unit="mm" x="0" y="0" z="1225.000009"/>
+      </physvol>
+      <physvol copynumber="2" name="d1_2_pv0x7fa3279eeca0">
+        <volumeref ref="d1_container_lv0x7fa3279e2110"/>
+        <position name="d1_2_pv0x7fa3279eeca0_pos" unit="mm" x="0" y="0" z="1550.000012"/>
+      </physvol>
+      <physvol copynumber="2" name="m1_2_pv0x7fa3279eed50">
+        <volumeref ref="m1_container_lv0x7fa327a75460"/>
+        <position name="m1_2_pv0x7fa3279eed50_pos" unit="mm" x="0" y="0" z="1875.000015"/>
+      </physvol>
+      <physvol copynumber="3" name="d1_3_pv0x7fa3279eeda0">
+        <volumeref ref="d1_container_lv0x7fa3279e2110"/>
+        <position name="d1_3_pv0x7fa3279eeda0_pos" unit="mm" x="0" y="0" z="2200.000018"/>
+      </physvol>
+      <physvol name="m1_outer_end_piece_0_pv0x7fa3279eee60">
+        <volumeref ref="m1_outer_end_container_lv0x7fa327a756c0"/>
+        <position name="m1_outer_end_piece_0_pv0x7fa3279eee60_pos" unit="mm" x="0" y="0" z="481.81676447472"/>
+      </physvol>
+      <physvol copynumber="1" name="m1_outer_end_piece_1_pv0x7fa3279eeef0">
+        <volumeref ref="m1_outer_end_container_lv0x7fa327a756c0"/>
+        <position name="m1_outer_end_piece_1_pv0x7fa3279eeef0_pos" unit="mm" x="0" y="0" z="668.18124452528"/>
+        <rotation name="m1_outer_end_piece_1_pv0x7fa3279eeef0_rot" unit="deg" x="180" y="0" z="180"/>
+      </physvol>
+      <physvol copynumber="2" name="m1_outer_end_piece_2_pv0x7fa3279ef050">
+        <volumeref ref="m1_outer_end_container_lv0x7fa327a756c0"/>
+        <position name="m1_outer_end_piece_2_pv0x7fa3279ef050_pos" unit="mm" x="0" y="0" z="1131.81677047472"/>
+      </physvol>
+      <physvol copynumber="3" name="m1_outer_end_piece_3_pv0x7fa3279ef0a0">
+        <volumeref ref="m1_outer_end_container_lv0x7fa327a756c0"/>
+        <position name="m1_outer_end_piece_3_pv0x7fa3279ef0a0_pos" unit="mm" x="0" y="0" z="1318.18125052528"/>
+        <rotation name="m1_outer_end_piece_3_pv0x7fa3279ef0a0_rot" unit="deg" x="180" y="0" z="180"/>
+      </physvol>
+      <physvol copynumber="4" name="m1_outer_end_piece_4_pv0x7fa3279ef180">
+        <volumeref ref="m1_outer_end_container_lv0x7fa327a756c0"/>
+        <position name="m1_outer_end_piece_4_pv0x7fa3279ef180_pos" unit="mm" x="0" y="0" z="1781.81677647472"/>
+      </physvol>
+      <physvol copynumber="5" name="m1_outer_end_piece_5_pv0x7fa3279ef210">
+        <volumeref ref="m1_outer_end_container_lv0x7fa327a756c0"/>
+        <position name="m1_outer_end_piece_5_pv0x7fa3279ef210_pos" unit="mm" x="0" y="0" z="1968.18125652528"/>
+        <rotation name="m1_outer_end_piece_5_pv0x7fa3279ef210_rot" unit="deg" x="180" y="0" z="180"/>
+      </physvol>
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="World_lv0x7fa3279eb7d0"/>
+  </setup>
+
+</gdml>
