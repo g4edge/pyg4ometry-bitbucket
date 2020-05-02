@@ -84,7 +84,7 @@ def CF_BeamPipe(name, bpLength = 500, bpId = 30, bpThickness = 2.5, flange1 = 'D
 
     # make first flange
     if flange1 != None :
-        flange1      = CF_BlankFlange(name+"flange1",flange1,reg=reg, vis=False)
+        flange1      = CF_BlankFlange(name+"flange1",flange1,reg=reg, vis=False, write = False)
         flange1Solid = flange1['logical'].solid
 
         # cut through flange
@@ -98,7 +98,7 @@ def CF_BeamPipe(name, bpLength = 500, bpId = 30, bpThickness = 2.5, flange1 = 'D
 
     # add second flange
     if flange2 != None :
-        flange2      = CF_BlankFlange(name+"flange2",flange2,reg=reg,vis=False)
+        flange2      = CF_BlankFlange(name+"flange2",flange2,reg=reg, vis=False, write = False)
         flange2Solid = flange2['logical'].solid
 
         # cut through flange
@@ -136,8 +136,67 @@ def CF_BeamPipe(name, bpLength = 500, bpId = 30, bpThickness = 2.5, flange1 = 'D
 def CF_CylindiricalChamber(name):
     pass
 
-def CF_CuboidalChamber(name):
-    pass
+def CF_CuboidalChamber(name, width = 650, height = 300, length = 1000,
+                       thickness = 15, flange = 30, radius = 10,
+                       ports={'port1': {'rotn': 0, 'id': 100, 'thickness': 5, 'length': 900, 'flange': 'DN100', 'term': 'DN40'},
+                              'port2': {'rotn': 20/360.0*2*_np.pi, 'id': 30, 'thickness': 5, 'length': 900, 'flange': 'DN40', 'term': 'DN40'},
+                              'port3': {'rotn': _np.pi/2, 'id': 100, 'thickness': 5, 'length': 400, 'flange': 'DN100', 'term': 'DN40'}
+                              },
+                       reg = None, vis = True):
+    if reg == None:
+        reg = _g4.Registry()
+
+    chamberBodyOuter  = _g4.solid.Box(name+"_chamberBodyOuterSolid",width-2*flange,height-4*thickness,length-2*flange,reg)
+    chamberBodyInner  = _g4.solid.Box(name+"_chamberBodyInnerSolid",width-2*flange-2*thickness,height-4*thickness+lengthSafety,length-2*flange-2*thickness,reg)
+    chamberBodySolid  = _g4.solid.Subtraction(name+"_chamberBody",chamberBodyOuter, chamberBodyInner, [[0,0,0],[0,0,0]],reg)
+
+    chamberFlangeOuter = _g4.solid.Box(name+"_chamberFlangeOuterSolid",width,thickness,length,reg)
+    chamberFlangeInner = _g4.solid.Box(name+"_chamberFlangeInnerSolid",width-2*flange-2*thickness, thickness+lengthSafety, length-2*flange-2*thickness, reg)
+    chamberFlangeSolid  = _g4.solid.Subtraction(name+"_flangeBody",chamberFlangeOuter, chamberFlangeInner, [[0,0,0],[0,0,0]],reg)
+
+    chamberSolid1 = _g4.solid.Union(name+"_chamberSolid1",chamberBodySolid,chamberFlangeSolid,[[0,0,0],[0,height/2-2*thickness+thickness/2.0-lengthSafety,0]],reg)
+    chamberSolid2 = _g4.solid.Union(name+"_chamberSolid2",chamberSolid1,chamberFlangeSolid,[[0,0,0],[0,-(height/2-2*thickness+thickness/2.0-lengthSafety),0]],reg)
+
+    for k in ports :
+        port      = ports[k]
+        rotn      = port['rotn']
+        lengthPort= port['length']
+        id        = port['id']
+        thickness = port['thickness']
+        flangePort= port['flange']
+        term      = port['term']
+
+        bp = CF_BeamPipe(name+"_"+k, bpLength=lengthPort,bpId=id, bpThickness=thickness, flange1=None,flange2=flangePort,reg=reg,vis=False)
+
+        bpSolid      = bp['logical'].solid
+
+        bpCutSolid   = _g4.solid.Tubs(bpSolid.name+"_cut_"+k,0,id/2,length,0,"2*pi",reg,"mm","rad")
+
+        chamberSolid2 = _g4.solid.Subtraction(name+"_chamberSolid3_"+k,chamberSolid2,bpCutSolid,
+                                             [[0,rotn,0],[length/2*_np.sin(rotn),0,length/2*_np.cos(rotn)]],reg)
+        chamberSolid2 = _g4.solid.Union(name+"_chamberSolid4_"+k,chamberSolid2,bpSolid,
+                                       [[0,rotn,0],[lengthPort/2*_np.sin(rotn),0,lengthPort/2*_np.cos(rotn)]],reg)
+        chamberSolid2 = _g4.solid.Subtraction(name+"_chamberSolid5_"+k, chamberSolid2, chamberBodyInner,
+                                              [[0,0,0],[0,0,0]],reg)
+
+    chamberMaterial = _g4.MaterialPredefined("G4_STAINLESS-STEEL")
+    chamberLogical  = _g4.LogicalVolume(chamberSolid2, chamberMaterial, "chamberLogical", reg)
+
+    # set world volume
+    reg.setWorld(chamberLogical.name)
+
+    extent = chamberLogical.extent(True)
+
+    print(extent)
+
+    if vis :
+        v = _vi.VtkViewer()
+        v.addLogicalVolume(reg.getWorldVolume())
+        # v.addBooleanSolidRecursive(chamberSolid2)
+        v.setOpacity(1.0)
+        v.view()
+
+    return {'logical':chamberLogical}
 
 def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
                         ports = {'port1':{'rotn':[0,         0,0], 'id':30, 'thickness':5, 'length':100, 'flange':'DN40', 'term':'DN40'},
@@ -202,6 +261,69 @@ def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
     return {'logical':chamberLogical}
 
 
+def Test_Cuboidal(vis = False, interactive = False) :
+    reg = _g4.Registry()
+
+    chamber = CF_CuboidalChamber("test1", vis=False,reg=reg)
+
+    log = chamber['logical']
+    extent = log.extent(True)
+
+    # create world box
+    ws = _g4.solid.Box("worldSolid",
+                       10*(extent[1][0]-extent[0][0]),
+                       10*(extent[1][1]-extent[0][1]),
+                       10*(extent[1][2]-extent[0][2]),
+                       reg,"mm")
+
+    wm = _g4.MaterialPredefined("G4_Galactic")
+
+    wl = _g4.LogicalVolume(ws, wm, "wl", reg)
+    cp = _g4.PhysicalVolume([0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
+
+    reg.setWorld(wl.name)
+
+    # test extent of physical volume
+    extentBB = wl.extent(includeBoundingSolid=True)
+
+
+    ################################
+    # export as obj
+    ################################
+    _vis.pycsgMeshToObj(log.mesh.localmesh,_path.join(_path.dirname(__file__),"CuboidalChamber"))
+
+    ################################
+    # write gdml
+    ################################
+    w = _gd.Writer()
+    w.addDetector(reg)
+    w.write(_path.join(_path.dirname(__file__),"CuboidalChamber.gdml"))
+
+    ################################
+    # write fluka
+    ################################
+    freg = _convert.geant4Logical2Fluka(wl)
+
+    w = _fluka.Writer()
+    w.addDetector(freg)
+    w.write(_path.join(_os.path.dirname(__file__),"CuboidalChamber.inp"))
+
+    # flair output file
+    f = _fluka.Flair("CuboidalChamber.inp",extentBB)
+    f.write(_path.join(_path.dirname(__file__),"CuboidalChamber.flair"))
+
+    ################################
+    # visualisation
+    ################################
+    v = None
+    if vis:
+        v = _vis.VtkViewer()
+        v.addLogicalVolume(wl)
+        v.setOpacity(0.25)
+        v.addAxes(_vis.axesFromExtents(extent)[0])
+        v.view(interactive=interactive)
+
+
 def Test(vis = True, interactive = False):
 
     reg = _g4.Registry()
@@ -231,16 +353,6 @@ def Test(vis = True, interactive = False):
     extentBB = wl.extent(includeBoundingSolid=True)
 
     ################################
-    # visualisation
-    ################################
-    v = None
-    if vis :
-        v = _vis.VtkViewer()
-        v.addLogicalVolume(wl)
-        v.setOpacity(0.25)
-        v.view(interactive=interactive)
-
-    ################################
     # export as obj
     ################################
     _vis.pycsgMeshToObj(log.mesh.localmesh,_path.join(_path.dirname(__file__),"SphericalChamber"))
@@ -264,3 +376,13 @@ def Test(vis = True, interactive = False):
     # flair output file
     f = _fluka.Flair("SphericalChamber.inp",extentBB)
     f.write(_path.join(_path.dirname(__file__),"SphericalChamber.flair"))
+
+    ################################
+    # visualisation
+    ################################
+    v = None
+    if vis :
+        v = _vis.VtkViewer()
+        v.addLogicalVolume(wl)
+        v.setOpacity(0.25)
+        v.view(interactive=interactive)
