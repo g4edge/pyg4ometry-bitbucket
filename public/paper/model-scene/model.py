@@ -1,7 +1,7 @@
 import pyg4ometry 
 import os 
 
-def buildSystem(vis = True, write = True) :
+def buildModel(vis = True, write = True) :
     # 
     reg = pyg4ometry.geant4.Registry()
 
@@ -94,7 +94,7 @@ def buildSystem(vis = True, write = True) :
     if write :
         w = pyg4ometry.gdml.Writer()
         w.addDetector(reg)
-        w.write(os.path.join(os.path.dirname(__file__), "system.gdml"))    
+        w.write(os.path.join(os.path.dirname(__file__), "model.gdml"))    
     
     
     
