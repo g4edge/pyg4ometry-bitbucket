@@ -12,7 +12,7 @@
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="125.0"/>
 		<box lunit="mm" name="Cube" x="100" y="100" z="100"/>
 	</solids>
 	<structure>

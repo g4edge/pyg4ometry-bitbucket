@@ -14,7 +14,7 @@
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
 		<box lunit="mm" name="Cube" x="100" y="100" z="100"/>
-		<para alpha="0.2" aunit="rad" lunit="mm" name="Para" phi="0.2" theta="0.2" x="50" y="50" z="50"/>
+		<para alpha="0.2" aunit="rad" lunit="mm" name="Para" phi="0.2" theta="0.2" x="50" y="50" z="6.25"/>
 	</solids>
 	<structure>
 		<volume name="lvPara">

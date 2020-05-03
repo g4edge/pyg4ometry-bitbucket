@@ -13,7 +13,7 @@
 	</materials>
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<cone aunit="rad" deltaphi="pi" lunit="mm" name="Cone" rmax1="100" rmax2="70" rmin1="0" rmin2="0" startphi="pi" z="100"/>
+		<cone aunit="rad" deltaphi="pi" lunit="mm" name="Cone" rmax1="73.75" rmax2="70.0" rmin1="0.0" rmin2="0.0" startphi="pi" z="12.5"/>
 	</solids>
 	<structure>
 		<volume name="lvCone">

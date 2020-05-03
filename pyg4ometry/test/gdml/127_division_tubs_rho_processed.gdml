@@ -13,7 +13,7 @@
 	</materials>
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<tube aunit="rad" deltaphi="pi" lunit="mm" name="tube" rmax="25" rmin="10" startphi="0" z="500"/>
+		<tube aunit="rad" deltaphi="pi" lunit="mm" name="tube" rmax="25.0" rmin="23.125" startphi="0" z="500"/>
 	</solids>
 	<structure>
 		<volume name="lvTube">

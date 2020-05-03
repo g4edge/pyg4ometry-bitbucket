@@ -13,7 +13,7 @@
 	</materials>
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<polyhedra aunit="rad" deltaphi="4*pi/4" lunit="mm" name="Polyh" numsides="3" startphi="-pi/4">
+		<polyhedra aunit="rad" deltaphi="1.0471975511965976" lunit="mm" name="Polyh" numsides="1" startphi="1.308996938995747">
 			<zplane rmax="5" rmin="0" z="0"/>
 			<zplane rmax="15" rmin="0" z="5"/>
 			<zplane rmax="15" rmin="0" z="8"/>
@@ -31,7 +31,7 @@
 		<volume name="lvDivision">
 			<materialref ref="AIR"/>
 			<solidref ref="Polyh"/>
-			<divisionvol axis="kPhi" number="3" offset="0.0981747704247" unit="rad" width="0.0981747704247">
+			<divisionvol axis="kPhi" number="3" offset="0.09817477042468103" unit="rad" width="0.09817477042468103">
 				<volumeref ref="lvPolyh"/>
 			</divisionvol>
 		</volume>

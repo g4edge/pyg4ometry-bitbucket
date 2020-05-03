@@ -14,9 +14,9 @@
 	<solids>
 		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
 		<polycone aunit="rad" deltaphi="4" lunit="mm" name="Polycone" startphi="1">
-			<zplane rmax="9" rmin="1" z="-20"/>
-			<zplane rmax="5" rmin="3" z="0"/>
-			<zplane rmax="9" rmin="1" z="20"/>
+			<zplane rmax="9.0" rmin="8.0" z="-20"/>
+			<zplane rmax="5.0" rmin="4.75" z="0"/>
+			<zplane rmax="9.0" rmin="8.0" z="20"/>
 		</polycone>
 	</solids>
 	<structure>
