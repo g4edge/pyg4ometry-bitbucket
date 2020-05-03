@@ -1,0 +1,39 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+ASSIGNMA    BLCKHOLE    BLKBDY
+ASSIGNMA      CARBON    AIRVOL
+ASSIGNMA         AIR    AIRVOL
+ASSIGNMA      COPPER     FC_CU
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RPP BB_IN      -200. 200. -200. 200. -200. 200.
+RPP BB_OUT     -300. 300. -300. 300. -300. 300.
+RCC FC_SS_OU   0. 0. 0. 0. 0. 15. 10.0
+RCC FC_SS_IN   0. 0. 0. 0. 0. 15. 9.0
+TRC FC1_SS_O   0. 0. 15. 0. 0. 15. 10.0 2.0
+TRC FC1_SS_I   0. 0. 15.0 0. 0. 14.25 9.0 1.3
+RCC FC2_SS_O   0. 0. 0. 0. 0. -1.0 10.0
+RCC FC2_SS_I   0. 0.0 0.0 0. 0. -1.0 3.
+RCC FC3_CU_O   0. 0. 0. 0. 0. 32.5 12.5
+END
+BLKBDY       5 +BB_OUT -BB_IN
+FC_SS        5 +FC_SS_OU -FC_SS_IN
+               | +FC1_SS_O -FC1_SS_I
+               | +FC2_SS_O -FC2_SS_I
+AIRVOL       5 +BB_IN -FC_SS_OU -FC1_SS_O -FC2_SS_O -FC3_CU_O
+               | +FC_SS_IN
+               | +FC1_SS_I
+               | +FC2_SS_I
+FC_CU        5 +FC3_CU_O -FC_SS_OU -FC1_SS_O
+END
+GEOEND
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ         1.0
+* Set the number of primary histories to be simulated in the run
+START
+STOP

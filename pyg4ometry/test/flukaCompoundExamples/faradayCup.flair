@@ -1,0 +1,108 @@
+# flair project file
+Version: 300
+Mode: fluka
+md5: 00eb1d12ae6156b84868e5df3975a86f
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+ASSIGNMA , BLCKHOLE BLKBDY
+ASSIGNMA , CARBON AIRVOL
+ASSIGNMA , AIR AIRVOL
+ASSIGNMA , COPPER FC_CU
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+RPP BB_IN -200 200 -200 200 -200 200
+	@select=8
+RPP BB_OUT -300 300 -300 300 -300 300
+	@select=8
+RCC FC_SS_OU 0. 0. 0. 0. 0. 15 10.0
+	@select=8
+RCC FC_SS_IN 0. 0 0 0. 0. 15 9.0
+	@select=8
+TRC FC1_SS_O 0. 0 15 0. 0. 15 10.0 2.0
+	@select=8
+TRC FC1_SS_I 0. 0. 15.0 0. 0. 14.25 9.0 1.3
+	@select=8
+RCC FC2_SS_O 0 0. 0 0. 0. -1.0 10.0
+	@select=8
+RCC FC2_SS_I 0. 0.0 0.0 0. 0. -1.0 3
+	@select=9
+RCC FC3_CU_O 0. 0 0. 0. 0. 32.5 12.5
+	@select=8
+END
+REGION BLKBDY
+	+BB_OUT -BB_IN
+REGION FC_SS
+	+FC_SS_OU -FC_SS_IN
+	| +FC1_SS_O -FC1_SS_I
+	| +FC2_SS_O -FC2_SS_I
+REGION AIRVOL
+	+BB_IN -FC_SS_OU -FC1_SS_O -FC2_SS_O -FC3_CU_O
+	| +FC_SS_IN
+	| +FC1_SS_I
+	| +FC2_SS_I
+REGION FC_CU
+	+FC3_CU_O -FC_SS_OU -FC1_SS_O
+END
+GEOEND
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+*Set the random number seed
+RANDOMIZ , 1.0
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Page: Flair
+
+# Run information
+Run: <default>
+	Last:     5
+End
+Geometry: Geometry
+	Synchronize: 1
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	coord: Z-X
+	extends: 28.8 18.6677
+	layer: Media
+	origin: 2.52479 0.139197 12.3729
+	subtype: Material
+	title: GeoViewer Red plot
+End
+Plot: Green
+	Type: Geometry
+	basisu: 0.0131918 0.0741952 0.997156
+	basisv: 0.201598 0.976567 -0.0753302
+	extends: 40.1878 26.099
+	layer: 3D
+	origin: 0.231172 1.28681 19.1793
+	subtype: Material
+	title: GeoViewer Green plot
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 28.8 18.6677
+	layer: Media
+	origin: 2.52479 0.139197 12.3729
+	subtype: Material
+	title: GeoViewer Blue plot
+End
+Plot: Magenta
+	Type: Geometry
+	coord: X-Y
+	extends: 28.7449 18.6677
+	layer: Media
+	origin: 2.52479 0.139197 12.3729
+	subtype: Material
+	title: GeoViewer Magenta plot
+End
