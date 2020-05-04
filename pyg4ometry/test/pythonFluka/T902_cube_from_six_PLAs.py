@@ -47,6 +47,8 @@ def Test(vis=False, interactive=False):
     
     freg.addRegion(region1)
 
+    freg.assignma("IRON", region1)
+
     greg = convert.fluka2Geant4(freg,
                                 withLengthSafety=True,
                                 splitDisjointUnions=False)

@@ -51,6 +51,8 @@ def Test(vis=False, interactive=False) :
     freg.addRegion(r1)
     freg.addRegion(r2)
 
+    freg.assignma("IRON", r1, r2)
+
     quaExtent = {"OUTER": Extent([-200., 0., 0.], [200, 200, 1100]),
                  "INNER": Extent([-100., 50., 250], [100., 150., 850.])}
 
