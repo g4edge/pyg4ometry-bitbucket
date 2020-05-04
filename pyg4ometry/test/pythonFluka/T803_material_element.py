@@ -7,15 +7,13 @@ def Test(vis=False, interactive=False):
 
     density = 2.48
     z = 87
-    massNumber = None
+    massNumber = None # i.e. determine it automatically given z.
     fr = Element("FRANCIUM", z, density, massNumber=massNumber,
                  flukaregistry=freg)
     card = fr.toCard()
     assert card.keyword == "MATERIAL"
     assert card.what1 == z
     assert card.what3 == density
-    assert card.what6 == massNumber
-
 
     rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg)
     zone = Zone()
