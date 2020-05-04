@@ -1,0 +1,14 @@
+option, magnetGeometryType="polescircular",
+	beampipeRadius=2.5*cm,
+	beampipeThickness = 1.5*mm;
+
+! another step up
+m1: quadrupole, l=0.15*m, k1=0.002, outerDiameter=40*cm;
+
+d1: drift, l=0.5*m;
+l1: line = (d1,m1,d1,m1,d1,m1,d1);
+
+use, l1;
+
+beam, particle="e-",
+      energy=1*GeV;

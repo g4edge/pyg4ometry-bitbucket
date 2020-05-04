@@ -56,10 +56,10 @@ def test_T001_PycsgTiming_Union():
 
         m1, dt = wrappedUnion()
 
-        print(i)
         data[i,0] = i
         data[i,1] = len(m1.polygons)
         data[i,2] = dt
+        print(i,data[i,1],dt)
 
     plotData(data)
 
@@ -100,10 +100,10 @@ def test_T002_pycsgTiming_Intersection():
 
         m1, dt  = wrappedIntersection()
 
-        print(i)
         data[i,0] = i
         data[i,1] = len(m1.polygons)
         data[i,2] = dt
+        print(i,data[i,1],dt)
 
     plotData(data)
 
@@ -143,10 +143,11 @@ def test_T003_pycsg_Timing_Difference():
 
         m1, dt = wrappedSubtraction()
 
-        print(i)
         data[i,0] = i
         data[i,1] = len(m1.polygons)
         data[i,2] = dt
+        print(i,data[i,1],dt)
+
 
     plotData(data)
 
