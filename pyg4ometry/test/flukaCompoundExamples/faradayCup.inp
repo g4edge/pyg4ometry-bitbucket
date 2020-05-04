@@ -6,6 +6,7 @@ ASSIGNMA    BLCKHOLE    BLKBDY
 ASSIGNMA      CARBON    AIRVOL
 ASSIGNMA         AIR    AIRVOL
 ASSIGNMA      COPPER     FC_CU
+ASSIGNMA      NICKEL     FC_SS
 * Define the beam position
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
