@@ -1,6 +1,9 @@
 from setuptools import find_packages
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
+#import os
+#os.environ["CC"] = "gcc-9"
+#os.environ["CXX"] = "g++-9"
 
 class ctypes(Extension):
     pass
@@ -34,6 +37,7 @@ setup(
     packages=find_packages(exclude=["docs", "tests"]),
     install_requires=["antlr4-python3-runtime==4.7.1",  # Generated with 4.7.1 - this avoids warnings
                       "matplotlib",
+                      "pandas",
                       "networkx == 2.2",
                       "numpy",
                       "vtk",

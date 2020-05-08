@@ -11,9 +11,10 @@ def Test(vis=False, interactive=False):
 
     z = Zone()
     z.addIntersection(rpp)
-    region = Region("RPP_REG", material="COPPER")
+    region = Region("RPP_REG")
     region.addZone(z)
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
 

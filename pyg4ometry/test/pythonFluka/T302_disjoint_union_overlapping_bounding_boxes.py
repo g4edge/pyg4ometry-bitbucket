@@ -17,12 +17,13 @@ def Test(vis=False, interactive=False):
     z1.addSubtraction(rpp2)
     z2.addIntersection(rpp3)
 
-    region = Region("RPP_REG", material="COPPER")
+    region = Region("RPP_REG")
     region.addZone(z1)
     region.addZone(z2)
 
-    cz = region.get_connected_zones()
+    cz = region.connectedZones()
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
 

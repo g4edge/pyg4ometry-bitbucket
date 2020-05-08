@@ -46,12 +46,15 @@ def Test(vis=False, interactive=False):
     z.addSubtraction(xypsub)
     z.addSubtraction(plasub)
 
-    region = Region("RPP_REG", material="COPPER")
+    region = Region("RPP_REG")
     region.addZone(z)
 
     assert len(region.bodies()) == 10
 
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
+
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
 
@@ -69,4 +72,4 @@ def Test(vis=False, interactive=False):
     return {"testStatus": True, "logicalVolume": greg.getWorldVolume(), "vtkViewer":v}
 
 if __name__ == '__main__':
-    Test()
+    Test(True, True)

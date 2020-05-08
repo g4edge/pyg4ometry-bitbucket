@@ -46,13 +46,14 @@ def Test(vis=False, interactive=False):
     z1.addSubtraction(z2)
     z3.addIntersection(z2)
 
-    region1 = Region("REG_INF1", material="COPPER")
-    region2 = Region("REG_INF2", material="COPPER")
+    region1 = Region("REG_INF1")
+    region2 = Region("REG_INF2")
     region1.addZone(z1)
     region2.addZone(z3)
 
     freg.addRegion(region1)
     freg.addRegion(region2)
+    freg.assignma("COPPER", region1, region2)
 
     greg = convert.fluka2Geant4(freg, withLengthSafety=True)
 

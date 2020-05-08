@@ -21,9 +21,10 @@ def Test(vis=False, interactive=False) :
     z.addSubtraction(end2)
     z.addSubtraction(end3)
 
-    region = Region("QUA_REG", material="COPPER")
+    region = Region("QUA_REG")
     region.addZone(z)
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     quaExtent = {"QUA_REG": Extent([-150., 100., 0], [150., 200., 1000.])}
 

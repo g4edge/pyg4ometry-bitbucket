@@ -143,7 +143,7 @@ from . import T713_YEC_minimisation
 from . import T713_ZEC_minimisation
 
 from . import T801_filter_redundant_halfspaces
-from . import T802_materialMap
+from . import T803_material_element
 
 from . import T901_cube_from_XYP_XZP_YZP
 from . import T902_cube_from_six_PLAs
@@ -555,8 +555,8 @@ class PythonFlukaAuthoringTests(_unittest.TestCase):
     def test_PythonFluka_T801_filter_redundant_halfspaces(self):
         T801_filter_redundant_halfspaces.Test(True, False)
 
-    def test_PythonFluka_T802_materialMap(self):
-        T802_materialMap.Test(True, False)
+    def test_PythonFluka_T803_material_element(self):
+        T803_material_element.Test(True, False)
 
 
     # 9999999999

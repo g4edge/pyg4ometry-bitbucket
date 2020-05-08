@@ -42,14 +42,16 @@ def Test(vis=False, interactive=False) :
 
     z1.addSubtraction(z2)
 
-    r1 = Region("OUTER", material="COPPER")
+    r1 = Region("OUTER")
     r1.addZone(z1)
 
-    r2 = Region("INNER", material="COPPER")
+    r2 = Region("INNER")
     r2.addZone(z2)
 
     freg.addRegion(r1)
     freg.addRegion(r2)
+
+    freg.assignma("IRON", r1, r2)
 
     quaExtent = {"OUTER": Extent([-200., 0., 0.], [200, 200, 1100]),
                  "INNER": Extent([-100., 50., 250], [100., 150., 850.])}

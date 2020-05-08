@@ -40,7 +40,7 @@ def Test(vis=False, interactive=False):
     z7 = Zone(name="connected_part_7")
     z7.addIntersection(rpp7)
 
-    region = Region("REGION", material="COPPER")
+    region = Region("REGION")
     region.addZone(z1)
     region.addZone(z2)
     region.addZone(z3)
@@ -50,6 +50,7 @@ def Test(vis=False, interactive=False):
     region.addZone(z7)
 
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
 

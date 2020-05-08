@@ -12,9 +12,10 @@ def Test(vis=False, interactive=False):
               flukaregistry=freg)
     z = Zone()
     z.addIntersection(trc)
-    region = Region("TRC_REG", material="COPPER")
+    region = Region("TRC_REG")
     region.addZone(z)
     freg.addRegion(region)
+    freg.assignma("COPPER", region)
 
     greg = convert.fluka2Geant4(freg)
 
