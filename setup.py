@@ -2,10 +2,16 @@ from setuptools import find_packages
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
-
 class ctypes(Extension):
     pass
 
+# might not have cython before running setup
+try:
+    from Cython.Build import cythonize
+except ImportError:
+     def cythonize(*args, **kwargs):
+         from Cython.Build import cythonize
+         return cythonize(*args, **kwargs)
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 #exts.append(ctypes('pyg4ometry.pycgal.pyg4_cgal', 
@@ -35,7 +41,8 @@ setup(
                       "GitPython",
                       "configparser",
                       "testtools",
-                      "pypandoc"],
+                      "pypandoc",
+                      "ipython"],
     # pyqt5
     ext_modules=exts,
     python_requires=">=3.7.1", # refer to pep440 for writing these correctly
