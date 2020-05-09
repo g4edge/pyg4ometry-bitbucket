@@ -10,15 +10,12 @@ def Test(vis=False, interactive=False):
     fr = Element("FRANCIUM", 87, 2.48, flukaregistry=freg)
     es = Element("EINSTEIN", 99, 8.84, flukaregistry=freg)
 
-    fr2es3 = Compound("Fr2Es3", 7.5, [(fr, 2.0), (es, 3.0)],
-                      fractionType="atomic", flukaregistry=freg)
+    fr2es3 = Compound("Fr2Es3", 7.5,
+                      [(fr, 2.0), (es, 3.0)],
+                      fractionType="mass",
+                      flukaregistry=freg)
 
     card = fr2es3.toCards()
-    # from IPython import embed; embed()
-    # assert card.keyword == "MATERIAL"
-    # assert card.what1 == z
-    # assert card.what3 == density
-    # assert card.what6 == massNumber
 
 
     rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg)
@@ -36,10 +33,18 @@ def Test(vis=False, interactive=False):
     greg = convert.fluka2Geant4(freg)
 
     lvmat = greg.logicalVolumeDict["RPP_REG_lv"].material
-    # assert lvmat.name == "FRANCIUM"
-    # assert lvmat.density == density
-    # assert lvmat.atomic_number == z
-    # assert lvmat.atomic_weight == 223
+    comp = lvmat.components
+    first = comp[0]
+    second = comp[1]
+
+    assert first[0].name == "FRANCIUM"
+    assert first[1] == 0.4
+    assert first[2] == "massfraction"
+
+    assert second[0].name == "EINSTEIN"
+    assert second[1] == 0.6
+    assert second[2] == "massfraction"
+
     greg.getWorldVolume().clipSolid()
 
     v = None

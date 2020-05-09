@@ -1,19 +1,22 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry, Element
+from pyg4ometry.fluka import (RPP, Region,
+                              Zone, FlukaRegistry,
+                              Element, Compound)
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    density = 2.48
-    z = 87
-    massNumber = None # i.e. determine it automatically given z.
-    fr = Element("FRANCIUM", z, density, massNumber=massNumber,
-                 flukaregistry=freg)
-    card = fr.toCard()
-    assert card.keyword == "MATERIAL"
-    assert card.what1 == z
-    assert card.what3 == density
+    fr = Element("FRANCIUM", 87, 2, flukaregistry=freg)
+    es = Element("EINSTEIN", 99, 8, flukaregistry=freg)
+
+    fr2es3 = Compound("Fr2Es3", 7.5,
+                      [(fr, 1.0), (es, 1.0)],
+                      fractionType="volume",
+                      flukaregistry=freg)
+
+    card = fr2es3.toCards()
+
 
     rpp = RPP("RPP_BODY", 0, 10, 0, 10, 0, 10, flukaregistry=freg)
     zone = Zone()
@@ -24,15 +27,23 @@ def Test(vis=False, interactive=False):
     region.addZone(zone)
     freg.addRegion(region)
 
-    freg.addMaterialAssignments(fr, region)
+    freg.addMaterialAssignments(fr2es3, region)
 
     greg = convert.fluka2Geant4(freg)
 
     lvmat = greg.logicalVolumeDict["RPP_REG_lv"].material
-    assert lvmat.name == "FRANCIUM"
-    assert lvmat.density == density
-    assert lvmat.atomic_number == z
-    assert lvmat.atomic_weight == 223
+    comp = lvmat.components
+    first = comp[0]
+    second = comp[1]
+
+    assert first[0].name == "FRANCIUM"
+    assert first[1] == 0.2
+    assert first[2] == "massfraction"
+
+    assert second[0].name == "EINSTEIN"
+    assert second[1] == 0.8
+    assert second[2] == "massfraction"
+
     greg.getWorldVolume().clipSolid()
 
     v = None
