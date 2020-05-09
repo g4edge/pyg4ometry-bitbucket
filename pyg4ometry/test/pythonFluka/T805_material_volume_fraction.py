@@ -36,8 +36,6 @@ def Test(vis=False, interactive=False):
     first = comp[0]
     second = comp[1]
 
-    from IPython import embed; embed()
-
     assert first[0].name == "FRANCIUM"
     assert first[1] == 0.2
     assert first[2] == "massfraction"

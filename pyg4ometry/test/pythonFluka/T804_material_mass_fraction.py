@@ -12,7 +12,7 @@ def Test(vis=False, interactive=False):
 
     fr2es3 = Compound("Fr2Es3", 7.5,
                       [(fr, 2.0), (es, 3.0)],
-                      fractionType="volume",
+                      fractionType="mass",
                       flukaregistry=freg)
 
     card = fr2es3.toCards()
