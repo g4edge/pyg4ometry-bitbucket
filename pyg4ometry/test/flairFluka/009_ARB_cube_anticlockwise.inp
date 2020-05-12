@@ -7,17 +7,17 @@ BEAM
 * Define the beam position
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
-    0    0
-ARB arb        0  0  0  20  0  0
-    	      20 20  0   0 20  0
-	       0  0 20  20  0 20
-	      20 20 20   0 20 20
-	      1234 8765 6732 4851 7843 5621
+    0    0          
+ARB arb        0. 0. 0. 20. 0. 0. 20. 20. 0. 0. 20. 0. 0. 0. 20. 20. 0. 20. 20.
+              20. 20. 0. 20. 20. 1234. 8765. 6732. 4851. 7843. 5621.
+BOX blackhole  -10. -10. -10. 40. 0. 0. 0. 40. 0. 0. 0. 40.
 END
 arbreg       5 +arb
+blackhol     5 +blackhole -arb
 END
 GEOEND
 ASSIGNMA    BERYLLIU    arbreg
+ASSIGNMA    BLCKHOLE  blackhol
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
 RANDOMIZ          1.

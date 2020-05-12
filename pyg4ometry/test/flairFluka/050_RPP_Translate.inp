@@ -8,18 +8,18 @@ BEAM
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
     0    0          
-RPP bb         -200. 200. -200. 200. -200. 200.
+RPP blackhole  -200. 200. -200. 200. -200. 200.
 $start_translat 50.0 50.0 50.0
-RPP bb1        -50. 50. -50. 50. -50. 50.
-$end_translat 
+RPP rpp        -50. 50. -50. 50. -50. 50.
+$end_translat
 END
-vr           5 +bb -bb1
-bbrr         5 +bb1
+blackhole    5 +blackhole -rpp
+rppreg       5 +rpp
 END
 GEOEND
 ASSIGNMA    BLCKHOLE       bbr
-ASSIGNMA      VACUUM        vr
-ASSIGNMA    BERYLLIU      bbrr
+ASSIGNMA    BLCKHOLE blackhole
+ASSIGNMA    BERYLLIU    rppreg
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
 RANDOMIZ          1.

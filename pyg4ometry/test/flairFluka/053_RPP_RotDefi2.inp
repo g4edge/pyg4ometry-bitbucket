@@ -8,17 +8,17 @@ BEAM
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
     0    0          
-RPP bb         -200. 200. -200. 200. -200. 200.
+RPP blackhole  -200. 200. -200. 200. -200. 200.
 $start_transform bb1rotdefi
-RPP bb1        -50. 50. -50. 50. -50. 50.
-$end_transform 
+RPP rpp        -50. 50. -50. 50. -50. 50.
+$end_transform
 END
-vr           5 +bb -bb1
-bbrr         5 +bb1
+blackhole    5 +blackhole -rpp
+rppreg       5 +rpp
 END
 GEOEND
-ASSIGNMA      VACUUM        vr
-ASSIGNMA    BERYLLIU      bbrr
+ASSIGNMA    BLCKHOLE blackhole
+ASSIGNMA    BERYLLIU    rppreg
 ROT-DEFI                   45.       45.       50.       50.       50.bb1rotdefi
 ROT-DEFI                   30.      -30.       50.       50.       50.bb1rotdefi
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..

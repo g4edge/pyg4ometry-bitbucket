@@ -13,11 +13,14 @@ ARB arb        0  0  0  20  0  0
 	       0  0 20  20  0 20
 	      20 20 20   0 20 20
 	      4321 5678 2376 1584 3487 1265
+BOX blackhole  -10. -10. -10. 40. 0. 0. 0. 40. 0. 0. 0. 40.
 END
 arbreg       5 +arb
+blackhol     5 +blackhole -arb
 END
 GEOEND
 ASSIGNMA    BERYLLIU    arbreg
+ASSIGNMA    BLCKHOLE  blackhol
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
 RANDOMIZ          1.

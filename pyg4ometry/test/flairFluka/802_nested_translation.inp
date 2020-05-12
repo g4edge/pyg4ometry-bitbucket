@@ -1,15 +1,18 @@
 GEOBEGIN                                                              COMBNAME
-    0    0
+    0    0          
 $start_translat 10 10 10
 $start_translat 0 20 0
 $start_translat -10 -10 -10
-RPP rpp       0.0 10 0.0 10 0.0 10
+RPP rpp        -50. 50. -50. 50. -50. 50.
 $end_translat
 $end_translat
 $end_translat
+RPP blackhole  -100. 100. -100. 100. -100. 100.
 END
-rppreg       5 | +rpp 
+rppreg       5 | +rpp
+blackhol     5 +blackhole -rpp
 END
 GEOEND
 ASSIGNMA         TIN    rppreg
+ASSIGNMA    BLCKHOLE  blackhol
 STOP
