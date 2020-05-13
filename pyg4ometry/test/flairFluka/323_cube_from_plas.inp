@@ -1,0 +1,20 @@
+TITLE
+wooo a title
+GEOBEGIN                                                              COMBNAME
+    0    0          
+PLA yzplo1     1. 0. 0. 0. 0. 0.
+PLA yzphig1    1. 0. 0. 10. 0. 0.
+PLA xzplo1     0. 1. 0. 0. 0. 0.
+PLA xzphig1    0. 1. 0. 0. 10. 0.
+PLA xyplo1     0. 0. 1. 0. 0. 0.
+PLA xyphig1    0. 0. 1. 0. 0. 10.
+RPP blackhol   -50. 50. -50. 50. -50. 50.
+END
+cube1        5 +yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1
+blackhol     5 +blackhol -(+yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1)
+END
+GEOEND
+FREE
+ASSIGNMA  , HYDROGEN, cube1
+ASSIGNMA  , BLCKHOLE, blackhol
+STOP

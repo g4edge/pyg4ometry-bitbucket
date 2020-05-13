@@ -1,92 +1,99 @@
-#!/Users/Stuart/fluka/flair/flair
-# FLUKA Project file
-Version: 2
+# flair project file
+Version: 300
+Mode: fluka
 Title: wooo a title
-Input: 320_cube_from_halfspaces_transform.inp
-Submit: *Default
-Tabs: 0.1 0.32 0.56 0.81 1.0
+md5: ce80575b78eee7f29800a094dbfe0646
+Input:
+TITLE
+	wooo a title
+GEOBEGIN COMBNAME
+$start_transform rotx
+YZP yzplo1 0.0
+YZP yzphig1 10.
+XYP xyplo1 0.0
+XYP xyphig1 10.
+XZP xzplo1 0.0
+XZP xzphig1 10.
+$end_transform
+$start_transform roty
+YZP yzplo2 0.0
+YZP yzphig2 10.
+XYP xyplo2 0.0
+XYP xyphig2 10.
+XZP xzplo2 0.0
+XZP xzphig2 10.
+$end_transform
+$start_transform rotz
+YZP yzplo3 0.0
+YZP yzphig3 10.
+XYP xyplo3 0.0
+XYP xyphig3 10.
+XZP xzplo3 0.0
+XZP xzphig3 10.
+$end_transform
+RPP blackhole -50 50 -50 50 -50 50
+	@select=8
+END
+REGION cube1 5
+	+yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1
+REGION cube2 5
+	+yzphig2 -yzplo2 +xyphig2 -xyplo2 +xzphig2 -xzplo2
+REGION cube3 5
+	+yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3
+REGION blackhol
+	+blackhole -(+yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1) -(+yzphig2 -yzplo2 +xyphig2 -xyplo2 +xzphig2 -xzplo2) -(+yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3
+	)
+END
+GEOEND
+FREE
+ASSIGNMA , IRON cubeinf
+ASSIGNMA , HYDROGEN cube1
+ASSIGNMA , HYDROGEN cube2
+ASSIGNMA , HYDROGEN cube3
+ASSIGNMA , BLCKHOLE blackhol
+ROT-DEFI rotx 1. 45. 45. 10. 0.0 0.0
+ROT-DEFI roty 2. 45. 45. 0.0 10. 0.0
+ROT-DEFI rotz 3. 45. 45. 0.0 0.0 10.
+STOP
+EndInput
+
 Page: Geometry
-DefMain: True
-LinkPrg: lfluka
-F77bound: True
-F77dline: False
 
 # Run information
 Run: <default>
-	Prev:     0
-	Last:     5
-	Status:   0
-	Pid:      0
-	StartRun: 0
 End
 
-# Geometry Information
-Geometry:
-	Frame.bsplit: 0.5
-	Frame.tsplit: 0.5
-	Frame.vsplit: 0.5
-End
-
-# Geometry plot "GeoViewer Red plot"
+# Plots information
 Plot: Red
-	Format: .eps
-	Type:   Geometry
-	basisu: 1 0 0
-	basisv: 0 1 0
-	boundaries: 1
-	coord: X-Y
-	extends: 120 66.4766
-	labels: 1
-	layer: 3D
-	origin: -30.7598 11.8794 32
-	subtype: Material
-	title: GeoViewer Red plot
-End
-
-# Geometry plot "GeoViewer Green plot"
-Plot: Green
-	Format: .eps
-	Type:   Geometry
+	Type: Geometry
 	basisu: 0 0 1
 	basisv: 1 0 0
-	boundaries: 1
 	coord: Z-X
-	extends: 100 55.3971
-	labels: 1
+	extends: 144 109.408
+	kind: Material
 	layer: Media
-	origin: 0 -10 36
-	subtype: Material
-	title: GeoViewer Green plot
+	origin: -12.7313 0 3.51449
 End
-
-# Geometry plot "GeoViewer Blue plot"
+Plot: Green
+	Type: Geometry
+	basisu: 0.836516 0.0173376 0.547668
+	basisv: 0.224144 0.901221 -0.370891
+	extends: 100 76.1905
+	kind: Material
+	layer: 3D
+End
 Plot: Blue
-	Format: .eps
-	Type:   Geometry
+	Type: Geometry
 	basisu: 0 0 1
-	basisv: 0 1 0
-	boundaries: 1
 	coord: Z-Y
-	extends: 100 55.1935
-	labels: 1
+	extends: 100 75.6983
+	kind: Material
 	layer: Media
-	origin: 0 0 0
-	subtype: Material
-	title: GeoViewer Blue plot
 End
-
-# Geometry plot "GeoViewer Magenta plot"
 Plot: Magenta
-	Format: .eps
-	Type:   Geometry
-	basisu: -1 0 0
-	basisv: 0 1 0
-	boundaries: 1
+	Type: Geometry
 	coord: X-Y
-	extends: 100 55.1935
-	labels: 1
+	extends: 100 75.9104
+	kind: Material
 	layer: Media
-	origin: 0 -8 34
-	subtype: Material
-	title: GeoViewer Magenta plot
 End

@@ -1,92 +1,80 @@
-#!/Users/sboogert/Dropbox (Royal Holloway)/Physics/codelocal/flair/flair-install/flair
-# FLUKA Project file
-Version: 2
-Title: 
-Input: 005_REC.inp
-Submit: *Default
-Tabs: 0.1 0.32 0.56 0.81 1.0
-Page: Flair
-DefMain: True
-LinkPrg: lfluka
+# flair project file
+Version: 300
+Mode: fluka
+md5: 68502f453e5c86f2fe6c07f67c6f6735
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+*Define the beam characteristics
+BEAM
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+RPP blackhole -200. 200. -200. 200. -200. 200.
+REC rec 50. -50. 0.0 -100. 100. 0.0 25. 25. 0.0 0.0 0.0 100.
+END
+REGION recreg 5
+	+rec
+REGION blackhol
+	+blackhole -rec
+	@select=1
+END
+GEOEND
+ASSIGNMA , BERYLLIU recreg
+ASSIGNMA , BLCKHOLE blackhol
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+*Set the random number seed
+RANDOMIZ , 1.
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Page: Geometry
 F77bound: True
 F77dline: False
+Tabs: 0.1 0.32 0.56 0.81 1.0
 
 # Run information
 Run: <default>
-	Prev:     0
-	Last:     5
-	Status:   0
-	Pid:      0
-	StartRun: 0
 End
 
-# Geometry Information
-Geometry:
-	Frame.bsplit: 0.5
-	Frame.tsplit: 0.5
-	Frame.vsplit: 0.5
-End
-
-# Geometry plot "GeoViewer Red plot"
+# Plots information
 Plot: Red
-	Format: .eps
-	Type:   Geometry
-	basisu: 1 0 0
-	basisv: 0 1 0
-	boundaries: 1
+	Type: Geometry
 	coord: X-Y
-	extends: 306.701 212.277
-	labels: 1
+	extends: 306.701 233.024
+	kind: Material
 	layer: Media
 	origin: 0.598204 1.19641 0
-	subtype: Material
 	title: GeoViewer Red plot
 End
-
-# Geometry plot "GeoViewer Green plot"
 Plot: Green
-	Format: .eps
-	Type:   Geometry
+	Type: Geometry
 	basisu: 0 0 1
 	basisv: 1 0 0
-	boundaries: 1
 	coord: Z-X
-	extends: 441.649 306.388
-	labels: 1
+	extends: 441.649 336.494
+	kind: Material
 	layer: Media
-	origin: 0 0 0
-	subtype: Material
 	title: GeoViewer Green plot
 End
-
-# Geometry plot "GeoViewer Blue plot"
 Plot: Blue
-	Format: .eps
-	Type:   Geometry
+	Type: Geometry
 	basisu: 0 0 1
-	basisv: 0 1 0
-	boundaries: 1
 	coord: Z-Y
-	extends: 306.701 211.567
-	labels: 1
+	extends: 306.701 232.168
+	kind: Material
 	layer: Media
-	origin: 0 0 0
-	subtype: Material
 	title: GeoViewer Blue plot
 End
-
-# Geometry plot "GeoViewer Magenta plot"
 Plot: Magenta
-	Format: .eps
-	Type:   Geometry
+	Type: Geometry
 	basisu: -1 0 0
-	basisv: 0 1 0
-	boundaries: 1
 	coord: X-Y
-	extends: 368.041 254.469
-	labels: 1
+	extends: 368.041 279.381
+	kind: Material
 	layer: Media
-	origin: 0 0 0
-	subtype: Material
 	title: GeoViewer Magenta plot
 End

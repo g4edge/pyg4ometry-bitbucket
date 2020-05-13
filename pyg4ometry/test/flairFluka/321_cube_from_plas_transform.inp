@@ -1,42 +1,45 @@
 TITLE
 wooo a title
 GEOBEGIN                                                              COMBNAME
-    0    0
+    0    0          
 $start_transform rotx
-PLA yzplo1     1 0 0  0 0 0
-PLA yzphig1    1 0 0  10 0 0
-PLA xzplo1     0 1 0  0 0 0
-PLA xzphig1    0 1 0  0 10 0
-PLA xyplo1     0 0 1  0 0 0
-PLA xyphig1    0 0 1  0 0 10
+PLA yzplo1     1. 0. 0. 0. 0. 0.
+PLA yzphig1    1. 0. 0. 10. 0. 0.
+PLA xzplo1     0. 1. 0. 0. 0. 0.
+PLA xzphig1    0. 1. 0. 0. 10. 0.
+PLA xyplo1     0. 0. 1. 0. 0. 0.
+PLA xyphig1    0. 0. 1. 0. 0. 10.
 $end_transform
 $start_transform roty
-PLA yzplo2     1 0 0  0 0 0
-PLA yzphig2    1 0 0  10 0 0
-PLA xzplo2     0 1 0  0 0 0
-PLA xzphig2    0 1 0  0 10 0
-PLA xyplo2     0 0 1  0 0 0
-PLA xyphig2    0 0 1  0 0 10
+PLA yzplo2     1. 0. 0. 0. 0. 0.
+PLA yzphig2    1. 0. 0. 10. 0. 0.
+PLA xzplo2     0. 1. 0. 0. 0. 0.
+PLA xzphig2    0. 1. 0. 0. 10. 0.
+PLA xyplo2     0. 0. 1. 0. 0. 0.
+PLA xyphig2    0. 0. 1. 0. 0. 10.
 $end_transform
 $start_transform rotz
-PLA yzplo3    1 0 0  0 0 0
-PLA yzphig3   1 0 0  10 0 0
-PLA xzplo3    0 1 0  0 0 0
-PLA xzphig3   0 1 0  0 10 0
-PLA xyplo3    0 0 1  0 0 0
-PLA xyphig3   0 0 1  0 0 10
+PLA yzplo3     1. 0. 0. 0. 0. 0.
+PLA yzphig3    1. 0. 0. 10. 0. 0.
+PLA xzplo3     0. 1. 0. 0. 0. 0.
+PLA xzphig3    0. 1. 0. 0. 10. 0.
+PLA xyplo3     0. 0. 1. 0. 0. 0.
+PLA xyphig3    0. 0. 1. 0. 0. 10.
 $end_transform
+RPP blackhol   -50. 50. -50. 50. -50. 50.
 END
 cube1        5 +yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1
 cube2        5 +yzphig2 -yzplo2 +xyphig2 -xyplo2 +xzphig2 -xzplo2
 cube3        5 +yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3
+blackhol     5 +blackhol -(+yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1) -(+yzphig2 -yzplo2 +xyphig2
+               -xyplo2 +xzphig2 -xzplo2) -(+yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3)
 END
 GEOEND
 FREE
-ASSIGNMA  , IRON, cubeinf
 ASSIGNMA  , HYDROGEN, cube1
 ASSIGNMA  , HYDROGEN, cube2
 ASSIGNMA  , HYDROGEN, cube3
+ASSIGNMA  , BLCKHOLE, blackhol
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, rotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, roty
 ROT-DEFI  , 3., 45., 45., 0.0, 0.0, 10., rotz

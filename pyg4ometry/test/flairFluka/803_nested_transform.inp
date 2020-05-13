@@ -1,27 +1,26 @@
 GEOBEGIN                                                              COMBNAME
     0    0          
 * No transforms applied
-RPP rpp0       0.0 10. 0.0 10. 0.0 10.
+RPP rpp0       -50. 50. -50. 50. -50. 50.
 * One transform applied
 $start_transform t1
-RPP rppt1      0.0 10. 0.0 10. 0.0 10.
-$end_transform 
+RPP rppt1      -50. 50. -50. 50. -50. 50.
+$end_transform
 * Both transforms applied
 * Note this nested transform suggests t1 then t2, not t2 then t1...
 $start_transform t1
 $start_transform t2
-RPP rppt1t2    0.0 10. 0.0 10. 0.0 10.
-$end_transform 
-$end_transform 
+RPP rppt1t2    -50. 50. -50. 50. -50. 50.
+$end_transform
+$end_transform
+RPP blackhole  -100. 100. -100. 100. -100. 100.
 END
-rpp0         5 | +rpp0
-rppt1        5 | +rppt1
-rppt1t2      5 | +rppt1t2
+rppreg       5 | +rpp0 | +rppt1 | +rppt1t2
+blackhol     5 +blackhole -rpp0 -rppt1 -rppt1t2
 END
 GEOEND
-ASSIGNMA      HELIUM      rpp0
-ASSIGNMA    BERYLLIU     rppt1
-ASSIGNMA     MERCURY   rppt1t2
+ASSIGNMA    MAGNESIU    rppreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 200., 0.0, 90., 0.0, 0.0, 0.0, t1
 ROT-DEFI  , 0.0, 0.0, 0.0, 0.0, 0.0, 10., t2

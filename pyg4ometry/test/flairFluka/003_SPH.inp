@@ -8,15 +8,15 @@ BEAM
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
     0    0          
-RPP bb         -200. 200. -200. 200. -200. 200.
-SPH bb1        0.0 0.0 0.0 100.
+RPP blackhole  -200. 200. -200. 200. -200. 200.
+SPH sph        0.0 0.0 0.0 100.
 END
-vr           5 +bb -bb1
-bbrr         5 +bb1
+blackhole    5 +blackhole -sph
+bbrr         5 +sph
 END
 GEOEND
 ASSIGNMA    BLCKHOLE       bbr
-ASSIGNMA      VACUUM        vr
+ASSIGNMA    BLCKHOLE blackhole
 ASSIGNMA    BERYLLIU      bbrr
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
