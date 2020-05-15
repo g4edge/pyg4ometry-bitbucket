@@ -10,7 +10,7 @@ def Test(vis=False, interactive=False):
     massNumber = None # i.e. determine it automatically given z.
     fr = Element("FRANCIUM", z, density, massNumber=massNumber,
                  flukaregistry=freg)
-    card = fr.toCard()
+    card = fr.toCards()[0]
     assert card.keyword == "MATERIAL"
     assert card.what1 == z
     assert card.what3 == density
