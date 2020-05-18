@@ -102,6 +102,8 @@ be quickly added. Given a LV variable named ``logical``
    :linenos:
 
    import pyg4ometry
+   reader = pyg4ometry.gdml.Reader("input.gdml")
+   logical = reader.getRegistry().getWorldVolume()      
    freg = pyg4ometry.convert.geant4Logical2Fluka(logical)
    w = pyg4ometry.fluka.Writer()
    w.addDetector(freg)
@@ -112,9 +114,9 @@ If you want to load a file into Flair then a flair file can be written based on 
 .. code-block :: python
    :linenos:
 
-    extent = logica.extent(includeBoundingSolid=True)
-    f = _fluka.Flair("FileName.inp",extent)
-    f.write("FileName.flair"))    
+    extent = logical.extent(includeBoundingSolid=True)
+    f = pyg4ometry.fluka.Flair("FileName.inp",extent)
+    f.write("FileName.flair")
 
 Here is an example (viewed in Flair) of a simple geant G4 solid that has been converted to Fluka using this 
 method
