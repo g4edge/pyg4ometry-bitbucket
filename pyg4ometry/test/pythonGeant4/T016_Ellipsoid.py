@@ -25,8 +25,9 @@ def Test(vis = False, interactive = False, n_slice=10,n_stack=10) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     es = _g4.solid.Ellipsoid("es",eax,eby,ecz,ebc,etc,reg,nslice=n_slice,nstack=n_stack)
-        
-    # structure 
+
+    print(es.mesh())
+    # structure
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     el = _g4.LogicalVolume(es, em, "el", reg)
     ep = _g4.PhysicalVolume([0,0,0],[0,0,0],  el, "e_pv1", wl, reg) 

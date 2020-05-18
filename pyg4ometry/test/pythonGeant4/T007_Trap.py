@@ -62,7 +62,7 @@ def Test(vis = False, interactive = False) :
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
-        v.view(interactive=False)
+        v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 

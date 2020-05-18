@@ -26,6 +26,7 @@ def Test(vis = False, interactive = False, type = normal,n_slice = 10) :
     crmin2 = _gd.Constant("crmin2","5",reg,True)
     crmax2 = _gd.Constant("crmax2","10",reg,True)
     cz     = _gd.Constant("cz","100",reg,True)
+    csp    = _gd.Constant("csp","0.0*pi",reg,True)
     cdp    = _gd.Constant("cdp","1.5*pi",reg,True)
     zero   = _gd.Constant("zero","0.0",reg,False)
 
