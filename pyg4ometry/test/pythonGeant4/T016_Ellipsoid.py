@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False, n_slice=10,n_stack=10) :
+def Test(vis = False, interactive = False, n_slice=25,n_stack=25) :
     reg = _g4.Registry()
     
     # defines 
