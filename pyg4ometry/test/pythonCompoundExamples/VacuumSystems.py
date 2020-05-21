@@ -355,7 +355,7 @@ def Test(vis = True, interactive = False):
     ################################
     # export as obj
     ################################
-    _vis.pycsgMeshToObj(log.mesh.localmesh,_path.join(_path.dirname(__file__),"SphericalChamber"))
+    # _vis.pycsgMeshToObj(log.mesh.localmesh,_path.join(_path.dirname(__file__),"SphericalChamber.obj"))
 
     ################################
     # write gdml
@@ -383,6 +383,9 @@ def Test(vis = True, interactive = False):
     v = None
     if vis :
         v = _vis.VtkViewer()
-        v.addLogicalVolume(wl)
+        # v.addLogicalVolume(wl)
+        v.addMeshSimple(wl.daughterVolumes[0].logicalVolume.mesh.localmesh)
         v.setOpacity(0.25)
         v.view(interactive=interactive)
+        v.exportOBJScene("SphericalChamber")
+
