@@ -1,7 +1,7 @@
 import pyg4ometry 
 import os 
 
-def buildModel(vis = True, write = True) :
+def buildModel(vis = True, write = True, render = True) :
     # 
     reg = pyg4ometry.geant4.Registry()
 
@@ -13,16 +13,14 @@ def buildModel(vis = True, write = True) :
     reader_gunChamber   = pyg4ometry.gdml.Reader("./CuboidalChamber.gdml")
     gunChamber_logical  = reader_gunChamber.getRegistry().getWorldVolume()
     gunChamber_assembly = gunChamber_logical.assemblyVolume()
-    # gunChamber_logical.clipSolid()
     gunChamber_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
                                                            [0,0,0],
                                                            gunChamber_assembly,
                                                            "gunChamber_physical",
                                                            world_logical,
                                                            reg,
-                                                           addRegistry=False) 
-    
-    print(gunChamber_logical.extent(includeBoundingSolid=False))
+                                                           addRegistry=False)
+    print("gun chamber",gunChamber_logical.extent(includeBoundingSolid=False))
 
     reg.addVolumeRecursive(gunChamber_physical)
 
@@ -36,7 +34,7 @@ def buildModel(vis = True, write = True) :
                                                         reg)
     gateValve_assembly= gateValve_logical.assemblyVolume()
     # gateValve_logical.clipSolid()
-    print(gateValve_logical.extent(includeBoundingSolid=True))
+    print("gate value", gateValve_logical.extent(includeBoundingSolid=True))
     gateValve_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
                                                           [0,0,900+38.9001],
                                                           gateValve_logical,
@@ -58,7 +56,7 @@ def buildModel(vis = True, write = True) :
                                                         reg,
                                                         addRegistry=False)
     #triplet_logical.clipSolid()
-    print(triplet_logical.extent(includeBoundingSolid=False))
+    print("triplet", triplet_logical.extent(includeBoundingSolid=False))
     reg.addVolumeRecursive(triplet_physical,"reuse")
 
 
@@ -78,9 +76,26 @@ def buildModel(vis = True, write = True) :
                                                        world_logical,
                                                        reg,
                                                        addRegistry=False)
-    print(dipole_logical.extent(includeBoundingSolid=True))
+    print("dipole",dipole_logical.extent(includeBoundingSolid=True))
     reg.addVolumeRecursive(dipole_physical,"reuse") 
-   
+
+    # load faraday cup
+    reader_faraday  = pyg4ometry.fluka.Reader("faradayCup2.inp")
+    faraday_greg    = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
+    faraday_logical = faraday_greg.worldVolume
+    faraday_assembly = faraday_logical.assemblyVolume()
+
+    faraday_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                       [0,0,900+2*38.9001+2450.000018+380.9],
+                                                       faraday_assembly,
+                                                       "faraday_physical",
+                                                       world_logical,
+                                                       reg,
+                                                       addRegistry=False)
+    print("faraday",faraday_logical.extent(includeBoundingSolid=True))
+    reg.addVolumeRecursive(faraday_physical,"reuse")
+
+
     reg.setWorld("world_logical")
     
     if vis :
@@ -95,6 +110,12 @@ def buildModel(vis = True, write = True) :
         w = pyg4ometry.gdml.Writer()
         w.addDetector(reg)
         w.write(os.path.join(os.path.dirname(__file__), "model.gdml"))    
-    
+
+    if render :
+        r = pyg4ometry.visualisation.RenderWriter()
+        r.addLogicalVolumeRecursive(reg.getWorldVolume())
+        r.write("./model")
+
+
     
     
