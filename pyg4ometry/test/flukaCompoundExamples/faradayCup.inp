@@ -11,7 +11,7 @@ ASSIGNMA      NICKEL     FC_SS
 BEAMPOS
 GEOBEGIN                                                              COMBNAME
     0    0          
-RPP BB_IN      -200. 200. -200. 200. -200. 200.
+RPP BB_IN      -50. 50. -50. 50. -50. 50.
 RPP BB_OUT     -300. 300. -300. 300. -300. 300.
 RCC FC_SS_OU   0. 0. 0. 0. 0. 15. 10.0
 RCC FC_SS_IN   0. 0. 0. 0. 0. 15. 9.0
