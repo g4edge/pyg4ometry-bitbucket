@@ -40,16 +40,21 @@ def plot_dir_contents(dirpath):
         stds = sample.stds(exclude=EXCLUDE)
         xbar = index + i * bar_width
         label = _backend_from_path(f)
-        rects = ax.bar(xbar, means.values(), bar_width,
-                       yerr=stds.values(),
+
+        values = np.array(list(means.values())) / 60
+        err = np.array(list(stds.values())) / 60
+
+        rects = ax.bar(xbar, values, bar_width,
+                       yerr=err,
                        alpha=opacity, #color='b',
                        label=label)
+        print(label, means)
         plt.legend(loc="upper right")
     
     ax.set_xticks([r + bar_width for r in range(len(sample_names))])
     ax.set_xticklabels(sample_names)
     ax.set_title(_title_from_path(dirpath))
-    ax.set_ylabel("Mean duration / s")
+    ax.set_ylabel("Mean CPU time / minutes")
     ax.set_xlabel("Conversion step")
         
     plt.show()
