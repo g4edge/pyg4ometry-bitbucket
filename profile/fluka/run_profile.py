@@ -44,7 +44,7 @@ def main(filein, extra_name="", ntimes=1):
         i += 1
         ed = ""
         if extra_name:
-            ed = f", "
+            ed = f", {extra_name}"
         print(f"Running sample {i} of {ntimes} with {backend}{ed}")
         run_once(filein, timer)
 
