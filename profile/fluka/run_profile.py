@@ -39,12 +39,17 @@ def main(filein, extra_name="", ntimes=1):
             raise ValueError(
                 "extra_name is coercible to int, you made a mistake")
 
+    backend = backendName()
     for i in range(int(ntimes)):
-        print(f"Running sample {i}")
+        i += 1
+        ed = ""
+        if extra_name:
+            ed = f", "
+        print(f"Running sample {i} of {ntimes} with {backend}{ed}")
         run_once(filein, timer)
 
     basename, _ = os.path.splitext(filein)
-    backend = backendName()
+
 
     basedir = "profile-results"
     outpath = os.path.join(basedir, basename, f"{backend}{extra_name}.pickle")
