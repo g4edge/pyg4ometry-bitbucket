@@ -22,6 +22,15 @@ def _backend_from_path(path):
 def _title_from_path(path):
     return str(pathlib.Path(path).name).replace("-", " ")
 
+def _get_missing_tags(files, missing_tags):
+    bad_files = set()
+    for f in files:
+        sample = _load_pickle(f)
+        sample_names = sample.sample_names()
+        if not set(sample_names).intersection(missing_tags):
+            bad_files.add(f)
+    return bad_files
+
 def plot_dir_contents(dirpath):
     files = glob.glob(os.path.join(dirpath, "*.pickle"))
 
@@ -36,6 +45,13 @@ def plot_dir_contents(dirpath):
     fig, ax = plt.subplots()
     for i, f in enumerate(files):
         sample = _load_pickle(f)
+        these_sample_names = sample.sample_names(exclude=EXCLUDE)
+        unique_tags = set(sample_names).symmetric_difference(these_sample_names)
+        if unique_tags:
+            files_with_missing_tags = _get_missing_tags(files, unique_tags)
+            raise ValueError(
+                f"Missing tags {unique_tags} in files {files_with_missing_tags}")
+
         means = sample.means(exclude=EXCLUDE)
         stds = sample.stds(exclude=EXCLUDE)
         xbar = index + i * bar_width
