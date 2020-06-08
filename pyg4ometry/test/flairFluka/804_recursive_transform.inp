@@ -6,14 +6,16 @@ RPP rpp0       0.0 10. 0.0 10. 0.0 10.
 $start_transform trans
 RPP rpptrans    0.0 10. 0.0 10. 0.0 10.
 $end_transform 
+RPP blackhole  -15. 15. -15. 15. -15. 15.
 END
+blackhol     5 +blackhole -rpp0 -rpptrans
 rpp0         5 | +rpp0
 rppt1        5 | +rpptrans
 END
 GEOEND
 ASSIGNMA      HELIUM      rpp0
 ASSIGNMA    BERYLLIU     rppt1
-ASSIGNMA     MERCURY   rppt1t2
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 * Note that the ROT-DEFI trans is defined recursively.
 ROT-DEFI  , 200., 0.0, 90., 0.0, 0.0, 0.0, trans

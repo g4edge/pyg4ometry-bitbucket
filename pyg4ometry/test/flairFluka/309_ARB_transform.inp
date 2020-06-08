@@ -29,11 +29,14 @@ ARB arbz       0.0 0.0 0.0 20.0 0.0 0.0
 	       10.0 20.0 20.0 0.0 20.0 20.0
 	       4321 5678 2376 1584 3487 1265
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
+blackhol     5 +blackhole -arbx -arby -arbz
 arbreg       5 | +arbx | +arby | +arbz
 END
 GEOEND
 ASSIGNMA    BERYLLIU    arbreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, arbrotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, arbroty

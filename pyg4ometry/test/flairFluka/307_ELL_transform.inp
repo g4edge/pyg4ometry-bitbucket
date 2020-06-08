@@ -9,11 +9,14 @@ $end_transform
 $start_transform ellrotz
 ELL ellz       0 0 5  0 0 15 20
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
+blackhol     5 +blackhole -ellx -elly -ellz
 ellreg       5 | +ellx | +elly | +ellz
 END
 GEOEND
 ASSIGNMA         TIN    ellreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, ellrotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, ellroty

@@ -9,11 +9,14 @@ $end_transform
 $start_transform boxrotz
 BOX boxz       0 0 0 10 0 0 0 10 0 0 0 10
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 100.
 END
+blackhol     5 +blackhole -boxx -boxy -boxz
 boxreg       5 | +boxx | +boxy | +boxz
 END
 GEOEND
 ASSIGNMA         TIN    boxreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, boxrotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, boxroty

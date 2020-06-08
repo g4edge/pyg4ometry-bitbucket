@@ -18,13 +18,16 @@ QUA parabi     0.12 0.0 0.0 0.0 0.0 0.0 0.0 1. 0.0 -15.
 XYP end1i      75.
 XYP end2i      25.
 XZP end3i      5.
+RPP blackhole  -50. 50. -50. 75. -50. 150.
 END
-OUTER        5 +parabo +end1o -end2o -end3o
+OUTER        5 +parabo +end1o -end2o -end3o -(+parabi +end1i -end2i -end3i )
 INNER        5 +parabi +end1i -end2i -end3i
+blackhol     5 +blackhole -(+parabo +end1o -end2o -end3o)
 END
 GEOEND
 ASSIGNMA        GOLD     INNER
 ASSIGNMA      SILVER     OUTER
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 3.0, 0.0, -45.0, 0.0, 0.0, 0.0, quaTRF
 FIXED

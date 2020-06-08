@@ -12,13 +12,16 @@ $start_expansion 0.5
 QUA parab      0.06 0.0 0.0 0.0 0.0 0.0 0.0 1. 0.0 -20.
 XYP end1       100.
 XYP end2       0.0
-XZP end3       10
+XZP end3       10.
 $end_expansion
+RPP blackhole  -10. 10. 0. 15. -10. 60.
 END
-QUA_REG           5 +parab +end1 -end2 -end3
+blackhol     5 +blackhole -(+parab +end1 -end2 -end3)
+QUA_REG      5 +parab +end1 -end2 -end3
 END
 GEOEND
 ASSIGNMA        GOLD   QUA_REG
+ASSIGNMA    BLCKHOLE  blackhol
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
 RANDOMIZ          1.

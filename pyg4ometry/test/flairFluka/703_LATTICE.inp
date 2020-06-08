@@ -27,7 +27,7 @@ GEOEND
 ASSIGNMA    BLCKHOLE   blckreg
 ASSIGNMA    HYDROGEN    TARGET
 ASSIGNMA    MUSCLEST   TARGET2
-ASSIGNMA      VACUUM   REPLIC2
+ASSIGNMA      VACUUM   REPLICA
 !@y=-9.0
 !@z=20.0
 ROT-DEFI         0.0                                     -2.      -30.Rotdefi1

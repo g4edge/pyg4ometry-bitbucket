@@ -9,11 +9,14 @@ $end_transform
 $start_transform trcrotz
 TRC trcz       0 0 0  0 0 10  5 2.5
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
+blackhol     5 +blackhole -trcx -trcy -trcz
 trcreg       5 | +trcx | +trcy | +trcz
 END
 GEOEND
 ASSIGNMA         TIN    trcreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, trcrotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, trcroty
