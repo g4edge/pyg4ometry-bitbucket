@@ -1,3 +1,10 @@
+"""
+Utility for plotting directories of samples written by run_profile.py.
+Argument is a directory, not a specific file.
+
+python profile_analysis ./profile-results/TAN/
+"""
+
 import glob
 import os.path
 import pickle
@@ -32,6 +39,11 @@ def _get_missing_tags(files, missing_tags):
     return bad_files
 
 def plot_dir_contents(dirpath):
+    """Plot a directory containing pyg4ometry.utils.Samples pickle files.
+
+    plot_dir_contents("./profile-results/some-magnet/")
+    """
+
     files = glob.glob(os.path.join(dirpath, "*.pickle"))
 
     f = _load_pickle(files[0])

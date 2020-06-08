@@ -16,20 +16,22 @@ def run_once(filein, timer):
     r = Reader(filein)
     greg = fluka2Geant4(r.flukaregistry, timer=timer)
 
-    # wlv = greg.getWorldVolume()
-    # wlv.checkOverlaps()
-    # v = vi.VtkViewer()
-    # # wlv.clipSolid()
-    # v.addAxes(length=200)
-    # v.addLogicalVolume(wlv)
-    # # v.setOpacity(1)
-    # # v.setRandomColours()
-    # # v.view(True)
-    # # vi
-
 def main(filein, extra_name="", ntimes=1):
+    """Profile the conversion of a FLUKA model to geant4.
+
+    :param filein: FLUKA inp file to be converted
+    :type name: str
+    :param extra_name: extra string to append as metadata to the output \
+    profiling information to distinguish a given sample.
+    :type extra_name: str
+    :param ntimes: The number of times to sample the conversion.
+    :type ntimes: int
+
+    """
     timer = Timer()
 
+    # Help prevent user from making a mistake by mixing up ntimes and
+    # extra_name.
     if extra_name != "":
         try:
             int(extra_name)
@@ -37,8 +39,9 @@ def main(filein, extra_name="", ntimes=1):
             pass
         else:
             raise ValueError(
-                "extra_name is coercible to int, you made a mistake")
+                "extra_name should be a string, not a number")
 
+    # Run the conversion
     backend = backendName()
     for i in range(int(ntimes)):
         i += 1
@@ -48,12 +51,16 @@ def main(filein, extra_name="", ntimes=1):
         print(f"Running sample {i} of {ntimes} with {backend}{ed}")
         run_once(filein, timer)
 
+    # Output directory and sample file
     basename, _ = os.path.splitext(filein)
-
-
     basedir = "profile-results"
     outpath = os.path.join(basedir, basename, f"{backend}{extra_name}.pickle")
 
+    # Write the output
+    try:
+        os.makedirs(os.path.dirname(outpath))
+    except FileExistsError:
+        pass
     timer.samples.writeAppend(outpath, verbose=True)
 
 
