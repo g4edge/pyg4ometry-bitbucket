@@ -31,9 +31,10 @@ END
 cube1        5 +yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1
 cube2        5 +yzphig2 -yzplo2 +xyphig2 -xyplo2 +xzphig2 -xzplo2
 cube3        5 +yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3
-blackhol     5 +blackhole -(+yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1) -(+yzphig2 -yzplo2 +xyphig2
-               -xyplo2 +xzphig2 -xzplo2) -(+yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3
-               )
+blackhol     5 +blackhole
+	     -(+yzphig1 -yzplo1 +xyphig1 -xyplo1 +xzphig1 -xzplo1)
+	     -(+yzphig2 -yzplo2 +xyphig2 -xyplo2 +xzphig2 -xzplo2)
+	     -(+yzphig3 -yzplo3 +xyphig3 -xyplo3 +xzphig3 -xzplo3)
 END
 GEOEND
 FREE
