@@ -2,7 +2,7 @@ import numpy as np
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
 from pyg4ometry.fluka import (QUA, Region, Zone, FlukaRegistry,
-                              Extent, XYP, XZP,
+                              AABB, XYP, XZP,
                               Transform)
 from pyg4ometry.fluka.directive import rotoTranslationFromTra2
 
@@ -36,10 +36,9 @@ def Test(vis=False, interactive=False) :
     freg.addRegion(region)
     freg.assignma("COPPER", region)
 
-    quaExtent = {"QUA_REG": Extent([-190., 40., 0], [50., 200., 1000.])}
+    quaAABB = {"QUA_REG": AABB([-190., 40., 0], [50., 200., 1000.])}
 
-    greg = convert.fluka2Geant4(freg,
-                                quadricRegionExtents=quaExtent)
+    greg = convert.fluka2Geant4(freg, quadricRegionAABBs=quaAABB)
 
     v = None
     if vis:

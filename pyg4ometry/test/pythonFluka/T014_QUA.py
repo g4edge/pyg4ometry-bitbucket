@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import QUA, Region, Zone, FlukaRegistry, Extent, XYP, XZP
+from pyg4ometry.fluka import QUA, Region, Zone, FlukaRegistry, AABB, XYP, XZP
 
 def Test(vis=False, interactive=False) :
     freg = FlukaRegistry()
@@ -26,10 +26,10 @@ def Test(vis=False, interactive=False) :
     freg.addRegion(region)
     freg.assignma("COPPER", region)
 
-    quaExtent = {"QUA_REG": Extent([-150., 100., 0], [150., 200., 1000.])}
+    quaAABB = {"QUA_REG": AABB([-150., 100., 0], [150., 200., 1000.])}
 
     greg = convert.fluka2Geant4(freg,
-                                quadricRegionExtents=quaExtent)
+                                quadricRegionAABBs=quaAABB)
 
     v = None
     if vis:
