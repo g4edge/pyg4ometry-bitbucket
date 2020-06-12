@@ -63,11 +63,6 @@ from . import T213_YEC_coplanar
 from . import T213_ZEC_coplanar
 from . import T214_QUA_coplanar
 
-from . import T301_disjoint_union
-from . import T302_disjoint_union_overlapping_bounding_boxes
-from . import T303_disjoint_union_complex
-from . import T304_disjoint_union_not_disjoint
-
 from . import T401_RPP_expansion
 from . import T402_BOX_expansion
 from . import T403_SPH_expansion
@@ -316,21 +311,6 @@ class PythonFlukaAuthoringTests(_unittest.TestCase):
 
     def test_PythonFluka_T214_QUA_coplanar(self):
         T214_QUA_coplanar.Test(True, False)
-
-
-    # 3333333333
-    def test_PythonFluka_T301_disjoint_union(self):
-        T301_disjoint_union.Test(True, False)
-
-    def test_PythonFluka_T302_disjoint_union_overlapping_bounding_boxes(self):
-        T302_disjoint_union_overlapping_bounding_boxes.Test(True, False)
-
-    def test_PythonFluka_T303_disjoint_union_complex(self):
-        T303_disjoint_union_complex.Test(True, False)
-
-    def test_PythonFluka_T304_disjoint_union_not_disjoint(self):
-        T304_disjoint_union_not_disjoint.Test(True, False)
-
 
     # 4444444444
     def test_PythonFluka_T401_RPP_expansion(self):

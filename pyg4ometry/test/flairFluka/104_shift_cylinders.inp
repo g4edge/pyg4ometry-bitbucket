@@ -2,13 +2,16 @@ TITLE
 Correctly shift the cylinder alon its axis.
 DEFAULTS                                                              PRECISIO
 ASSIGNMA    BERYLLIU      BPVC
+ASSIGNMA    BLCKHOLE  blackhol
 GEOBEGIN                                                  1.          COMBNAME
     0    0          a beam line
 $start_translat 0 0 -3000
 RPP yoke       -10. 10. -10. 10. -8.5 8.5
 ZEC bp         0.0 0.0 3. 1.5
-$end_translat 
+RPP blackhole  -50. 50. -50. 50. -50. 50.
+$end_translat
 END
+blackhol     5 +blackhole -yoke -bp
 BPVC         5 +yoke +bp
 END
 GEOEND

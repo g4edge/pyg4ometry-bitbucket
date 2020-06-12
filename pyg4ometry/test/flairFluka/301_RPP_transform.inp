@@ -1,5 +1,5 @@
 GEOBEGIN                                                              COMBNAME
-    0    0
+    0    0          
 $start_transform rpprotx
 RPP rppx       0.0 10. 0.0 10. 0.0 10.
 $end_transform
@@ -9,11 +9,14 @@ $end_transform
 $start_transform rpprotz
 RPP rppz       0.0 10. 0.0 10. 0.0 10.
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
+blackhol     5 +blackhole -rppx -rppy -rppz
 rppreg       5 | +rppx | +rppy | +rppz
 END
 GEOEND
 ASSIGNMA         TIN    rppreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, rpprotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, rpproty

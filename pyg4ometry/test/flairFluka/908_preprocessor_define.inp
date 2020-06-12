@@ -1,7 +1,6 @@
 TITLE
 
 * Set the defaults for precision simulations
-
 DEFAULTS                                                              PRECISIO
 * Define the beam characteristics
 BEAM
@@ -10,12 +9,15 @@ BEAMPOS
 GEOBEGIN                                                              COMBNAME
     0    0          
 #define boxsize Cos(5.0)*10^5*(3+4)*Abs(-2)*Pipipi
-RPP bb         -200. 200. -200. 200. -200. 200.
+RPP bb         -10. 10. -10. 10. -10. 10.
+RPP blackhole  -15. 15. -15. 15. -15. 15.
 END
+blackhol     5 +blackhole -bb
 vr           5 +bb
 END
 GEOEND
 ASSIGNMA      VACUUM        vr
+ASSIGNMA    BLCKHOLE  blackhol
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
 * Set the random number seed
 RANDOMIZ          1.

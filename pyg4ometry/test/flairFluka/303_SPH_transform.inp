@@ -1,19 +1,22 @@
 GEOBEGIN                                                              COMBNAME
-    0    0
+    0    0          
 $start_transform sphrotx
-SPH sphx       0 0 0 5
+SPH sphx       0. 0. 0. 5.
 $end_transform
 $start_transform sphroty
-SPH sphy       0 0 0 5
+SPH sphy       0. 0. 0. 5.
 $end_transform
 $start_transform sphrotz
-SPH sphz       0 0 0 5
+SPH sphz       0. 0. 0. 5.
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
 sphreg       5 | +sphx | +sphy | +sphz
+blackhol     5 +blackhole -sphx -sphy -sphz
 END
 GEOEND
 ASSIGNMA         TIN    sphreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, sphrotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, sphroty

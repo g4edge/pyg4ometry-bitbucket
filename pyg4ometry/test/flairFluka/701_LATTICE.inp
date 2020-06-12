@@ -12,7 +12,9 @@ RCC target     0.0 0.0 -5. 0.0 0.0 10. 5.
 $start_transform -Rotdefi1
 RCC targRepl   0.0 0.0 -5. 0.0 0.0 10. 5.
 $end_transform 
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
+blackhol     5 +blackhole -target -targRepl
 TARGET       5 +target
 REPLICA      5 +targRepl
 END
@@ -20,6 +22,7 @@ END
 LATTICE      REPLICA                                                  Rotdefi1
 GEOEND
 ASSIGNMA    HYDROGEN    TARGET
+ASSIGNMA    BLCKHOLE  blackhol
 ROT-DEFI         0.0                                     -2.      -30.Rotdefi1
 ROT-DEFI        100.                -45.                              Rotdefi1
 * ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..

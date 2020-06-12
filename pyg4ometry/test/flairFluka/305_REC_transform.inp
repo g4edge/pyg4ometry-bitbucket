@@ -9,11 +9,14 @@ $end_transform
 $start_transform recrotz
 REC recz       0 0 0  0 0 10  0 5 0  10 0 0
 $end_transform
+RPP blackhole  -50. 50. -50. 50. -50. 50.
 END
+blackhol     5 +blackhole -recx -recy -recz
 recreg       5 | +recx | +recy | +recz
 END
 GEOEND
 ASSIGNMA         TIN    recreg
+ASSIGNMA    BLCKHOLE  blackhol
 FREE
 ROT-DEFI  , 1., 45., 45., 10., 0.0, 0.0, recrotx
 ROT-DEFI  , 2., 45., 45., 0.0, 10., 0.0, recroty

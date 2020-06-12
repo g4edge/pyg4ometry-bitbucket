@@ -3,12 +3,15 @@ TITLE
 GLOBAL         5000.       0.0       0.0       0.0        1.
 DEFAULTS                                                              PRECISIO
 GEOBEGIN                                                              COMBNAME
-    0    0                   MC-CAD
-XYP plane   100000.
-RPP box   -10 10 -10 10 -10 10
+    0    0          MC-CAD
+XYP plane      100000.
+RPP box        -10. 10. -10. 10. -10. 10.
+RPP blackhole  -15. 15. -15. 15. -15. 15.
 END
+blackhol     5 +blackhole -box
 reg          5 +plane +box
 END
 GEOEND
 ASSIGNMA    ALUMINUM       reg
+ASSIGNMA    BLCKHOLE  blackhol
 STOP
