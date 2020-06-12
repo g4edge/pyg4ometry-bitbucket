@@ -32,6 +32,11 @@
 			<fraction n="0.9" ref="U235"/>
 			<fraction n="0.1" ref="U238"/>
 		</element>
+		<material name="Mixture_G4">
+			<D value="2.5"/>
+			<fraction n="0.97" ref="G4_C"/>
+			<fraction n="0.021" ref="G4_Fe"/>
+		</material>
 		<material Z="13" name="Al">
 			<D value="2.7"/>
 			<atom value="26.98"/>
