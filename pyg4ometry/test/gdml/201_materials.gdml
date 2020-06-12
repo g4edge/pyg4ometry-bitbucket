@@ -17,7 +17,6 @@
 			<D value="2.5"/>
 			<fraction n="0.97" ref="G4_C"/>
 			<fraction n="0.021" ref="G4_Fe"/>
-			<fraction n="0.009" ref="G4_Potato"/>
 		</material>
     <material name="Mixture_G4">
 			<D value="2.5"/>
