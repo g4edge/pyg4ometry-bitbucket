@@ -61,7 +61,7 @@ def buildModel(vis = True, write = True, render = True) :
 
 
     # load cad dipole 
-    reader_dipole = pyg4ometry.freecad.Reader("./09_SectorBendSmall.step")
+    reader_dipole = pyg4ometry.freecad.Reader("./10_SectorBendMedium.step")
     reader_dipole.relabelModel()
     reader_dipole.convertFlat()
 
@@ -86,7 +86,7 @@ def buildModel(vis = True, write = True, render = True) :
     faraday_assembly = faraday_logical.assemblyVolume()
 
     faraday_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
-                                                       [0,0,900+2*38.9001+2450.000018+380.9],
+                                                       [0,0,900+2*38.9001+2450.000018+437.37*2+100],
                                                        faraday_assembly,
                                                        "faraday_physical",
                                                        world_logical,
@@ -117,5 +117,44 @@ def buildModel(vis = True, write = True, render = True) :
         r.write("./model")
 
 
+def buildSectorBend(vis=True, inter=True):
+    # load cad dipole
+    reader_dipole = pyg4ometry.freecad.Reader("./10_SectorBendMedium.step")
+    reader_dipole.relabelModel()
+    reader_dipole.convertFlat()
+
+    dipole_placement = reader_dipole.rootPlacement
+    dipole_logical   = reader_dipole.getRegistry().getWorldVolume()
+
+    extentBB = dipole_logical.extent(includeBoundingSolid=False)
+
+    if vis :
+        v = pyg4ometry.visualisation.VtkViewer()
+        v.addLogicalVolume(dipole_logical)
+        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*3)
+
+        cam = v.ren.GetActiveCamera()
+        cam.SetRoll(0)
+        cam.SetPosition(1000, 1000, 1000)
+
+        v.view(interactive=inter)
+
+def buildFaradayCup(vis = True,inter = True) :
+    reader_faraday = pyg4ometry.fluka.Reader("faradayCup2.inp")
+    faraday_greg = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
+    faraday_logical  = faraday_greg.worldVolume
+
+    extentBB = faraday_logical.extent(includeBoundingSolid=False)
     
-    
+    if vis :
+        v = pyg4ometry.visualisation.VtkViewer()
+        v.addLogicalVolume(faraday_logical)
+        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*3)
+
+        cam = v.ren.GetActiveCamera()
+        cam.SetRoll(0)
+        cam.SetPosition(375, 375, -375)
+
+        v.view(interactive=inter)
+
+    return v
