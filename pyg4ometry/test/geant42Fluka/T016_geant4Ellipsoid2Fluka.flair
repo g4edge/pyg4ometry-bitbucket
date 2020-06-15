@@ -4,10 +4,13 @@ Mode: fluka
 md5: b1165f4a3f8dc908bbd24e2dcb35ab08
 Input: T016_geant4Ellipsoid2Fluka.inp
 Page: Flair
+
 # Run information
 Run: <default>
 	Last:     5
 End
+
+# Custom materials information
 
 # Plots information
 Plot: Red
