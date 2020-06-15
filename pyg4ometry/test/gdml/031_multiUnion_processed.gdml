@@ -19,13 +19,13 @@
 		<box lunit="mm" name="box_first" x="1" y="5" z="20"/>
 		<box lunit="mm" name="box_second" x="4" y="4.5" z="18"/>
 		<multiUnion name="multiunion1">
-			<multiUnionNode name="node-1">
+			<multiUnionNode name="multiunion1-node-1">
 				<solid ref="box_first"/>
 			</multiUnionNode>
-			<multiUnionNode name="node-2">
+			<multiUnionNode name="multiunion1-node-2">
 				<solid ref="box_second"/>
 				<positionref ref="union_position2"/>
-				<positionref ref="union_position2"/>
+				<rotationref ref="union_rotation2"/>
 			</multiUnionNode>
 		</multiUnion>
 	</solids>
