@@ -26,8 +26,8 @@ class HalfSpaceCachingTests(FlukaBodyStoreTests):
     def testHalfSpaceWithTransformIsReturned(self):
         xzp = self.bodystore.make(XZP, "xzp", 10, transform=self.aTransform)
         pla = self.bodystore.make(PLA, "pla",
-                                   [-0.5, 0.14644661, 0.85355339],
-                                   [5. , 11.46446609, 18.53553391])
+                                  [-0.14644661,  0.85355339,  0.5       ],
+                                  [-3.23223305, 18.83883476, 11.03553391])
         self.assertIs(xzp, pla)
 
     def testNewHalfSpaceIsReturnedIfDifferent(self):
