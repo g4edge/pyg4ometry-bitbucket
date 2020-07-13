@@ -35,6 +35,8 @@ setup(
     name="pyg4ometry",
     version="0.9.1",
     packages=find_packages(exclude=["docs", "tests"]),
+    package_dir={"pyg4ometry.visualisation": "pyg4ometry/visualisation"},
+    package_data={"pyg4ometry.visualisation": ["colours.ini"]},
     install_requires=["antlr4-python3-runtime==4.7.1",  # Generated with 4.7.1 - this avoids warnings
                       "matplotlib",
                       "pandas",
