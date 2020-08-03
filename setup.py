@@ -4,6 +4,39 @@ from Cython.Build import cythonize
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 
+
+cgal_geom_exts = Extension('pyg4ometry.pycgal.geom',
+                           sources = ['./pyg4ometry/pycgal/geom.cxx'],
+                           language="c++",
+                           extra_compile_args=["-std=c++14"])
+
+cgal_algo_exts = Extension('pyg4ometry.pycgal.algo',
+                           include_dirs = ['./pyg4ometry/external/cgal-install/include/',
+                                           '/opt/local/include/',
+                                           '/usr/include/'],
+                           libraries = ['mpfr','gmp'],
+                           library_dirs = ['/opt/local/lib'],
+                           sources = ['./pyg4ometry/pycgal/algo.cxx'],
+                           language="c++",
+                           extra_compile_args=["-std=c++14"])
+
+cgal_core_exts = Extension('pyg4ometry.pycgal.core',
+                           include_dirs = ['./pyg4ometry/external/cgal-install/include/',
+                                           '/opt/local/include/',
+                                           '/usr/include/'],
+                           libraries = ['mpfr','gmp'],
+                           library_dirs = ['/opt/local/lib'],
+                           sources = ['./pyg4ometry/pycgal/core.cxx'],
+                           language="c++",
+                           extra_compile_args=["-std=c++14"])
+
+exts.append(cgal_geom_exts)
+exts.append(cgal_algo_exts)
+exts.append(cgal_core_exts)
+
+print(exts)
+
+
 setup(
     name="pyg4ometry",
     version="0.9.1",
