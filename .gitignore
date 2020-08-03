@@ -51,3 +51,4 @@ pyg4ometry/test/root/
 low_poly_human.zip
 low_poly_human
 .coverage
+profile/fluka/profile-results/*
