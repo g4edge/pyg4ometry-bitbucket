@@ -2,7 +2,8 @@ import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
-
+import pyg4ometry.convert as _conv
+import pyg4ometry.fluka as _flu
 
 def Test(vis = False, interactive = False) :
     reg = _g4.Registry()
@@ -36,6 +37,14 @@ def Test(vis = False, interactive = False) :
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T001_Box.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T001_Box.gmad"),"T001_Box.gdml")
+
+    # fluka output
+    freg = _conv.geant4Reg2FlukaReg(reg)
+    w    = _flu.Writer()
+    w.addDetector(freg)
+    w.write("T001_Box.inp")
+    f    = _flu.Flair("T001_Box.inp")
+    f.write("T001_Box.flair")
 
     # test __repr__
     str(bs)
