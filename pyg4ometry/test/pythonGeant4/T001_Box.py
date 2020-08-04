@@ -18,7 +18,7 @@ def Test(vis = False, interactive = False) :
     bz = _gd.Constant("bz","10",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
-    bm = _g4.MaterialPredefined("G4_Fe") 
+    bm = _g4.MaterialPredefined("G4_Au")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -38,14 +38,6 @@ def Test(vis = False, interactive = False) :
     w.write(_os.path.join(_os.path.dirname(__file__), "T001_Box.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T001_Box.gmad"),"T001_Box.gdml")
 
-    # fluka output
-    freg = _conv.geant4Reg2FlukaReg(reg)
-    w    = _flu.Writer()
-    w.addDetector(freg)
-    w.write("T001_Box.inp")
-    f    = _flu.Flair("T001_Box.inp")
-    f.write("T001_Box.flair")
-
     # test __repr__
     str(bs)
 
@@ -56,7 +48,7 @@ def Test(vis = False, interactive = False) :
     # visualisation
     v = None
     if vis : 
-        v = _vi.VtkViewer()
+        v = _vi.PubViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
