@@ -117,8 +117,8 @@ class FreeCADLoadingTests(_unittest.TestCase):
     def test_FreeCAD_T004_LoadRubik(self):
         self.assertTrue(LoadFreecad(_pj("04_Rubik.step")))
 
-    def test_FreeCAD_T004_LoadRubikColour(self):
-        self.assertTrue(LoadFreecad(_pj("04_Rubik_Colour.step")))
+    #def test_FreeCAD_T004_LoadRubikColour(self):
+    #    self.assertTrue(LoadFreecad(_pj("04_Rubik_Colour.step")))
 
     def test_FreeCAD_T005_LoadPlacement(self):
         self.assertTrue(LoadFreecad(_pj("05_Placement.step")))
