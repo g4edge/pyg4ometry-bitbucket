@@ -158,3 +158,6 @@ def buildFaradayCup(vis = True,inter = True) :
         v.view(interactive=inter)
 
     return v
+
+if __name__ == '__main__':
+    buildModel()
