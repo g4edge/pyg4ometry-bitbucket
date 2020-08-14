@@ -65,6 +65,12 @@ def buildModel(vis = True, write = True, render = True) :
     reader_dipole.relabelModel()
     reader_dipole.convertFlat()
 
+    # Set materials for freecad dipole from G4_Galactic to something solid
+    dipole_lvd = reader_dipole.getRegistry().logicalVolumeDict
+    dipole_lvd["Solid_lv"].material = pyg4ometry.geant4.MaterialPredefined("G4_Fe")
+    dipole_lvd["Solid001_lv"].material = pyg4ometry.geant4.MaterialPredefined("G4_Cu")
+    dipole_lvd["Solid002_lv"].material = pyg4ometry.geant4.MaterialPredefined("G4_Cu")
+
     dipole_placement = reader_dipole.rootPlacement
     dipole_logical  = reader_dipole.getRegistry().getWorldVolume()
     dipole_assembly = dipole_logical.assemblyVolume()
