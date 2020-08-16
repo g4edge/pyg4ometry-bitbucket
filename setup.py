@@ -1,8 +1,11 @@
 from setuptools import find_packages
+from distutils.command import build_ext
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
+
+plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
@@ -26,7 +29,7 @@ cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/algo.cxx'],
-                           extra_objects=['./build/temp.macosx-10.14-x86_64-3.7/pyg4ometry/pycgal/geom.o'],
+                           extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o'],
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
@@ -37,8 +40,8 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/core.cxx'],
-                           extra_objects=['./build/temp.macosx-10.14-x86_64-3.7/pyg4ometry/pycgal/geom.o',
-                                          './build/temp.macosx-10.14-x86_64-3.7/pyg4ometry/pycgal/algo.o'],
+                           extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                          './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
