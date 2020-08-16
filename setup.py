@@ -4,7 +4,6 @@ from Cython.Build import cythonize
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 
-
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
                                            '/opt/local/include/',
@@ -18,7 +17,7 @@ pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
 cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
                            sources = ['./pyg4ometry/pycgal/geom.cxx'],
                            language="c++",
-                           extra_compile_args=["-std=c++14"])
+                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
@@ -27,8 +26,9 @@ cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/algo.cxx'],
+                           extra_objects=['./build/temp.macosx-10.14-x86_64-3.7/pyg4ometry/pycgal/geom.o'],
                            language="c++",
-                           extra_compile_args=["-std=c++14"])
+                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
@@ -37,16 +37,15 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/core.cxx'],
+                           extra_objects=['./build/temp.macosx-10.14-x86_64-3.7/pyg4ometry/pycgal/geom.o',
+                                          './build/temp.macosx-10.14-x86_64-3.7/pyg4ometry/pycgal/algo.o'],
                            language="c++",
-                           extra_compile_args=["-std=c++14"])
+                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
 exts.append(cgal_core_ext)
-
-print(exts)
-
 
 setup(
     name="pyg4ometry",
@@ -71,7 +70,8 @@ setup(
                       "configparser",
                       "testtools",
                       "pypandoc",
-                      "ipython"],
+                      "ipython",
+                      "sympy"],
     ext_modules=exts,
     python_requires=">=3.7.1",
     author="Stewart T. Boogert",
