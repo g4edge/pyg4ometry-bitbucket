@@ -62,25 +62,36 @@ RUN wget https://www.vtk.org/files/release/9.0/vtk-9.0.0rc3-cp38-cp38-linux_x86_
     pip3 install vtk-9.0.0rc3-cp38-cp38-linux_x86_64.whl
 
 # freecad
-RUN apt-get -y install freecad && \
-    ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/&& \
-    export PYTHONPATH=/usr/lib/freecad/lib/
+# RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install freecad && \
+#     ln -s /usr/lib/freecad/Mod /usr/lib/freecad-python3/&& \
+#     export PYTHONPATH=/usr/lib/freecad/lib/
+
+
+# default python
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+# default pip
+RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
 # cython
-RUN pip3 install cython
+RUN pip install cython
 
 # ipython
-RUN pip3 install ipython
+RUN pip install ipython
 
 # git
 RUN apt-get -y install git
 
 # CGAL
-RUN apt-get -y install libcgal-dev
+# RUN apt-get -y install libcgal-dev
 
 # pyg4ometry
-ARG PYG4OMETRY_VER=0
+RUN apt-get -y install libmpfr-dev libgmp-dev pybind11-dev
+ARG PYG4OMETRY_VER=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
     git checkout develop_python3
 
+RUN cd pyg4ometry && \
+    make build_ext && \
+    make develop
