@@ -3,9 +3,18 @@ from distutils.command import build_ext
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
-exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
+import sys
+build_base_long  = [arg[12:].strip("= ") for arg in sys.argv if arg.startswith("--build-base")]
+build_base_short = [arg[2:].strip(" ") for arg in sys.argv if arg.startswith("-b")]
+build_base_arg = build_base_long or build_base_short
+if build_base_arg:
+    build_base = build_base_arg[0]
+else:
+    build_base = "."
 
 plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
+
+exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
