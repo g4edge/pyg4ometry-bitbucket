@@ -4,13 +4,13 @@ import pyg4ometry.visualisation as vi
 from pyg4ometry import gdml
 from pyg4ometry.fluka import (RPP, Region,
                               Zone, FlukaRegistry,
-                              Element, Compound)
+                              Material, Compound)
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    fr = Element("FRANCIUM", 50,  2, flukaregistry=freg)
-    es = Element("EINSTEIN", 100, 8, flukaregistry=freg)
+    fr = Material("FRANCIUM", 50,  2, flukaregistry=freg)
+    es = Material("EINSTEIN", 100, 8, flukaregistry=freg)
 
     frFrac = 0.5
     frEs = 0.5

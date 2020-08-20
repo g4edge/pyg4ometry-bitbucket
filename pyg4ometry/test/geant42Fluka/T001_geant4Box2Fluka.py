@@ -18,13 +18,14 @@ def Test(vis = False, interactive = False, fluka = True) :
     b2s = _g4.solid.Box("b2s", 5,   10,  15, reg, "mm")
 
     # materials
-    wm = _g4.MaterialPredefined("G4_Galactic")
-    bm = _g4.MaterialPredefined("G4_Fe")
+    wm  = _g4.MaterialPredefined("G4_Galactic")
+    bm1 = _g4.MaterialPredefined("G4_Li")
+    bm2 = _g4.MaterialPredefined("G4_Fe")
 
     # structure
     wl  = _g4.LogicalVolume(ws, wm, "wl", reg)
-    b1l = _g4.LogicalVolume(b1s, bm, "b1l", reg)
-    b2l = _g4.LogicalVolume(b2s, bm, "b2l", reg)
+    b1l = _g4.LogicalVolume(b1s, bm1, "b1l", reg)
+    b2l = _g4.LogicalVolume(b2s, bm2, "b2l", reg)
 
     b2p1 = _g4.PhysicalVolume([0,0,_np.pi/4.0],[0, 15,0], b2l, "b2_pv1", b1l, reg)
     b2p2 = _g4.PhysicalVolume([0,0,0]         ,[0,-15,0], b2l, "b2_pv2", b1l, reg)
@@ -47,7 +48,7 @@ def Test(vis = False, interactive = False, fluka = True) :
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T001_geant4Box2Fluka.inp"))

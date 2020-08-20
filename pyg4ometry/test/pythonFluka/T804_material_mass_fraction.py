@@ -2,13 +2,13 @@ import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
 from pyg4ometry.fluka import (RPP, Region,
                               Zone, FlukaRegistry,
-                              Element, Compound)
+                              Material, Compound)
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
 
-    fr = Element("FRANCIUM", 87, 2.48, flukaregistry=freg)
-    es = Element("EINSTEIN", 99, 8.84, flukaregistry=freg)
+    fr = Material("FRANCIUM", 87, 2.48, flukaregistry=freg)
+    es = Material("EINSTEIN", 99, 8.84, flukaregistry=freg)
 
     fr2es3 = Compound("Fr2Es3", 7.5,
                       [(fr, 2.0), (es, 3.0)],

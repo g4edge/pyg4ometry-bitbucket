@@ -1,6 +1,6 @@
 import pyg4ometry.convert as convert
 import pyg4ometry.visualisation as vi
-from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry, Element
+from pyg4ometry.fluka import RPP, Region, Zone, FlukaRegistry, Material
 
 def Test(vis=False, interactive=False):
     freg = FlukaRegistry()
@@ -8,7 +8,7 @@ def Test(vis=False, interactive=False):
     density = 2.48
     z = 87
     massNumber = None # i.e. determine it automatically given z.
-    fr = Element("FRANCIUM", z, density, massNumber=massNumber,
+    fr = Material("FRANCIUM", z, density, massNumber=massNumber,
                  flukaregistry=freg)
     card = fr.toCards()[0]
     assert card.keyword == "MATERIAL"
