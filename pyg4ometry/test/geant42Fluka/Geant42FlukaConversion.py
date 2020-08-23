@@ -27,6 +27,7 @@ from . import T028_geant4Union2Fluka
 from . import T029_geant4Subtraction2Fluka
 from . import T030_geant4Intersection2Fluka
 
+from . import T105_geant4Assembly2Fluka
 
 class Geant42FlukaConversionTests(_unittest.TestCase) :
     def test_Geant42FlukaConversion_T001_Box(self) :
@@ -104,6 +105,8 @@ class Geant42FlukaConversionTests(_unittest.TestCase) :
     def test_Geant42FlukaConversion_T030_Intersection(self):
         T030_geant4Intersection2Fluka.Test(False,False,True)
 
+    def test_Geant42FlukaConversion_T105_Assembly(self):
+        T105_geant4Assembly2Fluka.Test(False,False,True)
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
