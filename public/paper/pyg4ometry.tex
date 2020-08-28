@@ -449,11 +449,14 @@ b  = g4.solid.Box("b",bx,by,bz)
 # structure 
 wl = g4.LogicalVolume(wb, wm, "wl", reg)
 bl = g4.LogicalVolume(b, bm, "b", reg)
-bp1 = g4.PhysicalVolume([0,0,0],[0,0,0], 
+bp1 = g4.PhysicalVolume([0,0,0],
+                        [0,0,0], 
                         bl, "b_pv1", wl) 
-bp2 = g4.PhysicalVolume([0,0,0],[-2*bx,0,0], 
+bp2 = g4.PhysicalVolume([0,0,0],
+                        [-2*bx,0,0], 
                         bl, "b_pv2", wl)  
-bp3 = g4.PhysicalVolume([0,0,0],[2*bx,0,0], 
+bp3 = g4.PhysicalVolume([0,0,0],
+                        [2*bx,0,0], 
                         bl, "b_pv3", wl) 
                         
 # gdml output
@@ -476,6 +479,8 @@ An example of the VTK output for code listing XXX is shown in Figure~\ref{fig:ra
 \end{center}
 \end{figure}
 Significantly more complex geometries can be developed using a structure similar to that shown in code listing XXX.  
+
+\subsection{Discussion}
 
 \section{FLUKA to GDML conversion}
 FLUKA geometry is based upon a limited set of primitives (referred to
@@ -511,7 +516,10 @@ Figure~\ref{fig:region-ast}.
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=0.95\textwidth]{./model-scene/faradayCup2.pdf}
-\caption{FLUKA input with an AST.}
+\caption{Example conversion of a simple FLUKA geometry to GDML, a) 
+the original FLUKA geometry displayed in FLAIR, b) the GDML geometry 
+viewed in pyg4ometry. The example is a Faraday cup used to capture 
+and measure accelerator beam charge}
 \label{fig:region-ast}
 \end{center}
 \end{figure*}
@@ -716,9 +724,9 @@ TwistedTrap, TwistedTrd and TwistedTube. These particular solids are problematic
 readable format, as non-convex solids can only be created by union of convex zones. These solids are converted to CGAL 
 Nef polyhedra \colorbox{yellow}{XXX CITE} and decomposed to convex polyhedra using a \colorbox{yellow}{XXX} algorithm. 
 
-\subsection{Materials}
-
 \subsection{Disjunctive normal form and degenerate surfaces}
+
+\subsection{Materials}
 
 \subsection{Disucssion}
 There are still a few outstanding issues with Geant4/GDML to Fluka conversion. 
@@ -736,7 +744,8 @@ There are still a few outstanding issues with Geant4/GDML to Fluka conversion.
 STEP and IGES files can be loaded into pyg4ometry, via an interface based on FreeCAD. FreeCAD is an open source CAD/CAM program, which in turn 
 is based on OpenCASCADE. A STEP CAD file could be considered as a hierarchical tree of {\it part assemblies} and {\it part features}, where a part assembly is a 
 collection of part features. A part feature can be used to create  a triangular mesh which can used to create a pyg4ometry tessellated solid. Assignment of materials 
-and visualisation attributes. 
+and visualisation attributes must be performed by the user after conversion to GDML as rarely will CAD/CAM packages included the detailed information required 
+for RT codes.
 
 \section{Complete simulation example}
 Pyg4ometry is designed to be as flexible as possible and offer the user a wide range of usage styles and workflows. The following sections describe a selection of 
@@ -748,6 +757,14 @@ amounts of user effort and ultimately yield more accurate simulations. Pyg4ometr
 internally based on Geant4 and GDML can have utility for users of all RT codes. Pyg4ometry can clearly be extended to other formats or applications. As for applications,
 examples include  the  generation triangular mesh structures for GPU accelerated photon tracking in liquid noble  dark matter detectors and geometries for event visualisation. 
 Although not implemented in the current version, a C++ output writer can be quickly implemented to generate geometry which can be compiled into a Geant4 application. 
+
+\begin{enumerate}
+\item Graphical front end viewer
+\item C++ output
+\item CAD BREP to FLUKA converter (a la McCAD) 
+\item Integration of other tools (DAGMC) 
+\item Far from perfect conversions. 
+\end{enumerate}
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
