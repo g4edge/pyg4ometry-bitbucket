@@ -609,27 +609,24 @@ body used in a subtraction.  These rules are inverted for nested
 subtractions and work well for guaranteeing well-formed geometry that
 is free from overlaps.
 
+\subsection{Lattice}
+Description of how we \colorbox{yellow}{translate lattices} 
+into one LV with multiple PVs.
 
-\subsection{Disjoint unions}
+\subsection{Discussion}
 A disjoint union in FLUKA is a union of two or more zones that are not
 connected.  This is a valid construct in FLUKA but is explicitly
 forbidden in Geant4 and must be removed during the conversion
 process.  Disjoint unions are detected by checking for overlaps
 between all zones within a union.
 
-\subsection{Lattice}
-Description of how we \colorbox{yellow}{translate lattices} 
-into one LV with multiple PVs.
-
-\subsection{Example}
-
-\subsection{TODO}
 \begin{itemize}
 \item disjoint subtractions?
 \item quadric specialisation
 \item second order lattice
 \item Materials 
 \end{itemize}
+
 \section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG region.
 Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
@@ -721,12 +718,11 @@ Nef polyhedra \colorbox{yellow}{XXX CITE} and decomposed to convex polyhedra usi
 
 \subsection{Materials}
 
-\subsection{Outstanding issues}
+\subsection{Disjunctive normal form and degenerate surfaces}
+
+\subsection{Disucssion}
 There are still a few outstanding issues with Geant4/GDML to Fluka conversion. 
 
-\subsection{Example}
-
-\subsection{TODO}
 \begin{itemize}
 \item Non-convex solids, convex decomposition (Polyhedron, Xtru, TwistedBox, TwistedTrap, TwistedTrd, TwistedTube)
 \item Non-convex 2D section (GenericPolycone, GenericPolyhedra)
@@ -742,26 +738,9 @@ is based on OpenCASCADE. A STEP CAD file could be considered as a hierarchical t
 collection of part features. A part feature can be used to create  a triangular mesh which can used to create a pyg4ometry tessellated solid. Assignment of materials 
 and visualisation attributes. 
 
-\subsection{Example}
-
-\section{Interesting use cases}
+\section{Complete simulation example}
 Pyg4ometry is designed to be as flexible as possible and offer the user a wide range of usage styles and workflows. The following sections describe a selection of 
 possible applications.
-
-\subsection{Mixing geometry sources}
-It is possible to mix different geometries from STL, STEP, GDML and FLUKA in single GDML file for use in Geant4 and ROOT. 
-
-\subsection{Modifying existing models}
-Often existing CAD models have either missing details or too many details. Examples of too potentially superfluous detail are gaskets and bolts 
-
-\subsection{Overlap checking in geometry}
-Often small errors in geometry cause unexpected RT code behaviour.  
-
-\section{Performance of converted geometry in Geant4}
-Clearly for Geant4 geometry defined in pyg4ometry the performance is exactly the same as it the geometry was specified in C++ and linked against the Geant4
-libraries. A comparison of the performance of converted CAD or FLUKA geometry compared with native Geant4 solids is required so a user can optimise the available
-computing resources against the human resources (required to convert geometry). BDSIM is used to load the pyg4ometry generated files  and run basic simulations where 
-high energy particles are   
 
 \section{Conclusions}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in particle transport Monte Carlo programmes will save significant 
