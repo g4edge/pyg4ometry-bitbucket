@@ -135,7 +135,7 @@ def buildSectorBend(vis=True, inter=True):
     extentBB = dipole_logical.extent(includeBoundingSolid=False)
 
     if vis :
-        v = pyg4ometry.visualisation.VtkViewer(size=(1024,1024))
+        v = pyg4ometry.visualisation.VtkViewer(size=(2280,1800))
         v.addLogicalVolume(dipole_logical)
         v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*1.25)
 
@@ -144,7 +144,7 @@ def buildSectorBend(vis=True, inter=True):
 
         cam = v.ren.GetActiveCamera()
         cam.SetRoll(0)
-        cam.SetPosition(800, 800, 800)
+        cam.SetPosition(500,0, 2000)
 
         v.view(interactive=inter, resetCamera=False)
 
@@ -160,7 +160,7 @@ def buildFaradayCup(vis = True,inter = True) :
     if vis :
         v = pyg4ometry.visualisation.PubViewer(size=(1024,1024))
         v.addLogicalVolume(faraday_logical)
-        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*3)
+        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
         v.setOpacity(0.7,4)
 
 

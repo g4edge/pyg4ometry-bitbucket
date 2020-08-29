@@ -1,1 +1,106 @@
-../../../pyg4ometry/test/flukaCompoundExamples/faradayCup2.flair
+# flair project file
+Version: 300
+Mode: fluka
+md5: 89def31a98d37b7c8e2bb72a8bbfe275
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+*Define the beam characteristics
+BEAM
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+RCC cyInner 0. 0.0 0. 0. 0. 5.0 2.0
+RCC cyOuter 0. 0. 0. 0. 0. 5.0 2.4
+TRC coInner 0. 0. 5.0 0. 0. 3.0 2.0 0.5
+TRC coOuter 0. 0.0 5.0 0. 0. 3.4 2.4 0.7
+RCC outer 0.0 0.0 0. 0. 0. 9.0 3.0
+RCC frOuter 0. 0. 0. 0. 0. 0.4 2.0
+	@select=1
+RCC frInner 0. 0.0 0. 0. 0. 0.4 1.0
+RPP bbInner -15. 15. -15. 15. -15 15.
+RPP bbOuter -16. 16. -16. 16. -16. 16.
+END
+REGION bb 5
+	+bbOuter -bbInner
+REGION air 5
+	+bbInner -outer
+REGION vacuum 5
+	+frInner
+	| +cyInner -frOuter
+	| +coInner
+REGION nickel 5
+	+frOuter -frInner
+	| +cyOuter -cyInner
+	| +coOuter -coInner
+	alpha=50
+REGION copper 5
+	+outer -cyOuter -coOuter
+	alpha=50
+END
+GEOEND
+ASSIGNMA , BLCKHOLE bb
+ASSIGNMA , AIR air
+ASSIGNMA , VACUUM vacuum
+ASSIGNMA , ALUMINUM nickel
+ASSIGNMA , COPPER copper
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+*Set the random number seed
+RANDOMIZ , 1.0
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Page: Geometry
+
+# Run information
+Run: <default>
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	coord: Z-X
+	extends: 9 5.06564
+	kind: Material
+	layer: Media
+	origin: 0.76958 0.0744503 3.16894
+	subtype: Material
+	title: GeoViewer Red plot
+End
+Plot: Green
+	Type: Geometry
+	basisu: -0.793891 0.0528782 -0.605756
+	basisv: -0.239633 0.88838 0.391607
+	extends: 11.2157 6.32156
+	kind: Material
+	layer: 3D
+	origin: 3.97845 3.1237 -0.199833
+	subtype: Material
+	title: GeoViewer Green plot
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 8.03757 4.52394
+	kind: Material
+	layer: Media
+	origin: 0.0967449 -0.224758 3.59985
+	subtype: Material
+	title: GeoViewer Blue plot
+End
+Plot: Magenta
+	Type: Geometry
+	coord: X-Y
+	extends: 8.03759 4.53028
+	kind: Material
+	layer: Media
+	origin: -0.0996455 0.29894 3.2
+	subtype: Material
+	title: GeoViewer Magenta plot
+End

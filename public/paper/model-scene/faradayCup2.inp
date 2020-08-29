@@ -1,1 +1,44 @@
-../../../pyg4ometry/test/flukaCompoundExamples/faradayCup2.inp
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+* Define the beam characteristics
+BEAM
+* Define the beam position
+BEAMPOS
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RCC cyInner    0. 0.0 0. 0. 0. 5.0 2.0
+RCC cyOuter    0. 0. 0. 0. 0. 5.0 2.4
+TRC coInner    0. 0. 5.0 0. 0. 3.0 2.0 0.5
+TRC coOuter    0. 0.0 5.0 0. 0. 3.4 2.4 0.7
+RCC outer      0.0 0.0 0. 0. 0. 9.0 3.0
+RCC frOuter    0. 0. 0. 0. 0. 0.4 2.0
+RCC frInner    0. 0.0 0. 0. 0. 0.4 1.0
+RPP bbInner    -15. 15. -15. 15. -15. 15.
+RPP bbOuter    -16. 16. -16. 16. -16. 16.
+END
+bb           5 +bbOuter -bbInner
+air          5 +bbInner -outer
+vacuum       5 +frInner
+               | +cyInner -frOuter
+               | +coInner
+!@alpha=50
+nickel       5 +frOuter -frInner
+               | +cyOuter -cyInner
+               | +coOuter -coInner
+!@alpha=50
+copper       5 +outer -cyOuter -coOuter
+END
+GEOEND
+ASSIGNMA    BLCKHOLE        bb
+ASSIGNMA         AIR       air
+ASSIGNMA      VACUUM    vacuum
+ASSIGNMA    ALUMINUM    nickel
+ASSIGNMA      COPPER    copper
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+* Set the random number seed
+RANDOMIZ         1.0
+* Set the number of primary histories to be simulated in the run
+START
+STOP
