@@ -46,7 +46,7 @@ w.addDetector(reg)
 w.write("output.gdml")
 
 # visualisation
-v = vi.VtkViewer()
+v = vi.VtkViewer(size=(1024,1024))
 v.addLogicalVolume(wl)
 v.addAxes()
 v.view()
