@@ -519,13 +519,20 @@ Figure~\ref{fig:region-ast}.
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
-\caption{Example conversion of a simple FLUKA geometry to GDML, a) 
-the original FLUKA geometry displayed in FLAIR, b) the GDML geometry 
+\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :  
+the original FLUKA geometry displayed in FLAIR, right panel : the GDML geometry 
 viewed in pyg4ometry. The example is a Faraday cup used to capture 
-and measure accelerator beam charge}
+and measure accelerator beam charge.}
 \label{fig:region-ast}
 \end{center}
 \end{figure*}
+
+\begin{lstlisting}[caption={A simple pyg4ometry python script to load a FLUKA file},label={lst:pythonFLUKALoading}, language=Python]
+    reader_faraday  = pyg4ometry.fluka.Reader("faradayCup2.inp")
+    faraday_greg    = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
+    faraday_logical = faraday_greg.getWorldVolume()
+    faraday_assembly = faraday_logical.assemblyVolume()
+\end{lstlisting}
 
 
 \begin{table}[hbt!]
@@ -644,6 +651,16 @@ It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of t
 Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
 lists the mapping between geant4 solids and the bodies used to compose a fluka region.
 
+\begin{figure*}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{./model-scene/CuboidalChamber.pdf}
+\caption{Example conversion of a simple GDML geometry to FLUKA, left panel :  
+the original model in pyg4ometry, right panel : the converted FLUKA geometry 
+viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
+\label{fig:flair-gdml}
+\end{center}
+\end{figure*}
+
 \begin{table}[hbt!]
 \centering
 \begin{tabular}{ l  l  } \hline
@@ -750,10 +767,19 @@ collection of part features. A part feature can be used to create  a triangular 
 and visualisation attributes must be performed by the user after conversion to GDML as rarely will CAD/CAM packages included the detailed information required 
 for RT codes.
 
+\begin{lstlisting}[caption={A simple pyg4ometry python script to load a STEP file},label={lst:pythonCADLoading}, language=Python]
+    reader_dipole = pyg4ometry.freecad.Reader("./10_SectorBendMedium.step")
+    reader_dipole.relabelModel()
+    reader_dipole.convertFlat()
+    dipole_reg = reader_dipole.getRegistry()
+\end{lstlisting}
+
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/SectorBend.pdf}
-\caption{CAD-GDML}
+\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :  
+the original model in FreeCAD, right panel : the GDML geometry 
+viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
 \label{fig:cad-gdml}
 \end{center}
 \end{figure*}
@@ -765,7 +791,7 @@ possible applications.
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/model.pdf}
-\caption{CAD-GDML}
+\caption{Complete compositing example using pyg4ometry.}
 \label{fig:model}
 \end{center}
 \end{figure*}

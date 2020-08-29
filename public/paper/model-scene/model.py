@@ -88,7 +88,7 @@ def buildModel(vis = True, write = True, render = True) :
     # load faraday cup
     reader_faraday  = pyg4ometry.fluka.Reader("faradayCup2.inp")
     faraday_greg    = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
-    faraday_logical = faraday_greg.worldVolume
+    faraday_logical = faraday_greg.getWorldVolume()
     faraday_assembly = faraday_logical.assemblyVolume()
 
     faraday_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
@@ -171,6 +171,42 @@ def buildFaradayCup(vis = True,inter = True) :
         v.view(interactive=inter, resetCamera=False)
 
     return v
+
+def buildChamber(vis = True, inter = True):
+    reg = pyg4ometry.geant4.Registry()
+
+    world_material = pyg4ometry.geant4.MaterialPredefined("G4_Galactic")
+    world_solid    = pyg4ometry.geant4.solid.Box("world_solid", 10000, 10000, 10000, reg, "mm")
+    world_logical  = pyg4ometry.geant4.LogicalVolume(world_solid, world_material, "world_logical", reg)
+
+    # load gun chamber
+    reader_gunChamber   = pyg4ometry.gdml.Reader("./CuboidalChamber.gdml")
+    gunChamber_logical  = reader_gunChamber.getRegistry().getWorldVolume()
+    gunChamber_assembly = gunChamber_logical.assemblyVolume()
+    gunChamber_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                           [0,0,0],
+                                                           gunChamber_assembly,
+                                                           "gunChamber_physical",
+                                                           world_logical,
+                                                           reg,
+                                                           addRegistry=False)
+
+    extentBB = gunChamber_logical.extent(includeBoundingSolid=False)
+
+    if vis :
+        v = pyg4ometry.visualisation.VtkViewer(size=(2280,1800))
+        v.addLogicalVolume(gunChamber_logical)
+        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*1.25)
+
+        v.setOpacity(1.0)
+        v.setRandomColours(3)
+
+        cam = v.ren.GetActiveCamera()
+        cam.SetRoll(0)
+        cam.SetPosition(500,0, 2000)
+
+        v.view(interactive=inter, resetCamera=False)
+
 
 if __name__ == '__main__':
     buildModel()
