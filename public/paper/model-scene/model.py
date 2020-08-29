@@ -105,7 +105,7 @@ def buildModel(vis = True, write = True, render = True) :
     reg.setWorld("world_logical")
     
     if vis :
-        v = pyg4ometry.visualisation.VtkViewer()
+        v = pyg4ometry.visualisation.PubViewer()
         v.addLogicalVolume(reg.getWorldVolume())
         # v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
         v.view(interactive=True)
@@ -135,15 +135,20 @@ def buildSectorBend(vis=True, inter=True):
     extentBB = dipole_logical.extent(includeBoundingSolid=False)
 
     if vis :
-        v = pyg4ometry.visualisation.VtkViewer()
+        v = pyg4ometry.visualisation.VtkViewer(size=(1024,1024))
         v.addLogicalVolume(dipole_logical)
-        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*3)
+        v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*1.25)
+
+        v.setOpacity(1.0)
+        v.setRandomColours(3)
 
         cam = v.ren.GetActiveCamera()
         cam.SetRoll(0)
-        cam.SetPosition(1000, 1000, 1000)
+        cam.SetPosition(800, 800, 800)
 
-        v.view(interactive=inter)
+        v.view(interactive=inter, resetCamera=False)
+
+    return v
 
 def buildFaradayCup(vis = True,inter = True) :
     reader_faraday = pyg4ometry.fluka.Reader("faradayCup2.inp")
@@ -153,15 +158,17 @@ def buildFaradayCup(vis = True,inter = True) :
     extentBB = faraday_logical.extent(includeBoundingSolid=False)
     
     if vis :
-        v = pyg4ometry.visualisation.VtkViewer()
+        v = pyg4ometry.visualisation.PubViewer(size=(1024,1024))
         v.addLogicalVolume(faraday_logical)
         v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*3)
+        v.setOpacity(0.7,4)
+
 
         cam = v.ren.GetActiveCamera()
         cam.SetRoll(0)
         cam.SetPosition(375, 375, -375)
 
-        v.view(interactive=inter)
+        v.view(interactive=inter, resetCamera=False)
 
     return v
 
