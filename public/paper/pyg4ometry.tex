@@ -474,17 +474,16 @@ v.addLogicalVolume(wl)
 v.view()
 \end{lstlisting}
 
-An example of the VTK output for code listing XXX is shown in Figure~\ref{fig:rapidModellingExample}.
+An example of the VTK output for code listing \ref{lst:pythonRapidModelling} is shown in Figure~\ref{fig:rapidModellingExample}.
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=7cm]{./diagrams/rapidModelling.pdf}
-\caption{VTK visualisation output from code example XXX.}
+\caption{VTK visualisation output from code listing \ref{lst:pythonRapidModelling}.}
 \label{fig:rapidModellingExample}
 \end{center}
 \end{figure}
-Significantly more complex geometries can be developed using a structure similar to that shown in code listing XXX.  
-
-\subsection{Discussion}
+Significantly more complex geometries can be developed using a structure similar to that shown in code 
+listing \ref{lst:pythonRapidModelling}. 
 
 \section{FLUKA to GDML conversion}
 FLUKA geometry is based upon a limited set of primitives (referred to
@@ -528,10 +527,9 @@ and measure accelerator beam charge.}
 \end{figure*}
 
 \begin{lstlisting}[caption={A simple pyg4ometry python script to load a FLUKA file},label={lst:pythonFLUKALoading}, language=Python]
-    reader_faraday  = pyg4ometry.fluka.Reader("faradayCup2.inp")
-    faraday_greg    = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
-    faraday_logical = faraday_greg.getWorldVolume()
-    faraday_assembly = faraday_logical.assemblyVolume()
+    reader      = pyg4ometry.fluka.Reader("faradayCup2.inp")
+    g4_reg     = pyg4ometry.convert.fluka2Geant4(reader.flukaregistry)
+    logical      = g4_reg.getWorldVolume()
 \end{lstlisting}
 
 
@@ -768,10 +766,10 @@ and visualisation attributes must be performed by the user after conversion to G
 for RT codes.
 
 \begin{lstlisting}[caption={A simple pyg4ometry python script to load a STEP file},label={lst:pythonCADLoading}, language=Python]
-    reader_dipole = pyg4ometry.freecad.Reader("./10_SectorBendMedium.step")
-    reader_dipole.relabelModel()
-    reader_dipole.convertFlat()
-    dipole_reg = reader_dipole.getRegistry()
+    reader = pyg4ometry.freecad.Reader("FileName.step")
+    reader.relabelModel()
+    reader.convertFlat()
+    logical = reader.getRegistry().getWorldVolume()
 \end{lstlisting}
 
 \begin{figure*}[htbp]
