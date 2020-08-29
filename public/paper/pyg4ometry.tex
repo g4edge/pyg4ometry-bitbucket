@@ -259,67 +259,67 @@ The constructors of the python classes are kept as close to the original Geant4 
 a new API. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
 should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in {\it pyg4ometry} are described.  
 
-\begin{table}[hbt!]
-\centering
-\begin{tabular}{ l l l } \hline
-GDML tag 		& Child tags				& pyg4ometry class 				\\ \hline
-Define 			& Constant				& gdml.Constant				\\
-				& Variable					& gdml.Variable					\\
-				& Quantity					& gdml.Quantity				\\
-				& Expression 				& gdml.Expression				\\
-				& Position					& gdml.Position					\\
-				& Rotation					& gdml.Rotation				\\
-				& Scale					& gdml.Scale					\\
-				& Matrix					& gdml.Matrix					\\ \hline
-Materials 			& Element					& geant4.Element				\\
-				& Isotope					& geant4.Isotope				\\
-				& Material					& geant4.Material				\\ \hline
-Solid  			& Box					& geant4.solid.Box				\\
-	  			& Tube					& geant4.solid.Tubs				\\
-	  			& CutTube				& geant4.solid.CutTubs			\\
-	  			& Cone					& geant4.solid.Cons				\\
-	  			& Para					& geant4.solid.Para				\\
-	  			& Trd					& geant4.solid.Trd				\\
-	  			& Trap					& geant4.solid.Trap				\\
-	  			& Sphere					& geant4.solid.Sphere			\\
-	  			& Orb					& geant4.solid.Orb				\\
-	  			& Torus					& geant4.solid.Torus				\\
-	  			& Polycone				& geant4.solid.Polycone			\\
-	  			& GenericPolycone			& geant4.solid.GenericPolycone	\\
-	  			& Polyhedra				& geant4.solid.Polyhedra			\\
-				& GenericPolyhedra                  & geant4.solid.GenericPolyhedra	\\ 
-	  			& Eltube					& geant4.solid.EllipticalTube		\\
-	  			& Ellipsoid					& geant4.solid.Ellipsoid			\\
-	  			& Elcone					& geant4.solid.EllipticalCone		\\
-				& Paraboloid				& geant4.solid.Paraboloid			\\
-				& Hype					& geant4.solid.Hyperboloid		\\
-				& Tet						& geant4.solid.Tet				\\
-				& Xtru					& geant4.solid.ExtrudedSolid		\\
-				& TwistedBox				& geant4.solid.TwistedBox		\\
-				& TwistedTtap				& geant4.solid.TwistedTrap		\\
-				& TwistedTrd				& geant4.solid.TwistedTrd 		\\
-				& TwistedTube				& geant4.solid.TwistedTube		\\
-				& Arb8					& geant4.solid.GenericTrap		\\
-				& Tessellated				& geant4.solid.TessellatedSolid 	\\
-				& Union					& geant4.solid.Union				\\
-				& Subtraction				& geant4.solid.Subtraction			\\
-				& Intersection				& geant4.solid.Intersection 		\\
-				& MultiUnion				& geant4.solid.MultiUnion 			\\
-				& ScaledSolid				& geant4.solid.ScaledSolid		\\				
-	  			& OpticalSurface			& geant4.solid.OpticalSurface		\\ \hline
-Structure			& Volume					& geant4.LogicalVolume			\\
-				& Assembly				& geant4.AssemblyVolume 		\\
-				& PhysVol					& geant4.PhysicalVolume			\\ 
-				& ReplicaVol				& geant4.ReplicaVolume			\\ 
-				& ParaVol					& geant4.ParameterisedVolume	\\ 
-				& DivisionVol				& geant4.DivisionVolume			\\
-				& SkinSurface				& geant4.SkinSurface			\\ 
-				& BorderSurface			& geant4.BorderSurface			\\ \hline
-
-\end{tabular}
-\label{tab:gdml-tags}
-\caption{GDML tags and corresponding pyg4ometry classes.}
-\end{table}
+%\begin{table}[hbt!]
+%\centering
+%\begin{tabular}{ l l l } \hline
+%GDML tag 		& Child tags				& pyg4ometry class 				\\ \hline
+%Define 			& Constant				& gdml.Constant				\\
+%				& Variable					& gdml.Variable					\\
+%				& Quantity					& gdml.Quantity				\\
+%				& Expression 				& gdml.Expression				\\
+%				& Position					& gdml.Position					\\
+%				& Rotation					& gdml.Rotation				\\
+%				& Scale					& gdml.Scale					\\
+%				& Matrix					& gdml.Matrix					\\ \hline
+%Materials 			& Element					& geant4.Element				\\
+%				& Isotope					& geant4.Isotope				\\
+%				& Material					& geant4.Material				\\ \hline
+%Solid  			& Box					& geant4.solid.Box				\\
+%	  			& Tube					& geant4.solid.Tubs				\\
+%	  			& CutTube				& geant4.solid.CutTubs			\\
+%	  			& Cone					& geant4.solid.Cons				\\
+%	  			& Para					& geant4.solid.Para				\\
+%	  			& Trd					& geant4.solid.Trd				\\
+%	  			& Trap					& geant4.solid.Trap				\\
+%	  			& Sphere					& geant4.solid.Sphere			\\
+%	  			& Orb					& geant4.solid.Orb				\\
+%	  			& Torus					& geant4.solid.Torus				\\
+%	  			& Polycone				& geant4.solid.Polycone			\\
+%	  			& GenericPolycone			& geant4.solid.GenericPolycone	\\
+%	  			& Polyhedra				& geant4.solid.Polyhedra			\\
+%				& GenericPolyhedra                  & geant4.solid.GenericPolyhedra	\\ 
+%	  			& Eltube					& geant4.solid.EllipticalTube		\\
+%	  			& Ellipsoid					& geant4.solid.Ellipsoid			\\
+%	  			& Elcone					& geant4.solid.EllipticalCone		\\
+%				& Paraboloid				& geant4.solid.Paraboloid			\\
+%				& Hype					& geant4.solid.Hyperboloid		\\
+%				& Tet						& geant4.solid.Tet				\\
+%				& Xtru					& geant4.solid.ExtrudedSolid		\\
+%				& TwistedBox				& geant4.solid.TwistedBox		\\
+%				& TwistedTtap				& geant4.solid.TwistedTrap		\\
+%				& TwistedTrd				& geant4.solid.TwistedTrd 		\\
+%				& TwistedTube				& geant4.solid.TwistedTube		\\
+%				& Arb8					& geant4.solid.GenericTrap		\\
+%				& Tessellated				& geant4.solid.TessellatedSolid 	\\
+%				& Union					& geant4.solid.Union				\\
+%				& Subtraction				& geant4.solid.Subtraction			\\
+%				& Intersection				& geant4.solid.Intersection 		\\
+%				& MultiUnion				& geant4.solid.MultiUnion 			\\
+%				& ScaledSolid				& geant4.solid.ScaledSolid		\\				
+%	  			& OpticalSurface			& geant4.solid.OpticalSurface		\\ \hline
+%Structure			& Volume					& geant4.LogicalVolume			\\
+%				& Assembly				& geant4.AssemblyVolume 		\\
+%				& PhysVol					& geant4.PhysicalVolume			\\ 
+%				& ReplicaVol				& geant4.ReplicaVolume			\\ 
+%				& ParaVol					& geant4.ParameterisedVolume	\\ 
+%				& DivisionVol				& geant4.DivisionVolume			\\
+%				& SkinSurface				& geant4.SkinSurface			\\ 
+%				& BorderSurface			& geant4.BorderSurface			\\ \hline
+%
+%\end{tabular}
+%\label{tab:gdml-tags}
+%\caption{GDML tags and corresponding pyg4ometry classes.}
+%\end{table}
 
 \begin{figure*}[hbt]
   \normalsize
