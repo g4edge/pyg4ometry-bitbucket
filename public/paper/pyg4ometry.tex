@@ -239,16 +239,19 @@ This paper is structured as follows, first a brief radiation transport-centric i
 \section{Computer descriptions of geometry} \label{sec:geometric}
 Central to a computer readable geometry of a system is how a solid is defined in three dimensions. There are numerous different ways to describe a
 geometry, including constructive solid geometry, boundary representation and tessellated polygons, these are described briefly in the following sections.  
-The Geant4 geometry specification is a mixture of geometry modelling techniques and described in detail. 
+The Geant4 geometry specification is a mixture of geometry modelling techniques and described in detail last.
 
 %%%%%%%%%%%%%%%%% Constructive solid geometry (CSG) 
-Constructive solid geometry uses boolean operations, subtraction, intersection and union, between simple solids shapes (e.g. cube, cylinder, sphere etc) to model complex surfaces which represent a solid. Boolean operations and solids can be combined to form a CSG-tree to model complex geometry. FLUKA uses CSG to 
-model solids, the form of boolean expression used by FLUKA is not a general CSG-tree but a logical expression in disjunctive normal-form.
+Constructive solid geometry uses boolean operations, subtraction, intersection and union, between simple solid shapes (e.g. cube, cylinder, sphere etc) or infinite
+volumes (e.g a plane defined infinite half-space) to model complex surfaces which represent a solid. Boolean operations and solids can be combined to form a 
+CSG-tree to model complex geometry. FLUKA uses CSG to model solids, the form of boolean expression used by FLUKA is not a general CSG-tree but a 
+logical expression in disjunctive normal-form.
 
 %%%%%%%%%%%%%%%%% Boundary representation (BREP)
-Boundary representation (BREP) consists of two parts, topology and geometry. Topological elements are faces, edges and vertices. No current RTMC 
-applications use native file formats employed by CAD systems. The conversion of CAD BREP formats for loading in RTMC applications is typically performed 
-via a tessellated format, although it is possible to decompose BREP descriptions to simple half-spaces and solids as used in CSG descriptions. 
+Boundary representation (BREP) consists of two parts, topology and geometry. Topological elements are faces, edges and vertices and the corresponding
+geometrical elements are surfaces, curves and points. No current RTMC applications use native file formats employed by CAD systems. The conversion of CAD BREP 
+formats for loading in RTMC applications is typically performed via a tessellated format, although it is possible to decompose BREP descriptions to bounded or 
+infinite mathematical surfaces and subsequently solids as used in CSG descriptions. 
 
 %%%%%%%%%%%%%%%%% Tessellated polygons
 Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL and 
@@ -335,22 +338,25 @@ should be able to start creating geometry in pyg4ometry immediately. In the foll
 %\end{table}
     
 
-\subsection{Input and output} 
+%%%%%%%%%%%%%%%%%  Input and output  
 For each input format available in pyg4ometry a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
 and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a registry which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
 
-\subsection{Expression evaluation}
+%%%%%%%%%%%%%%%%%  Expression evaluation
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
 In order to fully replicate the functionality of GDML an expression engine was implemented using ANTLR \cite{10.5555/2501720}. GDML allows for the definition 
 and assignment of variables. GDML expressions are not much more complicated than binary operators $+, -, \times, /$ and common trigonometric and special functions $\sin, \cos, \tan$ etc. The AST terminates on either expressions which evaluate to numbers or GDML variables. Internally all classes use GDML 
 expressions and not floating point numbers. Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of solid parameters and 
 placements. This allows a user to update variables whilst defining geometry and the expression engine will update all internal values.  
  
-\subsection{Replica, division, parametrised and looped volumes}
-A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The create multiple replicas of a volume in a cartesian, cylindrical or spherical grid is known as a ReplicaVolume. Currently GDML loops are not supported by pyg4ometry and will be implemented in a future release. 
+%%%%%%%%%%%%%%%%%  Replica, division, parametrised and looped volumes
+A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The create multiple replicas of a volume in a cartesian, cylindrical or spherical grid is known as a ReplicaVolume. A DivisionVolume breaks a primitive into segments in either a cartesian or cylindrical polar coordinates. 
+A Parametrised Volume allows for the arbitrary multiple placement of solids where the parameters are allowed to vary for each placement.  GDML supports loops, 
+where sections of GDML are allowed to be repeated with varying parameters. GDML loops are not supported by pyg4ometry and will be implemented in a 
+future release. 
 
-\subsection{Internal data representation} 
+%%%%%%%%%%%%%%%%%  Internal data representation
 The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates python ordered dictionaries that are  used to store the main 
 elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.
 \verb|Registry| instances can be aggregated to form a composite geometry or volumes can be removed and added.   
@@ -362,7 +368,7 @@ instances of geometry (physical volumes) and meshes for CSG derived solids. CSG 
 operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various polygon mesh 
 algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
-\subsection{Volume bounding} 
+%%%%%%%%%%%%%%%%% Volume bounding
 If a user is creating a placing multiple {\em daughter} volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully 
 encompasses the daughter volumes. Overlaps between daughter volumes and the mother can be detected, but it is desirable to have a mother volume 
 shape that efficiently holds all of its daughters. 
@@ -390,36 +396,38 @@ The python version of Geant4's physical volume is also used to store visualisati
 color, surface or wireframe representation and visibility. Overlaps detected in the discretised mesh geometry can be displayed separately to allow a user to remove
 the potential overlaps. This is dependent on the accuracy of the mesh generated and is a particular problem with meshes based on curved surfaces.    
 
-\subsection{Adding properties to volumes}
+%%%%%%%%%%%%%%%%% Adding properties to volumes
 A pure geometry description is an insufficient description for a RT simulation. Often other attributes need to be assigned for example material definition, magnetic field or  
 optical surface properties.  
 
 \subsection{Overlap detection}
 All RT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
-through such a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing a CSG intersection between solid instances 
-and determining if the resulting mesh is empty. Generally the overlap detection algorithm proceeds as 
-
-{\small 
-\begin{verbatim}
-Overlap detection
-\end{verbatim}
-} 
-
-For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm 
-has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential 
-waste if small overlaps are present in the final RT simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical 
-volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are 
-considered. 
- \begin{figure}[htbp]
+through such a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing an intersection operation etween solid instances and determining if the resulting mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b) and intersection with finite volume and c) an overlap where two daughters share a face. 
+\begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=8cm]{./diagrams/overlap.pdf}
-\caption{Placement of physical volume inside a logical volume}
+\caption{Schematic of the three different types of overlap between daughters of a mother logical volume.}
 \label{fig:overlap}
 \end{center}
 \end{figure} 
 
-\subsection{Graphical user interface}
-A basic Qt based graphical user interface is also available with pyg4ometry. If a model has a large number of volumes defined in a hierarchical tree structure, it is cumbersome for the user to find the logical or physical volume.    
+Overlap detection in pyg4ometry relies of the meshes generated for each solid, any detection algorithm will be approximate. Generally the overlap detection 
+algorithm proceeds as 
+\begin{enumerate}
+\item Check if any of the daughter solid meshes have a non-null intersection with the compliment of mother solid mesh
+\item Loop over all daughter volumes and check
+\item Check
+\end{enumerate}
+
+For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm 
+has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential 
+waste if small overlaps are present in the final RTMC simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical 
+volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are 
+considered. 
+
+
+%%%%%%%%%%%%%%%%% Graphical user interface
+% A basic Qt based graphical user interface is also available with pyg4ometry. If a model has a large number of volumes defined in a hierarchical tree structure, it is % cumbersome for the user to find the logical or physical volume.    
 
 \section{Rapid geometry modelling}
 Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the RT problem, vary 
@@ -557,7 +565,6 @@ QUA (Quadric surface) 					& TessellatedSolid \\ \hline
 \end{table}
 
 \subsection{Infinite bodies}
-
 The majority of bodies in FLUKA are infinite in extent, and fall
 broadly into four categories, half-spaces, infinitely long cylinders,
 infinitely long elliptical cylinders and quadric surfaces.
@@ -592,7 +599,6 @@ user must provide the approximate axis-aligned bounding box of any
 region in which a quadric is used.
 
 \subsection{Removing redundant half-spaces}
-
 The above algorithm for replacing infinite FLUKA bodies with finite
 Geant4 solids works well in most cases, but additional care must be
 taken for redundant infinite half spaces.  A redundant infinite half
@@ -609,7 +615,6 @@ the centre-to-corner distance of the AABB, then that half-space is
 removed from the region during conversion.
 
 \subsection{Coplanar faces}
-
 Coplanar faces, in which the faces of two union components or that of
 two regions are perfectly coplanar in FLUKA are ubiquitous and present
 no difficulties to the operation of the program.  However, in Geant4
