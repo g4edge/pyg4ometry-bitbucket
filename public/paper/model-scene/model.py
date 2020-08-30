@@ -15,17 +15,16 @@ def buildModel(vis = True, write = True, render = True) :
     gunChamber_logical  = reader_gunChamber.getRegistry().getWorldVolume()
     gunChamber_logical.name = "gunChamber_lv"
     print("gun chamber ",gunChamber_logical.name)
-    gunChamber_assembly = gunChamber_logical.assemblyVolume()
-    gunChamber_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
-                                                           [0,0,0],
-                                                           gunChamber_assembly,
-                                                           "gunChamber_physical",
-                                                           world_logical,
-                                                           reg,
-                                                           addRegistry=False)
-    print("gun chamber",gunChamber_logical.extent(includeBoundingSolid=False))
-
-    reg.addVolumeRecursive(gunChamber_physical)
+    # gunChamber_assembly = gunChamber_logical.assemblyVolume()
+    # gunChamber_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+    #                                                        [0,0,0],
+    #                                                        gunChamber_assembly,
+    #                                                        "gunChamber_physical",
+    #                                                        world_logical,
+    #                                                        reg,
+    #                                                        addRegistry=False)
+    # print("gun chamber",gunChamber_logical.extent(includeBoundingSolid=False))
+    # reg.addVolumeRecursive(gunChamber_physical)
 
     # load gate
     reader_gateValve  = pyg4ometry.stl.Reader("./GV-100CF-C-M.stl")
@@ -101,20 +100,23 @@ def buildModel(vis = True, write = True, render = True) :
     faraday_logical.name = "faraday_lv"
     print("faraday ",faraday_logical.name)
     faraday_assembly = faraday_logical.assemblyVolume()
+    faraday_assembly.name = "faraday_av"
 
     faraday_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
-                                                       [0,0,900+2*38.9001+2450.000018+437.37*2+100],
-                                                       faraday_assembly,
-                                                       "faraday_physical",
-                                                       world_logical,
-                                                       reg,
-                                                       addRegistry=False)
+                                                      [0,0,900+2*38.9001+2450.000018+437.37*2+100],
+                                                      faraday_assembly,
+                                                      "faraday_physical",
+                                                      world_logical,
+                                                      reg,
+                                                      addRegistry=False)
     print("faraday",faraday_logical.extent(includeBoundingSolid=True))
     reg.addVolumeRecursive(faraday_physical,"reuse")
 
 
     reg.setWorld("world_logical")
-    
+
+    print("world extent ", reg.getWorldVolume().extent())
+
     if vis :
         v = pyg4ometry.visualisation.PubViewer()
         v.addLogicalVolume(reg.getWorldVolume())

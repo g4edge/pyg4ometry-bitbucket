@@ -1,0 +1,35 @@
+# Invoke the OGLSX driver 
+# Create a scene handler and a viewer for the OGLSX driver
+#/vis/open OGL 600x600-0+0
+#/vis/open OGLSX
+#/vis/open DAWNFILE
+/vis/open RayTracerX
+
+# Draw scene 
+/vis/drawVolume
+
+# Surface style
+/vis/viewer/set/style surface
+
+# Specify view angle:
+#/vis/viewer/set/viewpointVector -1 0 0
+/vis/viewer/set/viewpointThetaPhi 90 20
+/vis/viewer/set/lightsVector -1 1 -1
+
+# Background
+/vis/viewer/set/background white
+# Set default colour for uncoloured items (such as GDML) to be a visible grey
+/vis/viewer/set/defaultColour 0.9 0.9 0.9
+
+# Axes
+#/vis/scene/add/axes
+
+# Trajectories
+/vis/scene/endOfEventAction accumulate
+/vis/scene/add/trajectories
+/vis/ogl/flushAt endOfEvent
+
+# Commit to Renderer
+/vis/viewer/flush
+
+

@@ -35,10 +35,12 @@ reg.setWorld(wl.name)
 
 # physical volume vistualisation attributes
 bp1.visOptions.color = (1,0,0)
-bp1.visOptions.alpha = 0.25
+bp1.visOptions.alpha = 1.0
 bp2.visOptions.color = (0,1,0)
-bp2.visOptions.representation = "wireframe"
+bp2.visOptions.alpha = 1.0
+# bp2.visOptions.representation = "wireframe"
 bp3.visOptions.color = (0,0,1)
+bp3.visOptions.alpha = 1.0
 
 # gdml output
 w = gd.Writer()
