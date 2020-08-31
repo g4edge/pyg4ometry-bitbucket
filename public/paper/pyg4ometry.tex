@@ -44,6 +44,7 @@
 \usepackage{xcolor}
 \usepackage{cleveref}
 \usepackage{listings}
+\usepackage[ruled,vlined]{algorithm2e}
 
 \lstset{
   showstringspaces=false,
@@ -151,7 +152,7 @@
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword
-Geant; Monte Carlo; Particle; Transport; Geometry; 
+Geant; Fluka; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry; 
 
 \end{keyword}
 
@@ -270,10 +271,15 @@ To exchange geometry descriptions Geant Detector Mark-up Language (GDML) was dev
 Geant4 geometry description. Geant4 and ROOT \cite{fons_rademakers_2019_3895860} can read and write GDML format and it is commonly used as an exchange format for Geant4 geometries. 
 
 \section{Pyg4ometry design and layout}
+Pyg4ometry is a python package consisting of semi-independent modules. The module \verb|pyg4ometry.geant4| contains all classes for geant4 detector 
+construction, \verb|pyg4ometry.gdml| for GDML reading and writing. Modules for importing and exporting other geometry formats  \verb|pyg4ometry.fluka|, 
+\verb|pyg4ometry.stl| and \verb|pyg4ometery.freecad|.
+
 The core of {\em pyg4ometry} consists of python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
-The constructors of the python classes are kept as close to the original Geant4 C++ implementation so that {\it pyg4ometry} users do not have to learn 
-a new API. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
-should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in {\it pyg4ometry} are described.  
+The constructors of the python classes are kept as close to the original Geant4 C++ implementation so that pyg4ometry users do not have to learn 
+a new API. For example the \verb|G4Box| class in Geant4, has the XML tag \verb|Box| in GDML and is represented by the \verb|geant4.solid.Box| class in 
+Python. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
+should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in pyg4ometry are described.  
 
 %\begin{table}[hbt!]
 %\centering
@@ -340,26 +346,41 @@ should be able to start creating geometry in pyg4ometry immediately. In the foll
 
 %%%%%%%%%%%%%%%%%  Input and output  
 For each input format available in pyg4ometry a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
-and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a registry which can be used or manipulated by the user. 
+and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
+
+%%%%%%%%%%%%%%%%%  Internal data representation
+The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates python ordered dictionaries that are  used to store the main 
+elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.
+\verb|Registry| instances can be aggregated to form a composite geometry or volumes can be removed and added. 
 
 %%%%%%%%%%%%%%%%%  Expression evaluation
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
 In order to fully replicate the functionality of GDML an expression engine was implemented using ANTLR \cite{10.5555/2501720}. GDML allows for the definition 
 and assignment of variables. GDML expressions are not much more complicated than binary operators $+, -, \times, /$ and common trigonometric and special functions $\sin, \cos, \tan$ etc. The AST terminates on either expressions which evaluate to numbers or GDML variables. Internally all classes use GDML 
 expressions and not floating point numbers. Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of solid parameters and 
-placements. This allows a user to update variables whilst defining geometry and the expression engine will update all internal values.  
+placements. This allows a user to update variables whilst defining geometry and the expression engine will update all internal values. An example of GDML expressions is shown in listing~\ref{lst:gdmlExpressions}.
+
+\begin{lstlisting}[caption={A simple python script using pyg4ometry to create a simple Geant4 geometry.},label={lst:gdmlExpressions}, language=Python]
+# Import modules 
+import pyg4ometry
+
+# Create empty data storage structure
+reg = pyg4ometry.geant4.Registry()
+
+# Expressions 
+v1 = pyg4ometry.gdml.Constant("v1","0",reg)
+v2 = pyg4ometry.gdml.Constant("v2","sin(v1+pi)",reg)
+
+\end{lstlisting}
+
  
 %%%%%%%%%%%%%%%%%  Replica, division, parametrised and looped volumes
 A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The create multiple replicas of a volume in a cartesian, cylindrical or spherical grid is known as a ReplicaVolume. A DivisionVolume breaks a primitive into segments in either a cartesian or cylindrical polar coordinates. 
 A Parametrised Volume allows for the arbitrary multiple placement of solids where the parameters are allowed to vary for each placement.  GDML supports loops, 
 where sections of GDML are allowed to be repeated with varying parameters. GDML loops are not supported by pyg4ometry and will be implemented in a 
 future release. 
-
-%%%%%%%%%%%%%%%%%  Internal data representation
-The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates python ordered dictionaries that are  used to store the main 
-elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.
-\verb|Registry| instances can be aggregated to form a composite geometry or volumes can be removed and added.   
+  
   
 \subsection{Tessellation of solids (meshing)}
 For each Geant4 primitive solid a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent of placed 
@@ -401,7 +422,7 @@ A pure geometry description is an insufficient description for a RT simulation. 
 optical surface properties.  
 
 \subsection{Overlap detection}
-All RT transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
+All RTM Ctransport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
 through such a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing an intersection operation etween solid instances and determining if the resulting mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b) and intersection with finite volume and c) an overlap where two daughters share a face. 
 \begin{figure}[htbp]
 \begin{center}
@@ -410,6 +431,23 @@ through such a situation.  A key feature of pyg4ometry is the detection of poten
 \label{fig:overlap}
 \end{center}
 \end{figure} 
+
+%\begin{algorithm}[h]
+%\SetAlgoLined
+%\KwResult{Write here the result }
+% initialization\;
+% \While{While condition}{
+%  instructions\;
+%  \eIf{condition}{
+%   instructions1\;
+%   instructions2\;
+%   }{
+%   instructions3\;
+%  }
+% }
+% \caption{How to write algorithms}
+%\end{algorithm}
+
 
 Overlap detection in pyg4ometry relies of the meshes generated for each solid, any detection algorithm will be approximate. Generally the overlap detection 
 algorithm proceeds as 
@@ -645,7 +683,7 @@ between all zones within a union.
 \end{itemize}
 
 \section{GDML to FLUKA conversion}
-It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA CSG region.
+It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA \verb|REGION|
 Some solids in Geant4 directly map to a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
 lists the mapping between geant4 solids and the bodies used to compose a fluka region.
 
@@ -730,32 +768,46 @@ geant4 logical Volumes to fluka regions, as the logical volume outer solid $S_{\
 solids $S_{{\rm daugher},i}$ subtracted. So a solid which can be converted to a region $S_{\rm region}$ is then 
 \begin{equation}
 S_{\rm region} =  S_{\rm logical} - S_{\rm daughter,1} - S_{\rm daughter,2} - S_{\rm daughter,3} \ldots 
-\label{eqn:logical}
+\label{eqn:logicalSubtraction}
 \end{equation} 
 If a logical volume has  number of daughter volumes which are also possibly boolean solids, then computing 
 $S_{\rm region}$ can become very complex because of Equations \ref{eqn:setDiff}, \ref{eqn:setUnion} and 
-\ref{eqn:setIntersection}.  
+\ref{eqn:setIntersection}. 
 
 \subsection{Non-Convex solid decomposition}
-In general the CSG description used by geant4 allow non-convex solids, these include Polyhedron, Xtru, TwistedBox, 
-TwistedTrap, TwistedTrd and TwistedTube. These particular solids are problematic when converting geometry to a Fluka 
-readable format, as non-convex solids can only be created by union of convex zones. These solids are converted to CGAL 
+In general the base solids used by Geant4 allow non-convex solids, eg Polycone, Xtru, the Twisted.  These particular solids are problematic when 
+converting geometry to a FLUKA readable format, as non-convex solids can only be created by union of convex zones. 
+There are two groups which need to considered, firstly those where 2D polygonal section needs to be decomposed these include Polycone, 
+Polyhedron and Xtru, secondly those where three dimensional convex decomposition is required  TwistedBox, TwistedTrap, TwistedTrd, 
+TwistedTube and Tessellated. These solids are converted to CGAL 
 Nef polyhedra \colorbox{yellow}{XXX CITE} and decomposed to convex polyhedra using a \colorbox{yellow}{XXX} algorithm. 
 
 \subsection{Disjunctive normal form and degenerate surfaces}
+Typically FLUKA will decompose a \verb|REGION| into disjunctive normal form (DNF), this normal form is characterised as the union of intersections, so 
+\begin{equation}
+R = z_1 \; | \;z_2\;  | \; z_3 | \; z_4 \dots
+\end{equation}
+Defining \verb|REGION|s in terms of DNF allows the rapid test if a point is inside or outside. Testing each zone $z_i$ of $R$ can terminate if a point 
+is determined to be inside any of convex zones. In general Equation~\ref{eqn:logicalSubtraction} is not in a DNF. If there are many levels of logical-physical 
+volume placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of parentheses. There are some conditions 
+where a general boolean expression can yield an exponential explosion of the final DNF. There are well known algorithms to convert logical expressions to 
+DNF  \colorbox{yellow}{XXX}. Pyg4ometery can simplify parentheses from a \verb|REGION| by creating a sympy \colorbox{yellow}{XXX CITE} expression and 
+using its logical module. Before version 4.0 FLUKA would simplify all regions to DNF and some converted geometry would generate too many zones and would fail.
+FLUKA version 4 allows control of the NDF expansion.
 
 \subsection{Materials}
+Pyg4ometry converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
 
 \subsection{Disucssion}
 There are still a few outstanding issues with Geant4/GDML to Fluka conversion. 
 
 \begin{itemize}
-\item Non-convex solids, convex decomposition (Polyhedron, Xtru, TwistedBox, TwistedTrap, TwistedTrd, TwistedTube)
-\item Non-convex 2D section (GenericPolycone, GenericPolyhedra)
-\item Scaled solid 
-\item Placement scale 
+\item Degenerate body look up 
+\item Bodes with/without transformation 
+\item Non-convex solids, convex decomposition (TwistedBox, TwistedTrap, TwistedTrd, TwistedTube, Tessellated)
+\item Scaled solid, Placement scale 
 \item Replica, Division, Parameterised
-\item Materials 
+\item Recursive application of \ref{eqn:setDiff}, \ref{eqn:setUnion}, \ref{eqn:setIntersection}, \label{eqn:logicalSubtraction} speed up using meshes
 \end{itemize}
 
 \section{CAD/STL to GDML conversion }
