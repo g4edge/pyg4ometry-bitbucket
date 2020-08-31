@@ -3,6 +3,10 @@ from distutils.command import build_ext
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
+# https://github.com/pypa/pip/issues/7953
+import site
+site.ENABLE_USER_SITE = True
+
 import sys
 build_base_long  = [arg[12:].strip("= ") for arg in sys.argv if arg.startswith("--build-base")]
 build_base_short = [arg[2:].strip(" ") for arg in sys.argv if arg.startswith("-b")]
@@ -61,7 +65,7 @@ exts.append(cgal_core_ext)
 
 setup(
     name="pyg4ometry",
-    version="0.9.1",
+    version="1.0",
     packages=find_packages(exclude=["docs", "tests"]),
     package_dir={"pyg4ometry.convert": "pyg4ometry/convert",
                  "pyg4ometry.fluka": "pyg4ometry/fluka",
