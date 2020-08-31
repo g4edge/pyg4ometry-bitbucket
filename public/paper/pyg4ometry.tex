@@ -152,7 +152,7 @@
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword
-Geant; Fluka; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry; 
+Geant; FLUKA; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry; 
 
 \end{keyword}
 
@@ -675,12 +675,12 @@ forbidden in Geant4 and must be removed during the conversion
 process.  Disjoint unions are detected by checking for overlaps
 between all zones within a union.
 
-\begin{itemize}
+\begin{enumerate}
 \item disjoint subtractions?
 \item quadric specialisation
 \item second order lattice
 \item Materials 
-\end{itemize}
+\end{enumerate}
 
 \section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 solids can be mapped to a FLUKA \verb|REGION|
@@ -793,22 +793,22 @@ volume placement, then recursive application of  Equation~\ref{eqn:logicalSubtra
 where a general boolean expression can yield an exponential explosion of the final DNF. There are well known algorithms to convert logical expressions to 
 DNF  \colorbox{yellow}{XXX}. Pyg4ometery can simplify parentheses from a \verb|REGION| by creating a sympy \colorbox{yellow}{XXX CITE} expression and 
 using its logical module. Before version 4.0 FLUKA would simplify all regions to DNF and some converted geometry would generate too many zones and would fail.
-FLUKA version 4 allows control of the NDF expansion.
+FLUKA version 4 allows control of the DNF expansion.
 
 \subsection{Materials}
 Pyg4ometry converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
 
 \subsection{Disucssion}
-There are still a few outstanding issues with Geant4/GDML to Fluka conversion. 
+There are still a few outstanding issues with Geant4/GDML to FLUKA conversion. 
 
-\begin{itemize}
+\begin{enumerate}
 \item Degenerate body look up 
 \item Bodes with/without transformation 
 \item Non-convex solids, convex decomposition (TwistedBox, TwistedTrap, TwistedTrd, TwistedTube, Tessellated)
 \item Scaled solid, Placement scale 
 \item Replica, Division, Parameterised
 \item Recursive application of \ref{eqn:setDiff}, \ref{eqn:setUnion}, \ref{eqn:setIntersection}, \label{eqn:logicalSubtraction} speed up using meshes
-\end{itemize}
+\end{enumerate}
 
 \section{CAD/STL to GDML conversion }
 STEP and IGES files can be loaded into pyg4ometry, via an interface based on FreeCAD. FreeCAD is an open source CAD/CAM program, which in turn 
@@ -838,6 +838,13 @@ viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
 Pyg4ometry is designed to be as flexible as possible and offer the user a wide range of usage styles and workflows. The following sections describe a selection of 
 possible applications.
 
+\begin{enumerate}
+\item Merging Registries 
+\item Removing volumes 
+\item Editing solid
+\item Converting to assembly solids 
+\end{enumerate}
+
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/model.pdf}
@@ -858,7 +865,7 @@ Although not implemented in the current version, a C++ output writer can be quic
 \item C++ output
 \item CAD BREP to FLUKA converter (a la McCAD) 
 \item Integration of other tools (DAGMC) 
-\item Far from perfect conversions. 
+\item Far from perfect conversions
 \end{enumerate}
 
 %% The Appendices part is started with the command \appendix;
