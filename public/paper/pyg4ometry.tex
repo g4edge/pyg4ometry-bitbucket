@@ -576,10 +576,19 @@ instances to them.  Each Zone and Region instance can then return its
 equivalent GDML Boolean solid.
 
 The FLUKA CSG ASCII format is parsed using an ANTLR4-generated parser,
-producing an abstract syntax tree (AST).  The resulting AST is then
-walked to populate Region instances with zones and bodies.  An example
-FLUKA region with the corresponding abstract syntax tree is shown in
-Figure~\ref{fig:region-ast}.
+producing an abstract syntax tree (AST).  The resulting AST is then walked
+to populate Region instances with zones and bodies.  With the region
+instances populated they can then be manipulated and translated into GDML.
+The translation involves a number of special steps to bridge the two
+disparate formats and ensure the resulting GDML is well-formed ans usable
+in Geant4.  Some of these steps are simple, for example in FLUKA unions can
+be disconnected, but in Geant4 specifically only MultiUnions can be
+disconnected, such that MultiUnions are used throughout the converted
+geometry instead of the usual binary unions.  Other procedures are more
+involved and are discussed in the rest of this section.
+
+
+
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
@@ -711,7 +720,7 @@ levels of \fluka{lattice} nesting the are supported in FLUKA.
 \caption{The \fluka{lattice} feature demonstrating a \fluka{lattice} cell
   referring to its basic unit with the rototranslation $R_\textrm{trans}$.
   Any particle entering the cell will be transformed onto the basic unit
-  with $R\textrm{trans}$, and when leaving the basic unit, back to the cell
+  with $R_\textrm{trans}$, and when leaving the basic unit, back to the cell
   with $R_\textrm{trans}^{-1}$.}
 \label{fig:lattice}
 \end{center}
