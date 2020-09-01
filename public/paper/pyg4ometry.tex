@@ -689,8 +689,56 @@ subtractions and work well for guaranteeing well-formed geometry that
 is free from overlaps.
 
 \subsection{Lattice}
-Description of how we \colorbox{yellow}{translate lattices} 
-into one LV with multiple PVs.
+
+FLUKA supports modular geometries with the use of the \fluka{lattice}
+command. Figure~\ref{fig:lattice} demonstrates this capability, and. The
+arbitrarily complex \textit{basic unit} can be defined once and used
+multiple times by placing one or more empty \textit{lattice cells} with the
+associated rototranslation from that \fluka{lattice} cell to the basic
+unit. The \fluka{lattice} cells themselves will generally lack structure
+and simply serve as a reference to the basic unit. The rototranslated
+lattice cell must fully contain the basic unit and all of the regions
+within it. When a particle steps into the \fluka{lattice} cell, the
+rototranslation is applied to that particle and it is is taken into the
+basic unit, and the simulation continues within the basic unit. Any
+particles leaving the basic unit will be translated back to the
+\fluka{lattice} cell with the inverted rototranslation. Up to two
+levels of \fluka{lattice} nesting the are supported in FLUKA.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=6cm]{./diagrams/lattice}
+\caption{The \fluka{lattice} feature demonstrating a \fluka{lattice} cell
+  referring to its basic unit with the rototranslation $R_\textrm{trans}$.
+  Any particle entering the cell will be transformed onto the basic unit
+  with $R\textrm{trans}$, and when leaving the basic unit, back to the cell
+  with $R_\textrm{trans}^{-1}$.}
+\label{fig:lattice}
+\end{center}
+\end{figure}
+
+This feature is clearly analogous to the logical/physical volume feature in
+Geant4, although it is less explicit as the contents of a given logical
+volume are clearly stated, whereas the contents of a \fluka{lattice} cell
+are implied by the combination of the rototranslation and the locations of
+its \fluka{lattice} cell and basic unit.
+
+Translating this construct into a logical volume (basic unit) with many
+physical volumes (\fluka{lattice} cells) requires associating each
+\fluka{lattice} cell with the full contents of its corresponding basic unit
+(typically several regions). This is achieved by meshing the complete
+FLUKA geometry and then rototranslating the \fluka{lattice} cell mesh with
+its associated rototranslation. By construction this will translate the
+\fluka{lattice} cell mesh directly onto the full basic unit mesh. Finally,
+in checking for overlaps, the regions within the the basic unit can be
+determined. In the final conversion step, the \fluka{lattice} cell can
+simply be replaced with a physical volume that refers back to logical
+volumes located in the previous step. Thus the \fluka{lattice} cells can
+be translated into Geant4's logical/physical volumes. As has been stated,
+FLUKA supports two levels of nesting, but currently the conversion to GDML
+supports only one. However, extending to an extra level is simple in that
+it only involves an extra application of a rototranslation matrix before
+checking for overlaps.
 
 \subsection{Discussion}
 A disjoint union in FLUKA is a union of two or more zones that are not
