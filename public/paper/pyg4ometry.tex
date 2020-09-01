@@ -508,7 +508,7 @@ wm = g4.Material("G4_Iron")
 
 # Solids
 wb = g4.solid.Box("wb",wx,wy,wz,reg)
-b   = g4.solid.Box("b",bx,by,bz)
+ b = g4.solid.Box("b",bx,by,bz)
 
 # Structure 
 wl = g4.LogicalVolume(wb, wm, "wl", reg)
@@ -707,17 +707,7 @@ between all zones within a union.
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 
 solids can be mapped to a FLUKA \verb|REGION|. Some solids in Geant4 directly map to 
 a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
-lists the mapping between geant4 solids and the bodies used to compose a fluka region.
-
-\begin{figure*}[htbp]
-\begin{center}
-\includegraphics[width=1.0\textwidth]{./model-scene/CuboidalChamber.pdf}
-\caption{Example conversion of a simple GDML geometry to FLUKA, left panel :  
-the original model in pyg4ometry, right panel : the converted FLUKA geometry 
-viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
-\label{fig:flair-gdml}
-\end{center}
-\end{figure*}
+lists the mapping between Geant4 solids and the bodies used to compose a FLUKA region.
 
 \begin{table}[hbt!]
 \centering
@@ -798,6 +788,20 @@ If a logical volume has  number of daughter volumes which are also possibly bool
 $S_{\rm region}$ can become very complex because of Equations \ref{eqn:setDiff}, \ref{eqn:setUnion} and 
 \ref{eqn:setIntersection}. 
 
+Figure~\ref{fig:flair-gdml} shows an example conversion from GDML to FLUKA. The example is a 
+vacuum chamber with three CF beam pipes connected to CF flanges. The top and bottom plates 
+have been removed to better see the geometry. The model is formed of \verb|G4Box| and
+\verb|G4Tubs| and boolean operations of subtraction, intersection and union.
+\begin{figure*}[htb!]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{./model-scene/CuboidalChamber.pdf}
+\caption{Example conversion of a simple GDML geometry to FLUKA, left panel :  
+the original model in pyg4ometry, right panel : the converted FLUKA geometry 
+viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
+\label{fig:flair-gdml}
+\end{center}
+\end{figure*}
+
 \subsection{Non-Convex solid decomposition}
 In general the base solids used by Geant4 allow non-convex solids, eg Polycone, Xtru, the Twisted.  These 
 particular solids are problematic when converting geometry to a FLUKA readable format, as non-convex solids 
@@ -821,9 +825,10 @@ placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} 
 parentheses. There are some conditions where a general boolean expression can yield an exponential 
 explosion of the final DNF. There are well known algorithms to convert logical expressions to DNF 
 \colorbox{yellow}{XXX}. Pyg4ometery can simplify parentheses from a \verb|REGION| by creating a 
-sympy \cite{10.7717/peerj-cs.103} expression and using its \verb|logical| module. Before version 4.0 FLUKA 
-would simplify all regions to DNF and some converted geometry would generate too many zones and would fail.
-FLUKA version 4 allows control of the DNF expansion.
+sympy \cite{10.7717/peerj-cs.103} expression and using its \verb|logical| module \verb|to_ndf| method based on 
+the Quine–McCluskey algorithm \cite{6769983}. Before version 4.0 FLUKA  would simplify all regions to 
+DNF and some converted geometry would generate too many zones and would fail. FLUKA version 4 
+allows control of the DNF expansion.
 
 \subsection{Materials}
 Pyg4ometry converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
