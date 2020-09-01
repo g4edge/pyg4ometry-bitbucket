@@ -15,16 +15,16 @@ def buildModel(vis = True, write = True, render = True) :
     gunChamber_logical  = reader_gunChamber.getRegistry().getWorldVolume()
     gunChamber_logical.name = "gunChamber_lv"
     print("gun chamber ",gunChamber_logical.name)
-    # gunChamber_assembly = gunChamber_logical.assemblyVolume()
-    # gunChamber_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
-    #                                                        [0,0,0],
-    #                                                        gunChamber_assembly,
-    #                                                        "gunChamber_physical",
-    #                                                        world_logical,
-    #                                                        reg,
-    #                                                        addRegistry=False)
-    # print("gun chamber",gunChamber_logical.extent(includeBoundingSolid=False))
-    # reg.addVolumeRecursive(gunChamber_physical)
+    gunChamber_assembly = gunChamber_logical.assemblyVolume()
+    gunChamber_physical = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                           [0,0,0],
+                                                           gunChamber_assembly,
+                                                           "gunChamber_physical",
+                                                           world_logical,
+                                                           reg,
+                                                           addRegistry=False)
+    print("gun chamber",gunChamber_logical.extent(includeBoundingSolid=False))
+    reg.addVolumeRecursive(gunChamber_physical)
 
     # load gate
     reader_gateValve  = pyg4ometry.stl.Reader("./GV-100CF-C-M.stl")
@@ -98,6 +98,13 @@ def buildModel(vis = True, write = True, render = True) :
     faraday_greg    = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
     faraday_logical = faraday_greg.getWorldVolume()
     faraday_logical.name = "faraday_lv"
+
+    for d in faraday_logical.daughterVolumes :
+        if d.name == "air_pv" :
+            faraday_logical.daughterVolumes.remove(d)
+
+    extentBB = faraday_logical.extent(includeBoundingSolid=False)
+
     print("faraday ",faraday_logical.name)
     faraday_assembly = faraday_logical.assemblyVolume()
     faraday_assembly.name = "faraday_av"
@@ -167,6 +174,10 @@ def buildFaradayCup(vis = True,inter = True) :
     reader_faraday = pyg4ometry.fluka.Reader("faradayCup2.inp")
     faraday_greg = pyg4ometry.convert.fluka2Geant4(reader_faraday.flukaregistry)
     faraday_logical  = faraday_greg.worldVolume
+
+    for d in faraday_logical.daughterVolumes :
+        if d.name == "air_pv" :
+            faraday_logical.daughterVolumes.remove(d)
 
     extentBB = faraday_logical.extent(includeBoundingSolid=False)
     
