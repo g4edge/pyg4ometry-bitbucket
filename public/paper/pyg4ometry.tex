@@ -551,13 +551,12 @@ Another key benefit is the ability to use the pyg4ometry code to create
 programatic converters between different geometry languages.
 
 \section{FLUKA to GDML conversion}
-FLUKA geometry is based upon a limited set of primitives (referred to
-as \textit{bodies} which can be combined using Boolean operations.  A
-\textit{zone} consists of one or more bodies or \textit{subzones}
-combined using intersections and subtractions.  Zones may then be
-further combined using union operations to form \textit{regions},
-which is defined as the union of one or more zones, as well as a
-material.
+FLUKA geometry is based upon a limited set of primitives (referred to as
+\textit{bodies}) which can be combined using Boolean operations. A
+\textit{zone} consists of one or more bodies or \textit{subzones} combined
+using intersections and subtractions.  Zones may then be further combined
+using union operations to form \textit{regions}, which is defined as the
+union of one or more zones, as well as a material.
 
 Each FLUKA body is represented in Pyg4ometry with a corresponding
 class, and in turn each class has methods which returns a GDML
@@ -580,7 +579,7 @@ producing an abstract syntax tree (AST).  The resulting AST is then walked
 to populate Region instances with zones and bodies.  With the region
 instances populated they can then be manipulated and translated into GDML.
 The translation involves a number of special steps to bridge the two
-disparate formats and ensure the resulting GDML is well-formed ans usable
+disparate formats and ensure the resulting GDML is well-formed and usable
 in Geant4.  Some of these steps are simple, for example in FLUKA unions can
 be disconnected, but in Geant4 specifically only MultiUnions can be
 disconnected, such that MultiUnions are used throughout the converted
@@ -588,15 +587,14 @@ geometry instead of the usual binary unions.  Other procedures are more
 involved and are discussed in the rest of this section.
 
 
-
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
-\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :  
-the original FLUKA geometry displayed in FLAIR, right panel : the GDML geometry 
-viewed in pyg4ometry. The example is a Faraday cup used to capture 
+\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :
+the original FLUKA geometry displayed in FLAIR, right panel : the GDML geometry
+viewed in pyg4ometry. The example is a Faraday cup used to capture
 and measure accelerator beam charge.}
-\label{fig:region-ast}
+\label{fig:fluka-to-geant4-cup}
 \end{center}
 \end{figure*}
 
@@ -611,10 +609,10 @@ and measure accelerator beam charge.}
 \caption{FLUKA bodies and their corresponding Geant4 solids.} \label{tab:Fluka2Geant4}
 \centering
 \begin{tabular}{ll} \hline
-FLUKA body							& pyg4ometry class \\ \hline
+FLUKA body                                              & pyg4ometry class \\ \hline
 RPP (Rectangular parallelepiped)			& Box \\
 BOX (General rectangular parallelepiped)		& Box \\
-SPH (Sphere)    						& Orb \\
+SPH (Sphere)    					& Orb \\
 RCC (Right circular cylinder)				& Tubs \\
 REC (Right elliptical cylinder)				& EllipticalTube \\
 TRC (Truncated Right Angle Cone)			& Cons \\
@@ -750,18 +748,35 @@ it only involves an extra application of a rototranslation matrix before
 checking for overlaps.
 
 \subsection{Discussion}
-A disjoint union in FLUKA is a union of two or more zones that are not
-connected.  This is a valid construct in FLUKA but is explicitly
-forbidden in Geant4 and must be removed during the conversion
-process.  Disjoint unions are detected by checking for overlaps
-between all zones within a union.
 
-\begin{enumerate}
-\item disjoint subtractions?
-\item quadric specialisation
-\item second order lattice
-\item Materials 
-\end{enumerate}
+Figure~\ref{fig:fluka-to-geant4-cup} shows a Faraday cup implemented in
+FLUKA and translated to GDML using pyg4ometry.  The conversion is clearly
+accurate well and also includes the translation of the materials to GDML.
+Many of the steps described above were directly applied in this model and
+all the features are tested and demonstrated in the repository.  This set
+of algorithms for bridging FLUKA with GDML covers a very broad range of
+geometries, however a number of possible improvements for the future
+persist.  For example, Boolean solids in FLUKA can in general be
+disconnected, and this most typically manifests itself in the form of
+disconnected unions, but is also allowed for intersections and
+subtractions.  Disconnected unions are readily availabe in GDML with the
+use of the MultiUnion solid type, however there is no valid means to
+construct a disconnected subtraction or intersection in GDML.  One possible
+solution would be to detect these two cases, and if found, split them into
+their constituent parts and place separately as TesselatedSolid instances.
+
+Furthermore, the quadric surface conversion can be further improved by
+specialising on some of the individual forms of the quadric.  Simply
+converting every quadric into a TesselatedSolid comes at a potential
+performance cost in the tracking, as well as usability in pyg4ometry as the
+user must provide an AABB.  In some cases tesselation in unavoidable (for
+example a hyperbolic parabaloid), but parabolic cylinders could for example
+be translated to an ExtrudedSolid.  This could provide both a performance
+improvement in the tracking time and make pyg4ometry easier to use as an
+AABB would not need to be provided beforehand.  This has not been
+implemented as quadrics are relatively rarely used, but where quadrics are
+used its often parabolic cylinders (e.g. magnet pole tips) this
+specicalisation in particular would be worth implementing.
 
 \section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 
