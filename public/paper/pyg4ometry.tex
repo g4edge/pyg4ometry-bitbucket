@@ -55,6 +55,22 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{
+  showstringspaces=false,
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  % frame=single,
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  language=Python,
+  keywordstyle=\color{blue},
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
  % For fluka commands such as LATTICE etc.
 \newcommand{\fluka}[1]{\texttt{\MakeUppercase{#1}}}
 
@@ -134,7 +150,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Pyg4ometry: a Python library for the creation of Monte Carlo radiation transport physical geometries}
+\title{PYG4OMETRY: a PYTHON library for the creation of Monte Carlo radiation transport physical geometries}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{<author name>}
@@ -169,16 +185,16 @@ Geant; FLUKA; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry;
 % Computer program descriptions should contain the following
 % PROGRAM SUMMARY.
 
-% \linenumbers
+\linenumbers
 
 {\bf PROGRAM SUMMARY}
   %Delete as appropriate.
 
 \begin{small}
 \noindent
-{\em Program Title: pyg4ometry }                                         		\\
+{\em Program Title: PYG4OMETRY }                                         		\\
 {\em Licensing provisions: GPLv3 }			\\
-{\em Programming language: python, C/C++}                         		\\
+{\em Programming language: PYTHON, C/C++}                         		\\
 
 {\em Supplementary material:}                                 				\\
   % Fill in if necessary, otherwise leave out.
@@ -216,41 +232,41 @@ Creating computer readable geometry descriptions for Monte Carlo radiation trans
 There are numerous different software codes to simulate the passage of particles through material, radiation transport (RT) programmes, these 
 include MCNP \cite{Mcnp_Werner}, FLUKA \cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3 \cite{Geant3_Brun} and Geant4 \cite{Geant4_Agostinelli}. 
 All these codes are based on the Monte Carlo technique but each code either has a particular specialism, simulation methodology or target user community.  
-RT Monte Carlo (RTMC) simulations have diverse uses, shielding calculations for radiological protection, detector performance, medical imaging and therapy and space radiation environment  simulation are some examples. A fundamental requirement of all of the codes is to supply a computer readable description of the 
+RT Monte Carlo (RTMC) simulations have diverse uses, shielding calculations for radiological protection, detector performance, medical imaging and therapy and space radiation environment  simulation are some examples. A fundamental requirement of all of the codes is to supply a computer-readable description of the 
 physical geometry that  the particles are passing through.  The creation of geometry files is typically a very time consuming activity and the simulation validity 
 and performance is directly dependent on the quality of the geometry. The requirement of a geometry system that allows the conversion between files prepared 
-for different codes will enable cross checks of the physics processes in different particle transport codes. Parallel to the creation of geometry files for RT 
-programs, usually computer assisted design (CAD) files exist for systems which need to be simulated in RT programmes. The fundamental geometric 
+for different codes will enable cross-checks of the physics processes in different particle transport codes. In addition to the creation of geometry files for RT 
+programs, usually computer assisted design (CAD) files exist for systems which need to be simulated. The fundamental geometric 
 representations in CAD files is typically not amenable for RT programmes.  For these reasons it is advantageous to create a software tool that allows 
-particle transport code users to rapidly develop geometry files, convert between common RT programme geometry formats and finally import CAD models. 
+particle transport code users to rapidly develop error free geometry files, convert between common RT programme geometry formats and finally import CAD models. 
 \colorbox{yellow}{More explanation of Geant4 and FLUKA} 
 
-This paper describes a geometry creation and conversion package called {\em pyg4ometry}, implemented in {\em Python} and internally based on the Geant4 geometry GDML \cite{GDML}. The main features of  {\em pyg4ometry} are a python scripting API to rapidly design parametrised geometry, conversion to and from  FLUKA geometry descriptions, conversion from CAD formats  (STEP and IGES) based on FreeCAD \cite{FreeCAD} and OpenCascade \cite{OpenCASCADE} and powerful geometry visualisation tools based on VTK \cite{VTK4}. The origin of pyg4ometry was a set of utilities to prepare geometry for an accelerator beam line simulation based on Geant4 called BDSIM \cite{BDSIM_Nevay}. Accelerator physicists like specialists in other areas need a tool to quickly simulate beam losses, and the subsequent interaction of the charged particle beam with the accelerator material. Figure~\ref{fig:workflow} depicts various workflows possible with {\em pyg4ometry}. {\em Pyg4ometry} is a not a software package but a toolkit library for creation and conversion of geometry, a user would typically write very small python programs to use the {\em pyg4ometry} toolbox. This paper describes version 1 of pyg4ometry, which is freely available as a git prepository and via pypi. 
+This paper describes a geometry creation and conversion package called PYG4OMETRY, implemented in PYTHON and internally based on the Geant4 for APIs and Geometry Description Markup Language (GDML) for file persistency  \cite{GDML}. The main features of PYG4OMETRY are a PYTHON scripting API to rapidly design parametrised geometry, conversion to and from  FLUKA geometry descriptions, conversion from CAD formats  (STEP and IGES) based on FreeCAD \cite{FreeCAD} and OpenCascade \cite{OpenCASCADE} and powerful geometry visualisation tools based on VTK \cite{VTK4}. The origin of PYG4OMETRY was a set of utilities to prepare geometry for an accelerator beamline simulation based on Geant4 called BDSIM \cite{BDSIM_Nevay}. Accelerator physicists, like specialists in other areas, need a tool to quickly simulate beam losses and the subsequent interaction of the charged particle beam with the accelerator material. Figure~\ref{fig:workflow} depicts various workflows possible with PYG4OMETRY. PYG4OMETRY is not an executable software package but a toolkit, a user would typically write very small PYTHON program to use the PYG4OMETRY. This paper describes version 1.0 of PYG4OMETRY, which is freely available as a git repository and via PyPi. 
 
 \begin{figure*}[hbt!]
   \normalsize
   \centering
   \includegraphics[width=0.7\textwidth]{./diagrams/workflow.pdf}
-  \caption{\label{fig:workflow}Pyg4ometry geometry conversion workflow.}
+  \caption{\label{fig:workflow}Schematic of PYG4OMETRY workflow, showing a) the different input file formats, b) PYTHON processing, c) output file targets and d) RTMC codes which use the geometry. }
 \end{figure*}
 
-There are existing codes that have functionality similar to pyg4ometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, commercial products include ESABASE2 \cite{ESABASE2} and FASTRAD \cite{FASTRAD}. There are also tools from the fusion and 
+There are existing codes that have functionality similar to PYG4OMETRY. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, commercial products include ESABASE2 \cite{ESABASE2} and FASTRAD \cite{FASTRAD}. There are also tools from the fusion and 
 neutronics community which  can convert CAD geometry into formats usable by RTMC codes, examples include DAGMC \cite{DAGMC} and McCad \cite{McCad}.  
 CAD software can export data to STL. If a CAD model comprises of a large number of parts, exporting, assigning material to and placing the STL  components into 
 the RTMC can be a cumbersome task. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.
 
-This paper is structured as follows, first a brief radiation transport-centric introduction to computer descriptions of geometry, followed by an explanation of the design and implementation of {\it Pyg4ometry}. Thesections that follow describe how {\it pyg4ometry} can be used to perform rapid geometric modelling, conversion from FLUKA to GDML, GDML to FLUKA and CAD to GDML. The paper concludes with an example of composite complex system consisting components of all the possible geometry input files formats.
+This paper is structured as follows, first a brief radiation transport-centric introduction to computer descriptions of geometry, followed by an explanation of the design and implementation of PYG4OMETRY. The sections that follow describe how PYG4OMETRY can be used to perform rapid geometric modelling, conversion from FLUKA to GDML, GDML to FLUKA and CAD to GDML. The paper concludes with an example of composite complex system consisting components of all the possible geometry input files formats.
 
 \section{Computer descriptions of geometry} \label{sec:geometric}
-Central to a computer readable geometry of a system is how a solid is defined in three dimensions. There are numerous different ways to describe a
-geometry, including constructive solid geometry, boundary representation and tessellated polygons, these are described briefly in the following sections.  
-The Geant4 geometry specification is a mixture of geometry modelling techniques and described in detail last.
+Central to a computer-readable geometry is how a solid is defined in three dimensions. There are numerous different ways to describe a
+geometry, including constructive solid geometry (CSG) , boundary representation (BREP) and tessellated polygons, these are described 
+briefly in the following sections.  The Geant4 geometry specification is a mixture of geometry modelling techniques and described in detail last.
 
 %%%%%%%%%%%%%%%%% Constructive solid geometry (CSG) 
-Constructive solid geometry uses boolean operations, subtraction, intersection and union, between simple solid shapes (e.g. cube, cylinder, sphere etc) or infinite
+Constructive solid geometry uses Boolean operations, subtraction, intersection and union, between simple solid shapes (e.g. cube, cylinder, sphere etc) or infinite
 volumes (e.g a plane defined infinite half-space) to model complex surfaces which represent a solid. Boolean operations and solids can be combined to form a 
-CSG-tree to model complex geometry. FLUKA uses CSG to model solids, the form of boolean expression used by FLUKA is not a general CSG-tree but a 
-logical expression in disjunctive normal-form.
+CSG tree to model complex geometry. FLUKA uses CSG to model solids, the form of Boolean expression used by FLUKA is not a general CSG tree but a 
+logical expression in disjunctive normal form.
 
 %%%%%%%%%%%%%%%%% Boundary representation (BREP)
 Boundary representation (BREP) consists of two parts, topology and geometry. Topological elements are faces, edges and vertices and the corresponding
@@ -260,35 +276,35 @@ infinite mathematical surfaces and subsequently solids as used in CSG descriptio
 
 %%%%%%%%%%%%%%%%% Tessellated polygons
 Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL and 
-more modern variants being PLY, OBJ, etc. For solids with curved faces a tessellated mesh will always give an approximate description. As the mesh 
-deviation distance from the solid decreases the number of polygons increases and hence the memory consumption and execution time of the RTMC. 
+more modern variants being PLY, OBJ to name a few. For solids with curved faces a tessellated mesh will always give an approximate description. As the mesh 
+deviation distance from the solid decreases the number of polygons increases and hence the memory consumption and execution time of the RTMC simulation. 
 
 %%%%%%%%%%%%%%%%% Geant4 geometery
 Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes XX fundamental solids, although it does not store a sense 
 of topology present in traditional CAD BREP systems. One of the fundamental solids is a {\em TessellatedSolid} which can used to represent STL or PLY files. 
-Geant4 also provides the ability to perform boolean operations on these primitive solids. The richest and most flexible geometry description is currently used by
-Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\it Logical Volumes} and {\it Physical Volumes}. A Logical Volume is a region of space  that is defined by an outer solid but also other attributes like material, magnetic field 
+Geant4 also provides the ability to perform Boolean operations on these primitive solids. The richest and most flexible geometry description is currently used by
+Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\it Logical Volumes} and {\it Physical Volumes}. A {\it Logical Volume} is a region of space  that is defined by an outer solid but also other attributes like material, magnetic field 
 and zero or more physical {\it daughter} volumes. A Physical Volume is a placement (or instance) of a Logical Volume.   
 
 %%%%%%%%%%%%%%%%% Geant Detector Mark-up Language
-To exchange geometry descriptions Geant Detector Mark-up Language (GDML) was developed \cite{GDML}. GDML is an XML based description of 
-Geant4 geometry description. Geant4 and ROOT \cite{fons_rademakers_2019_3895860} can read and write GDML format and it is commonly used as an exchange format for Geant4 geometries. 
+To exchange geometry descriptions between software packages Geometry Descripition Mark-up Language (GDML) was developed \cite{GDML}. 
+GDML is an XML based description of Geant4 geometry description. Geant4 and ROOT \cite{fons_rademakers_2019_3895860} can read and write 
+GDML format and it is commonly used as an exchange format for Geant4 geometries. 
 
-\section{Pyg4ometry design and layout}
-Pyg4ometry is a python package consisting of semi-independent modules. The module \verb|pyg4ometry.geant4| contains all classes for geant4 detector 
-construction, \verb|pyg4ometry.gdml| for GDML reading and writing. Modules for importing and exporting other geometry formats  \verb|pyg4ometry.fluka|, 
-\verb|pyg4ometry.stl| and \verb|pyg4ometery.freecad|.
+\section{PYG4OMETRY design and layout}
+PYG4OMETRY is a PYTHON package consisting of semi-independent sub-packages. The sub-package \verb|pyg4ometry.geant4| contains all classes for 
+geant4 detector construction, \verb|pyg4ometry.gdml| provides the functionality for reading and writing GDML files. There are sub-packages for importing and exporting other geometry formats  \verb|pyg4ometry.fluka|, \verb|pyg4ometry.stl| and \verb|pyg4ometery.freecad| and converting between file formats \verb|pyg4ometry.convert|.
 
-The core of {\em pyg4ometry} consists of python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
-The constructors of the python classes are kept as close to the original Geant4 C++ implementation so that pyg4ometry users do not have to learn 
+The core of PYG4OMETRY consists of PYTHON classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
+The constructors of the PYTHON classes are kept as close to the original Geant4 C++ implementation so that PYG4OMETRY users do not have to learn 
 a new API. For example the \verb|G4Box| class in Geant4, has the XML tag \verb|Box| in GDML and is represented by the \verb|geant4.solid.Box| class in 
-Python. Geometry construction in python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
-should be able to start creating geometry in pyg4ometry immediately. In the following sections novel or important developments in pyg4ometry are described.  
+PYTHON. Geometry construction in PYTHON proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
+should be able to start creating geometry in PYG4OMETRY immediately. In the following sections novel or important developments in PYG4OMETRY are described.  
 
 %\begin{table}[hbt!]
 %\centering
 %\begin{tabular}{ l l l } \hline
-%GDML tag 		& Child tags				& pyg4ometry class 				\\ \hline
+%GDML tag 		& Child tags				& PYG4OMETRY class 				\\ \hline
 %Define 			& Constant				& gdml.Constant				\\
 %				& Variable					& gdml.Variable					\\
 %				& Quantity					& gdml.Quantity				\\
@@ -344,17 +360,16 @@ should be able to start creating geometry in pyg4ometry immediately. In the foll
 %
 %\end{tabular}
 %\label{tab:gdml-tags}
-%\caption{GDML tags and corresponding pyg4ometry classes.}
+%\caption{GDML tags and corresponding PYG4OMETRY classes.}
 %\end{table}
     
 
 %%%%%%%%%%%%%%%%%  Input and output  
-For each input format available in pyg4ometry a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| 
-and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| which can be used or manipulated by the user. 
+For each input format available in PYG4OMETRY  (GDML, STL, FLUKA and STEP) a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
 
 %%%%%%%%%%%%%%%%%  Internal data representation
-The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates python ordered dictionaries that are  used to store the main 
+The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates PYTHON ordered dictionaries that are  used to store the main 
 elements of a GDML file. As a user specifies geometry the registry is updated. When a user is finished with the geometry, the registry is written to disk as a GDML file.
 \verb|Registry| instances can be aggregated to form a composite geometry or volumes can be removed and added. 
 
@@ -365,7 +380,7 @@ and assignment of variables. GDML expressions are not much more complicated than
 expressions and not floating point numbers. Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of solid parameters and 
 placements. This allows a user to update variables whilst defining geometry and the expression engine will update all internal values. An example of GDML expressions is shown in listing~\ref{lst:gdmlExpressions}.
 
-\begin{lstlisting}[caption={A simple python script using pyg4ometry to create a simple Geant4 geometry.},label={lst:gdmlExpressions}, language=Python]
+\begin{lstlisting}[caption={A simple PYTHON script using PYG4OMETRY to create GDML variables},label={lst:gdmlExpressions}, language=Python]
 # Import modules 
 import pyg4ometry
 
@@ -380,16 +395,16 @@ v2 = pyg4ometry.gdml.Constant("v2","sin(v1+pi)",reg)
 
  
 %%%%%%%%%%%%%%%%%  Replica, division, parametrised and looped volumes
-A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The create multiple replicas of a volume in a cartesian, cylindrical or spherical grid is known as a ReplicaVolume. A DivisionVolume breaks a primitive into segments in either a cartesian or cylindrical polar coordinates. 
+A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The create multiple replicas of a volume in a Cartesian, cylindrical or spherical grid is known as a ReplicaVolume. A DivisionVolume breaks a primitive into segments in either a cartesian or cylindrical polar coordinates. 
 A Parametrised Volume allows for the arbitrary multiple placement of solids where the parameters are allowed to vary for each placement.  GDML supports loops, 
-where sections of GDML are allowed to be repeated with varying parameters. GDML loops are not supported by pyg4ometry and will be implemented in a 
+where sections of GDML are allowed to be repeated with varying parameters. GDML loops are not supported by PYG4OMETRY and will be implemented in a 
 future release. 
   
   
 \subsection{Tessellation of solids (meshing)}
 For each Geant4 primitive solid a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent of placed 
-instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique in Python 
-\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b} . Triangular meshes based on CSG 
+instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique in pure PYTHON 
+\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b}. In general the CGAL implementation is one or two orders of magnitude faster than the pure-PYTHON CSG implementation and must be used for large geometries. Triangular meshes based on CSG 
 operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various polygon mesh 
 algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
@@ -424,17 +439,19 @@ If the mother volume is placed in the world then the placement transformation $\
 where the subscript $p$ indicates parent volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
 Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively depending on the number of nested volumes.
 
-The python version of Geant4 physical volume is also used to store visualisation attributes like the solid's 
+The {\it Physical Volume} class (\verb|pyg4ometry.geant4.PhysicalVolume|) is also used to store visualisation attributes like the solid's 
 colour, surface or wireframe representation and visibility. Overlaps detected in the mesh geometry are
 stored in the Logical Volume and can be  displayed separately to allow a user to understand the reason for 
 the overlaps.   
 
 %%%%%%%%%%%%%%%%% Adding properties to volumes
-Geometry alone is an insufficient information for a RTMC simulation. Often other attributes need to be assigned to regions of space for example material definition, magnetic field or optical properties. These physical properties can be used to define the visualisation attributes of a volume. 
+Geometry needs to be augmented with other information for a complete RTMC simulation. Often other attributes need to be 
+assigned to regions of space for example material definition, magnetic field or optical properties. These physical properties 
+can be used to define the visualisation attributes of a volume. 
 
 \subsection{Overlap detection}
-All RTMC transport codes can not handle spatial overlap between two geometric objects and likely are to have ill defined behaviour when tracking particles  
-through such a situation.  A key feature of pyg4ometry is the detection of potential overlaps efficiently, it does this by performing an intersection operation etween solid instances and determining if the resulting mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b) and intersection with finite volume and c) an overlap where two daughters share a face. 
+All RTMC codes can not handle spatial overlap between two geometric objects and likely are to have ill-defined behaviour when tracking particles  
+through such a situation.  A key feature of PYG4OMETRY is the detection of potential overlaps efficiently, it does this by performing an intersection operation between solid instances and determining if the resulting mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b)  finite volume intersection between two daughters  and c) an overlap where two daughters share a face. 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=8cm]{./diagrams/overlap.pdf}
@@ -459,7 +476,7 @@ through such a situation.  A key feature of pyg4ometry is the detection of poten
 % \caption{How to write algorithms}
 %\end{algorithm}
 
-Overlap detection in pyg4ometry relies of the meshes generated for each solid, 
+Overlap detection in PYG4OMETRY relies of the meshes generated for each solid, 
 any detection algorithm will be approximate. Generally the overlap detection 
 algorithm proceeds as 
 \begin{enumerate}
@@ -479,15 +496,14 @@ with meshes based on curved surfaces.
 
 
 %%%%%%%%%%%%%%%%% Graphical user interface
-% A basic Qt based graphical user interface is also available with pyg4ometry. If a model has a large number of volumes defined in a hierarchical tree structure, it is % cumbersome for the user to find the logical or physical volume.    
+% A basic Qt based graphical user interface is also available with PYG4OMETRY. If a model has a large number of volumes defined in a hierarchical tree structure, it is % cumbersome for the user to find the logical or physical volume.    
 
 \section{Rapid geometry modelling}
-Given the python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the RT problem, vary 
-the parameters of the geometry and visualise the geometry. Finally when the desired result without geometry overlaps is finalised a GDML file can be output
-from the internal memory representation. Some example code is presented in Listing~\ref{lst:pythonRapidModelling}. The structure should be familiar to regular 
-users of Geant4, first a \verb|Registry| need to be created to store all the pyg4ometry objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geomtery can be saved as a GDML file and/or visualised using VTK.
+Given the PYTHON scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the RT problem, vary 
+the parameters of the geometry and visualise it.  When a user has achieved the desired geometry, without geometry overlaps, a GDML file can be written to disk from the internal memory representation. Some example code is presented in Listing~\ref{lst:pythonRapidModelling}. The structure should be familiar to regular 
+users of Geant4 or GDML, apart from a new class called the \verb|Registry|. First a \verb|Registry| need to be created to store all the PYG4OMETRY objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geomtery can be saved as a GDML file and/or visualised using VTK.
 
-\begin{lstlisting}[caption={A simple python script using pyg4ometry to create a simple Geant4 geometry.},label={lst:pythonRapidModelling}, language=Python]
+\begin{lstlisting}[caption={A simple PYTHON script using PYG4OMETRY to create a simple Geant4 geometry.},label={lst:pythonRapidModelling}, language=Python]
 # Import modules 
 import pyg4ometry.gdml as gd
 import pyg4ometry.geant4 as g4
@@ -511,7 +527,7 @@ wm = g4.Material("G4_Iron")
 
 # Solids
 wb = g4.solid.Box("wb",wx,wy,wz,reg)
- b = g4.solid.Box("b",bx,by,bz)
+b = g4.solid.Box("b",bx,by,bz)
 
 # Structure 
 wl = g4.LogicalVolume(wb, wm, "wl", reg)
@@ -542,13 +558,16 @@ Figure~\ref{fig:rapidModellingExample}.
 Significantly more complex geometries can be developed using a structure similar to 
 that shown in code listing \ref{lst:pythonRapidModelling}. 
 
-The pyg4ometry python code in the example is approximately as expressive 
-as the GDML it writes. The benefit of wrapping GDML/Geant4 in Python allows 
+The PYG4OMETRY PYTHON code in the example is approximately as expressive 
+as the GDML it writes. The benefit of wrapping GDML/Geant4 in PYTHON allows 
 to very rapid prototyping of geometry without concerns of compilation of C++ (in the 
 case of Geant4) or writing well formed XML (in the case of GDML). Effectively
-the Python interpreter checks input for syntax errors when using pyg4ometry classes. 
-Another key benefit is the ability to use the pyg4ometry code to create 
-programatic converters between different geometry languages.
+the PYTHON interpreter checks input for syntax errors when using PYG4OMETRY classes. 
+Another key benefit is the ability to use the PYG4OMETRY code to create 
+programatic converters between different geometry languages or more generally 
+manipulation and transformation of the geometry stored in memory. The rapid modelling 
+example given in Listing~\ref{lst:pythonRapidModelling} and Figure~\ref{fig:rapidModellingExample} 
+is rather trivial, a significantly more complex example is in Figure~\ref{fig:gdml-flair}.
 
 \section{FLUKA to GDML conversion}
 FLUKA geometry is based upon a limited set of primitives (referred to as
@@ -558,7 +577,7 @@ using intersections and subtractions.  Zones may then be further combined
 using union operations to form \textit{regions}, which is defined as the
 union of one or more zones, as well as a material.
 
-Each FLUKA body is represented in Pyg4ometry with a corresponding
+Each FLUKA body is represented in PYG4OMETRY with a corresponding
 class, and in turn each class has methods which returns a GDML
 primitive solid and that solid's rotation and position such that it
 matches its FLUKA equivalent.  The expansion, translation and
@@ -592,13 +611,13 @@ involved and are discussed in the rest of this section.
 \includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
 \caption{Example conversion of a simple FLUKA geometry to GDML, left panel :
 the original FLUKA geometry displayed in FLAIR, right panel : the GDML geometry
-viewed in pyg4ometry. The example is a Faraday cup used to capture
+viewed in PYG4OMETRY. The example is a Faraday cup used to capture
 and measure accelerator beam charge.}
 \label{fig:fluka-to-geant4-cup}
 \end{center}
 \end{figure*}
 
-\begin{lstlisting}[caption={A simple pyg4ometry python script to load a FLUKA file},label={lst:pythonFLUKALoading}, language=Python]
+\begin{lstlisting}[caption={A simple PYG4OMETRY PYTHON script to load a FLUKA file},label={lst:pythonFlukaLoading}, language=Python]
     reader      = pyg4ometry.fluka.Reader("faradayCup2.inp")
     g4_reg     = pyg4ometry.convert.fluka2Geant4(reader.flukaregistry)
     logical      = g4_reg.getWorldVolume()
@@ -609,7 +628,7 @@ and measure accelerator beam charge.}
 \caption{FLUKA bodies and their corresponding Geant4 solids.} \label{tab:Fluka2Geant4}
 \centering
 \begin{tabular}{ll} \hline
-FLUKA body                                              & pyg4ometry class \\ \hline
+FLUKA body                                              & PYG4OMETRY class \\ \hline
 RPP (Rectangular parallelepiped)			& Box \\
 BOX (General rectangular parallelepiped)		& Box \\
 SPH (Sphere)    					& Orb \\
@@ -654,7 +673,7 @@ Generating these bounding boxes over which the bodies should be
 translated involves first evaluating each region with very large Tubs,
 EllipticalTubes and Boxes (by default \SI{50}{\km} in length), such
 that they are effectively infinite for most reasonable use cases.
-Pyg4ometry's CSG meshing is then used to generate a mesh for each
+PYG4OMETRY's CSG meshing is then used to generate a mesh for each
 region, from which the axis-aligned bounding box can be extracted.
 Each region is then evaluated a second time with respect to its
 respective bounding box, with all of its constituent infinite solids
@@ -750,7 +769,7 @@ checking for overlaps.
 \subsection{Discussion}
 
 Figure~\ref{fig:fluka-to-geant4-cup} shows a Faraday cup implemented in
-FLUKA and translated to GDML using pyg4ometry.  The conversion is clearly
+FLUKA and translated to GDML using PYG4OMETRY.  The conversion is clearly
 accurate well and also includes the translation of the materials to GDML.
 Many of the steps described above were directly applied in this model and
 all the features are tested and demonstrated in the repository.  This set
@@ -768,11 +787,11 @@ their constituent parts and place separately as TesselatedSolid instances.
 Furthermore, the quadric surface conversion can be further improved by
 specialising on some of the individual forms of the quadric.  Simply
 converting every quadric into a TesselatedSolid comes at a potential
-performance cost in the tracking, as well as usability in pyg4ometry as the
+performance cost in the tracking, as well as usability in PYG4OMETRY as the
 user must provide an AABB.  In some cases tesselation in unavoidable (for
 example a hyperbolic parabaloid), but parabolic cylinders could for example
 be translated to an ExtrudedSolid.  This could provide both a performance
-improvement in the tracking time and make pyg4ometry easier to use as an
+improvement in the tracking time and make PYG4OMETRY easier to use as an
 AABB would not need to be provided beforehand.  This has not been
 implemented as quadrics are relatively rarely used, but where quadrics are
 used its often parabolic cylinders (e.g. magnet pole tips) this
@@ -783,6 +802,12 @@ It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of t
 solids can be mapped to a FLUKA \verb|REGION|. Some solids in Geant4 directly map to 
 a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
 lists the mapping between Geant4 solids and the bodies used to compose a FLUKA region.
+A region is a region of space which is formed of bodies and the operators + (intersection), - 
+(complement) and | (union), also parentheses to indicate the order of operations. FLUKA 
+has XXX bodies and in general infinite extent bodies have benefits over finite ones. Key 
+for conversion are XY-, XZ-, YZ-Panes (XYP, XZP, YZP), arbitrary plane (PLA), 
+X, Y,  Z axis aligned cylinders (XCC, YCC, ZCC), X, Y, Z axis aligned elliptical cylinders (XEC, YEC, ZEC), 
+sphere (SPH), truncated right-angle cone (TRC) and general quadric surface (QUA). 
 
 \begin{table}[hbt!]
 \centering
@@ -819,20 +844,20 @@ Intersection			& $R_1 \cap R_2$				\\
 MultiUnion			& $R_1 \cup R_2 \cup R_3 \cup$	\\ \hline
 \end{tabular}
 \label{tab:geant2fluka}
-\caption{GDML/Geant4 solids and the mapping to FLUKA bodies}
+\caption{GDML/Geant4 solids and the mapping to FLUKA regions.}
 \end{table}
 
 There are some important issues which must be considered to perform an accurate conversion. 
-A Geant4 logical volume solid might need to be created from a fluka region composing of many zones, 
+A Geant4 logical volume solid might need to be created from a FLUKA region composing of many zones, 
 so $R_1 = +z_1 | +z_2$, similarly a void is required to locate daughter volume placements which again 
-might also be converted to a region of multiple zones $R_2= +z_3| z_4$. So creating the fluka region is then 
+might also be converted to a region of multiple zones $R_2= +z_3 | +z_4$. So creating the FLUKA region is then 
 \begin{eqnarray}
 R_1 - R_2 	& = & (+z_1 | +z_2) - ( +z_3 | +z_4) 			\\
 			& = & (+z_1 - z_3 - z_4) \;  | \; (+z_2 - z_3 - z_4)	
 \label{eqn:setDiff}
 \end{eqnarray}
-Geant4 has the boolean solids associated with difference, union and intersection, so in addition to 
-Equation~\ref{eqn:setDiff}, both $R_1 \cup R_2$ and $R_1 \cap R_2$ is required in fluka notation, so 
+Geant4 has the Boolean solids associated with difference, union and intersection, so in addition to 
+Equation~\ref{eqn:setDiff}, both $R_1 \cup R_2$ and $R_1 \cap R_2$ is required in FLUKA notation, so 
 \begin{eqnarray}
 R_1 \cup R_2 	& = & (+z_1 | +z_2)  \cup ( +z_3 | +z_4) \\
 			& = & +z_1 | +z_2 |  +z_3 | +z_4
@@ -845,42 +870,42 @@ R_1 \cap R_2 	& = & (+z_1 | +z_2) \cap ( +z_3 | +z_4) \\
 \label{eqn:setIntersection}
 \end{eqnarray}
 
-Fluka (apart from the {\it lattice} directive) has no sense of a volume hierarchy. Each body is placed with a 
+FLUKA (apart from the \fluka{lattice} directive) has no sense of a volume hierarchy. Each body is placed with a 
 translation, rotation, expansion geometry directives in global coordinates. A transformation from world 
 coordinates to a physical volume is built up by applying recursively daughter volume transformations 
-and  this is used to place Fluka bodies. This  in practice is very similar to the procedure to create the 
+and  this is used to place FLUKA bodies. This  in practice is very similar to the procedure to create the 
 VTK visualisation already described in Section~\ref{sec:visualisation}.
 
-In Fluka every single space point needs to be associated with one and only one region. There is problem 
-when converting geant4 logical Volumes to fluka regions, as the logical volume outer solid $S_{\rm logical}$ 
+In FLUKA every single space point needs to be associated with one and only one region. There is problem 
+when converting geant4 logical Volumes to FLUKA regions, as the logical volume outer solid $S_{\rm logical}$ 
 need to have the daughter  solids $S_{{\rm daugher},i}$ subtracted. So a solid which can be converted 
 to a region $S_{\rm region}$ is then 
 \begin{equation}
 S_{\rm region} =  S_{\rm logical} - S_{\rm daughter,1} - S_{\rm daughter,2} - S_{\rm daughter,3} \ldots 
 \label{eqn:logicalSubtraction}
 \end{equation} 
-If a logical volume has  number of daughter volumes which are also possibly boolean solids, then computing 
+If a logical volume has  number of daughter volumes which are also possibly Boolean solids, then computing 
 $S_{\rm region}$ can become very complex because of Equations \ref{eqn:setDiff}, \ref{eqn:setUnion} and 
 \ref{eqn:setIntersection}. 
 
-Figure~\ref{fig:flair-gdml} shows an example conversion from GDML to FLUKA. The example is a 
-vacuum chamber with three CF beam pipes connected to CF flanges. The top and bottom plates 
-have been removed to better see the geometry. The model is formed of \verb|G4Box| and
-\verb|G4Tubs| and boolean operations of subtraction, intersection and union.
+Figure~\ref{fig:gdml-flair} shows an example conversion from GDML to FLUKA. The example is a 
+vacuum chamber with three ConFlat flange (CF) beam pipes connected to CF flanges. The top and bottom plates 
+have been removed to display the geometry more clearly. The model is formed of \verb|G4Box| and
+\verb|G4Tubs| and Boolean operations of subtraction, intersection and union.
 \begin{figure*}[htb!]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/CuboidalChamber.pdf}
-\caption{Example conversion of a simple GDML geometry to FLUKA, left panel :  
-the original model in pyg4ometry, right panel : the converted FLUKA geometry 
-viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
-\label{fig:flair-gdml}
+\caption{Example conversion of a simple GDML geometry to FLUKA, left panel:  
+the original model in PYG4OMETRY, right panel: the converted FLUKA geometry 
+viewed in PYG4OMETRY. The example is a sector bend dipole electromagnet.}
+\label{fig:gdml-flair}
 \end{center}
 \end{figure*}
 
 \subsection{Non-Convex solid decomposition}
-In general the base solids used by Geant4 allow non-convex solids, eg Polycone, Xtru, the Twisted.  These 
-particular solids are problematic when converting geometry to a FLUKA readable format, as non-convex solids 
-can only be created by union of convex zones. There are two groups which need to considered, firstly those 
+In general the base solids used by Geant4 allow non-convex solids, e.g. Polycone, Xtru, the Twisted.  These 
+particular solids are problematic when converting them to a FLUKA-readable format, as non-convex solids 
+can only be created by the union of convex zones. There are two groups which need to considered, firstly those 
 where 2D polygonal section needs to be decomposed these include Polycone, Polyhedron and Xtru, secondly 
 those where three dimensional convex decomposition is required  TwistedBox, TwistedTrap, TwistedTrd, 
 TwistedTube and Tessellated. The second classification of non convex solids are converted to CGAL 
@@ -893,27 +918,27 @@ characterised as the union of intersections, so
 \begin{equation}
 R = z_1 \; | \;z_2\;  | \; z_3 	\; | \; z_4 \dots
 \end{equation}
-Defining \verb|REGION|s in terms of DNF allows the rapid test if a point is inside or outside. Testing each zone 
-$z_i$ of $R$ can terminate if a point is determined to be inside any of convex zones. In general 
-Equation~\ref{eqn:logicalSubtraction} is not in a DNF. If there are many levels of logical-physical volume 
+Defining \verb|REGION|s in terms of DNF allows the rapid test if a point is inside. Testing each zone 
+$z_i$ of $R$ can terminate if a point is determined to be inside any of the convex zones $z_i$. In general 
+Equation~\ref{eqn:logicalSubtraction} does not have the form of a DNF. If there are many levels of logical-physical volume 
 placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of 
-parentheses. There are some conditions where a general boolean expression can yield an exponential 
+parentheses. There are some conditions where a general Boolean expression can yield an exponential 
 explosion of the final DNF. There are well known algorithms to convert logical expressions to DNF 
-\colorbox{yellow}{XXX}. Pyg4ometery can simplify parentheses from a \verb|REGION| by creating a 
-sympy \cite{10.7717/peerj-cs.103} expression and using its \verb|logical| module \verb|to_ndf| method based on 
+\colorbox{yellow}{XXX}. PYG4OMETRY can simplify parentheses from a \verb|REGION| by creating a 
+sympy \cite{10.7717/peerj-cs.103} expression and using its \verb|logical| module \verb|to_dnf| method based on 
 the Quine–McCluskey algorithm \cite{6769983}. Before version 4.0 FLUKA  would simplify all regions to 
 DNF and some converted geometry would generate too many zones and would fail. FLUKA version 4 
 allows control of the DNF expansion.
 
 \subsection{Materials}
-Pyg4ometry converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
+PYG4OMETRY converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
 
 \subsection{Disucssion}
 There are still a few outstanding issues with Geant4/GDML to FLUKA conversion. 
 
 \begin{enumerate}
 \item Degenerate body look up 
-\item Bodes with/without transformation 
+\item Bodies with/without transformation 
 \item Non-convex solids, convex decomposition (TwistedBox, TwistedTrap, TwistedTrd, TwistedTube, Tessellated)
 \item Scaled solid, Placement scale 
 \item Replica, Division, Parameterised
@@ -921,14 +946,14 @@ There are still a few outstanding issues with Geant4/GDML to FLUKA conversion.
 \end{enumerate}
 
 \section{CAD/STL to GDML conversion }
-STEP and IGES files can be loaded into pyg4ometry, via an interface based on FreeCAD. FreeCAD is an 
+STEP and IGES files can be loaded into PYG4OMETRY, via an interface based on FreeCAD. FreeCAD is an 
 open source CAD/CAM program, which in turn is based on OpenCASCADE. A STEP CAD file could be 
 considered as a hierarchical tree of {\it part assemblies} and {\it part features}, where a part assembly is a 
 collection of part features. A part feature can be used to create  a triangular mesh which can used to create 
-a pyg4ometry tessellated solid. Assignment of materials and visualisation attributes must be performed by 
+a PYG4OMETRY tessellated solid. Assignment of materials and visualisation attributes must be performed by 
 the user after conversion to GDML as rarely will CAD/CAM packages included the detailed information required 
 for RT codes.
-\begin{lstlisting}[caption={A simple pyg4ometry python script to load a STEP file},label={lst:pythonCADLoading}, language=Python]
+\begin{lstlisting}[caption={A simple PYG4OMETRY PYTHON script to load a STEP file},label={lst:pythonCADLoading}, language=Python]
     reader = pyg4ometry.freecad.Reader("FileName.step")
     reader.relabelModel()
     reader.convertFlat()
@@ -938,15 +963,15 @@ for RT codes.
 \begin{figure*}[htb!]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/SectorBend.pdf}
-\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :  
-the original model in FreeCAD, right panel : the GDML geometry 
-viewed in pyg4ometry. The example is a sector bend dipole electromagnet.}
+\caption{Example conversion of a simple FLUKA geometry to GDML, left panel:  
+the original model in FreeCAD, right panel: the GDML geometry 
+viewed in PYG4OMETRY. The example is a sector bend dipole electromagnet.}
 \label{fig:cad-gdml}
 \end{center}
 \end{figure*}
 
 \section{Complete simulation example}
-Pyg4ometry is designed to be as flexible as possible and offer the user a wide range of usage styles 
+PYG4OMETRY is designed to be as flexible as possible and offer the user a wide range of usage styles 
 and workflows. The following sections describe a selection of 
 possible applications.
 %
@@ -960,7 +985,7 @@ possible applications.
 \begin{figure*}[htb!]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/model.pdf}
-\caption{Complete compositing example using pyg4ometry.}
+\caption{Complete compositing example using PYG4OMETRY.}
 \label{fig:model}
 \end{center}
 \end{figure*}
@@ -968,9 +993,9 @@ possible applications.
 \section{Conclusions}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in 
 particle transport Monte Carlo programmes will save significant amounts of user effort and ultimately 
-yield more accurate simulations. Pyg4ometry is a relatively complete implementation of a geometry 
+yield more accurate simulations. PYG4OMETRY is a relatively complete implementation of a geometry 
 creation tool, whilst heavily internally based on Geant4 and GDML can have utility for users of all RT 
-codes. Pyg4ometry can clearly be extended to other formats or applications. As for applications, examples 
+codes. PYG4OMETRY can clearly be extended to other formats or applications. As for applications, examples 
 include  the  generation triangular mesh structures for GPU accelerated photon tracking in liquid noble dark 
 matter detectors and geometries for event visualisation. Although not implemented in the current version, 
 a C++ output writer can be quickly implemented to generate geometry which can be compiled into a Geant4 
