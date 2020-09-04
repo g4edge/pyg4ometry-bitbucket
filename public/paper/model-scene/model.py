@@ -227,7 +227,7 @@ def buildChamber(vis = True, inter = True):
     extentBB = gunChamber_logical.extent(includeBoundingSolid=False)
 
     if vis :
-        v = pyg4ometry.visualisation.VtkViewer(size=(2280,1800))
+        v = pyg4ometry.visualisation.VtkViewer(size=(int(3360/2), int(2010/2)))
         v.addLogicalVolume(gunChamber_logical)
         v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*1.25)
 
@@ -236,10 +236,13 @@ def buildChamber(vis = True, inter = True):
 
         cam = v.ren.GetActiveCamera()
         cam.SetRoll(0)
-        cam.SetPosition(500,0, 2000)
+        cam.SetPosition(1977.2553779137681, 1437.1208947635857, 1788.4781360684926)
+        cam.SetFocalPoint(-170.93546811748698, 155.35523039050074, 99.51238355558247)
+        cam.SetDistance(3018.319473233368)
 
         v.view(interactive=inter, resetCamera=False)
 
+    return v
 
 if __name__ == '__main__':
     buildModel()
