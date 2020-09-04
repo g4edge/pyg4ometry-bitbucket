@@ -468,19 +468,27 @@ is non-null then the overlaps can be displayed side-by-side in the visualisation
 \end{figure} 
 
 \begin{algorithm}[h]
-\SetAlgoLined
-\KwResult{{Write here the result} }
- initialization\;
- \While{While condition}{
-  instructions\;
-  \eIf{condition}{
-   instructions1\;
-   instructions2\;
-   }{
-   instructions3\;
-  }
- }
- \caption{How to write algorithms}
+  \SetKwFunction{Intersect}{Intersect}
+  \SetAlgoLined
+  \KwIn{Logical volume mesh $m$ with daughter volume meshes $d\in D$.}
+\KwResult{Set, $S$, of overlapping pairs of meshes.}
+$V \longleftarrow \emptyset$\;
+$S \longleftarrow \emptyset$\;
+\For{$d_1 \in D$}{
+  \If{\Intersect{$d_1, m$}}{
+    $S \longleftarrow S \cup \{(d_1, m)\}$\;
+\For{$d_2 \in D$}{
+ \If{$d_1 = d_2$ {\bf or} $(d_1, d_2) \in V$}{
+  continue\;
+}
+\If{\Intersect{$d_1, d_2$}}{
+  $S \longleftarrow S \cup \{(d_1, d_2)\}$\;
+}
+$V \longleftarrow V \cup \{(d_1, d_2)\}$\;
+}
+}
+}
+\caption{The overlap checking algorithm employed in \PYGEOMETRY{}.}
 \end{algorithm}
 
 Overlap detection in \PYGEOMETRY{} relies of the meshes generated for each solid, 
