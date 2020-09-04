@@ -71,6 +71,8 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
 
+\newcommand{\pyinline}[1]{\lstinline[postbreak={}]{#1}}
+
  % For fluka commands such as LATTICE etc.
 \newcommand{\fluka}[1]{\texttt{\MakeUppercase{#1}}}
 \newcommand{\PYGEOMETRY}{\textsc{Pyg4ometry}}
@@ -293,12 +295,12 @@ GDML is an XML-based description of Geant4 geometry description. Geant4 and ROOT
 GDML format and it is commonly used as an exchange format for Geant4 geometries. 
 
 \section{\PYGEOMETRY{} design and layout}
-\PYGEOMETRY{} is a Python package consisting of semi-independent sub-packages. The sub-package \lstinline{pyg4ometry.geant4} contains all classes for 
-geant4 detector construction, \lstinline{pyg4ometry.gdml} provides the functionality for reading and writing GDML files. There are sub-packages for importing and exporting other geometry formats  \lstinline{pyg4ometry.fluka}, \lstinline{pyg4ometry.stl} and \lstinline{pyg4ometery.freecad} and converting between file formats \verb|pyg4ometry.convert|.
+\PYGEOMETRY{} is a Python package consisting of semi-independent sub-packages. The sub-package \pyinline{pyg4ometry.geant4} contains all classes for 
+geant4 detector construction, \pyinline{pyg4ometry.gdml} provides the functionality for reading and writing GDML files. There are sub-packages for importing and exporting other geometry formats  \pyinline{pyg4ometry.fluka}, \pyinline{pyg4ometry.stl} and \pyinline{pyg4ometery.freecad} and converting between file formats \verb|pyg4ometry.convert|.
 
 The core of \PYGEOMETRY{} consists of Python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
 The constructors of the Python classes are kept as close to the original Geant4 C++ implementation so that \PYGEOMETRY{} users do not have to learn 
-a new API. For example the \verb|G4Box| class in Geant4, has the XML tag \verb|Box| in GDML and is represented by the \lstinline{pyg4ometry.geant4.solid.Box} class in 
+a new API. For example the \verb|G4Box| class in Geant4, has the XML tag \verb|Box| in GDML and is represented by the \pyinline{pyg4ometry.geant4.solid.Box} class in 
 Python. Geometry construction in Python proceeds in a way which is very similar to geometry construction in Geant4. A user relatively familiar with Geant4
 should be able to start creating geometry in \PYGEOMETRY{} immediately. In the following sections novel or important developments in \PYGEOMETRY{} are described.  
 
@@ -443,7 +445,7 @@ If the mother volume is placed in the world then the placement transformation $\
 where the subscript $p$ indicates parent volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
 Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively depending on the number of nested volumes.
 
-The {\it Physical Volume} class (\lstinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
+The {\it Physical Volume} class (\pyinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
 colour, surface or wireframe representation and visibility. Overlaps detected in the mesh geometry are
 stored in the Logical Volume and can be  displayed separately to allow a user to understand the reason for 
 the overlaps.   
@@ -505,7 +507,7 @@ with meshes based on curved surfaces.
 \section{Rapid geometry modelling}
 Given the Python scripting interface, expression  and tessellation engines. It is possible for a user to rapidly specify the geometrical layout of the RT problem, vary 
 the parameters of the geometry and visualise it.  When a user has achieved the desired geometry, without geometry overlaps, a GDML file can be written to disk from the internal memory representation. Some example code is presented in Listing~\ref{lst:pythonRapidModelling}. The structure should be familiar to regular 
-users of Geant4 or GDML, apart from a new class called the \lstinline{Registry}. First a \verb|Registry| need to be created to store all the \PYGEOMETRY{} objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geomtery can be saved as a GDML file and/or visualised using VTK.
+users of Geant4 or GDML, apart from a new class called the \pyinline{Registry}. First a \verb|Registry| need to be created to store all the \PYGEOMETRY{} objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geomtery can be saved as a GDML file and/or visualised using VTK.
 
 \begin{lstlisting}[caption={A simple Python script using \PYGEOMETRY{} to create a simple Geant4 geometry.},label={lst:pythonRapidModelling}, language=Python]
 # Import modules 
