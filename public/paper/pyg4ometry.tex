@@ -76,6 +76,9 @@
 \newcommand{\PYGEOMETRY}{Pyg4ometry}
 
 
+% part features
+% part assembly
+
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -581,6 +584,17 @@ using intersections and subtractions.  Zones may then be further combined
 using union operations to form \textit{regions}, which is defined as the
 union of one or more zones, as well as a material.
 
+\begin{figure*}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
+\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :
+the original FLUKA geometry displayed in FLAIR, right panel : the GDML geometry
+viewed in \PYGEOMETRY{}. The example is a Faraday cup used to capture
+and measure accelerator beam charge.}
+\label{fig:fluka-to-geant4-cup}
+\end{center}
+\end{figure*}
+
 Each FLUKA body is represented in \PYGEOMETRY{} with a corresponding
 class, and in turn each class has methods which returns a GDML
 primitive solid and that solid's rotation and position such that it
@@ -608,18 +622,6 @@ be disconnected, but in Geant4 specifically only MultiUnions can be
 disconnected, such that MultiUnions are used throughout the converted
 geometry instead of the usual binary unions.  Other procedures are more
 involved and are discussed in the rest of this section.
-
-
-\begin{figure*}[htbp]
-\begin{center}
-\includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
-\caption{Example conversion of a simple FLUKA geometry to GDML, left panel :
-the original FLUKA geometry displayed in FLAIR, right panel : the GDML geometry
-viewed in \PYGEOMETRY{}. The example is a Faraday cup used to capture
-and measure accelerator beam charge.}
-\label{fig:fluka-to-geant4-cup}
-\end{center}
-\end{figure*}
 
 \begin{lstlisting}[caption={A simple \PYGEOMETRY{} PYTHON script to load a FLUKA file.},label={lst:pythonFlukaLoading}, language=Python]
     reader      = pyg4ometry.fluka.Reader("FlukaFileName.inp")
@@ -735,7 +737,7 @@ particles leaving the basic unit will be translated back to the
 \fluka{lattice} cell with the inverted rototranslation. Up to two
 levels of \fluka{lattice} nesting the are supported in FLUKA.
 
-\begin{figure}[htbp]
+\begin{figure}[hbtp]
 \begin{center}
 \includegraphics[width=6cm]{./diagrams/lattice}
 \caption{The \fluka{lattice} feature demonstrating a \fluka{lattice} cell
@@ -808,9 +810,9 @@ a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{
 lists the mapping between Geant4 solids and the bodies used to compose a FLUKA region.
 A region is a region of space which is formed of bodies and the operators + (intersection), - 
 (complement) and | (union), also parentheses to indicate the order of operations. FLUKA 
-has 20 bodies, listed in Table~\ref{tab:Fluka2Geant4}  and in general infinite extent bodies have benefits over finite ones. Key 
-for conversion are XY-, XZ-, YZ-Planes (XYP, XZP, YZP), arbitrary plane (PLA), 
-Z axis aligned cylinder (ZCC), Z axis aligned elliptical cylinder (ZEC), 
+has 20 bodies, listed in Table~\ref{tab:Fluka2Geant4}  and in general infinite extent bodies have 
+benefits over finite ones. Key for conversion are XY-, XZ-, YZ-Planes (XYP, XZP, YZP), arbitrary 
+plane (PLA), Z axis aligned cylinder (ZCC), Z axis aligned elliptical cylinder (ZEC), 
 sphere (SPH), truncated right-angle cone (TRC) and general quadric surface (QUA). 
 
 \begin{table}[hbt!]
@@ -953,12 +955,13 @@ There are still a few outstanding issues with Geant4/GDML to FLUKA conversion.
 
 \section{CAD/STL to GDML conversion }
 STEP and IGES files can be loaded into \PYGEOMETRY{}, via an interface based on FreeCAD. FreeCAD is an 
-open source CAD/CAM program, which in turn is based on OpenCASCADE. A STEP CAD file could be 
-considered as a hierarchical tree of {\it part assemblies} and {\it part features}, where a part assembly is a 
-collection of part features. A part feature can be used to create  a triangular mesh which can used to create 
+open source CAD/CAM program, which in turn is based on OpenCASCADE. FreeCAD allows for scripting in PYTHON 
+and acts as a simple to use interface to OpenCASCADE.A STEP CAD file could be 
+considered as a hierarchical tree of part assemblies and part features, where a part assembly is a 
+collection of part features. A part feature can be used to create a triangular mesh which can used to create 
 a \PYGEOMETRY{} tessellated solid. Assignment of materials and visualisation attributes must be performed by 
 the user after conversion to GDML as rarely will CAD/CAM packages included the detailed information required 
-for RT codes.
+for RT codes. Listing~\ref{lst:pythonCADLoading} shows how \PYGEOMETRY can load step files.
 \begin{lstlisting}[caption={A simple \PYGEOMETRY{} PYTHON script to load a STEP file.},label={lst:pythonCADLoading}, language=Python]
     reader = pyg4ometry.freecad.Reader("CadFileName.step")
     reader.relabelModel()
