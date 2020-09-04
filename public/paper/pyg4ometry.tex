@@ -481,7 +481,7 @@ $S \longleftarrow \emptyset$\;
   \If{\Intersect{$d_1, m$}}{
     $S \longleftarrow S \cup \{(d_1, m)\}$\;
 \For{$d_2 \in D$}{
- \If{$d_1 = d_2$ {\bf or} $(d_1, d_2) \in V$}{
+ \If{$d_1 = d_2$ {\bf or} $(d_2, d_1) \in V$}{
   continue\;
 }
 \If{\Intersect{$d_1, d_2$}}{
@@ -726,6 +726,31 @@ body used in a subtraction.  These rules are inverted for nested
 subtractions and work well for guaranteeing well-formed geometry that
 is free from overlaps.
 
+\subsection{Materials}
+
+Any useful translation between geometry description formats must also
+account for material, and accordingly \PYGEOMETRY{} correctly translates
+FLUKA materials to GDML.  FLUKA materials can be divided into built-in ,
+single-element and compound materials.  Built-in materials are simply those
+that are predefined by FLUKA, single-element materials are described with a
+single \fluka{material} card, and compound materials are described with one
+\fluka{material} card followed by one or more \fluka{compound} cards.
+These three alternatives are represented in \PYGEOMETRY{} with the
+\pyinline{BuiltIn}, \pyinline{Material}, and \pyinline{Compound} classes.
+Populating a hierarchy of instances using these classes is involved due to
+the fact that recursively-defined materials in FLUKA input files need not
+be defined in a logical order.  Namely, a given \pyinline{compound} may be
+defined before the materials that it consists of are themselves defined.
+To account for this it is necessary to correctly compute the instantiation
+order so that the above classes and be instantiated correctly.  To do this
+a directed acyclic graph is populated with the materials and their
+constituents, after which a topological sort is performed so that the
+compound materials are sequenced after their constituents.  Mapping this
+set of nested FLUKA material instances to GDML material instances is then
+straight forwards as the GDML material semantics are slightly more
+expressive than FLUKA's, so a one-to-one mapping is trivial.
+
+
 \subsection{Lattice}
 
 FLUKA supports modular geometries with the use of the \fluka{lattice}
@@ -781,16 +806,15 @@ checking for overlaps.
 \subsection{Discussion}
 
 Figure~\ref{fig:fluka-to-geant4-cup} shows a Faraday cup implemented in
-FLUKA and translated to GDML using \PYGEOMETRY{}.  The conversion is clearly
-accurate well and also includes the translation of the materials to GDML.
-Many of the steps described above were directly applied in this model and
-all the features are tested and demonstrated in the repository.  This set
-of algorithms for bridging FLUKA with GDML covers a very broad range of
+FLUKA and accurately translated to GDML using \PYGEOMETRY{}.  Many of the
+steps described above were directly applied in this model and all the
+features are tested and demonstrated in the repository.  This set of
+algorithms for bridging FLUKA with GDML covers a very broad range of
 geometries, however a number of possible improvements for the future
 persist.  For example, Boolean solids in FLUKA can in general be
 disconnected, and this most typically manifests itself in the form of
 disconnected unions, but is also allowed for intersections and
-subtractions.  Disconnected unions are readily availabe in GDML with the
+subtractions.  Disconnected unions are readily available in GDML with the
 use of the MultiUnion solid type, however there is no valid means to
 construct a disconnected subtraction or intersection in GDML.  One possible
 solution would be to detect these two cases, and if found, split them into
@@ -800,14 +824,14 @@ Furthermore, the quadric surface conversion can be further improved by
 specialising on some of the individual forms of the quadric.  Simply
 converting every quadric into a TesselatedSolid comes at a potential
 performance cost in the tracking, as well as usability in \PYGEOMETRY{} as the
-user must provide an AABB.  In some cases tesselation in unavoidable (for
-example a hyperbolic parabaloid), but parabolic cylinders could for example
+user must provide an AABB.  In some cases tessellation in unavoidable (for
+example a hyperbolic paraboloid), but parabolic cylinders could for example
 be translated to an ExtrudedSolid.  This could provide both a performance
 improvement in the tracking time and make \PYGEOMETRY{} easier to use as an
 AABB would not need to be provided beforehand.  This has not been
 implemented as quadrics are relatively rarely used, but where quadrics are
 used its often parabolic cylinders (e.g. magnet pole tips) this
-specicalisation in particular would be worth implementing.
+specialisation in particular would be worth implementing.
 
 \section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 
