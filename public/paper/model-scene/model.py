@@ -1,7 +1,7 @@
 import pyg4ometry 
 import os 
 
-def buildModel(vis = True, write = True, render = True) :
+def buildModel(vis = True, write = True, render = False) :
     # 
     reg = pyg4ometry.geant4.Registry()
 
@@ -125,10 +125,18 @@ def buildModel(vis = True, write = True, render = True) :
     print("world extent ", reg.getWorldVolume().extent())
 
     if vis :
-        v = pyg4ometry.visualisation.PubViewer()
+        v = pyg4ometry.visualisation.PubViewer(size=(int(3360/2), int(920/2)))
+
         v.addLogicalVolume(reg.getWorldVolume())
         # v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
-        v.view(interactive=True)
+
+        cam = v.ren.GetActiveCamera()
+        cam.SetRoll(0)
+        cam.SetPosition(2500, 1450.0, 1450.0)
+        cam.SetFocalPoint(0, 0, 1700.00)
+        cam.SetDistance(3400)
+
+        v.view(interactive=True, resetCamera=False)
 
     
     # gdml output
@@ -142,6 +150,7 @@ def buildModel(vis = True, write = True, render = True) :
         r.addLogicalVolumeRecursive(reg.getWorldVolume())
         r.write("./model")
 
+    return v
 
 def buildSectorBend(vis=True, inter=True):
     # load cad dipole
