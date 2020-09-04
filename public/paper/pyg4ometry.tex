@@ -816,7 +816,7 @@ geometries, however a number of possible improvements for the future
 persist.  For example, Boolean solids in FLUKA can in general be
 disconnected, and this most typically manifests itself in the form of
 disconnected unions, but is also allowed for intersections and
-subtractions.  Disconnected unions are readily availabe in GDML with the
+subtractions.  Disconnected unions are readily available in GDML with the
 use of the MultiUnion solid type, however there is no valid means to
 construct a disconnected subtraction or intersection in GDML.  One possible
 solution would be to detect these two cases, and if found, split them into
@@ -826,14 +826,14 @@ Furthermore, the quadric surface conversion can be further improved by
 specialising on some of the individual forms of the quadric.  Simply
 converting every quadric into a TesselatedSolid comes at a potential
 performance cost in the tracking, as well as usability in \PYGEOMETRY{} as the
-user must provide an AABB.  In some cases tesselation in unavoidable (for
-example a hyperbolic parabaloid), but parabolic cylinders could for example
+user must provide an AABB.  In some cases tessellation in unavoidable (for
+example a hyperbolic paraboloid), but parabolic cylinders could for example
 be translated to an ExtrudedSolid.  This could provide both a performance
 improvement in the tracking time and make \PYGEOMETRY{} easier to use as an
 AABB would not need to be provided beforehand.  This has not been
 implemented as quadrics are relatively rarely used, but where quadrics are
 used its often parabolic cylinders (e.g. magnet pole tips) this
-specicalisation in particular would be worth implementing.
+specialisation in particular would be worth implementing.
 
 \section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 
