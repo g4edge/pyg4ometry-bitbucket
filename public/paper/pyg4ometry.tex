@@ -281,7 +281,7 @@ more modern variants being PLY, OBJ to name a few. For solids with curved faces 
 deviation distance from the solid decreases the number of polygons increases and hence the memory consumption and execution time of the RTMC simulation. 
 
 %%%%%%%%%%%%%%%%% Geant4 geometery
-Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes XX fundamental solids, although it does not store a sense 
+Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes 27 basic solids, although it does not store a sense 
 of topology present in traditional CAD BREP systems. One of the fundamental solids is a {\em TessellatedSolid} which can used to represent STL or PLY files. 
 Geant4 also provides the ability to perform Boolean operations on these primitive solids. The richest and most flexible geometry description is currently used by
 Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\it Logical Volumes} and {\it Physical Volumes}. A {\it Logical Volume} is a region of space  that is defined by an outer solid but also other attributes like material, magnetic field 
@@ -404,9 +404,10 @@ to be repeated with varying parameters. GDML loops loading and expansion are not
 future release.
   
 \subsection{Tessellation of solids (meshing)}
-For each Geant4 primitive solid a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent of placed 
-instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique in pure PYTHON 
-\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b}. In general the CGAL implementation is one or two orders of magnitude faster than the pure-PYTHON CSG implementation and must be used for large geometries. Triangular meshes based on CSG 
+Creating a uniform three dimensional mesh description of all solids (include Booleans) is exceptionally useful, for visualisation and other algorithms, e.g overlap 
+detection. For each Geant4 solid instance a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent 
+of placed instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a BSP tree technique in 
+pure PYTHON \cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b}. In general the CGAL implementation is one or two orders of magnitude faster than the pure-PYTHON CSG implementation and must be used for large geometries. Triangular meshes based on CSG 
 operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various polygon mesh 
 algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
@@ -416,7 +417,8 @@ encompasses the daughter volumes. Overlaps between daughter volumes and the moth
 shape that efficiently holds all of its daughters. 
  
 \subsection{Visualisation} \label{sec:visualisation}
-A  geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 volume hierarchy is sufficient 
+When implementing geometry a rapid and robust visualisation system is key to produce error free and efficient simulation input.
+A  \PYGEOMETRY{}  hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 volume hierarchy is sufficient 
 to place the meshes associated with each physical volume. A daughter volume is placed within a logical volume with a rotation $\mathbf{R}_d$, scale $\mathbf{S}_d$ and translation $\mathbf{T}_d$.
 
 \begin{figure}[htb!]
@@ -453,7 +455,8 @@ can be used to define the visualisation attributes of a volume.
 
 \subsection{Overlap detection}
 All RTMC codes can not handle spatial overlap between two geometric objects and likely are to have ill-defined behaviour when tracking particles  
-through such a situation.  A key feature of \PYGEOMETRY{} is the detection of potential overlaps efficiently, it does this by performing an intersection operation between solid instances and determining if the resulting mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b)  finite volume intersection between two daughters  and c) an overlap where two daughters share a face. 
+through such a situation.  A key feature of \PYGEOMETRY{} is the detection of potential overlaps in a way which is most useful to the user, it does this by performing an intersection operation between solid instances and determining if the resulting mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b)  finite volume intersection between two daughters  and c) an overlap where two daughters share a face. If the resulting intersection 
+is non-null then the overlaps can be displayed side-by-side in the visualisation. 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=8cm]{./diagrams/overlap.pdf}
@@ -462,21 +465,21 @@ through such a situation.  A key feature of \PYGEOMETRY{} is the detection of po
 \end{center}
 \end{figure} 
 
-%\begin{algorithm}[h]
-%\SetAlgoLined
-%\KwResult{Write here the result }
-% initialization\;
-% \While{While condition}{
-%  instructions\;
-%  \eIf{condition}{
-%   instructions1\;
-%   instructions2\;
-%   }{
-%   instructions3\;
-%  }
-% }
-% \caption{How to write algorithms}
-%\end{algorithm}
+\begin{algorithm}[h]
+\SetAlgoLined
+\KwResult{{Write here the result} }
+ initialization\;
+ \While{While condition}{
+  instructions\;
+  \eIf{condition}{
+   instructions1\;
+   instructions2\;
+   }{
+   instructions3\;
+  }
+ }
+ \caption{How to write algorithms}
+\end{algorithm}
 
 Overlap detection in \PYGEOMETRY{} relies of the meshes generated for each solid, 
 any detection algorithm will be approximate. Generally the overlap detection 
@@ -487,11 +490,10 @@ algorithm proceeds as
 \item Check
 \end{enumerate}
 
-For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids with average number of vertices $n$, clearly this algorithm 
-has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters})$. This might seem like a prohibitive computational cost, but worth it considering the potential 
-waste if small overlaps are present in the final RTMC simulation. This algorithm clearly favours geometry descriptions which have a high degree of logical 
-volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection of overlaps, especially when curved surfaces are 
-considered. 
+For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids have an average number of faces $n$, clearly this algorithm 
+has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters}^2)$. This might seem like a prohibitive computational cost, but worth it considering the potential 
+waste if small overlaps are present in the final RTMC simulation and large amounts of cluster CPU time is wasted. This algorithm clearly favours geometry descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection 
+of overlaps, especially when curved surfaces are considered. 
 
 The accuracy of the overlap visualisation is dependent on the accuracy of the meshes generated, for example problems might occur 
 with meshes based on curved surfaces.  
@@ -806,9 +808,9 @@ a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{
 lists the mapping between Geant4 solids and the bodies used to compose a FLUKA region.
 A region is a region of space which is formed of bodies and the operators + (intersection), - 
 (complement) and | (union), also parentheses to indicate the order of operations. FLUKA 
-has XXX bodies and in general infinite extent bodies have benefits over finite ones. Key 
+has 20 bodies, listed in Table~\ref{tab:Fluka2Geant4}  and in general infinite extent bodies have benefits over finite ones. Key 
 for conversion are XY-, XZ-, YZ-Planes (XYP, XZP, YZP), arbitrary plane (PLA), 
-X, Y,  Z axis aligned cylinders (XCC, YCC, ZCC), X, Y, Z axis aligned elliptical cylinders (XEC, YEC, ZEC), 
+Z axis aligned cylinder (ZCC), Z axis aligned elliptical cylinder (ZEC), 
 sphere (SPH), truncated right-angle cone (TRC) and general quadric surface (QUA). 
 
 \begin{table}[hbt!]
@@ -894,7 +896,7 @@ Figure~\ref{fig:gdml-flair} shows an example conversion from GDML to FLUKA. The 
 vacuum chamber with three ConFlat flange (CF) beam pipes connected to CF flanges. The top and bottom plates 
 have been removed to display the geometry more clearly. The model is formed of \verb|G4Box| and
 \verb|G4Tubs| and Boolean operations of subtraction, intersection and union.
-\begin{figure*}[htb!]
+\begin{figure*}
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/CuboidalChamber.pdf}
 \caption{Example conversion of a simple GDML geometry to FLUKA, left panel:  
@@ -903,6 +905,7 @@ viewed in FLAIR. The example is a sector bend dipole electromagnet.}
 \label{fig:gdml-flair}
 \end{center}
 \end{figure*}
+
 
 \subsection{Non-Convex solid decomposition}
 In general the base solids used by Geant4 allow non-convex solids, e.g. Polycone, Xtru, the Twisted.  These 
@@ -963,7 +966,7 @@ for RT codes.
     logical = reader.getRegistry().getWorldVolume()
 \end{lstlisting}
 
-\begin{figure*}[htb!]
+\begin{figure*}
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/SectorBend.pdf}
 \caption{Example conversion of a simple FLUKA geometry to GDML, left panel:  
