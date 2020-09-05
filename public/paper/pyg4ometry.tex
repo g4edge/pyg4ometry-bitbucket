@@ -1112,15 +1112,21 @@ geometry is shown in Figure~\ref{fig:model}
 \end{center}
 \end{figure*}
 
+Having geometry wrapped in a suitable API allows a wide range of processes to be performed simply and potentially 
+programmatically if it must be performed for large numbers of objects. The processes include; 
 \begin{enumerate}
-\item Merging Registries 
-\item Removing volumes 
-\item Editing solid
-\item Converting to assembly solids 
+\item merging registries, 
+\item removing volumes (de-featuring),
+\item editing solid parameters,
+\item replacing logical volume materials 
+\item converting logical volumes to assembly volumes.
 \end{enumerate}
-%
-
-
+The merging of registries and removing volumes is required to create the example shown in Figure~\ref{fig:model}. 
+Each sub-component is stored in a separate registry and these have to combined without any GDML tags clashing. 
+The FLUKA to GDML conversion creates logical volumes which are not generally required in Geant4, so for example
+the air surrounding the Faraday cup, which is needed to specify a FLUKA geometry is converted to GDML but can be 
+safely removed. Examples of other workflow can be found in the \PYGEOMETRY{} online manual
+.
 \section{Conclusions and discussion}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in 
 particle transport Monte Carlo programmes will save significant amounts of user effort and ultimately 
@@ -1143,6 +1149,7 @@ application.
 \item Replace G4 polyhedron CSG
 \item Not for large scale conversion
 \item Export for other RTMC codes (MCNP, etc) 
+\item Performance in Geant4/FLUKA
 \end{enumerate}
 
 %% The Appendices part is started with the command \appendix;
