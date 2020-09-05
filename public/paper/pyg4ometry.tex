@@ -72,6 +72,8 @@
 }
 
 \newcommand{\pyinline}[1]{\lstinline[postbreak={}]{#1}}
+\newcommand{\cpinline}[1]{\lstinline[postbreak={}]{#1}}
+
 
  % For fluka commands such as LATTICE etc.
 \newcommand{\fluka}[1]{\texttt{\MakeUppercase{#1}}}
@@ -80,6 +82,12 @@
 
 % part features
 % part assembly
+% physical volume
+% logical volume
+% daughter volume
+% mother volume
+% Reader
+% scene
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -287,10 +295,10 @@ deviation distance from the solid decreases the number of polygons increases and
 
 %%%%%%%%%%%%%%%%% Geant4 geometery
 Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes 27 basic solids, although it does not store a sense 
-of topology present in traditional CAD BREP systems. One of the fundamental solids is a {\em TessellatedSolid} which can used to represent STL or PLY files. 
+of topology present in traditional CAD BREP systems. One of the fundamental solids is a tessellated sollid which can used to represent STL or PLY files. 
 Geant4 also provides the ability to perform Boolean operations on these primitive solids. The richest and most flexible geometry description is currently used by
-Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\it Logical Volumes} and {\it Physical Volumes}. A {\it Logical Volume} is a region of space  that is defined by an outer solid but also other attributes like material, magnetic field 
-and zero or more physical {\it daughter} volumes. A Physical Volume is a placement (or instance) of a Logical Volume.   
+Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\em logical volumes} and {\em physical volumes}. A logical volume is a region of space that is defined by an outer solid but also other attributes like material, magnetic field 
+and zero or more physical {\em daughter} physical volumes. A physical volume is a placement (or instance) of a logical volume.   
 
 %%%%%%%%%%%%%%%%% Geant Detector Mark-up Language
 To exchange geometry descriptions between software packages the Geometry Descripition Mark-up Language (GDML) was developed \cite{GDML}. 
@@ -371,7 +379,7 @@ should be able to start creating geometry in \PYGEOMETRY{} immediately. In the f
     
 
 %%%%%%%%%%%%%%%%%  Input and output  
-For each input format available in \PYGEOMETRY{}  (GDML, STL, FLUKA and STEP) a dedicated {\it Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| which can be used or manipulated by the user. 
+For each input format available in \PYGEOMETRY{}  (GDML, STL, FLUKA and STEP) a dedicated {\em Reader} class is implemented, so \verb|gdml.Reader|, \verb|stl.Reader|, \verb|fluka.Reader| and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| which can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
 
 %%%%%%%%%%%%%%%%%  Internal data representation
@@ -403,7 +411,7 @@ v2 = pyg4ometry.gdml.Constant("v2","sin(v1+pi)",reg)
 %%%%%%%%%%%%%%%%%  Replica, division, parametrised and looped volumes
 A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The class which enables the creation of 
 multiple replicas of a volume in a Cartesian, cylindrical or spherical grid is known as a Replica Volume. A Division Volume breaks a primitive into segments 
-in either a Cartesian or cylindrical polar coordinates. A Parametrised Volume allows for the arbitrary multiple placement of solids where the parameters are 
+in either a Cartesian or cylindrical polar coordinates. A parametrised volume allows for the arbitrary multiple placement of solids where the parameters are 
 allowed to vary for each placement.  Another way to in GDML to create parametrised solids or volumes is GDML loops, where sections of GDML are allowed 
 to be repeated with varying parameters. GDML loops loading and expansion are not supported by \PYGEOMETRY{} and will be implemented in a 
 future release.
@@ -417,7 +425,7 @@ operations involving curved surfaces often contain large numbers of thin triangl
 algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
 %%%%%%%%%%%%%%%%% Volume bounding
-If a user is creating a placing multiple {\em daughter} volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully 
+If a user is creating a placing multiple daughter volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully 
 encompasses the daughter volumes. Overlaps between daughter volumes and the mother can be detected, but it is desirable to have a mother volume 
 shape that efficiently holds all of its daughters. 
  
@@ -448,7 +456,7 @@ If the mother volume is placed in the world then the placement transformation $\
 where the subscript $p$ indicates parent volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
 Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively depending on the number of nested volumes.
 
-The {\it Physical Volume} class (\pyinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
+The physical volume class (\pyinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
 colour, surface or wireframe representation and visibility. Overlaps detected in the mesh geometry are
 stored in the Logical Volume and can be  displayed separately to allow a user to understand the reason for 
 the overlaps.   
@@ -474,7 +482,7 @@ is non-null then the overlaps can be displayed side-by-side in the visualisation
   \SetKwFunction{Intersect}{Intersect}
   \SetAlgoLined
   \KwIn{Logical volume mesh $m$ with daughter volume meshes $d\in D$.}
-\KwResult{Set, $S$, of overlapping pairs of meshes.}
+  \KwResult{Set, $S$, of overlapping pairs of meshes.}
 $V \longleftarrow \emptyset$\;
 $S \longleftarrow \emptyset$\;
 \For{$d_1 \in D$}{
@@ -614,7 +622,7 @@ solids is one of the main steps involved in the conversion process.
 This mapping is possible because whilst FLUKA bodies can be infinite
 in extent, all zones and regions must be finite.  Zones and regions
 are then composed by instantiating these classes and adding body
-instances to them.  Each Zone and Region instance can then return its
+instances to them.  Each zone and region instance can then return its
 equivalent GDML Boolean solid.
 
 The FLUKA CSG ASCII format is parsed using an ANTLR4-generated parser,
@@ -968,18 +976,77 @@ allows control of the DNF expansion.
 
 \subsection{Materials}
 \PYGEOMETRY{} converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
+Geant4 has a class \cpinline{G4Material} to assign material state (density, physical state, temperature and pressure) 
+to a logical volume. \cpinline{G4Material} has two main constructors, the first were a atomic number is supplied and 
+the second is when \cpinline{G4Element} instances and relative atomic or mass abundances are provided. The {\em simple}
+\cpinline{G4Material} is converted to a \fluka{material} card, whilst the {\em element} \cpinline{G4Material}  is converted to a 
+\fluka{compound} card. A similar issues existing when converting \cpinline{G4Element} to FLUKA, as \cpinline{G4Element}
+can either be simple, so defined only by atomic number and mass or composite and defined by a admixture defined by 
+relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so if an \cpinline{G4Element} is simple it is 
+directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compund}
+card. 
 
 \subsection{Disucssion}
-There are still a few outstanding issues with Geant4/GDML to FLUKA conversion. 
+Overall the conversion to FLUKA input format from GDML is quite 
+advanced and stable. Relatively large experimental simulations 
+have been converted from GDML to FLUKA and have been producing 
+simulation results. The conversion described still requires a user to
+understand how geometry is specified in both Geant4 and FLUKA. For 
+example the subtraction of many non-primitive body daughter volumes from 
+a mother will create a very complex non-DNF region which is inefficient when viewed in 
+FLAIR and used for simulation in FLUKA. A geometry designer can avoid this by 
+restricting daughter volumes in Geant4 that can be expressed without 
+XXX. If \PYGEOMETRY{} is used during the creation of geometry then multiple 
+codes can be targeted without additional user effort. There are still a few outstanding technical 
+issues, which should be discussed. 
+
+Currently replica, division and parametrised placements are not implemented 
+and will be addedin a future release. In Geant4 it is possible to create scaled 
+solids or placements with reflections, so called scale in Geant4. FLUKA 
+roto-translations do not support reflections and implementing reflections 
+require transformation of the body definitions. This is not yet implemented 
+in the current version of \PYGEOMETRY{}. 
+
+It is possible given the GDML to FLUKA conversion algorithm described 
+in this paper that coplanar overlaps exist in the FLUKA geometry.  In 
+Geant4 there is no connection between surfaces used to specify on 
+logical volume solid and another logical volume solid. So for example 
+if a logical volume solid shared a face with one its daughter volume 
+solids the body would be duplicated in the final FLUKA file. It 
+is possible to remove obvious degeneracies but this is complicated by 
+placements of bodies. It should be possible to cast FLUKA bodies 
+{\em without} roto-translations into a {\em normal form} which can be used 
+to test for approximate equality. Approximate equality is required as 
+multiple application roto-translations will accrue numerical rounding errors.
+An simple example of this is the XYP and PLA, it simple to transform an 
+XYP into a PLA with an appropriate rotation. This would allow for the removal 
+of degenerate surfaces removing potential coplanar overlaps and also reduce 
+the final converted file size.
+
+The twisted primitives need to be decomposed 
+into a union of convex solids. This decomposition does not always 
+succeed or produces a far from optimal number of convex solids. 
+An alternative to implement these solids is to approximate each 
+layer of the twisted solid as a union of terahedra. A similar problem 
+exists for general tessellated solids, which in general
+are non-convex and need decomposition into convex hulls. A potential 
+way to avoid a computationally expensive decomposition step is to 
+create a region formed from the unions of tetrahedra. There are numerous 
+algorithms for tetrahedralisation of surface meshes in both CGAL and TetGen 
+and will be implemented in a future release. Even if a stable and general 
+method for converting tessellated solids exists it not efficient to define 
+tessellated objects in this way and memory, body or zone limits might
+be reached in FLUKA and so limit the size of CAD or STL models which 
+might be loaded.
 
 \begin{enumerate}
-\item Degenerate body look up 
-\item Bodies with/without transformation 
-\item Non-convex solids, convex decomposition (TwistedBox, TwistedTrap, TwistedTrd, TwistedTube, Tessellated)
-\item Scaled solid, Placement scale 
-\item Replica, Division, Parameterised
+%\item Degenerate body look up 
+%\item Bodies with/without transformation 
+% \item Non-convex solids, convex decomposition (TwistedBox, TwistedTrap, TwistedTrd, TwistedTube, Tessellated)
+% \item Scaled solid, Placement scale 
+% \item Replica, Division, Parameterised
 \item Recursive application of \ref{eqn:setDiff}, \ref{eqn:setUnion}, \ref{eqn:setIntersection}, \ref{eqn:logicalSubtraction} speed up using meshes
-\item Issues with tessellated solids 
+% \item Issues with tessellated solids 
 \end{enumerate}
 
 \section{STL and CAD to GDML conversion}
@@ -1023,6 +1090,11 @@ viewed in \PYGEOMETRY{}. }
 \end{center}
 \end{figure*}
 
+\begin{enumerate}
+\item Mesh overlap and shrinking algorithm 
+\item Surface conversion and decomposition algorithm (future release)
+\end{enumerate}
+
 \section{Complete simulation example}
 \PYGEOMETRY{} is designed to be as flexible as possible and offer the user a wide range of usage styles, input files 
 and workflows. A fictitious beam line was created to demonstrate the capabilities of \PYGEOMETRY, this creates a composite 
@@ -1049,7 +1121,7 @@ geometry is shown in Figure~\ref{fig:model}
 %
 
 
-\section{Conclusions}
+\section{Conclusions and discussion}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in 
 particle transport Monte Carlo programmes will save significant amounts of user effort and ultimately 
 yield more accurate simulations. \PYGEOMETRY{} is a relatively complete implementation of a geometry 
