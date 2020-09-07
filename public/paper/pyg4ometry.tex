@@ -488,6 +488,7 @@ $S \longleftarrow \emptyset$\;
 \For{$d_1 \in D$}{
   \If{\Intersect{$d_1, m$}}{
     $S \longleftarrow S \cup \{(d_1, m)\}$\;
+    }
 \For{$d_2 \in D$}{
  \If{$d_1 = d_2$ {\bf or} $(d_2, d_1) \in V$}{
   continue\;
@@ -498,7 +499,7 @@ $S \longleftarrow \emptyset$\;
 $V \longleftarrow V \cup \{(d_1, d_2)\}$\;
 }
 }
-}
+
 \label{algo:overlap}
 \caption{The overlap checking algorithm employed in \PYGEOMETRY{}.}
 \end{algorithm}
