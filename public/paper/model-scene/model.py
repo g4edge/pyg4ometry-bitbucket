@@ -168,12 +168,15 @@ def buildSectorBend(vis=True, inter=True):
         v.addLogicalVolume(dipole_logical)
         v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0]*1.25)
 
+        v.actors[1].GetProperty().SetRepresentationToWireframe()
         v.setOpacity(1.0)
         v.setRandomColours(3)
-
+        v.actors[1].GetProperty().SetColor(1,1,1)
+        v.actors[1].GetProperty().SetLineWidth(5)
         cam = v.ren.GetActiveCamera()
         cam.SetRoll(0)
         cam.SetPosition(500,0, 2000)
+        cam.SetDistance(795)
 
         v.view(interactive=inter, resetCamera=False)
 
