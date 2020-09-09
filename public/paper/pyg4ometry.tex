@@ -984,7 +984,9 @@ the second is when \cpinline{G4Element} instances and relative atomic or mass ab
 can either be simple, so defined only by atomic number and mass or composite and defined by a admixture defined by 
 relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so if an \cpinline{G4Element} is simple it is 
 directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compund}
-card. 
+card. Geant4 also defines a set of standard materials \cite{NIST} from NIST so a user can just specify something like 
+\pyinline{G4_STAINLESS-STEEL}, \PYGEOMETRY contains a matching database and creates the appropriate FLUKA cards during 
+the conversion.
 
 \subsection{Disucssion}
 Overall the conversion to FLUKA input format from GDML is quite 
@@ -1056,6 +1058,16 @@ tessellated solid(s). STL is a relatively simple file format that can
 be loaded using pure Python. As STL files typically only contain a single 
 solid the \pyinline{stl.Reader} provides a single solid and not a logical volume
 as with the other file readers.
+%
+\begin{figure*}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{./model-scene/SectorBend.pdf}
+\caption{Example conversion of a simple CAD (STEP) geometry (sector bend dipole electromagnet) to GDML, left panel:  
+the original model in FreeCAD, right panel: the GDML geometry 
+viewed in \PYGEOMETRY{}. }
+\label{fig:cad-gdml}
+\end{center}
+\end{figure*}
 
 STEP and IGES files can be loaded into 
 \PYGEOMETRY{}, via an interface based on FreeCAD. FreeCAD is an 
@@ -1080,16 +1092,6 @@ how \PYGEOMETRY{} can load step files.
 
 An example geometry representing a dipole electromagnet, consisting of three parts was created in Autodesk Fusion 360
 and saved as a STEP file, \PYGEOMETRY{} produces the output in Figure~\ref{fig:cad-gdml}
-\begin{figure*}
-\begin{center}
-\includegraphics[width=1.0\textwidth]{./model-scene/SectorBend.pdf}
-\caption{Example conversion of a simple CAD (STEP) geometry (sector bend dipole electromagnet) to GDML, left panel:  
-the original model in FreeCAD, right panel: the GDML geometry 
-viewed in \PYGEOMETRY{}. }
-\label{fig:cad-gdml}
-\end{center}
-\end{figure*}
-
 \begin{enumerate}
 \item Mesh overlap and shrinking algorithm 
 \item Surface conversion and decomposition algorithm (future release)
@@ -1102,7 +1104,10 @@ and workflows. A fictitious beam line was created to demonstrate the capabilitie
 (modelled in \PYGEOMETRY{}), a vacuum gate value (STL from the manufacturer), a triplet of quadrupole magnets (exported 
 from BDSIM), a sector bend dipole electromagnet (created in Autodesk Fusion 360) and finally a Faraday cup (modelled in 
 Flair). Each different file is loaded using \PYGEOMETRY{} reader class and the placed as a physical volume. The final composite 
-geometry is shown in Figure~\ref{fig:model}
+geometry is shown in Figure~\ref{fig:model}. It must be noted when this complete geometry is written to GDML and loaded into 
+Geant4 it cannot be visualised in anything but the ray tracer because of limitations in the OpenGL visualisation in Geant4. Another 
+important note is that this geometry cannot be converted to FLUKA as it contains tessellated solids (both the STL gate valve and
+dipole magnet). 
 %
 \begin{figure*}
 \begin{center}
@@ -1125,8 +1130,9 @@ The merging of registries and removing volumes is required to create the example
 Each sub-component is stored in a separate registry and these have to combined without any GDML tags clashing. 
 The FLUKA to GDML conversion creates logical volumes which are not generally required in Geant4, so for example
 the air surrounding the Faraday cup, which is needed to specify a FLUKA geometry is converted to GDML but can be 
-safely removed. Examples of other workflow can be found in the \PYGEOMETRY{} online manual
-.
+safely removed. Examples of other workflows or geometry manipulation processes can be found in 
+the \PYGEOMETRY{} online manual.
+
 \section{Conclusions and discussion}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in 
 particle transport Monte Carlo programmes will save significant amounts of user effort and ultimately 
@@ -1139,6 +1145,7 @@ a C++ output writer can be quickly implemented to generate geometry which can be
 application. 
 
 \begin{enumerate}
+\item Coherent, uniform interface to existing tools
 \item Graphical front end viewer
 \item C++ output
 \item CAD BREP to FLUKA converter (a la McCAD) 
@@ -1150,7 +1157,19 @@ application.
 \item Not for large scale conversion
 \item Export for other RTMC codes (MCNP, etc) 
 \item Performance in Geant4/FLUKA
+\item AR/VR export (to OBJ or XXX)
+\item Where to put manual, unit tests, installation, git? 
+\item range of current users (RAL, CERN, LUXE, QUB, IHEP-CEPC, etc) 
+\item Paraview loader 
+\item 2D section viewer 
+\item PHITS, MCNP(X)
 \end{enumerate}
+
+\section{Acknowledgements}
+This work has been supported by STFC grants XXX and XXX. Multiple undergraduate and masters students 
+have contributed to the code for their degree project work, Simon Williams, Benjamin Shellswell, Joshua Albrecht. 
+STB has benefited from discussions with and insight of Vasilis Vlachoudis (CERN) on FLUKA geometry and FLAIR. 
+Cédric Hernalsteens (ULB/CERN) and Alistair Butcher (RHUL) also made useful contributions to the code.
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
