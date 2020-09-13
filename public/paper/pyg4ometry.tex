@@ -100,6 +100,7 @@
 % scene
 % API
 % AST 
+% BREP (not B-REP)
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -636,16 +637,16 @@ using intersections and subtractions.  Zones may then be further combined
 using union operations to form \textit{regions}, which is defined as the
 union of one or more zones, as well as a material.
 
-\begin{figure*}[htbp]
+\begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{./model-scene/faradayCup2.pdf}
+\includegraphics[width=0.9\columnwidth]{./model-scene/faradayCup2.pdf}
 \caption{Example conversion of a simple FLUKA geometry to GDML. Left panel:
 the original FLUKA geometry displayed in FLAIR. Right panel: the GDML geometry
 viewed in \PYGEOMETRY{}. The example is a Faraday cup used to capture
 and measure accelerator beam charge.}
 \label{fig:fluka-to-geant4-cup}
 \end{center}
-\end{figure*}
+\end{figure}
 
 Each FLUKA body is represented in \PYGEOMETRY{} with a corresponding
 class, and in turn each class has methods which returns a GDML
@@ -890,15 +891,15 @@ has 20 bodies, listed in Table~\ref{tab:Fluka2Geant4}  and, in general, infinite
 benefits over finite ones. Key for conversion are XY-, XZ-, YZ-Planes (XYP, XZP, YZP), arbitrary 
 plane (PLA), Z axis aligned cylinder (ZCC), Z axis aligned elliptical cylinder (ZEC), 
 sphere (SPH), truncated right-angle cone (TRC) and general quadric surface (QUA). 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=1.0\textwidth]{./model-scene/CuboidalChamber.pdf}
+\includegraphics[width=0.9\columnwidth]{./model-scene/CuboidalChamber.pdf}
 \caption{Example conversion of a simple GDML geometry to FLUKA, left panel:  
 the original model in \PYGEOMETRY{}, right panel: the converted FLUKA geometry 
 viewed in FLAIR. The example is a sector bend dipole electromagnet.}
 \label{fig:gdml-flair}
 \end{center}
-\end{figure*}
+\end{figure}
 
 \begin{table}[hbt!]
 \centering
@@ -1097,15 +1098,15 @@ be loaded using pure Python. As STL files typically only contain a single
 solid the \pyinline{stl.Reader} provides a single solid and not a logical volume
 as with the other file readers.
 %
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=1.0\textwidth]{./model-scene/SectorBend.pdf}
+\includegraphics[width=0.9\columnwidth]{./model-scene/SectorBend.pdf}
 \caption{Example conversion of a simple CAD (STEP) geometry (sector bend dipole electromagnet) to GDML, left panel:  
 the original model in FreeCAD, right panel: the GDML geometry 
 viewed in \PYGEOMETRY{}. }
 \label{fig:cad-gdml}
 \end{center}
-\end{figure*}
+\end{figure}
 
 STEP and IGES files can be loaded into \PYGEOMETRY{}, via an interface 
 based on FreeCAD. FreeCAD is an open source CAD/CAM program, which 
@@ -1128,7 +1129,7 @@ how \PYGEOMETRY{} can load step files.
 \end{lstlisting}
 Compared to other file readers, two additional steps are required \pyinline{relabelModel} and \pyinline{convertFlat}. CAD model 
 part names can contain characters which are not allowed in PYTHON dictionaries so need to be replaced by \pyinline{relabelModel}. 
-CAD models might also have a hierarchy of parts and assemblies, these are converted without this structure by \pyinline{convertFlat}
+CAD models might also have a hierarchy of parts and assemblies, these are converted without this structure by \pyinline{convertFlat}.
 
 An example geometry representing a dipole electromagnet, consisting of three parts was created in Autodesk Fusion 360
 and saved as a STEP file, \PYGEOMETRY{} produces the output in Figure~\ref{fig:cad-gdml}.
@@ -1180,7 +1181,7 @@ where a public issue tracker for users is hosted to report problems or bugs with
 PYTHON documentation generator. \PYGEOMETRY{} uses mature packages available for PYTHON as dependences. 
 \PYGEOMETRY{} has  two submodules that require compilation \pyinline{pyg4ometry.pycsg} and \pyinline{pyg4ometry.pycgal} 
 in C/C++. \PYGEOMETRY{}, package dependencies and extensions are installed using \pyinline{setuptools}. All aspects of 
-\PYGEOMETRY{} are routinely checked using unit tests. 543 tests are available for the code, which have 84\% coverage. 
+\PYGEOMETRY{} are routinely checked using unit tests, of which 543 tests are available for the code, which have 84\% coverage. 
 
 \section{Conclusions and discussion}
 The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in Monte Carlo
@@ -1189,13 +1190,16 @@ yield more accurate simulations. \PYGEOMETRY{} is a relatively complete implemen
 creation tool, whilst heavily internally based on Geant4 and GDML, it can have utility for users of all MCRT 
 codes. \PYGEOMETRY{} can clearly be extended to other formats or applications. Presently it provides a coherent and 
 uniform interface to existing tools and utilities, also by using the PYTHON programming language \PYGEOMETRY{} 
-allows the programatic control of geometry creation or modification.
+allows the programatic control of geometry creation or modification. This approach allows the integration of 
+other available tools \colorbox{yellow}{CITEXXX DAGMC, CAD stuff} into an unified workflow.
 
 Users should be aware of {\bf issues} with \PYGEOMETRY{}. The conversions between CAD/STL, GDML, and FLUKA 
-cannot be considered bidirectional. Workflows should focus on conversion from a primary format and then create conversions 
-to another format as the need arrises. This paper outlines the creation of geometry using \PYGEOMETRY{}, that geometry is loaded
-into Geant4, FLAIR and FLUKA but detailed studies of the MCRT simulation performance is beyond the scope of this publication 
-and will be addressed in the future.
+cannot be considered bidirectional. For example Geant4 tessellated cannot be converted easily to FLUKA which does not 
+have a convenient way of representing this geometry. In general a user would be unwise to attempt to convert a very large 
+geometry from one format to another, but concentrate on smaller conversions of constituent parts. Workflows should focus 
+on conversion from a primary format and then create conversions to another format as the need arrises. This paper outlines 
+the creation of geometry using \PYGEOMETRY{}, that geometry is loaded into Geant4, FLAIR and FLUKA but detailed 
+studies of the MCRT simulation performance is beyond the scope of this publication and will be addressed in the future.
 
 There are many {\bf output format extensions} that can be considered for \PYGEOMETRY{}. 
 Geant4 geometry is primarily created by writing C++ programmes, so a output writer that 
@@ -1220,25 +1224,24 @@ geometry without any programming knowledge would expand the number of potential 
 has been designed to interface with a GUI in a relatively straightforward manner. The VTK visualiser currently 
 limits the display of very large models as geometry instances are replicated opposed to reused in visualisation. 
 
-{\bf Conversion}
+The {\bf conversion} which would most dramatically enhance the creation of geometry is CAD to Geant4/FLUKA
+without use use of a triangular or tetrahedral mesh. There are methods to decompose BREP solids to Geant4 and 
+FLUKA like CSG geometry \colorbox{yellow}{CITEXXX MCCAD}. The FreeCAD/OpenCASCADE interface
+combined with the Geant4 and FLUKA PYTHON API present in \PYGEOMETRY{} will allow for the creation 
+of CAD B-REP decomposition algorithms.
 
 There is a strong relationship between \PYGEOMETRY and Geant4 and to a lesser extent between 
 \PYGEOMETRY{} and FLUKA. \PYGEOMETRY{} can be used to a testing ground for ideas prior to 
 implementation in Geant4 or FLAIR. An example of this the VTK visualisation system implemented in 
 \PYGEOMETRY{}, which could be used in Geant4 to rendering of Boolean solids which frequently 
-fail in the Geant4 OpenGL viewer.
+fail in the Geant4 OpenGL viewer. This would involve using CGAL meshing in the \pyinline{G4Polyhedron}
+class. There is also
 
-
-\begin{enumerate}
-\item CAD BREP to FLUKA converter (a la McCAD) 
-\item Integration of other tools (DAGMC) 
-\item Far from perfect conversions
-\item Convergence FLUKA/Geant4 - Moira 
-\item Replace G4 polyhedron CSG
-\item Not for large scale conversion
-\item range of current users (RAL, CERN, LUXE, QUB, IHEP-CEPC, etc) 
-\item 2D section viewer 
-\end{enumerate}
+\PYGEOMETRY{} is already proving to be a useful tool for geometry conversion, creation and manipulation.
+There are numerous international researcher and research groups already using the code for their particular applications.
+The users are focused in accelerator physics, but \PYGEOMETRY{} could find application in any scientific
+area where MCRT simulations are needed, for example particle physics, space environment and medical physics.
+The authors welcome contributions, extensions and bug-fixes as well a suggestions for larger collaborations.
 
 \section{Acknowledgements}
 This work has been supported by STFC grants XXX and XXX. Multiple undergraduate and masters students 

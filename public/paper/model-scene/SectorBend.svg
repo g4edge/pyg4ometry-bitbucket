@@ -10,9 +10,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="800mm"
-   height="254.24107mm"
-   viewBox="0 0 800 254.24107"
+   width="395mm"
+   height="485mm"
+   viewBox="0 0 395 484.99999"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
@@ -82,9 +82,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.90509668"
-     inkscape:cx="108.41775"
-     inkscape:cy="419.62674"
+     inkscape:zoom="0.45254834"
+     inkscape:cx="488.69605"
+     inkscape:cy="1038.3452"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -114,7 +114,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(355.1275,-46.156487)"
+     transform="translate(355.1275,184.60244)"
      style="display:inline">
     <image
        y="46.156487"
@@ -124,7 +124,8 @@
        preserveAspectRatio="none"
        height="250.71552"
        width="400"
-       clip-path="url(#clipPath861)" />
+       clip-path="url(#clipPath861)"
+       transform="translate(-2.5772001,-231.07363)" />
     <image
        y="46.156487"
        x="44.872498"
@@ -133,12 +134,13 @@
        preserveAspectRatio="none"
        height="254.24107"
        width="400"
-       clip-path="url(#clipPath867)" />
+       clip-path="url(#clipPath867)"
+       transform="translate(-403.44501,9.8876987)" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
      style="display:inline"
-     transform="translate(16.227942,-49.783176)" />
+     transform="translate(16.227942,180.97575)" />
 </svg>
