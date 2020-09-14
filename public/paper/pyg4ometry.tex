@@ -412,7 +412,7 @@ elements of a GDML file. As a \PYGEOMETRY{} user specifies geometry the registry
 %%%%%%%%%%%%%%%%%  Expression evaluation
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
 In order to fully replicate the functionality of GDML an expression engine was implemented using ANTLR \cite{10.5555/2501720}. The GDML is loaded using 
-standard XML modules and parsed using ANRLR to create an abstract syntax tree (AST).  GDML allows for the definition 
+standard XML modules and parsed using ANTLR to create an abstract syntax tree (AST).  GDML allows for the definition 
 and assignment of variables. GDML expressions are not much more complicated than binary operators $+, -, \times, /$ and common trigonometric and special functions $\sin, \cos, \tan$ etc. The AST terminates on either expressions which evaluate to numbers or GDML variables. Internally, all \PYGEOMETRY{} 
 classes use GDML expressions and not floating point numbers. Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of 
 solid parameters and  placements. This allows a user to update variables whilst defining geometry and the expression engine will update all internal values. 
