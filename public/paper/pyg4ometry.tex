@@ -1129,7 +1129,7 @@ how \PYGEOMETRY{} can load step files.
     logical = reader.getRegistry().getWorldVolume()
 \end{lstlisting}
 Compared to other file readers, two additional steps are required \pyinline{relabelModel} and \pyinline{convertFlat}. CAD model 
-part names can contain characters which are not allowed in PYTHON dictionaries so need to be replaced by \pyinline{relabelModel}. 
+part names can contain characters which are not allowed in Python dictionaries so need to be replaced by \pyinline{relabelModel}. 
 CAD models might also have a hierarchy of parts and assemblies, these are converted without this structure by \pyinline{convertFlat}.
 
 An example geometry representing a dipole electromagnet, consisting of three parts was created in Autodesk Fusion 360
@@ -1179,7 +1179,7 @@ the \PYGEOMETRY{} online manual.
 \section{Quality assurance}
 The source and manual code for \PYGEOMETRY{} is stored in a git repository (\url{https://bitbucket.org/jairhul/pyg4ometry}), 
 where a public issue tracker for users is hosted to report problems or bugs with the code. The manual is created using SPHINX a 
-PYTHON documentation generator. \PYGEOMETRY{} uses mature packages available for PYTHON as dependences. 
+Python documentation generator. \PYGEOMETRY{} uses mature packages available for Python as dependences. 
 \PYGEOMETRY{} has  two submodules that require compilation \pyinline{pyg4ometry.pycsg} and \pyinline{pyg4ometry.pycgal} 
 in C/C++. \PYGEOMETRY{}, package dependencies and extensions are installed using \pyinline{setuptools}. All aspects of 
 \PYGEOMETRY{} are routinely checked using unit tests, of which 543 tests are available for the code, which have 84\% coverage. 
@@ -1190,7 +1190,7 @@ particle transport programmes will save significant amounts of user effort and u
 yield more accurate simulations. \PYGEOMETRY{} is a relatively complete implementation of a geometry 
 creation tool, whilst heavily internally based on Geant4 and GDML, it can have utility for users of all MCRT 
 codes. \PYGEOMETRY{} can clearly be extended to other formats or applications. Presently it provides a coherent and 
-uniform interface to existing tools and utilities, also by using the PYTHON programming language \PYGEOMETRY{} 
+uniform interface to existing tools and utilities, also by using the Python programming language \PYGEOMETRY{} 
 allows the programatic control of geometry creation or modification. This approach allows the integration of 
 other available tools \colorbox{yellow}{CITEXXX DAGMC, CAD stuff} into an unified workflow.
 
@@ -1228,7 +1228,7 @@ limits the display of very large models as geometry instances are replicated opp
 The {\bf conversion} which would most dramatically enhance the creation of geometry is CAD to Geant4/FLUKA
 without use use of a triangular or tetrahedral mesh. There are methods to decompose BREP solids to Geant4 and 
 FLUKA like CSG geometry \colorbox{yellow}{CITEXXX MCCAD}. The FreeCAD/OpenCASCADE interface
-combined with the Geant4 and FLUKA PYTHON API present in \PYGEOMETRY{} will allow for the creation 
+combined with the Geant4 and FLUKA Python API present in \PYGEOMETRY{} will allow for the creation 
 of CAD B-REP decomposition algorithms.
 
 There is a strong relationship between \PYGEOMETRY and Geant4 and to a lesser extent between 
