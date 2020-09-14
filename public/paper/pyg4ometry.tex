@@ -1022,7 +1022,7 @@ the second is when \cpinline{G4Element} instances and relative atomic or mass ab
 \fluka{compound} card. A similar issues existing when converting \cpinline{G4Element} to FLUKA, as \cpinline{G4Element}
 can either be simple, so defined only by atomic number and mass or composite and defined by a admixture defined by 
 relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so if an \cpinline{G4Element} is simple it is 
-directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compund}
+directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compound}
 card. Geant4 also defines a set of standard materials from NIST  \colorbox{yellow}{CITEXXX NIST}. so a user can just specify something like 
 \pyinline{G4_STAINLESS-STEEL}, \PYGEOMETRY{}  contains a matching database and creates the appropriate FLUKA 
 cards during the conversion. This database is updated by running a small Geant4 program to output the appropriate
