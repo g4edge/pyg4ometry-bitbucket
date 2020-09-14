@@ -283,7 +283,7 @@ adaptation of geometry. Figure~\ref{fig:workflow} depicts various workflows poss
   \normalsize
   \centering
   \includegraphics[width=0.7\textwidth]{./diagrams/workflow.pdf}
-  \caption{\label{fig:workflow}Schematic of \PYGEOMETRY{} workflow, showing a) the different input file formats, b) Python processing, c) output file targets and d) RTMC codes which use the geometry. }
+  \caption{\label{fig:workflow}Schematic of \PYGEOMETRY{} workflow, showing (a) the different input file formats, (b) Python processing, (c) output file targets and (d) RTMC codes which use the geometry. }
 \end{figure*}
 
 There are existing codes that have functionality similar to \PYGEOMETRY{}. ROOT~\cite{Brun:1997pa}, the high-energy physics data analysis program, can load, display and manipulate GDML-like geometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, commercial products include ESABASE2 \cite{ESABASE2} and FASTRAD \cite{FASTRAD}. There are also tools from the fusion and 
@@ -489,7 +489,7 @@ can be used to define the visualisation attributes of a volume.
 
 \subsection{Overlap detection}
 All RTMC codes cannot handle spatial overlap between two geometric objects and will have ill-defined behaviour when tracking particles  
-in such a situation.  A key feature of \PYGEOMETRY{} is the detection of potential overlaps in a way which is most useful to the user, it does this by performing an intersection operation between solid instances and determining if the resultant mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, a) protrusion of a daughter from the mother, b)  finite volume intersection between two daughters  and c) an overlap where two daughters share a face. If the resulting intersection 
+in such a situation.  A key feature of \PYGEOMETRY{} is the detection of potential overlaps in a way which is most useful to the user, it does this by performing an intersection operation between solid instances and determining if the resultant mesh is empty. Figure~\ref{fig:overlap} shows the potential overlaps, (a) protrusion of a daughter from the mother, (b)  finite volume intersection between two daughters  and (c) an overlap where two daughters share a face. If the resulting intersection 
 is non-null then the overlaps can be displayed side-by-side in the visualisation. 
 \begin{figure}[htbp]
 \begin{center}
