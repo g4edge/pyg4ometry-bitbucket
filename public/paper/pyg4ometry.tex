@@ -475,7 +475,7 @@ If the mother volume is placed in the world then the placement transformation $\
 \mathbf{T}	_w 		& = & \mathbf{M}_m \mathbf{T}_d + \mathbf{T}_m= \mathbf{S}_m \mathbf{R}_m \mathbf{T}_d + \mathbf{T}_m  \label{eqn:worldToDaughter2}
 \end{eqnarray}
 where the subscript $m$ indicates mother volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
-Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively depending on the number of nested volumes.
+Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively to place an arbitrary number of nested volumes.
 
 The physical volume class (\pyinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
 colour, surface or wireframe representation and visibility. Overlaps detected in the mesh geometry are
