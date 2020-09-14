@@ -264,7 +264,7 @@ FLUKA to Geant4 requires the replacement of infinite surfaces with finite solids
 %% main text
 \section{Introduction} \label{sec:introduction}
 There are numerous different software codes to simulate the passage of particles through material radiation transport (RT) programmes these 
-include MCNP \cite{Mcnp_Werner}, FLUKA \cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3 \cite{Geant3_Brun} and Geant4 \cite{Geant4_Agostinelli}. 
+include MCNP~\cite{Mcnp_Werner}, FLUKA~\cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3~\cite{Geant3_Brun} and Geant4~\cite{Geant4_Agostinelli}. 
 All these codes are based on the Monte Carlo technique but each code either has a particular specialism, simulation methodology or target user community.  
 RT Monte Carlo (RTMC) simulations have diverse uses including shielding calculations for radiological protection, detector performance, medical imaging and therapy and space radiation environment  simulation are some examples. A fundamental requirement of all of the codes is to supply a computer-readable description of the 
 physical three-dimensional geometry that  the particles are passing through.  The creation of geometry files is typically a very time-consuming 
@@ -276,7 +276,7 @@ need to be simulated. The fundamental geometric representations in CAD files are
 advantageous to create a software tool that allows particle transport code users to rapidly develop error-free geometry files, convert between common MCRT 
 program geometry formats and load CAD models.
 
-This paper describes a geometry creation and conversion package called \PYGEOMETRY{}, written in Python and internally based on the Geant4 application programming interface (API) and the Geometry Description Markup Language (GDML) for file persistency  \cite{GDML}. The main features of \PYGEOMETRY{} are a Python scripting API to rapidly design parametrised geometry; conversion to and from  FLUKA geometry descriptions; conversion from CAD formats  (STEP and IGES) based on FreeCAD \cite{FreeCAD} and OpenCascade \cite{OpenCASCADE}; and powerful geometry visualisation tools based on VTK \cite{VTK4}. The origin of \PYGEOMETRY{} was a set of utilities to prepare geometry for an accelerator beamline simulation program based on Geant4 called BDSIM \cite{BDSIM_Nevay}. Accelerator physicists, like specialists in other areas, need a tool to quickly model specialist geometry and the subsequent interaction of the charged particle beam. \PYGEOMETRY{} allow the rapid creation and 
+This paper describes a geometry creation and conversion package called \PYGEOMETRY{}, written in Python and internally based on the Geant4 application programming interface (API) and the Geometry Description Markup Language (GDML) for file persistency~\cite{GDML}. The main features of \PYGEOMETRY{} are a Python scripting API to rapidly design parametrised geometry; conversion to and from  FLUKA geometry descriptions; conversion from CAD formats  (STEP and IGES) based on FreeCAD \cite{FreeCAD} and OpenCascade \cite{OpenCASCADE}; and powerful geometry visualisation tools based on VTK \cite{VTK4}. The origin of \PYGEOMETRY{} was a set of utilities to prepare geometry for an accelerator beamline simulation program based on Geant4 called BDSIM \cite{BDSIM_Nevay}. Accelerator physicists, like specialists in other areas, need a tool to quickly model specialist geometry and the subsequent interaction of the charged particle beam. \PYGEOMETRY{} allow the rapid creation and 
 adaptation of geometry. Figure~\ref{fig:workflow} depicts various workflows possible with \PYGEOMETRY{}. \PYGEOMETRY{} is not an executable software package but a toolkit, a user would typically write a very small Python program to use to use the classes and functions provided by \PYGEOMETRY{}. This paper describes version 1.0 of \PYGEOMETRY{}, which is freely available as a git repository and via the Python Package Index (PyPi).
 
 \begin{figure*}[hbt!]
@@ -286,9 +286,9 @@ adaptation of geometry. Figure~\ref{fig:workflow} depicts various workflows poss
   \caption{\label{fig:workflow}Schematic of \PYGEOMETRY{} workflow, showing a) the different input file formats, b) Python processing, c) output file targets and d) RTMC codes which use the geometry. }
 \end{figure*}
 
-There are existing codes that have functionality similar to \PYGEOMETRY{}. ROOT \cite{Brun:1997pa}, the high-energy physics data analysis program, can load, display and manipulate GDML-like geometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, commercial products include ESABASE2 \cite{ESABASE2} and FASTRAD \cite{FASTRAD}. There are also tools from the fusion and 
-neutronics community that can convert CAD geometry into formats usable by RTMC codes examples include DAGMC \cite{DAGMC} and McCAD \cite{McCad}.  
-In principle CAD software can export shape data to STL (or other similar mesh formats), which can be used by Geant4 \cite{poole2012acad}. In practice, using a lot of CAD models is difficult if a CAD model is comprised of a large number of parts. Exporting, assigning material to and placing the STL components into the RTMC can be a cumbersome task. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.
+There are existing codes that have functionality similar to \PYGEOMETRY{}. ROOT~\cite{Brun:1997pa}, the high-energy physics data analysis program, can load, display and manipulate GDML-like geometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, commercial products include ESABASE2 \cite{ESABASE2} and FASTRAD \cite{FASTRAD}. There are also tools from the fusion and 
+neutronics community that can convert CAD geometry into formats usable by RTMC codes examples include DAGMC~\cite{DAGMC} and McCAD~\cite{McCad}.  
+In principle CAD software can export shape data to STL (or other similar mesh formats), which can be used by Geant4~\cite{poole2012acad}. In practice, using a lot of CAD models is difficult if a CAD model is comprised of a large number of parts. Exporting, assigning material to and placing the STL components into the RTMC can be a cumbersome task. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.
 
 This paper is structured as follows, first a brief radiation transport focused introduction to computer descriptions of geometry, followed by an explanation of the design and implementation of \PYGEOMETRY{}. The sections that follow describe how \PYGEOMETRY{} can be used to perform rapid geometric modelling, conversion from FLUKA to GDML, GDML to FLUKA and CAD to GDML. The paper concludes with an example of a composite complex system consisting of components drawn from all the supported  geometry input files formats.
 
@@ -325,8 +325,8 @@ and zero or more physical {\em daughter} physical volumes. A physical volume is 
 %%%%%%%%%%%%%%%%% FLUKA geometry
 
 %%%%%%%%%%%%%%%%% Geant Detector Mark-up Language
-To exchange geometry descriptions between software packages the Geometry Descripition Mark-up Language (GDML) was developed \cite{GDML}. 
-GDML is an XML-based description of Geant4 geometry description. Geant4 and ROOT \cite{fons_rademakers_2019_3895860} can read and write 
+To exchange geometry descriptions between software packages the Geometry Descripition Mark-up Language (GDML) was developed~\cite{GDML}. 
+GDML is an XML-based description of Geant4 geometry description. Geant4 and ROOT~\cite{fons_rademakers_2019_3895860} can read and write 
 GDML format and it is commonly used as an exchange format for Geant4 geometries. 
 
 \section{\PYGEOMETRY{} design and layout}
@@ -411,7 +411,7 @@ elements of a GDML file. As a \PYGEOMETRY{} user specifies geometry the registry
 
 %%%%%%%%%%%%%%%%%  Expression evaluation
 In GDML symbolic expressions can be used to parametrise solids and their placement. These expressions are evaluated when the GDML is loaded into Geant4. 
-In order to fully replicate the functionality of GDML an expression engine was implemented using ANTLR \cite{10.5555/2501720}. The GDML is loaded using 
+In order to fully replicate the functionality of GDML an expression engine was implemented using ANTLR~\cite{10.5555/2501720}. The GDML is loaded using 
 standard XML modules and parsed using ANTLR to create an abstract syntax tree (AST).  GDML allows for the definition 
 and assignment of variables. GDML expressions are not much more complicated than binary operators $+, -, \times, /$ and common trigonometric and special functions $\sin, \cos, \tan$, etc. The AST terminates on either expressions which evaluate to numbers or GDML variables. Internally, all \PYGEOMETRY{} 
 classes use GDML expressions and not floating-point numbers. Storing internal data as expressions allows for deferred evaluation (or re-evaluation) of 
@@ -443,7 +443,7 @@ future release.
 \subsection{Tessellation of solids (meshing)}
 Creating a uniform three dimensional mesh description of all solids (include Booleans) is exceptionally useful, for visualisation and other algorithms, e.g. overlap 
 detection. For each Geant4 solid instance a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent 
-of placed instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a Binary Space Partitioning (BSP) tree technique in  pure Python \cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b}. In general the CGAL implementation is one to two orders of magnitude faster than the pure-PYTHON CSG implementation and must be used for large geometries. Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
+of placed instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a Binary Space Partitioning (BSP) tree technique in  pure Python~\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b}. In general the CGAL implementation is one to two orders of magnitude faster than the pure-PYTHON CSG implementation and must be used for large geometries. Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
 %%%%%%%%%%%%%%%%% Volume bounding
 If a user is creating and placing multiple daughter volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully 
@@ -1007,8 +1007,8 @@ Equation~\ref{eqn:logicalSubtraction} does not have the form of a DNF. If there 
 placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of 
 parentheses. There are some conditions where a general Boolean expression can yield an exponential 
 explosion of the final DNF. There are well known algorithms to convert logical expressions to a DNF. 
-\PYGEOMETRY{} can simplify parentheses from a \verb|REGION| by creating a sympy \cite{10.7717/peerj-cs.103} 
-expression and using its \verb|logical| module \verb|to_dnf| method based on the Quine–McCluskey algorithm \cite{6769983}. 
+\PYGEOMETRY{} can simplify parentheses from a \verb|REGION| by creating a sympy~\cite{10.7717/peerj-cs.103} 
+expression and using its \verb|logical| module \verb|to_dnf| method based on the Quine–McCluskey algorithm~\cite{6769983}. 
 Before version 4.0 FLUKA  would simplify all regions to DNF and some converted geometry would generate 
 too many zones and would fail. FLUKA version 4 allows control of the DNF expansion.
 
