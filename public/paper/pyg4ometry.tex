@@ -299,7 +299,7 @@ briefly in the following sections.  The Geant4 geometry specification is a mixtu
 
 %%%%%%%%%%%%%%%%% Constructive solid geometry (CSG) 
 Constructive solid geometry uses Boolean operations (subtraction, intersection and union), between simple solid shapes (e.g. cube, cylinder, sphere, etc.) or infinite
-volumes (e.g a plane defined infinite half-space) to model complex surfaces which represent a solid. Boolean operations and solids can be combined to form a 
+volumes (e.g. a plane defined infinite half-space) to model complex surfaces which represent a solid. Boolean operations and solids can be combined to form a 
 CSG tree to model complex geometry. FLUKA uses CSG to model solids, the form of Boolean expression used by FLUKA is not a general CSG tree but a 
 logical expression in disjunctive normal form.
 
@@ -441,7 +441,7 @@ to be repeated with varying parameters. GDML loop loading and expansion are not 
 future release.
   
 \subsection{Tessellation of solids (meshing)}
-Creating a uniform three dimensional mesh description of all solids (include Booleans) is exceptionally useful, for visualisation and other algorithms, e.g overlap 
+Creating a uniform three dimensional mesh description of all solids (include Booleans) is exceptionally useful, for visualisation and other algorithms, e.g. overlap 
 detection. For each Geant4 solid instance a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent 
 of placed instances of geometry (physical volumes) and meshes for CSG derived solids. CSG mesh calculations are performed using a Binary Space Partitioning (BSP) tree technique in  pure Python \cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b}. In general the CGAL implementation is one to two orders of magnitude faster than the pure-PYTHON CSG implementation and must be used for large geometries. Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of thin triangles. Before meshes are visualised or written to disk various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
