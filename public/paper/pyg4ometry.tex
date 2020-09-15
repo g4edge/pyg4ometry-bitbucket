@@ -326,7 +326,7 @@ Boundary representation consists of two parts, topology and geometry. Topologica
 geometrical elements are surfaces, curves and points. No current MCRT applications use native file formats employed by CAD systems. The conversion of 
 CAD BREP formats for loading in MCRT applications is typically performed via a tessellated format, although it is possible to decompose BREP descriptions
  to bounded or infinite mathematical surfaces and subsequently solids as used in CSG descriptions. This type of conversion is complex and error-prone, 
- although recent progress has been made \colorbox{yellow}{CITEXXX}.
+ although recent progress has been made \cite{WangNuclSciTech31-82-2020}.
 
 %%%%%%%%%%%%%%%%% Tessellated polygons
 Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL and 
@@ -1061,7 +1061,8 @@ the second is when \cpinline{G4Element} instances and relative atomic or mass ab
 can either be simple, so defined only by atomic number and mass or composite and defined by a admixture defined by 
 relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so if an \cpinline{G4Element} is simple it is 
 directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compound}
-card. Geant4 also defines a set of standard materials from NIST  \colorbox{yellow}{CITEXXX NIST}. so a user can just specify something like 
+card. Geant4 also defines a set of standard materials \cite{Geant4MaterialDB} or compounds from the US National Institute 
+of Standards and Technology (NIST) \colorbox{yellow}{CITEXXX NIST}. so a user can just specify something like 
 \pyinline{G4_STAINLESS-STEEL}, \PYGEOMETRY{}  contains a matching database and creates the appropriate FLUKA 
 cards during the conversion. This database is updated by running a small Geant4 program to output the appropriate
 material data.
@@ -1229,7 +1230,7 @@ creation tool, whilst heavily internally based on Geant4 and GDML, it can have u
 codes. \PYGEOMETRY{} can clearly be extended to other formats or applications. Presently it provides a coherent and 
 uniform interface to existing tools and utilities, also by using the Python programming language \PYGEOMETRY{} 
 allows the programatic control of geometry creation or modification. This approach allows the integration of 
-other available tools \colorbox{yellow}{CITEXXX DAGMC, CAD stuff} into an unified workflow.
+other available tools \cite{DavisNIMA915-65} into an unified workflow.
 
 Users should be aware of {\bf issues} with \PYGEOMETRY{}. The conversions between CAD/STL, GDML, and FLUKA 
 cannot be considered bidirectional. For example Geant4 tessellated cannot be converted easily to FLUKA which does not 
@@ -1241,7 +1242,7 @@ studies of the MCRT simulation performance is beyond the scope of this publicati
 
 There are many output format extensions that can be considered for \PYGEOMETRY{}. 
 Geant4 geometry is primarily created by writing C++ programmes, so a output writer that 
-converts the \PYGEOMETRY() in memory representation to C++ will allow rapid geometry 
+converts the \PYGEOMETRY{} in memory representation to C++ will allow rapid geometry 
 modelling but . This is not implemented in the current version but could be relatively quickly implemented
 for users that require this functionality. At present \PYGEOMETRY{} supports reading and writing. 
 Geant4 and FLUKA type files but could be extended without significant effort to other MCRT codes 
@@ -1264,9 +1265,9 @@ limits the display of very large models as geometry instances are replicated opp
 
 The conversion which would most dramatically enhance the creation of geometry is CAD to Geant4/FLUKA
 without use use of a triangular or tetrahedral mesh. There are methods to decompose BREP solids to Geant4 and 
-FLUKA like CSG geometry \colorbox{yellow}{CITEXXX MCCAD}. The FreeCAD/OpenCASCADE interface
-combined with the Geant4 and FLUKA Python API present in \PYGEOMETRY{} will allow for the creation 
-of CAD BREP decomposition algorithms.
+FLUKA like CSG geometry \cite{LuFusionEngineeringAndDesign124-2017, WangNuclSciTech31-82-2020}. 
+The FreeCAD/OpenCASCADE interface combined with the Geant4 and FLUKA Python API present in \PYGEOMETRY{} 
+will allow for the creation of CAD BREP decomposition algorithms.
 
 There is a strong relationship between \PYGEOMETRY and Geant4 and to a lesser extent between 
 \PYGEOMETRY{} and FLUKA. \PYGEOMETRY{} can be used to a testing ground for ideas prior to 
