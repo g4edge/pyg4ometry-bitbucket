@@ -866,7 +866,7 @@ removed from the region during conversion.
     primitives in $G$.\;
   }
 
-  \label{algo:overlap}
+  \label{algo:redundant-halfspace}
   \caption{The infinite-body minimisation algorithm employed in the
     conversion of Fluka to GDML.}
 \end{algorithm}
@@ -1287,7 +1287,7 @@ the \PYGEOMETRY{} online manual.
 \section{Quality assurance}
 The source and manual code for \PYGEOMETRY{} is stored in a git repository (\url{https://bitbucket.org/jairhul/pyg4ometry}), 
 where a public issue tracker for users is hosted to report problems or bugs with the code. The manual is created using Sphinx a 
-Python documentation generator (\url{Monte Carlo Radiation Transport (MCRT)}). \PYGEOMETRY{} uses mature packages 
+Python documentation generator (\url{http://www.pp.rhul.ac.uk/bdsim/pyg4ometry/}). \PYGEOMETRY{} uses mature packages 
 available for Python as dependencies. \PYGEOMETRY{} has  two submodules that require compilation \pyinline{pyg4ometry.pycsg} 
 and \pyinline{pyg4ometry.pycgal} in C/C++. \PYGEOMETRY{}, package dependencies and extensions are installed using 
 \pyinline{setuptools}. All aspects of \PYGEOMETRY{} are routinely checked using unit tests, of which 543 tests are available 
