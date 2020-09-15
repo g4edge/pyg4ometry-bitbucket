@@ -1,15 +1,21 @@
-@inproceedings{Mcnp_Werner,
-author = "{C}. {J}. {W}erner {\it et al.}", 
+@manual{Mcnp_Werner,
+author = "{C}. {J}. {W}erner {\it et al.}",
 title  = "{MCNP}6.2 {R}elease {N}otes",
 booktitle = "{L}os {A}lamos {N}ational {L}aboratory report {LA-UR}-18-20808",
 year = "2018"
 }
 
-@inproceedings{Fluka_Ferrari,
-author = "A. Ferrari and P. R. Sala and A. Fasso and J. Ranft and Organisation Européenne and Pour La and Recherche Nucléaire and Alfredo Ferrari and Paola R. Sala and Alberto Fassò and Johannes Ranft",
-title = "{FLUKA}: a multi-particle transport code",
-booktitle = "{CERN} 2005-10 (2005), {INFN/TC} 05/11, {SLAC-R}-773",
-year = "2005"
+@book{Fluka_Ferrari,
+      author        = "Ferrari, A and Sala, Paola R and Fassò, A and Ranft,
+                       Johannes",
+      title         = "{FLUKA: A multi-particle transport code (program version
+                       2005)}",
+      publisher     = "CERN",
+      address       = "Geneva",
+      series        = "CERN Yellow Reports: Monographs",
+      year          = "2005",
+      url           = "https://cds.cern.ch/record/898301",
+      doi           = "10.5170/CERN-2005-010",
 }
 
 @article{Fluka_Bohlen,
@@ -25,11 +31,12 @@ author = "T.T. Böhlen and F. Cerutti and M.P.W. Chin and A. Fassò and A. Ferra
 abstract = "The FLUKA Monte Carlo code is used extensively at CERN for all beam-machine interactions, radioprotection calculations and facility design of forthcoming projects. Such needs require the code to be consistently reliable over the entire energy range (from MeV to TeV) for all projectiles (full suite of elementary particles and heavy ions). Outside CERN, among various applications worldwide, FLUKA serves as a core tool for the HIT and CNAO hadron-therapy facilities in Europe. Therefore, medical applications further impose stringent requirements in terms of reliability and predictive power, which demands constant refinement of sophisticated nuclear models and continuous code improvement. Some of the latest developments implemented in FLUKA are presented in this paper, with particular emphasis on issues and concerns pertaining to CERN and medical applications."
 }
 
-@inproceedings{Geant3_Brun,
-author         = "Brun, R. and Bruyant, F. and Maire, M. and McPherson, A. C. and Zanarini, P.",
-title          = "{GEANT3}",
-year           = "1987",
-booktitle      = "{CERN-DD-EE}-84-1",
+@article{Geant3_Brun,
+    author = "Brun, R. and Bruyant, F. and Maire, M. and McPherson, A.C. and Zanarini, P.",
+    title = "{GEANT3}",
+    reportNumber = "CERN-DD-EE-84-1",
+    month = "September",
+    year = "1987"
 }
 
 @article{Geant4_Agostinelli,
@@ -37,7 +44,7 @@ title = "Geant4—a simulation toolkit",
 journal = "Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment",
 volume = "506",
 number = "3",
-pages = "250 - 303",
+pages = "250--303",
 year = "2003",
 issn = "0168-9002",
 doi = "https://doi.org/10.1016/S0168-9002(03)01368-8",
@@ -47,14 +54,18 @@ keywords = "Simulation, Particle interactions, Geometrical modelling, Software e
 abstract = "Geant4 is a toolkit for simulating the passage of particles through matter. It includes a complete range of functionality including tracking, geometry, physics models and hits. The physics processes offered cover a comprehensive range, including electromagnetic, hadronic and optical processes, a large set of long-lived particles, materials and elements, over a wide energy range starting, in some cases, from 250eV and extending in others to the TeV energy range. It has been designed and constructed to expose the physics models utilised, to handle complex geometries, and to enable its easy adaptation for optimal use in different sets of applications. The toolkit is the result of a worldwide collaboration of physicists and software engineers. It has been created exploiting software engineering and object-oriented technology and implemented in the C++ programming language. It has been used in applications in particle physics, nuclear physics, accelerator design, space engineering and medical physics."
 }
 
-@software{FreeCAD,
-title = "Free{CAD}",
+@misc{FreeCAD,
+title = "Free{CAD} (Version 0.19)",
+author = "{The FreeCAD Team}",
 url = "https://www.freecadweb.org",
+year = {2020},
 }
 
-@software{OpenCASCADE,
+@misc{OpenCASCADE,
 title = "Open{CASCADE}",
+author = "{Open Cascade S.A.S}",
 url = "https://www.opencascade.com",
+year = {2020},
 }
 
 @book{VTK4,
@@ -67,7 +78,7 @@ url = "https://www.opencascade.com",
 }
 
 @article{BDSIM_Nevay,
-title = "BDSIM: An accelerator tracking code with particle–matter interactions",
+title = "{BDSIM}: An accelerator tracking code with particle–matter interactions",
 journal = "Computer Physics Communications",
 volume = "252",
 pages = "107200",
@@ -94,7 +105,7 @@ Program Title: BDSIM Program Files doi: http://dx.doi.org/10.17632/bzg5hc65h6.1 
 }
 
 @article{GUIMesh_Pinto,
-title = "{GUI}Mesh: A tool to import {STEP} geometries into Geant4 via {GDML}",
+title = "{GUI}Mesh: A tool to import {STEP} geometries into {Geant4} via {GDML}",
 journal = "Computer Physics Communications",
 volume = "239",
 pages = "150 - 156",
@@ -109,32 +120,62 @@ Program Summary
 Program Title: GUIMesh Program Files doi: http://dx.doi.org/10.17632/c3c9xbspzp.1 Licensing provisions: GNU General Public License 3 (GPLv3) Programming language: Python Nature of problem: No open-source software allows to import STEP geometries intro Geant4, one of the most powerful toolkits to simulate radiation interaction with matter. Since CAD software is extensively used in the design of particle and radiation detection instruments, it is highly desirable for physicists that STEP geometries can be imported to Geant4 with little effort instead of having to code structures made of a very large number of solid volumes which are difficult to accurately reproduce with Geant4 C++ classes. Solution method: STEP geometries are converted to tessellated volumes (with some margin of error) using FreeCAD libraries. A Python script then writes GDML files based on the results allowing users to import these geometries with Geant4. A graphical user interface provides several options to the user, including material assignment and mesh precision setting for each volume."
 }
 
-@software{ESABASE2,
-title = "{ESABASE2}",
-url = "https://esabase2.net/product/",
+@inproceedings{ESABASE2,
+  Title={Recent Extensions Of The {ESABASE2} / Debris Impact Risk Assessment Tool},
+  author={A. Miller and M. Zaake and F. Gro{\ss}mann-ruh and K. Bunte and M. Millinger and G. Drolshagen},
+  year={2017},
+  booktitle={Proceedings of the 7th European Conference on Space Debris}
 }
 
-@software{FASTRAD,
-title = "{FASTRAD}",
-url = "https://www.fastrad.net",
+
+@INPROCEEDINGS{FASTRAD,
+  author={P. {Pourrouquet} and J. {Thomas} and P. {Peyrard} and R. {Ecoffet} and G. {Rolland}},
+  booktitle={2011 IEEE Radiation Effects Data Workshop},
+  title={FASTRAD 3.2: Radiation Shielding Tool with a New Monte Carlo Module},
+  year={2011},
+  volume={},
+  number={},
+  pages={1-5},
+  }
+
+@article{DAGMC,
+title = "Acceleration techniques for the direct use of {CAD}-based geometry in fusion neutronics analysis",
+journal = "Fusion Engineering and Design",
+volume = "85",
+number = "10",
+pages = "1759 - 1765",
+year = "2010",
+note = "Proceedings of the Ninth International Symposium on Fusion Nuclear Technology",
+issn = "0920-3796",
+doi = "https://doi.org/10.1016/j.fusengdes.2010.05.030",
+url = "http://www.sciencedirect.com/science/article/pii/S0920379610002425",
+author = "Paul P.H. Wilson and Timothy J. Tautges and Jason A. Kraftcheck and Brandon M. Smith and Douglass L. Henderson",
+keywords = "Fusion neutronics, CAD-based analysis, Software development",
+abstract = "The Direct Accelerated Geometry Monte Carlo (DAGMC) software library offers a unique approach to performing neutronics analysis on CAD-based geometries of fusion systems. By employing a number of acceleration techniques, the ray-tracing operations that are fundamental to Monte Carlo radiation transport are implemented efficiently for direct use on the CAD-based solid model, eliminating the need to translate to the native Monte Carlo input language. By forming hierarchical trees of oriented bounding boxes, one for each facet that results from a high-fidelity tessellation of the model, the ray-tracing performance is adequate to permit detailed analysis of large complex systems. In addition to the reduction in human effort and improvement in quality assurance that is found in the translation approaches, the DAGMC approach also permits the analysis of geometries with higher order surfaces that cannot be represented by many native Monte Carlo radiation transport tools. The paper describes the various acceleration techniques and demonstrates the resulting capability in a real fusion neutronics analysis."
 }
 
-@software{DAGMC,
-title = {DAGMC: Direct Accelerated Geometry Monte Carlo},
-url = {http://svalinn.github.io/DAGMC/},
+@article{McCad,
+title = "Improved algorithms and advanced features of the {CAD} to {MC} conversion tool {McCad}",
+journal = "Fusion Engineering and Design",
+volume = "89",
+number = "9",
+pages = "1885 - 1888",
+year = "2014",
+note = "Proceedings of the 11th International Symposium on Fusion Nuclear Technology-11 (ISFNT-11) Barcelona, Spain, 15-20 September, 2013",
+issn = "0920-3796",
+doi = "https://doi.org/10.1016/j.fusengdes.2014.05.015",
+url = "http://www.sciencedirect.com/science/article/pii/S0920379614003858",
+author = "L. Lu and U. Fischer and P. Pereslavtsev",
+keywords = "McCad, Decomposition, Void filling, MCNP",
+abstract = "McCad is a geometry conversion tool developed at KIT to enable the automatic bi-directional conversions of CAD models into the Monte Carlo (MC) geometries utilized for neutronics calculations (CAD to MC) and, reversed (MC to CAD), for visualization purposes. The paper presents the latest improvements of the conversion algorithms including improved decomposition, void filling and an advanced interface for the materials editing and assignment. The new implementations and features were tested on fusion neutronics applications to the DEMO and ITER NBI (Neutral Beam Injector) models. The results demonstrate greater stability and enhanced efficiency of McCad conversion process."
 }
 
-@software{McCad,
-title = "{McCad}",
-url = "https://github.com/inr-kit",
-}
-
-@software{InStep,
+@misc{InStep,
 title = "{I}n{S}tep",
 url = "https://www.solveering.com/InStep/instep.aspx",
 }
 
-@software{CADMC,
+@misc{CADMC,
 title = "(CADMC)",
 url = "http://polar.psi.ch/cadmc/",
 }
@@ -144,27 +185,33 @@ url = "http://polar.psi.ch/cadmc/",
     title = {{A CAD Interface for GEANT4}},
     journal={Australasian Physical \& Engineering Science in Medicine},
     year = 2012,
-    month = September,
+    month = "September",
     doi = {10.1007/s13246-012-0159-8},
     url = {http://www.springerlink.com/content/u563877422284578}
 }
 
-@book{10.5555/2501720, 
-author = {Parr, Terence}, 
-title = {The Definitive ANTLR 4 Reference}, 
-year = {2013}, 
+@book{10.5555/2501720,
+author = {Parr, Terence},
+title = {The Definitive ANTLR 4 Reference},
+year = {2013},
 isbn = {1934356999},
-publisher = {Pragmatic Bookshelf}, 
-edition = {2nd}, 
-abstract = {Programmers run into parsing problems all the time. Whether it's a data format like JSON, a network protocol like SMTP, a server configuration file for Apache, a PostScript/PDF file, or a simple spreadsheet macro language--ANTLR v4 and this book will demystify the process. ANTLR v4 has been rewritten from scratch to make it easier than ever to build parsers and the language applications built on top. This completely rewritten new edition of the bestselling Definitive ANTLR Reference shows you how to take advantage of these new features. Build your own languages with ANTLR v4, using ANTLR's new advanced parsing technology. In this book, you'll learn how ANTLR automatically builds a data structure representing the input (parse tree) and generates code that can walk the tree (visitor). You can use that combination to implement data readers, language interpreters, and translators. You'll start by learning how to identify grammar patterns in language reference manuals and then slowly start building increasingly complex grammars. Next, you'll build applications based upon those grammars by walking the automatically generated parse trees. Then you'll tackle some nasty language problems by parsing files containing more than one language (such as XML, Java, and Javadoc). You'll also see how to take absolute control over parsing by embedding Java actions into the grammar. You'll learn directly from well-known parsing expert Terence Parr, the ANTLR creator and project lead. You'll master ANTLR grammar construction and learn how to build language tools using the built-in parse tree visitor mechanism. The book teaches using real-world examples and shows you how to use ANTLR to build such things as a data file reader, a JSON to XML translator, an R parser, and a Java class-interface extractor. This book is your ticket to becoming a parsing guru!What You Need: ANTLR 4.0 and above. Java development tools. Ant build system optional (needed for building ANTLR from source)} 
+publisher = {Pragmatic Bookshelf},
+edition = {2nd},
+abstract = {Programmers run into parsing problems all the time. Whether it's a data format like JSON, a network protocol like SMTP, a server configuration file for Apache, a PostScript/PDF file, or a simple spreadsheet macro language--ANTLR v4 and this book will demystify the process. ANTLR v4 has been rewritten from scratch to make it easier than ever to build parsers and the language applications built on top. This completely rewritten new edition of the bestselling Definitive ANTLR Reference shows you how to take advantage of these new features. Build your own languages with ANTLR v4, using ANTLR's new advanced parsing technology. In this book, you'll learn how ANTLR automatically builds a data structure representing the input (parse tree) and generates code that can walk the tree (visitor). You can use that combination to implement data readers, language interpreters, and translators. You'll start by learning how to identify grammar patterns in language reference manuals and then slowly start building increasingly complex grammars. Next, you'll build applications based upon those grammars by walking the automatically generated parse trees. Then you'll tackle some nasty language problems by parsing files containing more than one language (such as XML, Java, and Javadoc). You'll also see how to take absolute control over parsing by embedding Java actions into the grammar. You'll learn directly from well-known parsing expert Terence Parr, the ANTLR creator and project lead. You'll master ANTLR grammar construction and learn how to build language tools using the built-in parse tree visitor mechanism. The book teaches using real-world examples and shows you how to use ANTLR to build such things as a data file reader, a JSON to XML translator, an R parser, and a Java class-interface extractor. This book is your ticket to becoming a parsing guru!What You Need: ANTLR 4.0 and above. Java development tools. Ant build system optional (needed for building ANTLR from source)}
 }
 
-@software{GDML,
-title= {Geometry Description Markup Language (GDML)},
-url = {https://gdml.web.cern.ch/GDML/},
+@article{GDML,
+  title={{Geometry Description Markup Language} for physics simulation and analysis applications},
+  author={Chytracek, Radovan and McCormick, Jeremy and Pokorski, Witold and Santin, Giovanni},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={53},
+  number={5},
+  pages={2892--2896},
+  year={2006},
+  publisher={IEEE}
 }
 
-@software{fons_rademakers_2019_3895860,
+@misc{fons_rademakers_2019_3895860,
   author       = {Fons Rademakers and
                   Philippe Canal and
                   Axel Naumann and
@@ -195,7 +242,7 @@ url = {https://gdml.web.cern.ch/GDML/},
                   Xavier Valls and
                   Raphael Isemann},
   title        = {root-project/root: v6.18/02},
-  month        = aug,
+  month        = August,
   year         = 2019,
   publisher    = {Zenodo},
   version      = {v6-18-02},
@@ -203,12 +250,13 @@ url = {https://gdml.web.cern.ch/GDML/},
   url          = {https://doi.org/10.5281/zenodo.3895860}
 }
 
-@software{pycsg,
+@misc{pycsg,
   author = {Tim Knip},
-  title = {Pycsg},
+  title = {pycsg},
+  year=2016,
   url ={"https://github.com/timknip/pycsg"},
 }
- 
+
 @misc{pybind11,
    author = {Wenzel Jakob and Jason Rhinelander and Dean Moldovan},
    year = {2017},
@@ -247,10 +295,10 @@ url = {https://gdml.web.cern.ch/GDML/},
 }
 
 @article{10.7717/peerj-cs.103,
- title = {SymPy: symbolic computing in Python},
+ title = {{SymPy}: symbolic computing in Python},
  author = {Meurer, Aaron and Smith, Christopher P. and Paprocki, Mateusz and \v{C}ert\'{i}k, Ond\v{r}ej and Kirpichev, Sergey B. and Rocklin, Matthew and Kumar, AMiT and Ivanov, Sergiu and Moore, Jason K. and Singh, Sartaj and Rathnayake, Thilina and Vig, Sean and Granger, Brian E. and Muller, Richard P. and Bonazzi, Francesco and Gupta, Harsh and Vats, Shivam and Johansson, Fredrik and Pedregosa, Fabian and Curry, Matthew J. and Terrel, Andy R. and Rou\v{c}ka, \v{S}t\v{e}p\'{a}n and Saboo, Ashutosh and Fernando, Isuru and Kulal, Sumith and Cimrman, Robert and Scopatz, Anthony},
  year = 2017,
- month = jan,
+ month = January,
  keywords = {Python, Computer algebra system, Symbolics},
  abstract = {
             SymPy is an open source computer algebra system written in pure Python. It is built with a focus on extensibility and ease of use, through both interactive and programmatic applications. These characteristics have led SymPy to become a popular symbolic library for the scientific Python ecosystem. This paper presents the architecture of SymPy, a description of its features, and a discussion of select submodules. The supplementary material provide additional examples and further outline details of the architecture and features of SymPy.
@@ -265,8 +313,8 @@ url = {https://gdml.web.cern.ch/GDML/},
 
 @ARTICLE{6769983,
   author={E. J. {McCluskey}},
-  journal={The Bell System Technical Journal}, 
-  title={Minimization of Boolean functions}, 
+  journal={The Bell System Technical Journal},
+  title={Minimization of {Boolean} functions},
   year={1956},
   volume={35},
   number={6},
@@ -282,7 +330,7 @@ url = {https://gdml.web.cern.ch/GDML/},
   pages={82},
   year={2020},
   }
-  
+
  @article{DavisNIMA915-65,
 title = "{F}lu{DAG}: {A} {CAD} based tool for high energy physics",
 journal = "Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment",
@@ -298,18 +346,18 @@ abstract = "As part of the expansion of the Direct Accelerated Geometry Monte Ca
 }
 
 @article{LuFusionEngineeringAndDesign124-2017,
-title = "{I}mproved solid decomposition algorithms for the {CAD}-to-{MC} conversion tool {M}c{C}ad",
-author = {Lei Lu and Yuefeng Qiu and Ulrich Fischer},
+title = "Improved solid decomposition algorithms for the {CAD-to-MC} conversion tool {McCad}",
 journal = "Fusion Engineering and Design",
+author = "Lu, Lei and Qiu, Yuefeng and Fischer, Ulrich",
 volume = "124",
 year = "2017",
 pages = "1269 - 1272",
 }
 
-@software{Geant4MaterialDB,
-title = "{G}eant4 {M}aterial {D}atabase",
+@misc{Geant4MaterialDB,
+title = "The {G}eant4 {M}aterial {D}atabase",
+author = "The Geant4 Collaboration",
 url = "http://geant4-userdoc.web.cern.ch/geant4-userdoc/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#nist-compounds",
+  year=2020,
+
 }
-
-
-
