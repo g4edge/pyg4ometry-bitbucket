@@ -89,7 +89,7 @@
 \newcommand{\fluka}[1]{\texttt{\MakeUppercase{#1}}}
 \newcommand{\PYGEOMETRY}{\textsc{Pyg4ometry}}
 
-
+% Python
 % part features
 % part assembly
 % physical volume
@@ -200,7 +200,7 @@ error prone and time consuming task. Simulating a system often requires geometry
 environments, including a range of MCRT codes and Computer-aided Design (CAD) tools. \PYGEOMETRY{} is a Python library 
 that enables users to rapidly create, manipulate, display, read and write Geometry Description Markup Language (GDML) based 
 geometry used in simulations. \PYGEOMETRY{} provides import of CAD files to GDML tessellated solids, conversion of GDML geometry 
-to FLUKA and conversely from FLUKA to GDML. The implementation of \PYGEOMETRY{} is explained in detail along with 
+to FLUKA and conversely from FLUKA to GDML. The implementation of \PYGEOMETRY{} is explained in detail along with small  
 examples. The paper concludes with a complete example using most of the \PYGEOMETRY{} features and a discussion of 
 extensions and future work.
 \end{abstract}
@@ -1287,11 +1287,11 @@ the \PYGEOMETRY{} online manual.
 \section{Quality assurance}
 The source and manual code for \PYGEOMETRY{} is stored in a git repository (\url{https://bitbucket.org/jairhul/pyg4ometry}), 
 where a public issue tracker for users is hosted to report problems or bugs with the code. The manual is created using Sphinx a 
-Python documentation generator. \PYGEOMETRY{} uses mature packages available for Python as dependencies. 
-\PYGEOMETRY{} has  two submodules that require compilation \pyinline{pyg4ometry.pycsg} and \pyinline{pyg4ometry.pycgal} 
-in C/C++. \PYGEOMETRY{}, package dependencies and extensions are installed using \pyinline{setuptools}. All aspects of 
-\PYGEOMETRY{} are routinely checked using unit tests, of which 543 tests are available for the code, which have 84\% coverage. 
-The unit tests also serve as minimal examples to help users understand the code operation.
+Python documentation generator (\url{Monte Carlo Radiation Transport (MCRT)}). \PYGEOMETRY{} uses mature packages 
+available for Python as dependencies. \PYGEOMETRY{} has  two submodules that require compilation \pyinline{pyg4ometry.pycsg} 
+and \pyinline{pyg4ometry.pycgal} in C/C++. \PYGEOMETRY{}, package dependencies and extensions are installed using 
+\pyinline{setuptools}. All aspects of \PYGEOMETRY{} are routinely checked using unit tests, of which 543 tests are available 
+for the code, which have 84\% coverage. The unit tests also serve as minimal examples to help users understand the code operation.
 
 \section{Conclusions and discussion}
 The authors believe that tools to quickly create, either ab initio or by conversion geometry usable in Monte Carlo
