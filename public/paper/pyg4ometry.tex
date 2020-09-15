@@ -101,6 +101,7 @@
 % API
 % AST 
 % BREP (not B-REP)
+% region 
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -920,7 +921,7 @@ specialisation in particular would be worth implementing.
 
 \section{GDML to FLUKA conversion}
 It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 
-solids can be mapped to a FLUKA \verb|REGION|. Some solids in Geant4 directly map to 
+solids can be mapped to a FLUKA region. Some solids in Geant4 directly map to 
 a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
 lists the mapping between Geant4 solids and the bodies used to compose a FLUKA region.
 A region is a region of space which is formed of bodies and the operators $+$ (intersection), $-$ 
@@ -942,7 +943,7 @@ viewed in FLAIR. The example is a sector bend dipole electromagnet.}
 \begin{table}[hbt!]
 \centering
 \begin{tabular}{ l  l  } \hline
-Geant4 solid			& FLUKA region constuction		\\ \hline
+Geant4 solid			& FLUKA region construction		\\ \hline
 Box					& +2 XYP + 2 XZP + 2 YZP 		\\
 Tube					& +ZCC - 2 PLA -2 XYP - ZCC	 	\\
 CutTube				& +ZCC - 4 PLA -ZCC			\\
@@ -1034,18 +1035,18 @@ Nef polyhedra \colorbox{yellow}{CITEXXX} and decomposed to convex polyhedra usin
 \colorbox{yellow}{CITEXXX} algorithm. 
 
 \subsection{Disjunctive normal form and degenerate surfaces}
-Typically FLUKA will decompose a \verb|REGION| into disjunctive normal form (DNF), this normal form is 
+Typically FLUKA will decompose a region into disjunctive normal form (DNF), this normal form is 
 characterised as the union of intersections, so 
 \begin{equation}
 R = z_1 \; | \;z_2\;  | \; z_3 	\; | \; z_4 \dots
 \end{equation}
-Defining \verb|REGION|s in terms of DNF allows the rapid test if a point is inside. Testing each zone 
+Defining regions in terms of DNF allows the rapid test if a point is inside. Testing each zone 
 $z_i$ of $R$ can terminate if a point is determined to be inside any of the convex zones $z_i$. In general 
 Equation~\ref{eqn:logicalSubtraction} does not have the form of a DNF. If there are many levels of logical-physical volume 
 placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of 
 parentheses. There are some conditions where a general Boolean expression can yield an exponential 
 explosion of the final DNF. There are well known algorithms to convert logical expressions to a DNF. 
-\PYGEOMETRY{} can simplify parentheses from a \verb|REGION| by creating a sympy~\cite{10.7717/peerj-cs.103} 
+\PYGEOMETRY{} can simplify parentheses from a region by creating a sympy~\cite{10.7717/peerj-cs.103} 
 expression and using its \verb|logical| module \verb|to_dnf| method based on the Quine–McCluskey algorithm~\cite{6769983}. 
 Before version 4.0 FLUKA  would simplify all regions to DNF and some converted geometry would generate 
 too many zones and would fail. FLUKA version 4 allows control of the DNF expansion.
@@ -1167,14 +1168,13 @@ how \PYGEOMETRY{} can load step files.
 Compared to other file readers, two additional steps are required \pyinline{relabelModel} and \pyinline{convertFlat}. CAD model 
 part names can contain characters which are not allowed in Python dictionaries so need to be replaced by \pyinline{relabelModel}. 
 CAD models might also have a hierarchy of parts and assemblies, these are converted without this structure by \pyinline{convertFlat}.
+In general there is no requirement to avoid geometric overlap  of parts in a CAD file. This will result in overlaps of the solids in 
+the converted tessellated solids. This is avoided by shrinking each solid, this is done by computing the a normal ${\bf n}$  for each 
+vertex ${\bf v}$ and shifting its position by $\epsilon {\bf n}$, so the new vertices are ${\bf v} - \epsilon {\bf n}$. The degree of shrinking 
+is user controllable. 
 
 An example geometry representing a dipole electromagnet, consisting of three parts was created in Autodesk Fusion 360
 and saved as a STEP file, \PYGEOMETRY{} produces the output in Figure~\ref{fig:cad-gdml}.
-
-\begin{enumerate}
-\item Mesh overlap and shrinking algorithm 
-\item Surface conversion and decomposition algorithm (future release)
-\end{enumerate}
 
 \section{Complete simulation example}
 \PYGEOMETRY{} is designed to be as flexible as possible and offer the user a wide range of usage styles, input files 
@@ -1239,7 +1239,7 @@ on conversion from a primary format and then create conversions to another forma
 the creation of geometry using \PYGEOMETRY{}, that geometry is loaded into Geant4, FLAIR and FLUKA but detailed 
 studies of the MCRT simulation performance is beyond the scope of this publication and will be addressed in the future.
 
-There are many {\bf output format extensions} that can be considered for \PYGEOMETRY{}. 
+There are many output format extensions that can be considered for \PYGEOMETRY{}. 
 Geant4 geometry is primarily created by writing C++ programmes, so a output writer that 
 converts the \PYGEOMETRY() in memory representation to C++ will allow rapid geometry 
 modelling but . This is not implemented in the current version but could be relatively quickly implemented
@@ -1247,7 +1247,7 @@ for users that require this functionality. At present \PYGEOMETRY{} supports rea
 Geant4 and FLUKA type files but could be extended without significant effort to other MCRT codes 
 like MCNP. 
 
-There are more {\bf complex extensions} that can be considered for inclusion into \PYGEOMETRY{}.
+There are more complex extensions that can be considered for inclusion into \PYGEOMETRY{}.
 The meshes created by \PYGEOMETRY{} are generally of very high quality and can be used for a 
 wide range of applications. An idea already being developed is the export of the geometry mesh data to
 data formats used in augmented or virtual reality software to create interactive visualisations of MCRT 
@@ -1256,13 +1256,13 @@ liquid noble dark matter detectors. Paraview/VTK are being standard software for
 the ability to write geometry to formats readily loaded and manipulated by these programs will 
 significantly aid the presentation of geometry along with the results of the MCRT simulations.
 
-\PYGEOMETRY{} is principally a toolkit but various {\bf visualisation and user interface extensions} would 
+\PYGEOMETRY{} is principally a toolkit but various visualisation and user interface extensions would 
 significantly aid geometry creation workflows. A graphical frontend interface (GUI) so a user could create 
 geometry without any programming knowledge would expand the number of potential users. \PYGEOMETRY{}
 has been designed to interface with a GUI in a relatively straightforward manner. The VTK visualiser currently 
 limits the display of very large models as geometry instances are replicated opposed to reused in visualisation. 
 
-The {\bf conversion} which would most dramatically enhance the creation of geometry is CAD to Geant4/FLUKA
+The conversion which would most dramatically enhance the creation of geometry is CAD to Geant4/FLUKA
 without use use of a triangular or tetrahedral mesh. There are methods to decompose BREP solids to Geant4 and 
 FLUKA like CSG geometry \colorbox{yellow}{CITEXXX MCCAD}. The FreeCAD/OpenCASCADE interface
 combined with the Geant4 and FLUKA Python API present in \PYGEOMETRY{} will allow for the creation 
