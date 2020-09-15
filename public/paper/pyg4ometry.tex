@@ -223,7 +223,7 @@ Geant; FLUKA; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry;
 {\em Program Title: PYG4OMETRY }                                         		\\
 {\em Licensing provisions: GPLv3 }							\\
 {\em Programming language: Python, C/C++}                         		\\
-{\em External routines/libraries: ANTLR, CGAL, FreeCAD, OpenCascade, sympy, VTK}           	\\
+{\em External routines/libraries: ANTLR, CGAL, FreeCAD, OpenCascade, SymPy, VTK}           	\\
 
 %{\em Supplementary material:}                                 				\\
   % Fill in if necessary, otherwise leave out.
@@ -340,12 +340,12 @@ Geant4 also provides the ability to perform Boolean operations on these primitiv
 Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\em logical volumes} 
 and {\em physical volumes}. A logical volume is a region of space that is defined by an outer solid but also other attributes like material, magnetic field 
 and zero or more physical {\em daughter} physical volumes. A physical volume is a placement (or instance) of a logical volume. This design permits large reuse 
-of objects, minismising memory footprint for largely repetitive structures such as detectors that Geant4 was created to simulate.  
+of objects, minimising memory footprint for largely repetitive structures such as detectors that Geant4 was created to simulate.  
 
 %%%%%%%%%%%%%%%%% FLUKA geometry
 
 %%%%%%%%%%%%%%%%% Geant Detector Mark-up Language
-To exchange geometry descriptions between software packages the Geometry Descripition Mark-up Language (GDML) was developed~\cite{GDML}. 
+To exchange geometry descriptions between software packages the Geometry Description Mark-up Language (GDML) was developed~\cite{GDML}. 
 GDML is an XML-based description of Geant4 geometry description. Geant4 and ROOT~\cite{fons_rademakers_2019_3895860} can read and write 
 GDML format and it is commonly used as an exchange format for Geant4 geometries. 
 
@@ -536,30 +536,41 @@ share a face. If the resulting intersection is non-null then the overlaps can be
 \end{center}
 \end{figure} 
 
-\begin{algorithm}[h]
-  \SetKwFunction{Intersect}{Intersect}
-  \SetAlgoLined
-  \KwIn{Logical volume mesh $m$ with daughter volume meshes $d\in D$.}
-  \KwResult{Set, $S$, of overlapping pairs of meshes.}
-$V \longleftarrow \emptyset$\;
-$S \longleftarrow \emptyset$\;
-\For{$d_1 \in D$}{
-  \If{\Intersect{$d_1, m$}}{
-    $S \longleftarrow S \cup \{(d_1, m)\}$\;
-    }
-\For{$d_2 \in D$}{
- \If{$d_1 = d_2$ {\bf or} $(d_2, d_1) \in V$}{
-  continue\;
-}
-\If{\Intersect{$d_1, d_2$}}{
-  $S \longleftarrow S \cup \{(d_1, d_2)\}$\;
-}
-$V \longleftarrow V \cup \{(d_1, d_2)\}$\;
-}
-}
 
-\label{algo:overlap}
-\caption{The overlap checking algorithm employed in \PYGEOMETRY{}.}
+\begin{algorithm}[h]
+  \SetKwProg{Int}{Function}{}{}
+  \SetKwFunction{Intersection}{Intersection}%
+  \SetKwProg{OCheck}{Function}{}{}
+  \KwData{Logical volume $v$ with mesh $m$ and daughter volume meshes $d\in D$.}
+  \KwResult{Set $S$ of non-null mesh intersections.}
+  
+  % Define the function used in the algorithm
+  \Int{\Intersection{$n_1, n_2$}}{
+    \KwData{CSG meshes $n_1$ and $n_2$.}
+    \KwResult{The mesh intersection of $n_1$ and $n_2$.}
+  }
+  % The actual algorithm
+  $V \longleftarrow \emptyset$\tcp*[r]{Cache tried mesh pairs.}
+  $S \longleftarrow \emptyset$\;
+  
+  \For{$d_1 \in D$}{
+    $p \longleftarrow$ \Intersection{$m,d_1$}\;
+    \If{$p$ is not null}{
+      $S \longleftarrow S \cup \{p\}$\;
+    }
+    \For{$d_2 \in D$}{
+      \If{$d_1 = d_2$ {\bf or} $(d_2, d_1) \in V$}{
+        \textbf{continue}\;
+      }
+      $q \longleftarrow \Intersection{a,b}$\;
+      \If{$q$ is not null}{
+        $S \longleftarrow S \cup \{q\}$\;
+      }
+      $V \longleftarrow V \cup \{(d_1, d_2)\}$\;
+    }
+  }
+  \label{algo:overlap}
+  \caption{The overlap checking algorithm employed in \PYGEOMETRY{}.}
 \end{algorithm}
 
 Overlap detection in \PYGEOMETRY{} relies of the meshes generated for each solid, 
@@ -579,7 +590,7 @@ Given the Python scripting interface, expression  and tessellation engines it is
 the parameters of the geometry and visualise it.  When a user has achieved the desired geometry, without geometry overlaps, a GDML file can be written to disk 
 from the internal memory representation. Some example code is presented in Listing~\ref{lst:pythonRapidModelling}. The structure should be familiar to regular 
 users of Geant4 or GDML, apart from the new class described in the previous section called the \pyinline{Registry}. First the \verb|Registry| is created to store all 
-the \PYGEOMETRY{} objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geomtery can be saved 
+the \PYGEOMETRY{} objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geometry can be saved
 as a GDML file or visualised using VTK.
 
 \begin{lstlisting}[caption={A simple Python script using \PYGEOMETRY{} to create a simple Geant4 geometry.},label={lst:pythonRapidModelling}, language=Python]
@@ -679,8 +690,8 @@ union of one or more zones, as well as a material.
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=0.9\columnwidth]{./model-scene/faradayCup2.pdf}
-\caption{Example conversion of a simple FLUKA geometry to GDML. Left panel:
-the original FLUKA geometry displayed in FLAIR. Right panel: the GDML geometry
+\caption{Example conversion of a simple FLUKA geometry to GDML. Above:
+the original FLUKA geometry displayed in flair. Below: the GDML geometry
 viewed in \PYGEOMETRY{}. The example is a Faraday cup used to capture
 and measure accelerator beam charge.}
 \label{fig:fluka-to-geant4-cup}
@@ -792,13 +803,65 @@ space is defined as one which has no affect on the topology of the
 final Boolean solid.  Whilst this may be true of arbitrary bodies, it
 is most problematic for half spaces as after the infinite-body
 reduction has been performed, if the half-space is far away from the
-region's AABB, then it can result in a malformed Boolean.  This is
-demonstrated in Figure~\ref{fig:redundant-halfspace}.  Such
+region's AABB, then it can result in a malformed Boolean.  This algorithm is
+demonstrated in Algorithm~\ref{algo:redundant-halfspace}.  Such
 half-spaces are filtered from their respective regions during the
 conversion process by calculating the nearest distance from the centre
 of the AABB to the half-space face.  If this distance is greater than
 the centre-to-corner distance of the AABB, then that half-space is
 removed from the region during conversion.
+
+\begin{algorithm}
+
+  \KwData{FLUKA regions to be converted to GDML.}
+  \KwResult{GDML solids equivalent to the FLUKA regions built from
+    minimally-sized primitive solids}
+
+  \SetKwProg{ToGDML}{Function}{}{}
+  \SetKwFunction{ToGDMLSolid}{ToGDMLSolid}
+
+  % The function for translating a fluka body to a finite GDML solid.
+  \ToGDML{\ToGDMLSolid{$b, a$}}{
+    \KwData{FLUKA body $b$ with axis-aligned bounding box $a$.}
+    \KwResult{GDML solid equivalent to $b$ bounded by the volume $a$.}
+  }
+
+  \SetKwProg{RAABB}{Function}{}{}
+  \SetKwFunction{RegionAABB}{RegionAABB}
+  % The function for translating a fluka body to a finite GDML solid.
+  \RAABB{\RegionAABB{$r$}}{
+    \KwData{FLUKA region $r$.}
+    \KwResult{Axis-aligned bounding box (AABB) of the FLUKA region.}
+  }
+
+  $ B \longleftarrow \emptyset$\tcp*[r]{Map of regions to AABBs.}
+  \For{$r$ in regions to be converted}{
+    $B[r] \longleftarrow$ \RegionAABB{$r$}
+  }
+
+  \tcp{Map of bodies to minimal bounding boxes.}
+  $ E \longleftarrow \emptyset$\;
+  \For{$b$ in bodies in regions to be converted}{
+    \For{$r$ in regions in which body $b$ is used}{
+      $E[b] \longleftarrow E[b] \cup $ \RegionAABB($r$)\;
+    }
+  }
+
+  $ G \longleftarrow \emptyset$ \;
+  \For{body $b$ and AABB $a$ in $E$}{
+    \tcp{Map the fluka bodies to minimal GDML solids by converting with the
+    minimal AABB, $a$.}
+    $G \longleftarrow $ \ToGDMLSolid{$b, a$}\;
+  }
+  \For{$r$ in regions to be converted}{
+    build the corresponding GDML for $r$ from the set of minimal GDML
+    primitives in $G$.\;
+  }
+
+  \label{algo:overlap}
+  \caption{The infinite-body minimisation algorithm employed in the
+    conversion of Fluka to GDML.}
+\end{algorithm}
 
 \subsection{Coplanar faces}
 Coplanar faces, in which the faces of two union components or that of
@@ -933,9 +996,9 @@ sphere (SPH), truncated right-angle cone (TRC) and general quadric surface (QUA)
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.9\columnwidth]{./model-scene/CuboidalChamber.pdf}
-\caption{Example conversion of a simple GDML geometry to FLUKA, left panel:  
-the original model in \PYGEOMETRY{}, right panel: the converted FLUKA geometry 
-viewed in FLAIR. The example is a sector bend dipole electromagnet.}
+\caption{Example conversion of a simple GDML geometry to FLUKA, above:
+the original model in \PYGEOMETRY{}, below: the converted FLUKA geometry
+viewed in flair. The example is a sector bend dipole electromagnet.}
 \label{fig:gdml-flair}
 \end{center}
 \end{figure}
@@ -962,7 +1025,7 @@ Elcone				& +QUA - 2 XYP				\\
 Paraboloid			& +QUA - 2 XYP				\\
 Hype					& +QUA - QUA - 2 XYP			\\
 Tet					& +4 PLA						\\
-Xtru					& +$N_{\rm plane} N_{\rm point}$ PLA \\
+Xtru					& +$N$ PLA \\
 TwistedBox			& +$N$ PLA					\\
 TwistedTtap			& +$N$ PLA					\\
 TwistedTrd			& +$N$ PLA				 	\\
@@ -1009,7 +1072,7 @@ VTK visualisation already described in Section~\ref{sec:visualisation}.
 
 In FLUKA every single space point needs to be associated with one and only one region. There is problem 
 when converting Geant4 logical volumes to FLUKA regions, as the logical volume outer solid $S_{\rm logical}$ 
-need to have the daughter  solids $S_{{\rm daugher},i}$ subtracted. So a solid which can be converted 
+need to have the daughter  solids $S_{{\rm daughter},i}$ subtracted. So a solid which can be converted 
 to a region $S_{\rm region}$ is then 
 \begin{equation}
 S_{\rm region} =  S_{\rm logical} - S_{\rm daughter,1} - S_{\rm daughter,2} - S_{\rm daughter,3} \ldots 
@@ -1046,7 +1109,7 @@ Equation~\ref{eqn:logicalSubtraction} does not have the form of a DNF. If there 
 placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of 
 parentheses. There are some conditions where a general Boolean expression can yield an exponential 
 explosion of the final DNF. There are well known algorithms to convert logical expressions to a DNF. 
-\PYGEOMETRY{} can simplify parentheses from a region by creating a sympy~\cite{10.7717/peerj-cs.103} 
+\PYGEOMETRY{} can simplify parentheses from a region by creating a SymPy~\cite{10.7717/peerj-cs.103} 
 expression and using its \verb|logical| module \verb|to_dnf| method based on the Quine–McCluskey algorithm~\cite{6769983}. 
 Before version 4.0 FLUKA  would simplify all regions to DNF and some converted geometry would generate 
 too many zones and would fail. FLUKA version 4 allows control of the DNF expansion.
@@ -1075,7 +1138,7 @@ simulation results. The conversion described still requires a user to
 understand how geometry is specified in both Geant4 and FLUKA. For 
 example the subtraction of many non-primitive body daughter volumes from 
 a mother will create a very complex non-DNF region which is inefficient when viewed in 
-FLAIR and used for simulation in FLUKA. A geometry designer can avoid this by 
+flair and used for simulation in FLUKA. A geometry designer can avoid this by
 restricting daughter volumes solids in Geant4 that can be expressed in DNF simply,
 for example a cuboid.  If \PYGEOMETRY{} is used during the creation of
  geometry then multiple codes can be targeted without additional user effort. 
@@ -1140,9 +1203,9 @@ as with the other file readers.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.9\columnwidth]{./model-scene/SectorBend.pdf}
-\caption{Example conversion of a simple CAD (STEP) geometry (sector bend dipole electromagnet) to GDML, left panel:  
-the original model in FreeCAD, right panel: the GDML geometry 
-viewed in \PYGEOMETRY{}. }
+\caption{Example conversion of a simple CAD (STEP) geometry (sector bend
+  dipole electromagnet) to GDML, above: the original model in FreeCAD,
+  below: the GDML geometry viewed in \PYGEOMETRY{}. }
 \label{fig:cad-gdml}
 \end{center}
 \end{figure}
@@ -1183,7 +1246,7 @@ and workflows. A fictitious beam line was created to demonstrate the capabilitie
 {\it scene} which consists of the different examples presented in this paper. The beam line consists of a vacuum chamber 
 (modelled in \PYGEOMETRY{}), a vacuum gate value (STL from the manufacturer), a triplet of quadrupole magnets (exported 
 from BDSIM), a sector bend dipole electromagnet (created in Autodesk Fusion 360) and finally a Faraday cup (modelled in 
-Flair). Each different file is loaded using \PYGEOMETRY{} reader class and the placed as a physical volume. The final composite 
+flair). Each different file is loaded using \PYGEOMETRY{} reader class and the placed as a physical volume. The final composite 
 geometry is shown in Figure~\ref{fig:model}. It must be noted when this complete geometry is written to GDML and loaded into 
 Geant4 it cannot be visualised in anything but the ray tracer because of limitations in the OpenGL visualisation in Geant4. Another 
 important note is that this geometry cannot be converted to FLUKA as it contains tessellated solids (both the STL gate valve and
@@ -1216,28 +1279,28 @@ the \PYGEOMETRY{} online manual.
 \section{Quality assurance}
 The source and manual code for \PYGEOMETRY{} is stored in a git repository (\url{https://bitbucket.org/jairhul/pyg4ometry}), 
 where a public issue tracker for users is hosted to report problems or bugs with the code. The manual is created using Sphinx a 
-Python documentation generator. \PYGEOMETRY{} uses mature packages available for Python as dependences. 
+Python documentation generator. \PYGEOMETRY{} uses mature packages available for Python as dependencies. 
 \PYGEOMETRY{} has  two submodules that require compilation \pyinline{pyg4ometry.pycsg} and \pyinline{pyg4ometry.pycgal} 
 in C/C++. \PYGEOMETRY{}, package dependencies and extensions are installed using \pyinline{setuptools}. All aspects of 
 \PYGEOMETRY{} are routinely checked using unit tests, of which 543 tests are available for the code, which have 84\% coverage. 
-The unit tests also serve as minimal examples to help users understand the code operaton.
+The unit tests also serve as minimal examples to help users understand the code operation.
 
 \section{Conclusions and discussion}
-The authors believe that tools to quickly create, either ab-initio or by conversion geometry usable in Monte Carlo
+The authors believe that tools to quickly create, either ab initio or by conversion geometry usable in Monte Carlo
 particle transport programmes will save significant amounts of user effort and ultimately 
 yield more accurate simulations. \PYGEOMETRY{} is a relatively complete implementation of a geometry 
 creation tool, whilst heavily internally based on Geant4 and GDML, it can have utility for users of all MCRT 
 codes. \PYGEOMETRY{} can clearly be extended to other formats or applications. Presently it provides a coherent and 
 uniform interface to existing tools and utilities, also by using the Python programming language \PYGEOMETRY{} 
-allows the programatic control of geometry creation or modification. This approach allows the integration of 
-other available tools \cite{DavisNIMA915-65} into an unified workflow.
+allows the programmatic control of geometry creation or modification. This approach allows the integration of 
+other available tools \colorbox{yellow}{CITEXXX DAGMC, CAD stuff} into an unified workflow.
 
 Users should be aware of {\bf issues} with \PYGEOMETRY{}. The conversions between CAD/STL, GDML, and FLUKA 
 cannot be considered bidirectional. For example Geant4 tessellated cannot be converted easily to FLUKA which does not 
 have a convenient way of representing this geometry. In general a user would be unwise to attempt to convert a very large 
 geometry from one format to another, but concentrate on smaller conversions of constituent parts. Workflows should focus 
-on conversion from a primary format and then create conversions to another format as the need arrises. This paper outlines 
-the creation of geometry using \PYGEOMETRY{}, that geometry is loaded into Geant4, FLAIR and FLUKA but detailed 
+on conversion from a primary format and then create conversions to another format as the need arises. This paper outlines 
+the creation of geometry using \PYGEOMETRY{}, that geometry is loaded into Geant4, flair and FLUKA but detailed 
 studies of the MCRT simulation performance is beyond the scope of this publication and will be addressed in the future.
 
 There are many output format extensions that can be considered for \PYGEOMETRY{}. 
@@ -1258,7 +1321,7 @@ the ability to write geometry to formats readily loaded and manipulated by these
 significantly aid the presentation of geometry along with the results of the MCRT simulations.
 
 \PYGEOMETRY{} is principally a toolkit but various visualisation and user interface extensions would 
-significantly aid geometry creation workflows. A graphical frontend interface (GUI) so a user could create 
+significantly aid geometry creation workflows. A graphical user interface (GUI) so a user could create 
 geometry without any programming knowledge would expand the number of potential users. \PYGEOMETRY{}
 has been designed to interface with a GUI in a relatively straightforward manner. The VTK visualiser currently 
 limits the display of very large models as geometry instances are replicated opposed to reused in visualisation. 
@@ -1271,7 +1334,7 @@ will allow for the creation of CAD BREP decomposition algorithms.
 
 There is a strong relationship between \PYGEOMETRY and Geant4 and to a lesser extent between 
 \PYGEOMETRY{} and FLUKA. \PYGEOMETRY{} can be used to a testing ground for ideas prior to 
-implementation in Geant4 or FLAIR. An example of this the VTK visualisation system implemented in 
+implementation in Geant4 or flair. An example of this the VTK visualisation system implemented in 
 \PYGEOMETRY{}, which could be used in Geant4 to rendering of Boolean solids which frequently 
 fail in the Geant4 OpenGL viewer. This would involve using CGAL meshing in the \pyinline{G4Polyhedron}
 class. %There is also
@@ -1283,10 +1346,16 @@ area where MCRT simulations are needed, for example particle physics, space envi
 The authors welcome contributions, extensions and bug-fixes as well a suggestions for larger collaborations.
 
 \section{Acknowledgements}
-This work has been supported by STFC grants XXX and XXX. Multiple undergraduate and masters students 
-have contributed to the code for their degree project work, Simon Williams, Benjamin Shellswell, Joshua Albrecht. 
-STB has benefited from discussions with and insight of Vasilis Vlachoudis (CERN) on FLUKA geometry and FLAIR. 
-Cédric Hernalsteens (ULB/CERN) and Alistair Butcher (RHUL) also made useful contributions to the code.
+
+The development of \PYGEOMETRY{} has received funding from Science and
+Technology Research council grant ``The John Adams Institute for
+Accelerator Science'' ST/P00203X/1 through the John Adams Institute at
+Royal Holloway, and Royal Holloway Impact Acceleration Account.  Multiple
+undergraduate and masters students have contributed to the code for their
+degree project work, Simon Williams, Benjamin Shellswell, Joshua Albrecht.
+STB has benefited from discussions with and insight of Vasilis Vlachoudis
+(CERN) on FLUKA geometry and flair.  Cédric Hernalsteens (ULB/CERN) and
+Alistair Butcher (RHUL) also made useful contributions to the code.
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
