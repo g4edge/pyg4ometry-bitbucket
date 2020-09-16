@@ -743,9 +743,9 @@ geometry instead of the usual binary unions.  Other procedures are more
 involved and are discussed in the rest of this section.
 
 \begin{lstlisting}[caption={A simple \PYGEOMETRY{} Python script to load a FLUKA file.},label={lst:pythonFlukaLoading}, language=Python]
-    reader      = pyg4ometry.fluka.Reader("FlukaFileName.inp")
-    g4_reg     = pyg4ometry.convert.fluka2Geant4(reader.flukaregistry)
-    logical      = g4_reg.getWorldVolume()
+reader      = pyg4ometry.fluka.Reader("FlukaFileName.inp")
+g4_reg     = pyg4ometry.convert.fluka2Geant4(reader.flukaregistry)
+logical      = g4_reg.getWorldVolume()
 \end{lstlisting}
 
 
@@ -1246,10 +1246,10 @@ will CAD/CAM packages included the detailed information required for MCRT
 codes. Listing~\ref{lst:pythonCADLoading} shows 
 how \PYGEOMETRY{} can load step files.
 \begin{lstlisting}[caption={A simple \PYGEOMETRY{} Python script to load a STEP file.},label={lst:pythonCADLoading}, language=Python]
-    reader = pyg4ometry.freecad.Reader("CadFileName.step")
-    reader.relabelModel()
-    reader.convertFlat()
-    logical = reader.getRegistry().getWorldVolume()
+reader = pyg4ometry.freecad.Reader("CadFileName.step")
+reader.relabelModel()
+reader.convertFlat()
+logical = reader.getRegistry().getWorldVolume()
 \end{lstlisting}
 Compared to other file readers, two additional steps are required \pyinline{relabelModel} and \pyinline{convertFlat}. CAD model 
 part names can contain characters which are not allowed in Python dictionaries so need to be replaced by \pyinline{relabelModel}. 
