@@ -1151,9 +1151,9 @@ can either be simple, i.e. defined only by atomic number and mass, or composite 
 relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so that if a \cpinline{G4Element} is simple it is 
 directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compound}
 card. Geant4 also defines a set of standard materials \cite{Geant4MaterialDB} or compounds from the US National Institute 
-of Standards and Technology (NIST), so a user can, for example, just
-specify the name \pyinline{G4_STAINLESS-STEEL} and \PYGEOMETRY{}  contains a matching database and creates the appropriate FLUKA 
-cards during the conversion. This database is updated by running a small Geant4 program to output the appropriate
+of Standards and Technology (NIST), so a user can for example, simply
+specify the name \pyinline{G4_STAINLESS-STEEL}. \PYGEOMETRY{}  contains a matching database and creates the appropriate FLUKA 
+cards from these names during the conversion. This database is updated by running a small Geant4 program to output the appropriate
 material data.
 
 \subsection{Discussion}
