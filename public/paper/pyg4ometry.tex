@@ -517,14 +517,14 @@ $\mathbf{R}_d$, scale $\mathbf{S}_d$ and translation $\mathbf{T}_d$.
 
 The transformation  $\mathbf{M}$  and translation $\mathbf{T}$ from mother to daugher is 
 \begin{eqnarray}
-\mathbf{M} 	& = &  \mathbf{S}_d  \mathbf{R}_d \\
-\mathbf{T} 	& = &  \mathbf{T}_d
+\mathbf{M} 	& = &  \mathbf{S}_d  \mathbf{R}_d\,, \\
+\mathbf{T} 	& = &  \mathbf{T}_d\,.
 \end{eqnarray}
 %
-If the mother volume is placed in the world then the placement transformation $\mathbf{M}_w$ and translation $\mathbf{T}_w$ 
+If the mother volume is placed in the world then the placement transformation $\mathbf{M}_w$ and translation $\mathbf{T}_w$ are expressed as
 \begin{eqnarray}
-\mathbf{M}_w	  	& = & \mathbf{M}_m \mathbf{M}_d  = \mathbf{S}_m \mathbf{R}_m  \mathbf{S}_d \mathbf{R}_d				\label{eqn:worldToDaughter1}\\
-\mathbf{T}	_w 		& = & \mathbf{M}_m \mathbf{T}_d + \mathbf{T}_m= \mathbf{S}_m \mathbf{R}_m \mathbf{T}_d + \mathbf{T}_m  \label{eqn:worldToDaughter2}
+\mathbf{M}_w	  	& = & \mathbf{M}_m \mathbf{M}_d  = \mathbf{S}_m \mathbf{R}_m  \mathbf{S}_d \mathbf{R}_d\, ,				\label{eqn:worldToDaughter1}\\
+\mathbf{T}	_w 		& = & \mathbf{M}_m \mathbf{T}_d + \mathbf{T}_m= \mathbf{S}_m \mathbf{R}_m \mathbf{T}_d + \mathbf{T}_m\,,  \label{eqn:worldToDaughter2}
 \end{eqnarray}
 where the subscript $m$ indicates mother volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
 Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively to place an arbitrary number of nested volumes.
