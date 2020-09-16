@@ -487,7 +487,7 @@ allowed to vary for each placement.  Another way in GDML to create parametrised 
 future release.
   
 \subsection{Tessellation of solids (meshing)}
-Creating a uniform three dimensional mesh description of all solids (including Booleans) is exceptionally useful, for visualisation and other algorithms, such as overlap 
+Creating a uniform three dimensional mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap 
 detection. For each Geant4 solid instance a triangular tessellated Vertex-Face mesh is generated and cached. This mesh is then used to determine the extent 
 of placed instances of geometry (physical volumes) and meshes for CSG-derived solids. CSG mesh calculations are performed using a Binary Space Partitioning 
 (BSP) tree technique in pure Python~\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b} in C++. In 
