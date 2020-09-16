@@ -372,7 +372,7 @@ Geant4 detector construction and \verb|pyg4ometry.gdml| provides the functionali
 exporting other geometry formats: \verb|pyg4ometry.fluka|, \verb|pyg4ometry.stl| and \verb|pyg4ometery.freecad|.  Lastly, the sub-package \verb|pyg4ometry.convert| 
 is used for conversions between formats.
 
-The core of \PYGEOMETRY{} consists of Python classes that mimic Geant4 solids, logical, physical volume objects, GDML parameters and material classes.
+The core of \PYGEOMETRY{} consists of Python classes that mimic Geant4 solids, logical volumes, physical volumes, GDML parameters and material classes.
 The constructors of the Python classes are kept as close to the original Geant4 C++ implementation so that \PYGEOMETRY{} users do not have to learn 
 a new API. For example the \verb|G4Box| class in Geant4, has the XML tag \verb|Box| in GDML and is represented by the \pyinline{pyg4ometry.geant4.solid.Box} 
 class in Python. The Python object constructor is kept a similar to the Geant4 C++ constructor, but the length definitions are those used by GDML. For example, 
