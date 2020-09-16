@@ -595,7 +595,8 @@ algorithm proceeds as shown in Algorithm~\ref{algo:overlap}.
 For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids have an average number of faces $n$, clearly this algorithm 
 has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters}^2)$. This might seem like a prohibitive computational cost, but worth it considering the potential 
 waste if small overlaps are present in the final MCRT simulation and large amounts of cluster CPU time is wasted. This algorithm clearly favours geometry 
-descriptions which have a high degree of logical volume reuse. Due to the discrete nature of triangular meshes it is not possible to have perfect detection 
+descriptions which have a high degree of logical volume reuse, however this is also true of Geant4 as a whole, so the user will likely be inclined to design along such lines regardless.
+Due to the discrete nature of triangular meshes it is not possible to have perfect detection 
 of overlaps, especially when curved surfaces are considered. The deviation of the meshes created from a solid can be controlled by the user reducing the 
 chances of missing a potential overlap, but the algorithm presented here cannot capture all overlap cases. The overlap detection algorithm can 
 present the potential overlaps quickly and easily to the user, thus significantly aiding their modelling process. 
