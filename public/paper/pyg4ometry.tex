@@ -482,8 +482,8 @@ v2 = pyg4ometry.gdml.Constant("v2","sin(v1+pi)",reg)
 A powerful feature of Geant4 and hence GDML is the ability to either repeat, divide or parametrise geometry. The class which enables the creation of 
 multiple replicas of a volume in a Cartesian, cylindrical or spherical grid is known as a Replica Volume. A Division Volume breaks a primitive into segments 
 in either Cartesian or cylindrical polar coordinates. A parametrised volume allows for the arbitrary multiple placement of solids where the parameters are 
-allowed to vary for each placement.  Another way in GDML to create parametrised solids or volumes is GDML loops, where sections of GDML are allowed 
-to be repeated with varying parameters. GDML loop loading and expansion are not supported by \PYGEOMETRY{} and will be implemented in a 
+allowed to vary for each placement.  Another way in GDML to create parametrised solids or volumes is GDML loops, where sections of GDML can be 
+ repeated with varying parameters based on the loop index. GDML loop loading and expansion are not supported by \PYGEOMETRY{} and will be implemented in a 
 future release.
   
 \subsection{Tessellation of solids (meshing)}
