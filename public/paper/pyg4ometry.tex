@@ -375,7 +375,7 @@ is used for conversions between formats.
 The core of \PYGEOMETRY{} consists of Python classes that mimic Geant4 solids, logical volumes, physical volumes, GDML parameters and material classes.
 The constructors of the Python classes are kept as close to the original Geant4 C++ implementation as possible so that \PYGEOMETRY{} users do not have to learn 
 a new API. For example the \verb|G4Box| class in Geant4, has the XML tag \verb|Box| in GDML and is represented by the \pyinline{Box} 
-class in \PYGEOMETRY{}. The Python object initialiser is kept a similar to the Geant4 C++ constructor, but the length definitions are those used by GDML. For example, 
+class in \PYGEOMETRY{}. The Python object initialiser is very similar to the Geant4 C++ constructor, but the length definitions are those used by GDML. For example, 
 GDML uses full lengths whilst Geant4 uses half lengths. Geometry construction in Python proceeds in a way which is very similar to geometry construction in Geant4. 
 A user relatively familiar with Geant4 should be able to start creating geometry in \PYGEOMETRY{} immediately. In the following sections novel or important developments 
 in \PYGEOMETRY{} are described.  
