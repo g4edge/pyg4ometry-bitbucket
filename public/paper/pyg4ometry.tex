@@ -1121,11 +1121,11 @@ Nef polyhedra~\cite{cgal:hk-bonp3-20b} and decomposed to convex polyhedra~\cite{
 
 \subsection{Disjunctive normal form and degenerate surfaces}
 Typically FLUKA will decompose a region into disjunctive normal form (DNF), this normal form is 
-characterised as the union of intersections, so 
+characterised as the union of intersections and subtractions,
 \begin{equation}
 R = z_1 \; | \;z_2\;  | \; z_3 	\; | \; z_4 \dots
 \end{equation}
-Defining regions in terms of DNF allows the rapid test if a point is inside. Testing each zone 
+Defining regions in terms of the DNF allows the rapid test of whether a point is inside that region. Testing each zone 
 $z_i$ of $R$ can terminate if a point is determined to be inside any of the convex zones $z_i$. In general 
 Equation~\ref{eqn:logicalSubtraction} does not have the form of a DNF. If there are many levels of logical-physical volume 
 placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of 
