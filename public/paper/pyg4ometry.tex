@@ -492,7 +492,7 @@ detection. For each Geant4 solid instance a triangular tessellated vertex-face m
 of placed instances of geometry (physical volumes) and meshes for CSG-derived solids. CSG mesh calculations are performed using a Binary Space Partitioning 
 (BSP) tree technique in pure Python~\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b} in C++. In 
 general the CGAL implementation is one to two orders of magnitude faster than the pure Python CSG implementation and must be used for large geometries. 
-Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of triangles. Before meshes are visualised or written to disk 
+Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of triangles. Before meshes are visualised or written to file 
 various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
 %%%%%%%%%%%%%%%%% Volume bounding
@@ -604,7 +604,7 @@ present the potential overlaps quickly and easily to the user, thus significantl
 
 \section{Rapid geometry modelling}
 Given the Python scripting interface, expression  and tessellation engines it is possible for a user to rapidly specify the geometrical layout of the RT problem, vary 
-the parameters of the geometry and visualise it.  When a user has achieved the desired geometry, without geometry overlaps, a GDML file can be written to disk 
+the parameters of the geometry and visualise it.  When a user has achieved the desired geometry, without geometry overlaps, a GDML file can be written to file 
 from the internal memory representation. Some example code is presented in Listing~\ref{lst:pythonRapidModelling}. The structure should be familiar to regular 
 users of Geant4 or GDML, apart from the new class described in the previous section called the \pyinline{Registry}. First the \verb|Registry| is created to store all 
 the \PYGEOMETRY{} objects; followed by constants;  then materials and properties, solids and logical and physical volumes; finally the whole geometry can be saved
