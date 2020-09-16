@@ -923,7 +923,7 @@ FLUKA supports modular geometries with the use of the \fluka{lattice}
 command. Figure~\ref{fig:lattice} demonstrates this capability. The
 arbitrarily complex \emph{basic unit} can be defined once and used
 multiple times by placing one or more empty \emph{lattice cells} with the
-associated roto-translation from that lattice cell to the basic
+associated rototranslation from that lattice cell to the basic
 unit. The lattice cells themselves will generally lack structure
 and simply serve as a reference to the basic unit. The rototranslated
 lattice cell must fully contain the basic unit and all of the regions
@@ -1174,7 +1174,7 @@ in this section.
 Currently replica, division and parametrised placements are not implemented 
 and will be added in a future release. In Geant4 it is possible to create scaled 
 solids or placements with reflections, referred to as \emph{scale} in Geant4. FLUKA 
-roto-translations do not support reflections and implementing reflections 
+rototranslations do not support reflections and implementing reflections 
 require transformation of the body definitions. This is not yet implemented 
 in the current version of \PYGEOMETRY{}. 
 
@@ -1194,9 +1194,9 @@ if a logical volume solid shared a face with one its daughter volume
 solids the body would be duplicated in the final FLUKA file. It 
 is possible to remove obvious degeneracies but this is complicated by 
 placements of bodies. It should be possible to cast FLUKA bodies 
-{\em without} roto-translations into a {\em normal form} which can be used 
+{\em without} rototranslations into a {\em normal form} which can be used 
 to test for approximate equality. Approximate equality is required as 
-multiple application roto-translations will accrue numerical rounding errors.
+multiple application rototranslations will accrue numerical rounding errors.
 An simple example of this is the XYP and PLA, it simple to transform an 
 XYP into a PLA with an appropriate rotation. This would allow for the removal 
 of degenerate surfaces removing potential coplanar overlaps and also reduce 
