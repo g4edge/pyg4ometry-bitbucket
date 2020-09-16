@@ -1146,7 +1146,7 @@ Geant4 has a class \cpinline{G4Material} to assign material state (density, phys
 to a logical volume. \cpinline{G4Material} has two main constructors, the first where an atomic number is supplied and 
 the second is when \cpinline{G4Element} instances and relative atomic or mass abundances are provided. The {\em simple}
 \cpinline{G4Material} is converted to a \fluka{material} card, whilst the {\em element} \cpinline{G4Material}  is converted to a 
-\fluka{compound} card. A similar issues existing when converting \cpinline{G4Element} to FLUKA, as \cpinline{G4Element}
+\fluka{compound} card. There are similar issues when converting \cpinline{G4Element} to FLUKA, as \cpinline{G4Element}
 can either be simple, so defined only by atomic number and mass or composite and defined by a admixture defined by 
 relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so if an \cpinline{G4Element} is simple it is 
 directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compound}
