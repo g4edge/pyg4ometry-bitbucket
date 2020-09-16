@@ -499,7 +499,7 @@ various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employ
 If a user is creating and placing multiple daughter volumes within a \emph{mother} volume then it is the user's responsibility to create a solid which fully 
 encompasses the daughter volumes. Overlaps between daughter volumes and the mother can be detected, but it is desirable 
 % \colorbox{yellow}{It's not just desirable, it's absolutely necessary isn't it?  And I'm not sure what the word ``efficiently'' means precisely in this context.} 
-to have a mother volume shape that efficiently holds its daughters. This is not always the case for example assembly volumes. 
+to have a mother volume shape that efficiently holds its daughters. However, there are exceptions to this rule in the form of assembly volumes. 
  
 \subsection{Visualisation} \label{sec:visualisation}
 When implementing geometry a rapid and robust visualisation system is key to produce error-free and efficient simulation input.
