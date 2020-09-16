@@ -89,19 +89,21 @@
 \newcommand{\fluka}[1]{\texttt{\MakeUppercase{#1}}}
 \newcommand{\PYGEOMETRY}{\textsc{Pyg4ometry}}
 
-% Python
-% part features
-% part assembly
-% physical volume
-% logical volume
-% daughter volume
-% mother volume
-% Reader
-% scene
-% API
-% AST 
-% BREP (not B-REP)
-% region 
+% Python           "Python" everywhere
+% part features   emph'd on first use
+% part assembly   emph'd on first use
+% physical volume  emph'd on first use
+% logical volume  emph'd on first use
+% daughter volume emph'd on first use
+% mother volume   emph'd on first use
+% Reader     emph'd on first use
+% scene      emph not on first use, but first novel/unconventional use.
+% API        paren on first use
+% AST        paren on first use
+% BREP (not B-REP)  BREP everywhere
+% region    emph'd on first use
+% zone      emph'd on first use
+% subzone   emph'd on first use
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -345,9 +347,9 @@ deviation distance from the solid decreases the number of polygons increases and
 Geant4 geometry description is a mixture of BREP, CSG and tessellated concepts. Geant4 includes 27 basic solids, although it does not store a sense 
 of topology present in traditional CAD BREP systems. One of the fundamental solids is a tessellated solid which can be used to represent STL or PLY files. 
 Geant4 also provides the ability to perform Boolean operations on these primitive solids. The richest and most flexible geometry description is currently used by
-Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this {\em logical volumes} 
-and {\em physical volumes}. A logical volume is a region of space that is defined by an outer solid but also other attributes like material, magnetic field 
-and zero or more physical {\em daughter} physical volumes. A physical volume is a placement (or instance) of a logical volume. This design permits large reuse 
+Geant4. Not only do solid objects need to be defined but also placed in a world coordinate system. Geant4 has two concepts which facilitate this \emph{logical volumes}
+and \emph{physical volumes}. A logical volume is a region of space that is defined by an outer solid but also other attributes like material, magnetic field 
+and zero or more \emph{daughter} physical volumes. A physical volume is a placement (or instance) of a logical volume. This design permits large reuse 
 of objects, minimising memory footprint for largely repetitive structures such as detectors that Geant4 was created to simulate.  
 
 %%%%%%%%%%%%%%%%% FLUKA geometry
@@ -435,7 +437,7 @@ in \PYGEOMETRY{} are described.
     
 
 %%%%%%%%%%%%%%%%%  Input and output  
-For each input format available in \PYGEOMETRY{}  (GDML, STL, FLUKA and STEP) a dedicated {\em Reader} class is implemented, so \verb|gdml.Reader|, 
+For each input format available in \PYGEOMETRY{}  (GDML, STL, FLUKA and STEP) a dedicated \emph{Reader} class is implemented, so \verb|gdml.Reader|,
 \verb|stl.Reader|, \verb|fluka.Reader| and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| which 
 can be used or manipulated by the user. 
 Output consists of taking the registry and writing the appropriate GDML.
@@ -487,7 +489,7 @@ Triangular meshes based on CSG operations involving curved surfaces often contai
 various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
 %%%%%%%%%%%%%%%%% Volume bounding
-If a user is creating and placing multiple daughter volumes within a {\em mother} volume then it is the users responsibility to create a solid which fully 
+If a user is creating and placing multiple daughter volumes within a \emph{mother} volume then it is the users responsibility to create a solid which fully 
 encompasses the daughter volumes. Overlaps between daughter volumes and the mother can be detected to, but it is desirable 
 % \colorbox{yellow}{It's not just desirable, it's absolutely necessary isn't it?  And I'm not sure what the word ``efficiently'' means precisely in this context.} 
 to have a mother volume shape that efficiently holds its daughters. This is not always the case for example assembly volumes. 
@@ -689,10 +691,10 @@ is rather trivial, a significantly more complex example is shown in Figure~\ref{
 
 \section{FLUKA to GDML conversion}
 FLUKA geometry is based upon a limited set of primitives (referred to as
-\textit{bodies}) which can be combined using Boolean operations. A
-\textit{zone} consists of one or more bodies or \textit{subzones} combined
+\emph{bodies}) which can be combined using Boolean operations. A
+\emph{zone} consists of one or more bodies or \emph{subzones} combined
 using intersections and subtractions.  Zones may then be further combined
-using union operations to form \textit{regions}, which is defined as the
+using union operations to form \emph{regions}, which is defined as the
 union of one or more zones, as well as a material.
 
 \begin{figure}[htbp]
@@ -912,8 +914,8 @@ expressive than FLUKA's, so a one-to-one mapping is trivial.
 
 FLUKA supports modular geometries with the use of the \fluka{lattice}
 command. Figure~\ref{fig:lattice} demonstrates this capability, and. The
-arbitrarily complex \textit{basic unit} can be defined once and used
-multiple times by placing one or more empty \textit{lattice cells} with the
+arbitrarily complex \emph{basic unit} can be defined once and used
+multiple times by placing one or more empty \emph{lattice cells} with the
 associated roto-translation from that \fluka{lattice} cell to the basic
 unit. The \fluka{lattice} cells themselves will generally lack structure
 and simply serve as a reference to the basic unit. The rototranslated
@@ -1228,8 +1230,8 @@ STEP and IGES files can be loaded into \PYGEOMETRY{}, via an interface
 based on FreeCAD. FreeCAD is an open source CAD/CAM program, which 
 in turn is based on OpenCASCADE. FreeCAD allows for scripting in Python 
 and acts as a simple to use interface to OpenCASCADE.  A STEP CAD file 
-could be considered as a hierarchical tree of parts and part assemblies, 
-where a part assembly is a collection of part features. A part feature can be used 
+could be considered as a hierarchical tree of parts and \emph{part assemblies}, 
+where a part assembly is a collection of \emph{part features}. A part feature can be used 
 to create a triangular mesh which can be used to create a \PYGEOMETRY{} tessellated solid. The placement 
 of the part feature is extracted from the STEP file and used to create an 
 appropriate physical volume. Assignment of materials and visualisation 
@@ -1257,7 +1259,7 @@ and saved as a STEP file, \PYGEOMETRY{} produces the output in Figure~\ref{fig:c
 \section{Complete simulation example}
 \PYGEOMETRY{} is designed to be as flexible as possible and offer the user a wide range of usage styles, input files 
 and workflows. A fictitious beam line was created to demonstrate the capabilities of \PYGEOMETRY, this creates a composite 
-{\it scene} which consists of the different examples presented in this paper. The beam line consists of a vacuum chamber 
+\emph{scene} which consists of the different examples presented in this paper. The beam line consists of a vacuum chamber 
 (modelled in \PYGEOMETRY{}), a vacuum gate value (STL from the manufacturer), a triplet of quadrupole magnets (exported 
 from BDSIM), a sector bend dipole electromagnet (created in Autodesk Fusion 360) and finally a Faraday cup (modelled in 
 flair). Each different file is loaded using \PYGEOMETRY{} reader class and the placed as a physical volume. The final composite 
