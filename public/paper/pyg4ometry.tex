@@ -1115,7 +1115,7 @@ In general the BREP solids used by Geant4 include non-convex solids, such as  Po
 particular solids are problematic when converting them to a FLUKA-readable format, as non-convex solids 
 can only be created by the union of convex zones. There are two groups which need to considered, firstly those 
 where 2D polygonal section needs to be decomposed, these include Polycone, Polyhedron and Xtru, secondly 
-those where three dimensional convex decomposition is required  TwistedBox, TwistedTrap, TwistedTrd, 
+those where three-dimensional convex decomposition is required  TwistedBox, TwistedTrap, TwistedTrd, 
 TwistedTube and Tessellated. The second classification of non convex solids are converted to CGAL 
 Nef polyhedra~\cite{cgal:hk-bonp3-20b} and decomposed to convex polyhedra~\cite{cgal:h-emspe-20b}.
 
