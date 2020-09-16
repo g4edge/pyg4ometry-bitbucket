@@ -1133,9 +1133,12 @@ parentheses. There are some conditions where a general Boolean expression can yi
 explosion of the final DNF. There are well known algorithms to convert logical expressions to its DNF. 
 \PYGEOMETRY{} can simplify parentheses from a region by creating a corresponding SymPy~\cite{10.7717/peerj-cs.103} Boolean
 expression and using the \verb|to_dnf| method.  Further simplification of the CSG tree leverages \PYGEOMETRY{}'s
-meshing capabilities combined with CSG pruning algorithms based on~\cite{pruning}.
-Before version 4.0 FLUKA  would simplify all regions to DNF and some converted geometry would generate 
-too many zones and would fail. FLUKA version 4 allows control of the DNF expansion.
+meshing capabilities combined with CSG pruning algorithms based
+on~\cite{pruning}.  FLUKA by default will try to expand all regions to
+their DNF at runtime, which inevitably can result in the sort of exponential explosion already mentioned.  Until version 4.0, if FLUKA identified 
+such an explosion, it would report an error and exit, thus making such models impossible to run.  As of version 4.0, however, this
+expansion can be disabled, and the tracking algorithms will walk the CSG trees verbatim, at some tracking efficiency cost.  Therefore, most 
+output generated from the GDML to FLUKA conversion described here can only be used with FLUKA 4.0.
 
 \subsection{Materials}
 \PYGEOMETRY{} converts GDML/Geant4 materials to FLUKA \verb|MATERIAL| and \verb|COMPOUND| cards.
