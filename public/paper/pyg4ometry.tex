@@ -991,16 +991,23 @@ used its often parabolic cylinders (e.g. magnet pole tips) this
 specialisation in particular would be worth implementing.
 
 \section{GDML to FLUKA conversion}
-It is relatively straight forward to convert Geant4 geometry to FLUKA. Each of the Geant4 
-solids can be mapped to a FLUKA region. Some solids in Geant4 directly map to 
-a FLUKA body, others need a construction of a simple FLUKA CSG tree. Table~\ref{tab:geant2fluka}
-lists the mapping between Geant4 solids and the bodies used to compose a FLUKA region.
-A region is a region of space which is formed of bodies and the operators $+$ (intersection), $-$ 
-(complement) and $\:|\:$ (union), also parentheses to indicate the order of operations. FLUKA 
-has 20 bodies, listed in Table~\ref{tab:Fluka2Geant4}  and, in general, infinite extent bodies have 
-benefits over finite ones. Key for conversion are XY-, XZ-, YZ-Planes (XYP, XZP, YZP), arbitrary 
-plane (PLA), Z-axis aligned cylinder (ZCC), Z-axis aligned elliptical cylinder (ZEC), 
-sphere (SPH), truncated right-angle cone (TRC) and general quadric surface (QUA). 
+It is relatively straight forward to convert Geant4 geometry to FLUKA. Each
+of the Geant4 solids can be mapped to a FLUKA region.  A region is a region
+of space defined by a material and the Boolean disjunction (a union using
+the operator~$\:|\:$ in free format geometry) of one or more
+zones. Each zone is then defined in terms of the conjunction (intersection
+with~$+$, subtraction with~$-$) of one or more primitive bodies, as well as
+parentheses to determine the order of operations within the zone.  FLUKA
+has 20 of these primitive bodies, listed in Table~\ref{tab:Fluka2Geant4}
+and, in general, infinite extent bodies have tracking accuracy and
+efficiency benefits over finite ones. Key for conversion are XY-, XZ-,
+YZ-Planes (XYP, XZP, YZP), arbitrary plane (PLA), Z-axis aligned cylinder
+(ZCC), Z-axis aligned elliptical cylinder (ZEC), sphere (SPH), truncated
+right-angle cone (TRC) and general quadric surface (QUA). Some solids in
+Geant4 directly map to a single FLUKA body, others require the construction
+of a simple FLUKA CSG tree combining these
+primitives. Table~\ref{tab:geant2fluka} lists the mapping between Geant4
+solids and the bodies used to compose a FLUKA region.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.9\columnwidth]{./model-scene/CuboidalChamber.pdf}
