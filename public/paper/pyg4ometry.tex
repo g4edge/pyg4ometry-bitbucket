@@ -1272,7 +1272,7 @@ and workflows. A fictitious beam line was created to demonstrate the capabilitie
 \emph{scene} which consists of geometry sources from the different formats described in this paper. The beamline consists of a vacuum chamber 
 (modelled in \PYGEOMETRY{}), a vacuum gate valve (STL from the manufacturer), a triplet of quadrupole magnets (exported 
 from BDSIM), a sector bend dipole electromagnet (created in Autodesk Fusion 360) and finally a Faraday cup (modelled in 
-flair). Each different file is loaded using \PYGEOMETRY{} reader class and the placed as a physical volume. The final composite 
+flair). Each different file is loaded using a different \PYGEOMETRY{} reader class and the placed as a physical volume. The final composite 
 geometry is shown in Figure~\ref{fig:model}. It must be noted when this complete geometry is written to GDML and loaded into 
 Geant4 it cannot be visualised in anything but the ray tracer because of limitations in the OpenGL visualisation in Geant4. Another 
 important note is that this geometry cannot be converted to FLUKA as it contains tessellated solids (both the STL gate valve and
