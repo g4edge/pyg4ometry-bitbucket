@@ -1343,29 +1343,30 @@ the ability to write geometry to formats readily loaded and manipulated by these
 significantly aid the presentation of geometry along with the results of the MCRT simulations.
 
 \PYGEOMETRY{} is principally a toolkit but various visualisation and user interface extensions would 
-significantly aid geometry creation workflows. A graphical user interface (GUI) so a user could create 
-geometry without any programming knowledge would expand the number of potential users. \PYGEOMETRY{}
-has been designed to interface with a GUI in a relatively straightforward manner. The VTK visualiser currently 
-limits the display of very large models as geometry instances are replicated opposed to reused in visualisation. 
+significantly aid geometry creation workflows. A graphical user interface (GUI) would enable a user without any
+ programming experience to create geometry for MCRT simulations and expand the number of potential users.
+\PYGEOMETRY{} has been designed to interface with a GUI in a relatively straightforward manner. The VTK visualiser currently 
+limits the display of very large models as geometry instances are replicated as opposed to reused in visualisation.  However,
+this could be drastically improved in a future release.
 
-The conversion which would most dramatically enhance the creation of geometry is CAD to Geant4/FLUKA
-without use use of a triangular or tetrahedral mesh. There are methods to decompose BREP solids to Geant4 and 
-FLUKA like CSG geometry \cite{WangNuclSciTech31-82-2020, LuFusionEngineeringAndDesign124-2017}. 
-The FreeCAD/OpenCASCADE interface combined with the Geant4 and FLUKA Python API present in \PYGEOMETRY{} 
+The conversion which would most dramatically enhance the creation of geometry is CAD to Geant4 or FLUKA
+without use use of a triangular or tetrahedral mesh. There are existing approaches to decompose BREP solids to Geant4 and 
+FLUKA-like CSG geometry \cite{WangNuclSciTech31-82-2020, LuFusionEngineeringAndDesign124-2017}. 
+The FreeCAD/OpenCASCADE interface combined with the Geant4 and FLUKA Python API in \PYGEOMETRY{} 
 will allow for the creation of CAD BREP decomposition algorithms.
 
-There is a strong relationship between \PYGEOMETRY and Geant4 and to a lesser extent between 
-\PYGEOMETRY{} and FLUKA. \PYGEOMETRY{} can be used to a testing ground for ideas prior to 
-implementation in Geant4 or flair. An example of this the VTK visualisation system implemented in 
-\PYGEOMETRY{}, which could be used in Geant4 to rendering of Boolean solids which frequently 
-fail in the Geant4 OpenGL viewer. This would involve using CGAL meshing in the \pyinline{G4Polyhedron}
-class. %There is also
+There is a strong relationship between \PYGEOMETRY{} and Geant4 and to a lesser extent between 
+\PYGEOMETRY{} and FLUKA. \PYGEOMETRY{} can be used as a testing ground for ideas prior to 
+implementation in Geant4 or FLUKA. An example of this is the VTK visualisation system implemented in 
+\PYGEOMETRY{}, which could be used in Geant4 to render Boolean solids which frequently 
+fail in the Geant4 OpenGL viewer, despite being otherwise perfectly valid constructs.
+This would involve using CGAL meshing in the \pyinline{G4Polyhedron} class. %There is also
 
 \PYGEOMETRY{} is already proving to be a useful tool for geometry conversion, creation and manipulation.
 There are numerous international researcher and research groups already using the code for their particular applications.
 The users are focused in accelerator physics, but \PYGEOMETRY{} could find application in any scientific
 area where MCRT simulations are needed, for example particle physics, space environment and medical physics.
-The authors welcome contributions, extensions and bug-fixes as well a suggestions for larger collaborations.
+The authors welcome contributions, extensions and bug fixes as well suggestions for larger collaborations.
 
 \section{Acknowledgements}
 
@@ -1374,7 +1375,7 @@ Technology Research council grant ``The John Adams Institute for
 Accelerator Science'' ST/P00203X/1 through the John Adams Institute at
 Royal Holloway, and Royal Holloway Impact Acceleration Account.  Multiple
 undergraduate and masters students have contributed to the code for their
-degree project work, Simon Williams, Benjamin Shellswell, Joshua Albrecht.
+degree project work: Simon Williams, Benjamin Shellswell and Joshua Albrecht.
 STB has benefited from discussions with and insight of Vasilis Vlachoudis
 (CERN) on FLUKA geometry and Flair.  Cédric Hernalsteens (ULB/CERN) and
 Alistair Butcher (RHUL) also made useful contributions to the code.
