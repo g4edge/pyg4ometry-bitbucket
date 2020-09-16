@@ -1286,15 +1286,10 @@ dipole magnet).
 \end{center}
 \end{figure*}
 
-Having geometry wrapped in a suitable API allows a wide range of processes to be performed simply and potentially 
-programmatically if it must be performed for large numbers of objects. The processes include; 
-\begin{enumerate}
-\item merging registries, 
-\item removing volumes (de-featuring),
-\item editing solid parameters,
-\item replacing logical volume materials 
-\item converting logical volumes to assembly volumes.
-\end{enumerate}
+Having geometry wrapped in a suitable API allows a wide range of processes to be performed simply and programmatically. The benefits of the API are
+particularly apparent when needing to process large amounts of geometry efficiently and precisesly. Possible transformations include merging registries, 
+removing volumes (de-featuring), editing solid parameters, changing logical volume materials and converting logical volumes to assembly volumes.
+
 The merging of registries and removing volumes is required to create the example shown in Figure~\ref{fig:model}. 
 Each sub-component is stored in a separate registry and these have to combined without any GDML tags clashing. 
 The FLUKA to GDML conversion creates logical volumes which are not generally required in Geant4, so for example
