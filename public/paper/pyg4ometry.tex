@@ -592,7 +592,6 @@ share a face. If the resulting intersection is non-null then the overlaps can be
 Overlap detection in \PYGEOMETRY{} relies of the meshes generated for each solid, 
 any detection algorithm will be approximate. Generally the overlap detection 
 algorithm proceeds as shown in Algorithm~\ref{algo:overlap}.
-
 For a logical volume with $n_{\rm daughters}$ physical volumes, assuming meshes for solids have an average number of faces $n$, clearly this algorithm 
 has complexity $\sim \mathcal{O}(n^2 n_{\rm daughters}^2)$. This might seem like a prohibitive computational cost, but worth it considering the potential 
 waste if small overlaps are present in the final MCRT simulation and large amounts of cluster CPU time is wasted. This algorithm clearly favours geometry 
