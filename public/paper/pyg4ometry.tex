@@ -1070,7 +1070,7 @@ so $R_1 = +z_1\: | +z_2$, similarly a void is required to locate daughter volume
 might also be converted to a region of multiple zones $R_2= +z_3 \: | +z_4$. So creating the FLUKA region is then 
 \begin{eqnarray}
 R_1 - R_2 	& = & (+z_1 \: | +z_2) - ( +z_3 \: | +z_4) 			\\
-			& = & (+z_1 - z_3 - z_4) \;  | \; (+z_2 - z_3 - z_4)	
+			& = & (+z_1 - z_3 - z_4) \;  | \; (+z_2 - z_3 - z_4)\,.	
 \label{eqn:setDiff}
 \end{eqnarray}
 Geant4 has the Boolean solids associated with difference, union and intersection, so in addition to 
@@ -1083,7 +1083,7 @@ R_1 \cup R_2 	& = & (+z_1 \: | +z_2)  \cup ( +z_3 \: | +z_4) \\
 and 
 \begin{eqnarray}
 R_1 \cap R_2 	& = & (+z_1 \: | +z_2) \cap ( +z_3 \: | +z_4) \\
-			& = & +z_1 +z_3  \; | +z_1 +z_4 \; | +z_2 +z_3 \; | +z_2 +z_4
+			& = & +z_1 +z_3  \; | +z_1 +z_4 \; | +z_2 +z_3 \; | +z_2 +z_4\,.
 \label{eqn:setIntersection}
 \end{eqnarray}
 
