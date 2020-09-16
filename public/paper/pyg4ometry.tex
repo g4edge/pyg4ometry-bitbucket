@@ -1318,11 +1318,11 @@ allows the programmatic control of geometry creation or modification. This appro
 other available tools \cite{DavisNIMA915-65} into a unified workflow.
 
 Users should be aware of issues with \PYGEOMETRY{}. The conversions between CAD/STL, GDML, and FLUKA 
-cannot be considered bidirectional. For example Geant4 tessellated cannot be converted easily to FLUKA which does not 
+cannot be considered bidirectional. For example Geant4 tessellated solids cannot be converted easily to FLUKA which does not 
 have a convenient way of representing this geometry. In general a user would be unwise to attempt to convert a very large 
 geometry from one format to another, but concentrate on smaller conversions of constituent parts. Workflows should focus 
 on conversion from a primary format and then create conversions to another format as the need arises. This paper outlines 
-the creation of geometry using \PYGEOMETRY{}, that geometry is loaded into Geant4, flair and FLUKA but detailed 
+the creation of geometry using \PYGEOMETRY{}, and whilst that geometry is subsequently loaded into Geant4, flair and FLUKA, detailed 
 studies of the MCRT simulation performance is beyond the scope of this publication and will be addressed in the future.
 
 There are many output format extensions that can be considered for \PYGEOMETRY{}. 
