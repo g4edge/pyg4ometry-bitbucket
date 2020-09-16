@@ -750,7 +750,7 @@ logical      = g4_reg.getWorldVolume()
 
 
 \begin{table}[hbt!]
-\caption{FLUKA bodies and their corresponding Geant4 solids.} \label{tab:Fluka2Geant4}
+\caption{FLUKA bodies and their corresponding \PYGEOMETRY{} classes.} \label{tab:Fluka2Geant4}
 \centering
 \begin{tabular}{ll} \hline
 FLUKA body                                              & \PYGEOMETRY{} class \\ \hline
@@ -779,53 +779,37 @@ QUA (Quadric surface) 					& TessellatedSolid \\ \hline
 
 \subsection{Infinite bodies}
 The majority of bodies in FLUKA are infinite in extent, and fall
-broadly into four categories, half-spaces, infinitely long cylinders,
-infinitely long elliptical cylinders and quadric surfaces.
+broadly into four categories, half-spaces, infinitely-long cylinders,
+infinitely-long elliptical cylinders and quadric surfaces.
 Translating these bodies to Geant4 requires generating the equivalent
 finite solid whilst retaining the same final finite Boolean shape.
-This is achieved with the use of axis-aligned bounding boxes (AABB),
+This is achieved with the use of axis-aligned bounding boxes (AABBs),
 in which the FLUKA body is translated to a finite solid with with
 dimensions slightly larger than the AABB.  The lengths of infinite
 (elliptical) cylinders are reduced to finite equivalents with lengths
-slightly greater than the bounding box.  Similarly, half spaces are
+slightly greater than the bounding box.  Similarly, half-spaces are
 reduced to boxes with one face acting as that of the half-space face,
 and quadric surfaces are sampled only over the volume denoted by the
 AABB.  Furthermore, the positions of these solids are moved as close
 to the bounding box as possible whilst retaining an identical final
 Boolean geometry.
 
-Generating these bounding boxes over which the bodies should be
-translated involves first evaluating each region with very large Tubs,
-EllipticalTubes and Boxes (by default \SI{50}{\km} in length), such
-that they are effectively infinite for most reasonable use cases.
-\PYGEOMETRY{}'s CSG meshing is then used to generate a mesh for each
-region, from which the axis-aligned bounding box can be extracted.
-Each region is then evaluated a second time with respect to its
-respective bounding box, with all of its constituent infinite solids
-being reduced as described above.  This algorithm works robustly for
-infinite (elliptical) cylinders and half spaces as the number of
-facets is independent of the size of the solid, so generating the
-initial mesh from large solids works well.  Generating a quadric
-surface over a very large volume in space whilst retaining topological
-information is computationally very expensive, so to resolve this the
-user must provide the approximate axis-aligned bounding box of any
-region in which a quadric is used.
-
-\subsection{Removing redundant half-spaces}
-The above algorithm for replacing infinite FLUKA bodies with finite
-Geant4 solids works well in most cases, but additional care must be
-taken for redundant infinite half spaces.  A redundant infinite half
-space is defined as one which has no affect on the topology of the
-final Boolean solid.  Whilst this may be true of arbitrary bodies, it
-is most problematic for half spaces as after the infinite-body
-reduction has been performed, if the half-space is far away from the
-region's AABB, then it can result in a malformed Boolean.  This algorithm is
-demonstrated in Algorithm~\ref{algo:redundant-halfspace}.  Such
-half-spaces are filtered from their respective regions during the
-conversion process by calculating the nearest distance from the centre
-of the AABB to the half-space face.  If this distance is greater than
-the centre-to-corner distance of the AABB, then that half-space is
-removed from the region during conversion.
+Generating these bounding boxes over which the bodies should be translated
+involves first evaluating each region with very large Tubs, EllipticalTubes
+and Boxes (by default \SI{50}{\km} in length), such that they are
+effectively infinite for most reasonable use cases.  \PYGEOMETRY{}'s CSG
+meshing is then used to generate a mesh for each region from which the
+axis-aligned bounding box can be extracted.  Each region is then evaluated
+a second time with respect its respective bounding box, with all of its
+constituent infinite solids being reduced as described above.  The
+implementation is described in
+Algorithm~\ref{algo:redundant-halfspace}. This algorithm works robustly for
+infinite (elliptical) cylinders and half-spaces as the number of facets is
+independent of the size of the solid, so generating the initial mesh from
+large solids works well.  Generating a quadric surface over a very large
+volume in space whilst retaining topological information is computationally
+very expensive, so to resolve this the user must provide the approximate
+axis-aligned bounding box of any region in which a quadric is used.
 
 \begin{algorithm}
 
@@ -879,6 +863,23 @@ removed from the region during conversion.
     conversion of Fluka to GDML.}
 \end{algorithm}
 
+
+\subsection{Removing redundant half-spaces}
+The above algorithm for replacing infinite FLUKA bodies with finite
+Geant4 solids works well in most cases, but additional care must be
+taken for redundant infinite half-spaces.  A redundant infinite half-space
+is defined as one which has no effect on the shape of the
+final Boolean solid.  Whilst this may be true of arbitrary bodies, it
+is most problematic for half-spaces as after the infinite body
+reduction has been performed. If the half-space is far away from the
+region's AABB, then it can result in a malformed Boolean. Such
+half-spaces are filtered from their respective regions during the
+conversion process by calculating the nearest distance from the centre
+of the AABB to the half-space face.  If this distance is greater than
+the centre-to-corner distance of the AABB, then that half-space is
+removed from the region during conversion.
+
+
 \subsection{Coplanar faces}
 Coplanar faces, in which the faces of two union components or that of
 two regions are perfectly coplanar in FLUKA are ubiquitous and present
@@ -889,13 +890,13 @@ are resolved automatically by slightly decreasing the size of every
 body that is used in an intersection, and increasing the size of every
 body used in a subtraction.  These rules are inverted for nested
 subtractions and work well for guaranteeing well-formed geometry that
-is free from overlaps.
+is free from tracking errors.
 
 \subsection{Materials}
 
 Any useful translation between geometry description formats must also
-account for material, and accordingly \PYGEOMETRY{} correctly translates
-FLUKA materials to GDML.  FLUKA materials can be divided into built-in ,
+account for materials, and accordingly \PYGEOMETRY{} correctly translates
+FLUKA materials to GDML.  FLUKA materials can be divided into built-in,
 single-element and compound materials.  Built-in materials are simply those
 that are predefined by FLUKA, single-element materials are described with a
 single \fluka{material} card, and compound materials are described with one
@@ -904,7 +905,7 @@ These three alternatives are represented in \PYGEOMETRY{} with the
 \pyinline{BuiltIn}, \pyinline{Material}, and \pyinline{Compound} classes.
 Populating a hierarchy of instances using these classes is involved due to
 the fact that recursively-defined materials in FLUKA input files need not
-be defined in a logical order.  Namely, a given \pyinline{compound} may be
+be defined in a logical order.  Namely, a given compound may be
 defined before the materials that it consists of are themselves defined.
 To account for this it is necessary to correctly compute the instantiation
 order so that the above classes and be instantiated correctly.  To do this
@@ -919,24 +920,24 @@ expressive than FLUKA's, so a one-to-one mapping is trivial.
 \subsection{Lattice}
 
 FLUKA supports modular geometries with the use of the \fluka{lattice}
-command. Figure~\ref{fig:lattice} demonstrates this capability, and. The
+command. Figure~\ref{fig:lattice} demonstrates this capability. The
 arbitrarily complex \emph{basic unit} can be defined once and used
 multiple times by placing one or more empty \emph{lattice cells} with the
-associated roto-translation from that \fluka{lattice} cell to the basic
-unit. The \fluka{lattice} cells themselves will generally lack structure
+associated roto-translation from that lattice cell to the basic
+unit. The lattice cells themselves will generally lack structure
 and simply serve as a reference to the basic unit. The rototranslated
 lattice cell must fully contain the basic unit and all of the regions
-within it. When a particle steps into the \fluka{lattice} cell, the
+within it. When a particle steps into the lattice cell, the
 rototranslation is applied to that particle and it is is taken into the
 basic unit, and the simulation continues within the basic unit. Any
 particles leaving the basic unit will be translated back to the
-\fluka{lattice} cell with the inverted rototranslation. Up to two
-levels of \fluka{lattice} nesting the are supported in FLUKA.
+lattice cell with the inverted rototranslation. Up to two
+levels of lattice nesting the are supported in FLUKA.
 
 \begin{figure}[hbtp]
 \begin{center}
 \includegraphics[width=6cm]{./diagrams/lattice}
-\caption{The \fluka{lattice} feature demonstrating a \fluka{lattice} cell
+\caption{The lattice feature demonstrating a lattice cell
   referring to its basic unit with the rototranslation $R_\textrm{trans}$.
   Any particle entering the cell will be transformed onto the basic unit
   with $R_\textrm{trans}$, and when leaving the basic unit, back to the cell
@@ -944,25 +945,24 @@ levels of \fluka{lattice} nesting the are supported in FLUKA.
 \label{fig:lattice}
 \end{center}
 \end{figure}
-
 This feature is clearly analogous to the logical/physical volume feature in
 Geant4, although it is less explicit as the contents of a given logical
-volume are clearly stated, whereas the contents of a \fluka{lattice} cell
+volume are clearly stated, whereas the contents of a lattice cell
 are implied by the combination of the rototranslation and the locations of
-its \fluka{lattice} cell and basic unit.
+its lattice cell and basic unit.
 
-Translating this construct into a logical volume (basic unit) with many
-physical volumes (\fluka{lattice} cells) requires associating each
-\fluka{lattice} cell with the full contents of its corresponding basic unit
+Translating the lattice construct into a logical volume (basic unit) with many
+physical volumes (lattice cells) requires associating each
+lattice cell with the full contents of its corresponding basic unit
 (typically several regions). This is achieved by meshing the complete
-FLUKA geometry and then rototranslating the \fluka{lattice} cell mesh with
+FLUKA geometry and then rototranslating the lattice cell mesh with
 its associated rototranslation. By construction this will translate the
-\fluka{lattice} cell mesh directly onto the full basic unit mesh. Finally,
+lattice cell mesh directly onto the full basic unit mesh. Finally,
 in checking for overlaps, the regions within the the basic unit can be
-determined. In the final conversion step, the \fluka{lattice} cell can
+determined. In the final conversion step, the lattice cell can
 simply be replaced with a physical volume that refers back to logical
-volumes located in the previous step. Thus the \fluka{lattice} cells can
-be translated into Geant4's logical/physical volumes. As has been stated,
+volumes located in the previous step. Thus a basic unit with one or more lattice cells can
+be translated into Geant4's logical volume with one or more physical volumes. As has been stated,
 FLUKA supports two levels of nesting, but currently the conversion to GDML
 supports only one. However, extending to an extra level is simple in that
 it only involves an extra application of a rototranslation matrix before
@@ -976,12 +976,12 @@ steps described above were directly applied in this model and all the
 features are tested and demonstrated in the repository.  This set of
 algorithms for bridging FLUKA with GDML covers a very broad range of
 geometries, however a number of possible improvements for the future
-persist.  For example, Boolean solids in FLUKA can in general be
-disconnected, and this most typically manifests itself in the form of
+remain.  For example, Boolean solids in FLUKA can in general be
+disconnected, and this typically manifests itself in the form of
 disconnected unions, but is also allowed for intersections and
 subtractions.  Disconnected unions are readily available in GDML with the
 use of the MultiUnion solid type, however there is no valid means to
-construct a disconnected subtraction or intersection in GDML.  One possible
+construct a disconnected intersection or subtraction in GDML.  One possible
 solution would be to detect these two cases, and if found, split them into
 their constituent parts and place separately as TesselatedSolid instances.
 
@@ -995,7 +995,7 @@ be translated to an ExtrudedSolid.  This could provide both a performance
 improvement in the tracking time and make \PYGEOMETRY{} easier to use as an
 AABB would not need to be provided beforehand.  This has not been
 implemented as quadrics are relatively rarely used, but where quadrics are
-used its often parabolic cylinders (e.g. magnet pole tips) this
+used it is often in the form of parabolic cylinders (e.g. magnet pole tips) and this
 specialisation in particular would be worth implementing.
 
 \section{GDML to FLUKA conversion}
