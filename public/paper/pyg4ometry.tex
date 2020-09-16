@@ -447,7 +447,7 @@ in \PYGEOMETRY{} are described.
 For each input format available in \PYGEOMETRY{}  (GDML, STL, FLUKA and STEP) a dedicated \emph{Reader} class is implemented: \verb|gdml.Reader|,
 \verb|stl.Reader|, \verb|fluka.Reader| and \verb|freecad.Reader|. Each reader constructs the appropriate Geant4 classes and provides a \verb|Registry| instance which 
 can be used or manipulated by the user. 
-Output consists of taking the registry and writing the appropriate GDML.
+Output consists of taking the registry and writing to file with the desired format.
 
 %%%%%%%%%%%%%%%%%  Internal data representation
 The internal data representation follows closely the structure of GDML. A \verb|Registry| class aggregates Python ordered dictionaries that are  used to store the main 
