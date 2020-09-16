@@ -1065,7 +1065,7 @@ MultiUnion			& $R_1 \cup R_2 \cup R_3 \cup$	\\ \hline
 \end{table}
 
 There are some important issues which must be considered to perform an accurate conversion. 
-A Geant4 logical volume solid might need to be created from a FLUKA region composing of many zones, 
+A Geant4 logical volume solid might need to be created from a FLUKA region consisting of many zones (i.e. unions), 
 so $R_1 = +z_1\: | +z_2$, similarly a void is required to locate daughter volume placements which again 
 might also be converted to a region of multiple zones $R_2= +z_3 \: | +z_4$. So creating the FLUKA region is then 
 \begin{eqnarray}
