@@ -1261,7 +1261,7 @@ CAD models might also have a hierarchy of parts and assemblies, these are conver
 In general there is no requirement to avoid geometric overlap  of parts in a CAD file. This will result in overlaps of the solids in 
 the converted tessellated solids. This is avoided by shrinking each solid, this is done by computing the a normal ${\bf n}$  for each 
 vertex ${\bf v}$ and shifting its position by $\epsilon {\bf n}$, so the new vertices are ${\bf v} - \epsilon {\bf n}$. The degree of shrinking 
-is user controllable. 
+is user-controllable. 
 
 An example geometry representing a dipole electromagnet, consisting of three parts was created in Autodesk Fusion 360
 and saved as a STEP file, \PYGEOMETRY{} produces the output in Figure~\ref{fig:cad-gdml}.
