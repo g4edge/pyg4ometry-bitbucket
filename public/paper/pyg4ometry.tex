@@ -1130,9 +1130,10 @@ $z_i$ of $R$ can terminate if a point is determined to be inside any of the conv
 Equation~\ref{eqn:logicalSubtraction} does not have the form of a DNF. If there are many levels of logical-physical volume 
 placement, then recursive application of  Equation~\ref{eqn:logicalSubtraction} will create a nested set of 
 parentheses. There are some conditions where a general Boolean expression can yield an exponential 
-explosion of the final DNF. There are well known algorithms to convert logical expressions to a DNF. 
-\PYGEOMETRY{} can simplify parentheses from a region by creating a SymPy~\cite{10.7717/peerj-cs.103} 
-expression and using its \verb|logical| module \verb|to_dnf| method based on the Quine–McCluskey algorithm~\cite{6769983}. 
+explosion of the final DNF. There are well known algorithms to convert logical expressions to its DNF. 
+\PYGEOMETRY{} can simplify parentheses from a region by creating a corresponding SymPy~\cite{10.7717/peerj-cs.103} Boolean
+expression and using the \verb|to_dnf| method.  Further simplification of the CSG tree leverages \PYGEOMETRY{}'s
+meshing capabilities combined with CSG pruning algorithms based on~\cite{pruning}.
 Before version 4.0 FLUKA  would simplify all regions to DNF and some converted geometry would generate 
 too many zones and would fail. FLUKA version 4 allows control of the DNF expansion.
 
