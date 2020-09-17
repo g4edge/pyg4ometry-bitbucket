@@ -525,7 +525,7 @@ If the mother volume is placed in the world then the placement transformation $\
 \mathbf{T}	_w 		& = & \mathbf{M}_m \mathbf{T}_d + \mathbf{T}_m= \mathbf{S}_m \mathbf{R}_m \mathbf{T}_d + \mathbf{T}_m\,,  \label{eqn:worldToDaughter2}
 \end{eqnarray}
 where the subscript $m$ indicates mother volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
-Equations~\ref{eqn:worldToDaughter1} and \ref{eqn:worldToDaughter2} can be used recursively to place an arbitrary number of nested volumes.
+Equations \ref{eqn:worldToDaughter1} and~\ref{eqn:worldToDaughter2} can be used recursively to place an arbitrary number of nested volumes.
 
 The physical volume class (\pyinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
 colour, surface or wireframe representation and visibility. Overlaps detected in the mesh geometry are
@@ -1100,8 +1100,7 @@ S_{\rm region} =  S_{\rm logical} - S_{\rm daughter,1} - S_{\rm daughter,2} - S_
 \label{eqn:logicalSubtraction}
 \end{equation} 
 If a logical volume has a number of daughter volumes which are also possibly Boolean solids, then computing 
-$S_{\rm region}$ can become very complex because of Equations \ref{eqn:setDiff}, \ref{eqn:setUnion} and 
-\ref{eqn:setIntersection}. 
+$S_{\rm region}$ can become very complex because of Equations \ref{eqn:setDiff}, \ref{eqn:setUnion} and~\ref{eqn:setIntersection}. 
 
 Figure~\ref{fig:gdml-flair} shows an example conversion from GDML to FLUKA. The example is a 
 vacuum chamber with three ConFlat flange (CF) beam pipes connected to CF flanges. The top and bottom plates 
@@ -1178,7 +1177,7 @@ require transformation of the body definitions. This is not yet implemented
 in the current version of \PYGEOMETRY{}. 
 
 In general, recursive application of Equations \ref{eqn:setDiff},
-\ref{eqn:setUnion}, \ref{eqn:setIntersection} and \ref{eqn:logicalSubtraction} 
+\ref{eqn:setUnion}, \ref{eqn:setIntersection} and~\ref{eqn:logicalSubtraction} 
 can result in very complex regions when converting from Geant4/GDML to 
 FLUKA. The complexity of the final region expression can be compounded 
 if transformed to DNF. The final region Boolean expression can be simplified by 
