@@ -707,8 +707,8 @@ union of one or more zones, as well as a material.
 \begin{center}
 \includegraphics[width=0.9\columnwidth]{./model-scene/faradayCup2.pdf}
 \caption{Example conversion of a simple FLUKA geometry to GDML. Above:
-the original FLUKA geometry displayed in flair. Below: the GDML geometry
-viewed using \PYGEOMETRY{}. The example is a Faraday cup used to capture
+  the original FLUKA geometry displayed in flair, FLUKA's graphical user interface.
+  Below: the GDML geometry viewed using \PYGEOMETRY{}. The example is a Faraday cup used to capture
 and measure accelerator beam charge.}
 \label{fig:fluka-to-geant4-cup}
 \end{center}
@@ -1164,7 +1164,8 @@ simulation results. The conversion described still requires a user to
 understand how geometry is specified in both Geant4 and FLUKA. For 
 example the subtraction of many non-primitive body daughter volumes from 
 a mother will create a very complex non-DNF region which is inefficient when viewed in 
-flair and used for simulation in FLUKA. A geometry designer can avoid this by
+FLUKA's graphical user interface (GUI), flair, and used for simulation in FLUKA.
+A geometry designer can avoid this by
 restricting daughter volumes solids in Geant4 that can be expressed in DNF simply,
 for example a cuboid.  If \PYGEOMETRY{} is used during the creation of
  geometry then multiple codes can be targeted without additional user effort. 
@@ -1343,7 +1344,7 @@ the ability to write geometry to formats readily loaded and manipulated by these
 significantly aid the presentation of geometry along with the results of the MCRT simulations.
 
 \PYGEOMETRY{} is principally a toolkit but various visualisation and user interface extensions would 
-significantly aid geometry creation workflows. A graphical user interface (GUI) would enable a user without any
+significantly aid geometry creation workflows. A graphical user interface would enable a user without any
  programming experience to create geometry for MCRT simulations and expand the number of potential users.
 \PYGEOMETRY{} has been designed to interface with a GUI in a relatively straightforward manner. The VTK visualiser currently 
 limits the display of very large models as geometry instances are replicated as opposed to reused in visualisation.  However,
