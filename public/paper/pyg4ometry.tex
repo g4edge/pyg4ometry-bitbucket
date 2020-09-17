@@ -502,8 +502,8 @@ to have a mother volume shape that efficiently holds its daughters. However, the
 \subsection{Visualisation} \label{sec:visualisation}
 When implementing geometry a rapid and robust visualisation system is key to produce error-free and efficient simulation input.
 A  \PYGEOMETRY{} geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4 
-volume hierarchy is sufficient to place the meshes associated with each physical volume. A daughter volume is placed within a logical volume with a rotation 
-$\mathbf{R}_d$, scale $\mathbf{S}_d$ and translation $\mathbf{T}_d$.
+volume hierarchy is sufficient to place the meshes associated with each physical volume. A daughter volume is placed within a logical volume with a
+rotation~$\mathbf{R}_d$, scale~$\mathbf{S}_d$ and translation~$\mathbf{T}_d$.
 
 \begin{figure}[htb!]
 \begin{center}
@@ -519,12 +519,12 @@ The transformation  $\mathbf{M}$  and translation $\mathbf{T}$ from mother to da
 \mathbf{T} 	& = &  \mathbf{T}_d\,.
 \end{eqnarray}
 %
-If the mother volume is placed in the world then the placement transformation $\mathbf{M}_w$ and translation $\mathbf{T}_w$ are expressed as
+If the mother volume is placed in the world then the placement transformation~$\mathbf{M}_w$ and translation~$\mathbf{T}_w$ are expressed as
 \begin{eqnarray}
 \mathbf{M}_w	  	& = & \mathbf{M}_m \mathbf{M}_d  = \mathbf{S}_m \mathbf{R}_m  \mathbf{S}_d \mathbf{R}_d\, ,				\label{eqn:worldToDaughter1}\\
 \mathbf{T}	_w 		& = & \mathbf{M}_m \mathbf{T}_d + \mathbf{T}_m= \mathbf{S}_m \mathbf{R}_m \mathbf{T}_d + \mathbf{T}_m\,,  \label{eqn:worldToDaughter2}
 \end{eqnarray}
-where the subscript $m$ indicates mother volume and $d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
+where the subscript~$m$ indicates mother volume and~$d$ indicates daughter volume. Given a hierarchy of logical and physical volumes, 
 Equations \ref{eqn:worldToDaughter1} and~\ref{eqn:worldToDaughter2} can be used recursively to place an arbitrary number of nested volumes.
 
 The physical volume class (\pyinline{pyg4ometry.geant4.PhysicalVolume}) is also used to store visualisation attributes like the solid's 
@@ -936,7 +936,7 @@ levels of lattice nesting the are supported in FLUKA.
 \begin{center}
 \includegraphics[width=6cm]{./diagrams/lattice}
 \caption{The lattice feature demonstrating a lattice cell
-  referring to its basic unit with the rototranslation $R_\textrm{trans}$.
+  referring to its basic unit with the rototranslation~$R_\textrm{trans}$.
   Any particle entering the cell will be transformed onto the basic unit
   with $R_\textrm{trans}$, and when leaving the basic unit, back to the cell
   with $R_\textrm{trans}^{-1}$.}
@@ -1064,8 +1064,8 @@ MultiUnion			& $R_1 \cup R_2 \cup R_3 \cup$	\\ \hline
 
 There are some important issues which must be considered to perform an accurate conversion. 
 A Geant4 logical volume solid might need to be created from a FLUKA region consisting of many zones (i.e. unions), 
-so $R_1 = +z_1\: | +z_2$, similarly a void is required to locate daughter volume placements which again 
-might also be converted to a region of multiple zones $R_2= +z_3 \: | +z_4$. So creating the FLUKA region is then 
+so~$R_1 = +z_1\: | +z_2$, similarly a void is required to locate daughter volume placements which again 
+might also be converted to a region of multiple zones~$R_2= +z_3 \: | +z_4$. So creating the FLUKA region is then 
 \begin{eqnarray}
 R_1 - R_2 	& = & (+z_1 \: | +z_2) - ( +z_3 \: | +z_4) 			\\
 			& = & (+z_1 - z_3 - z_4) \;  | \; (+z_2 - z_3 - z_4)\,.	
@@ -1092,9 +1092,9 @@ and  this is used to place FLUKA bodies. This  in practice is very similar to th
 VTK visualisation already described in Section~\ref{sec:visualisation}.
 
 In FLUKA every single point in space needs to be associated with one and only one region. This presents a problem 
-when converting Geant4 logical volumes to FLUKA regions, as the logical volume outer solid $S_{\rm logical}$ 
-need to have the daughter  solids $S_{{\rm daughter},i}$ subtracted. A solid which can be converted 
-to a region $S_{\rm region}$ is then 
+when converting Geant4 logical volumes to FLUKA regions, as the logical volume outer solid~$S_{\rm logical}$ 
+need to have the daughter  solids~$S_{{\rm daughter},i}$ subtracted. A solid which can be converted 
+to a region~$S_{\rm region}$ is then 
 \begin{equation}
 S_{\rm region} =  S_{\rm logical} - S_{\rm daughter,1} - S_{\rm daughter,2} - S_{\rm daughter,3} \ldots 
 \label{eqn:logicalSubtraction}
