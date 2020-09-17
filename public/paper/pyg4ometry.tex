@@ -237,11 +237,10 @@ Geant; FLUKA; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry;
 
 \begin{small}
 \noindent
-{\em Program Title: PYG4OMETRY }                                         		\\
+{\em Program Title: \PYGEOMETRY{} }                                         		\\
 {\em Licensing provisions: GPLv3 }							\\
-{\em Programming language: Python, C/C++}                         		\\
-{\em External routines/libraries: ANTLR, CGAL, FreeCAD, OpenCascade, SymPy, VTK}           	\\
-
+{\em Programming language: Python, C++}                         		\\
+{\em External routines/libraries: ANTLR, CGAL, FreeCAD, NumPy, OpenCascade, SymPy, VTK} \\
 %{\em Supplementary material:}                                 				\\
   % Fill in if necessary, otherwise leave out.
 %{\em Journal reference of previous version:}                  			\\
@@ -252,13 +251,12 @@ Geant; FLUKA; GDML; CAD; STEP; Monte Carlo; Particle; Transport; Geometry;
   %Only required for a New Version summary, otherwise leave out.
 %{\em Summary of revisions:}*								\\
   %Only required for a New Version summary, otherwise leave out.
-
-{\em Nature of problem(approx. 50-250 words):}\\
+{\em Nature of problem:}\\  % (approx. 50-250 words)
 Creating computer readable geometry descriptions for Monte Carlo radiation transport (MCRT) codes is a time-consuming and error-prone task. 
 Typically these geometries are written by the user directly in the file format used by the MCRT code. There are also multiple MCRT codes 
 available and geometry conversion is difficult or impossible to convert between these simulation tools. 
 \\
-{\em Solution method(approx. 50-250 words):}\\
+{\em Solution method:}\\  % (approx. 50-250 words)
 Create a Python application programming interface to read and write files of and process the geometry objects and specification 
 language used by Geant4 and FLUKA. Form triangular meshes to represent geometrical objects for both visualisation of the 
 geometry and advanced approximate geometrical algorithms. Triangular mesh process allows the loading and use of STL and CAD/CAM 
