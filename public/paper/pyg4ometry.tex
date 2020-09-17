@@ -297,8 +297,8 @@ that allows the conversion between files prepared for different codes will enabl
 This paper describes a geometry creation and conversion package called \PYGEOMETRY{}, written in Python and internally based on the Geant4 application 
 programming interface (API) and the Geometry Description Markup Language (GDML) for file persistency~\cite{GDML}. The main features of \PYGEOMETRY{} 
 are a Python scripting API to rapidly design parametrised geometry; conversion to and from  FLUKA geometry descriptions; conversion from CAD formats  (STEP 
-and IGES) based on FreeCAD \cite{FreeCAD} and OpenCascade \cite{OpenCASCADE}; and powerful geometry visualisation tools based on VTK \cite{VTK4}. The 
-origin of \PYGEOMETRY{} was a set of utilities to prepare geometry for an accelerator beamline simulation program based on Geant4 called BDSIM \cite{BDSIM_Nevay}. 
+and IGES) based on FreeCAD~\cite{FreeCAD} and OpenCascade~\cite{OpenCASCADE}; and powerful geometry visualisation tools based on VTK~\cite{VTK4}. The 
+origin of \PYGEOMETRY{} was a set of utilities to prepare geometry for an accelerator beamline simulation program based on Geant4 called BDSIM~\cite{BDSIM_Nevay}. 
 Accelerator physicists, like specialists in other areas, need a tool to quickly model specialist geometry and the subsequent interaction of the charged particle beam. 
 \PYGEOMETRY{} allows the rapid creation and adaptation of geometry. Figure~\ref{fig:workflow} depicts various workflows possible with \PYGEOMETRY{}. \PYGEOMETRY{} 
 is not an executable software package but a toolkit, a user would typically write a very small Python program to use to use the classes and functions provided by 
@@ -313,7 +313,7 @@ is not an executable software package but a toolkit, a user would typically writ
 \end{figure*}
 
 There are existing codes that have functionality similar to \PYGEOMETRY{}. ROOT~\cite{Brun:1997pa}, the high-energy physics data analysis framework, 
-can load, display and manipulate GDML-like geometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh \cite{GUIMesh_Pinto}, commercial 
+can load, display and manipulate GDML-like geometry. Tools exist to convert CAD files to GDML, open source examples are GUIMesh~\cite{GUIMesh_Pinto}, commercial 
 products include ESABASE2~\cite{ESABASE2} and FASTRAD~\cite{FASTRAD}. There are also tools from the fusion and neutronics community that can convert CAD 
 geometry into formats usable by MCRT codes, with examples including DAGMC~\cite{DAGMC} and McCAD~\cite{McCad}. In principle CAD software can export shape data to STL 
 (or other similar mesh formats), which can be used by Geant4~\cite{poole2012acad}. In practice, using a lot of CAD models is difficult if that model is comprised of a 
@@ -341,7 +341,7 @@ Boundary representation consists of two parts, topology and geometry. Topologica
 geometrical elements are surfaces, curves and points. No current MCRT applications use native file formats employed by CAD systems. The conversion of 
 CAD BREP formats for loading in MCRT applications is typically performed via a tessellated format, although it is possible to decompose BREP descriptions
  to bounded or infinite mathematical surfaces and subsequently solids as used in CSG descriptions. This type of conversion is complex and error-prone, 
- although recent progress has been made \cite{WangNuclSciTech31-82-2020}.
+ although recent progress has been made~\cite{WangNuclSciTech31-82-2020}.
 
 %%%%%%%%%%%%%%%%% Tessellated polygons
 Solid volumes can be defined using triangular, quadrilateral or tetrahedral meshes. Numerous formats exist to describe meshes, the ubiquitous being STL with
@@ -488,10 +488,10 @@ future release.
 Creating a uniform three dimensional mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap 
 detection. For each Geant4 solid instance a triangular tessellated vertex-face mesh is generated and cached. This mesh is then used to determine the extent 
 of placed instances of geometry (physical volumes) and meshes for CSG-derived solids. CSG mesh calculations are performed using a Binary Space Partitioning 
-(BSP) tree technique in pure Python~\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes \cite{cgal:bsmf-sm-20b} in C++. In 
+(BSP) tree technique in pure Python~\cite{pycsg} or the Computational Geometry Algorithms Library (CGAL) surface meshes~\cite{cgal:bsmf-sm-20b} in C++. In 
 general the CGAL implementation is one to two orders of magnitude faster than the pure Python CSG implementation and must be used for large geometries. 
 Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of triangles. Before meshes are visualised or written to file 
-various polygon mesh algorithms  from CGAL \cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
+various polygon mesh algorithms  from CGAL~\cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features. 
 
 %%%%%%%%%%%%%%%%% Volume bounding
 If a user is creating and placing multiple daughter volumes within a \emph{mother} volume then it is the user's responsibility to create a solid which fully 
@@ -1148,7 +1148,7 @@ the second is when \cpinline{G4Element} instances and relative atomic or mass ab
 can either be simple, i.e. defined only by atomic number and mass, or composite and defined by an admixture of 
 relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so that if a \cpinline{G4Element} is simple it is 
 directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compound}
-card. Geant4 also defines a set of standard materials \cite{Geant4MaterialDB} or compounds from the US National Institute 
+card. Geant4 also defines a set of standard materials~\cite{Geant4MaterialDB} or compounds from the US National Institute 
 of Standards and Technology (NIST), so a user can for example, simply
 specify the name \pyinline{G4_STAINLESS-STEEL}. \PYGEOMETRY{}  contains a matching database and creates the appropriate FLUKA 
 cards from these names during the conversion. This database is updated by running a small Geant4 program to output the appropriate
@@ -1314,7 +1314,7 @@ creation tool, whilst heavily internally based on Geant4 and GDML, it can have u
 codes. \PYGEOMETRY{} can clearly be extended to other formats or applications. Presently it provides a coherent and 
 uniform interface to existing tools and utilities, also by using the Python programming language \PYGEOMETRY{} 
 allows the programmatic control of geometry creation or modification. This approach allows the integration of 
-other available tools \cite{DavisNIMA915-65} into a unified workflow.
+other available tools~\cite{DavisNIMA915-65} into a unified workflow.
 
 Users should be aware of issues with \PYGEOMETRY{}. The conversions between CAD/STL, GDML, and FLUKA 
 cannot be considered bidirectional. For example Geant4 tessellated solids cannot be converted easily to FLUKA which does not 
@@ -1350,7 +1350,7 @@ this could be drastically improved in a future release.
 
 The conversion which would most dramatically enhance the creation of geometry is CAD to Geant4 or FLUKA
 without use use of a triangular or tetrahedral mesh. There are existing approaches to decompose BREP solids to Geant4 and 
-FLUKA-like CSG geometry \cite{WangNuclSciTech31-82-2020, LuFusionEngineeringAndDesign124-2017}. 
+FLUKA-like CSG geometry~\cite{WangNuclSciTech31-82-2020, LuFusionEngineeringAndDesign124-2017}. 
 The FreeCAD/OpenCASCADE interface combined with the Geant4 and FLUKA Python API in \PYGEOMETRY{} 
 will allow for the creation of CAD BREP decomposition algorithms.
 
