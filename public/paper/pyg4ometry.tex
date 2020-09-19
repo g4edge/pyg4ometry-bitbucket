@@ -317,8 +317,9 @@ can load, display and manipulate GDML-like geometry. Tools exist to convert CAD 
 products include ESABASE2~\cite{ESABASE2} and FASTRAD~\cite{FASTRAD}. There are also tools from the fusion and neutronics community that can convert CAD 
 geometry into formats usable by MCRT codes, with examples including DAGMC~\cite{DAGMC} and McCAD~\cite{McCad}. In principle CAD software can export shape data to STL 
 (or other similar mesh formats), which can be used by Geant4~\cite{poole2012acad}. In practice, using a lot of CAD models is difficult if that model is comprised of a 
-large number of parts. Exporting, assigning material to, and placing the STL components into the MCRT code can be a cumbersome task. The existent set of software does not 
-provide a complete set of tools to efficiently create complex geometries.
+large number of parts. Exporting, assigning material to, and placing the STL components into the MCRT code can be a cumbersome task. Almost all modern CAD tools like 
+CATIA, Inventor, SolidWorks have a scripting language to allow users to programatically generate geometry. This scripting functionality is not available with either 
+GDML or FLUKA were users write the geometry files directly. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.
 
 This paper is structured as follows, first a brief radiation transport-focused introduction to computer descriptions of geometry, followed by an explanation of the design 
 and implementation of \PYGEOMETRY{}. The sections that follow describe how \PYGEOMETRY{} can be used to perform rapid geometric modelling, conversion from 
@@ -1326,8 +1327,9 @@ studies of the MCRT simulation performance is beyond the scope of this publicati
 There are many output format extensions that can be considered for \PYGEOMETRY{}. 
 Geant4 geometry is primarily created by writing C++ programmes, so an output writer that 
 converts the \PYGEOMETRY{} in-memory representation to C++ will allow rapid geometry 
-modelling but . This is not implemented in the current version but could be relatively quickly implemented
-for users that require this functionality. At present \PYGEOMETRY{} supports reading and writing 
+modelling but inclusion of the geometry into an existing Geant4 application. This is not 
+implemented in the current version but could be relatively quickly implemented for users that 
+require this functionality. At present \PYGEOMETRY{} supports reading and writing 
 Geant4 (GDML) and FLUKA files but could be extended without significant effort to other MCRT codes 
 like MCNP. 
 
@@ -1347,11 +1349,12 @@ significantly aid geometry creation workflows. A graphical user interface would 
 limits the display of very large models as geometry instances are replicated as opposed to reused in visualisation.  However,
 this could be drastically improved in a future release.
 
-The conversion which would most dramatically enhance the creation of geometry is CAD to Geant4 or FLUKA
+The conversion which would most dramatically enhance the creation of RTMC geometry is CAD to Geant4 or FLUKA
 without use use of a triangular or tetrahedral mesh. There are existing approaches to decompose BREP solids to Geant4 and 
 FLUKA-like CSG geometry~\cite{WangNuclSciTech31-82-2020, LuFusionEngineeringAndDesign124-2017}. 
 The FreeCAD/OpenCASCADE interface combined with the Geant4 and FLUKA Python API in \PYGEOMETRY{} 
-will allow for the creation of CAD BREP decomposition algorithms.
+will allow for the creation of CAD BREP decomposition algorithms. There are python based CAD modelling tools like 
+cadquery \cite{cadquery} which allow the creation of models using pure Python which should allow the conversion of GDML to STEP. 
 
 There is a strong relationship between \PYGEOMETRY{} and Geant4 and to a lesser extent between 
 \PYGEOMETRY{} and FLUKA. \PYGEOMETRY{} can be used as a testing ground for ideas prior to 
@@ -1371,7 +1374,8 @@ The authors welcome contributions, extensions and bug fixes as well as suggestio
 The development of \PYGEOMETRY{} has received funding from Science and
 Technology Research council grant ``The John Adams Institute for
 Accelerator Science'' ST/P00203X/1 through the John Adams Institute at
-Royal Holloway, and Royal Holloway Impact Acceleration Account.  Multiple
+Royal Holloway, and Royal Holloway Impact Acceleration Account. Gian Luigi D'Alessandro (CERN/JAI)
+provided geometry and tested multiple conversions of beamlines. Multiple
 undergraduate and masters students have contributed to the code for their
 degree project work: Simon Williams, Benjamin Shellswell and Joshua Albrecht.
 STB has benefited from discussions with and insight of Vasilis Vlachoudis
