@@ -1,4 +1,5 @@
-# Invoke the OGLSX driver 
+#/jai/booleanMesh cgal
+# Invoke the OGLSX driver
 # Create a scene handler and a viewer for the OGLSX driver
 #/vis/open OGL 600x600-0+0
 #/vis/open OGLSX
