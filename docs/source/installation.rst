@@ -23,7 +23,9 @@ directory::
 
   cd /my/path/to/repositories/
   git clone http://bitbucket.org/jairhul/pyg4ometry
+  git checkout develop_python3
   cd pyg4ometry
+  
   make install
 
 .. note::
@@ -40,6 +42,18 @@ Or install from pypi::
 
 or alternatively, run ``make develop`` from the same directory to ensure
 that any local changes are picked up.
+
+Docker image
+------------
+
+#. Download and install https://www.docker.com/products/docker-desktop
+#. open a terminal (linux) or cmd (windows)
+#. (windows) Start Xming or Vxsrv
+#. Download https://bitbucket.org/jairhul/pyg4ometry/raw/82373218033874607f682a77be33e03d5b6706aa/docker/Dockerfile-ubuntu-pyg4ometry
+#. ``docker build -t ubuntu-pyg4ometry -f Dockerfile-ubuntu-pyg4ometry .``
+#. ``docker run -ti -v /tmp/.X11-unix:/tmp/.X11-unix -v YOURWORKDIR:/tmp/Physics -e DISPLAY=YOUR_IP ubuntu-pyg4ometry``
+
+If you need to update increment the variable ``ARG PYG4OMETRY_VER=1``
 
 FreeCAD support for CAD to GDML conversion
 ------------------------------------------
