@@ -6,9 +6,9 @@ Installation
 Requirements
 ------------
 
- * pyg4ometry is developed exclusively for Python 2.7 (Python3 coming soon)
+ * pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated)
  * `VTK (Visualisation toolkit) <https://vtk.org>`_
- * `Freecad <0.17 <https://www.freecadweb.org>`_
+ * `Freecad  <https://www.freecadweb.org>`_
  * `antlr4 <https://www.antlr.org>`_
  * `cython <https://cython.org>`_
  * `GitPython <https://gitpython.readthedocs.io/en/stable/>`_
@@ -46,14 +46,29 @@ that any local changes are picked up.
 Docker image
 ------------
 
-#. Download and install https://www.docker.com/products/docker-desktop
+#. Download and install `Docker desktop <https://www.docker.com/products/docker-desktop>`_
 #. open a terminal (linux) or cmd (windows)
-#. (windows) Start Xming or Vxsrv
-#. Download https://bitbucket.org/jairhul/pyg4ometry/raw/82373218033874607f682a77be33e03d5b6706aa/docker/Dockerfile-ubuntu-pyg4ometry
+#. (windows) Start `Xming <https://sourceforge.net/projects/xming/>`_ or `Vxsrv <https://sourceforge.net/projects/vcxsrv/>`_
+#. Download the `pyg4ometry docker file <https://bitbucket.org/jairhul/pyg4ometry/raw/82373218033874607f682a77be33e03d5b6706aa/docker/Dockerfile-ubuntu-pyg4ometry>`_
 #. ``docker build -t ubuntu-pyg4ometry -f Dockerfile-ubuntu-pyg4ometry .``
-#. ``docker run -ti -v /tmp/.X11-unix:/tmp/.X11-unix -v YOURWORKDIR:/tmp/Physics -e DISPLAY=YOUR_IP ubuntu-pyg4ometry``
 
 If you need to update increment the variable ``ARG PYG4OMETRY_VER=1``
+
+To start the container
+
+#. open a terminal (linux/mac) or cmd (windows)
+#. get your IP address ``ifconfig`` (linux/mac) or ``ipconfig /all`` (windows)
+#. ``docker run -ti -v /tmp/.X11-unix:/tmp/.X11-unix -v YOURWORKDIR:/tmp/Physics -e DISPLAY=YOUR_IP ubuntu-pyg4ometry`` (the ``-v /tmp/.X11-unix:/tmp/.X11-unix`` is only required for mac/linux)
+
+Linux installation
+------------------
+
+There are docker files for Centos 7 and Ubuntu 20. The docker files can be used as list of instructions for
+installation for each of these OSes.
+
+* `Ubuntu 20.02 <https://bitbucket.org/jairhul/pyg4ometry/raw/82373218033874607f682a77be33e03d5b6706aa/docker/Dockerfile-ubuntu-pyg4ometry>`_
+* `Centos 7 <https://bitbucket.org/jairhul/pyg4ometry/raw/befcd36c1213670830b854d02c671ef14b3f0f5c/docker/Dockerfile-centos-pyg4ometry>`_
+
 
 FreeCAD support for CAD to GDML conversion
 ------------------------------------------
