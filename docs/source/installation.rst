@@ -58,7 +58,16 @@ To start the container
 
 #. open a terminal (linux/mac) or cmd (windows)
 #. get your IP address ``ifconfig`` (linux/mac) or ``ipconfig /all`` (windows)
+#. Start XQuartz (mac) or Xming/Vxsrv (windows). For Xming/Vxsrv (might need to play with the settings when launching)
 #. ``docker run -ti -v /tmp/.X11-unix:/tmp/.X11-unix -v YOURWORKDIR:/tmp/Physics -e DISPLAY=YOUR_IP ubuntu-pyg4ometry`` (the ``-v /tmp/.X11-unix:/tmp/.X11-unix`` is only required for mac/linux)
+
+Test the installation
+
+#. ``docker> cd pyg4ometry/pyg4ometry/test/pythonGeant4/``
+#. ``docker> ipython``
+#. ``python> import pyg4ometry``
+#. ``python> import T001_Box``
+#. ``python> T001_Box.Test(True,True)``
 
 Linux installation
 ------------------
