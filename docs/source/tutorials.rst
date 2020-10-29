@@ -62,8 +62,6 @@ In directory ``pyg4ometry/pyg4ometry/test/freecad``
 .. figure:: tutorials/tutorial3.png
    :alt: Example of STEP loading in pyg4ometry
 
-FLUKA loading and conversion to Geant4
---------------------------------------
 
 Merging geometry
 ----------------
