@@ -319,7 +319,7 @@ products include ESABASE2~\cite{ESABASE2} and FASTRAD~\cite{FASTRAD}. There are 
 geometry into formats usable by MCRT codes, with examples including DAGMC~\cite{DAGMC} and McCAD~\cite{McCad}. In principle CAD software can export shape data to STL 
 (or other similar mesh formats), which can be used by Geant4~\cite{poole2012acad}. In practice, using a lot of CAD models is difficult if that model is comprised of a 
 large number of parts. Exporting, assigning material to, and placing the STL components into the MCRT code can be a cumbersome task. Almost all modern CAD tools like 
-CATIA, Inventor, SolidWorks have a scripting language to allow users to programatically generate geometry. This scripting functionality is not available with either 
+CATIA, Inventor, SolidWorks have a scripting language to allow users to programmatically generate geometry. This scripting functionality is not available with either 
 GDML or FLUKA were users write the geometry files directly. The existent set of software does not provide a complete set of tools to efficiently create complex geometries.
 
 This paper is structured as follows, first a brief radiation transport-focused introduction to computer descriptions of geometry, followed by an explanation of the design 
@@ -784,7 +784,7 @@ infinitely-long elliptical cylinders and quadric surfaces.
 Translating these bodies to Geant4 requires generating the equivalent
 finite solid whilst retaining the same final finite Boolean shape.
 This is achieved with the use of axis-aligned bounding boxes (AABBs),
-in which the FLUKA body is translated to a finite solid with with
+in which the FLUKA body is translated to a finite solid with
 dimensions slightly larger than the AABB.  The lengths of infinite
 (elliptical) cylinders are reduced to finite equivalents with lengths
 slightly greater than the bounding box.  Similarly, half-spaces are
@@ -1351,7 +1351,7 @@ limits the display of very large models as geometry instances are replicated as 
 this could be drastically improved in a future release.
 
 The conversion which would most dramatically enhance the creation of RTMC geometry is CAD to Geant4 or FLUKA
-without use use of a triangular or tetrahedral mesh. There are existing approaches to decompose BREP solids to Geant4 and 
+without use of a triangular or tetrahedral mesh. There are existing approaches to decompose BREP solids to Geant4 and 
 FLUKA-like CSG geometry~\cite{WangNuclSciTech31-82-2020, LuFusionEngineeringAndDesign124-2017}. 
 The FreeCAD/OpenCASCADE interface combined with the Geant4 and FLUKA Python API in \PYGEOMETRY{} 
 will allow for the creation of CAD BREP decomposition algorithms. There are python based CAD modelling tools like 
