@@ -728,7 +728,7 @@ FLUKA geometry is based upon a limited set of primitives (referred to as
 \emph{bodies}) which can be combined using Boolean operations. A
 \emph{zone} consists of one or more bodies or \emph{subzones} combined
 using intersections and subtractions.  Zones may then be further combined
-using union operations to form \emph{regions}, which is defined as the
+using union operations to form \emph{regions}, which are defined as the
 union of one or more zones, as well as a material.
 
 \begin{figure}[htbp]
@@ -754,7 +754,7 @@ translation of infinite bodies to equivalent finite solids is one of the
 main and most involved steps in the conversion process.  This mapping is
 possible because whilst FLUKA bodies can be infinite in extent, all zones
 and regions must be finite.  Zones and regions are then composed by
-instantiating these classes and adding body instances to them.  Each
+instantiating their respective classes and adding body instances to them.  Each
 \pyinline{Zone} and \pyinline{Region} instance can then return its
 equivalent GDML Boolean solid.
 
@@ -766,7 +766,7 @@ and translated into GDML.  The translation involves a number of special
 steps to bridge the two disparate formats and ensure the resulting GDML is
 well-formed and usable in Geant4.  Some of these steps are simple, for
 example in FLUKA unions can be disconnected, but in Geant4 specifically
-only MultiUnions can be disconnected.  Therefore, MultiUnions are used
+only multi-unions can be disconnected.  Therefore, multi-unions are used
 throughout the converted geometry instead of the more conventional binary unions.
 Other procedures are more involved and are discussed in the rest of this
 section.
@@ -817,7 +817,7 @@ infinitely-long elliptical cylinders and quadric surfaces.
 Translating these bodies to Geant4 requires generating the equivalent
 finite solid whilst retaining the same final finite Boolean shape.
 This is achieved with the use of axis-aligned bounding boxes (AABBs),
-in which the FLUKA body is translated to a finite solid with with
+in which the FLUKA body is translated to a finite solid with 
 dimensions slightly larger than the AABB.  The lengths of infinite
 (elliptical) cylinders are reduced to finite equivalents with lengths
 slightly greater than the bounding box.  Similarly, half-spaces are
@@ -845,13 +845,14 @@ independent of the size of the solid, so generating the initial mesh from
 arbitrarily large solids works well.  Generating a quadric surface over a very large
 volume in space whilst retaining topological information is computationally
 very expensive, so to resolve this the user must provide the approximate
-axis-aligned bounding box of any region in which a quadric is used.
+axis-aligned bounding box of any region in which a quadric is used to
+constrain the size of the mesh only to where it is needed.
 
 \begin{algorithm}
 
   \KwData{FLUKA regions to be converted to GDML.}
   \KwResult{GDML solids equivalent to the FLUKA regions built from
-    minimally-sized primitive solids}
+    minimally-sized primitive solids.}
 
   \SetKwProg{ToGDML}{Function}{}{}
   \SetKwFunction{ToGDMLSolid}{ToGDMLSolid}
@@ -885,7 +886,7 @@ axis-aligned bounding box of any region in which a quadric is used.
 
   $ G \longleftarrow \emptyset$ \;
   \For{body $b$ and AABB $a$ in $E$}{
-    \tcp{Map the fluka bodies to minimal GDML solids by converting with the
+    \tcp{Map the FLUKA bodies to minimal GDML solids by converting with the
     minimal AABB, $a$.}
     $G \longleftarrow $ \ToGDMLSolid{$b, a$}\;
   }
@@ -896,7 +897,7 @@ axis-aligned bounding box of any region in which a quadric is used.
 
   \label{algo:redundant-halfspace}
   \caption{The infinite-body minimisation algorithm employed in the
-    conversion of Fluka to GDML.}
+    conversion of FLUKA to GDML.}
 \end{algorithm}
 
 
@@ -922,7 +923,7 @@ union components or that of two regions are perfectly coplanar in FLUKA.
 Coplanar faces of this nature are ubiquitous in FLUKA and present no
 problems to the operation of the program.  However, in Geant4 these will
 generally result in tracking errors.  These must be handled robustly to
-ensure the resulting geometry is usable.  Coplanar faces are resolved
+ensure the resulting geometry is usable in Geant4.  Coplanar faces are resolved
 automatically by slightly decreasing the size of every body that is used in
 an intersection, and increasing the size of every body used in a
 subtraction.  These rules are inverted for nested subtractions.  This
@@ -965,11 +966,11 @@ unit. The lattice cells themselves will generally lack structure
 and simply serve as a reference to the basic unit. The rototranslated
 lattice cell must fully contain the basic unit and all of the regions
 within it. When a particle steps into the lattice cell, the
-rototranslation is applied to that particle and it is is taken into the
-basic unit, and the simulation continues within the basic unit. Any
-particles leaving the basic unit will be translated back to the
+rototranslation is applied to that particle transporting it to the
+basic unit, and the simulation continues. Any
+particles leaving the basic unit will be transported back to the
 lattice cell with the inverted rototranslation. Up to two
-levels of lattice nesting the are supported in FLUKA.
+levels of lattice nesting are supported in FLUKA.
 
 \begin{figure}[hbtp]
 \begin{center}
@@ -985,7 +986,7 @@ levels of lattice nesting the are supported in FLUKA.
 This feature is clearly analogous to the logical/physical volume feature in
 Geant4, although it is more implicit as the contents of a given logical
 volume are explicitly stated, whereas the contents of a lattice cell
-are implied by the combination of the rototranslation and the locations of
+are implied by the combination of the rototranslation and the global positions of
 its lattice cell and basic unit.
 
 Translating the lattice construct into a logical volume (basic unit) with
@@ -997,10 +998,10 @@ rototranslation. By construction this will translate the lattice cell mesh
 directly onto the full basic unit mesh. This transformed lattice cell mesh
 can then be intersected with all other meshes in the scene.  Intersections
 with the transformed lattice cell mesh determine the contents of the basic
-unit.  Finally, the lattice cell can simply be replaced with a physical
+unit.  Finally, the contents of lattice cell can simply be replaced with a physical
 volume containing the logical volumes determined in the previous step.
-Thus a basic unit with one or more lattice cells can be translated into
-Geant4's logical volume with one or more physical volumes. As has been
+Thus a basic unit with one or more lattice cells can be translated into a
+Geant4 logical volume with one or more physical volumes. As has been
 stated, FLUKA supports two levels of lattice nesting, but currently the
 conversion to GDML supports only one. However, extending to an extra level
 is simple in that it only involves an additional application of a
@@ -1014,14 +1015,15 @@ FLUKA and accurately translated to GDML using \PYGEOMETRY{}.  Many of the
 steps described above were directly applied in this model and all the
 features are tested and demonstrated in the repository.  This set of
 algorithms for bridging FLUKA with GDML covers a very broad range of
-geometries, however a number of possible improvements for the future
-remain.  For example, FLUKA regions can in general be disconnected, that is
+geometries, however a number of possible improvements remain for the
+future.
+For example, FLUKA regions can in general be disconnected, that is
 to say the resulting set of points defined by that region may consist of
 two disconnected subvolumes.  In FLUKA this typically manifests itself in
-the form of disconnected unions, but it is also allowed for intersections
+the form of a disconnected unions, but it is also allowed for intersections
 and subtractions to be disconnected.  In the case of translating
 disconnected unions from FLUKA to GDML, this presents no difficulties as
-the GDML \pyinline{MultiUnion} solid is explicitly allowed to be formed from
+the GDML multi-union solid is explicitly allowed to be formed from
 disconnected parts.  However, it is forbidden for \pyinline{Intersection} or
 \pyinline{Subtraction} solids to be disconnected in this way and is
 therefore necessary to account for this difference between the two codes.
@@ -1036,7 +1038,8 @@ quadric into a TesselatedSolid comes at a potential performance cost in the
 tracking, as well as usability in \PYGEOMETRY{} as the user must provide an
 AABB for every single region featuring a quadric body.  In some cases
 tessellation is unavoidable (for example a hyperbolic paraboloid), but
-parabolic cylinders could for example be mapped to an \pyinline{ExtrudedSolid}.
+parabolic cylinders, for example, could be mapped to \pyinline{ExtrudedSolid}
+instances.
 This could provide both a performance improvement in the tracking time and
 make \PYGEOMETRY{} easier to use as an AABB would not need to be provided
 beforehand.  This has not been implemented as quadrics are relatively
@@ -1110,10 +1113,10 @@ MultiUnion			& $R_1 \cup R_2 \cup R_3 \cup$	\\ \hline
 \caption{GDML/Geant4 solids and the mapping to FLUKA regions.}
 \end{table}
 Understanding the algebra of FLUKA CSG and how it relates to Geant4's
-concepts of solids, logical volumes and physical volumes must be understood
+concepts of solids, logical volumes and physical volumes is necessary
 to perform an accurate conversion.  For example, a Geant4 logical volume
 solid may correspond to a FLUKA region consisting of many zones
-(i.e. unions), e.g.,~$R_1 = +z_1\: | +z_2$.  If this logical volume is
+(i.e. unions), e.g.,~$R_1 = +z_1\: |~+z_2$.  If this logical volume is
 placed as a physical volume inside some mother volume with its solid
 perhaps consisting of multiple zones, e.g., $R_2= +z_3 \: |~+z_4$, then
 subtracting a hole in the mother solid to make room for the daughter
@@ -1143,7 +1146,7 @@ and
 \label{eqn:setIntersection}
 \end{equation}
 
-FLUKA (apart from the \fluka{lattice} directive) has no sense of a volume hierarchy. Each body is placed with
+Apart from the lattice feature, FLUKA has no sense of a volume hierarchy. Each body is placed with
 translation, rotation and expansion geometry directives in global coordinates. A transformation from world
 coordinates to a physical volume is built up by recursively applying daughter volume transformations
 and  this is used to place FLUKA bodies. This  in practice is very similar to the procedure to create the
@@ -1162,7 +1165,7 @@ $S_{\rm region}$ can become very complex because of Equations \ref{eqn:setDiff},
 
 Figure~\ref{fig:gdml-flair} shows an example conversion from GDML to FLUKA. The example is a
 vacuum chamber with three ConFlat flange (CF) beam pipes connected to CF flanges. The top and bottom plates
-have been removed to display the geometry more clearly. The model is formed of \verb|Box| and
+have been removed to display the geometry more clearly. The model is formed of \verb|Box|,
 \verb|Tubs| and Boolean operations of subtraction, intersection and union.
 
 \subsection{Non-convex solid decomposition}
@@ -1180,8 +1183,8 @@ polyhedra~\cite{cgal:hk-bonp3-20b} and decomposed to convex
 polyhedra~\cite{cgal:h-emspe-20b}.
 
 \subsection{Disjunctive normal form and degenerate surfaces}
-Typically FLUKA will decompose a region into disjunctive normal form (DNF)
-as runtime, this normal form is characterised as the union of intersections and subtractions,
+FLUKA will typically decompose a region into disjunctive normal form (DNF)
+at runtime, this normal form is characterised as the union of intersections and subtractions,
 \begin{equation}
 R = z_1 \; | \;z_2\;  | \; z_3 	\; | \; z_4 \dots
 \end{equation}
@@ -1194,10 +1197,10 @@ explosion of the final DNF. There are well known algorithms to convert logical e
 \PYGEOMETRY{} can simplify parentheses from a region by creating a corresponding SymPy~\cite{10.7717/peerj-cs.103} Boolean
 expression and using the \verb|to_dnf| method.  Further simplification of the CSG tree leverages \PYGEOMETRY{}'s
 meshing capabilities combined with CSG pruning algorithms based
-on~\cite{pruning}.  FLUKA by default will try to expand all regions to
+on~\cite{pruning}.  FLUKA will by default try to expand all regions to
 their DNF at runtime, which inevitably can result in the sort of exponential explosion already mentioned.  Until version 4.0, if FLUKA identified
-such an explosion, it would report an error and exit, thus making such models impossible to run.  As of version 4.0, however, this
-expansion can be disabled, and the tracking algorithms will walk the CSG trees verbatim, at some tracking efficiency cost.  Therefore, most
+such an explosion, it would the expansion, report an error and exit, thus making such models impossible to run.  As of version 4.0, however, this
+expansion can be disabled, and the tracking algorithms will walk the CSG trees verbatim, albeit at some tracking efficiency cost.  Therefore, most
 output generated from the GDML to FLUKA conversion described here can only be used with FLUKA 4.0.
 
 \subsection{Materials}
@@ -1208,7 +1211,7 @@ the second is when \cpinline{G4Element} instances and relative atomic or mass ab
 \cpinline{G4Material} is converted to a \fluka{material} card, whilst the {\em element} \cpinline{G4Material}  is converted to a
 \fluka{compound} card. There are similar issues when converting \cpinline{G4Element} to FLUKA, as \cpinline{G4Element}
 can either be simple, i.e. defined only by atomic number and mass, or composite and defined by an admixture of
-relative abundances of \cpinline{G4Isotope}. A similar mapping is performed so that if a \cpinline{G4Element} is simple it is
+relative abundances of isotopes. A similar mapping is performed so that if a \cpinline{G4Element} is simple it is
 directly converted to a FLUKA \fluka{MATERIAL} card, and the {\it isotope} \cpinline{G4Element} is converted to a \fluka{compound}
 card. Geant4 also defines a set of standard materials~\cite{Geant4MaterialDB} or compounds from the US National Institute
 of Standards and Technology (NIST), so a user can, for example, simply
@@ -1221,17 +1224,20 @@ Overall the conversion to FLUKA input format from GDML is quite advanced
 and stable. Relatively large experimental simulations have been converted
 from GDML to FLUKA and have been used to produce simulation results. The
 conversion described still requires a user to understand how geometry is
-specified in both Geant4 and FLUKA. For example the subtraction of many
-non-primitive body daughter volumes from a mother will create a very
-complex region that is not in disjunctive normal form which is inefficient
+specified in both Geant4 and FLUKA. For example, as has been stated, a
+Geant4 mother volume will, when translated to a FLUKA region, have all of
+its daughters subtracted from its respective FLUKA region. If those daughter volumes, when
+translated to FLUKA, consist of combinations of many FLUKA bodies, the
+mother region can become very complex.  This complex
+region will generally not be in disjunctive normal form and is inefficient
 when viewed in FLUKA's graphical user interface (GUI), flair, and used for
 simulation in FLUKA.  Users who wish to minimise this should ensure that
 there are not large numbers of daughter volumes at the same level in the
 hierarchy, unless corresponding to solids which translate to simple
 primitives such as boxes.  Complex daughter volumes consisting of solids
-that are complex Booleans should be placed inside primitive solids that map
+that are complex Booleans should be placed inside solids that map
 to primitive FLUKA bodies.  This ensures that expanding to the DNF is
-computationally tractible, and in doing do FLUKA's tracking will be faster.
+computationally tractable, and in doing do FLUKA's tracking will be faster.
 This is not a drastic constraint on the conversion functionality, however,
 as this is actually typically how one would implement geometries in FLUKA
 regardless.
@@ -1240,8 +1246,8 @@ With the above in mind it is perhaps preferable for a user creating
 geometry from scratch to use \PYGEOMETRY{} and these conversion tools
 as part of the process.  This would allow a user to target multiple codes with
 a single source description with minimal additional effort.  However, there
-are still a  outstanding technical issues with the conversion, which are discussed in
-this section.
+are still a  outstanding technical issues with the conversion, which are
+discussed in the rest of this section.
 
 Replica, division and parametrised placements are not currently implemented
 and will be added in a future release. In Geant4 it is possible to create scaled
@@ -1272,24 +1278,22 @@ possible to remove obvious degeneracies but this is complicated by
 placements of bodies. Every FLUKA body with an arbitrary number of
 associated transformations (rototranslations, rotations or expansions)
 provided by geometry directives can be re-expressed purely in terms of a
-body (possibly of a different type) without any transform.  For example, a
-sphere with a geometry directive translation can be re-expressed as a
-sphere without a translation, and instead with offset added directly to the
-sphere's centre.  This {\em normal form} can be used to test for
-approximate equality between bodies that are equivalent whilst accounting
-for any transforms.  Approximate equality is required as multiple
-applications of rototranslations will accrue numerical rounding errors such
-that true equality is not maintained.  A simple example of this is the XYP
-and PLA, it is simple to transform an XYP into a PLA with an appropriate
-rotation. This would allow for the removal of degenerate surfaces removing
-potential coplanar overlaps and also reduce the final converted file size.
+body (possibly of a different type) without any transform. A simple example
+of this is the XYP and PLA, it is simple to transform an XYP into a PLA
+with an appropriate rotation. This {\em normal form} can be used to test
+for approximate equality between bodies that are equivalent whilst
+accounting for any transforms.  Approximate equality is required as
+multiple applications of rototranslations will accrue numerical rounding
+errors such that true equality is not maintained.  This would allow for the
+removal of degenerate surfaces removing potential coplanar overlaps and
+also reduce the final converted file size.
 
-The twisted primitives need to be decomposed
+The twisted primitive solids need to be decomposed
 into a union of convex solids. This decomposition does not always
 succeed or produces a far from optimal number of convex solids.
 An alternative to implementing these solids is to approximate each
 layer of the twisted solid as a union of tetrahedra. A similar problem
-exists for general tessellated solids, which in general
+exists for tessellated solids, which in general
 are non-convex and need decomposition into convex hulls. An alternative
 to the computationally expensive convex decomposition is to
 create a region formed from the unions of tetrahedra. There are numerous
@@ -1334,14 +1338,18 @@ information required for MCRT codes. The loading of STEP files in
 \PYGEOMETRY{} is demonstrated in Listing~\ref{lst:pythonCADLoading}.
 
 \begin{lstlisting}[caption={A simple \PYGEOMETRY{} Python script to load a STEP file.},label={lst:pythonCADLoading}, language=Python]
-reader = pyg4ometry.freecad.Reader("CadFileName.step")
+import pyg4ometry.freecad as freecad
+
+reader = freecad.Reader("CadFileName.step")
 reader.relabelModel()
 reader.convertFlat()
 logical = reader.getRegistry().getWorldVolume()
 \end{lstlisting}
 Compared to other file readers, two additional steps are required: \pyinline{relabelModel} and \pyinline{convertFlat}. CAD model
-part names can contain characters which are not allowed in Python dictionaries so need to be replaced by \pyinline{relabelModel}.
-CAD models might also have a hierarchy of parts and assemblies, these are converted without this structure by \pyinline{convertFlat}.
+part names can contain characters which are not allowed in Python
+dictionaries so need to be replaced by using \pyinline{relabelModel}.
+CAD models might also have a hierarchy of parts and assemblies, these are
+converted without this structure by using \pyinline{convertFlat}.
 In general there is no requirement to avoid geometric overlap  of parts in
 a CAD file. This will result in overlaps between the converted tessellated
 solids. This is avoided by shrinking each solid by computing the normal ${\bf n}$  for each
@@ -1360,14 +1368,14 @@ and workflows. A fictitious beamline was created to demonstrate the capabilities
 from BDSIM), a sector bend dipole electromagnet (created in Autodesk Fusion 360) and finally a Faraday cup (FLUKA geometry designed in
 flair). Each different file is loaded using the appropriate \PYGEOMETRY{} \pyinline{Reader} class and then placed as a physical volume. The final composite
 geometry is shown in Figure~\ref{fig:model}. It must be noted that when this complete geometry is written to GDML and loaded into
-Geant4 it cannot be visualised in anything but the ray tracer because of limitations in the OpenGL visualisation in Geant4. Another
+Geant4 it cannot be visualised with anything but the ray tracer due to limitations in the OpenGL visualisation in Geant4. Another
 important note is that this geometry cannot be converted to FLUKA as it contains tessellated solids (both the STL gate valve and
 dipole magnet).
 %
 \begin{figure*}
 \begin{center}
 \includegraphics[width=1.0\textwidth]{./model-scene/model.pdf}
-\caption{Complete compositing example using \PYGEOMETRY{}.}
+\caption{Complete composite example using \PYGEOMETRY{} showing a model with geometry sourced from a range of different formats.}
 \label{fig:model}
 \end{center}
 \end{figure*}
@@ -1402,7 +1410,7 @@ will save significant amounts of time and user effort and will ultimately
 yield more accurate simulations. \PYGEOMETRY{} is a relatively complete implementation of a geometry
 creation tool, and whilst heavily internally based on Geant4 and GDML, it can have utility for users of all MCRT
 codes. \PYGEOMETRY{} can clearly be extended to other formats or applications. Presently it provides a coherent and
-uniform interface to existing tools and utilities, and by using the Python programming language \PYGEOMETRY{}
+uniform interface to existing tools and utilities, and by using the Python programming language
  the programmatic control of geometry creation or modification is possible. This approach allows the integration of
 other available tools~\cite{DavisNIMA915-65} into a unified workflow.
 
@@ -1418,7 +1426,7 @@ studies of the MCRT simulation performance is beyond the scope of this publicati
 There are many output format extensions that can be considered for \PYGEOMETRY{}.
 Geant4 geometry is primarily created by writing C++ programs, so an output writer that
 converts the \PYGEOMETRY{} in-memory representation to C++ will allow rapid geometry
-modelling but inclusion of the geometry into an existing Geant4 application. This is not
+modelling and inclusion of the geometry into an existing Geant4 application. This is not
 implemented in the current version but could be relatively quickly implemented for users that
 require this functionality. At present \PYGEOMETRY{} supports reading and writing
 Geant4 (GDML) and FLUKA files but could be extended without significant effort to other MCRT codes
@@ -1466,13 +1474,13 @@ The development of \PYGEOMETRY{} has received funding from Science and
 Technology Research council grant ``The John Adams Institute for
 Accelerator Science'' ST/P00203X/1 through the John Adams Institute at
 Royal Holloway, and Royal Holloway Impact Acceleration Account. Gian Luigi D'Alessandro (CERN/JAI)
-provided geometry and tested multiple conversions of beamlines. Multiple
+provided geometry and tested multiple converted beamlines. Multiple
 undergraduate and masters students have contributed to the code for their
 degree project work: Simon Williams, Benjamin Shellswell and Joshua Albrecht.
 STB has benefited from discussions with, and the insights of, Vasilis Vlachoudis
 (CERN) regarding FLUKA geometry and flair.  Cédric Hernalsteens (ULB/CERN) and
 Alistair Butcher (RHUL) also made useful contributions to the code. Don Boogert
-provided valuable insight on meshing and modern computer graphics programming.
+provided valuable insights on meshing and modern computer graphics programming.
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
