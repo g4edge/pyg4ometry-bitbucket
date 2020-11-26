@@ -17,6 +17,7 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     trmax  = _gd.Constant("rmax","10.0",reg,True)
     trtor  = _gd.Constant("rtor","40.0",reg,True)
     tsphi  = _gd.Constant("sphi","0",reg,True)
+    tsphi2 = _gd.Constant("sphi2s","0.3*pi",reg,True)
     tdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
@@ -24,12 +25,15 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts = _g4.solid.Torus("ts",trmin,trmax,trtor,tsphi,tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
+    ts1 = _g4.solid.Torus("ts1",trmin,trmax,trtor,tsphi, tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
+    ts2 = _g4.solid.Torus("ts2",trmin,trmax,trtor,tsphi2,tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
-    tl = _g4.LogicalVolume(ts, tm, "tl", reg)
-    tp = _g4.PhysicalVolume([0,0,0],[0,0,0],  tl, "t_pv1", wl, reg) 
+    tl1 = _g4.LogicalVolume(ts1, tm, "tl1", reg)
+    tl2 = _g4.LogicalVolume(ts2, tm, "tl2", reg)
+    tp1 = _g4.PhysicalVolume([0,0,0],[0,0,0],   tl1, "t1_pv1", wl, reg)
+    tp2 = _g4.PhysicalVolume([0,0,0],[0,0,2*trmax+5],  tl2, "t2_pv1", wl, reg) 
 
     # set world volume
     reg.setWorld(wl.name)
@@ -41,7 +45,7 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T010_Torus.gmad"),"T010_Torus.gdml")
 
     # test __repr__
-    str(ts)
+    str(ts1)
 
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
