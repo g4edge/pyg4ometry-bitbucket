@@ -18,8 +18,8 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20, scale=[-1
     trmin  = _gd.Constant("rmin","2.0",reg,True)
     trmax  = _gd.Constant("rmax","10.0",reg,True)
     trtor  = _gd.Constant("rtor","40.0",reg,True)
-    tsphi  = _gd.Constant("sphi","0.1*pi/2.0",reg,True)
-    tdphi  = _gd.Constant("dphi","0.95*pi/2.0",reg,True)
+    tsphi  = _gd.Constant("sphi","0.05*pi/2.0",reg,True)
+    tdphi  = _gd.Constant("dphi","0.9*pi/2.0",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
     tm = _g4.MaterialPredefined("G4_Fe") 
