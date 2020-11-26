@@ -35,8 +35,8 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20, scale=[-1
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, tm, "tl", reg)
     ul = _g4.LogicalVolume(us, tm, "ul", reg)
-    tp1 = _g4.PhysicalVolume([0,0,0],[0,0,20],  tl, "t_pv1", wl, reg)
-    tp2 = _g4.PhysicalVolume([0,0,0],[0,0,20],  tl, "t_pv2", wl, reg, scale=scale)
+    tp1 = _g4.PhysicalVolume([0,0,0],[20,20,20], tl, "t_pv1", wl, reg)
+    tp2 = _g4.PhysicalVolume([0,0,0],[20,20,20], tl, "t_pv2", wl, reg, scale=scale)
     up  = _g4.PhysicalVolume([0,0,0],[20,10,60], ul, "u_pv1", wl, reg)
     up2 = _g4.PhysicalVolume([0,0,0],[20,10,60], ul, "u_pv2", wl, reg, scale=scale)
 
