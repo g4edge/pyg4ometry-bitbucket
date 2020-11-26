@@ -17,7 +17,7 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     trmax  = _gd.Constant("rmax","10.0",reg,True)
     trtor  = _gd.Constant("rtor","40.0",reg,True)
     tsphi  = _gd.Constant("sphi","0",reg,True)
-    tsphi2 = _gd.Constant("sphi2s","0.5*pi",reg,True)
+    tsphi2 = _gd.Constant("sphi2s","0.3*pi",reg,True)
     tdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
     
     wm = _g4.MaterialPredefined("G4_Galactic") 
