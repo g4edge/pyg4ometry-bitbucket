@@ -36,7 +36,7 @@
 \usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
 \PassOptionsToPackage{hyphens}{url}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{todonotes}
 \usepackage{siunitx}
 \usepackage{lineno}
@@ -72,15 +72,15 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
 
-\hypersetup{
-    colorlinks=false,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-    pdftitle={Pyg4ometry paper},
-    bookmarks=true,
-    pdfpagemode=FullScreen,
-}
+%\hypersetup{
+%    colorlinks=false,
+%    linkcolor=blue,
+%    filecolor=magenta,
+%    urlcolor=cyan,
+%    pdftitle={Pyg4ometry paper},
+%    bookmarks=true,
+%    pdfpagemode=FullScreen,
+%}
 
 \newcommand{\pyinline}[1]{\lstinline[postbreak={}]{#1}}
 \newcommand{\cpinline}[1]{\lstinline[postbreak={}]{#1}}
