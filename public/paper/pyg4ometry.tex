@@ -294,7 +294,7 @@ include MCNP~\cite{Mcnp_Werner}, FLUKA~\cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3
 All these codes are based on the Monte Carlo technique but each code either has a particular specialism, simulation methodology or target user community.
  Monte Carlo RT (MCRT) simulations have diverse uses including shielding calculations for radiological protection, detector performance, medical
 imaging and therapy, and space radiation environment simulations. A fundamental requirement of all of the codes is to supply a
-computer-readable description of the  physical three-dimensional geometry that  the particles are passing through.  The creation of geometry files is
+computer-readable description of the  physical 3D geometry that  the particles are passing through.  The creation of geometry files is
 typically a very time-consuming activity and the simulation validity and performance is directly dependent on the quality of the geometry. There is no
 standard geometry format used across MCRT codes, with each code often using its own unique format. A user will typically not have geometry in both FLUKA and Geant4 for example. A geometry system
 that enables the conversion between files prepared for different codes will allow for cross-checks of the physics processes in different particle transport
@@ -510,7 +510,7 @@ allowed to vary for each placement.  Another way in GDML to create parametrised 
 future release.
 
 \subsection{Tessellation of solids (meshing)}
-Creating a uniform three-dimensional mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap
+Creating a uniform 3D mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap
 detection. For each Geant4 solid instance a triangular tessellated vertex-face mesh is generated and cached. This mesh is then used to determine the extent
 of placed instances of geometry (physical volumes) and meshes for CSG-derived solids. CSG mesh calculations are performed using a Binary Space Partitioning
 (BSP) tree technique in pure Python~\cite{pycsg} or via the Computational
