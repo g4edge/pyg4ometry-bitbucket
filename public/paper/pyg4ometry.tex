@@ -299,7 +299,7 @@ typically a very time-consuming activity and the simulation validity and perform
 standard geometry format used across MCRT codes, with each code often using its own unique format. A user will typically not have geometry in both FLUKA and Geant4 for example. A geometry system
 that enables the conversion between files prepared for different codes will allow for cross-checks of the physics processes in different particle transport
  codes.  The file formats used for geometry are generally focused
- on the computational efficiency of particle tracking algorithms  and not ease of use. In addition to the creation of geometry files for RT programs, usually
+ on the computational efficiency of particle tracking algorithms  and not ease of preparation. In addition to the creation of geometry files for RT programs, usually
  computer-aided design (CAD) files exist for systems which need to be simulated. The fundamental geometric representations in CAD files are usually not
  amenable to MCRT programs.  For these reasons it is advantageous to create a software tool that allows particle transport code users to rapidly develop
  error-free geometry files, convert between common MCRT geometry formats and load CAD models.
@@ -513,8 +513,11 @@ future release.
 Creating a uniform three-dimensional mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap
 detection. For each Geant4 solid instance a triangular tessellated vertex-face mesh is generated and cached. This mesh is then used to determine the extent
 of placed instances of geometry (physical volumes) and meshes for CSG-derived solids. CSG mesh calculations are performed using a Binary Space Partitioning
-(BSP) tree technique in pure Python~\cite{pycsg} or via the Computational Geometry Algorithms Library (CGAL) surface meshes~\cite{cgal:bsmf-sm-20b} in C++. In
-general, the CGAL implementation is one to two orders of magnitude faster than the pure Python CSG implementation and must be used for large geometries.
+(BSP) tree technique in pure Python~\cite{pycsg} or via the Computational
+Geometry Algorithms Library (CGAL) surface meshes~\cite{cgal:bsmf-sm-20b}
+in C++. The pure Python CSG backend is further accelerated by compiling it
+to C using Cython\cite{cython}.
+For maximum flexibility either backend can be used, but in general, the CGAL implementation is one to two orders of magnitude faster than the Cythonized CSG implementation and must be used for large geometries.
 Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of triangles. Before meshes are visualised or written to file
 various polygon mesh algorithms  from CGAL~\cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features.
 
