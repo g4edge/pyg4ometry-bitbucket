@@ -516,10 +516,10 @@ of placed instances of geometry (physical volumes) and meshes for CSG-derived so
 (BSP) tree technique in pure Python~\cite{pycsg} or via the Computational
 Geometry Algorithms Library (CGAL) surface meshes~\cite{cgal:bsmf-sm-20b}
 in C++. The pure Python CSG backend is further accelerated by compiling it
-to C using Cython\cite{cython}.
-For maximum flexibility either backend can be used, but in general, the
+to C using Cython~\cite{cython}.
+For maximum flexibility either backend can be used, but in general the
 CGAL implementation is one to two orders of magnitude faster than the
-Cythonized CSG implementation and should be used for large geometries.
+Cythonized CSG implementation and should be preferred, particularly for large geometries.
 Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of triangles. Before meshes are visualised or written to file
 various polygon mesh algorithms  from CGAL~\cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features.
 
