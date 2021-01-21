@@ -5,11 +5,11 @@
 		<rotation name="union_rotation2" unit="deg" x="0.0" y="0.0" z="30"/>
 	</define>
 	<materials>
-		<material Z="13" name="ALU">
+		<material Z="13" name="ALU" state="solid">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
-		<material Z="1" name="AIR">
+		<material Z="1" name="AIR" state="gas">
 			<D value="1e-24"/>
 			<atom value="1.00794"/>
 		</material>

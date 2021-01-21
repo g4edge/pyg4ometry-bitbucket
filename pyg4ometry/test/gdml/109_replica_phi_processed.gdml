@@ -2,11 +2,11 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define/>
 	<materials>
-		<material Z="13" name="ALU">
+		<material Z="13" name="ALU" state="solid">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
-		<material Z="1" name="AIR">
+		<material Z="1" name="AIR" state="gas">
 			<D value="1e-24"/>
 			<atom value="1.00794"/>
 		</material>
