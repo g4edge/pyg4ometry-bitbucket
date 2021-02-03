@@ -31,6 +31,8 @@ pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            extra_compile_args=["-std=c++14"])
 
 cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
+                          include_dirs = ['/opt/local/include/',
+                                          '/usr/include/'],
                            sources = ['./pyg4ometry/pycgal/geom.cxx'],
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
