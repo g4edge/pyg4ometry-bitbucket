@@ -11,6 +11,9 @@ def Test(vis=False, interactive=False, n_slice=16, n_stack=16):
 
     _config.setGlobalMeshSliceAndStack(n_slice)
 
+    # nstack and nslice can be set individually for one solid via:
+    #_config.SolidDefaults.Orb.nslice = 40
+
     # defines
     wx = _gd.Constant("wx", "100", reg, True)
     wy = _gd.Constant("wy", "100", reg, True)
@@ -58,4 +61,4 @@ def Test(vis=False, interactive=False, n_slice=16, n_stack=16):
 
 
 if __name__ == "__main__":
-    Test(1, 1, 8, 16)
+    Test()
