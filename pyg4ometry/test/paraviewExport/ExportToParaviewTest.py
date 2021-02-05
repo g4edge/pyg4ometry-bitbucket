@@ -18,7 +18,7 @@ def localFile(filename):
 
 
 def exportToVTKTest():
-    e = pyg4ometry.visualisation.VtkExporter(localPath('./paraview_model/'))
+    e = pyg4ometry.visualisation.VtkExporter(localPath('./'))
 
     reader = pyg4ometry.gdml.Reader(localFile('model.gdml'))
     reg = reader.getRegistry()
@@ -38,7 +38,7 @@ def exportToVTKTest():
 
 
 def exportToParaview():
-    e = pyg4ometry.visualisation.VtkExporter(localPath('./paraview_model/'))
+    e = pyg4ometry.visualisation.VtkExporter(localPath('./'))
 
     reader = pyg4ometry.gdml.Reader(localFile('model.gdml'))
     reg = reader.getRegistry()
