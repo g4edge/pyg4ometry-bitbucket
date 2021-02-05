@@ -52,3 +52,5 @@ low_poly_human.zip
 low_poly_human
 .coverage
 profile/fluka/profile-results/*
+**/*.vtm
+**/*.vtp
