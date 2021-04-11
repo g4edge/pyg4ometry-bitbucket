@@ -3,6 +3,8 @@ from distutils.command import build_ext
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
+import pybind11
+
 # https://github.com/pypa/pip/issues/7953
 import site
 site.ENABLE_USER_SITE = True
@@ -20,10 +22,16 @@ plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 
+pybind11_include = pybind11.get_include()
+
+
+
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
                                            '/opt/local/include/',
-                                           '/usr/include/'],
+                                           '/usr/include/',
+                                           pybind11_include,
+                                           ],
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
@@ -33,12 +41,15 @@ pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
 cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
                            sources = ['./pyg4ometry/pycgal/geom.cxx'],
                            language="c++",
-                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+                          include_dirs=[pybind11_include],
+                          extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
                                            '/opt/local/include/',
-                                           '/usr/include/'],
+                                           '/usr/include/',
+                                           pybind11_include
+                                           ],
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/algo.cxx'],
@@ -49,7 +60,9 @@ cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
 cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            include_dirs = ['./pyg4ometry/external/cgal-install/include/',
                                            '/opt/local/include/',
-                                           '/usr/include/'],
+                                           '/usr/include/',
+                                           pybind11_include
+                                           ],
                            libraries = ['mpfr','gmp'],
                            library_dirs = ['/opt/local/lib'],
                            sources = ['./pyg4ometry/pycgal/core.cxx'],
@@ -57,6 +70,8 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                                           './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+# from IPython import embed; embed()
 
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
