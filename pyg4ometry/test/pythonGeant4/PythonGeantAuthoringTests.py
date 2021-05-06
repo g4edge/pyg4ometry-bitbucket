@@ -309,7 +309,7 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         T204_NIST_Element.Test_NIST_Element()
 
     def test_PythonGeant_T205_NIST_Material(self):
-        T204_NIST_Element.Test_NIST_Material()
+        T205_NIST_Element.Test_NIST_Material()
 
     def test_PythonGeant_T400_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
