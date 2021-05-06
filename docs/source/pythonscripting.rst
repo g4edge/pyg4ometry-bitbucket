@@ -234,8 +234,41 @@ Example of elements formed by isotopes
    uranium = _g4.ElementIsotopeMixture("uranium", "U", 2)
    uranium.add_isotope(u235, 0.00716)
    uranium.add_isotope(u238, 0.99284)
-   bm = _g4.MaterialCompound("natural_uranium", 19.1, 2, reg)
-   bm.add_element_massfraction(uranium, 1) 
+   bm = _g4.MaterialCompound("natural_uranium", 19.1, 1, reg)
+   bm.add_element_massfraction(uranium, 1)
+
+
+NIST Materials
+**************
+
+Geant4 has many predefined materials according to the NIST database. Their name typically starts
+with :code:`G4_`. These typically can be used with :code:`MaterialPredefined` and we **do not need*
+to specify the full composition - Geant4 will find them at run time.
+
+However, in the case of conversion to FLUKA, these are fully expanded according to their definition
+in Geant4 based on a cache in pyg4ometry of the material compositions generated using BDSIM from
+Geant4 (10.7.p01 as of writing). Should the user wish to use these, they can be accessed from the
+functions in the geant4 module.
+
+.. code-block :: python
+   :linenos:
+
+   import pyg4ometry
+   nistHydrogenElement = pyg4ometry.geant4.nist_element_2geant4Element('G4_H')
+
+Note, an 'element' cannot be used as a 'material' in a logical volume. We must upgrade it to a material
+for that. The NIST elements contain the appropriate mixture of natural isotopes and can be used in
+:code:`MaterialCompound` as demonstrated above.
+
+Alternatively, we can access the NIST materials and materials of elements.
+
+.. code-block :: python
+   :linenos:
+
+   import pyg4ometry
+   nistHydrogenMaterial = pyg4ometry.geant4.nist_material_2geant4Material('G4_H')
+   nistConcreteMaterial = pyg4ometry.geant4.nist_material_2geant4Material('G4_CONCRETE')
+
 
 Detector contruction 
 --------------------
