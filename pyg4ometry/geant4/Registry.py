@@ -232,11 +232,24 @@ class Registry:
 
         return define.name
 
-    def setWorld(self, worldName):
-        self.worldName = worldName
-        self.worldVolume = self.logicalVolumeDict[self.worldName]
-        self.orderLogicalVolumes(worldName)
-        self.logicalVolumeList.append(worldName)
+    def setWorld(self, worldIn):
+        """
+        The argument can either be the name of logical volume of the world
+        or the pyg4ometry.geant4.LogicalVolume instance of the world volume.
+        The term world is used to refer to the outermost volume of the hierarchy.
+        """
+        if type(worldIn) is str:
+            # assume it's the name of the world volume
+            self.worldName = worldIn
+            self.worldVolume = self.logicalVolumeDict[worldIn]
+            self.orderLogicalVolumes(worldIn)
+            self.logicalVolumeList.append(worldIn)
+        else:
+            self.worldName = worldIn.name
+            self.worldVolume = worldIn
+            if worldIn not in self.logicalVolumeDict:
+                self.logicalVolumeDict[worldIn.name] = worldIn
+            self.logicalVolumeList.append(worldIn.name)
 
     def _orderMaterialList(self, materials, materials_ordered=[]):
         for mat in materials:
