@@ -56,6 +56,7 @@ from . import T201_Materials
 from . import T202_OpticalSurface
 from . import T203_MaterialsRegistry
 from . import T204_NIST_Element
+from . import T205_NIST_Material
 from . import T400_MergeRegistry
 from . import T401_MergeRegistry_Box
 from . import T402_MergeRegistry_Tubs
@@ -309,7 +310,7 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         T204_NIST_Element.Test_NIST_Element()
 
     def test_PythonGeant_T205_NIST_Material(self):
-        T205_NIST_Element.Test_NIST_Material()
+        T205_NIST_Material.Test_NIST_Material()
 
     def test_PythonGeant_T400_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
