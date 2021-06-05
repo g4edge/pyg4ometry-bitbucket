@@ -62,3 +62,6 @@ def Test(vis = False, interactive = False, fluka = True) :
         v.addLogicalVolume(wl)
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
+
+if __name__ == "__main__":
+    Test()

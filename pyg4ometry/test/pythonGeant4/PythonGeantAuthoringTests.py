@@ -53,6 +53,9 @@ from . import T110_replica_rho
 from . import T111_parameterised_box
 from . import T112_parameterised_tube
 from . import T201_Materials
+from . import T202_OpticalSurface
+from . import T203_MaterialsRegistry
+from . import T204_NIST_Element
 from . import T400_MergeRegistry
 from . import T401_MergeRegistry_Box
 from . import T402_MergeRegistry_Tubs
@@ -295,6 +298,18 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         T201_Materials.Test_MaterialCompoundAtoms()
         T201_Materials.Test_MaterialMixture()
         T201_Materials.Test_MaterialIsotopes()
+
+    def test_PythonGeant_T202_OpticalSurface(self):
+        T202_OpticalSurface.Test_OpticalSurface()
+
+    def test_PythonGeant_T203_MaterialsRegistry(self):
+        T203_MaterialsRegistry.Test_MaterialsRegistry()
+
+    def test_PythonGeant_T204_NIST_Element(self):
+        T204_NIST_Element.Test_NIST_Element()
+
+    def test_PythonGeant_T205_NIST_Material(self):
+        T205_NIST_Element.Test_NIST_Material()
 
     def test_PythonGeant_T400_MergeRegistry(self):
         self.assertTrue(T400_MergeRegistry.Test())
