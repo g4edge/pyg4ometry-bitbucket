@@ -242,7 +242,7 @@ NIST Materials
 **************
 
 Geant4 has many predefined materials according to the NIST database. Their name typically starts
-with :code:`G4_`. These typically can be used with :code:`MaterialPredefined` and we **do not need*
+with :code:`G4_`. These typically can be used with :code:`MaterialPredefined` and we **do not need**
 to specify the full composition - Geant4 will find them at run time.
 
 However, in the case of conversion to FLUKA, these are fully expanded according to their definition

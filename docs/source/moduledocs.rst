@@ -161,7 +161,7 @@ Geant4 module
    :undoc-members:
    :show-inheritance:
 
-VTK module 
+VTK module
 ----------
 .. automodule:: pyg4ometry.visualisation.VtkViewer
    :members:
