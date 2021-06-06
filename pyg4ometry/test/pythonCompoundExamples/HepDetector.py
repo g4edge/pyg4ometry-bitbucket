@@ -4,6 +4,13 @@ import numpy as _np
 def HepDetector():
     reg = pyg4ometry.geant4.Registry()
 
+    twopi = pyg4ometry.gdml.Constant("twopi", "2.0*pi", reg)
+    constants = {"twopi" : twopi}
+
+    solenoidInnerRadius = 510
+    solenoidThickness   = 100
+    solenoidLength      = 1800
+
     worldSolid = pyg4ometry.geant4.solid.Box("world_solid",10000,10000,10000,reg,"mm")
     worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid,"G4_Galactic","worldLV",reg)
     
