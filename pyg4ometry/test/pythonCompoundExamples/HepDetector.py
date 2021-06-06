@@ -5,7 +5,7 @@ def HepDetector() :
     pass
 
 
-def SiTracker() :
+def SiBarrelTracker() :
     reg = pyg4ometry.geant4.Registry()
 
     worldBox      = pyg4ometry.geant4.solid.Box("worldBox",10000,10000,10000,reg,"mm")
@@ -17,13 +17,13 @@ def SiTracker() :
 
     siTrackerModuleAv = SiTrackerBarrelModule(reg=reg)
 
-    siTrackerLayer1Av = SiTrackerBarrelLayer(name = "barrelAv1", moduleAv=siTrackerModuleAv, radius = 0.15, nAzimuth = 25, reg = reg)
+    siTrackerLayer1Av = SiTrackerBarrelLayer(name = "barrelAv1", moduleAv=siTrackerModuleAv, radius = 0.15, nAzimuth = 15, reg = reg)
     siTrackerLayer1Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer1Av,"siTrackerLayer1Pv",siTrackerLv, reg)
 
-    siTrackerLayer2Av = SiTrackerBarrelLayer(name = "barrelAv2", moduleAv=siTrackerModuleAv, radius = 0.30, nAzimuth = int(0.3/0.15*25), reg = reg)
+    siTrackerLayer2Av = SiTrackerBarrelLayer(name = "barrelAv2", moduleAv=siTrackerModuleAv, radius = 0.30, nAzimuth = int(0.3/0.15*15), reg = reg)
     siTrackerLayer2Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer2Av,"siTrackerLayer2Pv",siTrackerLv, reg)
 
-    siTrackerLayer3Av = SiTrackerBarrelLayer(name = "barrelAv3", moduleAv=siTrackerModuleAv, radius = 0.45, nAzimuth = int(0.45/0.15*25), reg = reg)
+    siTrackerLayer3Av = SiTrackerBarrelLayer(name = "barrelAv3", moduleAv=siTrackerModuleAv, radius = 0.45, nAzimuth = int(0.45/0.15*15), reg = reg)
     siTrackerLayer3Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer3Av,"siTrackerLayer3Pv",siTrackerLv, reg)
 
     v = pyg4ometry.visualisation.VtkViewer()
@@ -71,14 +71,14 @@ def SiTrackerBarrelModule(sensorSize = 0.08, sensorGap = 3e-3,pcbLength = 0.015,
 
     tiltAngleRad = pyg4ometry.transformation.deg2rad(tiltAngleDeg)
 
-    moduleAv = pyg4ometry.geant4.AssemblyVolume("moduleAv",reg,True)
+    moduleAv = pyg4ometry.geant4.AssemblyVolume("barrelModuleAv",reg,True)
 
     sensorLv = SiTrackerBarrelSensor(sensorSize = sensorSize,
                                      sensorThickness = 300e-6,
                                      nstrip = 512,
                                      reg = reg)
-    sensorPv1 = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,-sensorSize/2, sensorGap/2, "m"], sensorLv,"sensorPv1",moduleAv,reg)
-    sensorPv2 = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0, sensorSize/2, sensorGap/2, "m"], sensorLv,"sensorPv1",moduleAv,reg)
+    sensorPv1 = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,-sensorSize/2, sensorGap/2, "m"], sensorLv,"sensorBarrelPv1",moduleAv,reg)
+    sensorPv2 = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0, sensorSize/2, sensorGap/2, "m"], sensorLv,"sensorBarrelPv1",moduleAv,reg)
     sensorPv3 = pyg4ometry.geant4.PhysicalVolume([0,0,tiltAngleRad],[-sensorSize/2*_np.sin(tiltAngleRad),-sensorSize/2*_np.cos(tiltAngleRad),-sensorGap/2, "m"], sensorLv,"sensorPv1",moduleAv,reg)
     sensorPv4 = pyg4ometry.geant4.PhysicalVolume([0,0,tiltAngleRad],[ sensorSize/2*_np.sin(tiltAngleRad), sensorSize/2*_np.cos(tiltAngleRad),-sensorGap/2, "m"], sensorLv,"sensorPv1",moduleAv,reg)
 
@@ -92,19 +92,45 @@ def SiTrackerBarrelSensor(sensorSize = 0.05, sensorThickness = 300e-6, nstrip = 
     if reg is None :
         reg = pyg4ometry.geant4.Registry()
 
-    sensor = pyg4ometry.geant4.solid.Box("sensorSolid",sensorSize, sensorSize, sensorThickness,reg, "m", True)
-    sensorLv = pyg4ometry.geant4.LogicalVolume(sensor,"G4_Si","sensorLV",reg,True)
+    sensor   = pyg4ometry.geant4.solid.Box("sensorBarrrelSolid",sensorSize, sensorSize, sensorThickness,reg, "m", True)
+    sensorLv = pyg4ometry.geant4.LogicalVolume(sensor,"G4_Si","sensorBarrelLV",reg,True)
 
     return sensorLv
 
-def SiTrackerEndLayer(innerRadius = 0.3, outerRadius = 0.56, nPetal = 20, phiPetal = 0.6) :
+def SiTrackerEndcapLayer(innerRadius = 0.3, outerRadius = 0.56, nPetal = 20, phiPetal = 0.6) :
     pass
 
-def SiTrackerEndModule() :
-    pass
+def SiTrackerEndcapModule(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorGap = 3e-3, reg = None) :
+    if reg is None :
+        reg = pyg4ometry.geant4.Registry()
 
-def SiTrackerEndSensor(innerRadius = 0.3, outerRadius = 0.56) :
-    pass
+    moduleAv = pyg4ometry.geant4.AssemblyVolume("endcapModuleAv",reg,True)
+
+    sensorLv = SiTrackerEndcapSensor(innerRadius = innerRadius,
+                                     outerRadius = outerRadius,
+                                     sensorSize  = sensorSize,
+                                     reg = reg)
+
+    sensorPv1 = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0, sensorGap/2, 0, "m"], sensorLv,"sensorEndcapPv1",moduleAv,reg)
+    sensorPv2 = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,-sensorGap/2, 0, "m"], sensorLv,"sensorEndcapPv2",moduleAv,reg)
+
+    return moduleAv
+
+
+def SiTrackerEndcapSensor(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorThickness = 300e-6, reg = None) :
+    if reg is None :
+        reg = pyg4ometry.geant4.Registry()
+
+    dx1 = sensorSize/2.0*innerRadius
+    dy1 = sensorThickness
+    dx2 = sensorSize/2.0*outerRadius
+    dy2 = sensorThickness
+    dz  = outerRadius - innerRadius
+
+    sensor   = pyg4ometry.geant4.solid.Trd("sensorEndcapSolid",dx1, dx2, dy1,dy2,dz, reg, "m")
+    sensorLv = pyg4ometry.geant4.LogicalVolume(sensor,"G4_Si","sensorEndcapLV",reg,True)
+
+    return sensorLv
 
 def FibreTracker() :
     pass
