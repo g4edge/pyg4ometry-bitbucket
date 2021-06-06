@@ -1,19 +1,43 @@
 import pyg4ometry
 import numpy as _np
 
-def HepDetector() :
-    pass
-
-
-def SiBarrelTracker() :
+def HepDetector():
     reg = pyg4ometry.geant4.Registry()
 
-    worldBox      = pyg4ometry.geant4.solid.Box("worldBox",10000,10000,10000,reg,"mm")
-    worldLv       = pyg4ometry.geant4.LogicalVolume(worldBox,"G4_Galactic","worldLv",reg)
+    worldSolid = pyg4ometry.geant4.solid.Box("world_solid",10000,10000,10000,reg,"mm")
+    worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid,"G4_Galactic","worldLV",reg)
+    
+    # silicon barrel
+    siBarrelWorldLV = SiBarrelTracker(reg)
+    siBarrelAV = siBarrelWorldLV.assemblyVolume()
+    siBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                  [0,0,0],
+                                                  siBarrelAV,
+                                                  "silicon_barrel_pv",
+                                                  worldLV,
+                                                  reg)
+
+
+    v = pyg4ometry.visualisation.VtkViewer()
+    v.addLogicalVolume(worldLV)
+    v.view()
+
+    # gdml output
+    reg.setWorld(worldLV)
+    w = pyg4ometry.gdml.Writer()
+    w.addDetector(reg)
+    w.write("HepDetector.gdml")
+
+
+def SiBarrelTracker(reg=None, view=False):
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
+    
+    worldBox        = pyg4ometry.geant4.solid.Box("worldBox",10000,10000,10000,reg,"mm")
+    siBarrelWorldLV = pyg4ometry.geant4.LogicalVolume(worldBox,"G4_Galactic","siBarrelWorldLV",reg)
 
     siTrackerTubs = pyg4ometry.geant4.solid.Tubs("siTrackerTubs",100,500,1650,0,2*_np.pi,reg,"mm","rad")
     siTrackerLv   = pyg4ometry.geant4.LogicalVolume(siTrackerTubs,"G4_Galactic","siTrackerLv",reg)
-    siTrackerPv   = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,0,0],siTrackerLv,"siTrackerPv",worldLv,reg)
+    siTrackerPv   = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,0,0],siTrackerLv,"siTrackerPv",siBarrelWorldLV,reg)
 
     siTrackerModuleAv = SiTrackerBarrelModule(reg=reg)
 
@@ -26,22 +50,24 @@ def SiBarrelTracker() :
     siTrackerLayer3Av = SiTrackerBarrelLayer(name = "barrelAv3", moduleAv=siTrackerModuleAv, radius = 0.45, nAzimuth = int(0.45/0.15*15), reg = reg)
     siTrackerLayer3Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer3Av,"siTrackerLayer3Pv",siTrackerLv, reg)
 
-    v = pyg4ometry.visualisation.VtkViewer()
-    v.addLogicalVolume(worldLv)
-    v.view()
+    if view:
+        v = pyg4ometry.visualisation.VtkViewer()
+        v.addLogicalVolume(siBarrelWorldLV)
+        v.view()
 
     # gdml output
-    reg.setWorld("worldLv")
+    reg.setWorld("siBarrelWorldLV")
     w = pyg4ometry.gdml.Writer()
     w.addDetector(reg)
     w.write("SiTracker.gdml")
+
+    return siBarrelWorldLV
 
 def SiTrackerBarrelLayer(name = "barrelAv", moduleAv = None,
                          length = 1.6, radius = 0.25, sensorSize= 0.08, nAzimuth = 25, tiltAngleDeg = 11,
                          reg = None) :
 
-    if reg is None :
-        reg = pyg4ometry.geant4.Registry()
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
     tiltAngleRad = pyg4ometry.transformation.deg2rad(tiltAngleDeg)
 
@@ -143,3 +169,7 @@ def CalorimeterBarrel() :
 
 def CalorimeterCap(innerRadius = 2, outerRadius = 2.5) :
     pass
+
+
+if __name__ == "__main__":
+    HepDetector()
