@@ -17,10 +17,19 @@ def HepDetector():
     # silicon barrel
     siBarrelWorldLV = SiBarrelTracker(reg)
     siBarrelAV = siBarrelWorldLV.assemblyVolume()
-    siBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
-                                                  [0,0,0],
-                                                  siBarrelAV,
-                                                  "silicon_barrel_pv",
+    #siBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+    #                                              [0,0,0],
+    #                                              siBarrelAV,
+    #                                              "silicon_barrel_pv",
+    #                                              worldLV,
+    #                                              reg)
+
+    # solenoid
+    solenoidLV = Solenoid(solenoidInnerRadius, solenoidThickness, solenoidLength, constants, reg)
+    solenoidPV = pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
+                                                  [0, 0, 0],
+                                                  solenoidLV,
+                                                  "solenoid_pv",
                                                   worldLV,
                                                   reg)
 
@@ -165,13 +174,56 @@ def SiTrackerEndcapSensor(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0
 
     return sensorLv
 
-def FibreTracker() :
+def FibreTracker():
     pass
 
-def Solenoid() :
-    pass
+def Solenoid(innerRadius, thickness, length, constants, reg=None):
+    """
+    Create a big solid aluminium cylinder with embedded NbTi coils.
+    """
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
+    solenoidSolid = pyg4ometry.geant4.solid.Tubs("solenoid_solid",
+                                                 innerRadius,
+                                                 innerRadius+thickness,
+                                                 length,
+                                                 0, constants['twopi'],
+                                                 reg)
+    aluminium = pyg4ometry.geant4.MaterialPredefined("G4_Al")
+    solenoidLV = pyg4ometry.geant4.LogicalVolume(solenoidSolid, aluminium, "solenoid_lv", reg)
 
-def CalorimeterBarrel() :
+    coilThickness = 0.25*thickness
+    coilInnerRadius = innerRadius + 0.5*thickness - 0.5*coilThickness
+    coilOuterRadius = innerRadius + 0.5*thickness + 0.5*coilThickness
+    coilLengthZ     = 0.5*thickness
+    nCoils = int(length / (2*coilLengthZ))
+    nCoilsEven = nCoils if (nCoils % 2 == 0) else nCoils - 1
+    coilSolid = pyg4ometry.geant4.solid.Tubs("coil_solid",
+                                             coilInnerRadius,
+                                             coilOuterRadius,
+                                             coilLengthZ,
+                                             0, constants['twopi'],
+                                             reg)
+    nbti = pyg4ometry.geant4.MaterialCompound("nbti", 5.7, 2, reg)
+    nbti.set_state("solid")
+    nbti.set_temperature(4, "K")
+    nbti.add_material(pyg4ometry.geant4.MaterialPredefined("G4_Sn"), 0.3)
+    nbti.add_material(pyg4ometry.geant4.MaterialPredefined("G4_Nb"), 0.7)
+    coilLV = pyg4ometry.geant4.LogicalVolume(coilSolid, nbti, "solenoid_coil_lv", reg)
+
+    # central coil
+    iCoil = 0
+    pyg4ometry.geant4.PhysicalVolume([0, 0, 0], [0, 0, 0], coilLV, "coil_"+str(iCoil)+"_pv", solenoidLV, reg)
+    # one side
+    for i in range(int(nCoilsEven/2)):
+        zOffset = i * 2 * coilLengthZ
+        iCoil += 1
+        pyg4ometry.geant4.PhysicalVolume([0, 0, 0], [0, 0, zOffset],  coilLV, "coil_" + str(iCoil) + "_pv", solenoidLV, reg)
+        iCoil += 1
+        pyg4ometry.geant4.PhysicalVolume([0, 0, 0], [0, 0, -zOffset], coilLV, "coil_" + str(iCoil) + "_pv", solenoidLV, reg)
+
+    return solenoidLV
+
+def CalorimeterBarrel():
     pass
 
 def CalorimeterCap(innerRadius = 2, outerRadius = 2.5) :
