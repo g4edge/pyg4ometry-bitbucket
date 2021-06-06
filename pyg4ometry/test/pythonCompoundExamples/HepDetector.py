@@ -26,7 +26,7 @@ def SiBarrelTracker() :
     siTrackerLayer3Av = SiTrackerBarrelLayer(name = "barrelAv3", moduleAv=siTrackerModuleAv, radius = 0.45, nAzimuth = int(0.45/0.15*15), reg = reg)
     siTrackerLayer3Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer3Av,"siTrackerLayer3Pv",siTrackerLv, reg)
 
-    v = pyg4ometry.visualisation.VtkViewer()
+    v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
     v.addLogicalVolume(worldLv)
     v.view()
 
