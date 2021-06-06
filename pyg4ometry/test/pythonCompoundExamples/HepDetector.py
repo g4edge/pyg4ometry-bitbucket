@@ -11,7 +11,7 @@ def SiBarrelTracker() :
     worldBox      = pyg4ometry.geant4.solid.Box("worldBox",10000,10000,10000,reg,"mm")
     worldLv       = pyg4ometry.geant4.LogicalVolume(worldBox,"G4_Galactic","worldLv",reg)
 
-    siTrackerTubs = pyg4ometry.geant4.solid.Tubs("siTrackerTubs",100,500,1650,0,2*_np.pi,reg,"mm","rad")
+    siTrackerTubs = pyg4ometry.geant4.solid.Tubs("siBarrelTrackerTubs",100,500,1650,0,2*_np.pi,reg,"mm","rad")
     siTrackerLv   = pyg4ometry.geant4.LogicalVolume(siTrackerTubs,"G4_Galactic","siTrackerLv",reg)
     siTrackerPv   = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,0,0],siTrackerLv,"siTrackerPv",worldLv,reg)
 
