@@ -108,9 +108,7 @@ def SiTrackerBarrelLayer(name = "barrelAv", moduleAv = None,
     return barrelAv
 
 def SiTrackerBarrelModule(sensorSize = 0.08, sensorGap = 3e-3,pcbLength = 0.015, pcbGap = 0.005, tiltAngleDeg = 5, reg = None) :
-
-    if reg is None :
-        reg = pyg4ometry.geant4.Registry()
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
     tiltAngleRad = pyg4ometry.transformation.deg2rad(tiltAngleDeg)
 
@@ -132,8 +130,7 @@ def SiTrackerBarrelModule(sensorSize = 0.08, sensorGap = 3e-3,pcbLength = 0.015,
     return moduleAv
 
 def SiTrackerBarrelSensor(sensorSize = 0.05, sensorThickness = 300e-6, nstrip = 512, reg = None) :
-    if reg is None :
-        reg = pyg4ometry.geant4.Registry()
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
     sensor   = pyg4ometry.geant4.solid.Box("sensorBarrrelSolid",sensorSize, sensorSize, sensorThickness,reg, "m", True)
     sensorLv = pyg4ometry.geant4.LogicalVolume(sensor,"G4_Si","sensorBarrelLV",reg,True)
@@ -141,9 +138,7 @@ def SiTrackerBarrelSensor(sensorSize = 0.05, sensorThickness = 300e-6, nstrip = 
     return sensorLv
 
 def SiTrackerEndcapLayer(name = "endcapAv", innerRadius = 0.3, outerRadius = 0.56, nAzimuth = 30, phiPetal = 0.6, moduleGap = 0.005, reg = None) :
-
-    if reg is None :
-        reg = pyg4ometry.geant4.Registry()
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
     moduleLv = SiTrackerEndcapModule(innerRadius=innerRadius,outerRadius=outerRadius,sensorSize=phiPetal,reg = reg)
 
@@ -180,8 +175,7 @@ def SiTrackerEndcapLayer(name = "endcapAv", innerRadius = 0.3, outerRadius = 0.5
 
 
 def SiTrackerEndcapModule(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorGap = 3e-3, reg = None) :
-    if reg is None :
-        reg = pyg4ometry.geant4.Registry()
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
     moduleAv = pyg4ometry.geant4.AssemblyVolume("endcapModuleAv",reg,True)
 
@@ -197,8 +191,7 @@ def SiTrackerEndcapModule(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0
 
 
 def SiTrackerEndcapSensor(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorThickness = 300e-6, reg = None) :
-    if reg is None :
-        reg = pyg4ometry.geant4.Registry()
+    reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
     dx1 = sensorSize/2.0*innerRadius
     dy1 = sensorThickness
