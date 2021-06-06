@@ -51,7 +51,7 @@ def SiBarrelTracker(reg=None, view=False):
     worldBox        = pyg4ometry.geant4.solid.Box("worldBox",10000,10000,10000,reg,"mm")
     siBarrelWorldLV = pyg4ometry.geant4.LogicalVolume(worldBox,"G4_Galactic","siBarrelWorldLV",reg)
 
-    siTrackerTubs = pyg4ometry.geant4.solid.Tubs("siTrackerTubs",100,500,1650,0,2*_np.pi,reg,"mm","rad")
+    siTrackerTubs = pyg4ometry.geant4.solid.Tubs("siBarrelTrackerTubs",100,500,1650,0,2*_np.pi,reg,"mm","rad")
     siTrackerLv   = pyg4ometry.geant4.LogicalVolume(siTrackerTubs,"G4_Galactic","siTrackerLv",reg)
     siTrackerPv   = pyg4ometry.geant4.PhysicalVolume([0,0,0],[0,0,0],siTrackerLv,"siTrackerPv",siBarrelWorldLV,reg)
 
@@ -67,7 +67,7 @@ def SiBarrelTracker(reg=None, view=False):
     siTrackerLayer3Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer3Av,"siTrackerLayer3Pv",siTrackerLv, reg)
 
     if view:
-        v = pyg4ometry.visualisation.VtkViewer()
+        v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
         v.addLogicalVolume(siBarrelWorldLV)
         v.view()
 
@@ -139,8 +139,44 @@ def SiTrackerBarrelSensor(sensorSize = 0.05, sensorThickness = 300e-6, nstrip = 
 
     return sensorLv
 
-def SiTrackerEndcapLayer(innerRadius = 0.3, outerRadius = 0.56, nPetal = 20, phiPetal = 0.6) :
-    pass
+def SiTrackerEndcapLayer(name = "endcapAv", innerRadius = 0.3, outerRadius = 0.56, nAzimuth = 30, phiPetal = 0.6, moduleGap = 0.005, reg = None) :
+
+    if reg is None :
+        reg = pyg4ometry.geant4.Registry()
+
+    moduleLv = SiTrackerEndcapModule(innerRadius=innerRadius,outerRadius=outerRadius,sensorSize=phiPetal,reg = reg)
+
+    dAzimuth = 2*_np.pi/nAzimuth
+
+
+    siTrackerTubs = pyg4ometry.geant4.solid.Tubs(name+"_siTrackerTubs",innerRadius,outerRadius,0.05,0,2*_np.pi,reg,"m","rad")
+    siTrackerLv   = pyg4ometry.geant4.LogicalVolume(siTrackerTubs,"G4_Galactic","siTrackerLv",reg)
+
+    rMid = (innerRadius + outerRadius)/2.0
+
+
+    for i in range(0, nAzimuth, 1):
+        azimuth = i*dAzimuth
+
+        x = rMid * _np.cos(azimuth+_np.pi/2.)
+        y = rMid * _np.sin(azimuth+_np.pi/2.)
+
+        if i % 2 == 0 :
+            z = -moduleGap
+        else :
+            z = moduleGap
+
+        modulePv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,azimuth,0],
+                                                    [x,y,z, "m"],
+                                                    moduleLv,
+                                                    name + "_modulePv" + str(i),
+                                                    siTrackerLv, reg)
+
+
+    return siTrackerLv
+
+
+
 
 def SiTrackerEndcapModule(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorGap = 3e-3, reg = None) :
     if reg is None :
