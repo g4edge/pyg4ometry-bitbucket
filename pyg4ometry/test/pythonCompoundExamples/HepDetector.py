@@ -35,7 +35,7 @@ def HepDetector():
                                                   reg)
 
 
-    v = pyg4ometry.visualisation.VtkViewer()
+    v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
     v.addLogicalVolume(worldLV)
     v.view()
 
@@ -46,7 +46,7 @@ def HepDetector():
     w.write("HepDetector.gdml")
 
 
-def SiBarrelTracker(reg=None, view=False):
+def SiBarrelTracker(reg=None):
     reg = pyg4ometry.geant4.Registry() if reg is None else reg
     
     worldBox        = pyg4ometry.geant4.solid.Box("worldBox",10000,10000,10000,reg,"mm")
@@ -67,18 +67,7 @@ def SiBarrelTracker(reg=None, view=False):
     siTrackerLayer3Av = SiTrackerBarrelLayer(name = "barrelAv3", moduleAv=siTrackerModuleAv, radius = 0.45, nAzimuth = int(0.45/0.15*15), reg = reg)
     siTrackerLayer3Pv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,0,0],[0,0,0],siTrackerLayer3Av,"siTrackerLayer3Pv",siTrackerLv, reg)
 
-    if view:
-        v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
-        v.addLogicalVolume(siBarrelWorldLV)
-        v.view()
-
-    # gdml output
-    reg.setWorld("siBarrelWorldLV")
-    w = pyg4ometry.gdml.Writer()
-    w.addDetector(reg)
-    w.write("SiTracker.gdml")
-
-    return siBarrelWorldLV
+    return siTrackerLv
 
 def SiTrackerBarrelLayer(name = "barrelAv", moduleAv = None,
                          length = 1.6, radius = 0.25, sensorSize= 0.08, nAzimuth = 25, tiltAngleDeg = 11,
@@ -144,35 +133,24 @@ def SiTrackerEndcapLayer(name = "endcapAv", innerRadius = 0.3, outerRadius = 0.5
 
     dAzimuth = 2*_np.pi/nAzimuth
 
-
-    siTrackerTubs = pyg4ometry.geant4.solid.Tubs(name+"_siTrackerTubs",innerRadius,outerRadius,0.05,0,2*_np.pi,reg,"m","rad")
-    siTrackerLv   = pyg4ometry.geant4.LogicalVolume(siTrackerTubs,"G4_Galactic","siTrackerLv",reg)
+    siTrackerECTubs = pyg4ometry.geant4.solid.Tubs(name+"_siTrackerECTubs",innerRadius,outerRadius,0.025,0,2*_np.pi,reg,"m","rad")
+    siTrackerECLv   = pyg4ometry.geant4.LogicalVolume(siTrackerECTubs,"G4_Galactic","siTrackerECLv",reg)
 
     rMid = (innerRadius + outerRadius)/2.0
 
-
     for i in range(0, nAzimuth, 1):
         azimuth = i*dAzimuth
-
         x = rMid * _np.cos(azimuth+_np.pi/2.)
         y = rMid * _np.sin(azimuth+_np.pi/2.)
-
-        if i % 2 == 0 :
-            z = -moduleGap
-        else :
-            z = moduleGap
+        z = -moduleGap if (i % 2 == 0) else moduleGap
 
         modulePv = pyg4ometry.geant4.PhysicalVolume([_np.pi/2.0,azimuth,0],
                                                     [x,y,z, "m"],
                                                     moduleLv,
                                                     name + "_modulePv" + str(i),
-                                                    siTrackerLv, reg)
+                                                    siTrackerECLv, reg)
 
-
-    return siTrackerLv
-
-
-
+    return siTrackerECLv
 
 def SiTrackerEndcapModule(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorGap = 3e-3, reg = None) :
     reg = pyg4ometry.geant4.Registry() if reg is None else reg
@@ -225,7 +203,7 @@ def Solenoid(innerRadius, thickness, length, constants, reg=None):
     coilInnerRadius = innerRadius + 0.5*thickness - 0.5*coilThickness
     coilOuterRadius = innerRadius + 0.5*thickness + 0.5*coilThickness
     coilLengthZ     = 0.5*thickness
-    nCoils = int(length / (2*coilLengthZ))
+    nCoils = int(length.eval() / (2*coilLengthZ.eval()))
     nCoilsEven = nCoils if (nCoils % 2 == 0) else nCoils - 1
     coilSolid = pyg4ometry.geant4.solid.Tubs("coil_solid",
                                              coilInnerRadius,
@@ -244,7 +222,7 @@ def Solenoid(innerRadius, thickness, length, constants, reg=None):
     iCoil = 0
     pyg4ometry.geant4.PhysicalVolume([0, 0, 0], [0, 0, 0], coilLV, "coil_"+str(iCoil)+"_pv", solenoidLV, reg)
     # one side
-    for i in range(int(nCoilsEven/2)):
+    for i in range(1, int(nCoilsEven/2)):
         zOffset = i * 2 * coilLengthZ
         iCoil += 1
         pyg4ometry.geant4.PhysicalVolume([0, 0, 0], [0, 0, zOffset],  coilLV, "coil_" + str(iCoil) + "_pv", solenoidLV, reg)
