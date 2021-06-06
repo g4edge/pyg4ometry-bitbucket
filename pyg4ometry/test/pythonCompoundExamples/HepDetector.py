@@ -1,7 +1,11 @@
 import pyg4ometry
 import numpy as _np
 
-def HepDetector():
+# set the number of polygon points on cylinders to be 2x the 16 default
+pyg4ometry.config.SolidDefaults.Tubs.nslice = 32
+pyg4ometry.config.SolidDefaults.CutTubs.nslice = 32
+
+def HepDetector(barrel=False, solenoid=True, endcaps=True):
     reg = pyg4ometry.geant4.Registry()
 
     twopi = pyg4ometry.gdml.Constant("twopi", "2.0*pi", reg)
@@ -16,24 +20,43 @@ def HepDetector():
     worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid,"G4_Galactic","worldLV",reg)
     
     # silicon barrel
-    siBarrelWorldLV = SiBarrelTracker(reg)
-    siBarrelAV = siBarrelWorldLV.assemblyVolume()
-    #siBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
-    #                                              [0,0,0],
-    #                                              siBarrelAV,
-    #                                              "silicon_barrel_pv",
-    #                                              worldLV,
-    #                                              reg)
+    if barrel:
+        siBarrelContainerLV = SiBarrelTracker(reg)
+        siBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                      [0,0,0],
+                                                      siBarrelContainerLV,
+                                                      "silicon_barrel_pv",
+                                                      worldLV,
+                                                      reg)
 
     # solenoid
-    solenoidLV = Solenoid(solenoidInnerRadius, solenoidThickness, solenoidLength, constants, reg)
-    solenoidPV = pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
-                                                  [0, 0, 0],
-                                                  solenoidLV,
-                                                  "solenoid_pv",
-                                                  worldLV,
-                                                  reg)
+    if solenoid:
+        solenoidLV = Solenoid(solenoidInnerRadius, solenoidThickness, solenoidLength, constants, reg)
+        solenoidPV = pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
+                                                      [0, 0, 0],
+                                                      solenoidLV,
+                                                      "solenoid_pv",
+                                                      worldLV,
+                                                      reg)
 
+    # end caps
+    if endcaps:
+        endcapLV = SiTrackerEndcapLayer(reg=reg)
+        for i in range(4):
+            zOffset = 0.5*solenoidLength*1.1 + (i*endcapLayerSeparation)
+            pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
+                                             [0, 0, zOffset],
+                                             endcapLV,
+                                             "endcap_" + str(i)+"_left_pv",
+                                             worldLV,
+                                             reg)
+            pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
+                                             [0, 0, -zOffset],
+                                             endcapLV,
+                                             "endcap_" + str(i) + "_right_pv",
+                                             worldLV,
+                                             reg)
+    
 
     v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
     v.addLogicalVolume(worldLV)
