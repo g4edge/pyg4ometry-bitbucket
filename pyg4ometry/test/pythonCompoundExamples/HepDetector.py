@@ -7,9 +7,10 @@ def HepDetector():
     twopi = pyg4ometry.gdml.Constant("twopi", "2.0*pi", reg)
     constants = {"twopi" : twopi}
 
-    solenoidInnerRadius = 510
-    solenoidThickness   = 100
-    solenoidLength      = 1800
+    solenoidInnerRadius = pyg4ometry.gdml.Constant("solenoidInnerRadius", 510, reg)
+    solenoidThickness   = pyg4ometry.gdml.Constant("solenoidThickness", 50, reg)
+    solenoidLength      = pyg4ometry.gdml.Constant("solenoidLength", 1800, reg)
+    endcapLayerSeparation = pyg4ometry.gdml.Constant("encapLayerSeparation", 50, reg)
 
     worldSolid = pyg4ometry.geant4.solid.Box("world_solid",10000,10000,10000,reg,"mm")
     worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid,"G4_Galactic","worldLV",reg)
