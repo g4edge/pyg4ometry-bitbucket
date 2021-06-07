@@ -5,22 +5,30 @@ import numpy as _np
 pyg4ometry.config.SolidDefaults.Tubs.nslice = 32
 pyg4ometry.config.SolidDefaults.CutTubs.nslice = 32
 
-def HepDetector(barrel=False, solenoid=True, endcaps=True):
+def HepDetector(siBarrel=True, siEndcaps=True, ecalBarrel=True, solenoid=True):
     reg = pyg4ometry.geant4.Registry()
 
-    twopi = pyg4ometry.gdml.Constant("twopi", "2.0*pi", reg)
-    constants = {"twopi" : twopi}
+    twopi  = pyg4ometry.gdml.Constant("twopi", "2.0*pi", reg)
+    halfpi = pyg4ometry.gdml.Constant("halfpi", "0.5*pi", reg)
+    safety = pyg4ometry.gdml.Constant("safety", 1e-3, reg)
+    constants = {"twopi" : twopi,
+                 "safety": safety,
+                 "halfpi": halfpi}
 
-    solenoidInnerRadius = pyg4ometry.gdml.Constant("solenoidInnerRadius", 510, reg)
+    siBarrelLength      = pyg4ometry.gdml.Constant("siBarrelLength", 1600, reg)
+    ecalBInnerRadius    = pyg4ometry.gdml.Constant("ecalBInnerRadius", 590, reg)
+    ecalBOuterRadius    = pyg4ometry.gdml.Constant("ecalBOuterRadius", 900, reg)
+    ecalBLength         = pyg4ometry.gdml.Constant("ecalBLength", 2500, reg)
+    solenoidInnerRadius = pyg4ometry.gdml.Constant("solenoidInnerRadius", ecalBOuterRadius + 50, reg)
     solenoidThickness   = pyg4ometry.gdml.Constant("solenoidThickness", 50, reg)
-    solenoidLength      = pyg4ometry.gdml.Constant("solenoidLength", 1800, reg)
+    solenoidLength      = pyg4ometry.gdml.Constant("solenoidLength", 1.1*ecalBLength, reg)
     endcapLayerSeparation = pyg4ometry.gdml.Constant("encapLayerSeparation", 50, reg)
 
     worldSolid = pyg4ometry.geant4.solid.Box("world_solid",10000,10000,10000,reg,"mm")
     worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid,"G4_Galactic","worldLV",reg)
     
     # silicon barrel
-    if barrel:
+    if siBarrel:
         siBarrelContainerLV = SiBarrelTracker(reg)
         siBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
                                                       [0,0,0],
@@ -29,21 +37,11 @@ def HepDetector(barrel=False, solenoid=True, endcaps=True):
                                                       worldLV,
                                                       reg)
 
-    # solenoid
-    if solenoid:
-        solenoidLV = Solenoid(solenoidInnerRadius, solenoidThickness, solenoidLength, constants, reg)
-        solenoidPV = pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
-                                                      [0, 0, 0],
-                                                      solenoidLV,
-                                                      "solenoid_pv",
-                                                      worldLV,
-                                                      reg)
-
     # end caps
-    if endcaps:
+    if siEndcaps:
         endcapLV = SiTrackerEndcapLayer(reg=reg)
         for i in range(4):
-            zOffset = 0.5*solenoidLength*1.1 + (i*endcapLayerSeparation)
+            zOffset = 0.5*siBarrelLength*1.02 + (i*endcapLayerSeparation)
             pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
                                              [0, 0, zOffset],
                                              endcapLV,
@@ -56,9 +54,33 @@ def HepDetector(barrel=False, solenoid=True, endcaps=True):
                                              "endcap_" + str(i) + "_right_pv",
                                              worldLV,
                                              reg)
-    
+
+    # ecalBarrel
+    if ecalBarrel:
+        ecalBarrelLV = ECALBarrel(ecalBInnerRadius.eval(), ecalBOuterRadius.eval(), ecalBLength.eval(), 16, 41, constants, reg)
+        ecalBarrelPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                        [0,0,0],
+                                                        ecalBarrelLV,
+                                                        "ecal_barrel_pv",
+                                                        worldLV,
+                                                        reg)
+        
+    # solenoid
+    if solenoid:
+        solenoidLV = Solenoid(solenoidInnerRadius, solenoidThickness, solenoidLength, constants, reg)
+        solenoidPV = pyg4ometry.geant4.PhysicalVolume([0, 0, 0],
+                                                      [0, 0, 0],
+                                                      solenoidLV,
+                                                      "solenoid_pv",
+                                                      worldLV,
+                                                      reg)
+            
 
     v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
+    pbw0Vis = pyg4ometry.visualisation.VisualisationOptions()
+    pbw0Vis.colour = [0.8,0.8,0.95]
+    pbw0Vis.alpha = 0.1
+    v.addMaterialVisOption("lead_tungstate", pbw0Vis)
     v.addLogicalVolume(worldLV)
     v.view()
 
@@ -190,7 +212,6 @@ def SiTrackerEndcapModule(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0
 
     return moduleAv
 
-
 def SiTrackerEndcapSensor(innerRadius = 0.35, outerRadius = 0.56, sensorSize = 0.4, sensorThickness = 300e-6, reg = None) :
     reg = pyg4ometry.geant4.Registry() if reg is None else reg
 
@@ -254,8 +275,83 @@ def Solenoid(innerRadius, thickness, length, constants, reg=None):
 
     return solenoidLV
 
-def CalorimeterBarrel():
-    pass
+def ECALBarrel(innerRadius, outerRadius, length, nModulesPhi, nModulesZ, constants, reg):
+    # container LV
+    ecalBarrelSolid = pyg4ometry.geant4.solid.Tubs("ecal_barrel_solid",
+                                                   innerRadius,
+                                                   outerRadius,
+                                                   length,
+                                                   0, constants["twopi"],
+                                                   reg)
+    air = pyg4ometry.geant4.MaterialPredefined("G4_AIR")
+    ecalBarrelLV = pyg4ometry.geant4.LogicalVolume(ecalBarrelSolid, air, "ecal_barrel_lv", reg)
+
+
+    # calculate sizes
+    safety = constants["safety"].eval()
+    twopi  = constants["twopi"].eval()
+    halfpi = constants["halfpi"].eval()
+    innerR1 = innerRadius + safety   # for the segment container
+    segmentAngle = twopi / nModulesPhi
+    # inner theoretical radius for modules such that the chord doesn't intercept the arc
+    #innerR2 = innerR1 + innerR1 * (1-_np.cos(segmentAngle))
+    rGap = outerRadius - innerRadius
+    innerR2 = innerR1 + 0.05*rGap
+    outerR1 = outerRadius - safety   # for the segment container
+    outerR2 = outerR1 - 0.1*rGap # for the modules
+    rMid = 0.5*(outerR1+innerR2)
+    
+    nModulesZ = nModulesZ if (nModulesZ % 2 != 0) else nModulesZ + 1
+    
+    # segment container solid
+    segmentSolid = pyg4ometry.geant4.solid.Tubs("ecal_barrel_segment_solid",
+                                                innerR1,
+                                                outerR1,
+                                                length - 2*safety,
+                                                halfpi-0.5*segmentAngle, segmentAngle,
+                                                reg)
+    segmentLV = pyg4ometry.geant4.LogicalVolume(segmentSolid, air, "ecal_barrel_segment_lv", reg)
+
+    # approximate PbW04
+    leadTungstate = pyg4ometry.geant4.MaterialCompound("lead_tungstate", 8.28, 3, reg)
+    leadTungstate.set_state("solid")
+    leadTungstate.set_temperature(293, "K")
+    leadTungstate.add_material(pyg4ometry.geant4.MaterialPredefined("G4_Pb"), 0.45)
+    leadTungstate.add_material(pyg4ometry.geant4.MaterialPredefined("G4_W"),  0.40)
+    leadTungstate.add_material(pyg4ometry.geant4.MaterialPredefined("G4_O"),  0.15)
+    
+    # place modules along Z
+    iz = -0.5*length
+    dz = length / nModulesZ
+    startAngle = halfpi-0.5*0.98*segmentAngle
+    sweepAngle = 0.96*segmentAngle
+    for i in range(nModulesZ):
+        iModuleName = "ecal_mod_"+str(i)
+        iModule = pyg4ometry.geant4.solid.Tubs(iModuleName + "_solid",
+                                               innerR2, outerR2,
+                                               0.95*dz,
+                                               startAngle, sweepAngle,
+                                               reg)
+        iModuleLV = pyg4ometry.geant4.LogicalVolume(iModule, leadTungstate, iModuleName + "_lv", reg)
+        pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                         [0,0,iz+0.5*dz],
+                                         iModuleLV,
+                                         iModuleName + "_pv",
+                                         segmentLV,
+                                         reg)
+        iz += dz
+
+    
+    #nModulesPhi = 1
+    for i in range(nModulesPhi):
+        angle = i * segmentAngle
+        pyg4ometry.geant4.PhysicalVolume([0, 0, angle],
+                                         [0,0,0],
+                                         segmentLV,
+                                         "ecal_segment_"+str(i)+"_pv",
+                                         ecalBarrelLV,
+                                         reg)
+    return ecalBarrelLV
 
 def CalorimeterCap(innerRadius = 2, outerRadius = 2.5) :
     pass
