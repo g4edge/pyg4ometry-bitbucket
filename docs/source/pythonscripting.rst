@@ -9,8 +9,9 @@ Precepts
 * Rotations are made using Tait-Bryan angles (rotation about reference x,y,z axes).
 * A :class:`Registry` object should be used to hold all things related in a model
   and passed into the constructors of most objects.
+* GDML-like full lengths are used instead of typically half lengths
 
-Geant4 python scripting 
+Geant4 Python Scripting 
 -----------------------
 
 Making use of pyg4ometry requires the following modules 
@@ -19,7 +20,7 @@ Making use of pyg4ometry requires the following modules
 
    import pyg4ometry               
 
-To make a simple geometery of a box located at the origin
+To make a simple geometry of a box located at the origin
 
 .. code-block :: python
    :linenos:
@@ -51,12 +52,13 @@ Here is the vtk visualiser output of the above example
 .. figure:: pythonscripting/pythonscripting1.tiff
    :alt: Simple python scripting example
 
-GDML defines 
+GDML Defines
 ------------
 
-In GDML there are multiple ``define`` objects that can be used parametrise 
-geometry, materials etc. For example a GDML constant can be created in the 
-following way 
+In GDML there are multiple ``define`` objects that can be used parameterise 
+geometry, materials etc. These can be used as variables or definitions and
+mean that any equations used will be retained in GDML output. For example a
+GDML constant can be created in the following way 
 
 .. code-block :: python
 
@@ -144,7 +146,7 @@ So the box example above can be rewritten using constants
    b1.pX = 20              # do not do this
    b1.pX.setExpression(20) # rather do this
 
-Solids 
+Solids
 ------
 
 The python geant4 solids match the Geant4 constructors as much possible (different constructor signatures are not supported in python). For example looking at the ``G4Box`` class
@@ -162,7 +164,7 @@ A full list of solids can be found in :ref:`all-solids`.
 .. warning::
    The parameters stick to the GDML convention of **full** lengths opposed to half lengths.
 
-Materials 
+Materials
 ---------
 
 As with solids materials are defined in a similar way to Geant4 C++. Python
@@ -280,23 +282,76 @@ Alternatively, we can access the NIST materials and materials of elements.
    nistConcreteMaterial = pyg4ometry.geant4.nist_material_2geant4Material('G4_CONCRETE')
 
 
-Detector contruction 
---------------------
+Detector Construction
+---------------------
 
-This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans, logical, 
-physical (replica, division, param) volumes.
+This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans,
+logical, physical (replica, division, param) volumes.
 
-Transformations 
----------------
+0. Create registry to hold everything
+1. Create solids
+2. Create logical volumes
+3. Place logical volumes (construct physical volumes)
+4. Visualise
+5. Check
+6. Export
 
-Transformations in 3D are essential for the easy placement of solids in a CSG tree or LV placement. 
-There is not a specific transformation classes like in Geant4, matricies and vectors used for placements
-are typically numpy arrays or matrices. 
+Transformations & Physical Volumes
+----------------------------------
 
-Optical surfaces 
+Transformations in 3D are essential for the easy placement of solids in a CSG tree or
+LV placement. There is not a specific transformation classes like in Geant4, matrices
+and vectors used for placements are typically Numpy arrays or matrices.
+
+Geant4 has two possible constructors for a physical volume. These provide active and
+passive transformations. In pyg4ometry, only one is provided. The transform in a
+physical volume first translates the placed logical volume with respect to the mother
+logical, then rotates it.
+
+The physical volume class is documented here: :ref:`g4-module`, but an example
+is shown here.
+
+.. code-block:: python
+   :linenos:
+
+   import pyg4ometry
+   r = pyg4ometry.geant4.Registry()
+   vacuum = _g4.MaterialPredefined("G4_Galactic")
+   water = _g4.MaterialPredefined("G4_WATER")
+   worldSolid = pyg4ometry.geant4.solid.Box("world_solid", 100, 100, 100, reg)
+   boxSolid = pyg4ometry.geant4.solid.Box("box_solid", 10, 20, 40, reg)
+   worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid, vacuum, "world_lv", reg)
+   boxLV = pyg4ometry.geant4.LogicalVolume(boxSolid, water, "box_lv", reg)
+
+   pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                    [0,0,0],
+				    boxLV,
+				    "box_pv",
+				    worldLV,
+				    reg)
+
+This creates a box of water inside a box of vacuum. The box of water is 10 x 20 x 50 mm long
+(note mm are the default length units), and it is placed with no offset and no rotation (i.e.
+at the centre) of the world volume. Alternatively: 
+
+.. code-block:: python
+   :linenos:
+
+   import numpy as np
+   pyg4ometry.geant4.PhysicalVolume([0,np.pi/3.0,0],
+                                    [0,0,0],
+				    boxLV,
+				    "box_pv",
+				    worldLV,
+				    reg)
+
+In this case, the box is placed with no offset but with a rotation of :math:`\pi/3` radians
+about the y axis of the world box.
+
+Optical Surfaces 
 ----------------
 
-Registry and GDML output
+Registry and GDML Output
 ------------------------
 
 Strictly speaking a registry class to store all of the GDML is not required. 
@@ -344,7 +399,7 @@ and then commands can be typed into the terminal, for example
    v.setWirefrace()   
    v.start()
    
-Overlap checking
+Overlap Checking
 ----------------
 
 Given all the PVs (daughters) of a LV (mother) should be bounded by the LV/mother solid. It is
@@ -371,7 +426,7 @@ There is no output when ``checkOverlaps`` is called but a overlap, protrusion or
 coplanar meshes are computed and stored in the logical volume instance and displayed
 by the ``VtkViewer``
 
-GDML output 
+GDML Output
 -----------
 
 To write an GDML file file given a ``pyg4ometry.geant4.registy reg``   

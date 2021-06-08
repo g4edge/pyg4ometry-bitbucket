@@ -135,7 +135,9 @@ Geant4 solids
 .. automodule:: pyg4ometry.geant4.solid.Subtraction
    :members:
 
-Geant4 module 
+.. _g4-module:
+      
+Geant4 module
 -------------
 .. autoclass:: pyg4ometry.geant4.Registry
    :members: addDefine, addMaterial, addSolid, addLogicalVolume, addPhysicalVolume
