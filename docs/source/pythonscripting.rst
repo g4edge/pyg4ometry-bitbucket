@@ -124,7 +124,7 @@ So the box example above can be rewritten using constants
 
 .. note::
    All GDML defines (Constant, Variable, etc) can be used in the construction of other pyg4ometry classes 
-   interchangably instead of floats or strings (where strings are either numbers or a GDML expression)
+   interchangeably instead of floats or strings (where strings are either numbers or a GDML expression)
 
 .. warning::
    Avoid reassigning variables used as defines, this can have unexpected consequences so for example 
@@ -156,10 +156,10 @@ Materials
 ---------
 
 As with solids materials are defined in a similar way to Geant4 C++. Python
-does not have overloaded contrcutors, so unique signatures are needed, in 
-constrast to Geant4.  
+does not have overloaded constructors, so unique signatures are needed, in 
+contrast to Geant4.  
 
-To define a material from the Geant4 predefined materials 
+To define a material from the Geant4 predefined (e.g. NIST) materials 
 
 .. code-block :: python
    :emphasize-lines: 2-3
@@ -170,7 +170,7 @@ To define a material from the Geant4 predefined materials
    bm = _g4.MaterialPredefined("G4_Fe")
 
 
-To define a single element in terms of atomic number, atmoic mass and density.
+To define a single element in terms of atomic number, atomic mass and density.
 
 .. code-block :: python
    :emphasize-lines: 2-3
@@ -290,16 +290,16 @@ Registry and GDML output
 ------------------------
 
 Strictly speaking a registry class to store all of the GDML is not required. 
-As with normal Geant4 given a ``lv`` pointer it should possible to form an aggregration 
-hierarchy that contains all nessessary objects. Now GDML breaks this as the
+As with normal Geant4 given a ``lv`` pointer it should possible to form an aggregation 
+hierarchy that contains all necessary objects. Now GDML breaks this as the
 structure is built up using ``name`` tags. For example a placement requires 
-a position. In G4 this would just be a pointer to an transformation object, but GDML 
+a position. In Geant4 this would just be a pointer to an transformation object, but GDML 
 has two mechanisms to represent this, firstly child nodes of a PhysicalVolume tag 
 or secondly a position define, see below
 
 The registry class is a storage class for a complete GDML file. At the
 construction stage of almost all objects a registry is required. If the 
-object is added to the resistry then it will appear explicitly in the GDML 
+object is added to the registry then it will appear explicitly in the GDML 
 output
 
 Visualisation
@@ -338,7 +338,7 @@ Overlap checking
 ----------------
 
 Given all the PVs (daughters) of a LV (mother) should be bounded by the LV/mother solid. It is
-possible check between all daugher solid meshes and between daughers and the mother solid mesh.
+possible check between all daughter solid meshes and between daughters and the mother solid mesh.
 Given an ``LV`` this check can be performed by calling the following code.
 
 .. code-block :: python
