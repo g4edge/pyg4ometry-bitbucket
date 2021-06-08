@@ -70,6 +70,7 @@ Defines and variables
    :members: upgradeToVector, upgradeToTransformation
 
 
+.. _all-solids:
 
 Geant4 solids
 -------------

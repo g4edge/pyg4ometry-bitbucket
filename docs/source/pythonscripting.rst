@@ -2,6 +2,14 @@
 Basic python geometry scripting
 ===============================
 
+Precepts
+--------
+
+* Units may be specified but default to Geant4 ones (e.g. mm, rad).
+* Rotations are made using Tait-Bryan angles (rotation about reference x,y,z axes).
+* A :class:`Registry` object should be used to hold all things related in a model
+  and passed into the constructors of most objects.
+
 Geant4 python scripting 
 -----------------------
 
@@ -149,6 +157,8 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
 
    G4Box(const G4String& pName, G4double  pX, G4double  pY, G4double pZ)
 
+A full list of solids can be found in :ref:`all-solids`.
+   
 .. warning::
    The parameters stick to the GDML convention of **full** lengths opposed to half lengths.
 
