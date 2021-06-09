@@ -89,7 +89,7 @@ setup(
                       "testtools",
                       "pypandoc",
                       "ipython",
-                      "sympy"],
+                      "sympy>=1.7"],
     ext_modules=exts,
     python_requires=">=3.7.1",
     author="Stewart T. Boogert",
