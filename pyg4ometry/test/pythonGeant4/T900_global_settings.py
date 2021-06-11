@@ -9,10 +9,13 @@ import pyg4ometry.visualisation as _vi
 def Test(vis=False, interactive=False, n_slice=16, n_stack=16):
     reg = _g4.Registry()
 
+    # Set the default mesh density (both nstack and nslice) to the same value
+    # for all curved solids. The global default value must be set before any of the
+    # solid constructors are called.
     _config.setGlobalMeshSliceAndStack(n_slice)
 
     # nstack and nslice can be set individually for one solid via:
-    #_config.SolidDefaults.Orb.nslice = 40
+    _config.SolidDefaults.Orb.nslice = 40
 
     # defines
     wx = _gd.Constant("wx", "100", reg, True)

@@ -36,7 +36,7 @@ pyg4ometry.pdf
 *.synctex.gz
 *FCStd1
 *c
-*venv
+*venv*
 external
 papers
 gdmlLoader_4.10.5.1

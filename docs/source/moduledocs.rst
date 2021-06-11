@@ -70,6 +70,7 @@ Defines and variables
    :members: upgradeToVector, upgradeToTransformation
 
 
+.. _all-solids:
 
 Geant4 solids
 -------------
@@ -134,7 +135,9 @@ Geant4 solids
 .. automodule:: pyg4ometry.geant4.solid.Subtraction
    :members:
 
-Geant4 module 
+.. _g4-module:
+      
+Geant4 module
 -------------
 .. autoclass:: pyg4ometry.geant4.Registry
    :members: addDefine, addMaterial, addSolid, addLogicalVolume, addPhysicalVolume
@@ -161,7 +164,7 @@ Geant4 module
    :undoc-members:
    :show-inheritance:
 
-VTK module 
+VTK module
 ----------
 .. automodule:: pyg4ometry.visualisation.VtkViewer
    :members:

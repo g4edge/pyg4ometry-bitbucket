@@ -12,7 +12,7 @@ type of solid used for an LV.
 Complex geometry builder
 ------------------------
 
-Having access to geometry contruction in python allows the rapid contruction of 
+Having access to geometry construction in python allows the rapid construction of 
 geometry using functions which return an appropriate LV. Examples of this available in 
 ``pyg4ometry/pyg4ometry/test/pythonCompoundExamples``
 
@@ -51,10 +51,11 @@ of a single body
 Export scene to unity/unreal
 ----------------------------
 
-The quickest way to get gemetry to Unity/Unreal is to use a standard asset 
+The quickest way to get geometry to Unity/Unreal is to use a standard asset 
 format. This takes a vtkRenderer and creates a OBJ file. The vtkRenderer 
 managed within pyg4ometry from the vtkViwer class, once a geometry is created
-(either from any source) then an OBJ file can be created. Taking the example in ``pyg4ometry/pyg4ometry/test/pythonCompoundExamples/``
+(either from any source) then an OBJ file can be created. Taking the
+example in ``pyg4ometry/pyg4ometry/test/pythonCompoundExamples/``
 
 .. code-block :: python
    :linenos:
@@ -88,7 +89,7 @@ As the meshing might need to changed for the visualisation application,
 the parameters for the meshing for each solid might need to changed. 
 
 An ``obj`` file for an entire experiment does not help with work flows where meshes
-have to be UVed and textured. Tools like Blender and Gaffer can be used for this workload 
+have to be UV-ed and textured. Tools like Blender and Gaffer can be used for this workload 
 but require meshes for each object and their placement. To enable there is a special 
 writer 
 

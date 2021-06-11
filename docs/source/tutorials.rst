@@ -199,7 +199,7 @@ method
 .. warning::
 
    Currently there are some things which are not implemented in the conversion. 1) Materials, 2) Scaled solids,
-   3) Reflections in placements, 4) Division, replica and parametrised placements. Some of these are straight
+   3) Reflections in placements, 4) Division, replica and parameterised placements. Some of these are straight
    forward to implement, like Materials and the non-Placement physical volumes can be done quickly if a user
    requires it.
 
@@ -260,7 +260,7 @@ true of the quadric surface.  A quadric surface cannot simply be generated
 to be "very large", as the number of polygons will grow quickly, along with
 the memory consumption and facets in the resulting GDML TesselatedSolid,
 which will also slowing down tracking time in Geant4.  For this reason the
-user must provide axis-aligned bounding boxes of the regions whre any QUA
+user must provide axis-aligned bounding boxes of the regions where any QUA
 bodies are present.  It is recommended that these boxes be a centimetre
 larger than formally necessary to ensure a correct conversion.  Providing
 the bounding box ensures that an efficient and accurate mesh of the QUA
