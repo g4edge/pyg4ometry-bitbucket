@@ -47,6 +47,14 @@ of a single body
    v.addLogicalVolume(greg.getWorldVolume())
    v.view()
 
+Export scene to paraview/vtk
+----------------------------
+
+.. code-block :: python
+   :linenos:
+   
+   import pyg4ometry
+   
 
 Export scene to unity/unreal
 ----------------------------
