@@ -7,9 +7,9 @@ import pandas as pd
 
 def localPath(filename):
     """
- Append the absolute path to *this* directory to the filename so the tests
- can be ran from anywhere
- """
+    Append the absolute path to *this* directory to the filename so the tests
+    can be ran from anywhere
+    """
     return _os.path.join(_os.path.dirname(__file__), filename)
 
 

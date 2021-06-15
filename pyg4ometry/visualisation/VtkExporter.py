@@ -13,18 +13,16 @@ import logging
 
 _WITH_PARAVIEW = True
 try:
-
     import paraview.simple as paras
-
 except (ImportError, ImportWarning):
     _WITH_PARAVIEW = False
-    logging.error("paraview is required for this module to have full functionalities.\n"
-                    "Not all methods will be available.")
+    msg = "paraview is required for this module to have full functionalities.\n"
+    msg += "Not all methods will be available."
+    logging.log(20, msg)
 
 class VtkExporter:
     def __init__(self, path='.'):
         """
-
         Args:
             path: output repository path
         """
@@ -38,7 +36,7 @@ class VtkExporter:
         # list of elements
         self.elements = []
 
-        #multi block dictionary
+        # multi block dictionary
         self.mbdico = {}
         self.mbindexdico = {}
 
