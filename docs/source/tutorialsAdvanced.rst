@@ -2,12 +2,63 @@
 Advanced tutorials
 ==================
 
+Finding volumes
+---------------
+
+Before editing geometry it is useful to find a logical volume. The registry contains all the logical volumes
+using the GDML in ``pyg4ometry/pyg4ometry/test/gdmlG4examples/ChargeExchangeMC/``
+
+.. code-block :: python
+   :linenos:
+
+   import pyg4ometry
+   r = pyg4ometry.gdml.Reader("lht.gdml")
+   reg = r.getRegistry()
+
+The ``registry`` instance ``reg`` has a member variable called ``logicalVolumeDict`` so calling
+
+.. code-block :: python
+
+   reg.logicalVolumeDict.keys()
+
+should print
+
+.. code-block :: console
+
+   In [4]: reg.logicalVolumeDict.keys()
+   Out[4]: odict_keys(['vMonitor', 'vMonitorBack', 'vTarget', 'vTargetInnerCover', 'vTargetColumn', 'vTargetInnerColumn',
+                       'vTargetVacuumSpace', 'vTargetOuterCover', 'vCrystal', 'vCrystalRow', 'vCalorimeter', 'vVetoCounter',
+                       'vOuterFerrumRing', 'vInnerFerrumRing', 'vInnerCuprumRing', 'vTargetWindow', 'vTargetWindowCap',
+                       'vTargetWindowMylarCover', 'vTargetWindowAluminiumCover', 'vWorldVisible', 'World'])
+
+then the LogicalVolume can be obtained simply from the dictionary
+
+.. code-block :: python
+
+   lv = reg.logicalVolumeDict['vTargetInnerColumn']
+
+This ``lv`` can be used for manipulating geometry, passing to visualisers etc.
+
+
+Navigating the LV-PV hierachy
+-----------------------------
+
+There is a hierarchy of LV-PVs to describe a GDML/Geant4 geometry. An LV in terms of
+geometry consists of an outer solid ``lv.solid`` and ``lv.daughterVolumes``. ``lv.solid``
+is one of the ``pyg4ometry.geant4.solid`` types which match the GDML/Geant4 solids. ``lv.daughterVolumes``
+is a list of ``pyg4ometry.geant4.PhysicalVolumes``.
+
+The best way to explore the methods and data members of ``pyg4ometry.geant4.LogicalVolume`` and
+``pyg4ometry.geant4.PhysicalVolume`` is to explore in iPython. See cute video based on the ``lht.gdml``
+example above.
+
+
 Edit existing geometry
 ----------------------
 
 After loading some geometry it is possible to modify the memory resident geometry.
 This could adjusting the parameter of a given solid or PV, or replacing entirely the
-type of solid used for an LV.
+type of solid used for an LV. To edit geometry a LV instance is required
 
 Complex geometry builder
 ------------------------
