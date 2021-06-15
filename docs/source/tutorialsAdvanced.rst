@@ -40,8 +40,8 @@ then the LogicalVolume can be obtained simply from the dictionary
 This ``lv`` can be used for manipulating geometry, passing to visualisers etc.
 
 
-Navigating the LV-PV hierachy
------------------------------
+Navigating the LV-PV hierarchy
+------------------------------
 
 There is a hierarchy of LV-PVs to describe a GDML/Geant4 geometry. An LV in terms of
 geometry consists of an outer solid ``lv.solid`` and ``lv.daughterVolumes``. ``lv.solid``
@@ -112,7 +112,7 @@ Export scene to unity/unreal
 
 The quickest way to get geometry to Unity/Unreal is to use a standard asset 
 format. This takes a vtkRenderer and creates a OBJ file. The vtkRenderer 
-managed within pyg4ometry from the vtkViwer class, once a geometry is created
+managed within pyg4ometry from the vtkViewer class, once a geometry is created
 (either from any source) then an OBJ file can be created. Taking the
 example in ``pyg4ometry/pyg4ometry/test/pythonCompoundExamples/``
 
