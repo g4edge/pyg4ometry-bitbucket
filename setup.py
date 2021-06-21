@@ -73,7 +73,6 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
-# from IPython import embed; embed()
 
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
