@@ -6,7 +6,7 @@ Installation
 Requirements
 ------------
 
- * pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated)
+ * pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated) - recommend up to Python 3.8 currently as no VTK wheels for 3.9.
  * `VTK (Visualisation toolkit) <https://vtk.org>`_
  * `Freecad  <https://www.freecadweb.org>`_
  * `antlr4 <https://www.antlr.org>`_
@@ -14,6 +14,7 @@ Requirements
  * `GitPython <https://gitpython.readthedocs.io/en/stable/>`_
  * `matplotlib <https://matplotlib.org>`_
  * `CGAL <https://www.cgal.org>`_
+ * pybind11
 
 Installation
 ------------
@@ -23,7 +24,7 @@ directory::
 
   cd /my/path/to/repositories/
   git clone http://bitbucket.org/jairhul/pyg4ometry
-  git checkout develop_python3
+  git checkout develop
   cd pyg4ometry
   
   make install
