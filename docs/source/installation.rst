@@ -111,4 +111,19 @@ Building FreeCAD can be a pain for MAC so
 
 
       
+Python 3.9
+----------
 
+Generally we recommend up to Python 3.8.
+
+At the time of writing, there are no VTK distributions for Python 3.9 on pypi. However,
+you can have VTK with Python 3.9 through say MacPorts or by compiling it yourself. In this
+case, you can comment out the VTK requirement from the setup.py around line 86.
+
+Similarly, there are fixed version requirements for networkx and antlr. These specific
+versions will not be available for Python 3.9 but newer versions will likely work. In
+this case, you can remove the fixed version requirement (leaving only the name).
+
+.. warning:: ANTLR will create an unbelievable amount of warnings when using a different
+	     ANRLR version that the one the parser was generated with. It should work
+	     though.
