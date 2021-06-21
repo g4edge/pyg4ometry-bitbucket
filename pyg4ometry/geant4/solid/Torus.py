@@ -47,8 +47,8 @@ class Torus(_SolidBase):
     """
 
     def __init__(self, name, pRmin, pRmax, pRtor, pSPhi, pDPhi,
-                 registry, lunit="mm", aunit="rad", nslice=50, nstack=10,
-                 addRegistry=True):
+                 registry, lunit="mm", aunit="rad",
+                 nslice=None, nstack=None, addRegistry=True):
 
         self.type    = 'Torus'
         self.name    = name
@@ -57,8 +57,8 @@ class Torus(_SolidBase):
         self.pRtor   = pRtor
         self.pSPhi   = pSPhi
         self.pDPhi   = pDPhi
-        self.nslice  = nslice
-        self.nstack  = nstack
+        self.nslice  = nslice if nslice else _config.SolidDefaults.Torus.nslice
+        self.nstack  = nstack if nstack else _config.SolidDefaults.Torus.nstack
         self.lunit   = lunit
         self.aunit   = aunit
 
@@ -107,20 +107,20 @@ class Torus(_SolidBase):
                 i1 = i0
                 i2 = i0 + 1
 
-                xRMaxP1T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.cos(dPhi * j1)
-                yRMaxP1T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.sin(dPhi * j1)
+                xRMaxP1T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.cos(pSPhi + dPhi * j1)
+                yRMaxP1T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.sin(pSPhi + dPhi * j1)
                 zRMaxP1T1 =           pRmax * _np.sin(dTheta * i1)
 
-                xRMaxP1T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.cos(dPhi * j1)
-                yRMaxP1T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.sin(dPhi * j1)
+                xRMaxP1T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.cos(pSPhi + dPhi * j1)
+                yRMaxP1T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.sin(pSPhi + dPhi * j1)
                 zRMaxP1T2 =           pRmax * _np.sin(dTheta * i2)
 
-                xRMaxP2T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.cos(dPhi * j2)
-                yRMaxP2T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.sin(dPhi * j2)
+                xRMaxP2T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.cos(pSPhi + dPhi * j2)
+                yRMaxP2T2 = (pRtor + (pRmax * _np.cos(dTheta * i2))) * _np.sin(pSPhi + dPhi * j2)
                 zRMaxP2T2 =           pRmax * _np.sin(dTheta * i2)
 
-                xRMaxP2T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.cos(dPhi * j2)
-                yRMaxP2T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.sin(dPhi * j2)
+                xRMaxP2T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.cos(pSPhi + dPhi * j2)
+                yRMaxP2T1 = (pRtor + (pRmax * _np.cos(dTheta * i1))) * _np.sin(pSPhi + dPhi * j2)
                 zRMaxP2T1 =           pRmax * _np.sin(dTheta * i1)
 
                 vertices_outer = []
@@ -131,20 +131,20 @@ class Torus(_SolidBase):
                 polygons.append(_Polygon(vertices_outer))
 
 
-                xRMinP1T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.cos(dPhi * j1)
-                yRMinP1T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.sin(dPhi * j1)
+                xRMinP1T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.cos(pSPhi + dPhi * j1)
+                yRMinP1T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.sin(pSPhi + dPhi * j1)
                 zRMinP1T1 =           pRmin * _np.sin(dTheta * i1)
 
-                xRMinP1T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.cos(dPhi * j1)
-                yRMinP1T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.sin(dPhi * j1)
+                xRMinP1T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.cos(pSPhi + dPhi * j1)
+                yRMinP1T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.sin(pSPhi + dPhi * j1)
                 zRMinP1T2 =           pRmin * _np.sin(dTheta * i2)
 
-                xRMinP2T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.cos(dPhi * j2)
-                yRMinP2T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.sin(dPhi * j2)
+                xRMinP2T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.cos(pSPhi + dPhi * j2)
+                yRMinP2T2 = (pRtor + (pRmin * _np.cos(dTheta * i2))) * _np.sin(pSPhi + dPhi * j2)
                 zRMinP2T2 =           pRmin * _np.sin(dTheta * i2)
 
-                xRMinP2T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.cos(dPhi * j2)
-                yRMinP2T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.sin(dPhi * j2)
+                xRMinP2T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.cos(pSPhi + dPhi * j2)
+                yRMinP2T1 = (pRtor + (pRmin * _np.cos(dTheta * i1))) * _np.sin(pSPhi + dPhi * j2)
                 zRMinP2T1 =           pRmin * _np.sin(dTheta * i1)
 
                 if 0 < pRmin < pRmax:

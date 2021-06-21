@@ -36,7 +36,7 @@
 \usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
 \PassOptionsToPackage{hyphens}{url}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{todonotes}
 \usepackage{siunitx}
 \usepackage{lineno}
@@ -72,15 +72,15 @@
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
 
-\hypersetup{
-    colorlinks=false,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-    pdftitle={Pyg4ometry paper},
-    bookmarks=true,
-    pdfpagemode=FullScreen,
-}
+%\hypersetup{
+%    colorlinks=false,
+%    linkcolor=blue,
+%    filecolor=magenta,
+%    urlcolor=cyan,
+%    pdftitle={Pyg4ometry paper},
+%    bookmarks=true,
+%    pdfpagemode=FullScreen,
+%}
 
 \newcommand{\pyinline}[1]{\lstinline[postbreak={}]{#1}}
 \newcommand{\cpinline}[1]{\lstinline[postbreak={}]{#1}}
@@ -203,11 +203,11 @@
 %% \address[label1]{<address>}
 %% \address[label2]{<address>}
 
-\author[a]{S.D. Walker}
+\author[a]{S.~D. Walker}
 \author[a]{A. Abramov}
-\author[a]{L.J. Nevay}
+\author[a]{L.~J. Nevay}
 \author[a]{W. Shields}
-\author[a]{S.T. Boogert\corref{author}}
+\author[a]{S.~T. Boogert\corref{author}}
 
 \cortext[author] {Corresponding author.\\\textit{E-mail address:} stewart.boogert@rhul.ac.uk}
 \address[a]{John Adams Institute at Royal Holloway, Department of Physics, Royal Holloway, Egham, TW20 0EX, Surrey, UK}
@@ -294,12 +294,12 @@ include MCNP~\cite{Mcnp_Werner}, FLUKA~\cite{Fluka_Ferrari,Fluka_Bohlen}, Geant3
 All these codes are based on the Monte Carlo technique but each code either has a particular specialism, simulation methodology or target user community.
  Monte Carlo RT (MCRT) simulations have diverse uses including shielding calculations for radiological protection, detector performance, medical
 imaging and therapy, and space radiation environment simulations. A fundamental requirement of all of the codes is to supply a
-computer-readable description of the  physical three-dimensional geometry that  the particles are passing through.  The creation of geometry files is
+computer-readable description of the  physical 3D geometry that  the particles are passing through.  The creation of geometry files is
 typically a very time-consuming activity and the simulation validity and performance is directly dependent on the quality of the geometry. There is no
 standard geometry format used across MCRT codes, with each code often using its own unique format. A user will typically not have geometry in both FLUKA and Geant4 for example. A geometry system
 that enables the conversion between files prepared for different codes will allow for cross-checks of the physics processes in different particle transport
  codes.  The file formats used for geometry are generally focused
- on the computational efficiency of particle tracking algorithms  and not ease of use. In addition to the creation of geometry files for RT programs, usually
+ on the computational efficiency of particle tracking algorithms  and not ease of preparation. In addition to the creation of geometry files for RT programs, usually
  computer-aided design (CAD) files exist for systems which need to be simulated. The fundamental geometric representations in CAD files are usually not
  amenable to MCRT programs.  For these reasons it is advantageous to create a software tool that allows particle transport code users to rapidly develop
  error-free geometry files, convert between common MCRT geometry formats and load CAD models.
@@ -510,11 +510,16 @@ allowed to vary for each placement.  Another way in GDML to create parametrised 
 future release.
 
 \subsection{Tessellation of solids (meshing)}
-Creating a uniform three-dimensional mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap
+Creating a uniform 3D mesh description of all solids (including Booleans) is exceptionally useful for visualisation and other algorithms, such as overlap
 detection. For each Geant4 solid instance a triangular tessellated vertex-face mesh is generated and cached. This mesh is then used to determine the extent
 of placed instances of geometry (physical volumes) and meshes for CSG-derived solids. CSG mesh calculations are performed using a Binary Space Partitioning
-(BSP) tree technique in pure Python~\cite{pycsg} or via the Computational Geometry Algorithms Library (CGAL) surface meshes~\cite{cgal:bsmf-sm-20b} in C++. In
-general, the CGAL implementation is one to two orders of magnitude faster than the pure Python CSG implementation and must be used for large geometries.
+(BSP) tree technique in pure Python~\cite{pycsg} or via the Computational
+Geometry Algorithms Library (CGAL) surface meshes~\cite{cgal:bsmf-sm-20b}
+in C++. The pure Python CSG backend is further accelerated by compiling it
+to C using Cython~\cite{cython}.
+For maximum flexibility either backend can be used, but in general the
+CGAL implementation is one to two orders of magnitude faster than the
+Cythonized CSG implementation and should be preferred, particularly for large geometries.
 Triangular meshes based on CSG operations involving curved surfaces often contain large numbers of triangles. Before meshes are visualised or written to file
 various polygon mesh algorithms  from CGAL~\cite{cgal:lty-pmp-20b} can be employed to give the meshes more desirable features.
 
@@ -523,7 +528,7 @@ various polygon mesh algorithms  from CGAL~\cite{cgal:lty-pmp-20b} can be employ
 When implementing geometry a rapid and robust visualisation system is key to produce error-free and efficient simulation input.
 A  \PYGEOMETRY{} geometry hierarchy can be viewed using the popular Visualisation Toolkit (VTK). No separate scene graph is required as the Geant4
 volume hierarchy is sufficient to place the meshes associated with each physical volume. A daughter volume is placed within a logical volume with a
-rotation~$\mathbf{R}_d$, scale~$\mathbf{S}_d$ and translation~$\mathbf{T}_d$.
+rotation~$\mathbf{R}_d$, reflection~$\mathbf{S}_d$ and translation~$\mathbf{T}_d$.
 
 \begin{figure}[htb!]
 \begin{center}
@@ -1199,7 +1204,7 @@ expression and using the \verb|to_dnf| method.  Further simplification of the CS
 meshing capabilities combined with CSG pruning algorithms based
 on~\cite{pruning}.  FLUKA will by default try to expand all regions to
 their DNF at runtime, which inevitably can result in the sort of exponential explosion already mentioned.  Until version 4.0, if FLUKA identified
-such an explosion, it would the expansion, report an error and exit, thus making such models impossible to run.  As of version 4.0, however, this
+such an explosion, it would terminate the expansion, report an error and exit, thus making such models impossible to run.  As of version 4.0, however, this
 expansion can be disabled, and the tracking algorithms will walk the CSG trees verbatim, albeit at some tracking efficiency cost.  Therefore, most
 output generated from the GDML to FLUKA conversion described here can only be used with FLUKA 4.0.
 
@@ -1393,12 +1398,18 @@ the \PYGEOMETRY{} online manual.
 
 \section{Quality assurance}
 The source and manual code for \PYGEOMETRY{} is stored in a Git repository (\url{https://bitbucket.org/jairhul/pyg4ometry}),
-where a public issue tracker for users is hosted to report problems or bugs with the code. The manual is created using Sphinx, a
-Python documentation generator (\url{http://www.pp.rhul.ac.uk/bdsim/pyg4ometry/}). \PYGEOMETRY{} uses mature packages
+where a public issue tracker for users is hosted to report problems or bugs
+with the code. The Python source is documented throughout using docstrings, which
+are also used to generate an API reference using Sphinx, a
+Python documentation generator
+(\url{http://www.pp.rhul.ac.uk/bdsim/pyg4ometry/}).  This
+automatically-generated documentation is supplemented with
+developer-written documentation in the form of examples and tutorials,
+again using Sphinx. \PYGEOMETRY{} uses mature packages
 available for Python as dependencies. \PYGEOMETRY{} has  two sub-packages
 that require compilation: \pyinline{pyg4ometry.pycsg} in Python and
 \pyinline{pyg4ometry.pycgal} in C++.
-\PYGEOMETRY{} package dependencies and extensions are installed easily using
+\PYGEOMETRY{} package dependencies and extensions are easily installed using
 \pyinline{setuptools}. All aspects of \PYGEOMETRY{} are routinely checked
 using software tests, of which there were 543 at the time of writing,
 resulting in 84\% code coverage. The tests also serve as minimal examples to help users understand the code operation.

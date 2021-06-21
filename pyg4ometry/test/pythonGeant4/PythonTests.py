@@ -315,5 +315,27 @@ class PythonTests(_unittest.TestCase) :
         v  = r['vtkViewer']
         v.setRandomColours()
 
+    def test_Python_VisualisationVtk_RandomColour(self):
+        import pyg4ometry.test.pythonCompoundExamples.lhc_blm_model as lhc_blm_model
+        import pyg4ometry
+        wlv = lhc_blm_model.make_lhc_blm()
+        v = pyg4ometry.visualisation.VtkViewerColoured(defaultColour="random")
+        v.addLogicalVolume(wlv)
+
+    def test_Python_VisualisationVtk_DefaultMaterial(self):
+        import pyg4ometry.test.pythonCompoundExamples.lhc_blm_model as lhc_blm_model
+        import pyg4ometry
+        wlv = lhc_blm_model.make_lhc_blm()
+        v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
+        v.addLogicalVolume(wlv)
+
+    def test_Python_VisualisationVtk_CustomMaterialColours(self):
+        import pyg4ometry.test.pythonCompoundExamples.lhc_blm_model as lhc_blm_model
+        import pyg4ometry
+        wlv = lhc_blm_model.make_lhc_blm()
+        colours = lhc_blm_model.materialToColour
+        v = pyg4ometry.visualisation.VtkViewerColoured(materialVisOptions=colours)
+        v.addLogicalVolume(wlv)
+
 if __name__ == '__main__':
     _unittest.main(verbosity=2)

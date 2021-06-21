@@ -2,7 +2,16 @@
 Basic python geometry scripting
 ===============================
 
-Geant4 python scripting 
+Precepts
+--------
+
+* Units may be specified but default to Geant4 ones (e.g. mm, rad).
+* Rotations are made using Tait-Bryan angles (rotation about reference x,y,z axes).
+* A :class:`Registry` object should be used to hold all things related in a model
+  and passed into the constructors of most objects.
+* GDML-like full lengths are used instead of typically half lengths
+
+Geant4 Python Scripting 
 -----------------------
 
 Making use of pyg4ometry requires the following modules 
@@ -11,7 +20,7 @@ Making use of pyg4ometry requires the following modules
 
    import pyg4ometry               
 
-To make a simple geometery of a box located at the origin
+To make a simple geometry of a box located at the origin
 
 .. code-block :: python
    :linenos:
@@ -43,12 +52,13 @@ Here is the vtk visualiser output of the above example
 .. figure:: pythonscripting/pythonscripting1.tiff
    :alt: Simple python scripting example
 
-GDML defines 
+GDML Defines
 ------------
 
-In GDML there are multiple ``define`` objects that can be used parametrise 
-geometry, materials etc. For example a GDML constant can be created in the 
-following way 
+In GDML there are multiple ``define`` objects that can be used parameterise 
+geometry, materials etc. These can be used as variables or definitions and
+mean that any equations used will be retained in GDML output. For example a
+GDML constant can be created in the following way 
 
 .. code-block :: python
 
@@ -124,7 +134,7 @@ So the box example above can be rewritten using constants
 
 .. note::
    All GDML defines (Constant, Variable, etc) can be used in the construction of other pyg4ometry classes 
-   interchangably instead of floats or strings (where strings are either numbers or a GDML expression)
+   interchangeably instead of floats or strings (where strings are either numbers or a GDML expression)
 
 .. warning::
    Avoid reassigning variables used as defines, this can have unexpected consequences so for example 
@@ -136,7 +146,7 @@ So the box example above can be rewritten using constants
    b1.pX = 20              # do not do this
    b1.pX.setExpression(20) # rather do this
 
-Solids 
+Solids
 ------
 
 The python geant4 solids match the Geant4 constructors as much possible (different constructor signatures are not supported in python). For example looking at the ``G4Box`` class
@@ -149,17 +159,19 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
 
    G4Box(const G4String& pName, G4double  pX, G4double  pY, G4double pZ)
 
+A full list of solids can be found in :ref:`all-solids`.
+   
 .. warning::
    The parameters stick to the GDML convention of **full** lengths opposed to half lengths.
 
-Materials 
+Materials
 ---------
 
 As with solids materials are defined in a similar way to Geant4 C++. Python
-does not have overloaded contrcutors, so unique signatures are needed, in 
-constrast to Geant4.  
+does not have overloaded constructors, so unique signatures are needed, in 
+contrast to Geant4.  
 
-To define a material from the Geant4 predefined materials 
+To define a material from the Geant4 predefined (e.g. NIST) materials 
 
 .. code-block :: python
    :emphasize-lines: 2-3
@@ -170,7 +182,7 @@ To define a material from the Geant4 predefined materials
    bm = _g4.MaterialPredefined("G4_Fe")
 
 
-To define a single element in terms of atomic number, atmoic mass and density.
+To define a single element in terms of atomic number, atomic mass and density.
 
 .. code-block :: python
    :emphasize-lines: 2-3
@@ -234,39 +246,125 @@ Example of elements formed by isotopes
    uranium = _g4.ElementIsotopeMixture("uranium", "U", 2)
    uranium.add_isotope(u235, 0.00716)
    uranium.add_isotope(u238, 0.99284)
-   bm = _g4.MaterialCompound("natural_uranium", 19.1, 2, reg)
-   bm.add_element_massfraction(uranium, 1) 
+   bm = _g4.MaterialCompound("natural_uranium", 19.1, 1, reg)
+   bm.add_element_massfraction(uranium, 1)
 
-Detector contruction 
---------------------
 
-This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans, logical, 
-physical (replica, division, param) volumes.
+NIST Materials
+**************
 
-Transformations 
----------------
+Geant4 has many predefined materials according to the NIST database. Their name typically starts
+with :code:`G4_`. These typically can be used with :code:`MaterialPredefined` and we **do not need**
+to specify the full composition - Geant4 will find them at run time.
 
-Transformations in 3D are essential for the easy placement of solids in a CSG tree or LV placement. 
-There is not a specific transformation classes like in Geant4, matricies and vectors used for placements
-are typically numpy arrays or matrices. 
+However, in the case of conversion to FLUKA, these are fully expanded according to their definition
+in Geant4 based on a cache in pyg4ometry of the material compositions generated using BDSIM from
+Geant4 (10.7.p01 as of writing). Should the user wish to use these, they can be accessed from the
+functions in the geant4 module.
 
-Optical surfaces 
+.. code-block :: python
+   :linenos:
+
+   import pyg4ometry
+   nistHydrogenElement = pyg4ometry.geant4.nist_element_2geant4Element('G4_H')
+
+Note, an 'element' cannot be used as a 'material' in a logical volume. We must upgrade it to a material
+for that. The NIST elements contain the appropriate mixture of natural isotopes and can be used in
+:code:`MaterialCompound` as demonstrated above.
+
+Alternatively, we can access the NIST materials and materials of elements.
+
+.. code-block :: python
+   :linenos:
+
+   import pyg4ometry
+   nistHydrogenMaterial = pyg4ometry.geant4.nist_material_2geant4Material('G4_H')
+   nistConcreteMaterial = pyg4ometry.geant4.nist_material_2geant4Material('G4_CONCRETE')
+
+
+Detector Construction
+---------------------
+
+This largely proceeds in exactly the same way as in G4 or GDML. Hierarchy of solids, booleans,
+logical, physical (replica, division, param) volumes.
+
+0. Create registry to hold everything
+1. Create solids
+2. Create logical volumes
+3. Place logical volumes (construct physical volumes)
+4. Visualise
+5. Check
+6. Export
+
+Transformations & Physical Volumes
+----------------------------------
+
+Transformations in 3D are essential for the easy placement of solids in a CSG tree or
+LV placement. There is not a specific transformation classes like in Geant4, matrices
+and vectors used for placements are typically Numpy arrays or matrices.
+
+Geant4 has two possible constructors for a physical volume. These provide active and
+passive transformations. In pyg4ometry, only one is provided. The transform in a
+physical volume first translates the placed logical volume with respect to the mother
+logical, then rotates it.
+
+The physical volume class is documented here: :ref:`g4-module`, but an example
+is shown here.
+
+.. code-block:: python
+   :linenos:
+
+   import pyg4ometry
+   r = pyg4ometry.geant4.Registry()
+   vacuum = _g4.MaterialPredefined("G4_Galactic")
+   water = _g4.MaterialPredefined("G4_WATER")
+   worldSolid = pyg4ometry.geant4.solid.Box("world_solid", 100, 100, 100, reg)
+   boxSolid = pyg4ometry.geant4.solid.Box("box_solid", 10, 20, 40, reg)
+   worldLV = pyg4ometry.geant4.LogicalVolume(worldSolid, vacuum, "world_lv", reg)
+   boxLV = pyg4ometry.geant4.LogicalVolume(boxSolid, water, "box_lv", reg)
+
+   pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                    [0,0,0],
+				    boxLV,
+				    "box_pv",
+				    worldLV,
+				    reg)
+
+This creates a box of water inside a box of vacuum. The box of water is 10 x 20 x 50 mm long
+(note mm are the default length units), and it is placed with no offset and no rotation (i.e.
+at the centre) of the world volume. Alternatively: 
+
+.. code-block:: python
+   :linenos:
+
+   import numpy as np
+   pyg4ometry.geant4.PhysicalVolume([0,np.pi/3.0,0],
+                                    [0,0,0],
+				    boxLV,
+				    "box_pv",
+				    worldLV,
+				    reg)
+
+In this case, the box is placed with no offset but with a rotation of :math:`\pi/3` radians
+about the y axis of the world box.
+
+Optical Surfaces 
 ----------------
 
-Registry and GDML output
+Registry and GDML Output
 ------------------------
 
 Strictly speaking a registry class to store all of the GDML is not required. 
-As with normal Geant4 given a ``lv`` pointer it should possible to form an aggregration 
-hierarchy that contains all nessessary objects. Now GDML breaks this as the
+As with normal Geant4 given a ``lv`` pointer it should possible to form an aggregation 
+hierarchy that contains all necessary objects. Now GDML breaks this as the
 structure is built up using ``name`` tags. For example a placement requires 
-a position. In G4 this would just be a pointer to an transformation object, but GDML 
+a position. In Geant4 this would just be a pointer to an transformation object, but GDML 
 has two mechanisms to represent this, firstly child nodes of a PhysicalVolume tag 
 or secondly a position define, see below
 
 The registry class is a storage class for a complete GDML file. At the
 construction stage of almost all objects a registry is required. If the 
-object is added to the resistry then it will appear explicitly in the GDML 
+object is added to the registry then it will appear explicitly in the GDML 
 output
 
 Visualisation
@@ -301,11 +399,11 @@ and then commands can be typed into the terminal, for example
    v.setWirefrace()   
    v.start()
    
-Overlap checking
+Overlap Checking
 ----------------
 
 Given all the PVs (daughters) of a LV (mother) should be bounded by the LV/mother solid. It is
-possible check between all daugher solid meshes and between daughers and the mother solid mesh.
+possible check between all daughter solid meshes and between daughters and the mother solid mesh.
 Given an ``LV`` this check can be performed by calling the following code.
 
 .. code-block :: python
@@ -328,7 +426,7 @@ There is no output when ``checkOverlaps`` is called but a overlap, protrusion or
 coplanar meshes are computed and stored in the logical volume instance and displayed
 by the ``VtkViewer``
 
-GDML output 
+GDML Output
 -----------
 
 To write an GDML file file given a ``pyg4ometry.geant4.registy reg``   

@@ -11,6 +11,7 @@ from pythonFluka            import PythonFlukaAuthoringTests
 from geant42Fluka           import Geant42FlukaConversionTests
 from flairFluka             import FlairLoadTests
 from bdsim                  import PythonBdsimAuthoringTests
+from paraviewExport           import VtkExporter
 
 import unittest as _unittest
 import logging as _log

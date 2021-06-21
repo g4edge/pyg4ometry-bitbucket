@@ -272,12 +272,31 @@ class Reader(object):
             elif mat_type == "material":
                 components = []
                 properties = {}
+
+                try :
+                    state = node.attributes["state"].value
+                except :
+                    state = None
                 for chNode in node.childNodes:
                     if chNode.nodeType != chNode.ELEMENT_NODE:
                         continue # comment
 
                     if chNode.tagName == "D":
                         def_attrs["density"] = chNode.attributes["value"].value
+
+                    elif chNode.tagName == "T":
+                        def_attrs["temperature"] = chNode.attributes["value"].value
+                        try:
+                            def_attrs["temperature_unit"] = chNode.attributes["unit"].value
+                        except KeyError:
+                            def_attrs["temperature_unit"] = "K"
+
+                    elif chNode.tagName == "P":
+                        def_attrs["pressure"] = chNode.attributes["value"].value
+                        try:
+                            def_attrs["pressure_unit"] = chNode.attributes["unit"].value
+                        except KeyError:
+                            def_attrs["pressure_unit"] = "pascal"
 
                     elif chNode.tagName == "atom":
                         def_attrs["a"] = chNode.attributes["value"].value
@@ -349,17 +368,20 @@ class Reader(object):
 
         for material in materials:
             name = str(material.get("name", ""))
+            state = str(material.get("state",""))
             density = float(material.get("density", 0.0))
 
             if not material["components"]:
                 Z    = float(material.get("Z", 0))
                 a    = float(material.get("a", 0.0))
-                mat = _g4.MaterialSingleElement(name, Z, a, density, registry=self._registry)
+                mat = _g4.MaterialSingleElement(name, Z, a, density, registry=self._registry, tolerateZeroDensity=True)
+                mat.set_state(state)
 
             else:
                 n_comp = len(material["components"])
                 comp_type = str(material["components"][0]["comp_type"])
-                mat = _g4.MaterialCompound(name, density, n_comp, registry=self._registry)
+                mat = _g4.MaterialCompound(name, density, n_comp, registry=self._registry, tolerateZeroDensity=True)
+                mat.set_state(state)
 
                 for comp in material["components"]:
                     ref = str(comp.get("ref", ""))
@@ -388,6 +410,13 @@ class Reader(object):
 
                     else:
                         raise ValueError("Unrecognised material component type: {}".format(comp_type))
+
+            # Set the optional variables of state
+            if "temperature" in material:
+                mat.set_temperature(float(material["temperature"]), material["temperature_unit"])
+
+            if "pressure" in material:
+                mat.set_pressure(float(material["pressure"]), material["pressure_unit"])
 
             # Set the optional properties
             properties = material.get("properties")
@@ -1341,7 +1370,10 @@ class Reader(object):
                 if material in self._registry.materialDict:
                     mat = self._registry.materialDict[material]
                 else:
-                    mat = _g4.MaterialPredefined(material)
+                    try:
+                        mat = _g4.MaterialPredefined(material)
+                    except ValueError:
+                        mat = _g4.MaterialArbitrary(material)
 
                 aux_list = []
                 try:
