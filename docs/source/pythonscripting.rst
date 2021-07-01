@@ -11,6 +11,58 @@ Precepts
   and passed into the constructors of most objects.
 * GDML-like full lengths are used instead of typically half lengths
 
+Units
+-----
+
+* The default units are mm and rad for length and angle.
+* Most constructors will take units as an optional key word argument ('kwarg').
+* The kwargs are typically :code:`lunit` for length unit and :code:`aunit` for angle unit.
+* Units are defined in :code:`pyg4ometry.gdml.Units.py`.
+
+The following units (as strings) are accepted:
+
++-------------+------------------+
+| **Unit**    | **Value**        |
++=============+==================+
+| nm          | 1e-6             |
++-------------+------------------+
+| um          | 1e-3             |
++-------------+------------------+
+| mm          | 1                |
++-------------+------------------+
+| cm          | 10               |
++-------------+------------------+
+| m           | 1e3              |
++-------------+------------------+
+| km          | 1e6              |
++-------------+------------------+
+| deg         | :math:`\pi/180`  |
++-------------+------------------+
+| degree      | :math:`\pi/180`  |
++-------------+------------------+
+| rad         | 1                |
++-------------+------------------+
+| radian      | 1                |
++-------------+------------------+
+| mrad        | 1e-3             |
++-------------+------------------+
+| urad        | 1e-6             |
++-------------+------------------+
+| eV          | 1e-3             |
++-------------+------------------+
+| none        | 1                |
++-------------+------------------+
+
+Examples: ::
+
+  reg = pyg4ometry.geant4.Registry()
+  boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg)
+
+This defines a box with the default units (none specifed), so mm. We can specify them: ::
+
+  boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg, "cm")
+
+
 Geant4 Python Scripting 
 -----------------------
 
