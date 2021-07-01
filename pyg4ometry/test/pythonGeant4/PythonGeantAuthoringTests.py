@@ -40,6 +40,7 @@ from . import T029_Subtraction
 from . import T030_Intersection
 from . import T031_MultiUnion
 from . import T032_Scaled
+from . import T033_TessellatedSolid
 from . import T101_physical_logical
 from . import T102_overlap_none
 from . import T103_overlap_copl
@@ -255,6 +256,9 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
 
     def test_PythonGeant_T032_Scaled(self):
         self.assertTrue(T032_Scaled.Test()["testStatus"])
+
+    def test_PythonGeant_T033_Tessellated(self):
+        self.assertTrue(T033_TessellatedSolid.Test()["testStatus"])
 
     def test_PythonGeant_T101_PhysicalLogical(self):
         self.assertTrue(T101_physical_logical.Test()["testStatus"])
