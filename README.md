@@ -1,4 +1,4 @@
-pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2020
+pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2021
 
 General Information
 ===================
@@ -12,9 +12,9 @@ Stuart Walker         <Stuart.Walker.2011@live.rhul.ac.uk>
 Installation guide
 ==================
 
-  * Required libraries VTK and CGAL
+  * Required libraries VTK, CGAL, pybind11
   * Optional libraries FreeCAD
-  * clone repo
+  * clone repository
   * cd pyg4ometry 
   * make install or make develop
 
