@@ -39,7 +39,7 @@ bp3 = g4.PhysicalVolume([0,0,2*br],
 # define world volume
 reg.setWorld(wl.name)
 
-# physical volume vistualisation attributes
+# physical volume visualisation attributes
 bp1.visOptions.color = (1,0,0)
 bp1.visOptions.alpha = 1.0
 bp2.visOptions.color = (0,1,0)

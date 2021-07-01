@@ -20,6 +20,17 @@ COLOURS = {
     "nitrogen": (102, 153, 83, 0.005),  # light grass green
 }
 
+materialToColour = {'BLM_Nitrogen':COLOURS['nitrogen'],
+                    'BLM_Nitrogen_Active':COLOURS['nitrogen'],
+                    'Al203':COLOURS['aluminium_oxide'],
+                    'G4_Galactic':COLOURS['none'],
+                    'nitrogen':COLOURS['nitrogen'],
+                    'G4_STAINLESS-STEEL':COLOURS['steel-lowalpha'],
+                    'aluminium':COLOURS['aluminium'],
+                    'oxygen':(100,30,200,0.05),
+                    'G4_Al':COLOURS['aluminium']
+                    }
+
 
 def assign_colour(lv, colour):
     colour_val = COLOURS.get(colour, (128, 128, 128, 1))
@@ -547,7 +558,9 @@ def make_lhc_blm(vis=False, interactive=False, n_slice=16):
         v.addLogicalVolume(reg.getWorldVolume())
         v.view(interactive=interactive)
 
+    return world_lv
+
 
 if __name__ == "__main__":
     # electrode_profile()
-    make_lhc_blm(1, 1)
+    make_lhc_blm(True, True)
