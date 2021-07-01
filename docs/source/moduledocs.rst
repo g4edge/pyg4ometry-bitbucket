@@ -143,6 +143,8 @@ Geant4 module
    :members: addDefine, addMaterial, addSolid, addLogicalVolume, addPhysicalVolume
    :undoc-members:
    :show-inheritance:
+.. autofunction:: pyg4ometry.geant4.AnalyseGeometryComplexity
+
 .. autoclass:: pyg4ometry.geant4.Material
    :members:
    :undoc-members:
