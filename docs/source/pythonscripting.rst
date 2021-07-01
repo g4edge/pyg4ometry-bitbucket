@@ -101,7 +101,7 @@ To make a simple geometry of a box located at the origin
 
 Here is the vtk visualiser output of the above example
 
-.. figure:: pythonscripting/pythonscripting1.tiff
+.. figure:: pythonscripting/pythonscripting1.jpg
    :alt: Simple python scripting example
 
 GDML Defines
