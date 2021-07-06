@@ -28,6 +28,11 @@ from . import T029_geant4Subtraction2Fluka
 from . import T030_geant4Intersection2Fluka
 
 from . import T105_geant4Assembly2Fluka
+from . import T106_replica_x_2Fluka
+from . import T107_replica_y_2Fluka
+from . import T108_replica_z_2Fluka
+from . import T109_replica_phi_2Fluka
+from . import T110_replica_rho_2Fluka
 
 class Geant42FlukaConversionTests(_unittest.TestCase) :
     def test_Geant42FlukaConversion_T001_Box(self) :
@@ -107,6 +112,21 @@ class Geant42FlukaConversionTests(_unittest.TestCase) :
 
     def test_Geant42FlukaConversion_T105_Assembly(self):
         T105_geant4Assembly2Fluka.Test(False,False,True)
+
+    def test_Geant42FlukaConversion_T106_replica_x(self):
+        T106_replica_x_2Fluka.Test(False,False,True)
+
+    def test_Geant42FlukaConversion_T107_replica_y(self):
+        T107_replica_y_2Fluka.Test(False,False,True)
+
+    def test_Geant42FlukaConversion_T108_replica_z(self):
+        T108_replica_z_2Fluka.Test(False,False,True)
+
+    def test_Geant42FlukaConversion_T109_replica_phi(self):
+        T109_replica_phi_2Fluka.Test(False,False,True)
+
+    def test_Geant42FlukaConversion_T110_replica_rho(self):
+        T110_replica_rho_2Fluka.Test(False,False,True)
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
