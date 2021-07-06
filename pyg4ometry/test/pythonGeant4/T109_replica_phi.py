@@ -44,7 +44,7 @@ def Test(vis = False, interactive = False) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T108_replica_z.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T109_replica_phi.gdml"))
 
     # test __repr__
     str(mtl)
