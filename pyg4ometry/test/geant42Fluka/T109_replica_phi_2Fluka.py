@@ -1,7 +1,9 @@
 import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
+import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
+import pyg4ometry.convert as _convert
 
 
 def Test(vis = False, interactive = False, fluka=False) :
@@ -44,7 +46,7 @@ def Test(vis = False, interactive = False, fluka=False) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T109_replica_phi.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T109_replica_phi_2Fluka.gdml"))
 
     # test __repr__
     str(mtl)
@@ -61,8 +63,8 @@ def Test(vis = False, interactive = False, fluka=False) :
         w.write(_os.path.join(_os.path.dirname(__file__),"T109_replica_phi_2Fluka.inp"))
 
         # flair output file
-        f = _fluka.Flair("T109_replica_phi_2Fluka",extentBB)
-        f.write(_os.path.join(_os.path.dirname(__file__),"T109_replica_phi_2Fluka"))
+        f = _fluka.Flair("T109_replica_phi_2Fluka.inp",extentBB)
+        f.write(_os.path.join(_os.path.dirname(__file__),"T109_replica_phi_2Fluka.flair"))
 
     # visualisation
     v = None
