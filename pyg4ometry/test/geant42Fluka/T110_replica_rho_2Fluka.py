@@ -22,17 +22,17 @@ def Test(vis = False, interactive = False, fluka=False) :
     trmax  = _gd.Constant("rmax",200,reg,True)
     tz     = _gd.Constant("z",800,reg,True)
     mtdphi = _gd.Constant("mtdphi","2*pi",reg,True)
-    tdphi  = _gd.Constant("tdphi","2*pi/8.0",reg,True)
+    tdphi  = _gd.Constant("tdphi","2*pi",reg,True)
     nreplicas = _gd.Constant("nreplicas", 8, reg, True)
-    tdR = _gd.Constant("tdR", (trmax-trmin)/nreplicas, reg, True)
+    tdR = _gd.Constant("tdR", trmax/nreplicas, reg, True)
 
     wm  = _g4.MaterialPredefined("G4_Galactic")
     bm  = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws  = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts  = _g4.solid.Tubs("ts",trmin,trmax,tz,0,tdphi,reg,"mm","rad",16,True)
-    mts = _g4.solid.Tubs("mts",trmin,trmax,tz,0,mtdphi,reg,"mm","rad",16,True)
+    ts  = _g4.solid.Tubs("ts",0,trmax,tz,0,tdphi,reg,"mm","rad",16,True)
+    mts = _g4.solid.Tubs("mts",0,trmax,tz,0,mtdphi,reg,"mm","rad",16,True)
         
     # structure 
     wl  = _g4.LogicalVolume(ws, wm, "wl",reg)
