@@ -15,7 +15,7 @@ def Test(vis = False, interactive = False) :
     worldSolid = _g4.solid.Box("world_solid",200,200,200, reg)
     worldLV    = _g4.LogicalVolume(worldSolid, vacuum, "world_lv", reg)
 
-    masterAssembly = _g4.AssemblyVolume("big_part", reg)
+    masterAssembly = _g4.AssemblyVolume("assembly2", reg)
     asPV1 = _g4.PhysicalVolume([0,0,0], [0,0,0],  assembly, "part_pv1", masterAssembly, reg)
     asPV2 = _g4.PhysicalVolume([0,0,0], [0,0,12], assembly, "part_pv2", masterAssembly, reg)
     asPV3 = _g4.PhysicalVolume([0,0,0], [0,0,24], assembly, "part_pv3", masterAssembly, reg)
