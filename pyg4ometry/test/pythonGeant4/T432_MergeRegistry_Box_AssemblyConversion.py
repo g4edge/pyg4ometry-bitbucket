@@ -14,9 +14,6 @@ def Test(vis = False, interactive = False) :
     av1 = l1.assemblyVolume()
     av2 = l2.assemblyVolume()
 
-    av1.checkOverlaps()
-    av2.checkOverlaps()
-
     wx0 = _gd.Constant("wx0", "200", reg0, True)
     wy0 = _gd.Constant("wy0", "200", reg0, True)
     wz0 = _gd.Constant("wz0", "200", reg0, True)
@@ -27,6 +24,8 @@ def Test(vis = False, interactive = False) :
 
     p1 = _g4.PhysicalVolume([0,0,0],[-25,0,0], av1, "av1_pv", wl, reg0)
     p2 = _g4.PhysicalVolume([0,0,0],[ 25,0,0], av2, "av2_pv", wl, reg0)
+
+    wl.checkOverlaps(recursive=True)
 
     reg0.addVolumeRecursive(p1)
     reg0.addVolumeRecursive(p2)

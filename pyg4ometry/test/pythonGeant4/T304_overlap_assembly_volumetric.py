@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 import numpy as _np
 
-import ECamelAssembly
+from . import ECamelAssembly
 
 def Test(vis = False, interactive = False) :
     reg = _g4.Registry()

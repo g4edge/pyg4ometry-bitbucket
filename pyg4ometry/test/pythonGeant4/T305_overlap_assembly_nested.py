@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 import numpy as _np
 
-import ECamelAssembly
+from . import ECamelAssembly
 
 def Test(vis = False, interactive = False) :
     reg = _g4.Registry()
@@ -32,7 +32,7 @@ def Test(vis = False, interactive = False) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T304_overlap_assembly_volumetric.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T305_overlap_assembly_nested.gdml"))
 
     # test __repr__
     str(worldSolid)
