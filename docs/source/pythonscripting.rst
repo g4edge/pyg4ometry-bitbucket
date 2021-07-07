@@ -526,6 +526,18 @@ Limitations
    so usually we can "get away" with this if the curved solids aren't rotated about their axis.
 2. Currently, division and parameterised volumes are not handled explicitly.
 
+Assemblies
+**********
+
+In the case of assembly volumes, and if an overlap is detected, a unique name is built up
+based on the parent PhysicalVolume, the assembly and the PhysicalVolume inside it. Furthermore, this
+is done recursively is assemblies of assemblies (etc) are used. The name is built up with an
+underscore "_" for padding and the user should decode this from their input.
+
+As there is no 'mother' of an
+assembly, there is no mother protrusion directly. The contents of an assembly are compared to
+all other daughters and the mother at the higher level in which they are placed.
+
 GDML Output
 -----------
 
