@@ -198,7 +198,7 @@ GDML module
    :undoc-members:
    :show-inheritance:
 
-Fluka bodies 
+Fluka bodies
 ------------
 .. automodule:: pyg4ometry.fluka.body
    :members:
@@ -206,7 +206,7 @@ Fluka bodies
    :undoc-members:
    :show-inheritance:
 
-Fluka module 
+Fluka module
 ------------
 .. automodule:: pyg4ometry.fluka.FlukaRegistry
    :members:
@@ -217,3 +217,12 @@ Fluka module
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. _transformation-module:
+
+Transformation
+--------------
+
+.. automodule:: pyg4ometry.transformation
+   :members:
+   :undoc-members:
