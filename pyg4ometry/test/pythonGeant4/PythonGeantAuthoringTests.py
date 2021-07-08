@@ -58,6 +58,14 @@ from . import T202_OpticalSurface
 from . import T203_MaterialsRegistry
 from . import T204_NIST_Element
 from . import T205_NIST_Material
+from . import T300_overlap_assembly_regular_lv
+from . import T301_overlap_assembly_none
+from . import T302_overlap_assembly_coplanar
+from . import T303_overlap_assembly_daughter_collision
+from . import T304_overlap_assembly_volumetric
+from . import T305_overlap_assembly_nested
+from . import T306_overlap_replica_x
+from . import T307_overlap_replica_x_internal
 from . import T400_MergeRegistry
 from . import T401_MergeRegistry_Box
 from . import T402_MergeRegistry_Tubs

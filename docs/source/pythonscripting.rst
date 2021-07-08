@@ -9,7 +9,7 @@ Precepts
 * Rotations are made using Tait-Bryan angles (rotation about reference x,y,z axes).
 * A :class:`Registry` object should be used to hold all things related in a model
   and passed into the constructors of most objects.
-* GDML-like full lengths are used instead of typically half lengths
+* GDML-like **full lengths** are used instead of typically half lengths
 
 Units
 -----
@@ -352,13 +352,14 @@ Transformations & Physical Volumes
 ----------------------------------
 
 Transformations in 3D are essential for the easy placement of solids in a CSG tree or
-LV placement. There is not a specific transformation classes like in Geant4, matrices
-and vectors used for placements are typically Numpy arrays or matrices.
+LV placement. There is not a specific transformation class like in Geant4. The matrices
+and vectors used for placements are here typically Numpy arrays or matrices.
 
 Geant4 has two possible constructors for a physical volume. These provide active and
-passive transformations. In pyg4ometry, only one is provided. The transform in a
-physical volume first translates the placed logical volume with respect to the mother
-logical, then rotates it.
+passive transformations. In pyg4ometry, only one is provided.
+
+* The transform in a physical volume first translates the placed logical volume
+  with respect to the mother logical, then rotates it.
 
 The physical volume class is documented here: :ref:`g4-module`, but an example
 is shown here.
@@ -400,7 +401,15 @@ at the centre) of the world volume. Alternatively:
 In this case, the box is placed with no offset but with a rotation of :math:`\pi/3` radians
 about the y axis of the world box.
 
-Optical Surfaces 
+.. note:: The rotations are Tait-Bryan angles, which are rotations about the reference
+	  x,y,z axes. i.e. if there is a rotation about both x and y, these are independent
+	  and it is **not** a compound frame that is rotated. These are commonly thought of
+	  like an aircraft and called pitch, yaw and tilt.
+
+There are utility functions for translation between different transformations in
+:code:`pyg4ometry.transformation`. See :ref:`transformation-module`.
+
+Optical Surfaces
 ----------------
 
 Registry and GDML Output
@@ -422,15 +431,15 @@ output
 Visualisation
 -------------
 
-Any logical volume ``lv`` can be visualised using 
+Any logical volume ``lv`` can be visualised using:
 
 .. code-block :: python
    :linenos:
 
-   v = pyg4ometry.visualisation.VtkViewer()
-   v.addLogicalVolume(lv)
-   v.addAxes(20)
-   v.view()
+    v = pyg4ometry.visualisation.VtkViewer()
+    v.addLogicalVolume(lv)
+    v.addAxes(20)
+    v.view()
 
 which will open a Vtk render window. The render window now receives keyboard and mouse commands. 
 To exit render window ``q``, to restart interaction with the visualiser 
@@ -438,7 +447,7 @@ To exit render window ``q``, to restart interaction with the visualiser
 .. code-block :: python
    :linenos:
 
-   v.start()
+    v.start()
 
 There are also convenience methods of ``pyg4ometry.visualisation.VtkViewer()`` the allow changing 
 of the viewing parameters. So if the viewer is active then render window needs to be stopped ``q`` 
@@ -447,16 +456,37 @@ and then commands can be typed into the terminal, for example
 .. code-block :: python
    :linenos:
 
-   v.setOpactity(0.1)
-   v.setWirefrace()   
-   v.start()
-   
+    v.setOpactity(0.1)
+    v.setWirefrace()   
+    v.start()
+
+
 Overlap Checking
 ----------------
 
+"Overlaps" is a general term used to describe malformed geometry. Such geometry is unphysical
+and may causing particle tracking problems in simulations such as stuck particles, or particles
+completely missing certain volumes entirely. Such errors are rarely easy to spot from results
+or running the simulation.
+
 Given all the PVs (daughters) of a LV (mother) should be bounded by the LV/mother solid. It is
-possible check between all daughter solid meshes and between daughters and the mother solid mesh.
-Given an ``LV`` this check can be performed by calling the following code.
+possible to check between all daughter solid meshes and between daughters and the mother solid mesh.
+Given an :code:`pyg4ometry.geant4.LogicalVolume` instance ("lv"), this check can be performed by calling
+the following code:
+
+.. code-block :: python
+
+    lv.checkOverlaps()
+
+This will check only the immediate daughters of this logical volume. To descend further into
+a geometry, the recursive flag can be used:
+
+.. code-block :: python
+
+    lv.checkOverlaps(recursive=True)
+
+See :ref:`g4-module` : :code:`LogicalVolume.checkOverlaps()` for full details. A more
+complete example is:
 
 .. code-block :: python
    :emphasize-lines: 5
@@ -474,14 +504,54 @@ Given an ``LV`` this check can be performed by calling the following code.
 .. figure:: pythonscripting/pythonscripting2.png
    :alt: Example overlap visualisation
 
-There is no output when ``checkOverlaps`` is called but a overlap, protrusion or 
-coplanar meshes are computed and stored in the logical volume instance and displayed
-by the ``VtkViewer``
+Text is by default only printed out when an overlap is found. Any overlaps will be prepared
+for visualisation in a VtkViewer (must be constructed and given the LV after this).
+
+The following overlap checks are performed:
+
+1. daughter with other daughter overlap
+2. co-planar daughter with other daughter overlap
+3. protrusion of a daughter from the mother volume
+4. co-planar daughter with mother volume
+
+
+Colour Coding
+*************
+
+In the visualiser, text will be overlaid saying "overlap" where some kind of overlap is detected.
+Additionally, the actual overlap itself will be visualised and colour coded according to:
+
+* red: protrusion overlap
+* green: daughter-daughter overlap
+* blue: co-planar overlap
+
+
+Limitations
+***********
+
+1. The overlap detection is performed by checking for overlaps in the visualisation meshes
+   generated for each volume. In the case of curved solids (e.g. a cylinder), the mesh is
+   not truly curved but a polygon. Very closely spaced curved surfaces may produce false
+   overlaps. By default, all curved solids will use the same number of points around a circle,
+   so usually we can "get away" with this if the curved solids aren't rotated about their axis.
+2. Currently, division and parameterised volumes are not handled explicitly.
+
+Assemblies
+**********
+
+In the case of assembly volumes, and if an overlap is detected, a unique name is built up
+based on the parent PhysicalVolume, the assembly and the PhysicalVolume inside it. Furthermore, this
+is done recursively is assemblies of assemblies (etc) are used. The name is built up with an
+underscore "_" for padding and the user should decode this from their input.
+
+As there is no 'mother' of an
+assembly, there is no mother protrusion directly. The contents of an assembly are compared to
+all other daughters and the mother at the higher level in which they are placed.
 
 GDML Output
 -----------
 
-To write an GDML file file given a ``pyg4ometry.geant4.registy reg``   
+To write an GDML file file given a :code:`pyg4ometry.geant4.registy` instance  :code:`reg`.   
 
 .. code-block :: python
    :emphasize-lines: 3
@@ -490,8 +560,9 @@ To write an GDML file file given a ``pyg4ometry.geant4.registy reg``
    import pyg4ometry
    w = p4gometry.gdml.Writer()
    w.addDetector(reg)
-   w.write('./file.gdml')
-   w.writeGmadTester('./file.gmad')
+   w.write('file.gdml')
+   # make a quick bdsim job for the one component in a beam line
+   w.writeGmadTester('file.gmad', 'file.gdml')
 
 
 

@@ -2,7 +2,7 @@
 Tutorials
 =========
 
-GDML loading
+GDML Loading
 ------------
 
 In directory ``pyg4ometry/pyg4ometry/test/gdmlG4examples/ChargeExchangeMC/``
@@ -21,7 +21,7 @@ In directory ``pyg4ometry/pyg4ometry/test/gdmlG4examples/ChargeExchangeMC/``
    :alt: Example of loading a GDML file
 
 
-STL loading
+STL Loading
 -----------
 
 STL files are typically used for a single watertight solid mesh. This mesh is
@@ -42,7 +42,7 @@ in a geometry. In directory ``pyg4ometry/pyg4ometry/test/stl``.
    :alt: Example of STL loading in pyg4ometry
 
 
-STEP/STP loading
+STEP/STP Loading
 ----------------
 
 In directory ``pyg4ometry/pyg4ometry/test/freecad``
@@ -63,7 +63,7 @@ In directory ``pyg4ometry/pyg4ometry/test/freecad``
    :alt: Example of STEP loading in pyg4ometry
 
 
-Merging geometry
+Merging Geometry
 ----------------
 
 There are ways to incorporate geometry from multiple sources in GDML. This has potentially
@@ -135,14 +135,14 @@ Now merging the ``tl`` logicalVolume (which is a simple tubs) with the box gdml 
    on are not transferred over.
 
 
-Assembly conversion
+Assembly Conversion
 -------------------
 
 Given two sources of geometry, placement of top level world logical volume solids will
 likely result in an overlap. To avoid these types of problems, it might required to convert
 one of the logical volumes to an AssemblyVolume.
 
-STL output
+STL Output
 ----------
 
 To write an STL file from ``m = volume.pycsgmesh()``
@@ -267,3 +267,41 @@ the bounding box ensures that an efficient and accurate mesh of the QUA
 bodies can be generated meaning that the conversion to be performed in a
 tractable amount of time as well giving more performant tracking in Geant4.
 
+Geometry Complexity Analysis
+----------------------------
+
+For a given logical volume we can get some statistics on the complexity
+of the geometry. A simple class called `GeometryComplexityInformation` is
+returned that has a serious of dictionaries with information. ::
+
+  cd pyg4ometry/pyg4ometry/test/gdmlCompoundExamples/bdsim_2
+  ipython
+  >>> import pyg4ometry
+  >>> r = pyg4ometry.gdml.Reader("22-size-variation-facetcrop-quad.gdml")
+  >>> info = pyg4ometry.geant4.AnalyseGeometryComplexity(r.getRegistry().getWorldVolume())
+  >>> info.printSummary()
+  Types of solids
+  ExtrudedSolid        : 96
+  Tubs                 : 51
+  Intersection         : 24
+  Polyhedra            : 12
+  Subtraction          : 6
+  Box                  : 1
+ 
+  # of daughters       count
+  0                    : 152
+  2                    : 19
+  4                    : 12
+  13                   : 6
+  25                   : 1
+ 
+  Depth of booleans    count
+  1                    : 30
+ 
+  Booleans width depth over  3
+  Solid name                               : n Booleans
+
+  >>> info. <tab>
+  comp.booleanDepth      comp.nDaughtersPerLV  
+  comp.booleanDepthCount comp.printSummary     
+  comp.nDaughters        comp.solids

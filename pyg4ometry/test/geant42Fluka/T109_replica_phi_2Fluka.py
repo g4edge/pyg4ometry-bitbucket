@@ -1,10 +1,12 @@
 import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
+import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
+import pyg4ometry.convert as _convert
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, fluka=False) :
     reg = _g4.Registry()
     
     # defines 
@@ -20,23 +22,21 @@ def Test(vis = False, interactive = False) :
     trmax  = _gd.Constant("rmax",200,reg,True)
     tz     = _gd.Constant("z",800,reg,True)
     mtdphi = _gd.Constant("mtdphi","2*pi",reg,True)
-    tdphi  = _gd.Constant("tdphi","2*pi",reg,True)
-    nreplicas = _gd.Constant("nreplicas", 8, reg, True)
-    tdR = _gd.Constant("tdR", trmax/nreplicas, reg, True)
+    tdphi  = _gd.Constant("tdphi","2*pi/8.0",reg,True)
 
     wm  = _g4.MaterialPredefined("G4_Galactic")
     bm  = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws  = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts  = _g4.solid.Tubs("ts",0,trmax,tz,0,tdphi,reg,"mm","rad",16,True)
-    mts = _g4.solid.Tubs("mts",0,trmax,tz,0,mtdphi,reg,"mm","rad",16,True)
+    ts  = _g4.solid.Tubs("ts",trmin,trmax,tz,0,tdphi,reg,"mm","rad",16,True)
+    mts = _g4.solid.Tubs("mts",trmin,trmax,tz,0,mtdphi,reg,"mm","rad",16,True)
         
     # structure 
     wl  = _g4.LogicalVolume(ws, wm, "wl",reg)
     tl  = _g4.LogicalVolume(ts, bm, "tl",reg)
     ml  = _g4.LogicalVolume(mts,wm, "ml",reg)
-    mtl = _g4.ReplicaVolume("mtl",tl,ml,_g4.ReplicaVolume.Axis.kRho,nreplicas,tdR,0,reg,True,"mm","mm")
+    mtl = _g4.ReplicaVolume("mtl",tl,ml,_g4.ReplicaVolume.Axis.kPhi,8,tdphi,0,reg,True,"mm","mm")
 
     mtp= _g4.PhysicalVolume([0,0,0],[0,0,0],  ml, "ml_pv1", wl, reg)
 
@@ -46,8 +46,7 @@ def Test(vis = False, interactive = False) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T110_replica_rho.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T110_replica_rho.gmad"),"T110_replica_rho.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T109_replica_phi_2Fluka.gdml"))
 
     # test __repr__
     str(mtl)
@@ -55,6 +54,17 @@ def Test(vis = False, interactive = False) :
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
     extent   = wl.extent(includeBoundingSolid=False)
+
+    # fluka conversion
+    if fluka :
+        freg = _convert.geant4Reg2FlukaReg(reg)
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_os.path.join(_os.path.dirname(__file__),"T109_replica_phi_2Fluka.inp"))
+
+        # flair output file
+        f = _fluka.Flair("T109_replica_phi_2Fluka.inp",extentBB)
+        f.write(_os.path.join(_os.path.dirname(__file__),"T109_replica_phi_2Fluka.flair"))
 
     # visualisation
     v = None

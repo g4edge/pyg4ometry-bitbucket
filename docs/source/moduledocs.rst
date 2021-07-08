@@ -143,6 +143,8 @@ Geant4 module
    :members: addDefine, addMaterial, addSolid, addLogicalVolume, addPhysicalVolume
    :undoc-members:
    :show-inheritance:
+.. autofunction:: pyg4ometry.geant4.AnalyseGeometryComplexity
+
 .. autoclass:: pyg4ometry.geant4.Material
    :members:
    :undoc-members:
@@ -196,7 +198,7 @@ GDML module
    :undoc-members:
    :show-inheritance:
 
-Fluka bodies 
+Fluka bodies
 ------------
 .. automodule:: pyg4ometry.fluka.body
    :members:
@@ -204,7 +206,7 @@ Fluka bodies
    :undoc-members:
    :show-inheritance:
 
-Fluka module 
+Fluka module
 ------------
 .. automodule:: pyg4ometry.fluka.FlukaRegistry
    :members:
@@ -215,3 +217,12 @@ Fluka module
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. _transformation-module:
+
+Transformation
+--------------
+
+.. automodule:: pyg4ometry.transformation
+   :members:
+   :undoc-members:
