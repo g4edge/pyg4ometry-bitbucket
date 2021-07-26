@@ -3,17 +3,17 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-def MakeGeometry() :
+def MakeGeometry(size=50) :
     reg = _g4.Registry()
 
     # defines
-    wx = _gd.Constant("wx", "50", reg, True)
-    wy = _gd.Constant("wy", "50", reg, True)
-    wz = _gd.Constant("wz", "50", reg, True)
+    wx = _gd.Constant("wx", size, reg, True)
+    wy = _gd.Constant("wy", size, reg, True)
+    wz = _gd.Constant("wz", size, reg, True)
 
-    bx = _gd.Constant("bx", "10", reg, True)
-    by = _gd.Constant("by", "10", reg, True)
-    bz = _gd.Constant("bz", "10", reg, True)
+    bx = _gd.Constant("bx", size/5, reg, True)
+    by = _gd.Constant("by", size/5, reg, True)
+    bz = _gd.Constant("bz", size/5, reg, True)
 
     wm = _g4.MaterialPredefined("G4_Galactic")
     bm = _g4.MaterialPredefined("G4_Fe")
@@ -36,7 +36,7 @@ def MakeGeometry() :
 def Test(vis = False, interactive=False) :
     reg0 = _g4.Registry()
     reg1 = MakeGeometry()
-    reg2 = MakeGeometry()
+    reg2 = MakeGeometry(size=60)
 
     l1 = reg1.getWorldVolume()
     l2 = reg2.getWorldVolume()
