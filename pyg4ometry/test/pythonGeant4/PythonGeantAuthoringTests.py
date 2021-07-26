@@ -98,6 +98,7 @@ from . import T429_MergeRegistry_Subtraction
 from . import T430_MergeRegistry_Intersection
 from . import T431_MergeRegistry_MultiUnion
 from . import T432_MergeRegistry_Box_AssemblyConversion
+from . import T433_MergeRegistry_Scale
 
 import logging as _log
 
@@ -419,6 +420,9 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
 
     def test_PythonGeant_T432_MergeRegistryBoxAssemblyConverion(self):
         self.assertTrue(T432_MergeRegistry_Box_AssemblyConversion.Test()["testStatus"])
+
+    def test_PythonGeant_T433_MergeRegistry_Scale(self):
+        self.assertTrue(T433_MergeRegistry_Scale.Test()["testStatus"])
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
