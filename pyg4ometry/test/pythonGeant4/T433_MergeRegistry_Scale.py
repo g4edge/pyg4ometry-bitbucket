@@ -1,4 +1,5 @@
 import pyg4ometry
+import os as _os
 
 
 def Test(vis=False, interactive=False):
@@ -41,6 +42,22 @@ def Test(vis=False, interactive=False):
     # create another registry and add the world to it
     reg1 = pyg4ometry.geant4.Registry()
     reg1.addVolumeRecursive(worldLV)
+
+    world2 = pyg4ometry.geant4.solid.Box("bigger_world", 100,100,100, reg1)
+    world2LV = pyg4ometry.geant4.LogicalVolume(world2, vacuum, "bigger_world_lv", reg1)
+    reg1.setWorld(world2LV)
+
+    smallWorldPV = pyg4ometry.geant4.PhysicalVolume([0,0,0],
+                                                    [0,0,0],
+                                                    worldLV,
+                                                    "smaller_world_pv",
+                                                    world2LV,
+                                                    reg1)
+
+    # gdml output
+    w = pyg4ometry.gdml.Writer()
+    w.addDetector(reg1)
+    w.write(_os.path.join(_os.path.dirname(__file__), "T433_MergeRegistry_Scale.gdml"))
 
     v = None
     if vis:
