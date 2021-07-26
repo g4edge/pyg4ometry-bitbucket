@@ -39,7 +39,10 @@ def MakeGeometry(size=50, lowOxygen=False) :
     # structure
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     bl = _g4.LogicalVolume(bs, air, "bl", reg)
-    bp = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], bl, "b_pv1", wl, reg)
+
+    scale = _gd.Defines.Scale("sca_reflection", 1, 1, -1, registry=reg)
+    
+    bp = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], bl, "b_pv1", wl, reg, scale=scale)
 
     # set world volume
     reg.setWorld(wl.name)
