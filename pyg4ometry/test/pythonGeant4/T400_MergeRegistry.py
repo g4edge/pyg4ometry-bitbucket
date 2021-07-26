@@ -22,12 +22,13 @@ def MakeGeometry(size=50, lowOxygen=False) :
     # this allows us to define two technically different materials but called
     # "air" so they should be resolved correctly in the merging
     air = _g4.MaterialCompound("air",1.290e-3,2,reg)
-    ne = _g4.ElementSimple("nitrogen","N",7,14.01)
     oe = _g4.ElementSimple("oxygen","O",8,16.0)
     if lowOxygen:
+        ne = _g4.ElementSimple("nitrogen","N",7,15.01)
         air.add_element_massfraction(ne,0.95)
         air.add_element_massfraction(oe,0.05)
     else:
+        ne = _g4.ElementSimple("nitrogen","N",7,14.01)
         air.add_element_massfraction(ne,0.7)
         air.add_element_massfraction(oe,0.3)
 
