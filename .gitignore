@@ -54,3 +54,4 @@ low_poly_human
 profile/fluka/profile-results/*
 **/*.vtm
 **/*.vtp
+*.root
