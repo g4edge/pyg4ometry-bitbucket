@@ -247,18 +247,18 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
     def test_PythonGeant_T029_Subtraction(self) :
         self.assertTrue(T029_Subtraction.Test(False,False,False)["testStatus"])
 
-        try :
-            T029_Subtraction.Test(False,False,True)
-        except pyg4ometry.exceptions.NullMeshError :
-            pass
+        #try :
+        #    T029_Subtraction.Test(False,False,True)
+        #except pyg4ometry.exceptions.NullMeshError :
+        #    pass
 
     def test_PythonGeant_T030_Intersection(self) :
         self.assertTrue(T030_Intersection.Test(False,False,T030_Intersection.normal))
 
-        try : 
-            T030_Intersection.Test(False,False,T030_Intersection.non_intersecting)
-        except pyg4ometry.exceptions.NullMeshError : 
-            pass
+        #try :
+        #    T030_Intersection.Test(False,False,T030_Intersection.non_intersecting)
+        #except pyg4ometry.exceptions.NullMeshError :
+        #    pass
 
     def test_PythonGeant_T031_MultiUnion(self) :
         self.assertTrue(T031_MultiUnion.Test())
