@@ -10,7 +10,7 @@ def gdml2ROOT(gdmlFileName, rootFileName):
     tgm.Export(_os.path.join(_os.path.dirname(__file__),rootFileName))
 
 def loadROOTFile(rootFileName):
-    r = _pyg4ometry.io.ROOT.Reader(_os.path.join(_os.path.dirname(__file__),rootFileName))
+    r = _pyg4ometry.io.ROOTTGeo.Reader(_os.path.join(_os.path.dirname(__file__),rootFileName))
     return r
 
 def deleteROOTFile(rootFileName):
