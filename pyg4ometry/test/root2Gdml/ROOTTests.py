@@ -34,100 +34,149 @@ class ROOTTests(_unittest.TestCase) :
     def test_ROOT_T001Box(self,  vis = False, interactive = False):
         gdml2ROOT("T001_Box.gdml","T001_Box.root")
         r = loadROOTFile("T001_Box.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T001_Box.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T002Tubs(self,  vis = False, interactive = False):
         gdml2ROOT("T002_Tubs.gdml","T002_Tubs.root")
         r = loadROOTFile("T002_Tubs.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T002_Tubs.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T003CutTubs(self,  vis = False, interactive = False):
         gdml2ROOT("T003_CutTubs.gdml","T003_CutTubs.root")
         r = loadROOTFile("T003_CutTubs.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T003_CutTubs.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
+
 
     def test_ROOT_T004Cons(self,  vis = False, interactive = False):
         gdml2ROOT("T004_Cons.gdml","T004_Cons.root")
         r = loadROOTFile("T004_Cons.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T004_Cons.root")
+        return {"testStatus": True, "logicalVolume": l, "vtkViewer": v}
 
     def test_ROOT_T005Para(self,  vis = False, interactive = False):
         gdml2ROOT("T005_Para.gdml","T005_Para.root")
         r = loadROOTFile("T005_Para.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T005_Para.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T006Trd(self,  vis = False, interactive = False):
         gdml2ROOT("T006_Trd.gdml","T006_Trd.root")
         r = loadROOTFile("T006_Trd.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T006_Trd.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
+
 
     def test_ROOT_T007Trap(self,  vis = False, interactive = False):
         gdml2ROOT("T007_Trap.gdml","T007_Trap.root")
         r = loadROOTFile("T007_Trap.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T007_Trap.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T008Sphere(self,  vis = False, interactive = False):
         gdml2ROOT("T008_Sphere.gdml","T008_Sphere.root")
         r = loadROOTFile("T008_Sphere.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T008_Sphere.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T009Orb(self,  vis = False, interactive = False):
         gdml2ROOT("T009_Orb.gdml","T009_Orb.root")
         r = loadROOTFile("T009_Orb.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T009_Orb.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T010Torus(self,  vis = False, interactive = False):
         gdml2ROOT("T010_Torus.gdml","T010_Torus.root")
         r = loadROOTFile("T010_Torus.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T010_Torus.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
+
 
     def test_ROOT_T011Polycone(self,  vis = False, interactive = False):
         gdml2ROOT("T011_Polycone.gdml","T011_Polycone.root")
         r = loadROOTFile("T011_Polycone.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T011_Polycone.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     # Generic polycone does not exist in ROOT
 
     def test_ROOT_T013Polyhedra(self,  vis = False, interactive = False):
         gdml2ROOT("T013_Polyhedra.gdml","T013_Polyhedra.root")
         r = loadROOTFile("T013_Polyhedra.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T013_Polyhedra.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     # Generic polyheda does not exist in ROOT
 
     def test_ROOT_T015EllipticalTube(self,  vis = False, interactive = False):
         gdml2ROOT("T015_EllipticalTube.gdml","T015_EllipticalTube.root")
         r = loadROOTFile("T015_EllipticalTube.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T015_EllipticalTube.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
+
 
     # Ellipsoid used scaled and boolean
     def test_ROOT_T016Ellipsoid(self,  vis = False, interactive = False):
         gdml2ROOT("T016_Ellipsoid.gdml","T016_Ellipsoid.root")
         r = loadROOTFile("T016_Ellipsoid.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T016_Ellipsoid.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
+
 
     # phi range does not exist for ROOT Cons
     def test_ROOT_T017EllipticalCone(self,  vis = False, interactive = False):
         gdml2ROOT("T017_EllipticalCone.gdml","T017_EllipticalCone.root")
         r = loadROOTFile("T017_EllipticalCone.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T017_EllipticalCone.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
+
 
     def test_ROOT_T018Paraboloid(self,  vis = False, interactive = False):
         gdml2ROOT("T018_Paraboloid.gdml","T018_Paraboloid.root")
         r = loadROOTFile("T018_Paraboloid.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T018_Paraboloid.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T019Hyperboloid(self,  vis = False, interactive = False):
         gdml2ROOT("T019_Hyperboloid.gdml","T019_Hyperboloid.root")
         r = loadROOTFile("T019_Hyperboloid.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T019_Hyperboloid.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     # Tet does not exist
@@ -137,6 +186,7 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T021_ExtrudedSolid.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T021_ExtrudedSolid.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     # Twisted don't exist
@@ -148,6 +198,7 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T028_Union.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        deleteROOTFile("T028_Union.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T029Subtraction(self,  vis = False, interactive = False):
@@ -155,6 +206,7 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T029_Subtraction.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T029_Subtraction.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T030Intersection(self,  vis = False, interactive = False):
@@ -162,6 +214,7 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T030_Intersection.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T030_Intersection.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     # Multiunion does not exist
@@ -179,6 +232,7 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T033_TessellatedSolid.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T033_TessellatedSolid.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
 
@@ -187,6 +241,7 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T101_physical_logical.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T101_physical_logical.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T102OverlapNone(self,  vis = False, interactive = False):
@@ -194,18 +249,23 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T102_overlap_none.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T102_overlap_none.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T103OverlapCopl(self,  vis = False, interactive = False):
         gdml2ROOT("T103_overlap_copl.gdml","T103_overlap_copl.root")
         r = loadROOTFile("T103_overlap_copl.root")
-        visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
+        l = r.getRegistry().getWorldVolume()
+        v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T103_overlap_copl.root")
+        return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T900LHT(self,  vis = False, interactive = False):
         gdml2ROOT("lht.gdml","lht.root")
         r = loadROOTFile("lht.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("lht.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
 
     def test_ROOT_T901BoxPlacement(self,  vis = False, interactive = False):
@@ -213,4 +273,5 @@ class ROOTTests(_unittest.TestCase) :
         r = loadROOTFile("T001_geant4Box2Fluka.root")
         l = r.getRegistry().getWorldVolume()
         v = visGeometry(l, vis, interactive)
+        deleteROOTFile("T001_geant4Box2Fluka.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
