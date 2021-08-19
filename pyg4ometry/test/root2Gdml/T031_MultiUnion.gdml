@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wx" value="100"/>
+		<constant name="wy" value="100"/>
+		<constant name="wz" value="100"/>
+		<constant name="bx" value="10"/>
+		<constant name="by" value="10"/>
+		<constant name="bz" value="10"/>
+	</define>
+	<materials/>
+	<solids>
+		<box lunit="mm" name="ws" x="wx" y="wy" z="wz"/>
+		<box lunit="mm" name="bs" x="bx" y="by" z="bz"/>
+		<multiUnion name="mu">
+			<multiUnionNode name="mu-node-1">
+				<solid ref="bs"/>
+				<position name="mu-node-1-position" unit="mm" x="1.647441575126912" y="1.346535312830925" z="-9.933491704205933"/>
+				<rotation name="mu-node-1-rotation" unit="rad" x="0.000000000000000" y="2.930583889211323" z="0.685230655186966"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-2">
+				<solid ref="bs"/>
+				<position name="mu-node-2-position" unit="mm" x="-8.396855297245185" y="-2.579797874678654" z="-6.663009431768283"/>
+				<rotation name="mu-node-2-rotation" unit="rad" x="0.000000000000000" y="2.219728134547867" z="3.439672690607755"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-3">
+				<solid ref="bs"/>
+				<position name="mu-node-3-position" unit="mm" x="15.743759154848505" y="-3.639978983122346" z="-2.055993491332747"/>
+				<rotation name="mu-node-3-rotation" unit="rad" x="0.000000000000000" y="1.697351010512965" z="6.055976190555922"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-4">
+				<solid ref="bs"/>
+				<position name="mu-node-4-position" unit="mm" x="-10.922957735195771" y="3.933357539059651" z="-3.278849416596717"/>
+				<rotation name="mu-node-4-rotation" unit="rad" x="0.000000000000000" y="1.846053451937553" z="2.795948511750474"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-5">
+				<solid ref="bs"/>
+				<position name="mu-node-5-position" unit="mm" x="-9.917979510417725" y="-5.104671257309296" z="4.218912455169786"/>
+				<rotation name="mu-node-5-rotation" unit="rad" x="0.000000000000000" y="1.209202612546003" z="3.616921994263855"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-6">
+				<solid ref="bs"/>
+				<position name="mu-node-6-position" unit="mm" x="1.260022488848893" y="3.000792265641283" z="4.808750055080397"/>
+				<rotation name="mu-node-6-rotation" unit="rad" x="0.000000000000000" y="0.594990406439976" z="1.173256228351879"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-7">
+				<solid ref="bs"/>
+				<position name="mu-node-7-position" unit="mm" x="-10.683697231001879" y="1.586938438981276" z="-5.791081751597019"/>
+				<rotation name="mu-node-7-rotation" unit="rad" x="0.000000000000000" y="2.062956312360580" z="2.994132527409054"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-8">
+				<solid ref="bs"/>
+				<position name="mu-node-8-position" unit="mm" x="0.886227476583570" y="-0.866727557885778" z="-1.300288639429054"/>
+				<rotation name="mu-node-8-rotation" unit="rad" x="0.000000000000000" y="2.380082915580573" z="5.508910711724056"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-9">
+				<solid ref="bs"/>
+				<position name="mu-node-9-position" unit="mm" x="7.036644131795549" y="-5.236871581252842" z="-16.251578866311043"/>
+				<rotation name="mu-node-9-rotation" unit="rad" x="0.000000000000000" y="2.646666847958815" z="5.643388159419453"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-10">
+				<solid ref="bs"/>
+				<position name="mu-node-10-position" unit="mm" x="-14.203974169141997" y="11.557020829906270" z="-2.348374676496020"/>
+				<rotation name="mu-node-10-rotation" unit="rad" x="0.000000000000000" y="1.698344752748001" z="2.458585593591601"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-11">
+				<solid ref="bs"/>
+				<position name="mu-node-11-position" unit="mm" x="4.057248021888642" y="-9.948764708808728" z="9.139512508975455"/>
+				<rotation name="mu-node-11-rotation" unit="rad" x="0.000000000000000" y="0.865930130592857" z="5.099613576181845"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-12">
+				<solid ref="bs"/>
+				<position name="mu-node-12-position" unit="mm" x="-4.648578419351976" y="-2.941938288105038" z="-16.074398272021323"/>
+				<rotation name="mu-node-12-rotation" unit="rad" x="0.000000000000000" y="2.811847844744237" z="3.705830130520114"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-13">
+				<solid ref="bs"/>
+				<position name="mu-node-13-position" unit="mm" x="-17.522345114293731" y="5.624892525507947" z="-4.706307633625523"/>
+				<rotation name="mu-node-13-rotation" unit="rad" x="0.000000000000000" y="1.821165587081052" z="2.830971491542063"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-14">
+				<solid ref="bs"/>
+				<position name="mu-node-14-position" unit="mm" x="0.134573631777817" y="-0.077386900695019" z="-13.203995047034805"/>
+				<rotation name="mu-node-14-rotation" unit="rad" x="0.000000000000000" y="3.129836309194424" z="5.761311588154811"/>
+			</multiUnionNode>
+			<multiUnionNode name="mu-node-15">
+				<solid ref="bs"/>
+				<position name="mu-node-15-position" unit="mm" x="-3.082777700426433" y="-2.642439049878955" z="15.338183502668079"/>
+				<rotation name="mu-node-15-rotation" unit="rad" x="0.000000000000000" y="0.258782374572826" z="3.850229802079688"/>
+			</multiUnionNode>
+		</multiUnion>
+	</solids>
+	<structure>
+		<volume name="ml">
+			<materialref ref="G4_Fe"/>
+			<solidref ref="mu"/>
+		</volume>
+		<volume name="wl">
+			<materialref ref="G4_Galactic"/>
+			<solidref ref="ws"/>
+			<physvol name="m_pv1">
+				<volumeref ref="ml"/>
+			</physvol>
+		</volume>
+	</structure>
+	<setup name="Default" version="1.0">
+		<world ref="wl"/>
+	</setup>
+</gdml>

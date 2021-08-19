@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define>
+		<constant name="wx" value="100"/>
+		<constant name="wy" value="100"/>
+		<constant name="wz" value="100"/>
+		<constant name="crmin1" value="6"/>
+		<constant name="crmax1" value="20"/>
+		<constant name="crmin2" value="5"/>
+		<constant name="crmax2" value="10"/>
+		<constant name="cz" value="100"/>
+		<constant name="csp" value="0.0*pi"/>
+		<constant name="cdp" value="1.5*pi"/>
+	</define>
+	<materials/>
+	<solids>
+		<box lunit="mm" name="ws" x="wx" y="wy" z="wz"/>
+		<cone aunit="rad" deltaphi="cdp" lunit="mm" name="cs" rmax1="crmax1" rmax2="crmax2" rmin1="crmin1" rmin2="crmin2" startphi="0.0" z="cz"/>
+	</solids>
+	<structure>
+		<volume name="cl">
+			<materialref ref="G4_Fe"/>
+			<solidref ref="cs"/>
+		</volume>
+		<volume name="wl">
+			<materialref ref="G4_Galactic"/>
+			<solidref ref="ws"/>
+			<physvol name="c_pv1">
+				<volumeref ref="cl"/>
+			</physvol>
+		</volume>
+	</structure>
+	<setup name="Default" version="1.0">
+		<world ref="wl"/>
+	</setup>
+</gdml>
