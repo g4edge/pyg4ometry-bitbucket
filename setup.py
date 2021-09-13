@@ -2,6 +2,9 @@ from setuptools import find_packages
 from distutils.command import build_ext
 from distutils.core import setup, Extension
 from Cython.Build import cythonize
+from subprocess import run
+from shutil import which
+import sys
 
 import pybind11
 
@@ -9,61 +12,95 @@ import pybind11
 import site
 site.ENABLE_USER_SITE = True
 
-import sys
-build_base_long  = [arg[12:].strip("= ") for arg in sys.argv if arg.startswith("--build-base")]
-build_base_short = [arg[2:].strip(" ") for arg in sys.argv if arg.startswith("-b")]
-build_base_arg = build_base_long or build_base_short
-if build_base_arg:
-    build_base = build_base_arg[0]
-else:
-    build_base = "."
-
 plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 
+# pybind11 include directory  (header only library)
 pybind11_include = pybind11.get_include()
 
+# detect python version
+pythonMajorVersion = sys.version_info[0]
+pythonMinorVersion = sys.version_info[1]
+
+print("Python version : {}.{}".format(pythonMajorVersion,pythonMinorVersion))
+
+# start with system dirs (and port/brew and default miniconda)
+includeSearchDirs = ["/usr/include","/usr/local/include","/opt/local/include/","/usr/local/Cellar/include/","/opt/miniconda3/include/"]
+librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/"]
+
+# search for cgal, pybind11 (only if pybind11_include is not set), mpfr, gmp in the search dirs
+def findPackage(name, searchDirs) :
+    import glob
+    import os.path
+
+    path = set()
+    for d in searchDirs :
+        for f in glob.glob(d+"/*"+name+"*") :
+            path.add(os.path.dirname(f))
+
+    print("Found "+name,list(path))
+    if len(path) == 0:
+        print("Could not find "+name,path)
+        return list()
+    else :
+        print(list(path))
+        return list(path)
+
+incPathSet = set()
+libPathSet = set()
+
+# TODO does not handle lists properly
+incPath = findPackage("mpfr",includeSearchDirs); incPathSet.add(*set(incPath))
+libPath = findPackage("mpfr",librarySearchDirs); libPathSet.add(*set(libPath))
+incPath = findPackage("gmp",includeSearchDirs); incPathSet.add(*set(incPath))
+libPath = findPackage("gmp",librarySearchDirs); libPathSet.add(*set(libPath))
+# incPath = findPackage("pybind11",includeSearchDirs); incPathSet.add(*set(incPath))
+incPath = findPackage("CGAL",includeSearchDirs); incPathSet.add(*set(incPath))
+
+print("Using include paths : ",incPath)
+print("Using library paths : ",libPath)
+
+# detect conda
+condaExe    = which("conda")
+if condaExe is not None :
+    condaDetect = run([condaExe,"-V"], capture_output=True)
+    print("Found conda {}".format(condaExe))
+
+# conda environments
 
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
-                           include_dirs = ['./pyg4ometry/external/cgal-install/include/',
-                                           '/opt/local/include/',
-                                           '/usr/include/',
+                           include_dirs = [*incPath,
                                            pybind11_include],
                            libraries = ['mpfr','gmp'],
-                           library_dirs = ['/opt/local/lib'],
+                           library_dirs = [*libPath],
                            sources = ['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
                            language="c++",
                            extra_compile_args=["-std=c++14"])
 
 cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
-                          include_dirs = ['/opt/local/include/',
-                                          '/usr/include/',
+                          include_dirs = [*incPath,
                                           pybind11_include],
                           sources = ['./pyg4ometry/pycgal/geom.cxx'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
-                          include_dirs = ['./pyg4ometry/external/cgal-install/include/',
-                                          '/opt/local/include/',
-                                          '/usr/include/',
+                          include_dirs = [*incPath,
                                           pybind11_include],
                           libraries = ['mpfr','gmp'],
-                          library_dirs = ['/opt/local/lib'],
+                          library_dirs = [*libPath],
                           sources = ['./pyg4ometry/pycgal/algo.cxx'],
                           extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_core_ext = Extension('pyg4ometry.pycgal.core',
-                          include_dirs = ['./pyg4ometry/external/cgal-install/include/',
-                                          '/opt/local/include/',
-                                          '/usr/include/',
+                          include_dirs = [*incPath,
                                           pybind11_include],
                            libraries = ['mpfr','gmp'],
-                           library_dirs = ['/opt/local/lib'],
+                           library_dirs = [*libPath],
                            sources = ['./pyg4ometry/pycgal/core.cxx'],
                            extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
                                           './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
