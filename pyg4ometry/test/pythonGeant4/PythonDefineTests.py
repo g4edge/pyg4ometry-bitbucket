@@ -228,52 +228,52 @@ class PythonDefineTests(_unittest.TestCase) :
     def test_GdmlDefine_ConstantSinExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.sin(xc)).eval(),0.09983341664682815)
+        self.assertAlmostEqual((pyg4ometry.gdml.sin(xc)).eval(),0.09983341664682815, 14)
 
     def test_GdmlDefine_ConstantCosExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.cos(xc)).eval(),0.9950041652780257) 
+        self.assertAlmostEqual((pyg4ometry.gdml.cos(xc)).eval(),0.9950041652780257, 14)
 
     def test_GdmlDefine_ConstantTanExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.tan(xc)).eval(),0.10033467208545055) 
+        self.assertAlmostEqual((pyg4ometry.gdml.tan(xc)).eval(),0.10033467208545055, 14)
 
     def test_GdmlDefine_ConstantExpExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.exp(xc)).eval(),1.1051709180756477) 
+        self.assertAlmostEqual((pyg4ometry.gdml.exp(xc)).eval(),1.1051709180756477, 14)
 
     def test_GdmlDefine_ConstantLogExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.log(xc)).eval(),-2.3025850929940455) 
+        self.assertAlmostEqual((pyg4ometry.gdml.log(xc)).eval(),-2.3025850929940455, 14)
 
     def test_GdmlDefine_ConstantLog10Expression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.log10(xc)).eval(),-1.0) 
+        self.assertEqual((pyg4ometry.gdml.log10(xc)).eval(),-1.0)
 
     def test_GdmlDefine_ConstantSqrtExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.sqrt(xc)).eval(),0.31622776601683794) 
+        self.assertAlmostEqual((pyg4ometry.gdml.sqrt(xc)).eval(),0.31622776601683794, 14)
 
     def test_GdmlDefine_ConstantArcSinExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.asin(xc)).eval(),0.1001674211615598)
+        self.assertAlmostEqual((pyg4ometry.gdml.asin(xc)).eval(),0.1001674211615598, 14)
 
     def test_GdmlDefine_ConstantArcCosExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.acos(xc)).eval(),1.4706289056333368) 
+        self.assertAlmostEqual((pyg4ometry.gdml.acos(xc)).eval(),1.4706289056333368, 14)
 
     def test_GdmlDefine_ConstantArcTanExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)
-        self.assertEqual((pyg4ometry.gdml.atan(xc)).eval(),0.09966865249116204) 
+        self.assertAlmostEqual((pyg4ometry.gdml.atan(xc)).eval(),0.09966865249116204, 14)
 
     def test_GdmlDefine_PowExpression(self) :
         r = pyg4ometry.geant4.Registry()
