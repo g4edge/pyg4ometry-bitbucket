@@ -1,41 +1,45 @@
-# Generated from RegionParser.g4 by ANTLR 4.7
+# Generated from RegionParser.g4 by ANTLR 4.9
 # encoding: utf-8
-from __future__ import print_function
 from antlr4 import *
 from io import StringIO
 import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
+
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"\16V\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
-        buf.write(u"\4\b\t\b\3\2\6\2\22\n\2\r\2\16\2\23\3\3\3\3\3\3\3\3\3")
-        buf.write(u"\3\3\3\5\3\34\n\3\3\4\3\4\3\4\3\4\6\4\"\n\4\r\4\16\4")
-        buf.write(u"#\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4-\n\4\f\4\16\4\60\13")
-        buf.write(u"\4\3\4\3\4\5\4\64\n\4\3\5\5\5\67\n\5\3\5\3\5\5\5;\n\5")
-        buf.write(u"\3\5\3\5\5\5?\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6")
-        buf.write(u"I\n\6\3\7\3\7\3\7\5\7N\n\7\3\7\3\7\3\7\3\b\3\b\3\b\3")
-        buf.write(u"\b\2\2\t\2\4\6\b\n\f\16\2\3\3\2\n\13\2\\\2\21\3\2\2\2")
-        buf.write(u"\4\33\3\2\2\2\6\63\3\2\2\2\b>\3\2\2\2\nH\3\2\2\2\fJ\3")
-        buf.write(u"\2\2\2\16R\3\2\2\2\20\22\5\4\3\2\21\20\3\2\2\2\22\23")
-        buf.write(u"\3\2\2\2\23\21\3\2\2\2\23\24\3\2\2\2\24\3\3\2\2\2\25")
-        buf.write(u"\26\7\b\2\2\26\27\7\7\2\2\27\34\5\b\5\2\30\31\7\b\2\2")
-        buf.write(u"\31\32\7\7\2\2\32\34\5\6\4\2\33\25\3\2\2\2\33\30\3\2")
-        buf.write(u"\2\2\34\5\3\2\2\2\35\36\7\f\2\2\36!\5\b\5\2\37 \7\f\2")
-        buf.write(u"\2 \"\5\b\5\2!\37\3\2\2\2\"#\3\2\2\2#!\3\2\2\2#$\3\2")
-        buf.write(u"\2\2$\64\3\2\2\2%&\7\f\2\2&\64\5\b\5\2\'(\5\b\5\2(.\7")
-        buf.write(u"\f\2\2)*\5\b\5\2*+\7\f\2\2+-\3\2\2\2,)\3\2\2\2-\60\3")
-        buf.write(u"\2\2\2.,\3\2\2\2./\3\2\2\2/\61\3\2\2\2\60.\3\2\2\2\61")
-        buf.write(u"\62\5\b\5\2\62\64\3\2\2\2\63\35\3\2\2\2\63%\3\2\2\2\63")
-        buf.write(u"\'\3\2\2\2\64\7\3\2\2\2\65\67\7\t\2\2\66\65\3\2\2\2\66")
-        buf.write(u"\67\3\2\2\2\678\3\2\2\28?\5\n\6\29;\7\t\2\2:9\3\2\2\2")
-        buf.write(u":;\3\2\2\2;<\3\2\2\2<?\5\f\7\2=?\7\t\2\2>\66\3\2\2\2")
-        buf.write(u">:\3\2\2\2>=\3\2\2\2?\t\3\2\2\2@I\5\16\b\2AB\5\16\b\2")
-        buf.write(u"BC\5\n\6\2CI\3\2\2\2DE\5\f\7\2EF\5\n\6\2FI\3\2\2\2GI")
-        buf.write(u"\5\f\7\2H@\3\2\2\2HA\3\2\2\2HD\3\2\2\2HG\3\2\2\2I\13")
-        buf.write(u"\3\2\2\2JK\t\2\2\2KM\7\r\2\2LN\7\t\2\2ML\3\2\2\2MN\3")
-        buf.write(u"\2\2\2NO\3\2\2\2OP\5\n\6\2PQ\7\16\2\2Q\r\3\2\2\2RS\t")
-        buf.write(u"\2\2\2ST\7\t\2\2T\17\3\2\2\2\f\23\33#.\63\66:>HM")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\16")
+        buf.write("V\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
+        buf.write("\t\b\3\2\6\2\22\n\2\r\2\16\2\23\3\3\3\3\3\3\3\3\3\3\3")
+        buf.write("\3\5\3\34\n\3\3\4\3\4\3\4\3\4\6\4\"\n\4\r\4\16\4#\3\4")
+        buf.write("\3\4\3\4\3\4\3\4\3\4\3\4\7\4-\n\4\f\4\16\4\60\13\4\3\4")
+        buf.write("\3\4\5\4\64\n\4\3\5\5\5\67\n\5\3\5\3\5\5\5;\n\5\3\5\3")
+        buf.write("\5\5\5?\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6I\n\6\3")
+        buf.write("\7\3\7\3\7\5\7N\n\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\2\2\t")
+        buf.write("\2\4\6\b\n\f\16\2\3\3\2\n\13\2\\\2\21\3\2\2\2\4\33\3\2")
+        buf.write("\2\2\6\63\3\2\2\2\b>\3\2\2\2\nH\3\2\2\2\fJ\3\2\2\2\16")
+        buf.write("R\3\2\2\2\20\22\5\4\3\2\21\20\3\2\2\2\22\23\3\2\2\2\23")
+        buf.write("\21\3\2\2\2\23\24\3\2\2\2\24\3\3\2\2\2\25\26\7\b\2\2\26")
+        buf.write("\27\7\7\2\2\27\34\5\b\5\2\30\31\7\b\2\2\31\32\7\7\2\2")
+        buf.write("\32\34\5\6\4\2\33\25\3\2\2\2\33\30\3\2\2\2\34\5\3\2\2")
+        buf.write("\2\35\36\7\f\2\2\36!\5\b\5\2\37 \7\f\2\2 \"\5\b\5\2!\37")
+        buf.write("\3\2\2\2\"#\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\64\3\2\2\2%&")
+        buf.write("\7\f\2\2&\64\5\b\5\2\'(\5\b\5\2(.\7\f\2\2)*\5\b\5\2*+")
+        buf.write("\7\f\2\2+-\3\2\2\2,)\3\2\2\2-\60\3\2\2\2.,\3\2\2\2./\3")
+        buf.write("\2\2\2/\61\3\2\2\2\60.\3\2\2\2\61\62\5\b\5\2\62\64\3\2")
+        buf.write("\2\2\63\35\3\2\2\2\63%\3\2\2\2\63\'\3\2\2\2\64\7\3\2\2")
+        buf.write("\2\65\67\7\t\2\2\66\65\3\2\2\2\66\67\3\2\2\2\678\3\2\2")
+        buf.write("\28?\5\n\6\29;\7\t\2\2:9\3\2\2\2:;\3\2\2\2;<\3\2\2\2<")
+        buf.write("?\5\f\7\2=?\7\t\2\2>\66\3\2\2\2>:\3\2\2\2>=\3\2\2\2?\t")
+        buf.write("\3\2\2\2@I\5\16\b\2AB\5\16\b\2BC\5\n\6\2CI\3\2\2\2DE\5")
+        buf.write("\f\7\2EF\5\n\6\2FI\3\2\2\2GI\5\f\7\2H@\3\2\2\2HA\3\2\2")
+        buf.write("\2HD\3\2\2\2HG\3\2\2\2I\13\3\2\2\2JK\t\2\2\2KM\7\r\2\2")
+        buf.write("LN\7\t\2\2ML\3\2\2\2MN\3\2\2\2NO\3\2\2\2OP\5\n\6\2PQ\7")
+        buf.write("\16\2\2Q\r\3\2\2\2RS\t\2\2\2ST\7\t\2\2T\17\3\2\2\2\f\23")
+        buf.write("\33#.\63\66:>HM")
         return buf.getvalue()
 
 
@@ -49,13 +53,13 @@ class RegionParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"'+'", u"'-'", u"'|'", u"'('", u"')'" ]
+    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "'+'", "'-'", "'|'", "'('", "')'" ]
 
-    symbolicNames = [ u"<INVALID>", u"Whitespace", u"InLineComment", u"LineComment", 
-                      u"Newline", u"Integer", u"RegionName", u"BodyName", 
-                      u"Plus", u"Minus", u"Bar", u"LParen", u"RParen" ]
+    symbolicNames = [ "<INVALID>", "Whitespace", "InLineComment", "LineComment", 
+                      "Newline", "Integer", "RegionName", "BodyName", "Plus", 
+                      "Minus", "Bar", "LParen", "RParen" ]
 
     RULE_regions = 0
     RULE_region = 1
@@ -65,8 +69,8 @@ class RegionParser ( Parser ):
     RULE_subZone = 5
     RULE_unaryExpression = 6
 
-    ruleNames =  [ u"regions", u"region", u"zoneUnion", u"zone", u"expr", 
-                   u"subZone", u"unaryExpression" ]
+    ruleNames =  [ "regions", "region", "zoneUnion", "zone", "expr", "subZone", 
+                   "unaryExpression" ]
 
     EOF = Token.EOF
     Whitespace=1
@@ -82,21 +86,22 @@ class RegionParser ( Parser ):
     LParen=11
     RParen=12
 
-    def __init__(self, input, output=sys.stdout):
-        super(RegionParser, self).__init__(input, output=output)
-        self.checkVersion("4.7")
+    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.9")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
 
 
+
     class RegionsContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.RegionsContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
-        def region(self, i=None):
+        def region(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(RegionParser.RegionContext)
             else:
@@ -106,16 +111,16 @@ class RegionParser ( Parser ):
         def getRuleIndex(self):
             return RegionParser.RULE_regions
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterRegions"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterRegions" ):
                 listener.enterRegions(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitRegions"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitRegions" ):
                 listener.exitRegions(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitRegions"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRegions" ):
                 return visitor.visitRegions(self)
             else:
                 return visitor.visitChildren(self)
@@ -150,10 +155,11 @@ class RegionParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class RegionContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.RegionContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
 
@@ -161,15 +167,15 @@ class RegionParser ( Parser ):
             return RegionParser.RULE_region
 
      
-        def copyFrom(self, ctx):
-            super(RegionParser.RegionContext, self).copyFrom(ctx)
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
 
 
     class ComplexRegionContext(RegionContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.RegionContext)
-            super(RegionParser.ComplexRegionContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.RegionContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def RegionName(self):
@@ -180,16 +186,16 @@ class RegionParser ( Parser ):
             return self.getTypedRuleContext(RegionParser.ZoneUnionContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterComplexRegion"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterComplexRegion" ):
                 listener.enterComplexRegion(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitComplexRegion"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitComplexRegion" ):
                 listener.exitComplexRegion(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitComplexRegion"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitComplexRegion" ):
                 return visitor.visitComplexRegion(self)
             else:
                 return visitor.visitChildren(self)
@@ -197,8 +203,8 @@ class RegionParser ( Parser ):
 
     class SimpleRegionContext(RegionContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.RegionContext)
-            super(RegionParser.SimpleRegionContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.RegionContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def RegionName(self):
@@ -209,16 +215,16 @@ class RegionParser ( Parser ):
             return self.getTypedRuleContext(RegionParser.ZoneContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterSimpleRegion"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSimpleRegion" ):
                 listener.enterSimpleRegion(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitSimpleRegion"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSimpleRegion" ):
                 listener.exitSimpleRegion(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitSimpleRegion"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleRegion" ):
                 return visitor.visitSimpleRegion(self)
             else:
                 return visitor.visitChildren(self)
@@ -264,10 +270,11 @@ class RegionParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ZoneUnionContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.ZoneUnionContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
 
@@ -275,39 +282,39 @@ class RegionParser ( Parser ):
             return RegionParser.RULE_zoneUnion
 
      
-        def copyFrom(self, ctx):
-            super(RegionParser.ZoneUnionContext, self).copyFrom(ctx)
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
 
 
     class MultipleUnion2Context(ZoneUnionContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ZoneUnionContext)
-            super(RegionParser.MultipleUnion2Context, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ZoneUnionContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
-        def zone(self, i=None):
+        def zone(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(RegionParser.ZoneContext)
             else:
                 return self.getTypedRuleContext(RegionParser.ZoneContext,i)
 
-        def Bar(self, i=None):
+        def Bar(self, i:int=None):
             if i is None:
                 return self.getTokens(RegionParser.Bar)
             else:
                 return self.getToken(RegionParser.Bar, i)
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterMultipleUnion2"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMultipleUnion2" ):
                 listener.enterMultipleUnion2(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitMultipleUnion2"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMultipleUnion2" ):
                 listener.exitMultipleUnion2(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitMultipleUnion2"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMultipleUnion2" ):
                 return visitor.visitMultipleUnion2(self)
             else:
                 return visitor.visitChildren(self)
@@ -315,32 +322,32 @@ class RegionParser ( Parser ):
 
     class MultipleUnionContext(ZoneUnionContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ZoneUnionContext)
-            super(RegionParser.MultipleUnionContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ZoneUnionContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
-        def Bar(self, i=None):
+        def Bar(self, i:int=None):
             if i is None:
                 return self.getTokens(RegionParser.Bar)
             else:
                 return self.getToken(RegionParser.Bar, i)
-        def zone(self, i=None):
+        def zone(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(RegionParser.ZoneContext)
             else:
                 return self.getTypedRuleContext(RegionParser.ZoneContext,i)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterMultipleUnion"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMultipleUnion" ):
                 listener.enterMultipleUnion(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitMultipleUnion"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMultipleUnion" ):
                 listener.exitMultipleUnion(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitMultipleUnion"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMultipleUnion" ):
                 return visitor.visitMultipleUnion(self)
             else:
                 return visitor.visitChildren(self)
@@ -348,8 +355,8 @@ class RegionParser ( Parser ):
 
     class SingleUnionContext(ZoneUnionContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ZoneUnionContext)
-            super(RegionParser.SingleUnionContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ZoneUnionContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def Bar(self):
@@ -358,16 +365,16 @@ class RegionParser ( Parser ):
             return self.getTypedRuleContext(RegionParser.ZoneContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterSingleUnion"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSingleUnion" ):
                 listener.enterSingleUnion(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitSingleUnion"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSingleUnion" ):
                 listener.exitSingleUnion(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitSingleUnion"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSingleUnion" ):
                 return visitor.visitSingleUnion(self)
             else:
                 return visitor.visitChildren(self)
@@ -448,10 +455,11 @@ class RegionParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ZoneContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.ZoneContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
 
@@ -459,15 +467,15 @@ class RegionParser ( Parser ):
             return RegionParser.RULE_zone
 
      
-        def copyFrom(self, ctx):
-            super(RegionParser.ZoneContext, self).copyFrom(ctx)
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
 
 
     class ZoneExprContext(ZoneContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ZoneContext)
-            super(RegionParser.ZoneExprContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ZoneContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self):
@@ -476,16 +484,16 @@ class RegionParser ( Parser ):
         def BodyName(self):
             return self.getToken(RegionParser.BodyName, 0)
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterZoneExpr"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterZoneExpr" ):
                 listener.enterZoneExpr(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitZoneExpr"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitZoneExpr" ):
                 listener.exitZoneExpr(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitZoneExpr"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitZoneExpr" ):
                 return visitor.visitZoneExpr(self)
             else:
                 return visitor.visitChildren(self)
@@ -493,23 +501,23 @@ class RegionParser ( Parser ):
 
     class ZoneBodyContext(ZoneContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ZoneContext)
-            super(RegionParser.ZoneBodyContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ZoneContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def BodyName(self):
             return self.getToken(RegionParser.BodyName, 0)
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterZoneBody"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterZoneBody" ):
                 listener.enterZoneBody(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitZoneBody"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitZoneBody" ):
                 listener.exitZoneBody(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitZoneBody"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitZoneBody" ):
                 return visitor.visitZoneBody(self)
             else:
                 return visitor.visitChildren(self)
@@ -517,8 +525,8 @@ class RegionParser ( Parser ):
 
     class ZoneSubZoneContext(ZoneContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ZoneContext)
-            super(RegionParser.ZoneSubZoneContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ZoneContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def subZone(self):
@@ -527,16 +535,16 @@ class RegionParser ( Parser ):
         def BodyName(self):
             return self.getToken(RegionParser.BodyName, 0)
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterZoneSubZone"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterZoneSubZone" ):
                 listener.enterZoneSubZone(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitZoneSubZone"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitZoneSubZone" ):
                 listener.exitZoneSubZone(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitZoneSubZone"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitZoneSubZone" ):
                 return visitor.visitZoneSubZone(self)
             else:
                 return visitor.visitChildren(self)
@@ -598,10 +606,11 @@ class RegionParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ExprContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.ExprContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
 
@@ -609,15 +618,15 @@ class RegionParser ( Parser ):
             return RegionParser.RULE_expr
 
      
-        def copyFrom(self, ctx):
-            super(RegionParser.ExprContext, self).copyFrom(ctx)
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
 
 
     class UnaryAndBooleanContext(ExprContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ExprContext)
-            super(RegionParser.UnaryAndBooleanContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ExprContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def unaryExpression(self):
@@ -627,16 +636,16 @@ class RegionParser ( Parser ):
             return self.getTypedRuleContext(RegionParser.ExprContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterUnaryAndBoolean"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterUnaryAndBoolean" ):
                 listener.enterUnaryAndBoolean(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitUnaryAndBoolean"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitUnaryAndBoolean" ):
                 listener.exitUnaryAndBoolean(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitUnaryAndBoolean"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryAndBoolean" ):
                 return visitor.visitUnaryAndBoolean(self)
             else:
                 return visitor.visitChildren(self)
@@ -644,24 +653,24 @@ class RegionParser ( Parser ):
 
     class OneSubZoneContext(ExprContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ExprContext)
-            super(RegionParser.OneSubZoneContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ExprContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def subZone(self):
             return self.getTypedRuleContext(RegionParser.SubZoneContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterOneSubZone"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterOneSubZone" ):
                 listener.enterOneSubZone(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitOneSubZone"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitOneSubZone" ):
                 listener.exitOneSubZone(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitOneSubZone"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOneSubZone" ):
                 return visitor.visitOneSubZone(self)
             else:
                 return visitor.visitChildren(self)
@@ -669,8 +678,8 @@ class RegionParser ( Parser ):
 
     class UnaryAndSubZoneContext(ExprContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ExprContext)
-            super(RegionParser.UnaryAndSubZoneContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ExprContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def subZone(self):
@@ -680,16 +689,16 @@ class RegionParser ( Parser ):
             return self.getTypedRuleContext(RegionParser.ExprContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterUnaryAndSubZone"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterUnaryAndSubZone" ):
                 listener.enterUnaryAndSubZone(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitUnaryAndSubZone"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitUnaryAndSubZone" ):
                 listener.exitUnaryAndSubZone(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitUnaryAndSubZone"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryAndSubZone" ):
                 return visitor.visitUnaryAndSubZone(self)
             else:
                 return visitor.visitChildren(self)
@@ -697,24 +706,24 @@ class RegionParser ( Parser ):
 
     class SingleUnaryContext(ExprContext):
 
-        def __init__(self, parser, ctx): # actually a RegionParser.ExprContext)
-            super(RegionParser.SingleUnaryContext, self).__init__(parser)
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a RegionParser.ExprContext
+            super().__init__(parser)
             self.copyFrom(ctx)
 
         def unaryExpression(self):
             return self.getTypedRuleContext(RegionParser.UnaryExpressionContext,0)
 
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterSingleUnary"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSingleUnary" ):
                 listener.enterSingleUnary(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitSingleUnary"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSingleUnary" ):
                 listener.exitSingleUnary(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitSingleUnary"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSingleUnary" ):
                 return visitor.visitSingleUnary(self)
             else:
                 return visitor.visitChildren(self)
@@ -770,10 +779,11 @@ class RegionParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class SubZoneContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.SubZoneContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def LParen(self):
@@ -798,16 +808,16 @@ class RegionParser ( Parser ):
         def getRuleIndex(self):
             return RegionParser.RULE_subZone
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterSubZone"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSubZone" ):
                 listener.enterSubZone(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitSubZone"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSubZone" ):
                 listener.exitSubZone(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitSubZone"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSubZone" ):
                 return visitor.visitSubZone(self)
             else:
                 return visitor.visitChildren(self)
@@ -851,10 +861,11 @@ class RegionParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class UnaryExpressionContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(RegionParser.UnaryExpressionContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def BodyName(self):
@@ -869,16 +880,16 @@ class RegionParser ( Parser ):
         def getRuleIndex(self):
             return RegionParser.RULE_unaryExpression
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterUnaryExpression"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterUnaryExpression" ):
                 listener.enterUnaryExpression(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitUnaryExpression"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitUnaryExpression" ):
                 listener.exitUnaryExpression(self)
 
-        def accept(self, visitor):
-            if hasattr(visitor, "visitUnaryExpression"):
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryExpression" ):
                 return visitor.visitUnaryExpression(self)
             else:
                 return visitor.visitChildren(self)
