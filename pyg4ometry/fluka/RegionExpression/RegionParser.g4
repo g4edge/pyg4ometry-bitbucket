@@ -2,7 +2,7 @@ parser grammar RegionParser;
 
 options {
 tokenVocab=RegionLexer;
-language=Python2;
+language=Python3;
 }
 
 regions
