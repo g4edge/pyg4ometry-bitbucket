@@ -136,7 +136,6 @@ setup(
                       "configparser",
                       "testtools",
                       "pypandoc",
-                      "ipython",
                       "sympy>=1.7"],
     ext_modules=exts,
     python_requires=">=3.7.1",
