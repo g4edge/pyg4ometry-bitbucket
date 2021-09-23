@@ -125,7 +125,7 @@ setup(
                   "pyg4ometry.fluka": ["flair_template.flair"],
                   "pyg4ometry.geant4": ["bdsim_materials.txt"],
                   "pyg4ometry.visualisation": ["colours.ini"]},
-    install_requires=["antlr4-python3-runtime==4.7.1",  # Generated with 4.7.1 - this avoids warnings
+    install_requires=["antlr4-python3-runtime>=4.9",  # Generated with 4.9 - this avoids warnings
                       "matplotlib",
                       "pandas",
                       "networkx",
