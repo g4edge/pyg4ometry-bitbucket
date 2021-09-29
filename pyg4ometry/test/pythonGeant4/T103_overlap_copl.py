@@ -42,7 +42,7 @@ def Test(vis = False, interactive = False) :
     bp6 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/2-bx/2      ,-2*bx,0]   ,      bl, "b_pv6", wl, reg)
     bp7 = _g4.PhysicalVolume([0,0,3.14159/4],  [ wx/2-bx/2      ,-2*bx+2*bx/4,bx] ,   bl, "b_pv7", wl, reg)
 
-    bp8 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,2*bx,0],         bl, "b_pv9", wl, reg)
+    bp8 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2      ,2*bx,0],         bl, "b_pv8", wl, reg)
     bp9 = _g4.PhysicalVolume([0,0,0]        ,  [-wx/4+bx/2+bx/2 ,2*bx+bx/2,0],      bl, "b_pv9", wl, reg)
 
     bp10 = _g4.PhysicalVolume([0,0,0]        ,  [ wx/4-bx/2     ,2*bx,0],         bl, "b_pv10", wl, reg)
