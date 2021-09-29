@@ -13,12 +13,7 @@
 		<rotation name="box1Vol_PV_rotation" x="0" y="0" z="0"/>
 	</define>
 	<materials>
-	      <material name="Mixture_G4">
-			<D value="2.5"/>
-			<fraction n="0.97" ref="G4_C"/>
-			<fraction n="0.021" ref="G4_Fe"/>
-		</material>
-    <material name="Mixture_G4">
+		<material name="Mixture_G4">
 			<D value="2.5"/>
 			<fraction n="0.97" ref="G4_C"/>
 			<fraction n="0.021" ref="G4_Fe"/>
