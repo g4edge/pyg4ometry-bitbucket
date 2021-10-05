@@ -45,3 +45,7 @@ class PythonComparisonTests(_unittest.TestCase):
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
+
+    class TracingStreamResult(_testtools.StreamResult):
+        def status(self, *args, **kwargs):
+            print('{0[test_id]}: {0[test_status]}'.format(kwargs))
