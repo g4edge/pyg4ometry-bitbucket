@@ -3,17 +3,76 @@ import pyg4ometry
 import pyg4ometry.geant4 as _g4
 
 def Test():
-    r = _g4.Registry()
+    # make 2 copies independently so we can have degenerate names, which we couldn't
+    # have in just 1 registry
+    r1 = _g4.Registry()
+    r2 = _g4.Registry()
 
     tests = pyg4ometry.geant4.Compare.Tests()
     
-    galactic1 = _g4.MaterialPredefined("G4_Galactic", r)
-    galactic2 = _g4.MaterialPredefined("G4_Galactic", r)
+    galactic1 = _g4.MaterialPredefined("G4_Galactic", r1)
+    copper1 = _g4.MaterialPredefined("G4_Cu", r1)
+    galactic2 = _g4.MaterialPredefined("G4_Galactic", r1)
+    copper2 = _g4.MaterialPredefined("G4_Cu", r2)
 
-    # predefined materials
-    comp1 = pyg4ometry.geant4.Compare.Materials(galactic1, galactic2, tests)
+    #ctdeltaphi = pyg4ometry.gdml.Constant("deltaphi","2*pi",r1)
+    ts1 = _g4.solid.Tubs("ts", 0, 50, 100, 0, "2*pi", r1)
+    tl1 = _g4.LogicalVolume(ts1, copper1, "tl1_lv", r1)
+    ts2 = _g4.solid.Tubs("ts", 0, 50, 100, 0, "2*pi", r2)
+    tl2 = _g4.LogicalVolume(ts2, copper2, "tl1_lv", r2)
+    tl2b = _g4.LogicalVolume(ts2, galactic2, "tl1b_lv", r2)
+
+    # same lvs
+    comp1 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl1, tests)
     comp1.Print()
     assert(len(comp1) == 0)
+
+    # same lvs, different registry
+    comp2 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests)
+    comp2.Print()
+    assert(len(comp2) == 0)
+
+    # different material
+    comp3 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2b, tests)
+    comp3.Print()
+    assert (len(comp3) > 0)
+
+    miniBox1   = _g4.solid.Box("mb1", 1, 2, 3, r1)
+    miniBox1LV = _g4.LogicalVolume(miniBox1, galactic1, "mb1_lv", r1)
+    miniBox2   = _g4.solid.Box("mb2", 1, 2, 3, r1)
+    miniBox2LV = _g4.LogicalVolume(miniBox1, galactic1, "mb2_lv", r1)
+    miniBox3   = _g4.solid.Box("mb3", 3, 2, 1, r1)
+    miniBox3LV = _g4.LogicalVolume(miniBox1, galactic1, "mb3_lv", r1)
+    miniBox1PV1 = _g4.PhysicalVolume([0, 0.1,  0], [-1, 0, -10], miniBox1LV, "mb1_pv1", tl1, r1)
+    miniBox1PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5,  0, 10],  miniBox1LV, "mb1_pv2", tl1, r1)
+    miniBox1PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox1LV, "mb1_pv3", tl1, r1)
+
+    # same daughters
+    comp4 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl1, tests, recursive=True) # recursive = check daughter placements
+    comp4.Print()
+    assert (len(comp4) == 0)
+
+    # make it all again in reg2
+    miniBox12 = _g4.solid.Box("mb1", 1, 2, 3, r2)
+    miniBox12LV = _g4.LogicalVolume(miniBox12, galactic2, "mb1_lv", r2)
+    miniBox22 = _g4.solid.Box("mb2", 1, 2, 3, r2)
+    miniBox22LV = _g4.LogicalVolume(miniBox12, galactic2, "mb2_lv", r2)
+    miniBox32 = _g4.solid.Box("mb3", 3, 2, 1, r2)
+    miniBox32LV = _g4.LogicalVolume(miniBox12, galactic2, "mb3_lv", r2)
+    miniBox12PV1 = _g4.PhysicalVolume([0, 0.1, 0], [-1, 0, -10], miniBox12LV, "mb1_pv1", tl2, r2)
+    miniBox12PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5, 0, 10], miniBox12LV, "mb1_pv2", tl2, r2)
+    miniBox12PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox12LV, "mb1_pv3", tl2, r2)
+
+    # same daughters
+    comp5 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests, recursive=True)
+    comp5.Print()
+    assert (len(comp5) == 0)
+
+    # extra placement in 2nd one now
+    miniBox12PV4 = _g4.PhysicalVolume([0, 0, 0], [-5, 0, 40], miniBox12LV, "mb1_pv4", tl2, r2)
+    comp6 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests, recursive=True)
+    comp6.Print()
+    assert (len(comp6) > 0)
 
     return {"testStatus": True}
 
