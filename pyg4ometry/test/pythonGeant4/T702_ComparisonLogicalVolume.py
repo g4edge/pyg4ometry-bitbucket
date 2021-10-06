@@ -45,7 +45,7 @@ def Test():
     miniBox3LV = _g4.LogicalVolume(miniBox1, galactic1, "mb3_lv", r1)
     miniBox1PV1 = _g4.PhysicalVolume([0, 0.1,  0], [-1, 0, -10], miniBox1LV, "mb1_pv1", tl1, r1)
     miniBox1PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5,  0, 10],  miniBox1LV, "mb1_pv2", tl1, r1)
-    miniBox1PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox1LV, "mb1_pv3", tl1, r1)
+    miniBox1PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox1LV, "mb1_pv3", tl1, r1, copyNumber=3, scale=[1,1,-1])
 
     # same daughters
     comp4 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl1, tests, recursive=True) # recursive = check daughter placements
@@ -61,7 +61,7 @@ def Test():
     miniBox32LV = _g4.LogicalVolume(miniBox12, galactic2, "mb3_lv", r2)
     miniBox12PV1 = _g4.PhysicalVolume([0, 0.1, 0], [-1, 0, -10], miniBox12LV, "mb1_pv1", tl2, r2)
     miniBox12PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5, 0, 10], miniBox12LV, "mb1_pv2", tl2, r2)
-    miniBox12PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox12LV, "mb1_pv3", tl2, r2)
+    miniBox12PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox12LV, "mb1_pv3", tl2, r2, copyNumber=3, scale=[1,1,-1])
 
     # same daughters
     comp5 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests, recursive=True)
@@ -73,6 +73,20 @@ def Test():
     comp6 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests, recursive=True)
     comp6.Print()
     assert (len(comp6) > 0)
+
+    # different copyNumber
+    miniBox1PV5  = _g4.PhysicalVolume([0, 0, 0], [0, 10, 40], miniBox1LV,  "mb1_pv5", tl1, r1, copyNumber=2)
+    miniBox12PV5 = _g4.PhysicalVolume([0, 0, 0], [0, 10, 40], miniBox12LV, "mb1_pv5", tl2, r2, copyNumber=3)
+    comp7 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests, recursive=True)
+    comp7.Print()
+    assert (len(comp7.test['copyNumber']) > 0)
+
+    # different scale
+    miniBox1PV6  = _g4.PhysicalVolume([0, 0, 0], [0, -10, 40], miniBox1LV,  "mb1_pv6", tl1, r1, scale=[1,1,1])
+    miniBox12PV6 = _g4.PhysicalVolume([0, 0, 0], [0, -10, 40], miniBox12LV, "mb1_pv6", tl2, r2, scale=[1,1,-1])
+    comp8 = pyg4ometry.geant4.Compare.LogicalVolumes(tl1, tl2, tests, recursive=True)
+    comp8.Print()
+    assert (len(comp8.test['scale']) > 0)
 
     return {"testStatus": True}
 
