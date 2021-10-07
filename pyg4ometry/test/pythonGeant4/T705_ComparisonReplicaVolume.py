@@ -11,7 +11,7 @@ def Test():
     galactic2 = _g4.MaterialPredefined("G4_Galactic", r)
 
     # predefined materials
-    comp1 = pyg4ometry.geant4.Compare.Materials(galactic1, galactic2, tests)
+    comp1 = pyg4ometry.geant4.Compare.materials(galactic1, galactic2, tests)
     comp1.Print()
     assert(len(comp1) == 0)
     
