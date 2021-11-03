@@ -1,28 +1,28 @@
 <?xml version="1.0" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define>
-		<position name="R" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="V" unit="degree" x="10" y="20" z="30"/>
+		<position name="R" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="V" x="10" y="20" z="30" unit="degree"/>
 		<variable name="veloSD" value="4"/>
 	</define>
 	<materials>
-		<material Z="7" name="Nitrogen">
+		<material name="Nitrogen" Z="7">
 			<D value="0.00125"/>
 			<atom value="14.01"/>
 		</material>
-		<material Z="8" name="Oxygen">
+		<material name="Oxygen" Z="8">
 			<D value="0.00143"/>
 			<atom value="16.0"/>
 		</material>
 		<material name="Air">
 			<D value="0.0012"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="Box" x="1000" y="1000" z="1000"/>
-		<box lunit="mm" name="WorldBox" x="10000" y="10000" z="10000"/>
+		<box name="Box" x="1000" y="1000" z="1000" lunit="mm"/>
+		<box name="WorldBox" x="10000" y="10000" z="10000" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="Boxvol">
@@ -49,20 +49,20 @@
 				<auxiliary auxtype="sometype" auxvalue="somevalue"/>
 			</auxiliary>
 			<auxiliary auxtype="RootLogicalVolume" auxvalue="Boxvol2"/>
-			<auxiliary auxtype="proton_cut_legth" auxunit="mm" auxvalue="2"/>
-			<auxiliary auxtype="proton_cut_energy" auxunit="KeV" auxvalue="900"/>
-			<auxiliary auxtype="electron_cut_length" auxunit="mm" auxvalue="1"/>
-			<auxiliary auxtype="electron_cut_energy" auxunit="MeV" auxvalue="1"/>
+			<auxiliary auxtype="proton_cut_legth" auxvalue="2" auxunit="mm"/>
+			<auxiliary auxtype="proton_cut_energy" auxvalue="900" auxunit="KeV"/>
+			<auxiliary auxtype="electron_cut_length" auxvalue="1" auxunit="mm"/>
+			<auxiliary auxtype="electron_cut_energy" auxvalue="1" auxunit="MeV"/>
 			<auxiliary auxtype="cut" auxvalue="electron">
-				<auxiliary auxtype="energy" auxunit="keV" auxvalue="900"/>
+				<auxiliary auxtype="energy" auxvalue="900" auxunit="keV"/>
 			</auxiliary>
-			<auxiliary auxtype="userlimit_electron" auxunit="keV" auxvalue="1"/>
+			<auxiliary auxtype="userlimit_electron" auxvalue="1" auxunit="keV"/>
 		</auxiliary>
 		<auxiliary auxtype="region" auxvalue="myregion2">
 			<auxiliary auxtype="RootLogicalVolume" auxvalue="vol1"/>
 			<auxiliary auxtype="RootLogicalVolume" auxvalue="vol2"/>
-			<auxiliary auxtype="electron_cut_length" auxunit="mm" auxvalue="1.5"/>
-			<auxiliary auxtype="proton_cut_length" auxunit="mm" auxvalue="2.5"/>
+			<auxiliary auxtype="electron_cut_length" auxvalue="1.5" auxunit="mm"/>
+			<auxiliary auxtype="proton_cut_length" auxvalue="2.5" auxunit="mm"/>
 		</auxiliary>
 	</userinfo>
 	<setup name="Default" version="1.0">

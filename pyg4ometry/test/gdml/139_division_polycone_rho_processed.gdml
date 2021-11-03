@@ -2,21 +2,21 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define/>
 	<materials>
-		<material Z="1" name="AIR" state="gas">
+		<material name="AIR" state="gas" Z="1">
 			<D value="1e-24"/>
 			<atom value="1.00794"/>
 		</material>
-		<material Z="13" name="ALU" state="solid">
+		<material name="ALU" state="solid" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<polycone aunit="rad" deltaphi="4" lunit="mm" name="Polycone" startphi="1">
-			<zplane rmax="9.0" rmin="8.0" z="-20"/>
-			<zplane rmax="5.0" rmin="4.75" z="0"/>
-			<zplane rmax="9.0" rmin="8.0" z="20"/>
+		<box name="WorldBox" x="1000" y="1000" z="1000" lunit="mm"/>
+		<polycone name="Polycone" startphi="1" deltaphi="4" lunit="mm" aunit="rad">
+			<zplane rmin="8.0" rmax="9.0" z="-20"/>
+			<zplane rmin="4.75" rmax="5.0" z="0"/>
+			<zplane rmin="8.0" rmax="9.0" z="20"/>
 		</polycone>
 	</solids>
 	<structure>
@@ -27,7 +27,7 @@
 		<volume name="lvDivision">
 			<materialref ref="AIR"/>
 			<solidref ref="Polycone"/>
-			<divisionvol axis="kRho" number="3" offset="0.0" unit="rad" width="0.0">
+			<divisionvol number="3" axis="kRho" width="0.0" offset="0.0" unit="rad">
 				<volumeref ref="lvPolycone"/>
 			</divisionvol>
 		</volume>
