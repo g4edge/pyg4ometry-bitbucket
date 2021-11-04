@@ -107,11 +107,26 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
+usd_ext = Extension('pyg4ometry.pyusd.usd',
+                    include_dirs = ['/Users/sboogert/Physics/coderepos/USD/.install/include',
+                                    pybind11_include,
+                                    '/opt/local/include/',
+                                    './pyg4ometry/pycgal/'],
+                    library_dirs = ['/Users/sboogert/Physics/coderepos/USD/.install/lib'],
+                    libraries = ['usd_usd','usd_usdGeom'],
+                    sources = ['./pyg4ometry/pyusd/usd.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/core.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-W#pragma-messages","-fvisibility=hidden"])
+
 
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
 exts.append(cgal_core_ext)
+exts.append(usd_ext)
 
 setup(
     name="pyg4ometry",
