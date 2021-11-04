@@ -1,5 +1,7 @@
 #include "usd.h"
 
+#include "algo.h"
+
 Stage::Stage() {
   py::print("Stage::Stage>");
   stage = pxr::UsdStage::CreateInMemory();
@@ -23,7 +25,6 @@ GeomMesh::GeomMesh(Stage *stage) {
   mesh.CreateFaceVertexIndicesAttr().Set(faceVertexIndices, 0.0);
   mesh.CreatePointsAttr().Set(points,0.0);
 
-
   auto convertableAttribute = mesh.GetPrim().CreateAttribute(pxr::TfToken("myAttrib"),  pxr::SdfValueTypeNames->Float);
   convertableAttribute.Set(1.23f, 0.0f);
   
@@ -38,7 +39,32 @@ GeomMesh::GeomMesh(CSG *csg, Stage *stage) {
   pxr::VtArray<pxr::GfVec3f> points;
 
   pxr::UsdGeomMesh mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
-  
+
+  int nFaces    = sm.number_of_faces();
+  int nVertices = sm.number_of_vertices();
+
+  py::print("GeomMesh::GeomMesh>",nFaces,nVertices);
+
+  Surface_mesh::Point p;
+
+  for(Surface_mesh::Vertex_index vd : sm._surfacemesh->vertices() ) {    
+    p = sm._surfacemesh->point(vd);
+    points.push_back(pxr::GfVec3f(CGAL::to_double(p.x()), CGAL::to_double(p.y()), CGAL::to_double(p.z())));
+  }
+
+  for(Surface_mesh::Face_index fd : sm._surfacemesh->faces() ) {
+    int iVertInFace = 0;
+    for(Surface_mesh::Halfedge_index hd : CGAL::halfedges_around_face(sm._surfacemesh->halfedge(fd),
+								      *(sm._surfacemesh))) {
+      iVertInFace++;
+      faceVertexIndices.push_back((int)sm._surfacemesh->source(hd));
+    }
+    faceVertexCounts.push_back(iVertInFace);
+  }
+
+  mesh.CreateFaceVertexCountsAttr().Set(faceVertexCounts, 0.0);
+  mesh.CreateFaceVertexIndicesAttr().Set(faceVertexIndices, 0.0);
+  mesh.CreatePointsAttr().Set(points,0.0);
 }
 
 /*********************************************
