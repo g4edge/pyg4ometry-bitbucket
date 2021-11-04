@@ -13,13 +13,13 @@ void Stage::Export(py::str exportFileName) {
 }
 
 GeomMesh::GeomMesh(Stage *stage) {
-  pxr::VtArray<int> faceVertexCounts = {4};
-  pxr::VtArray<int> faceVertexIndices = {0,1,2,3};
-  pxr::VtArray<pxr::GfVec3f> points ={ pxr::GfVec3f(0.0f, 0.0f,0.0f),
-                                       pxr::GfVec3f(1.0f, 0.0f,0.0f),
-                                       pxr::GfVec3f(1.0f, 1.0f,0.0f),
-                                       pxr::GfVec3f(0.0f, 1.0f,0.0f)};
-  pxr::UsdGeomMesh mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
+  faceVertexCounts = {4};
+  faceVertexIndices = {0,1,2,3};
+  points ={pxr::GfVec3f(0.0f, 0.0f,0.0f),
+           pxr::GfVec3f(1.0f, 0.0f,0.0f),
+           pxr::GfVec3f(1.0f, 1.0f,0.0f),
+           pxr::GfVec3f(0.0f, 1.0f,0.0f)};
+  mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
 
   mesh.CreateFaceVertexCountsAttr().Set(faceVertexCounts, 0.0);
   mesh.CreateFaceVertexIndicesAttr().Set(faceVertexIndices, 0.0);
@@ -34,11 +34,8 @@ GeomMesh::GeomMesh(Stage *stage) {
 
 GeomMesh::GeomMesh(CSG *csg, Stage *stage) {
   SurfaceMesh &sm = csg->getSurfaceMesh();
-  pxr::VtArray<int> faceVertexCounts;
-  pxr::VtArray<int> faceVertexIndices;
-  pxr::VtArray<pxr::GfVec3f> points;
 
-  pxr::UsdGeomMesh mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
+  mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
 
   int nFaces    = sm.number_of_faces();
   int nVertices = sm.number_of_vertices();

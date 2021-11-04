@@ -25,6 +25,9 @@ public :
 
 class GeomMesh {
 private:
+  pxr::VtArray<int> faceVertexCounts;
+  pxr::VtArray<int> faceVertexIndices;
+  pxr::VtArray<pxr::GfVec3f> points;
   pxr::UsdGeomMesh mesh;
 
 public:
