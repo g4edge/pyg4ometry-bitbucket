@@ -2,53 +2,43 @@
 
 #include "algo.h"
 
-Stage::Stage() {
-  py::print("Stage::Stage>");
+bool UsdExporterFlat::debug = false;
+
+UsdExporterFlat::UsdExporterFlat() {
+  if(debug)
+    py::print("UsdExporterFlat::UsdExporter>");
+  
   stage = pxr::UsdStage::CreateInMemory();
 }
 
-void Stage::Export(py::str exportFileName) {
-  py::print("Stage::Export>",exportFileName);
-  stage->Export(exportFileName);
+UsdExporterFlat::~UsdExporterFlat() {
+  if(debug)
+    py::print("UsdExporterFlat::~UsdExporter>");
 }
 
-GeomMesh::GeomMesh(Stage *stage) {
-  faceVertexCounts = {4};
-  faceVertexIndices = {0,1,2,3};
-  points ={pxr::GfVec3f(0.0f, 0.0f,0.0f),
-           pxr::GfVec3f(1.0f, 0.0f,0.0f),
-           pxr::GfVec3f(1.0f, 1.0f,0.0f),
-           pxr::GfVec3f(0.0f, 1.0f,0.0f)};
-  mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
-
-  mesh.CreateFaceVertexCountsAttr().Set(faceVertexCounts, 0.0);
-  mesh.CreateFaceVertexIndicesAttr().Set(faceVertexIndices, 0.0);
-  mesh.CreatePointsAttr().Set(points,0.0);
-
-  auto convertableAttribute = mesh.GetPrim().CreateAttribute(pxr::TfToken("myAttrib"),  pxr::SdfValueTypeNames->Float);
-  convertableAttribute.Set(1.23f, 0.0f);
-  
-  auto unconvertableAttribute = mesh.GetPrim().CreateAttribute(pxr::TfToken("myAttrib2"),  pxr::SdfValueTypeNames->Float);
-  unconvertableAttribute.Set(3.45f, 0.0f);
-}
-
-GeomMesh::GeomMesh(CSG *csg, Stage *stage) {
+void UsdExporterFlat::AddCGALMesh(std::string name, CSG *csg) {
   SurfaceMesh &sm = csg->getSurfaceMesh();
-
-  mesh = pxr::UsdGeomMesh::Define(stage->getStage(), pxr::SdfPath("/mesh"));
-
+  
+  std::string pxrPath = "/"+name;
+  
+  pxr::VtArray<int> faceVertexCounts;
+  pxr::VtArray<int> faceVertexIndices;
+  pxr::VtArray<pxr::GfVec3f> points;
+  pxr::UsdGeomMesh mesh = pxr::UsdGeomMesh::Define(stage, pxr::SdfPath(pxrPath));
+  
   int nFaces    = sm.number_of_faces();
   int nVertices = sm.number_of_vertices();
-
-  py::print("GeomMesh::GeomMesh>",nFaces,nVertices);
-
+  
+  if(debug)
+    py::print("GeomMesh::GeomMesh>",nFaces,nVertices);
+  
   Surface_mesh::Point p;
-
-  for(Surface_mesh::Vertex_index vd : sm._surfacemesh->vertices() ) {    
+  
+  for(Surface_mesh::Vertex_index vd : sm._surfacemesh->vertices() ) {
     p = sm._surfacemesh->point(vd);
     points.push_back(pxr::GfVec3f(CGAL::to_double(p.x()), CGAL::to_double(p.y()), CGAL::to_double(p.z())));
   }
-
+  
   for(Surface_mesh::Face_index fd : sm._surfacemesh->faces() ) {
     int iVertInFace = 0;
     for(Surface_mesh::Halfedge_index hd : CGAL::halfedges_around_face(sm._surfacemesh->halfedge(fd),
@@ -58,21 +48,51 @@ GeomMesh::GeomMesh(CSG *csg, Stage *stage) {
     }
     faceVertexCounts.push_back(iVertInFace);
   }
-
+  
   mesh.CreateFaceVertexCountsAttr().Set(faceVertexCounts, 0.0);
   mesh.CreateFaceVertexIndicesAttr().Set(faceVertexIndices, 0.0);
   mesh.CreatePointsAttr().Set(points,0.0);
+  
+  /////////////////////////////
+  // Add mesh to map
+  meshes.insert(std::pair<std::string,pxr::UsdGeomMesh>(name,mesh));
+  
+}
+
+void UsdExporterFlat::AddMeshInstance(std::string name, std::vector<double> pos) {
+  if(debug)
+    py::print("UsdExporterFlat::AddMeshInstance>",name, pos[0],pos[1],pos[2]);
+  
+  if (meshes.find(name) == meshes.end()) {
+    py::print("UsdExporter::AddMeshInstance> Mesh not defined");
+    return;
+  }
+  
+  if (instancePositions.find(name) == instancePositions.end()) {
+    pxr::VtArray<pxr::GfVec3f> points;
+    points.push_back(pxr::GfVec3f(pos[0], pos[1], pos[2]));
+    instancePositions.insert(std::pair<std::string, pxr::VtArray<pxr::GfVec3f>>(name, points));
+  }
+  else {
+    instancePositions[name].push_back(pxr::GfVec3f(pos[0], pos[1], pos[2]));
+  }
+}
+
+void UsdExporterFlat::Export(std::string exportFileName) {
+  if(debug)
+    py::print("UsdExporterFlat::Export>");
+  stage->Export(exportFileName);
 }
 
 /*********************************************
 PYBIND
 *********************************************/
 PYBIND11_MODULE(usd, m) {
-  py::class_<Stage>(m,"Stage")
+  
+  py::class_<UsdExporterFlat>(m,"UsdExporterFlat")
     .def(py::init<>())
-    .def("Export",(void (Stage::*)(py::str &)) &Stage::Export);
-
-  py::class_<GeomMesh>(m,"GeomMesh")
-    .def(py::init<Stage *>())
-    .def(py::init<CSG *, Stage *>());
+    .def_readwrite_static("debug",&UsdExporterFlat::debug)
+    .def("AddCGALMesh", &UsdExporterFlat::AddCGALMesh)
+    .def("AddMeshInstance", &UsdExporterFlat::AddMeshInstance)
+    .def("Export", &UsdExporterFlat::Export);
 }

@@ -9,30 +9,29 @@
 #include "pxr/usd/usd/stage.h"
 #include "pxr/usd/usdGeom/mesh.h"
 
+#include <map>
+#include <string>
+
 #include "core.h"
 
 namespace py = pybind11;
 
-class Stage {
+class UsdExporterFlat {
+  
 private:
   pxr::UsdStageRefPtr stage;
-
-public :
-  Stage();
-  void Export(py::str exportFileName);
-  pxr::UsdStageRefPtr getStage() {return stage;}
-};
-
-class GeomMesh {
-private:
-  pxr::VtArray<int> faceVertexCounts;
-  pxr::VtArray<int> faceVertexIndices;
-  pxr::VtArray<pxr::GfVec3f> points;
-  pxr::UsdGeomMesh mesh;
-
+  std::map<std::string,pxr::UsdGeomMesh> meshes;
+  std::map<std::string,pxr::VtArray<pxr::GfVec3f>> instancePositions;
+  
+  
 public:
-  GeomMesh(Stage *);
-  GeomMesh(CSG *, Stage *);
+  static bool debug;
+  UsdExporterFlat();
+  ~UsdExporterFlat();
+  void AddCGALMesh(std::string name, CSG *);
+  void AddMeshInstance(std::string name, std::vector<double> pos);
+  void Export(std::string exportFileName);
+  
 };
 
 #endif
