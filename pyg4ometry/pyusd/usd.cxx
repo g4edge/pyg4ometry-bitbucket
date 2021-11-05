@@ -62,14 +62,14 @@ void UsdExporterFlat::AddCGALMesh(std::string name, CSG *csg) {
 void UsdExporterFlat::AddMeshInstance(std::string name, std::vector<double> pos) {
   if(debug)
     py::print("UsdExporterFlat::AddMeshInstance>",name, pos[0],pos[1],pos[2]);
-  
+
   if (meshes.find(name) == meshes.end()) {
     py::print("UsdExporter::AddMeshInstance> Mesh not defined");
     return;
   }
   
   if (instancePositions.find(name) == instancePositions.end()) {
-    pxr::VtArray<pxr::GfVec3f> points;
+    pxr::VtArray<pxr::GfVec3f> points;// = new pxr::VtArray<pxr::GfVec3f>();
     points.push_back(pxr::GfVec3f(pos[0], pos[1], pos[2]));
     instancePositions.insert(std::pair<std::string, pxr::VtArray<pxr::GfVec3f>>(name, points));
   }
@@ -84,6 +84,29 @@ void UsdExporterFlat::Export(std::string exportFileName) {
   stage->Export(exportFileName);
 }
 
+void UsdExporterFlat::Complete() {
+  for(auto pointPair : instancePositions) {
+    std::string pxrPath = "/"+pointPair.first+"_instances";
+    pxr::UsdGeomPointInstancer pointInstancer = pxr::UsdGeomPointInstancer::Define(stage, pxr::SdfPath(pxrPath));
+    pointInstancers.insert(std::pair<std::string, pxr::UsdGeomPointInstancer>(pointPair.first, pointInstancer));
+    pointInstancer.CreatePositionsAttr().Set(pointPair.second,0.0);
+  }
+}
+
+void UsdExporterFlat::DebugPrint() {
+  py::print("meshes ",meshes.size());
+  py::print("instancers ",pointInstancers.size());
+
+  pxr::VtArray<pxr::GfVec3f> points;
+  for(auto pointInstancer : pointInstancers) {
+    pointInstancer.second.GetPositionsAttr().Get(&points,0);
+    py::print("instances ", pointInstancer.first, points.size());
+    for(auto p : points) {
+      py::print(p[0],p[1],p[2]);
+    }
+  }
+}
+
 /*********************************************
 PYBIND
 *********************************************/
@@ -94,5 +117,8 @@ PYBIND11_MODULE(usd, m) {
     .def_readwrite_static("debug",&UsdExporterFlat::debug)
     .def("AddCGALMesh", &UsdExporterFlat::AddCGALMesh)
     .def("AddMeshInstance", &UsdExporterFlat::AddMeshInstance)
-    .def("Export", &UsdExporterFlat::Export);
+    .def("Export", &UsdExporterFlat::Export)
+    .def("Complete", &UsdExporterFlat::Complete)
+    .def("DebugPrint", &UsdExporterFlat::DebugPrint);
+
 }

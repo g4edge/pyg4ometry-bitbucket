@@ -8,6 +8,8 @@
 
 #include "pxr/usd/usd/stage.h"
 #include "pxr/usd/usdGeom/mesh.h"
+#include "pxr/usd/usdGeom/pointInstancer.h"
+
 
 #include <map>
 #include <string>
@@ -22,7 +24,7 @@ private:
   pxr::UsdStageRefPtr stage;
   std::map<std::string,pxr::UsdGeomMesh> meshes;
   std::map<std::string,pxr::VtArray<pxr::GfVec3f>> instancePositions;
-  
+  std::map<std::string,pxr::UsdGeomPointInstancer> pointInstancers;
   
 public:
   static bool debug;
@@ -31,6 +33,8 @@ public:
   void AddCGALMesh(std::string name, CSG *);
   void AddMeshInstance(std::string name, std::vector<double> pos);
   void Export(std::string exportFileName);
+  void Complete();
+  void DebugPrint();
   
 };
 
