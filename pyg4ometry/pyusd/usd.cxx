@@ -85,15 +85,27 @@ void UsdExporterFlat::Export(std::string exportFileName) {
 }
 
 void UsdExporterFlat::Complete() {
+  py::print("UsdExporterFlat::Complete>");
+
   for(auto pointPair : instancePositions) {
     std::string pxrPath = "/"+pointPair.first+"_instances";
     pxr::UsdGeomPointInstancer pointInstancer = pxr::UsdGeomPointInstancer::Define(stage, pxr::SdfPath(pxrPath));
     pointInstancers.insert(std::pair<std::string, pxr::UsdGeomPointInstancer>(pointPair.first, pointInstancer));
     pointInstancer.CreatePositionsAttr().Set(pointPair.second,0.0);
+
+    pxr::VtArray<int> pi;
+    for(int i=0;i<pointPair.second.size();i++) {
+       pi.push_back(0);
+    }
+
+    pointInstancer.CreateProtoIndicesAttr().Set(pi);
+    pxr::UsdRelationship rel = pointInstancer.CreatePrototypesRel();
+    rel.AddTarget(pxr::SdfPath("/"+pointPair.first));
   }
 }
 
 void UsdExporterFlat::DebugPrint() {
+  py::print("UsdExporterFlat::DebugPrint>");
   py::print("meshes ",meshes.size());
   py::print("instancers ",pointInstancers.size());
 
