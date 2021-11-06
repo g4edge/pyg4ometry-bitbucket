@@ -55,6 +55,7 @@ void UsdExporterFlat::AddCGALMesh(std::string name, CSG *csg) {
   
   /////////////////////////////
   // Add mesh to map
+  /////////////////////////////
   meshes.insert(std::pair<std::string,pxr::UsdGeomMesh>(name,mesh));
   
 }
@@ -81,11 +82,14 @@ void UsdExporterFlat::AddMeshInstance(std::string name, std::vector<double> pos)
 void UsdExporterFlat::Export(std::string exportFileName) {
   if(debug)
     py::print("UsdExporterFlat::Export>");
+
+  this->Complete();
   stage->Export(exportFileName);
 }
 
 void UsdExporterFlat::Complete() {
-  py::print("UsdExporterFlat::Complete>");
+  if(debug)
+    py::print("UsdExporterFlat::Complete>");
 
   for(auto pointPair : instancePositions) {
     std::string pxrPath = "/"+pointPair.first+"_instances";
@@ -93,12 +97,14 @@ void UsdExporterFlat::Complete() {
     pointInstancers.insert(std::pair<std::string, pxr::UsdGeomPointInstancer>(pointPair.first, pointInstancer));
     pointInstancer.CreatePositionsAttr().Set(pointPair.second,0.0);
 
+    // IMPORTANT : need to add protoindices
     pxr::VtArray<int> pi;
     for(int i=0;i<pointPair.second.size();i++) {
        pi.push_back(0);
     }
-
     pointInstancer.CreateProtoIndicesAttr().Set(pi);
+
+    // IMPORTANT : set relationship between pointInstancer and meshes
     pxr::UsdRelationship rel = pointInstancer.CreatePrototypesRel();
     rel.AddTarget(pxr::SdfPath("/"+pointPair.first));
   }
@@ -132,5 +138,4 @@ PYBIND11_MODULE(usd, m) {
     .def("Export", &UsdExporterFlat::Export)
     .def("Complete", &UsdExporterFlat::Complete)
     .def("DebugPrint", &UsdExporterFlat::DebugPrint);
-
 }
