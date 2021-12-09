@@ -7,30 +7,30 @@
 		<constant name="bx" value="5.0"/>
 		<constant name="by" value="bx"/>
 		<constant name="bz" value="bx"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
-		<ellipsoid ax="1" by="2" cz="5" lunit="mm" name="ellipsoid_param" zcut1="-4" zcut2="4"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<box name="box" x="20*bx" y="20*bx" z="20*bx" lunit="mm"/>
+		<ellipsoid name="ellipsoid_param" ax="1" by="2" cz="5" zcut1="-4" zcut2="4" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="ellipsoid1Vol">
@@ -44,47 +44,47 @@
 				<volumeref ref="ellipsoid1Vol"/>
 				<parameterised_position_size>
 					<parameters number="1">
-						<position name="ellipsoid1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<rotation name="ellipsoid11Vol1Rot" unit="rad" x="0" y="0" z="-0.4"/>
-						<ellipsoid_dimensions ax="0.5" by="0.75" cz="1" lunit="mm" zcut1="-1" zcut2="1"/>
+						<position name="ellipsoid1Vol1pos" x="0" y="0" z="-8*bx" unit="mm"/>
+						<rotation name="ellipsoid11Vol1Rot" x="0" y="0" z="-0.4" unit="rad"/>
+						<ellipsoid_dimensions ax="0.5" by="0.75" cz="1" zcut1="-1" zcut2="1" lunit="mm"/>
 					</parameters>
 					<parameters number="2">
-						<position name="ellipsoid1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<rotation name="ellipsoid1Vol2Rot" unit="rad" x="0" y="0" z="-0.3"/>
-						<ellipsoid_dimensions ax="1.0" by="1.25" cz="1.5" lunit="mm" zcut1="-1.25" zcut2="1.25"/>
+						<position name="ellipsoid1Vol2pos" x="0" y="0" z="-6*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol2Rot" x="0" y="0" z="-0.3" unit="rad"/>
+						<ellipsoid_dimensions ax="1.0" by="1.25" cz="1.5" zcut1="-1.25" zcut2="1.25" lunit="mm"/>
 					</parameters>
 					<parameters number="3">
-						<position name="ellipsoid1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<rotation name="ellipsoid1Vol3Rot" unit="rad" x="0" y="0" z="-0.2"/>
-						<ellipsoid_dimensions ax="1.5" by="1.75" cz="2.0" lunit="mm" zcut1="-1.5" zcut2="1.5"/>
+						<position name="ellipsoid1Vol3pos" x="0" y="0" z="-4*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol3Rot" x="0" y="0" z="-0.2" unit="rad"/>
+						<ellipsoid_dimensions ax="1.5" by="1.75" cz="2.0" zcut1="-1.5" zcut2="1.5" lunit="mm"/>
 					</parameters>
 					<parameters number="4">
-						<position name="ellipsoid1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<rotation name="ellipsoid1Vol24ot" unit="rad" x="0" y="0" z="-0.1"/>
-						<ellipsoid_dimensions ax="2.0" by="2.25" cz="2.5" lunit="mm" zcut1="-1.75" zcut2="1.75"/>
+						<position name="ellipsoid1Vol4pos" x="0" y="0" z="-2*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol24ot" x="0" y="0" z="-0.1" unit="rad"/>
+						<ellipsoid_dimensions ax="2.0" by="2.25" cz="2.5" zcut1="-1.75" zcut2="1.75" lunit="mm"/>
 					</parameters>
 					<parameters number="5">
-						<ellipsoid_dimensions ax="2.5" by="2.75" cz="3.0" lunit="mm" zcut1="-2.0" zcut2="2.0"/>
+						<ellipsoid_dimensions ax="2.5" by="2.75" cz="3.0" zcut1="-2.0" zcut2="2.0" lunit="mm"/>
 					</parameters>
 					<parameters number="6">
-						<position name="ellipsoid1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<rotation name="ellipsoid1Vol6Rot" unit="rad" x="0" y="0" z="0.1"/>
-						<ellipsoid_dimensions ax="3.0" by="3.25" cz="3.5" lunit="mm" zcut1="-2.25" zcut2="2.25"/>
+						<position name="ellipsoid1Vol6pos" x="0" y="0" z="2*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol6Rot" x="0" y="0" z="0.1" unit="rad"/>
+						<ellipsoid_dimensions ax="3.0" by="3.25" cz="3.5" zcut1="-2.25" zcut2="2.25" lunit="mm"/>
 					</parameters>
 					<parameters number="7">
-						<position name="ellipsoid1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<rotation name="ellipsoid1Vol7Rot" unit="rad" x="0" y="0" z="0.2"/>
-						<ellipsoid_dimensions ax="3.5" by="3.75" cz="4.0" lunit="mm" zcut1="-2.5" zcut2="2.5"/>
+						<position name="ellipsoid1Vol7pos" x="0" y="0" z="4*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol7Rot" x="0" y="0" z="0.2" unit="rad"/>
+						<ellipsoid_dimensions ax="3.5" by="3.75" cz="4.0" zcut1="-2.5" zcut2="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="8">
-						<position name="ellipsoid1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<rotation name="ellipsoid1Vol8Rot" unit="rad" x="0" y="0" z="0.3"/>
-						<ellipsoid_dimensions ax="4.0" by="4.25" cz="4.5" lunit="mm" zcut1="-2.75" zcut2="2.75"/>
+						<position name="ellipsoid1Vol8pos" x="0" y="0" z="6*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol8Rot" x="0" y="0" z="0.3" unit="rad"/>
+						<ellipsoid_dimensions ax="4.0" by="4.25" cz="4.5" zcut1="-2.75" zcut2="2.75" lunit="mm"/>
 					</parameters>
 					<parameters number="9">
-						<position name="ellipsoid1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<rotation name="ellipsoid1Vol9Rot" unit="rad" x="0" y="0" z="0.4"/>
-						<ellipsoid_dimensions ax="4.5" by="4.75" cz="5" lunit="mm" zcut1="-3.0" zcut2="3"/>
+						<position name="ellipsoid1Vol9pos" x="0" y="0" z="8*bx" unit="mm"/>
+						<rotation name="ellipsoid1Vol9Rot" x="0" y="0" z="0.4" unit="rad"/>
+						<ellipsoid_dimensions ax="4.5" by="4.75" cz="5" zcut1="-3.0" zcut2="3" lunit="mm"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

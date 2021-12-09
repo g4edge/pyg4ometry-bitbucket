@@ -1,51 +1,51 @@
 <?xml version="1.0" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define>
-		<position name="det_163517544inWorld_163515704p" unit="mm" x="0" y="0" z="0"/>
+		<position name="det_163517544inWorld_163515704p" x="0" y="0" z="0" unit="mm"/>
 	</define>
 	<materials>
-		<isotope N="235" Z="92" name="U235">
+		<isotope name="U235" Z="92" N="235">
 			<atom value="235.01"/>
 		</isotope>
-		<isotope N="238" Z="92" name="U238">
+		<isotope name="U238" Z="92" N="238">
 			<atom value="235.03"/>
 		</isotope>
-		<element Z="1" formula="H" name="Hydrogen">
+		<element name="Hydrogen" formula="H" Z="1">
 			<atom value="1.0"/>
 		</element>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<element formula="" name="EnrichedUranium">
-			<fraction n="0.9" ref="U235"/>
-			<fraction n="0.1" ref="U238"/>
+		<element name="EnrichedUranium" formula="">
+			<fraction ref="U235" n="0.9"/>
+			<fraction ref="U238" n="0.1"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Water">
 			<D value="1.0"/>
-			<composite n="2" ref="Hydrogen"/>
-			<composite n="1" ref="Oxygen"/>
+			<composite ref="Hydrogen" n="2"/>
+			<composite ref="Oxygen" n="1"/>
 		</material>
 		<material name="Air_163514448">
 			<D value="0.001289"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 		<material name="WetEnrichedUranium">
 			<D value="0.001289"/>
-			<fraction n="0.9" ref="EnrichedUranium"/>
-			<fraction n="0.1" ref="Water"/>
+			<fraction ref="EnrichedUranium" n="0.9"/>
+			<fraction ref="Water" n="0.1"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="world_163515648" x="10000" y="10000" z="10000"/>
-		<box lunit="mm" name="det_163515856" x="2000" y="2000" z="2000"/>
+		<box name="world_163515648" x="10000" y="10000" z="10000" lunit="mm"/>
+		<box name="det_163515856" x="2000" y="2000" z="2000" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="Detector_163517456">
