@@ -7,33 +7,33 @@
 		<constant name="bx" value="5.0"/>
 		<constant name="by" value="bx"/>
 		<constant name="bz" value="bx"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
-		<polycone aunit="rad" deltaphi="4" lunit="mm" name="polycone_param" startphi="1">
-			<zplane rmax="9" rmin="1" z="-5"/>
-			<zplane rmax="5" rmin="3" z="0"/>
-			<zplane rmax="9" rmin="1" z="5"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<box name="box" x="20*bx" y="20*bx" z="20*bx" lunit="mm"/>
+		<polycone name="polycone_param" startphi="1" deltaphi="4" lunit="mm" aunit="rad">
+			<zplane rmin="1" rmax="9" z="-5"/>
+			<zplane rmin="3" rmax="5" z="0"/>
+			<zplane rmin="1" rmax="9" z="5"/>
 		</polycone>
 	</solids>
 	<structure>
@@ -48,74 +48,74 @@
 				<volumeref ref="polycone1Vol"/>
 				<parameterised_position_size>
 					<parameters number="1">
-						<position name="polycone1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.9" startPhi="2*pi*0.1">
-							<zplane rmax="9" rmin="1" z="-0.5"/>
-							<zplane rmax="5" rmin="3" z="0"/>
-							<zplane rmax="9" rmin="1" z="0.5"/>
+						<position name="polycone1Vol1pos" x="0" y="0" z="-8*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.1" openPhi="2*pi*0.9" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-0.5" rmin="1" rmax="9"/>
+							<zplane z="0" rmin="3" rmax="5"/>
+							<zplane z="0.5" rmin="1" rmax="9"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="2">
-						<position name="polycone1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.8" startPhi="2*pi*0.2">
-							<zplane rmax="10" rmin="2" z="-1.0"/>
-							<zplane rmax="6" rmin="3" z="0"/>
-							<zplane rmax="10" rmin="2" z="1.0"/>
+						<position name="polycone1Vol2pos" x="0" y="0" z="-6*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.2" openPhi="2*pi*0.8" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-1.0" rmin="2" rmax="10"/>
+							<zplane z="0" rmin="3" rmax="6"/>
+							<zplane z="1.0" rmin="2" rmax="10"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="3">
-						<position name="polycone1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.7" startPhi="2*pi*0.3">
-							<zplane rmax="11" rmin="3" z="-1.0"/>
-							<zplane rmax="7" rmin="4" z="0"/>
-							<zplane rmax="11" rmin="3" z="1.0"/>
+						<position name="polycone1Vol3pos" x="0" y="0" z="-4*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.3" openPhi="2*pi*0.7" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-1.0" rmin="3" rmax="11"/>
+							<zplane z="0" rmin="4" rmax="7"/>
+							<zplane z="1.0" rmin="3" rmax="11"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="4">
-						<position name="polycone1Vol3pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.6" startPhi="2*pi*0.4">
-							<zplane rmax="12" rmin="4" z="-1.5"/>
-							<zplane rmax="8" rmin="5" z="0"/>
-							<zplane rmax="12" rmin="4" z="1.5"/>
+						<position name="polycone1Vol3pos" x="0" y="0" z="-2*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.4" openPhi="2*pi*0.6" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-1.5" rmin="4" rmax="12"/>
+							<zplane z="0" rmin="5" rmax="8"/>
+							<zplane z="1.5" rmin="4" rmax="12"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="5">
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.5" startPhi="2*pi*0.5">
-							<zplane rmax="13" rmin="5" z="-2"/>
-							<zplane rmax="9" rmin="6" z="0"/>
-							<zplane rmax="13" rmin="5" z="2"/>
+						<polycone_dimensions startPhi="2*pi*0.5" openPhi="2*pi*0.5" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-2" rmin="5" rmax="13"/>
+							<zplane z="0" rmin="6" rmax="9"/>
+							<zplane z="2" rmin="5" rmax="13"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="6">
-						<position name="polycone1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.4" startPhi="2*pi*0.6">
-							<zplane rmax="14" rmin="6" z="-2.5"/>
-							<zplane rmax="10" rmin="7" z="0"/>
-							<zplane rmax="14" rmin="6" z="2.5"/>
+						<position name="polycone1Vol6pos" x="0" y="0" z="2*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.6" openPhi="2*pi*0.4" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-2.5" rmin="6" rmax="14"/>
+							<zplane z="0" rmin="7" rmax="10"/>
+							<zplane z="2.5" rmin="6" rmax="14"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="7">
-						<position name="polycone1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.3" startPhi="2*pi*0.7">
-							<zplane rmax="15" rmin="7" z="-3"/>
-							<zplane rmax="11" rmin="8" z="0"/>
-							<zplane rmax="15" rmin="7" z="3"/>
+						<position name="polycone1Vol7pos" x="0" y="0" z="4*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.7" openPhi="2*pi*0.3" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-3" rmin="7" rmax="15"/>
+							<zplane z="0" rmin="8" rmax="11"/>
+							<zplane z="3" rmin="7" rmax="15"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="8">
-						<position name="polycone1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.2" startPhi="2*pi*0.8">
-							<zplane rmax="16" rmin="8" z="-3.5"/>
-							<zplane rmax="12" rmin="9" z="0"/>
-							<zplane rmax="16" rmin="8" z="3.5"/>
+						<position name="polycone1Vol8pos" x="0" y="0" z="6*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.8" openPhi="2*pi*0.2" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-3.5" rmin="8" rmax="16"/>
+							<zplane z="0" rmin="9" rmax="12"/>
+							<zplane z="3.5" rmin="8" rmax="16"/>
 						</polycone_dimensions>
 					</parameters>
 					<parameters number="9">
-						<position name="polycone1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<polycone_dimensions aunit="rad" lunit="mm" numRZ="3" openPhi="2*pi*0.1" startPhi="2*pi*0.9">
-							<zplane rmax="17" rmin="9" z="-4.0"/>
-							<zplane rmax="13" rmin="10" z="0"/>
-							<zplane rmax="17" rmin="9" z="4.0"/>
+						<position name="polycone1Vol9pos" x="0" y="0" z="8*bx" unit="mm"/>
+						<polycone_dimensions startPhi="2*pi*0.9" openPhi="2*pi*0.1" lunit="mm" aunit="rad" numRZ="3">
+							<zplane z="-4.0" rmin="9" rmax="17"/>
+							<zplane z="0" rmin="10" rmax="13"/>
+							<zplane z="4.0" rmin="9" rmax="17"/>
 						</polycone_dimensions>
 					</parameters>
 				</parameterised_position_size>

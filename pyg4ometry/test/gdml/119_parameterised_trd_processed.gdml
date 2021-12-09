@@ -7,30 +7,30 @@
 		<constant name="bx" value="5.0"/>
 		<constant name="by" value="bx"/>
 		<constant name="bz" value="bx"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
-		<trd lunit="mm" name="trd_param" x1="0.5" x2="1.0" y1="1.0" y2="1.5" z="3"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<box name="box" x="20*bx" y="20*bx" z="20*bx" lunit="mm"/>
+		<trd name="trd_param" x1="0.5" x2="1.0" y1="1.0" y2="1.5" z="3" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="trd1Vol">
@@ -44,39 +44,39 @@
 				<volumeref ref="trd1Vol"/>
 				<parameterised_position_size>
 					<parameters number="1">
-						<position name="trd1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<trd_dimensions lunit="mm" x1="5" x2="2.5" y1="5" y2="2.5" z="0.5"/>
+						<position name="trd1Vol1pos" x="0" y="0" z="-8*bx" unit="mm"/>
+						<trd_dimensions x1="5" x2="2.5" y1="5" y2="2.5" z="0.5" lunit="mm"/>
 					</parameters>
 					<parameters number="2">
-						<position name="trd1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<trd_dimensions lunit="mm" x1="4.5" x2="2.75" y1="5.5" y2="2.25" z="1.0"/>
+						<position name="trd1Vol2pos" x="0" y="0" z="-6*bx" unit="mm"/>
+						<trd_dimensions x1="4.5" x2="2.75" y1="5.5" y2="2.25" z="1.0" lunit="mm"/>
 					</parameters>
 					<parameters number="3">
-						<position name="trd1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<trd_dimensions lunit="mm" x1="4.0" x2="3.0" y1="6.0" y2="2.0" z="1.5"/>
+						<position name="trd1Vol3pos" x="0" y="0" z="-4*bx" unit="mm"/>
+						<trd_dimensions x1="4.0" x2="3.0" y1="6.0" y2="2.0" z="1.5" lunit="mm"/>
 					</parameters>
 					<parameters number="4">
-						<position name="trd1Vol3pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<trd_dimensions lunit="mm" x1="3.5" x2="3.25" y1="6.5" y2="1.75" z="2.0"/>
+						<position name="trd1Vol3pos" x="0" y="0" z="-2*bx" unit="mm"/>
+						<trd_dimensions x1="3.5" x2="3.25" y1="6.5" y2="1.75" z="2.0" lunit="mm"/>
 					</parameters>
 					<parameters number="5">
-						<trd_dimensions lunit="mm" x1="3.0" x2="3.5" y1="7.0" y2="1.50" z="2.5"/>
+						<trd_dimensions x1="3.0" x2="3.5" y1="7.0" y2="1.50" z="2.5" lunit="mm"/>
 					</parameters>
 					<parameters number="6">
-						<position name="trd1Vol5pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<trd_dimensions lunit="mm" x1="2.5" x2="3.75" y1="7.5" y2="1.25" z="3.0"/>
+						<position name="trd1Vol5pos" x="0" y="0" z="2*bx" unit="mm"/>
+						<trd_dimensions x1="2.5" x2="3.75" y1="7.5" y2="1.25" z="3.0" lunit="mm"/>
 					</parameters>
 					<parameters number="7">
-						<position name="trd1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<trd_dimensions lunit="mm" x1="2.0" x2="4.0" y1="8.0" y2="1.0" z="3.5"/>
+						<position name="trd1Vol7pos" x="0" y="0" z="4*bx" unit="mm"/>
+						<trd_dimensions x1="2.0" x2="4.0" y1="8.0" y2="1.0" z="3.5" lunit="mm"/>
 					</parameters>
 					<parameters number="8">
-						<position name="trd1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<trd_dimensions lunit="mm" x1="1.5" x2="4.25" y1="8.5" y2="0.75" z="4.0"/>
+						<position name="trd1Vol8pos" x="0" y="0" z="6*bx" unit="mm"/>
+						<trd_dimensions x1="1.5" x2="4.25" y1="8.5" y2="0.75" z="4.0" lunit="mm"/>
 					</parameters>
 					<parameters number="9">
-						<position name="trd1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<trd_dimensions lunit="mm" x1="1.0" x2="4.5" y1="9.0" y2="0.5" z="4.5"/>
+						<position name="trd1Vol9pos" x="0" y="0" z="8*bx" unit="mm"/>
+						<trd_dimensions x1="1.0" x2="4.5" y1="9.0" y2="0.5" z="4.5" lunit="mm"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

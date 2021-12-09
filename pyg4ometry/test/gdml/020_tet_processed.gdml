@@ -4,37 +4,37 @@
 		<constant name="wbx" value="100.0"/>
 		<constant name="wby" value="100.0"/>
 		<constant name="wbz" value="100.0"/>
-		<position name="v1" unit="mm" x="10" y="10" z="0"/>
-		<position name="v2" unit="mm" x="-10" y="10" z="0"/>
-		<position name="v3" unit="mm" x="-10" y="-10" z="0"/>
-		<position name="v4" unit="mm" x="0" y="0" z="10"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="v1" x="10" y="10" z="0" unit="mm"/>
+		<position name="v2" x="-10" y="10" z="0" unit="mm"/>
+		<position name="v3" x="-10" y="-10" z="0" unit="mm"/>
+		<position name="v4" x="0" y="0" z="10" unit="mm"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 		<position name="tet1_v1" x="10" y="10" z="0"/>
 		<position name="tet1_v2" x="-10" y="10" z="0"/>
 		<position name="tet1_v3" x="-10" y="-10" z="0"/>
 		<position name="tet1_v4" x="0" y="0" z="10"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<tet lunit="mm" name="tet1" vertex1="tet1_v1" vertex2="tet1_v2" vertex3="tet1_v3" vertex4="tet1_v4"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<tet name="tet1" vertex1="tet1_v1" vertex2="tet1_v2" vertex3="tet1_v3" vertex4="tet1_v4" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="tet1Vol">
