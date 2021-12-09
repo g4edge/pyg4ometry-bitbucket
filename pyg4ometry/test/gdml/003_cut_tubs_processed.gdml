@@ -15,29 +15,29 @@
 		<constant name="cthix" value="10"/>
 		<constant name="cthiy" value="10"/>
 		<constant name="cthiz" value="10"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<cutTube aunit="rad" deltaphi="4" highX="cthix" highY="cthiy" highZ="cthiz" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" lunit="mm" name="cuttube1" rmax="5" rmin="1" startphi="1" z="20"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<cutTube name="cuttube1" z="20" rmin="1" rmax="5" startphi="1" deltaphi="4" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" highX="cthix" highY="cthiy" highZ="cthiz" lunit="mm" aunit="rad"/>
 	</solids>
 	<structure>
 		<volume name="cuttube11Vol">

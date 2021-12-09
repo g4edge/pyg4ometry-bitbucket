@@ -7,30 +7,30 @@
 		<constant name="bx" value="10.0"/>
 		<constant name="by" value="20.0"/>
 		<constant name="bz" value="30.0"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 		<scale name="scale" x="1.0" y="1.2" z="1.3"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="m" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<box lunit="m" name="box1" x="bx" y="by" z="bz"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="m"/>
+		<box name="box1" x="bx" y="by" z="bz" lunit="m"/>
 	</solids>
 	<structure>
 		<volume name="box1Vol">

@@ -7,30 +7,30 @@
 		<constant name="bx" value="5.0"/>
 		<constant name="by" value="bx"/>
 		<constant name="bz" value="bx"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
-		<hype aunit="rad" inst="1" lunit="mm" name="hype_param" outst="2" rmax="0.5" rmin="0.25" z="5"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<box name="box" x="20*bx" y="20*bx" z="20*bx" lunit="mm"/>
+		<hype name="hype_param" rmin="0.25" rmax="0.5" z="5" inst="1" outst="2" lunit="mm" aunit="rad"/>
 	</solids>
 	<structure>
 		<volume name="hype1Vol">
@@ -44,39 +44,39 @@
 				<volumeref ref="hype1Vol"/>
 				<parameterised_position_size>
 					<parameters number="1">
-						<position name="hype1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<hype_dimensions aunit="rad" inst="0.1" lunit="mm" outst="0.2" rmax="0.5" rmin="0.25" z="1"/>
+						<position name="hype1Vol1pos" x="0" y="0" z="-8*bx" unit="mm"/>
+						<hype_dimensions rmin="0.25" rmax="0.5" inst="0.1" outst="0.2" z="1" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="2">
-						<position name="hype1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<hype_dimensions aunit="rad" inst="0.2" lunit="mm" outst="0.3" rmax="1.0" rmin="0.5" z="2"/>
+						<position name="hype1Vol2pos" x="0" y="0" z="-6*bx" unit="mm"/>
+						<hype_dimensions rmin="0.5" rmax="1.0" inst="0.2" outst="0.3" z="2" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="3">
-						<position name="hype1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<hype_dimensions aunit="rad" inst="0.3" lunit="mm" outst="0.4" rmax="1.5" rmin="0.75" z="3"/>
+						<position name="hype1Vol3pos" x="0" y="0" z="-4*bx" unit="mm"/>
+						<hype_dimensions rmin="0.75" rmax="1.5" inst="0.3" outst="0.4" z="3" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="4">
-						<position name="hype1Vol4pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<hype_dimensions aunit="rad" inst="0.4" lunit="mm" outst="0.5" rmax="2.0" rmin="1.0" z="4"/>
+						<position name="hype1Vol4pos" x="0" y="0" z="-2*bx" unit="mm"/>
+						<hype_dimensions rmin="1.0" rmax="2.0" inst="0.4" outst="0.5" z="4" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="5">
-						<hype_dimensions aunit="rad" inst="0.5" lunit="mm" outst="0.6" rmax="2.5" rmin="1.25" z="5"/>
+						<hype_dimensions rmin="1.25" rmax="2.5" inst="0.5" outst="0.6" z="5" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="6">
-						<position name="hype1Vol6pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<hype_dimensions aunit="rad" inst="0.6" lunit="mm" outst="0.7" rmax="3.0" rmin="1.5" z="6"/>
+						<position name="hype1Vol6pos" x="0" y="0" z="2*bx" unit="mm"/>
+						<hype_dimensions rmin="1.5" rmax="3.0" inst="0.6" outst="0.7" z="6" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="7">
-						<position name="hype1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<hype_dimensions aunit="rad" inst="0.7" lunit="mm" outst="0.8" rmax="4.5" rmin="1.75" z="7"/>
+						<position name="hype1Vol7pos" x="0" y="0" z="4*bx" unit="mm"/>
+						<hype_dimensions rmin="1.75" rmax="4.5" inst="0.7" outst="0.8" z="7" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="8">
-						<position name="hype1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<hype_dimensions aunit="rad" inst="0.8" lunit="mm" outst="0.9" rmax="5.0" rmin="2.0" z="8"/>
+						<position name="hype1Vol8pos" x="0" y="0" z="6*bx" unit="mm"/>
+						<hype_dimensions rmin="2.0" rmax="5.0" inst="0.8" outst="0.9" z="8" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="9">
-						<position name="hype1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<hype_dimensions aunit="rad" inst="0.9" lunit="mm" outst="1.0" rmax="5.5" rmin="2.25" z="9"/>
+						<position name="hype1Vol9pos" x="0" y="0" z="8*bx" unit="mm"/>
+						<hype_dimensions rmin="2.25" rmax="5.5" inst="0.9" outst="1.0" z="9" lunit="mm" aunit="rad"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

@@ -2,19 +2,19 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define/>
 	<materials>
-		<material Z="13" name="ALU" state="solid">
+		<material name="ALU" state="solid" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
-		<material Z="1" name="AIR" state="gas">
+		<material name="AIR" state="gas" Z="1">
 			<D value="1e-24"/>
 			<atom value="1.00794"/>
 		</material>
 	</materials>
 	<solids>
-		<tube aunit="rad" deltaphi="2*pi" lunit="mm" name="tube" rmax="50" rmin="0" startphi="0" z="800"/>
-		<tube aunit="rad" deltaphi="2*pi" lunit="mm" name="motherTube" rmax="400" rmin="0" startphi="0" z="800"/>
-		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+		<tube name="tube" rmin="0" rmax="50" z="800" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="motherTube" rmin="0" rmax="400" z="800" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<box name="WorldBox" x="1000" y="1000" z="1000" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="lvTube">
@@ -28,8 +28,8 @@
 				<volumeref ref="lvTube"/>
 				<replicate_along_axis>
 					<direction rho="1"/>
-					<width unit="mm" value="50.0"/>
-					<offset unit="mm" value="0.0"/>
+					<width value="50.0" unit="mm"/>
+					<offset value="0.0" unit="mm"/>
 				</replicate_along_axis>
 			</replicavol>
 		</volume>

@@ -2,18 +2,18 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define/>
 	<materials>
-		<material Z="1" name="AIR" state="gas">
+		<material name="AIR" state="gas" Z="1">
 			<D value="1e-24"/>
 			<atom value="1.00794"/>
 		</material>
-		<material Z="13" name="ALU" state="solid">
+		<material name="ALU" state="solid" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<tube aunit="rad" deltaphi="pi/2.0" lunit="mm" name="tube" rmax="50" rmin="25" startphi="0" z="10.0"/>
+		<box name="WorldBox" x="1000" y="1000" z="1000" lunit="mm"/>
+		<tube name="tube" rmin="25" rmax="50" z="10.0" startphi="0" deltaphi="pi/2.0" lunit="mm" aunit="rad"/>
 	</solids>
 	<structure>
 		<volume name="lvTube">
@@ -23,7 +23,7 @@
 		<volume name="lvDivision">
 			<materialref ref="AIR"/>
 			<solidref ref="tube"/>
-			<divisionvol axis="kZAxis" number="5" offset="10.0" unit="mm" width="10.0">
+			<divisionvol number="5" axis="kZAxis" width="10.0" offset="10.0" unit="mm">
 				<volumeref ref="lvTube"/>
 			</divisionvol>
 		</volume>

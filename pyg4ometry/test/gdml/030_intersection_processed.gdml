@@ -3,29 +3,29 @@
 	<define>
 		<constant name="wbx" value="100.0"/>
 		<constant name="bx" value="40.0"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wbx" z="wbx"/>
-		<box lunit="mm" name="box1" x="bx" y="bx" z="bx"/>
+		<box name="WorldBox" x="wbx" y="wbx" z="wbx" lunit="mm"/>
+		<box name="box1" x="bx" y="bx" z="bx" lunit="mm"/>
 		<intersection name="intersection1">
 			<first ref="box1"/>
 			<second ref="box1"/>
-			<position name="intersection1_translation" unit="mm" x="bx/2" y="bx/2" z="bx/2"/>
+			<position name="intersection1_translation" x="bx/2" y="bx/2" z="bx/2" unit="mm"/>
 		</intersection>
 	</solids>
 	<structure>
