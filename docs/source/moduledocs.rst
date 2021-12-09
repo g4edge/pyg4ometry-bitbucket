@@ -102,7 +102,11 @@ Geant4 solids
    :members:
 .. automodule:: pyg4ometry.geant4.solid.GenericPolycone
    :members:
+.. automodule:: pyg4ometry.geant4.solid.GenericPolyhedra
+   :members:
 .. automodule:: pyg4ometry.geant4.solid.Polyhedra
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.EllipticalCone
    :members:
 .. automodule:: pyg4ometry.geant4.solid.EllipticalTube
    :members:
