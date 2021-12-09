@@ -46,7 +46,7 @@ def Test():
     assert(len(comp6) > 0)
 
     # different density
-    air2= _g4.MaterialCompound("air", 1.291e-3, 2, r)
+    air2= _g4.MaterialCompound("air2", 1.291e-3, 2, r)
     air2.add_element_massfraction(ne, 0.7)
     air2.add_element_massfraction(oe, 0.3)
     comp7 = pyg4ometry.compare.materials(air, air2, tests)
@@ -54,7 +54,7 @@ def Test():
     assert (len(comp7) > 0)
 
     # different mass fraction
-    air3 = _g4.MaterialCompound("air", 1.291e-3, 2, r)
+    air3 = _g4.MaterialCompound("air3", 1.291e-3, 2, r)
     air3.add_element_massfraction(ne, 0.701)
     air3.add_element_massfraction(oe, 0.299)
     comp8 = pyg4ometry.compare.materials(air2, air3, tests)
@@ -95,10 +95,10 @@ def Test():
     assert (len(comp11) > 0)
 
     # n atoms difference
-    water2 = _g4.MaterialCompound("water", 1.0, 2, r)
+    water2 = _g4.MaterialCompound("water2", 1.0, 2, r)
     water2.add_element_natoms(he, 3)
     water2.add_element_natoms(oe, 1)
-    comp12 = pyg4ometry.geant4.materials(water, water2, tests)
+    comp12 = pyg4ometry.compare.materials(water, water2, tests)
     comp12.print()
     assert (len(comp12) > 0)
 
