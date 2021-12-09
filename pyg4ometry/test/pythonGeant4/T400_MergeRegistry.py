@@ -53,24 +53,28 @@ def MakeGeometry(size=50, lowOxygen=False) :
 def Test(vis = False, interactive=False) :
     reg0 = _g4.Registry()
     reg1 = MakeGeometry()
-    reg2 = MakeGeometry(size=70, lowOxygen=True)
+    reg2 = MakeGeometry(size=70,  lowOxygen=True)
+    reg3 = MakeGeometry(size=100, lowOxygen=True)
 
     l1 = reg1.getWorldVolume()
     l2 = reg2.getWorldVolume()
+    l3 = reg3.getWorldVolume()
 
-    wx0 = _gd.Constant("wx0", "200", reg0, True)
-    wy0 = _gd.Constant("wy0", "200", reg0, True)
-    wz0 = _gd.Constant("wz0", "200", reg0, True)
+    wx0 = _gd.Constant("wx0", "400", reg0, True)
+    wy0 = _gd.Constant("wy0", "400", reg0, True)
+    wz0 = _gd.Constant("wz0", "400", reg0, True)
 
     wm = _g4.MaterialPredefined("G4_Galactic")
     ws = _g4.solid.Box("ws", wx0, wy0, wz0, reg0, "mm")
     wl = _g4.LogicalVolume(ws, wm, "wl", reg0)
 
-    p1 = _g4.PhysicalVolume([0,0,0],[-50,0,0], l1, "l1_pv", wl, reg0)
-    p2 = _g4.PhysicalVolume([0,0,0],[ 50,0,0], l2, "l2_pv", wl, reg0)
+    p1 = _g4.PhysicalVolume([0,0,0],[-50,0,0],  l1, "l1_pv", wl, reg0)
+    p2 = _g4.PhysicalVolume([0,0,0],[ 50,0,0],  l2, "l2_pv", wl, reg0)
+    p3 = _g4.PhysicalVolume([0,0,0],[ 150,0,0], l3, "l3_pv", wl, reg0)
 
     reg0.addVolumeRecursive(p1)
     reg0.addVolumeRecursive(p2)
+    reg0.addVolumeRecursive(p3)
 
     reg0.setWorld(wl.name)
 
