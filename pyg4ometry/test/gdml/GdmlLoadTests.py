@@ -727,6 +727,11 @@ class GdmlLoadTests(_unittest.TestCase) :
 
     def test_GdmlLoad_305_UnrecognisedDefine(self):
         self.assertTrue(pyg4ometryLoadWriteTest("305_unrecognised_define.gdml"))
+        
+    def test_GdmlLoad_306_Tubs_Bad_Pi(self):
+        # check it raises an exception
+        with self.assertRaises(ValueError):
+            pyg4ometryLoadWriteTest("306_tubs_hand_written_bad_pi.gdml")
 
     def test_GdmlLoad_ChargeExhangeMC(self):
         registry, writtenFilename = pyg4ometryLoadWriteTest("../gdmlG4examples/ChargeExchangeMC/lht.gdml")

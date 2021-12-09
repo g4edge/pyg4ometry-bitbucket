@@ -8,29 +8,29 @@
 		<constant name="dy" value="0.4"/>
 		<constant name="zmax" value="50"/>
 		<constant name="zcut" value="15"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<elcone dx="dx" dy="dy" lunit="mm" name="elcone1" zcut="zcut" zmax="zmax"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<elcone name="elcone1" dx="dx" dy="dy" zmax="zmax" zcut="zcut" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="elcone1Vol">

@@ -7,30 +7,30 @@
 		<constant name="bx" value="5.0"/>
 		<constant name="by" value="bx"/>
 		<constant name="bz" value="bx"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<box lunit="mm" name="box" x="20*bx" y="20*bx" z="20*bx"/>
-		<trap alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" name="trap_param" phi="0.0" theta="0.0" x1="0.5" x2="1.0" x3="1.0" x4="1.5" y1="1.0" y2="1.0" z="3"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<box name="box" x="20*bx" y="20*bx" z="20*bx" lunit="mm"/>
+		<trap name="trap_param" z="3" theta="0.0" phi="0.0" y1="1.0" x1="0.5" x2="1.0" alpha1="0.0" y2="1.0" x3="1.0" x4="1.5" alpha2="0.0" lunit="mm" aunit="rad"/>
 	</solids>
 	<structure>
 		<volume name="trap1Vol">
@@ -44,39 +44,39 @@
 				<volumeref ref="trap1Vol"/>
 				<parameterised_position_size>
 					<parameters number="1">
-						<position name="trap1Vol1pos" unit="mm" x="0" y="0" z="-8*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.05" theta="0.05" x1="0.5" x2="1.0" x3="1.5" x4="2.0" y1="1.0" y2="1.0" z="1"/>
+						<position name="trap1Vol1pos" x="0" y="0" z="-8*bx" unit="mm"/>
+						<trap_dimensions z="1" theta="0.05" phi="0.05" y1="1.0" x1="0.5" x2="1.0" alpha1="0.0" y2="1.0" x3="1.5" x4="2.0" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="2">
-						<position name="trap1Vol2pos" unit="mm" x="0" y="0" z="-6*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.1" theta="0.1" x1="0.5" x2="1.0" x3="1.5" x4="2.0" y1="1.25" y2="1.25" z="1.5"/>
+						<position name="trap1Vol2pos" x="0" y="0" z="-6*bx" unit="mm"/>
+						<trap_dimensions z="1.5" theta="0.1" phi="0.1" y1="1.25" x1="0.5" x2="1.0" alpha1="0.0" y2="1.25" x3="1.5" x4="2.0" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="3">
-						<position name="trap1Vol3pos" unit="mm" x="0" y="0" z="-4*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.15" theta="0.15" x1="0.5" x2="1.0" x3="1.5" x4="2.0" y1="1.5" y2="1.5" z="2.0"/>
+						<position name="trap1Vol3pos" x="0" y="0" z="-4*bx" unit="mm"/>
+						<trap_dimensions z="2.0" theta="0.15" phi="0.15" y1="1.5" x1="0.5" x2="1.0" alpha1="0.0" y2="1.5" x3="1.5" x4="2.0" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="4">
-						<position name="trap1Vol3pos" unit="mm" x="0" y="0" z="-2*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.20" theta="0.2" x1="0.75" x2="1.25" x3="1.75" x4="2.25" y1="1.75" y2="1.75" z="2.5"/>
+						<position name="trap1Vol3pos" x="0" y="0" z="-2*bx" unit="mm"/>
+						<trap_dimensions z="2.5" theta="0.2" phi="0.20" y1="1.75" x1="0.75" x2="1.25" alpha1="0.0" y2="1.75" x3="1.75" x4="2.25" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="5">
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.25" theta="0.25" x1="1.0" x2="1.5" x3="1.75" x4="2.25" y1="2.0" y2="2.0" z="3.0"/>
+						<trap_dimensions z="3.0" theta="0.25" phi="0.25" y1="2.0" x1="1.0" x2="1.5" alpha1="0.0" y2="2.0" x3="1.75" x4="2.25" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="6">
-						<position name="trap1Vol5pos" unit="mm" x="0" y="0" z="2*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.3" theta="0.3" x1="1.25" x2="1.75" x3="2.0" x4="2.5" y1="2.25" y2="2.25" z="3.5"/>
+						<position name="trap1Vol5pos" x="0" y="0" z="2*bx" unit="mm"/>
+						<trap_dimensions z="3.5" theta="0.3" phi="0.3" y1="2.25" x1="1.25" x2="1.75" alpha1="0.0" y2="2.25" x3="2.0" x4="2.5" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="7">
-						<position name="trap1Vol7pos" unit="mm" x="0" y="0" z="4*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.35" theta="0.35" x1="1.5" x2="2.0" x3="2.25" x4="2.75" y1="2.5" y2="2.5" z="4.0"/>
+						<position name="trap1Vol7pos" x="0" y="0" z="4*bx" unit="mm"/>
+						<trap_dimensions z="4.0" theta="0.35" phi="0.35" y1="2.5" x1="1.5" x2="2.0" alpha1="0.0" y2="2.5" x3="2.25" x4="2.75" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="8">
-						<position name="trap1Vol8pos" unit="mm" x="0" y="0" z="6*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.4" theta="0.4" x1="1.75" x2="2.25" x3="2.5" x4="3.0" y1="2.75" y2="2.75" z="4.5"/>
+						<position name="trap1Vol8pos" x="0" y="0" z="6*bx" unit="mm"/>
+						<trap_dimensions z="4.5" theta="0.4" phi="0.4" y1="2.75" x1="1.75" x2="2.25" alpha1="0.0" y2="2.75" x3="2.5" x4="3.0" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 					<parameters number="9">
-						<position name="trap1Vol9pos" unit="mm" x="0" y="0" z="8*bx"/>
-						<trap_dimensions alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm" phi="0.45" theta="0.45" x1="2.0" x2="2.5" x3="2.75" x4="3.25" y1="3.0" y2="3.0" z="5.0"/>
+						<position name="trap1Vol9pos" x="0" y="0" z="8*bx" unit="mm"/>
+						<trap_dimensions z="5.0" theta="0.45" phi="0.45" y1="3.0" x1="2.0" x2="2.5" alpha1="0.0" y2="3.0" x3="2.75" x4="3.25" alpha2="0.0" lunit="mm" aunit="rad"/>
 					</parameters>
 				</parameterised_position_size>
 			</paramvol>

@@ -20,7 +20,9 @@ def _pj(filename):
     return _os.path.join(_os.path.dirname(__file__), filename)
 
 def LoadFreecad(fileName, vis = False, interactive = False):
-
+    if pyg4ometry.freecad.useFreeCAD == False:
+        return True
+    
     # Loading
     reader = pyg4ometry.freecad.Reader(fileName)
 
@@ -55,7 +57,9 @@ def LoadFreecad(fileName, vis = False, interactive = False):
     return True
 
 def LoadFreecad_withPlacement(fileName, vis=False, interactive=False):
-
+    if pyg4ometry.freecad.useFreeCAD == False:
+        return True
+    
     # Loading
     reader = pyg4ometry.freecad.Reader(fileName)
 

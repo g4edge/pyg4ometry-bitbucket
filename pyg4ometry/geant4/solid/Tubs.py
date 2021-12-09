@@ -43,24 +43,23 @@ class Tubs(_SolidBase):
     """
     def __init__(self, name, pRMin, pRMax, pDz, pSPhi, pDPhi, registry,
                  lunit="mm", aunit="rad", nslice=None, addRegistry=True):
-        self.name   = name
-        self.type   = 'Tubs'
+        super(Tubs, self).__init__(name, 'Tubs', registry)
 
         if not nslice:
             nslice = _config.SolidDefaults.Tubs.nslice
-
-        if addRegistry :
-            registry.addSolid(self)
-        self.registry = registry
 
         self.dependents = []
         self.varNames = ["pRMin", "pRMax", "pDz", "pSPhi",
                          "pDPhi", "aunit", "lunit", "nslice"]
 
-        for name in self.varNames:
-            self._addProperty(name)
-            setattr(self, name, locals()[name])
+        for varName in self.varNames:
+            self._addProperty(varName)
+            setattr(self, varName, locals()[varName])
 
+        self._twoPiValueCheck("pDPhi", aunit)
+
+        if addRegistry :
+            registry.addSolid(self)
 
     def __repr__(self):
         return "Tubs : {} {} {} {} {} {}".format(self.name, self.pRMin, self.pRMax,

@@ -1,38 +1,38 @@
 <?xml version="1.0" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define>
-		<position name="v0" unit="mm" x="0" y="0" z="0"/>
-		<position name="v1" unit="mm" x="13" y="15" z="10"/>
-		<position name="v2" unit="mm" x="-12" y="-10" z="20"/>
-		<position name="v3" unit="mm" x="22" y="14" z="25"/>
-		<position name="P" unit="mm" x="10" y="20" z="30"/>
-		<rotation name="R" unit="degree" x="10" y="20" z="30"/>
-		<matrix coldim="3" name="mat" values="100000 200000 30000 100000 500000 6000 70000 8000 90000"/>
-		<matrix coldim="1" name="la" values="100000 200000 30000 100000 500000 6000 70000 8000 90000"/>
-		<matrix coldim="1" name="k" values="3 2 2.2 1.4 5 6.3 72 2.8 19"/>
+		<position name="v0" x="0" y="0" z="0" unit="mm"/>
+		<position name="v1" x="13" y="15" z="10" unit="mm"/>
+		<position name="v2" x="-12" y="-10" z="20" unit="mm"/>
+		<position name="v3" x="22" y="14" z="25" unit="mm"/>
+		<position name="P" x="10" y="20" z="30" unit="mm"/>
+		<rotation name="R" x="10" y="20" z="30" unit="degree"/>
+		<matrix name="mat" coldim="3" values="100000 200000 30000 100000 500000 6000 70000 8000 90000"/>
+		<matrix name="la" coldim="1" values="100000 200000 30000 100000 500000 6000 70000 8000 90000"/>
+		<matrix name="k" coldim="1" values="3 2 2.2 1.4 5 6.3 72 2.8 19"/>
 		<position name="Tet_v1" x="0" y="0" z="0"/>
 		<position name="Tet_v2" x="13" y="15" z="10"/>
 		<position name="Tet_v3" x="-12" y="-10" z="20"/>
 		<position name="Tet_v4" x="22" y="14" z="25"/>
 	</define>
 	<materials>
-		<material Z="7" name="Nitrogen">
+		<material name="Nitrogen" Z="7">
 			<D value="0.00125"/>
 			<atom value="14.01"/>
 		</material>
-		<material Z="8" name="Oxygen">
+		<material name="Oxygen" Z="8">
 			<D value="0.00143"/>
 			<atom value="16.0"/>
 		</material>
 		<material name="Air">
 			<D value="0.0012"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<tet lunit="mm" name="Tet" vertex1="Tet_v1" vertex2="Tet_v2" vertex3="Tet_v3" vertex4="Tet_v4"/>
-		<box lunit="mm" name="WorldBox" x="150" y="150" z="150"/>
+		<tet name="Tet" vertex1="Tet_v1" vertex2="Tet_v2" vertex3="Tet_v3" vertex4="Tet_v4" lunit="mm"/>
+		<box name="WorldBox" x="150" y="150" z="150" lunit="mm"/>
 	</solids>
 	<structure>
 		<volume name="Tetvol">
@@ -45,7 +45,7 @@
 			<physvol name="Tetvol_PV">
 				<volumeref ref="Tetvol"/>
 				<positionref ref="P"/>
-				<rotation name="lrp" unit="degree" x="10" y="20" z="30"/>
+				<rotation name="lrp" x="10" y="20" z="30" unit="degree"/>
 			</physvol>
 		</volume>
 	</structure>

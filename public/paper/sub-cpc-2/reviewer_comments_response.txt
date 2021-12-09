@@ -1,0 +1,106 @@
+Authors : The authors would like to thank the reviewers for their comments. Many of the issues found improve the readability of the manuscript for potential users of the software. Almost all of the comments and suggested changes were implemented as suggested by the reviewers. Below are the reviewer comments with the changes or comments. 
+
+
+Reviewer #1: The authors are to be commended on writing an exceptionally clear and comprehensive manuscript. While the paper contains occasional grammatical errors, it is easy to follow and addressed all concerns I had as I was reading it.
+This paper concerns pyg4ometry, a tool to create Geant4 geometry structures in GDML via Python, with tools that support restructuring files in CAD and FLUKA formats. Examples are provided throughout the manuscript to aid the reader in implementing the module,
+and docs are already available online for v0.9.1 as of this review. As a former user of GATE, I am personally aware of the difficulty in rapid creation of Geant4 geometries, and I wish I had such a tool at my disposal in the past.
+This work helps lower the barrier of entry to Geant4 for inexperienced programmers who do know enough Python to get by. I think a line expressing this is warranted.
+    Line added
+
+This manuscript is ready for publication as written, but I leave the following comments for the authors’ consideration:
+P3 Line 27: powerful how?
+   Removed word powerful   
+P4 Line 9: I'd add a line highlighting how useful it is that this co
+de is written for Python users. ROOT, for example, is harder for a layman to use.
+   Added extra line to clarify this
+P4 Line 56: stick a comma before which or replace it with that. (Come to think of it, I don't know if American grammar rules apply in the UK)
+   Fixed
+P7Line 50: I think this entire paragraph should be placed in a discussion section and not in methods. Best not to promise things for future release in a methods section.
+   Changed as loops are unlikely to be implemented.
+P10 L37: Too not to. In fact, this whole paragraph is oddly out of place so far. Use of clearly and loopy language that is less specific and efficient than its preceding chapters. What is it trying to say?
+    Paragraph tightened up for clarity
+
+Reviewer 2 [Linnemann]
+The manuscript is generally well-written, though the English could use touching up: there are a lot of run-on sentences. I recommend that the manuscript be accepted but that the authors incorporate some minor revisions for the final manuscript.
+Suggestions below (page.line)
+
+2.16 impossible to convert -> impossible
+    Fixed
+2.24 STL undefined
+    Fixed
+2.33 delete: different
+    Deleted
+2.34 material, such -> material. Such
+    Fixed
+2.39 specialism -> specialty
+    Fixed
+2.59 geometry -> geometry descriptions
+    Fixed
+3.36 toolkit. A user
+    Fixed
+4.21 using a lot of -> using
+    Fixed
+4.29 existent -> existing
+    Fixed     
+4.31 follows: first comes
+    Changed
+4.46 delete: different
+    Fixed
+In this section it might make sense to mention that you chose STP and STEP as manufacturer-neutral CAD file formats for which there commonly exist converters from proprietary formats.
+And that IGES is an older standard which STEP seems to be overtaking.
+But it appears that Fig 1 is missing IGES since you later state IGES can be read, which is confusing since at 6.47 you omit IGES, but include it at 30.49; perhaps you mean that the software mentioned there can translate IGES to STEP for you?
+I also note you don't mention OBJ why? Should it be mentioned? Any plans for adding in the future?
+    OBJ is mentioned and other similar formats are trivally implemented, we provide one simple one. 
+I of course wondered whether AUTOCAD is compatible, but apparently there are converters from DWG default to STEP, so no need to mention that specific product if you make the more general statements. But aha at 32.41 you mention another piece of Autodesk software, but state that you can save as STEP format.
+    Autodesk FUSION replaced with Common commercial program. Wanted to make the point that the input for pyg4ometry was from a standard package a user might be familiar with 
+5.10 solids. However,
+    Fixed
+8.43 geometry, a rapid
+    Fixed
+9.56 user. It does
+    Fixed
+10.37 to -> too
+    Fixed
+10.48 reuse. However
+    Not changed. 
+10.53 considered. In
+    Fixed
+13.13 vistualisation -> visualization (assuming British spelling)
+    Fixed
+15.18 trivial. A
+    Fixed
+18.33 50km is there a place this default can be changed? I know I'm weird, but I'm thinking astrophysics
+    This can easily be changed and note added to highlight this.
+Quadric hmm, maybe usage has changed since I studied mathematics I'd have said quadratic, but quadric seems correct when I look it up!
+21.14 straight forwards -> straightforward
+    Fixed
+22.46 geometries. However
+    Fixed
+29.14 doing do -> doing so
+    Fixed
+30.9 PLA. It is
+    Fixed
+32.33 assemblies. These
+    Fixed
+32.41 I'd remove comma after electromagnet
+Hmm, now you mention another piece of Autodesk software, but do state that you can save as STEP format
+    Agreed and fixed
+32.42 STEP file. The PYG4OMETRY
+    Fixed    
+32.40 PYG4OMETRY. This
+    Fixed
+33.52 FLUKA geometry, is converted
+    Fixed
+34.19 developer-written falls outside the margins
+    Fix in proof (as likely to change)
+34.52 FLUKA,
+    Fixed     
+35.24 user that -> users who
+    Fixed    
+35.39 hmm, apparently ParaView is a GUI for VTK; if you combine them into one object, I'd have said is instead of are
+    Fixed 
+
+******************************************
+Please note that the editorial process varies considerably from journal to journal. To view a sample editorial process, please click here:
+http://ees.elsevier.com/eeshelp/sample_editorial_process.pdf
+For further assistance, please visit our customer support site at http://help.elsevier.com/app/answers/list/p/7923. Here you can search for solutions on a range of topics, find answers to frequently asked questions and learn more about EM via interactive tutorials. You will also find our 24/7 support contact details should you need any further assistance from one of our customer support representatives.~

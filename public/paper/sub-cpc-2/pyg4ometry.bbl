@@ -1,0 +1,223 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{Mcnp_Werner}
+C.~J. {W}erner {\it et al.}, {MCNP}6.2 {R}elease {N}otes (2018).
+
+\bibitem{Fluka_Ferrari}
+A.~Ferrari, P.~R. Sala, A.~Fassò, J.~Ranft, {FLUKA: A multi-particle transport
+  code (program version 2005)}, CERN Yellow Reports: Monographs, CERN, Geneva,
+  2005.
+\newblock \href {https://doi.org/10.5170/CERN-2005-010}
+  {\path{doi:10.5170/CERN-2005-010}}.
+
+\bibitem{Fluka_Bohlen}
+T.~Böhlen, F.~Cerutti, M.~Chin, A.~Fassò, A.~Ferrari, P.~Ortega, A.~Mairani,
+  P.~Sala, G.~Smirnov, V.~Vlachoudis, The {FLUKA} code: {D}evelopments and
+  {C}hallenges for {H}igh {E}nergy and {M}edical {A}pplications, {N}uclear
+  {D}ata {S}heets 120 (2014) 211 -- 214.
+\newblock \href {https://doi.org/10.1016/j.nds.2014.07.049}
+  {\path{doi:10.1016/j.nds.2014.07.049}}.
+
+\bibitem{Geant3_Brun}
+R.~Brun, F.~Bruyant, M.~Maire, A.~McPherson, P.~Zanarini, {GEANT3} (Sep. 1987).
+
+\bibitem{Geant4_Agostinelli}
+S.~{A}gostinelli {\it et al.}, Geant4—a simulation toolkit, Nuclear
+  Instruments and Methods in Physics Research Section A: Accelerators,
+  Spectrometers, Detectors and Associated Equipment 506~(3) (2003) 250--303.
+\newblock \href {https://doi.org/10.1016/S0168-9002(03)01368-8}
+  {\path{doi:10.1016/S0168-9002(03)01368-8}}.
+
+\bibitem{GDML}
+R.~Chytracek, J.~McCormick, W.~Pokorski, G.~Santin, {Geometry Description
+  Markup Language} for physics simulation and analysis applications, IEEE
+  Transactions on Nuclear Science 53~(5) (2006) 2892--2896.
+\newblock \href {https://doi.org/10.1109/TNS.2006.881062}
+  {\path{doi:10.1109/TNS.2006.881062}}.
+
+\bibitem{FreeCAD}
+{The FreeCAD Team}, \href{https://www.freecadweb.org}{Free{CAD} version 0.19}
+  (2020) [cited 16~September~2020].
+\newline\urlprefix\url{https://www.freecadweb.org}
+
+\bibitem{OpenCASCADE}
+{Open Cascade S.A.S}, \href{https://www.opencascade.com}{Open{CASCADE}} (2020)
+  [cited 16~September~2020].
+\newline\urlprefix\url{https://www.opencascade.com}
+
+\bibitem{VTK4}
+W.~Schroeder, K.~Martin, B.~Lorensen, {The Visualization Toolkit--An
+  Object-Oriented Approach To 3D Graphics}, 4th Edition, Kitware, Inc., 2006.
+
+\bibitem{BDSIM_Nevay}
+L.~J. Nevay, S.~T. Boogert, J.~Snuverink, A.~Abramov, L.~C. Deacon,
+  H.~Garcia-Morales, H.~Lefebvre, S.~M. Gibson, R.~Kwee-Hinzmann, W.~Shields,
+  S.~D. Walker, {BDSIM}: An accelerator tracking code with particle–matter
+  interactions, Computer Physics Communications 252 (2020) 107200.
+\newblock \href {https://doi.org/10.1016/j.cpc.2020.107200}
+  {\path{doi:10.1016/j.cpc.2020.107200}}.
+
+\bibitem{Brun:1997pa}
+R.~Brun, F.~Rademakers, {ROOT: An object oriented data analysis framework},
+  Nucl. Instrum. Meth. A 389 (1997) 81--86.
+\newblock \href {https://doi.org/10.1016/S0168-9002(97)00048-X}
+  {\path{doi:10.1016/S0168-9002(97)00048-X}}.
+
+\bibitem{GUIMesh_Pinto}
+M.~Pinto, P.~Gonçalves, {GUIM}esh: A tool to import {STEP} geometries into
+  {Geant4} via {GDML}, Computer Physics Communications 239 (2019) 150 -- 156.
+\newblock \href {https://doi.org/10.1016/j.cpc.2019.01.024}
+  {\path{doi:10.1016/j.cpc.2019.01.024}}.
+
+\bibitem{ESABASE2}
+A.~Miller, M.~Zaake, F.~Gro{\ss}mann-ruh, K.~Bunte, M.~Millinger,
+  G.~Drolshagen, Recent extensions of the {ESABASE2} / debris impact risk
+  assessment tool, in: Proceedings of the 7th European Conference on Space
+  Debris, 2017.
+
+\bibitem{FASTRAD}
+P.~{Pourrouquet}, J.~{Thomas}, P.~{Peyrard}, R.~{Ecoffet}, G.~{Rolland},
+  {FASTRAD} 3.2: Radiation shielding tool with a new {Monte Carlo} module, in:
+  2011 IEEE Radiation Effects Data Workshop, 2011, pp. 1--5.
+\newblock \href {https://doi.org/10.1109/redw.2010.6062530}
+  {\path{doi:10.1109/redw.2010.6062530}}.
+
+\bibitem{DAGMC}
+P.~P. Wilson, T.~J. Tautges, J.~A. Kraftcheck, B.~M. Smith, D.~L. Henderson,
+  Acceleration techniques for the direct use of {CAD}-based geometry in fusion
+  neutronics analysis, Fusion Engineering and Design 85~(10) (2010) 1759 --
+  1765, proceedings of the Ninth International Symposium on Fusion Nuclear
+  Technology.
+\newblock \href {https://doi.org/10.1016/j.fusengdes.2010.05.030}
+  {\path{doi:10.1016/j.fusengdes.2010.05.030}}.
+
+\bibitem{McCad}
+L.~Lu, U.~Fischer, P.~Pereslavtsev, Improved algorithms and advanced features
+  of the {CAD} to {MC} conversion tool {McCad}, Fusion Engineering and Design
+  89~(9) (2014) 1885 -- 1888, proceedings of the 11th International Symposium
+  on Fusion Nuclear Technology-11 (ISFNT-11) Barcelona, Spain, 15-20 September,
+  2013.
+\newblock \href {https://doi.org/10.1016/j.fusengdes.2014.05.015}
+  {\path{doi:10.1016/j.fusengdes.2014.05.015}}.
+
+\bibitem{poole2012acad}
+C.~M. Poole, I.~Cornelius, J.~V. Trapp, C.~M. Langton, {A CAD Interface for
+  GEANT4}, Australasian Physical \& Engineering Science in Medicine (Sep.
+  2012).
+\newblock \href {https://doi.org/10.1007/s13246-012-0159-8}
+  {\path{doi:10.1007/s13246-012-0159-8}}.
+
+\bibitem{WangNuclSciTech31-82-2020}
+X.~{W}ang, J.~{L}i, Z.~{W}u {\it et al.}, {CMGC}: a {CAD} to {M}onte {C}arlo
+  geometry conversion code, Nucl Sci Tech 31 (2020) 82.
+\newblock \href {https://doi.org/10.1007/s41365-020-00793-8}
+  {\path{doi:10.1007/s41365-020-00793-8}}.
+
+\bibitem{fons_rademakers_2019_3895860}
+F.~Rademakers, P.~Canal, A.~Naumann, O.~Couet, L.~Moneta, V.~Vassilev,
+  S.~Linev, D.~Piparo, G.~GANIS, B.~Bellenot, E.~Guiraud, G.~Amadio, wverkerke,
+  P.~Mato, TimurP, M.~Tadel, wlav, E.~Tejedor, J.~Blomer, A.~Gheata,
+  S.~Hageboeck, S.~Roiser, marsupial, S.~Wunsch, O.~Shadura, A.~Bose,
+  CristinaCristescu, X.~Valls, R.~Isemann, root-project/root: v6.18/02 (Aug.
+  2019).
+\newblock \href {https://doi.org/10.5281/zenodo.3895860}
+  {\path{doi:10.5281/zenodo.3895860}}.
+
+\bibitem{10.5555/2501720}
+T.~Parr, The Definitive ANTLR 4 Reference, 2nd Edition, Pragmatic Bookshelf,
+  2013.
+
+\bibitem{pycsg}
+T.~Knip, \href{"https://github.com/timknip/pycsg"}{pycsg} (2016) [cited
+  16~September~2020].
+\newline\urlprefix\url{"https://github.com/timknip/pycsg"}
+
+\bibitem{cgal:bsmf-sm-20b}
+M.~Botsch, D.~Sieger, P.~Moeller, A.~Fabri,
+  \href{https://doc.cgal.org/5.0.3/Manual/packages.html#PkgSurfaceMesh}{Surface
+  mesh}, in: {CGAL} User and Reference Manual, {5.0.3} Edition, {CGAL Editorial
+  Board}, 2020.
+\newline\urlprefix\url{https://doc.cgal.org/5.0.3/Manual/packages.html#PkgSurfaceMesh}
+
+\bibitem{cython}
+S.~Behnel, R.~Bradshaw, C.~Citro, L.~Dalcin, D.~S. Seljebotn, K.~Smith, Cython:
+  The best of both worlds, Computing in Science \& Engineering 13~(2) (2011)
+  31--39.
+\newblock \href {https://doi.org/10.1109/MCSE.2010.118}
+  {\path{doi:10.1109/MCSE.2010.118}}.
+
+\bibitem{cgal:lty-pmp-20b}
+S.~Loriot, M.~Rouxel-Labb{\'e}, J.~Tournois, I.~O. Yaz,
+  \href{https://doc.cgal.org/5.0.3/Manual/packages.html#PkgPolygonMeshProcessing}{Polygon
+  mesh processing}, in: {CGAL} User and Reference Manual, {5.0.3} Edition,
+  {CGAL Editorial Board}, 2020.
+\newline\urlprefix\url{https://doc.cgal.org/5.0.3/Manual/packages.html#PkgPolygonMeshProcessing}
+
+\bibitem{cgal:hk-bonp3-20b}
+P.~Hachenberger, L.~Kettner,
+  \href{https://doc.cgal.org/5.1/Manual/packages.html#PkgNef3}{{3D} {Boolean}
+  operations on {Nef} polyhedra}, in: {CGAL} User and Reference Manual, {5.1}
+  Edition, {CGAL Editorial Board}, 2020.
+\newline\urlprefix\url{https://doc.cgal.org/5.1/Manual/packages.html#PkgNef3}
+
+\bibitem{cgal:h-emspe-20b}
+P.~Hachenberger,
+  \href{https://doc.cgal.org/5.1/Manual/packages.html#PkgConvexDecomposition3}{Convex
+  decomposition of polyhedra}, in: {CGAL} User and Reference Manual, {5.1}
+  Edition, {CGAL Editorial Board}, 2020.
+\newline\urlprefix\url{https://doc.cgal.org/5.1/Manual/packages.html#PkgConvexDecomposition3}
+
+\bibitem{10.7717/peerj-cs.103}
+A.~Meurer, C.~P. Smith, M.~Paprocki, O.~\v{C}ert\'{i}k, S.~B. Kirpichev,
+  M.~Rocklin, A.~Kumar, S.~Ivanov, J.~K. Moore, S.~Singh, T.~Rathnayake,
+  S.~Vig, B.~E. Granger, R.~P. Muller, F.~Bonazzi, H.~Gupta, S.~Vats,
+  F.~Johansson, F.~Pedregosa, M.~J. Curry, A.~R. Terrel, v.~Rou\v{c}ka,
+  A.~Saboo, I.~Fernando, S.~Kulal, R.~Cimrman, A.~Scopatz, {SymPy}: symbolic
+  computing in {Python}, PeerJ Computer Science 3 (2017) e103.
+\newblock \href {https://doi.org/10.7717/peerj-cs.103}
+  {\path{doi:10.7717/peerj-cs.103}}.
+
+\bibitem{pruning}
+J.~{Goldfeather}, S.~{Monar}, G.~{Turk}, H.~{Fuchs}, Near real-time {CSG}
+  rendering using tree normalization and geometric pruning, IEEE Computer
+  Graphics and Applications 9~(3) (1989) 20--28.
+\newblock \href {https://doi.org/10.21236/ada201085}
+  {\path{doi:10.21236/ada201085}}.
+
+\bibitem{Geant4MaterialDB}
+{The Geant4 Collaboration},
+  \href{http://geant4-userdoc.web.cern.ch/geant4-userdoc/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#nist-compounds}{The
+  {G}eant4 {M}aterial {D}atabase} (2020).
+\newline\urlprefix\url{http://geant4-userdoc.web.cern.ch/geant4-userdoc/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#nist-compounds}
+
+\bibitem{tetgen}
+H.~Si, {TetGen}, a delaunay-based quality tetrahedral mesh generator, ACM
+  Trans. Math. Softw. 41~(2) (Feb. 2015).
+\newblock \href {https://doi.org/10.1145/2629697} {\path{doi:10.1145/2629697}}.
+
+\bibitem{DavisNIMA915-65}
+A.~Davis, J.~Barzilla, A.~Ferrari, K.~T. Lee, V.~Vlachoudis, P.~P. Wilson,
+  {F}lu{DAG}: {A} {CAD} based tool for high energy physics, Nuclear Instruments
+  and Methods in Physics Research Section A: Accelerators, Spectrometers,
+  Detectors and Associated Equipment 915 (2019) 65 -- 74.
+\newblock \href {https://doi.org/10.1016/j.nima.2018.10.117}
+  {\path{doi:10.1016/j.nima.2018.10.117}}.
+
+\bibitem{LuFusionEngineeringAndDesign124-2017}
+L.~Lu, Y.~Qiu, U.~Fischer, Improved solid decomposition algorithms for the
+  {CAD-to-MC} conversion tool {McCad}, Fusion Engineering and Design 124 (2017)
+  1269 -- 1272.
+\newblock \href {https://doi.org/10.1016/j.fusengdes.2017.02.040}
+  {\path{doi:10.1016/j.fusengdes.2017.02.040}}.
+
+\bibitem{cadquery}
+\href{https://cadquery.readthedocs.io/en/latest/}{{C}ad{Q}uery 2.0
+  {D}ocumentation} [cited 16~September~2020].
+\newline\urlprefix\url{https://cadquery.readthedocs.io/en/latest/}
+
+\end{thebibliography}

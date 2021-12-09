@@ -51,9 +51,8 @@ class Cons(_SolidBase):
     def __init__(self, name, pRmin1, pRmax1, pRmin2, pRmax2, pDz,
                  pSPhi, pDPhi, registry, lunit="mm", aunit="rad",
                  nslice=None, addRegistry=True):
+        super(Cons, self).__init__(name, 'Cons', registry)
 
-        self.name   = name
-        self.type   = 'Cons'
         self.pRmin1 = pRmin1
         self.pRmax1 = pRmax1
         self.pRmin2 = pRmin2
@@ -73,21 +72,14 @@ class Cons(_SolidBase):
         if addRegistry:
             registry.addSolid(self)
 
-        self.registry = registry
-
         self.checkParameters()
 
     def checkParameters(self):
-        import pyg4ometry.gdml.Units as _Units #TODO move circular import
-
-        auval = _Units.unit(self.aunit)
-
         if self.evaluateParameter(self.pRmin1) > self.evaluateParameter(self.pRmax1) :
             raise ValueError("Inner radius must be less than outer radius.")
         if self.evaluateParameter(self.pRmin2) > self.evaluateParameter(self.pRmax2) :
             raise ValueError("Inner radius must be less than outer radius.")
-        if self.evaluateParameter(self.pDPhi)*auval > _np.pi*2:
-            raise ValueError("pDPhi must be less than 2 pi")
+        self._twoPiValueCheck("pDPhi", self.aunit)
 
     def __repr__(self):
         return "Cons : {} {} {} {} {} {} {} {}".format(self.name, self.pRmin1, self.pRmax1,

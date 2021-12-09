@@ -21,29 +21,29 @@
 		<constant name="av8x" value="40"/>
 		<constant name="av8y" value="20"/>
 		<constant name="adz" value="30"/>
-		<position name="center" unit="mm" x="0" y="0" z="0"/>
-		<rotation name="identity" unit="rad" x="0" y="0" z="0"/>
+		<position name="center" x="0" y="0" z="0" unit="mm"/>
+		<rotation name="identity" x="0" y="0" z="0" unit="rad"/>
 	</define>
 	<materials>
-		<element Z="8" formula="O" name="Oxygen">
+		<element name="Oxygen" formula="O" Z="8">
 			<atom value="16.0"/>
 		</element>
-		<element Z="7" formula="N" name="Nitrogen">
+		<element name="Nitrogen" formula="N" Z="7">
 			<atom value="14.01"/>
 		</element>
-		<material Z="13" name="Al">
+		<material name="Al" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 		<material name="Air">
 			<D value="1.29"/>
-			<fraction n="0.7" ref="Nitrogen"/>
-			<fraction n="0.3" ref="Oxygen"/>
+			<fraction ref="Nitrogen" n="0.7"/>
+			<fraction ref="Oxygen" n="0.3"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="wbx" y="wby" z="wbz"/>
-		<arb8 dz="adz" name="arb81" v1x="av1x" v1y="av1y" v2x="av2x" v2y="av2y" v3x="av3x" v3y="av3y" v4x="av4x" v4y="av4y" v5x="av5x" v5y="av5y" v6x="av6x" v6y="av6y" v7x="av7x" v7y="av7y" v8x="av8x" v8y="av8y"/>
+		<box name="WorldBox" x="wbx" y="wby" z="wbz" lunit="mm"/>
+		<arb8 name="arb81" v1x="av1x" v1y="av1y" v2x="av2x" v2y="av2y" v3x="av3x" v3y="av3y" v4x="av4x" v4y="av4y" v5x="av5x" v5y="av5y" v6x="av6x" v6y="av6y" v7x="av7x" v7y="av7y" v8x="av8x" v8y="av8y" dz="adz"/>
 	</solids>
 	<structure>
 		<volume name="arb81Vol">

@@ -30,13 +30,11 @@ class Polyhedra(_SolidBase):
     :type aunit: str 
     
     """
-
     def __init__(self, name, pSPhi, pDPhi, numSide, numZPlanes,
                  zPlane, rInner, rOuter, registry, lunit="mm", aunit="rad",
                  addRegistry=True):
+        super(Polyhedra, self).__init__(name, 'Polyhedra', registry)
 
-        self.type       = 'Polyhedra'
-        self.name       = name
         self.pSPhi      = pSPhi
         self.pDPhi      = pDPhi
         self.numSide    = numSide
@@ -51,10 +49,10 @@ class Polyhedra(_SolidBase):
 
         self.dependents = []
 
+        self._twoPiValueCheck("pDPhi", self.aunit)
+
         if addRegistry:
             registry.addSolid(self)
-
-        self.registry = registry
 
     def __repr__(self):
         return "Polyhedra : {} {} {} {} {}".format(self.name, self.pSPhi,

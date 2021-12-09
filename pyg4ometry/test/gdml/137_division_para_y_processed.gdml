@@ -2,19 +2,19 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 	<define/>
 	<materials>
-		<material Z="1" name="AIR" state="gas">
+		<material name="AIR" state="gas" Z="1">
 			<D value="1e-24"/>
 			<atom value="1.00794"/>
 		</material>
-		<material Z="13" name="ALU" state="solid">
+		<material name="ALU" state="solid" Z="13">
 			<D value="2.7"/>
 			<atom value="26.98"/>
 		</material>
 	</materials>
 	<solids>
-		<box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-		<box lunit="mm" name="Cube" x="100" y="100" z="100"/>
-		<para alpha="0.2" aunit="rad" lunit="mm" name="Para" phi="0.2" theta="0.2" x="50" y="6.25" z="50"/>
+		<box name="WorldBox" x="1000" y="1000" z="1000" lunit="mm"/>
+		<box name="Cube" x="100" y="100" z="100" lunit="mm"/>
+		<para name="Para" x="50" y="6.25" z="50" alpha="0.2" theta="0.2" phi="0.2" lunit="mm" aunit="rad"/>
 	</solids>
 	<structure>
 		<volume name="lvPara">
@@ -24,7 +24,7 @@
 		<volume name="lvDivision">
 			<materialref ref="AIR"/>
 			<solidref ref="Para"/>
-			<divisionvol axis="kYAxis" number="8" offset="0.0" unit="mm" width="0.0">
+			<divisionvol number="8" axis="kYAxis" width="0.0" offset="0.0" unit="mm">
 				<volumeref ref="lvPara"/>
 			</divisionvol>
 		</volume>

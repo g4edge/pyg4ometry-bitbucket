@@ -1,7 +1,7 @@
 import pyg4ometry
 
 def Test() :
-    s = pyg4ometry.geant4.solid.SolidBase("oldname")
+    s = pyg4ometry.geant4.solid.SolidBase("oldname", "type", None)
 
     # get name
     name = s.name 

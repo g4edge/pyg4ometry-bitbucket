@@ -27,7 +27,7 @@ print("Python version : {}.{}".format(pythonMajorVersion,pythonMinorVersion))
 
 # start with system dirs (and port/brew and default miniconda)
 includeSearchDirs = ["/usr/include","/usr/local/include","/opt/local/include/","/usr/local/Cellar/include/","/opt/miniconda3/include/"]
-librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/"]
+librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/usr/lib/x86_64-linux-gnu/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/"]
 
 # search for cgal, pybind11 (only if pybind11_include is not set), mpfr, gmp in the search dirs
 def findPackage(name, searchDirs) :
@@ -136,7 +136,6 @@ setup(
                       "configparser",
                       "testtools",
                       "pypandoc",
-                      "ipython",
                       "sympy>=1.7"],
     ext_modules=exts,
     python_requires=">=3.7.1",

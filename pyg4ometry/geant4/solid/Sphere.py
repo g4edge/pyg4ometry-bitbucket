@@ -48,13 +48,11 @@ class Sphere(_SolidBase):
     :param nstack: number of theta elements for meshing
     :type nstack: int 
     """
-
     def __init__(self, name, pRmin, pRmax, pSPhi, pDPhi, pSTheta,
                  pDTheta, registry, lunit="mm", aunit="rad",
                  nslice=None, nstack=None, addRegistry=True):
+        super(Sphere, self).__init__(name, 'Sphere', registry)
 
-        self.type    = 'Sphere'
-        self.name    = name
         self.pRmin   = pRmin
         self.pRmax   = pRmax
         self.pSPhi   = pSPhi
@@ -70,12 +68,10 @@ class Sphere(_SolidBase):
 
         self.varNames = ["pRmin", "pRmax", "pSPhi","pDPhi","pSTheta","pDTheta"]
 
+        self.checkParameters()
+
         if addRegistry:
             registry.addSolid(self)
-
-        self.registry = registry
-
-        self.checkParameters()
 
     def checkParameters(self):
         import pyg4ometry.gdml.Units as _Units #TODO move circular import
@@ -84,8 +80,7 @@ class Sphere(_SolidBase):
             raise ValueError("Inner radius must be less than outer radius.")
         if self.evaluateParameter(self.pDTheta)*auval > _np.pi:
             raise ValueError("pDTheta must be less than pi")
-        if self.evaluateParameter(self.pDPhi)*auval > _np.pi*2:
-            raise ValueError("pDPhi must be less than 2 pi")
+        self._twoPiValueCheck("pDPhi", self.aunit)
 
     def __repr__(self):
         return "Sphere : {} {} {} {} {} {} {}".format(self.name, self.pRmin,
