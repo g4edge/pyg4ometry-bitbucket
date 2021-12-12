@@ -71,7 +71,7 @@ def Test():
     e_b_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, 50], a_b_lv, "a_b_pv1", e_ass, r5)
     comp6 = pyg4ometry.compare.assemblyVolumes(a_ass, e_ass, tests, testsAlreadyDone=[])
     comp6.print()
-    assert (len(comp6) == 1)
+    assert (len(comp6) == 3) # 1 pv pos fail, 1x bounding box min fail, 1x bounding box max fail
 
     # different values of lv material inside pvs inside avs
     r6 = _g4.Registry()
