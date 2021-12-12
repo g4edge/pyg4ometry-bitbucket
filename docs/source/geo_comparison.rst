@@ -129,24 +129,6 @@ A comparison is run by using a function in :code:`pyg4ometry.compare`, giving it
 and a Tests instance. The comparison result returned is a class with a list of test results
 that can be inspected and also printed.
 
-Example Output
-**************
-
-For a test that failed the following is an example of output.
-
-::
-
-   Overall result>  TestResult.Failed
-   Test>  position
-   (av): a_assembly: (pv): a_a_pv1: a_a_pv1_pos: TestResult.Failed: z: (reference): 100.0, (other): -100.0
-
-   Test>  shapeExtentBoundingBoxMin
-   a_assembly_a_a_pv1: TestResult.Failed: axis-aligned bounding box lower edge: dimension: z, (reference): 85.0, (other): -115.0
- 
-   Test>  shapeExtentBoundingBoxMax
-   a_assembly_a_a_pv1: TestResult.Failed: axis-aligned bounding box upper edge: dimension: z, (reference): 115.0, (other): -85.0
-
-
 GDML Files
 **********
 
@@ -175,12 +157,37 @@ There are functions to compare individual objects too. These follow the same pat
 * :code:`pyg4ometry.compare.materials`
 * :code:`pyg4ometry.compare.solids`
 
-   
+
+Example Output
+**************
+
+For a test that failed the following is an example of output.
+
+::
+
+   Overall result>  TestResult.Failed
+   Test>  position
+   (av): a_assembly: (pv): a_a_pv1: a_a_pv1_pos: TestResult.Failed: z: (reference): 100.0, (other): -100.0
+
+   Test>  shapeExtentBoundingBoxMin
+   a_assembly_a_a_pv1: TestResult.Failed: axis-aligned bounding box lower edge: dimension: z, (reference): 85.0, (other): -115.0
+ 
+   Test>  shapeExtentBoundingBoxMax
+   a_assembly_a_a_pv1: TestResult.Failed: axis-aligned bounding box upper edge: dimension: z, (reference): 115.0, (other): -85.0
+  
 Seeing the Results
 ------------------
 
+The return of a comparison is a :code:`pyg4ometry.compare.ComparisonResult` instance.
+The most useful function here is the print function, which will print all results
+but also you can print select sets of tests or only certain results.
+
+* See :ref:`geometry-compare-module` and :code:`ComparisonResult` for details.
+
 Examples
 --------
+
+See :code:`pyg4ometry/pyg4ometry/test/pythonGeant4/T7*.py` for examples that form the tests of this code.
 
 Only Volume
 ***********
@@ -206,7 +213,12 @@ Here, two ways are shown for creating the set of tests.
        "testDaughtersByName"
    >>> t.setAllFalse()
    >>> t.shapeVolume = True
-   >>> t2 = pyg4ometry.compare.Tests("shapeVolume")
    >>> comparison = pyg4ometry.compare.gdmlFiles("file1.gdml", "file2.gdml", t)
    >>> comparison.print()
    
+or ::
+
+  >>> import pyg4ometry
+  >>> t2 = pyg4ometry.compare.Tests("shapeVolume")
+  >>> comparison = pyg4ometry.compare.gdmlFiles("file1.gdml", "file2.gdml", t2)
+  >>> comparison.print()
