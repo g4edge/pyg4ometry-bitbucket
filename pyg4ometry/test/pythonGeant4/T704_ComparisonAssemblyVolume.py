@@ -43,7 +43,7 @@ def Test():
     b_a_pv = _g4.PhysicalVolume([0,0,0], [0,0,100], a_a_lv, "a_a_pv1", b_ass, r2)
     comp3 = pyg4ometry.compare.assemblyVolumes(a_ass, b_ass, tests, testsAlreadyDone=[])
     comp3.print()
-    assert(len(comp3) == 1)
+    assert(len(comp3) == 2)
 
     # extra daughter
     r3 = _g4.Registry()
@@ -53,7 +53,7 @@ def Test():
     c_b2_pv = _g4.PhysicalVolume([0,0,0], [0,0,0],   a_b_lv, "a_b_pv2", c_ass, r3)
     comp4 = pyg4ometry.compare.assemblyVolumes(a_ass, c_ass, tests, testsAlreadyDone=[])
     comp4.print()
-    assert(len(comp4) == 1)
+    assert(len(comp4) == 2)
 
     # different daughter by name
     r4 = _g4.Registry()
