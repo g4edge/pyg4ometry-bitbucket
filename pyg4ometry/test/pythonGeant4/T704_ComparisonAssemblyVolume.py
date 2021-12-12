@@ -83,6 +83,22 @@ def Test():
     comp7.print()
     assert (len(comp7) == 1)
 
+    # mesh volume / area testing
+    r7 = _g4.Registry()
+    # should be equivalent to a_a_solid = _g4.solid.Box("a_a_solid", 50, 40, 30, r)
+    c_a_solidA = _g4.solid.Box("c_a_solidA", 80, 40, 30, r7)
+    c_a_solidB = _g4.solid.Box("c_a_solidB", 50, 90, 30, r7)
+    c_a_solid  = _g4.solid.Intersection("c_a_solid", c_a_solidA, c_a_solidB, [[0,0,0],[0,0,0]], r7)
+    c_a_lv = _g4.LogicalVolume(c_a_solid, copper, "c_a_lv", r7)
+    g_ass = _g4.AssemblyVolume("a_assembly", r7)
+    a_a_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, 100], c_a_lv, "a_a_pv1", g_ass, r7)
+    a_b_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, 50], a_b_lv, "a_b_pv1", g_ass, r7)
+    testVolumeAreaOnly = pyg4ometry.compare.Tests('shapeVolume', 'shapeArea')
+    assert(len(testVolumeAreaOnly) == 2)
+    comp8 = pyg4ometry.compare.assemblyVolumes(a_ass, g_ass, testVolumeAreaOnly, testsAlreadyDone=[])
+    comp8.print()
+    assert (len(comp8) == 0)
+
     return {"testStatus": True}
 
 if __name__ == "__main__":
