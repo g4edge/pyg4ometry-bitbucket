@@ -87,6 +87,28 @@ def Test():
     comp8.print()
     assert (len(comp8.test['scale']) > 0)
 
+    # equivalent volume but different solids
+    # NOTE solids go with LogicalVolumes in pyg4ometry, not solids
+    r3 = _g4.Registry()
+    boxA   = _g4.solid.Box("box_a", 10, 20, 50, r3)
+    boxALV = _g4.LogicalVolume(boxA, copper1, "boxA_lv", r3)
+    r4 = _g4.Registry()
+    boxB_A = _g4.solid.Box("box_b_a", 10, 30, 100, r3)
+    boxB_B = _g4.solid.Box("box_b_b", 10, 20, 50,  r3)
+    boxB   = _g4.solid.Intersection("box_b", boxB_A, boxB_B, [[0,0,0],[0,0,0]], r3)
+    boxBLV = _g4.LogicalVolume(boxB, copper1, "boxB_lv", r3)
+    testVolumeAreaOnly = pyg4ometry.compare.Tests('shapeVolume', 'shapeArea')
+    comp9 = pyg4ometry.compare.logicalVolumes(boxALV, boxBLV, testVolumeAreaOnly)
+    comp9.print()
+    assert(len(comp9) == 0)
+
+    # update the shape of one solid and convince ourselves the area and volume checks work
+    boxB_B.pY = 12
+    boxBLV._reMesh()
+    comp10 = pyg4ometry.compare.logicalVolumes(boxALV, boxBLV, testVolumeAreaOnly)
+    comp10.print()
+    assert (len(comp10) == 2)
+    
     return {"testStatus": True}
 
 if __name__ == "__main__":
