@@ -230,3 +230,32 @@ Transformation
 .. automodule:: pyg4ometry.transformation
    :members:
    :undoc-members:
+
+.. _geometry-compare-module:
+      
+Compare
+-------
+
+.. autoclass:: pyg4ometry.compare.ComparisonResult
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.compare.Tests
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.compare.TestResult
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoclass:: pyg4ometry.compare.TestResultNamed
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.compare._Compare
+   :members:
+   :undoc-members:
