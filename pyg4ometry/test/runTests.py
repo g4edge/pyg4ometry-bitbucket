@@ -4,6 +4,7 @@ from freecadExamples        import FreeCADLoadingTests
 from pythonGeant4           import PythonTests
 from pythonGeant4           import PythonDefineTests
 from pythonGeant4           import PythonGeantAuthoringTests
+from pythonGeant4           import PythonComparisonTests
 from pythonCompoundExamples import PythonCompoundExampleTests
 from gdml                   import GdmlLoadTests
 from stl                    import StlLoadTests
