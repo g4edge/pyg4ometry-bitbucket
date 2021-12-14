@@ -1,7 +1,7 @@
 import pyg4ometry
 import pyg4ometry.geant4 as _g4
 
-def Test():
+def Test(printOut=False):
     r = _g4.Registry()
 
     # in all of these we force testsAlreadyDone=[] as an argument to reset
@@ -18,7 +18,8 @@ def Test():
 
     # predefined materials
     comp1 = pyg4ometry.compare.materials(galactic1, galactic2, tests)
-    comp1.print()
+    if printOut:
+        comp1.print()
     assert(len(comp1) == 0)
 
     # some geometry
@@ -34,7 +35,8 @@ def Test():
 
     # with itself
     comp2 = pyg4ometry.compare.assemblyVolumes(a_ass, a_ass, tests, testsAlreadyDone=[])
-    comp2.print()
+    if printOut:
+        comp2.print()
     assert(len(comp2) == 0)
 
     # missing daughter
@@ -42,7 +44,8 @@ def Test():
     b_ass = _g4.AssemblyVolume("a_assembly", r2)
     b_a_pv = _g4.PhysicalVolume([0,0,0], [0,0,100], a_a_lv, "a_a_pv1", b_ass, r2)
     comp3 = pyg4ometry.compare.assemblyVolumes(a_ass, b_ass, tests, testsAlreadyDone=[])
-    comp3.print()
+    if printOut:
+        comp3.print()
     assert(len(comp3) == 2)
 
     # extra daughter
@@ -52,7 +55,8 @@ def Test():
     c_b1_pv = _g4.PhysicalVolume([0,0,0], [0,0,50],  a_b_lv, "a_b_pv1", c_ass, r3)
     c_b2_pv = _g4.PhysicalVolume([0,0,0], [0,0,0],   a_b_lv, "a_b_pv2", c_ass, r3)
     comp4 = pyg4ometry.compare.assemblyVolumes(a_ass, c_ass, tests, testsAlreadyDone=[])
-    comp4.print()
+    if printOut:
+        comp4.print()
     assert(len(comp4) == 2)
 
     # different daughter by name
@@ -61,7 +65,8 @@ def Test():
     d_a_pv = _g4.PhysicalVolume([0,0,0], [0,0,100], a_a_lv, "a_aaaa_pv1", d_ass, r4)
     d_b_pv = _g4.PhysicalVolume([0,0,0], [0,0,50],  a_b_lv, "a_b_pv1", d_ass, r4)
     comp5 = pyg4ometry.compare.assemblyVolumes(a_ass, d_ass, tests, testsAlreadyDone=[])
-    comp5.print()
+    if printOut:
+        comp5.print()
     assert(len(comp5) == 2) # both missing and extra
 
     # different values of pvs
@@ -70,7 +75,8 @@ def Test():
     e_a_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, -100], a_a_lv, "a_a_pv1", e_ass, r5)
     e_b_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, 50], a_b_lv, "a_b_pv1", e_ass, r5)
     comp6 = pyg4ometry.compare.assemblyVolumes(a_ass, e_ass, tests, testsAlreadyDone=[])
-    comp6.print()
+    if printOut:
+        comp6.print()
     assert (len(comp6) == 3) # 1 pv pos fail, 1x bounding box min fail, 1x bounding box max fail
 
     # different values of lv material inside pvs inside avs
@@ -80,7 +86,8 @@ def Test():
     f_a_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, 100], a_a_lv, "a_a_pv1", f_ass, r6)
     f_b_pv = _g4.PhysicalVolume([0, 0, 0], [0, 0, 50], a_b_lv, "a_b_pv1", f_ass, r6)
     comp7 = pyg4ometry.compare.assemblyVolumes(a_ass, f_ass, tests, testsAlreadyDone=[])
-    comp7.print()
+    if printOut:
+        comp7.print()
     assert (len(comp7) == 1)
 
     # mesh volume / area testing
@@ -96,7 +103,8 @@ def Test():
     testVolumeAreaOnly = pyg4ometry.compare.Tests('shapeVolume', 'shapeArea')
     assert(len(testVolumeAreaOnly) == 2)
     comp8 = pyg4ometry.compare.assemblyVolumes(a_ass, g_ass, testVolumeAreaOnly, testsAlreadyDone=[])
-    comp8.print()
+    if printOut:
+        comp8.print()
     assert (len(comp8) == 0)
 
     return {"testStatus": True}

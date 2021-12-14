@@ -1,7 +1,7 @@
 import pyg4ometry
 import pyg4ometry.geant4 as _g4
 
-def Test():
+def Test(printOut=False):
     r = _g4.Registry()
 
     tests = pyg4ometry.compare.Tests()
@@ -10,7 +10,8 @@ def Test():
     
     # solid with itself
     comp1 = pyg4ometry.compare.solids(box1, box1, tests)
-    comp1.print()
+    if printOut:
+        comp1.print()
     assert(len(comp1) == 0)
 
     wx = pyg4ometry.gdml.Constant("wx", 100, r)
@@ -18,19 +19,22 @@ def Test():
 
     # solid with itself - using expressions
     comp2 = pyg4ometry.compare.solids(box2, box2, tests)
-    comp2.print()
+    if printOut:
+        comp2.print()
     assert(len(comp2) == 0)
 
     # box with numbers vs box with expressions but equivalent
     # only name should be different
     comp3 = pyg4ometry.compare.solids(box1, box2, tests)
-    comp3.print()
+    if printOut:
+        comp3.print()
     assert(len(comp3) == 1)
 
     testsNoName = pyg4ometry.compare.Tests()
     testsNoName.names = False
     comp4 = pyg4ometry.compare.solids(box1, box2, testsNoName, "maintest", includeAllTestResults=True)
-    comp4.print()
+    if printOut:
+        comp4.print()
     assert (len(comp4) > 0) # because we include all tests
 
     # test a solid where a parameter is potentially a list or not just a number
@@ -45,11 +49,13 @@ def Test():
 
     # complex solid with other with simple values
     comp5 = pyg4ometry.compare.solids(box1, xs, tests)
-    comp5.print()
+    if printOut:
+        comp5.print()
     assert (len(comp5) > 0)
 
     comp6 = pyg4ometry.compare.solids(xs, xs, tests)
-    comp6.print()
+    if printOut:
+        comp6.print()
     assert (len(comp6) == 0)
 
     # one number deep inside that's slightly different
@@ -57,7 +63,8 @@ def Test():
     slices2 = [[z1, [6, y1], s1], [z2, [x2, y2], s2], [z3, [x3, y3], s3]]
     xs2 = _g4.solid.ExtrudedSolid("xs2", polygon2, slices2, r)
     comp7 = pyg4ometry.compare.solids(xs, xs2, tests)
-    comp7.print()
+    if printOut:
+        comp7.print()
     assert (len(comp7) > 0)
 
     return {"testStatus": True}
