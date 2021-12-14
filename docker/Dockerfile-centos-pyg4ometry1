@@ -1,0 +1,110 @@
+FROM centos:7
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /tmp
+
+RUN yum -y install epel-release git make \
+    gcc gcc-c++ gcc-gfortran \
+    xerces-c-devel zlib-devel  wget \
+    openssl-devel
+
+# Modern compilers 
+RUN yum -y install centos-release-scl && yum -y install devtoolset-7
+
+# CMake (3.14.6 from yum/epel)
+RUN yum -y install cmake3
+
+# OpenGL
+RUN yum -y install mesa-libGL-devel
+
+# X11 
+RUN yum -y install xorg-x11-server-Xorg xorg-x11-xauth libX11-devel \
+    libXpm-devel libXft-devel libXext-devel libXt-devel
+
+# Python
+RUN yum -y install python3-pip python3 python3-devel
+
+# Modern python
+RUN yum install -y openssl-devel libffi-devel bzip2-devel 
+RUN wget https://www.python.org/ftp/python/3.8.9/Python-3.8.9.tgz && \
+    tar xvf Python-3.8.9.tgz && \
+    cd Python-3.8*/ && \
+    ./configure --enable-optimizations && \
+    make install 
+
+
+# VTK (8.2 from source)
+#RUN wget --no-check-certificate https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz && \
+#    tar zxf VTK-8.2.0.tar.gz && \
+#    mkdir VTK-8.2.0-build && \
+#    cd VTK-8.2.0-build && \
+#    source scl_source enable devtoolset-7 && \
+#    cmake3 -DVTK_WRAP_PYTHON=ON -DPYTHON_LIB=/usr/local/lib/python3.8/ -DPYTHON_INCLUDE_DIR=/usr/local/include/python3.8/ -DPYTHON_EXECUTABLE=/usr/local/bin/python3.8 ../VTK-8.2.0/ && \
+#    make -j3 && make install
+
+# VTK (9.1 from source)
+RUN mkdir vtk && \
+    cd vtk && \
+    wget --no-check-certificate https://www.vtk.org/files/release/9.1/VTK-9.1.0.tar.gz && \
+    tar zxf VTK-9.1.0.tar.gz && \
+    mkdir build && \
+    cd build && \
+    source scl_source enable devtoolset-7 && \
+    cmake3 -DVTK_WRAP_PYTHON=ON -DPYTHON_LIB=/usr/lib/python3.8/ -DPYTHON_INCLUDE_DIR=/usr/include/python3.8/ -DPYTHON_EXECUTABLE=/usr/bin/python3.8 ../VTK-9.1.0/ && \
+    make -j3 && make install
+
+
+# CGAL (https://github.com/CGAL/cgal/archive/refs/tags/v5.3.tar.gz)
+RUN mkdir cgal && \
+    cd cgal && \
+    wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.tar.gz && \
+    tar zxf v5.3.tar.gz && \
+    mkdir build && \
+    cd build && \
+    cmake3 ../cgal-5.3 && \
+    make && \
+    make install
+#   rm -rf build
+
+# OCCT (https://github.com/Open-Cascade-SAS/OCCT/archive/refs/tags/V7_6_0.tar.gz)
+RUN yum install -y tcl-devel tk-devel
+RUN mkdir occt && \
+    cd occt && \
+    wget https://github.com/Open-Cascade-SAS/OCCT/archive/refs/tags/V7_6_0.tar.gz && \
+    tar zfx V7_6_0.tar.gz && \
+    mkdir build && \
+    cd build && \
+    source scl_source enable devtoolset-7 && \
+    cmake3 ../OCCT-7_6_0/ && \
+    make -j3 && \
+    make install
+#   rm -rf build
+
+# FreeCAD
+# https://github.com/FreeCAD/FreeCAD/archive/refs/tags/0.19.2.tar.gz
+RUN yum install -y boost169-devel freeglut-devel eigen3-devel \
+                   qt5-qtbase-devel qt5-qtxmlpatterns-devel qt5-qtsvg-devel qt5-qttools-devel qt5-qttools-static \
+	           Coin3-devel
+#RUN mkdir freecad && \
+#    cd freecad && \
+#    wget https://github.com/FreeCAD/FreeCAD/archive/refs/tags/0.19.2.tar.gz && \
+#    tar zxf 0.19.2.tar.gz &&\
+#    mkdir build &&\
+#    cd build && \
+#    cmake3 ../FreeCAD-0.19.2/ -DPYTHON_EXECUTABLE=/usr/bin/python3.6 -DPYTHON_LIBRARY=/usr/lib64/python3.6/ -DPYTHON_LIBRARY_RELEASE=/usr/lib64/python3.6/ -DPYTHON_LIBRARY_DEBUG=/usr/lib64/python3.6/  -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m/ -DBoost_LIBRARY_DIR=/usr/lib64/boost169/ -DBoost_INCLUDE_DIR=/usr/include/boost169/ -DBUILD_FEM=OFF -DBUILD_QT5=ON -DBUILD_WEB=OFF -DBUILD_MATERIAL=OFF && \
+#    make && \
+#    make install 
+
+# USD
+# https://github.com/PixarAnimationStudios/USD/archive/refs/tags/v21.11.tar.gz
+  
+# pyg4ometry
+#RUN yum install -y mpfr-devel gmp-devel
+#RUN ln -s /usr/local/bin/pip3.8 /usr/bin/pip
+#RUN ln -sf /usr/local/bin/python3.8 /usr/bin/python
+#RUN pip install pybind11 cython ipython
+#RUN git clone https://bitbucket.org/jairhul/pyg4ometry.git 
+#RUN cd pyg4ometry && \
+#    source scl_source enable devtoolset-7 && \
+#    make develop
