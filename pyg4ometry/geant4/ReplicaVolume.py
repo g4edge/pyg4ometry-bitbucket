@@ -22,15 +22,15 @@ class ReplicaVolume(_PhysicalVolume):
     :param offset: of grid
     '''
 
-    class Axis :
+    class Axis:
         kXAxis = 1
         kYAxis = 2
         kZAxis = 3
         kRho   = 4
         kPhi   = 5
-
+        
     def __init__(self, name, logicalVolume, motherVolume, axis, nreplicas, 
-                 width, offset = 0, registry = None, addRegistry=True, wunit = "mm", ounit= "mm") :
+                 width, offset=0, registry=None, addRegistry=True, wunit="mm", ounit="mm"):
 
         # TBC - doesn't call super() so doesn't have PV objects
         
@@ -58,6 +58,14 @@ class ReplicaVolume(_PhysicalVolume):
 
         # Create replica meshes
         [self.meshes,self.transforms] = self.createReplicaMeshes()
+        
+    def GetAxisName(self):
+        names = {1 : 'kXAxis',
+                 2 : 'kYAxis',
+                 3 : 'kZAxis',
+                 4 : 'kRho',
+                 5 : 'kPhi'}
+        return names[self.axis]
 
     def _checkInternalOverlaps(self, debugIO=False, nOverlapsDetected=[0]):
         """
@@ -106,8 +114,7 @@ class ReplicaVolume(_PhysicalVolume):
                     print(f"\033[1mOVERLAP DETECTED> overlap between daughters of {self.name} \033[0m #{i} #{j} {interMesh.vertexCount()}")
                     self.motherVolume.mesh.addOverlapMesh([interMesh, _OverlapType.overlap])
 
-    def createReplicaMeshes(self) :
-
+    def createReplicaMeshes(self):
         import pyg4ometry.gdml.Units as _Units
         from pyg4ometry.gdml.Defines import evaluateToFloat
 

@@ -1,5 +1,4 @@
 import pyg4ometry.transformation as _trans
-
 from pyg4ometry.visualisation import VisualisationOptions as _VisOptions
 
 import numpy as _np
@@ -95,6 +94,5 @@ class PhysicalVolume(object):
 
         vmin = [min(a, b) for a, b in zip(vMinPrime, vMaxPrime)]
         vmax = [max(a, b) for a, b in zip(vMinPrime, vMaxPrime)]
-
 
         return [vmin, vmax]

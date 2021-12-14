@@ -5,6 +5,8 @@ import pyg4ometry.pycgal as _pycgal
 from pyg4ometry.fluka.directive import rotoTranslationFromTra2 as _rotoTranslationFromTra2
 import numpy as _np
 import copy as _copy
+
+# this should be refactored to rename namespaced (privately)
 from pyg4ometry.fluka.body import *
 
 # import matplotlib.pyplot as _plt
@@ -1671,7 +1673,7 @@ def geant4Material2Fluka(material, freg, suggestedDensity=None, elementSuffix=Fa
         # check again as we've just changed our short name
         if materialNameShort in freg.materials:
             return freg.materials[materialNameShort]
-        if materialInstance.type == "simple" :
+        if materialInstance.type == "element-simple" :
             mat = _fluka.Material(materialNameShort,
                                   materialInstance.Z,
                                   suggestedDensity,
@@ -1679,7 +1681,7 @@ def geant4Material2Fluka(material, freg, suggestedDensity=None, elementSuffix=Fa
                                   flukaregistry=freg)
             return mat
 
-        elif materialInstance.type == "composite" :
+        elif materialInstance.type == "element-composite" :
             flukaComponentNames     = []
             flukaComponents         = []
             flukaComponentFractions = []
@@ -1708,6 +1710,8 @@ def geant4Material2Fluka(material, freg, suggestedDensity=None, elementSuffix=Fa
                             atomicMass = materialInstance.a,
                             massNumber = materialInstance.N,)
         return fi
+    else:
+        raise TypeError("Unknown material.type \""+str(material.type)+"\"")
 
 def pycsgmesh2FlukaRegion(mesh, name, transform, flukaRegistry, commentName) :
     import pyg4ometry.pycgal as pycgal
@@ -1716,7 +1720,7 @@ def pycsgmesh2FlukaRegion(mesh, name, transform, flukaRegistry, commentName) :
     nef = pycgal.pycsgmesh2NefPolyhedron(mesh)
 
     nconvex = ctypes.c_int(0)
-    vpArray = ctypes.c_void_p*10000;
+    vpArray = ctypes.c_void_p*10000
     polyhedra = vpArray()
 
     pycgal.nefpolyhedron_to_convexpolyhedra(nef,polyhedra,ctypes.byref(nconvex))

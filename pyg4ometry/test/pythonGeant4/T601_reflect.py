@@ -43,7 +43,7 @@ def Test(vis = False, interactive = False) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T700_reflect.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T601_reflect.gdml"))
 
     # test __repr__
     str(bs1)

@@ -6,14 +6,13 @@ import pyg4ometry as _pyg4ometry
 from   pyg4ometry.visualisation  import Mesh            as _Mesh
 from   pyg4ometry.visualisation  import Convert         as _Convert
 from   pyg4ometry.visualisation  import OverlapType     as _OverlapType
-from . import solid                     as                 _solid
-from . import _Material                  as                 _mat
-import pyg4ometry.transformation as                 _trans
-import pyg4ometry.visualisation  as                 _vi
-import vtk                       as                 _vtk
+from . import solid as _solid
+from . import _Material as _mat
+import pyg4ometry.transformation as _trans
+import vtk as _vtk
 
-import numpy   as   _np
-import logging as   _log
+import numpy   as _np
+import logging as _log
 
 
 def _solid2tessellated(solid):
@@ -44,27 +43,23 @@ def _solid2tessellated(solid):
 
 
 class LogicalVolume(object):
-    '''
+    """
     LogicalVolume : G4LogicalVolume
     :param solid:  
     :param material:
     :param name: 
     :param registry:      
     :param addRegistry: 
-    '''
-
+    """
     def __init__(self, solid, material, name, registry=None, addRegistry=True, **kwargs):
         super(LogicalVolume, self).__init__()
 
-        # type 
-        self.type            = "logical"
-        
-        # geant4 required objects 
-        self.solid           = solid
+        self.type  = "logical"
+        self.solid = solid
  
         if isinstance(material, _mat.Material):
             self.material = material
-            self.material.set_registry(registry)
+            self.material.set_registry(registry, dontWarnIfAlreadyAdded=True)
         elif isinstance(material, str):
             # If the material is registered already, use it
             if registry and material in registry.materialDict:
@@ -76,6 +71,7 @@ class LogicalVolume(object):
 
         self.name            = name
         self.daughterVolumes = []
+        self._daughterVolumesDict = {}
         self.bdsimObjects    = []
 
         # geometry mesh
@@ -85,7 +81,9 @@ class LogicalVolume(object):
             self.mesh           = None
             print("geant4.LogicalVolume> meshing error {} {}".format(self.name,self.solid.type))
 
+        self._reMesh()
         self.auxiliary       = []
+
         self.addAuxiliaryInfo(kwargs.get("auxiliary", None))
 
         # registry logic
@@ -99,22 +97,32 @@ class LogicalVolume(object):
     def __repr__(self):
         return 'Logical volume : '+self.name+' '+str(self.solid)+' '+str(self.material)
 
+    def _reMesh(self):
+        try:
+            self.mesh = _Mesh(self.solid)
+        except:
+            self.mesh = None
+            print("geant4.LogicalVolume> meshing error {}".format(self.name))
+
     def add(self, physicalVolume):
         self.daughterVolumes.append(physicalVolume)
+        self._daughterVolumesDict[physicalVolume.name] = physicalVolume
 
     def addBDSIMObject(self, bdsimobject):
         self.bdsimObjects.append(bdsimobject)
 
     def _getPhysicalDaughterMesh(self, pv):
-        '''
-        return a (cloned from the lv) mesh of a given pv with rotation,scale,
+        """
+        Return a (cloned from the lv) mesh of a given pv with rotation,scale,
         translation evaluated.
-        '''
+        """
         # cannot currently deal with replica, division and parametrised
-        if  pv.type != "placement" :
+        if  pv.type != "placement":
+            print("Cannot generate specific daughter mesh for replica, division, parameterised")
             return None
         # cannot currently deal with assembly
-        if  pv.logicalVolume.type == "assembly" :
+        if  pv.logicalVolume.type == "assembly":
+            print("Cannot generate specific daughter mesh for assembly")
             return None
 
         _log.info('LogicalVolume.checkOverlaps> %s' % (pv.name))
@@ -167,6 +175,7 @@ class LogicalVolume(object):
                 toKeep.append( interMesh.polygonCount() != 0)
 
         self.daughterVolumes = [pv for pv,keep in zip(self.daughterVolumes, toKeep) if keep]
+        self._daughterVolumesDict = {pv.name:pv for pv in self.daughterVolumes}
 
     def checkOverlaps(self, recursive=False, coplanar=True, debugIO=False, printOut=True, nOverlapsDetected=[0]):
         """
@@ -256,8 +265,8 @@ class LogicalVolume(object):
                 transformedMeshesNames.append(name)
 
         # overlap daughter pv checks
-        for i in range(0,len(transformedMeshes)) : 
-            for j in range(i+1,len(transformedMeshes)) :
+        for i in range(0,len(transformedMeshes)):
+            for j in range(i+1,len(transformedMeshes)):
                 if debugIO :
                     print(f"LogicalVolume.checkOverlaps> daughter-daughter bounding mesh intersection test: {transformedMeshesNames[i]} {transformedMeshesNames[j]}")
 
@@ -277,9 +286,9 @@ class LogicalVolume(object):
         # coplanar daughter pv checks
         # print 'coplanar with pvs'
         # print "LogicalVolume.checkOverlaps> daughter coplanar overlaps"
-        if coplanar :
-            for i in range(0,len(transformedMeshes)) :
-                for j in range(i+1,len(transformedMeshes)) :
+        if coplanar:
+            for i in range(0,len(transformedMeshes)):
+                for j in range(i+1,len(transformedMeshes)):
                     if debugIO :
                         print(f"LogicalVolume.checkOverlaps> full coplanar test between daughters {transformedMeshesNames[i]} {transformedMeshesNames[j]}")
 
@@ -296,7 +305,7 @@ class LogicalVolume(object):
                         self.mesh.addOverlapMesh([coplanarMesh, _OverlapType.coplanar])
 
         # protrusion from mother solid
-        for i in range(0,len(transformedMeshes)) :
+        for i in range(0,len(transformedMeshes)):
             if debugIO :
                 print(f"LogicalVolume.checkOverlaps> full daughter-mother intersection test {transformedMeshesNames[i]}")
 
@@ -308,15 +317,15 @@ class LogicalVolume(object):
             interMesh = transformedMeshes[i].subtract(self.mesh.localmesh)
             _log.info('LogicalVolume.checkOverlaps> daughter container %d %d %d' % (i, interMesh.vertexCount(), interMesh.polygonCount()))
 
-            if interMesh.vertexCount() != 0 :
+            if interMesh.vertexCount() != 0:
                 nOverlapsDetected[0] += 1
                 print(f"\033[1mOVERLAP DETECTED> overlap with mother \033[0m {transformedMeshesNames[i]} {interMesh.vertexCount()}")
                 self.mesh.addOverlapMesh([interMesh,_OverlapType.protrusion])
 
         # coplanar with solid
         # print 'coplanar with solid'
-        if coplanar :
-            for i in range(0,len(transformedMeshes)) :
+        if coplanar:
+            for i in range(0,len(transformedMeshes)):
                 if debugIO :
                     print(f"LogicalVolume.checkOverlaps> full daughter-mother coplanar test {transformedMeshesNames[i]}"),
 
@@ -331,7 +340,7 @@ class LogicalVolume(object):
                     self.mesh.addOverlapMesh([coplanarMesh, _OverlapType.coplanar])
 
         # recursively check entire tree
-        if recursive :
+        if recursive:
             for d in self.daughterVolumes:
                 if type(d.logicalVolume) is _pyg4ometry.geant4.AssemblyVolume:
                     continue # no specific overlap check - handled by the PV of an assembly
@@ -454,13 +463,15 @@ class LogicalVolume(object):
             physicalNames = physicalNames.union(pvn)
         return logicalNames, physicalNames
 
-    def findLogicalByName(self,name) : 
+    def findLogicalByName(self, name):
+        """
+        Return a list of LogicalVolume instances used inside this logical volume
+        as daughters (at any level inside) with the given name.
+        """
         lv = []
-
-        if self.name.find(name) != -1 : 
+        if self.name.find(name) != -1:
             lv.append(self)
-
-        for d in self.daughterVolumes : 
+        for d in self.daughterVolumes:
             l = d.logicalVolume.findLogicalByName(name)
             if len(l) != 0 :
                 lv.append(l)
@@ -468,31 +479,44 @@ class LogicalVolume(object):
         return lv
 
     def makeMaterialNameSet(self):
-
+        """
+        Return a set of material names used in this logical volume and any daughters.
+        This is built up recursively by checking all daughters etc etc.
+        """
         materialNames = set([])
 
         materialNames.add(self.material.name)
 
-        for dv in self.daughterVolumes :
+        for dv in self.daughterVolumes:
             dvMaterialNames = dv.logicalVolume.makeMaterialNameSet()
             materialNames = materialNames.union(dvMaterialNames)
 
         return materialNames
 
     def assemblyVolume(self):
+        """
+        Return an assembly volume of this this logical volume, in effect
+        removing the solid and material of this logical volume, but retaining
+        all of the relative daughter placements.
+        """
         import pyg4ometry.geant4.AssemblyVolume as _AssemblyVolume
 
         # prepend the name because the name might have a pointer in it
         # therefore geant4 will just strip off everything after 0x
         av = _AssemblyVolume("assembly_"+self.name, self.registry)
 
-        for dv in self.daughterVolumes :
+        for dv in self.daughterVolumes:
             av.add(dv)
 
         return av
 
-    def makeWorldVolume(self, worldMaterial = 'G4_Galactic'):
-
+    def makeWorldVolume(self, worldMaterial='G4_Galactic'):
+        """
+        This will create a container box according to the extents of this logical volume:
+        an axis-aligned bounding-box. It will be filled with the given material (predefined
+        by name) and assigned as the world volume (outermost) of the registry according
+        to this logical volume.
+        """
         import pyg4ometry.geant4 as _g4
 
         extent = self.extent(True)

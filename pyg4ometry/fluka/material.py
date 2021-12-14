@@ -1,7 +1,6 @@
-import os
 from itertools import zip_longest as _zip_longest
 
-from .card import Card
+from .card import Card as _Card
 
 # http://www.fluka.org/content/manuals/online/5.2.html
 # name, atomic mass, atomic number, density in g/cm3
@@ -86,7 +85,7 @@ class _MatProp(object):
         return self.density < 0.01 or self.pressure
 
     def makeMatPropCard(self):
-        return Card("MAT-PROP", what1=self.pressure, what4=self.name)
+        return _Card("MAT-PROP", what1=self.pressure, what4=self.name)
 
 class Material(_MatProp):
     """A FLUKA material consisting of a single element.  This corresponds
@@ -102,7 +101,7 @@ class Material(_MatProp):
     :type density: float
     :param massNumber: Optional mass number, will be inferred in FLUKA \
     based on atomicNumber.  Allows one to specify a specific isotope.
-    :type massNumber: int
+    :type massNumber: int, None
     :param atomicMass: The mass of the atom in g/mole.  Will be
     inferred in FLUKA based on atomicNumber.
     :type atomicMass: float
@@ -128,7 +127,7 @@ class Material(_MatProp):
             flukaregistry.addMaterial(self)
 
     def toCards(self):
-        material = [Card("MATERIAL",
+        material = [_Card("MATERIAL",
                          what1=self.atomicNumber,
                          what2=self.atomicMass,
                          what3=self.density,
@@ -159,7 +158,8 @@ class Material(_MatProp):
 
 
 class Compound(_MatProp):
-    """A FLUKA compound material.  This corresponds to the case in
+    """
+    A FLUKA compound material. This corresponds to the case in
     FLUKA of a single MATERIAL card with one or more associated
     COMPOUND cards.
 
@@ -177,8 +177,6 @@ class Compound(_MatProp):
     :param flukaregistry: Optional FlukaRegistry instance the Compound \
     is to be added to.
     :type flukaregistry: FlukaRegistry
-
-
     """
     def __init__(self, name, density, fractions, fractionType,
                  pressure=None,
@@ -196,7 +194,7 @@ class Compound(_MatProp):
 
     def toCards(self):
         compoundName =self.name
-        material = Card(keyword="MATERIAL",
+        material = _Card(keyword="MATERIAL",
                         what3=self.density,
                         sdum=compoundName)
 
@@ -215,7 +213,7 @@ class Compound(_MatProp):
         for first, second, third in  _grouper(3, self.fractions):
             frac, name  = _formatFlukaMaterialPair(first, namePrefix,
                                                    fractionPrefix)
-            card = Card("COMPOUND", what1=frac, what2=name, sdum=compoundName)
+            card = _Card("COMPOUND", what1=frac, what2=name, sdum=compoundName)
             if second is not None:
                 frac, name  = _formatFlukaMaterialPair(second,
                                                        namePrefix,
@@ -259,8 +257,7 @@ class Compound(_MatProp):
             raise TypeError("Mixed mass, volume, and fraction types"
                             f" are not supported for material={compoundName}")
 
-        # Map the material names to material/compound instances via
-        # the FlukaRegistry.
+        # Map the material names to material/compound instances via the FlukaRegistry.
         fractions = [(flukareg.getMaterial(name), f) for name, f in fractions]
 
         return cls(compoundName, density, fractions, fractionTypes[0],

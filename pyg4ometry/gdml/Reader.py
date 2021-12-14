@@ -1,32 +1,29 @@
-import numpy                             as _np
+from collections import defaultdict      as _defaultdict
 import re                                as _re
 from   xml.dom import minidom            as _minidom
 import xml.parsers.expat                 as _expat
-import warnings                          as _warnings
-from   math import pi                    as _pi
-from . import Defines                           as _defines
+from . import Defines                    as _defines
 import logging                           as _log
-
 import pyg4ometry.geant4                          as _g4
-import pyg4ometry.visualisation                   as _vtk
-from   pyg4ometry.geant4 import Expression        as _Expression
 
 class Reader(object):
-
     def __init__(self, fileName, registryOn = True):
         super(Reader, self).__init__()
         self.filename   = fileName    
         self.registryOn = registryOn    
 
         if self.registryOn : 
-            self._registry = _g4.Registry() 
+            self._registry = _g4.Registry()
+
+        self._physVolumeNameCount = _defaultdict(int)
         
         # load file
         self.load()
 
     def load(self):
-
         _log.info('Reader.load>')
+        self._physVolumeNameCount.clear()
+
         # open file 
         data  = open(self.filename)
 
@@ -1290,7 +1287,7 @@ class Reader(object):
 
                 # if not defined then need to define defaults
                 position = _defines.Position(mu_node_name.value+"_pos","0","0","0","mm",self._registry,False)
-                rotation = _defines.Rotation(mu_node_name.value+"_rot","0","0","0","mm",self._registry,False)     
+                rotation = _defines.Rotation(mu_node_name.value+"_rot","0","0","0","rad",self._registry,False)
 
                 # loop over child nodes 
                 for cn in n.childNodes :
@@ -1427,8 +1424,13 @@ class Reader(object):
                 # Name 
                 try : 
                     pvol_name = chNode.attributes["name"].value
-                except KeyError : 
-                    pvol_name = volref+"_PV"
+                except KeyError:
+                    # no name given - in the Geant4 GDML reader it would be <lv name> + _PV
+                    # here we do the same but we truly require unique names, so we count them
+                    count = self._physVolumeNameCount[volref]
+                    suffix = '_'+str(count) if count > 0 else ''
+                    pvol_name = volref+suffix+"_PV"
+                    self._physVolumeNameCount[volref] += 1
                             
                 _log.info('Reader.extractStructureNodeData> %s' % (pvol_name))
                             

@@ -3,7 +3,7 @@ import vtk as _vtk
 import pyg4ometry.transformation as _transformation
 from   pyg4ometry.visualisation  import OverlapType as _OverlapType
 from   pyg4ometry.visualisation import VisualisationOptions as _VisOptions
-from .VisualisationOptions import predefinedMaterialVisOptions as _predefinedMaterialVisOptions
+from .VisualisationOptions import getPredefinedMaterialVisOptions as _getPredefinedMaterialVisOptions
 from   pyg4ometry.visualisation import Convert as _Convert
 import logging as _log
 import random as _random
@@ -73,6 +73,7 @@ class VtkViewer:
         self.xcutters = []
         self.ycutters = []
         self.zcutters = []
+        self.usercutters = []
 
         # axes
         self.axes = []
@@ -109,7 +110,7 @@ class VtkViewer:
         self.ren.AddActor(axes)
 
     def addAxesWidget(self):
-        axesActor = _vtk.vtkAnnotatedCubeActor();
+        axesActor = _vtk.vtkAnnotatedCubeActor()
         axesActor.SetXPlusFaceText('+x')
         axesActor.SetXMinusFaceText('-x')
         axesActor.SetYPlusFaceText('+y')
@@ -125,7 +126,7 @@ class VtkViewer:
         self.axesWidget.EnabledOn()
         self.axesWidget.InteractiveOn()
 
-    def setOpacity(self, v, iActor = -1):
+    def setOpacity(self, v, iActor=-1):
         for a, i in zip(self.actors,range(0,len(self.actors))):
             if i == iActor :
                 a.GetProperty().SetOpacity(v)
@@ -316,8 +317,8 @@ class VtkViewer:
             raise RuntimeError('Need a filename.')
 
 
-    def addLogicalVolume(self, logical, mtra=_np.matrix([[1,0,0],[0,1,0],[0,0,1]]), tra=_np.array([0,0,0])) :
-        if logical.type == "logical" :
+    def addLogicalVolume(self, logical, mtra=_np.matrix([[1,0,0],[0,1,0],[0,0,1]]), tra=_np.array([0,0,0]), recursive=True):
+        if logical.type == "logical":
             self.addLogicalVolumeBounding(logical)
             for [overlapmesh, overlaptype], i in zip(logical.mesh.overlapmeshes,
                                                      range(0, len(logical.mesh.overlapmeshes))):
@@ -328,8 +329,9 @@ class VtkViewer:
                              self.physicalActorMapOverlap,
                              visOptions=visOptions, overlap=True, cutters=False)
 
-        # recurse down scene hierarchy
-        self.addLogicalVolumeRecursive(logical, mtra, tra)
+        if recursive:
+            # recurse down scene hierarchy
+            self.addLogicalVolumeRecursive(logical, mtra, tra)
 
     def addLogicalVolumeBounding(self, logical):
         # add logical solid as wireframe 
@@ -693,32 +695,32 @@ class VtkViewer:
         # check if there is a material visualisation options
 
         # set visualisation properties
-        if visOptions :
+        if visOptions:
             vtkActor.GetProperty().SetColor(*visOptions.getColour())
             vtkActor.GetProperty().SetOpacity(visOptions.alpha)
-            if visOptions.representation == "surface" :
+            if visOptions.representation == "surface":
                 vtkActor.GetProperty().SetRepresentationToSurface()
-            elif visOptions.representation == "wireframe" :
+            elif visOptions.representation == "wireframe":
                 vtkActor.GetProperty().SetRepresentationToWireframe()
-        else : 
+        else:
             vtkActor.GetProperty().SetColor(1,0,0)
 
         vtkActor.SetVisibility(visOptions.visible)
         actors.append(vtkActor)
         self.ren.AddActor(vtkActor)
 
-    def view(self, interactive = True, resetCamera = True ):
+    def view(self, interactive=True, resetCamera=True ):
         # enable user interface interactor
         self.iren.Initialize()
 
         # Camera setup
-        if resetCamera :
+        if resetCamera:
             self.ren.ResetCamera()
 
         # Render
         self.renWin.Render()
 
-        if interactive : 
+        if interactive:
             self.iren.Start()
 
     def _getCutterData(self, axis='x', scaling=1.0):
@@ -728,6 +730,8 @@ class VtkViewer:
             cutters = self.ycutters
         elif axis == 'z':
             cutters = self.zcutters
+        else:
+            raise ValueError("axis is not one of x,y,z")
 
         allX = []
         allY = []
@@ -774,31 +778,29 @@ class VtkViewer:
         json.dump(d,f)
         f.close()
 
-    def viewSection(self, dir = 'x'):
+    def viewSection(self, dir='x'):
         import matplotlib.pyplot as _plt
-        from vtk.numpy_interface import dataset_adapter as dsa
-        import pyg4ometry.pycgal.algo as algo
-        import random
+        #from vtk.numpy_interface import dataset_adapter as dsa
 
-        if dir == 'x' :
+        if dir == 'x':
             cutters = self.xcutters
-        elif dir == 'y' :
+        elif dir == 'y':
             cutters = self.ycutters
-        elif dir == 'z' :
+        elif dir == 'z':
             cutters = self.zcutters
         else:
             raise ValueError("Unknown direction " + dir)
 
         for c in cutters:
             pd = c.GetOutput()
-            for i in range(0,pd.GetNumberOfCells(),1) :
+            for i in range(0, pd.GetNumberOfCells(), 1):
                 idl = _vtk.vtkIdList()
-                pd.GetCellPoints(i,idl)
+                pd.GetCellPoints(i, idl)
 
                 x = []
                 y = []
 
-                for j in range(0,idl.GetNumberOfIds(),1) :
+                for j in range(0, idl.GetNumberOfIds(), 1):
                     p = pd.GetPoint(idl.GetId(j))
 
                     if dir == 'x':
@@ -817,7 +819,7 @@ class VtkViewer:
         """
         Add a cutting plane at position=[x,y,z] with normal [nx,ny,nz].
 
-        :param position: [float, float, float] - (x,y,z) poisition in scene (mm)
+        :param position: [float, float, float] - (x,y,z) position in scene (mm)
         :param normal:   [float, float, float] - (nx,ny,z) normal unit vector
         :param colour: None or [float, float, float] - [r,g,b] in range [0:1]
         
@@ -952,7 +954,7 @@ class VtkViewerColouredMaterial(PubViewer):
     Geant4, FLUKA and BDSIM materials.
     """
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, materialVisOptions=_predefinedMaterialVisOptions, **kwargs)
+        super().__init__(*args, materialVisOptions=_getPredefinedMaterialVisOptions(), **kwargs)
 
 class MouseInteractorNamePhysicalVolume(_vtk.vtkInteractorStyleTrackballCamera):
     def __init__(self, renderer, vtkviewer):
@@ -990,3 +992,60 @@ def axesFromExtents(extent):
     length = diff.max()/2
 
     return length,centre
+
+def viewLogicalVolumeDifference(referenceLV, otherLV, otherTranslation=[0,0,0], otherRotation=[0,0,0], viewDifference=True):
+    """
+    :param referenceLV: LogicalVolume instance to view viewed in red.
+    :type  referenceLV: pyg4ometry.geant4.LogicalVolume.
+    :param referenceLV: LogicalVolume instance to view viewed in blue.
+    :type  referenceLV: pyg4ometry.geant4.LogicalVolume.
+    :param otherTranslation: Translation (in native units, mm) of otherLV w.r.t. referenceLV
+    :type  otherTranslation: [float, float, float]
+    :param otherRotation: Rotation (in native units, rad) of other LV w.r.t. referenceLV.
+    :type  otherRotation: [float, float, float]
+
+    View the shapes of 2 logical volumes without their contents. The reference one will be red and
+    the 'other' one will be blue.
+
+    The other one may optionally be translated and rotated (Tait-Bryant x,y,z) relative to the reference.
+    """
+    lvr = referenceLV
+    lvo = otherLV
+    v = VtkViewer()
+
+    visOptions1 = _VisOptions()
+    visOptions1.colour = [1.0, 0.0, 0.0] # red
+    visOptions1.alpha = 0.4
+    mtra = _np.matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+    v.addMesh("referenceLV", lvr.solid.name, lvr.mesh.localmesh, mtra, _np.array([0, 0, 0]),
+              v.localmeshes, v.filters, v.mappers, v.physicalMapperMap, v.actors, v.physicalActorMap,
+              visOptions=visOptions1, overlap=False)
+
+    visOptions2 = _VisOptions()
+    visOptions2.colour = [0.0, 0.0, 1.0]  # blue
+    visOptions2.alpha = 0.4
+    oRotation = _transformation.tbxyz2matrix(otherRotation)
+    oTranslation = _np.array(otherTranslation)
+    v.addMesh("otherLV", lvo.solid.name, lvo.mesh.localmesh, oRotation, oTranslation,
+              v.localmeshes, v.filters, v.mappers, v.physicalMapperMap, v.actors, v.physicalActorMap,
+              visOptions=visOptions2, overlap=False)
+
+    if viewDifference:
+        oMeshClone = lvo.mesh.localmesh.clone()
+        #aa = oRotation
+        import pyg4ometry
+        #print(pyg4ometry.pycgal.geom.Vector(aa[0]))
+        aa = _transformation.matrix2axisangle(oRotation)
+        tra = oTranslation
+        oMeshClone.rotate(aa[0], -aa[1] / _np.pi * 180.)
+        oMeshClone.translate([tra[0], tra[1], tra[2]])
+        differenceMesh = oMeshClone.subtract(lvr.mesh.localmesh.clone())
+        visOptions3 = _VisOptions()
+        visOptions3.colour = [0.0, 1.0, 0.0]  # blue
+        visOptions3.alpha = 0.8
+        v.addMesh("difference-mesh", "difference-solid", differenceMesh, mtra, _np.array([0, 0, 0]),
+                  v.localmeshes, v.filters, v.mappers, v.physicalMapperMap, v.actors, v.physicalActorMap,
+                  visOptions=visOptions3, overlap=False)
+
+    v.view()
+    return v
