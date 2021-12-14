@@ -6,6 +6,7 @@ import ROOT as _ROOT
 import pyg4ometry as _pyg4ometry
 
 def gdml2ROOT(gdmlFileName, rootFileName):
+    _ROOT.TGeoManager.SetVerboseLevel(0)
     tgm = _ROOT.TGeoManager.Import(_os.path.join(_os.path.dirname(__file__),gdmlFileName))
     tgm.Export(_os.path.join(_os.path.dirname(__file__),rootFileName))
 
