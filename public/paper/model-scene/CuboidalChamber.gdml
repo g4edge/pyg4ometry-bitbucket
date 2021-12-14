@@ -1,0 +1,377 @@
+<?xml version="1.0" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+	<define/>
+	<materials/>
+	<solids>
+		<box name="test1_chamberBodyOuterSolid" x="590" y="240" z="940" lunit="mm"/>
+		<box name="test1_chamberBodyInnerSolid" x="560" y="240.00001" z="910" lunit="mm"/>
+		<subtraction name="test1_chamberBody">
+			<first ref="test1_chamberBodyOuterSolid"/>
+			<second ref="test1_chamberBodyInnerSolid"/>
+		</subtraction>
+		<box name="test1_chamberFlangeOuterSolid" x="650" y="15" z="1000" lunit="mm"/>
+		<box name="test1_chamberFlangeInnerSolid" x="560" y="15.00001" z="910" lunit="mm"/>
+		<subtraction name="test1_flangeBody">
+			<first ref="test1_chamberFlangeOuterSolid"/>
+			<second ref="test1_chamberFlangeInnerSolid"/>
+		</subtraction>
+		<union name="test1_chamberSolid1">
+			<first ref="test1_chamberBody"/>
+			<second ref="test1_flangeBody"/>
+			<position name="test1_chamberSolid1_translation" x="0.000000000000000" y="127.499989999999997" z="0.000000000000000" unit="mm"/>
+		</union>
+		<union name="test1_chamberSolid2">
+			<first ref="test1_chamberSolid1"/>
+			<second ref="test1_flangeBody"/>
+			<position name="test1_chamberSolid2_translation" x="0.000000000000000" y="-127.499989999999997" z="0.000000000000000" unit="mm"/>
+		</union>
+		<tube name="test1_port1_bp" rmin="50.0" rmax="55.0" z="900" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port1_bpInner" rmin="0" rmax="50.0" z="900" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port1flange2_flange" rmin="0" rmax="76.0" z="20.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port1flange2_hole_0" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_0">
+			<first ref="test1_port1flange2_flange"/>
+			<second ref="test1_port1flange2_hole_0"/>
+			<position name="test1_port1flange2_sub_0_translation" x="65.150000000000006" y="0.000000000000000" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_1" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_1">
+			<first ref="test1_port1flange2_sub_0"/>
+			<second ref="test1_port1flange2_hole_1"/>
+			<position name="test1_port1flange2_sub_1_translation" x="60.190751543110338" y="24.931825618585602" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_2" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_2">
+			<first ref="test1_port1flange2_sub_1"/>
+			<second ref="test1_port1flange2_hole_2"/>
+			<position name="test1_port1flange2_sub_2_translation" x="46.068006794303578" y="46.068006794303571" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_3" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_3">
+			<first ref="test1_port1flange2_sub_2"/>
+			<second ref="test1_port1flange2_hole_3"/>
+			<position name="test1_port1flange2_sub_3_translation" x="24.931825618585606" y="60.190751543110338" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_4" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_4">
+			<first ref="test1_port1flange2_sub_3"/>
+			<second ref="test1_port1flange2_hole_4"/>
+			<position name="test1_port1flange2_sub_4_translation" x="0.000000000000004" y="65.150000000000006" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_5" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_5">
+			<first ref="test1_port1flange2_sub_4"/>
+			<second ref="test1_port1flange2_hole_5"/>
+			<position name="test1_port1flange2_sub_5_translation" x="-24.931825618585599" y="60.190751543110338" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_6" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_6">
+			<first ref="test1_port1flange2_sub_5"/>
+			<second ref="test1_port1flange2_hole_6"/>
+			<position name="test1_port1flange2_sub_6_translation" x="-46.068006794303571" y="46.068006794303578" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_7" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_7">
+			<first ref="test1_port1flange2_sub_6"/>
+			<second ref="test1_port1flange2_hole_7"/>
+			<position name="test1_port1flange2_sub_7_translation" x="-60.190751543110338" y="24.931825618585609" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_8" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_8">
+			<first ref="test1_port1flange2_sub_7"/>
+			<second ref="test1_port1flange2_hole_8"/>
+			<position name="test1_port1flange2_sub_8_translation" x="-65.150000000000006" y="0.000000000000008" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_9" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_9">
+			<first ref="test1_port1flange2_sub_8"/>
+			<second ref="test1_port1flange2_hole_9"/>
+			<position name="test1_port1flange2_sub_9_translation" x="-60.190751543110345" y="-24.931825618585595" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_10" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_10">
+			<first ref="test1_port1flange2_sub_9"/>
+			<second ref="test1_port1flange2_hole_10"/>
+			<position name="test1_port1flange2_sub_10_translation" x="-46.068006794303585" y="-46.068006794303571" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_11" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_11">
+			<first ref="test1_port1flange2_sub_10"/>
+			<second ref="test1_port1flange2_hole_11"/>
+			<position name="test1_port1flange2_sub_11_translation" x="-24.931825618585638" y="-60.190751543110323" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_12" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_12">
+			<first ref="test1_port1flange2_sub_11"/>
+			<second ref="test1_port1flange2_hole_12"/>
+			<position name="test1_port1flange2_sub_12_translation" x="-0.000000000000012" y="-65.150000000000006" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_13" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_13">
+			<first ref="test1_port1flange2_sub_12"/>
+			<second ref="test1_port1flange2_hole_13"/>
+			<position name="test1_port1flange2_sub_13_translation" x="24.931825618585616" y="-60.190751543110331" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_14" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_14">
+			<first ref="test1_port1flange2_sub_13"/>
+			<second ref="test1_port1flange2_hole_14"/>
+			<position name="test1_port1flange2_sub_14_translation" x="46.068006794303564" y="-46.068006794303585" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_hole_15" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_15">
+			<first ref="test1_port1flange2_sub_14"/>
+			<second ref="test1_port1flange2_hole_15"/>
+			<position name="test1_port1flange2_sub_15_translation" x="60.190751543110323" y="-24.931825618585641" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port1flange2_cf" rmin="0" rmax="60.25" z="1.4" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port1flange2_sub_16">
+			<first ref="test1_port1flange2_sub_15"/>
+			<second ref="test1_port1flange2_cf"/>
+			<position name="test1_port1flange2_sub_16_translation" x="0.000000000000000" y="0.000000000000000" z="10.000000000000000" unit="mm"/>
+		</subtraction>
+		<subtraction name="test1_port1flange2_sub_16_cut">
+			<first ref="test1_port1flange2_sub_16"/>
+			<second ref="test1_port1_bpInner"/>
+		</subtraction>
+		<union name="test1_port1_bp_flange2">
+			<first ref="test1_port1_bp"/>
+			<second ref="test1_port1flange2_sub_16_cut"/>
+			<position name="test1_port1_bp_flange2_translation" x="0.000000000000000" y="0.000000000000000" z="440.000000000000000" unit="mm"/>
+		</union>
+		<tube name="test1_port1_bp_flange2_cut_port1" rmin="0" rmax="50.0" z="1000" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_chamberSolid3_port1">
+			<first ref="test1_chamberSolid2"/>
+			<second ref="test1_port1_bp_flange2_cut_port1"/>
+			<position name="test1_chamberSolid3_port1_translation" x="0.000000000000000" y="0.000000000000000" z="500.000000000000000" unit="mm"/>
+		</subtraction>
+		<union name="test1_chamberSolid4_port1">
+			<first ref="test1_chamberSolid3_port1"/>
+			<second ref="test1_port1_bp_flange2"/>
+			<position name="test1_chamberSolid4_port1_translation" x="0.000000000000000" y="0.000000000000000" z="450.000000000000000" unit="mm"/>
+		</union>
+		<subtraction name="test1_chamberSolid5_port1">
+			<first ref="test1_chamberSolid4_port1"/>
+			<second ref="test1_chamberBodyInnerSolid"/>
+		</subtraction>
+		<tube name="test1_port2_bp" rmin="15.0" rmax="20.0" z="900" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port2_bpInner" rmin="0" rmax="15.0" z="900" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port2flange2_flange" rmin="0" rmax="34.75" z="13.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port2flange2_hole_0" rmin="0" rmax="3.3" z="13.65" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_0">
+			<first ref="test1_port2flange2_flange"/>
+			<second ref="test1_port2flange2_hole_0"/>
+			<position name="test1_port2flange2_sub_0_translation" x="29.350000000000001" y="0.000000000000000" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port2flange2_hole_1" rmin="0" rmax="3.3" z="13.65" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_1">
+			<first ref="test1_port2flange2_sub_0"/>
+			<second ref="test1_port2flange2_hole_1"/>
+			<position name="test1_port2flange2_sub_1_translation" x="14.675000000000004" y="25.417845601073275" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port2flange2_hole_2" rmin="0" rmax="3.3" z="13.65" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_2">
+			<first ref="test1_port2flange2_sub_1"/>
+			<second ref="test1_port2flange2_hole_2"/>
+			<position name="test1_port2flange2_sub_2_translation" x="-14.674999999999995" y="25.417845601073278" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port2flange2_hole_3" rmin="0" rmax="3.3" z="13.65" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_3">
+			<first ref="test1_port2flange2_sub_2"/>
+			<second ref="test1_port2flange2_hole_3"/>
+			<position name="test1_port2flange2_sub_3_translation" x="-29.350000000000001" y="0.000000000000004" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port2flange2_hole_4" rmin="0" rmax="3.3" z="13.65" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_4">
+			<first ref="test1_port2flange2_sub_3"/>
+			<second ref="test1_port2flange2_hole_4"/>
+			<position name="test1_port2flange2_sub_4_translation" x="-14.675000000000013" y="-25.417845601073267" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port2flange2_hole_5" rmin="0" rmax="3.3" z="13.65" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_5">
+			<first ref="test1_port2flange2_sub_4"/>
+			<second ref="test1_port2flange2_hole_5"/>
+			<position name="test1_port2flange2_sub_5_translation" x="14.674999999999981" y="-25.417845601073289" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port2flange2_cf" rmin="0" rmax="24.05" z="1.4" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port2flange2_sub_6">
+			<first ref="test1_port2flange2_sub_5"/>
+			<second ref="test1_port2flange2_cf"/>
+			<position name="test1_port2flange2_sub_6_translation" x="0.000000000000000" y="0.000000000000000" z="6.500000000000000" unit="mm"/>
+		</subtraction>
+		<subtraction name="test1_port2flange2_sub_6_cut">
+			<first ref="test1_port2flange2_sub_6"/>
+			<second ref="test1_port2_bpInner"/>
+		</subtraction>
+		<union name="test1_port2_bp_flange2">
+			<first ref="test1_port2_bp"/>
+			<second ref="test1_port2flange2_sub_6_cut"/>
+			<position name="test1_port2_bp_flange2_translation" x="0.000000000000000" y="0.000000000000000" z="443.500000000000000" unit="mm"/>
+		</union>
+		<tube name="test1_port2_bp_flange2_cut_port2" rmin="0" rmax="15.0" z="1000" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_chamberSolid3_port2">
+			<first ref="test1_chamberSolid5_port1"/>
+			<second ref="test1_port2_bp_flange2_cut_port2"/>
+			<position name="test1_chamberSolid3_port2_translation" x="171.010071662834349" y="0.000000000000000" z="469.846310392954194" unit="mm"/>
+			<rotation name="test1_chamberSolid3_port2_rotation" x="0.000000000000000" y="0.349065850398866" z="0.000000000000000" unit="rad"/>
+		</subtraction>
+		<union name="test1_chamberSolid4_port2">
+			<first ref="test1_chamberSolid3_port2"/>
+			<second ref="test1_port2_bp_flange2"/>
+			<position name="test1_chamberSolid4_port2_translation" x="153.909064496550911" y="0.000000000000000" z="422.861679353658815" unit="mm"/>
+			<rotation name="test1_chamberSolid4_port2_rotation" x="0.000000000000000" y="0.349065850398866" z="0.000000000000000" unit="rad"/>
+		</union>
+		<subtraction name="test1_chamberSolid5_port2">
+			<first ref="test1_chamberSolid4_port2"/>
+			<second ref="test1_chamberBodyInnerSolid"/>
+		</subtraction>
+		<tube name="test1_port3_bp" rmin="50.0" rmax="55.0" z="400" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port3_bpInner" rmin="0" rmax="50.0" z="400" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port3flange2_flange" rmin="0" rmax="76.0" z="20.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<tube name="test1_port3flange2_hole_0" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_0">
+			<first ref="test1_port3flange2_flange"/>
+			<second ref="test1_port3flange2_hole_0"/>
+			<position name="test1_port3flange2_sub_0_translation" x="65.150000000000006" y="0.000000000000000" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_1" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_1">
+			<first ref="test1_port3flange2_sub_0"/>
+			<second ref="test1_port3flange2_hole_1"/>
+			<position name="test1_port3flange2_sub_1_translation" x="60.190751543110338" y="24.931825618585602" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_2" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_2">
+			<first ref="test1_port3flange2_sub_1"/>
+			<second ref="test1_port3flange2_hole_2"/>
+			<position name="test1_port3flange2_sub_2_translation" x="46.068006794303578" y="46.068006794303571" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_3" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_3">
+			<first ref="test1_port3flange2_sub_2"/>
+			<second ref="test1_port3flange2_hole_3"/>
+			<position name="test1_port3flange2_sub_3_translation" x="24.931825618585606" y="60.190751543110338" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_4" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_4">
+			<first ref="test1_port3flange2_sub_3"/>
+			<second ref="test1_port3flange2_hole_4"/>
+			<position name="test1_port3flange2_sub_4_translation" x="0.000000000000004" y="65.150000000000006" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_5" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_5">
+			<first ref="test1_port3flange2_sub_4"/>
+			<second ref="test1_port3flange2_hole_5"/>
+			<position name="test1_port3flange2_sub_5_translation" x="-24.931825618585599" y="60.190751543110338" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_6" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_6">
+			<first ref="test1_port3flange2_sub_5"/>
+			<second ref="test1_port3flange2_hole_6"/>
+			<position name="test1_port3flange2_sub_6_translation" x="-46.068006794303571" y="46.068006794303578" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_7" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_7">
+			<first ref="test1_port3flange2_sub_6"/>
+			<second ref="test1_port3flange2_hole_7"/>
+			<position name="test1_port3flange2_sub_7_translation" x="-60.190751543110338" y="24.931825618585609" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_8" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_8">
+			<first ref="test1_port3flange2_sub_7"/>
+			<second ref="test1_port3flange2_hole_8"/>
+			<position name="test1_port3flange2_sub_8_translation" x="-65.150000000000006" y="0.000000000000008" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_9" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_9">
+			<first ref="test1_port3flange2_sub_8"/>
+			<second ref="test1_port3flange2_hole_9"/>
+			<position name="test1_port3flange2_sub_9_translation" x="-60.190751543110345" y="-24.931825618585595" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_10" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_10">
+			<first ref="test1_port3flange2_sub_9"/>
+			<second ref="test1_port3flange2_hole_10"/>
+			<position name="test1_port3flange2_sub_10_translation" x="-46.068006794303585" y="-46.068006794303571" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_11" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_11">
+			<first ref="test1_port3flange2_sub_10"/>
+			<second ref="test1_port3flange2_hole_11"/>
+			<position name="test1_port3flange2_sub_11_translation" x="-24.931825618585638" y="-60.190751543110323" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_12" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_12">
+			<first ref="test1_port3flange2_sub_11"/>
+			<second ref="test1_port3flange2_hole_12"/>
+			<position name="test1_port3flange2_sub_12_translation" x="-0.000000000000012" y="-65.150000000000006" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_13" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_13">
+			<first ref="test1_port3flange2_sub_12"/>
+			<second ref="test1_port3flange2_hole_13"/>
+			<position name="test1_port3flange2_sub_13_translation" x="24.931825618585616" y="-60.190751543110331" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_14" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_14">
+			<first ref="test1_port3flange2_sub_13"/>
+			<second ref="test1_port3flange2_hole_14"/>
+			<position name="test1_port3flange2_sub_14_translation" x="46.068006794303564" y="-46.068006794303585" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_hole_15" rmin="0" rmax="4.2" z="21.0" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_15">
+			<first ref="test1_port3flange2_sub_14"/>
+			<second ref="test1_port3flange2_hole_15"/>
+			<position name="test1_port3flange2_sub_15_translation" x="60.190751543110323" y="-24.931825618585641" z="0.000000000000000" unit="mm"/>
+		</subtraction>
+		<tube name="test1_port3flange2_cf" rmin="0" rmax="60.25" z="1.4" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_port3flange2_sub_16">
+			<first ref="test1_port3flange2_sub_15"/>
+			<second ref="test1_port3flange2_cf"/>
+			<position name="test1_port3flange2_sub_16_translation" x="0.000000000000000" y="0.000000000000000" z="10.000000000000000" unit="mm"/>
+		</subtraction>
+		<subtraction name="test1_port3flange2_sub_16_cut">
+			<first ref="test1_port3flange2_sub_16"/>
+			<second ref="test1_port3_bpInner"/>
+		</subtraction>
+		<union name="test1_port3_bp_flange2">
+			<first ref="test1_port3_bp"/>
+			<second ref="test1_port3flange2_sub_16_cut"/>
+			<position name="test1_port3_bp_flange2_translation" x="0.000000000000000" y="0.000000000000000" z="190.000000000000000" unit="mm"/>
+		</union>
+		<tube name="test1_port3_bp_flange2_cut_port3" rmin="0" rmax="50.0" z="1000" startphi="0" deltaphi="2*pi" lunit="mm" aunit="rad"/>
+		<subtraction name="test1_chamberSolid3_port3">
+			<first ref="test1_chamberSolid5_port2"/>
+			<second ref="test1_port3_bp_flange2_cut_port3"/>
+			<position name="test1_chamberSolid3_port3_translation" x="500.000000000000000" y="0.000000000000000" z="0.000000000000031" unit="mm"/>
+			<rotation name="test1_chamberSolid3_port3_rotation" x="0.000000000000000" y="1.570796326794897" z="0.000000000000000" unit="rad"/>
+		</subtraction>
+		<union name="test1_chamberSolid4_port3">
+			<first ref="test1_chamberSolid3_port3"/>
+			<second ref="test1_port3_bp_flange2"/>
+			<position name="test1_chamberSolid4_port3_translation" x="200.000000000000000" y="0.000000000000000" z="0.000000000000012" unit="mm"/>
+			<rotation name="test1_chamberSolid4_port3_rotation" x="0.000000000000000" y="1.570796326794897" z="0.000000000000000" unit="rad"/>
+		</union>
+		<subtraction name="test1_chamberSolid5_port3">
+			<first ref="test1_chamberSolid4_port3"/>
+			<second ref="test1_chamberBodyInnerSolid"/>
+		</subtraction>
+		<box name="worldSolid" x="7250.0" y="2699.9998" z="14000.0" lunit="mm"/>
+	</solids>
+	<structure>
+		<volume name="chamberLogical">
+			<materialref ref="G4_STAINLESS-STEEL"/>
+			<solidref ref="test1_chamberSolid5_port3"/>
+		</volume>
+		<volume name="wl">
+			<materialref ref="G4_Galactic"/>
+			<solidref ref="worldSolid"/>
+			<physvol name="chamber_pv1">
+				<volumeref ref="chamberLogical"/>
+			</physvol>
+		</volume>
+	</structure>
+	<setup name="Default" version="1.0">
+		<world ref="wl"/>
+	</setup>
+</gdml>
