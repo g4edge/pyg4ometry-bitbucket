@@ -1,1 +1,4 @@
-from . import usd as usd
+try:
+    from .usd import *
+except ImportError:
+    pass
