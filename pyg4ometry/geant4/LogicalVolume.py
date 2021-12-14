@@ -83,7 +83,7 @@ class LogicalVolume(object):
             self.mesh            = _Mesh(self.solid)
         except :
             self.mesh           = None
-            print("geant4.LogicalVolume> meshing error {}".format(self.name))
+            print("geant4.LogicalVolume> meshing error {} {}".format(self.name,self.solid.type))
 
         self.auxiliary       = []
         self.addAuxiliaryInfo(kwargs.get("auxiliary", None))
