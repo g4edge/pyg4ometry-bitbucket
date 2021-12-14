@@ -351,14 +351,18 @@ class VtkViewer:
         if solid.type == "Union" or solid.type == "Subtraction" or solid.type == "Intersection" :
 
             if first:
-                mesh = solid.mesh()
-                visOptions = _VisOptions()
-                visOptions.representation = "surface"
-                visOptions.alpha = 1.0
-                visOptions.color = [0.5, 0.5, 0.5]
-                self.addMesh(solid.name, solid.name, mesh, mtra, tra, self.localmeshes,
-                             self.filters, self.mappers, self.physicalMapperMap, self.actors,
-                             self.physicalActorMap, visOptions=visOptions, overlap=False, cutters=False)
+                try :
+                    mesh = solid.mesh()
+                    visOptions = _VisOptions()
+                    visOptions.representation = "surface"
+                    visOptions.alpha = 1.0
+                    visOptions.color = [0.5, 0.5, 0.5]
+                    self.addMesh(solid.name, solid.name, mesh, mtra, tra, self.localmeshes,
+                                 self.filters, self.mappers, self.physicalMapperMap, self.actors,
+                                 self.physicalActorMap, visOptions=visOptions, overlap=False, cutters=False)
+                except :
+                    print("meshing error")
+
                 first = False
 
             obj1 = solid.object1()
