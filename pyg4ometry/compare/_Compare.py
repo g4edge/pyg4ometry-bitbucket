@@ -69,6 +69,13 @@ class Tests:
         for name in cls._testNames:
             print('"' + name + '"')
 
+    def __repr__(self):
+        s = ""
+        for name in self._testNames:
+            s += name + ": " + str(getattr(self,name)) + "\n"
+        return s
+
+
 class TestResult(_enum.Enum):
     """
     A test result can be either pass, fail or not conducted.
@@ -141,6 +148,8 @@ class ComparisonResult:
 
     def __add__(self, other):
         result = _deepcopy(self)
+        if other is None:
+            return result
         for testName,results in other.test:
             result.test[testName].extend(results)
             for v in results:
@@ -148,6 +157,8 @@ class ComparisonResult:
         return result
 
     def __iadd__(self, other):
+        if other is None:
+            return self
         self.result = self.result | other.result # this should already be a product of all subtests
         for testName, results in other.test.items():
             self.test[testName].extend(results)
@@ -247,7 +258,7 @@ def logicalVolumes(referenceLV, otherLV, tests, recursive=False, includeAllTestR
 
     if tests.names:
         result += _names("logicalVolumeName", rlv.name, olv.name, testName, includeAllTestResults)
-    result += solids(rlv.solid, olv.solid, tests,testName, includeAllTestResults)
+    result += solids(rlv.solid, olv.solid, tests, testName, includeAllTestResults)
     if tests.materials:
         if ("mat_test_"+rlv.material.name, "mat_test_"+olv.material.name) not in testsAlreadyDone:
             result += materials(rlv.material, olv.material, tests, testName, includeAllTestResults)
@@ -299,7 +310,8 @@ def logicalVolumes(referenceLV, otherLV, tests, recursive=False, includeAllTestR
             result = _checkPVLikeDaughters(i_rDaughter, i_oDaughter, tests, rlv.name, testName,
                                            result, recursive, includeAllTestResults, testsAlreadyDone)
 
-    result = _testDaughterNameSets(rSet, oSet, result, testName, includeAllTestResults)
+    if tests.names:
+        result = _testDaughterNameSets(rSet, oSet, result, testName, includeAllTestResults)
 
     testsAlreadyDone.append( ("lv_test_"+referenceLV.name, "lv_test_"+otherLV.name) )
     return result
@@ -541,8 +553,8 @@ def replicaVolumes(referenceRV, otherRV, tests, recursive=True, includeAllTestRe
     elif includeAllTestResults:
         result['replicaOunit'] += [TestResultNamed(testName, TestResult.Passed)]
 
+    result.result = result.result | TestResult.Passed
     testsAlreadyDone.append( ("rv_test_"+rrv.name, "rv_test_"+orv.name) )
-        
     return result
 
 def divisionVolumes(referenceRV, otherRV, tests, includeAllTestResults=False, testsAlreadyDone=[]):
@@ -586,6 +598,8 @@ def materials(referenceMaterial, otherMaterial, tests, lvName="", includeAllTest
             result['materialType'] += [TestResultNamed(testName, TestResult.Passed)]
 
     if rm.type == "nist" or om.type == "nist":
+        # just because one of them's NIST, doesn't mean the other isn't a different (NIST) material.. check!
+        result += _names("materialNameNIST", rm.name, om.name, lvName, includeAllTestResults)
         if includeAllTestResults:
             result['materialDensity'] += [TestResultNamed(testName, TestResult.NotTested)]
             result['materialNComponents'] += [TestResultNamed(testName, TestResult.NotTested)]
@@ -883,12 +897,14 @@ def _meshes(lvname, referenceMesh, otherMesh, tests, includeAllTestResults=False
             rVolume = rmRawMesh.volume()
             oVolume = omRawMesh.volume()
             dVolume = oVolume - rVolume
-            if (abs(dVolume)/rVolume > tests.toleranceVolumeFraction):
+            dVolumeFraction = abs(dVolume)/rVolume
+            if (dVolumeFraction > tests.toleranceVolumeFraction):
                 details =  "volume difference greater than fractional tolerance, (reference): "
-                details += str(rVolume) + ", (other): "+str(oVolume)
+                details += str(rVolume) + ", (other): "+str(oVolume) + ", fractional difference is: " + str(dVolumeFraction)
                 result['shapeVolume'] += [TestResultNamed(lvname, TestResult.Failed, details)]
             elif includeAllTestResults:
                 result['shapeVolume'] += [TestResultNamed(lvname, TestResult.NotTested)]
+            result.result = result.result | TestResult.Passed
         else:
             # explicitly flag as we were meant to test but can't
             details = "one or both meshes unavailable for: " + lvname
@@ -901,12 +917,14 @@ def _meshes(lvname, referenceMesh, otherMesh, tests, includeAllTestResults=False
             rArea = rmRawMesh.area()
             oArea = omRawMesh.area()
             dArea = oArea - rArea
-            if (abs(dArea)/rArea > tests.toleranceAreaFraction):
+            dAreaFraction = abs(dArea)/rArea
+            if (dAreaFraction > tests.toleranceAreaFraction):
                 details =  "surface area difference greater than fractional tolerance, (reference): "
-                details += str(rArea) + ", (other): "+str(oArea)
+                details += str(rArea) + ", (other): " + str(oArea) + ", fractional difference is: " + str(dAreaFraction)
                 result['shapeArea'] += [TestResultNamed(lvname, TestResult.Failed, details)]
             elif includeAllTestResults:
                 result['shapeArea'] += [TestResultNamed(lvname, TestResult.NotTested)]
+            result.result = result.result | TestResult.Passed
         else:
             # explicitly flag as we were meant to test but can't
             details = "one or both meshes unavailable for: " + lvname

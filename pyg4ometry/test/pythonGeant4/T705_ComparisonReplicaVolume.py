@@ -1,7 +1,7 @@
 import pyg4ometry
 import pyg4ometry.geant4 as _g4
 
-def Test():
+def Test(printOut=False):
     r = _g4.Registry()
     wm = _g4.MaterialPredefined("G4_Galactic") 
     bm = _g4.MaterialPredefined("G4_Fe")
@@ -17,7 +17,8 @@ def Test():
     tests = pyg4ometry.compare.Tests()
 
     comp1 = pyg4ometry.compare.replicaVolumes(mbl, mbl, tests)
-    comp1.print()
+    if printOut:
+        comp1.print()
     assert(len(comp1) == 0)
 
     # different number of replicas
@@ -25,7 +26,8 @@ def Test():
     mbl2 = _g4.ReplicaVolume("mbl", bl, ml, _g4.ReplicaVolume.Axis.kXAxis,
                              7, 100, 0, r2)
     comp2 = pyg4ometry.compare.replicaVolumes(mbl, mbl2, tests)
-    comp2.print()
+    if printOut:
+        comp2.print()
     assert(len(comp2) == 1)
 
     # different axis
@@ -33,7 +35,8 @@ def Test():
     mbl3 = _g4.ReplicaVolume("mbl", bl, ml, _g4.ReplicaVolume.Axis.kYAxis,
                              8, 100, 0, r3)
     comp3 = pyg4ometry.compare.replicaVolumes(mbl, mbl3, tests)
-    comp3.print()
+    if printOut:
+        comp3.print()
     assert(len(comp3) == 1)
 
     
