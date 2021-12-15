@@ -5,7 +5,6 @@ import pyg4ometry.convert as _convert
 import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 
-
 def Test(vis = True, interactive = False, fluka = True) :
 
     # registry
@@ -23,12 +22,13 @@ def Test(vis = True, interactive = False, fluka = True) :
     tstartphi = _gd.Constant("startphi", "0", reg, True)
     tdeltaphi = _gd.Constant("deltaphi", "1.5*pi", reg, True)
 
-    wm = _g4.Material(name="G4_Galactic")
-    bm = _g4.Material(name="G4_Fe")
-
     # solids
     ws = _g4.solid.Box("ws", wx, wy, wz, reg, "mm")
     ts = _g4.solid.Tubs("ts", trmin, trmax, tz, tstartphi, tdeltaphi, reg, "mm", "rad")
+
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # structure
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
@@ -48,7 +48,7 @@ def Test(vis = True, interactive = False, fluka = True) :
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__), "T002_geant4Tubs2Fluka.inp"))
@@ -61,3 +61,8 @@ def Test(vis = True, interactive = False, fluka = True) :
         v = _vi.VtkViewer()
         v.addLogicalVolume(wl)
         v.view(interactive=interactive)
+
+    return {'greg':reg,'freg':freg}
+
+if __name__ == "__main__":
+    Test()

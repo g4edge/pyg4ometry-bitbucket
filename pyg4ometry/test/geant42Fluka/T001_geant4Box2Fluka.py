@@ -6,7 +6,6 @@ import pyg4ometry.fluka as _fluka
 import pyg4ometry.visualisation as _vi
 import numpy as _np
 
-
 def Test(vis = False, interactive = False, fluka = True) :
 
     # registry
@@ -16,21 +15,17 @@ def Test(vis = False, interactive = False, fluka = True) :
     ws = _g4.solid.Box("ws", 1000, 1000, 1000, reg, "mm")
     b1s = _g4.solid.Box("b1s", 50,   75,  100, reg, "mm")
     b2s = _g4.solid.Box("b2s", 5,    10,   15, reg, "mm")
-    b3s = _g4.solid.Box("b3s", 5,     4,    3, reg, "mm")
 
     # materials
-    wm  = _g4.MaterialPredefined("G4_Galactic")
-    bm1 = _g4.MaterialPredefined("G4_Li")
-    bm2 = _g4.MaterialPredefined("G4_Fe")
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm1 = _g4.nist_material_2geant4Material("G4_Li")
+    bm2 = _g4.nist_material_2geant4Material("G4_Fe")
 
     # structure
     wl  = _g4.LogicalVolume(ws, wm, "wl", reg)
     b1l = _g4.LogicalVolume(b1s, bm1, "b1l", reg)
     b2l = _g4.LogicalVolume(b2s, bm2, "b2l", reg)
-    b3l = _g4.LogicalVolume(b3s, bm1, "b3l", reg)
 
-    b3p1 = _g4.PhysicalVolume([0,0,0]         ,[0,-40,0], b3l, "b3_pv1", b1l, reg)
-    
     b2p1 = _g4.PhysicalVolume([0,0,_np.pi/4.0],[0, 15,0], b2l, "b2_pv1", b1l, reg)
     b2p2 = _g4.PhysicalVolume([0,0,0]         ,[0,-15,0], b2l, "b2_pv2", b1l, reg)
 
@@ -66,6 +61,8 @@ def Test(vis = False, interactive = False, fluka = True) :
         v.addLogicalVolume(wl)
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
+
+    return {'greg':reg,'freg':freg}
 
 if __name__ == "__main__":
     Test()

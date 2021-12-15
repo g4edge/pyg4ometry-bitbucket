@@ -32,9 +32,9 @@ def Test(vis = False, interactive = False, fluka = True) :
     talp1  = _gd.Constant("talp1","0.0",reg,True)
     talp2  = _gd.Constant("talp2","0.0",reg,True)
 
-
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    tm = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    wm = _g4.nist_material_2geant4Material('G4_Galactic')
+    tm = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -58,7 +58,7 @@ def Test(vis = False, interactive = False, fluka = True) :
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T007_geant4Trap2Fluka.inp"))

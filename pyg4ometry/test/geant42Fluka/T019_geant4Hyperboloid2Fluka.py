@@ -34,8 +34,9 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice 
         hrmin.setExpression(2)
         hrmax.setExpression(1)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    hm = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    hm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -59,7 +60,7 @@ def Test(vis = False, interactive = False, fluka = True, type = normal, n_slice 
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T019_geant4Hyperboloid2Fluka.inp"))

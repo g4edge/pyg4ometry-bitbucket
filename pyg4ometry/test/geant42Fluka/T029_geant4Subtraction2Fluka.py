@@ -16,9 +16,10 @@ def Test(vis = False, interactive = False, fluka = True, nullMesh = False) :
     bx = _gd.Constant("bx","10",reg,True)
     by = _gd.Constant("by","10",reg,True)
     bz = _gd.Constant("bz","10",reg,True)
-    
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    bm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -55,7 +56,7 @@ def Test(vis = False, interactive = False, fluka = True, nullMesh = False) :
         v.view(interactive = interactive)
 
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T029_geant4Subtraction2Fluka.inp"))

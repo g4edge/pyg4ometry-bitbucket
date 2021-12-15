@@ -24,8 +24,9 @@ def Test(vis = False, interactive = False, fluka = True, n_slice=10, n_stack=10)
     ebc = _gd.Constant("ebc", "-15", reg, True)
     etc = _gd.Constant("etc", "15", reg, True)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    em = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    em  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -49,7 +50,7 @@ def Test(vis = False, interactive = False, fluka = True, n_slice=10, n_stack=10)
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T016_geant4Ellipsoid2Fluka.inp"))

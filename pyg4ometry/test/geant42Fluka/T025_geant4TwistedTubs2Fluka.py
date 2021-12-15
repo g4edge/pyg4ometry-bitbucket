@@ -24,9 +24,10 @@ def Test(vis = False, interactive = False, fluka = True) :
     trmax     = _gd.Constant("trmax","10.0",reg,True)    
     tz        = _gd.Constant("tz","50",reg,True)
     tphi      = _gd.Constant("phi","1.5*pi",reg,True)
-    
-    wm = _g4.Material(name="G4_Galactic") 
-    bm = _g4.Material(name="G4_Fe") 
+
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -50,7 +51,7 @@ def Test(vis = False, interactive = False, fluka = True) :
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T025_geant4TwistedTubs2Fluka.inp"))

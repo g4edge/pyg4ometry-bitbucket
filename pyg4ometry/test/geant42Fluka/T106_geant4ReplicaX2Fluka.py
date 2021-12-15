@@ -22,8 +22,9 @@ def Test(vis = False, interactive = False, fluka=True) :
     mby = _gd.Constant("mby","100",reg,True)
     mbz = _gd.Constant("mbz","100",reg,True)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    bm = _g4.MaterialPredefined("G4_Fe")
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws  = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -44,7 +45,7 @@ def Test(vis = False, interactive = False, fluka=True) :
     # gdml output 
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T106_replica_x_2Fluka.gdml"))
+    w.write(_os.path.join(_os.path.dirname(__file__), "T106_geant4ReplicaX2Fluka.gdml"))
 
     # test __repr__
     str(mbl)
@@ -58,11 +59,11 @@ def Test(vis = False, interactive = False, fluka=True) :
         freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
-        w.write(_os.path.join(_os.path.dirname(__file__),"T106_replica_x_2Fluka.inp"))
+        w.write(_os.path.join(_os.path.dirname(__file__),"T106_geant4ReplicaX2Fluka.inp"))
 
         # flair output file
-        f = _fluka.Flair("T106_replica_x_2Fluka.inp",extentBB)
-        f.write(_os.path.join(_os.path.dirname(__file__),"T106_replica_x_2Fluka.flair"))
+        f = _fluka.Flair("T106_geant4ReplicaX2Fluka.inp",extentBB)
+        f.write(_os.path.join(_os.path.dirname(__file__),"T106_geant4ReplicaX2Fluka.flair"))
 
     # visualisation
     v = None

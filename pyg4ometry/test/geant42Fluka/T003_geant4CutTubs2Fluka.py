@@ -28,8 +28,9 @@ def Test(vis = True, interactive = False, fluka = True) :
     thighy    = _gd.Constant("cthighy","-1",reg,True)
     thighz    = _gd.Constant("cthighz","1",reg,True)
 
-    wm = _g4.Material(name="G4_Galactic")
-    bm = _g4.Material(name="G4_Fe")
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws", wx, wy, wz, reg, "mm")
@@ -53,7 +54,7 @@ def Test(vis = True, interactive = False, fluka = True) :
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T003_geant4CutTubs2Fluka.inp"))
@@ -67,6 +68,7 @@ def Test(vis = True, interactive = False, fluka = True) :
         v.addLogicalVolume(wl)
         v.view(interactive=interactive)
 
+    return {'greg':reg,'freg':freg}
 
-
-
+if __name__ == "__main__":
+    Test()

@@ -56,9 +56,10 @@ def Test(vis = False, interactive = False, fluka = True) :
 
     polygon = [[p1x,p1y], [p2x,p2y], [p3x,p3y], [p4x,p4y], [p5x,p5y], [p6x,p6y], [p7x,p7y], [p8x,p8y]]
     slices  = [[z1,[x1,y1],s1], [z2,[x2,y2],s2], [z3,[x3,y3],s3]]
-          
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    xm = _g4.MaterialPredefined("G4_Fe")
+
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    xm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -79,7 +80,7 @@ def Test(vis = False, interactive = False, fluka = True) :
 
     # fluka conversion
     if fluka :
-        freg = _convert.geant4Logical2Fluka(wl)
+        freg = _convert.geant4Reg2FlukaReg(reg)
         w = _fluka.Writer()
         w.addDetector(freg)
         w.write(_os.path.join(_os.path.dirname(__file__),"T021_geant4ExtrudedSolid2Fluka.inp"))

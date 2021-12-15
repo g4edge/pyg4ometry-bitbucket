@@ -20,8 +20,9 @@ def Test(vis = False, interactive = False, fluka = True) :
     alignSurfX = _gd.Rotation("alignSurfX",0,halfPi,0,"rad",reg,True)
     alignSurfY = _gd.Rotation("alignSurfY",halfPi,0,0,"rad",reg,True)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    bm = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    wm  = _g4.nist_material_2geant4Material('G4_Galactic')
+    bm  = _g4.nist_material_2geant4Material("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "m")

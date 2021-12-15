@@ -2,7 +2,7 @@
 Version: 300
 Mode: fluka
 md5: b1165f4a3f8dc908bbd24e2dcb35ab08
-Input: T110_replica_rho_2Fluka.inp
+Input: T110_geant4ReplicaRho2Fluka.inp
 Page: Flair
 
 # Run information
