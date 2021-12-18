@@ -261,7 +261,7 @@ def CF_SphericalChamber(name, innerRadius = 100, outerRadius = 107,
     return {'logical':chamberLogical}
 
 
-def Test_Cuboidal(vis = False, interactive = False) :
+def Test_Cuboidal(vis = False, interactive = False, fluka = False) :
     reg = _g4.Registry()
 
     chamber = CF_CuboidalChamber("test1", vis=False,reg=reg)
@@ -302,15 +302,16 @@ def Test_Cuboidal(vis = False, interactive = False) :
     ################################
     # write fluka
     ################################
-    freg = _convert.geant4Logical2Fluka(wl)
+    if fluka :
+        freg = _convert.geant4Reg2FlukaReg(reg)
 
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_path.join(_os.path.dirname(__file__),"CuboidalChamber.inp"))
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_path.join(_os.path.dirname(__file__),"CuboidalChamber.inp"))
 
-    # flair output file
-    f = _fluka.Flair("CuboidalChamber.inp",extentBB)
-    f.write(_path.join(_path.dirname(__file__),"CuboidalChamber.flair"))
+        # flair output file
+        f = _fluka.Flair("CuboidalChamber.inp",extentBB)
+        f.write(_path.join(_path.dirname(__file__),"CuboidalChamber.flair"))
 
     ################################
     # visualisation
@@ -324,7 +325,7 @@ def Test_Cuboidal(vis = False, interactive = False) :
         v.view(interactive=interactive)
 
 
-def Test(vis = True, interactive = False):
+def Test(vis = True, interactive = False, fluka = False):
 
     reg = _g4.Registry()
 
@@ -347,7 +348,7 @@ def Test(vis = True, interactive = False):
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     cp = _g4.PhysicalVolume([_np.pi/4.0,0,0],[0,0,0], log, "chamber_pv1", wl, reg)
 
-    reg.setWorld(wl.name)
+    reg.setWorld(wl)
 
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)
@@ -367,15 +368,16 @@ def Test(vis = True, interactive = False):
     ################################
     # write fluka
     ################################
-    freg = _convert.geant4Logical2Fluka(wl)
+    if fluka :
+        freg = _convert.geant4Reg2FlukaReg(reg)
 
-    w = _fluka.Writer()
-    w.addDetector(freg)
-    w.write(_path.join(_os.path.dirname(__file__),"SphericalChamber.inp"))
+        w = _fluka.Writer()
+        w.addDetector(freg)
+        w.write(_path.join(_os.path.dirname(__file__),"SphericalChamber.inp"))
 
-    # flair output file
-    f = _fluka.Flair("SphericalChamber.inp",extentBB)
-    f.write(_path.join(_path.dirname(__file__),"SphericalChamber.flair"))
+        # flair output file
+        f = _fluka.Flair("SphericalChamber.inp",extentBB)
+        f.write(_path.join(_path.dirname(__file__),"SphericalChamber.flair"))
 
     ################################
     # visualisation

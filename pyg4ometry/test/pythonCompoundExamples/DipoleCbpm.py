@@ -8,7 +8,7 @@ import pyg4ometry.fluka as _fluka
 
 from os import path as _path
 
-def Test(vis = True, interactive = False, gdml = True, fluka = True) :
+def Test(vis = True, interactive = False, gdml = True, fluka = False) :
     
     reg = _g4.Registry()
     
@@ -133,7 +133,7 @@ def Test(vis = True, interactive = False, gdml = True, fluka = True) :
     # write fluka
     ################################        
     if fluka :
-        freg = _convert.geant4Logical2Fluka(world_logical)
+        freg = _convert.geant4Reg2FlukaReg(world_logical)
 
         w = _fluka.Writer()
         w.addDetector(freg)
