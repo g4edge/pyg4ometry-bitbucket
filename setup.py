@@ -123,7 +123,8 @@ setup(
                  "pyg4ometry.visualisation": "pyg4ometry/visualisation"},
     package_data={"pyg4ometry.convert": ["periodic-table.csv"],
                   "pyg4ometry.fluka": ["flair_template.flair"],
-                  "pyg4ometry.geant4": ["bdsim_materials.txt"],
+                  "pyg4ometry.geant4": ["nist_elements.txt"],
+                  "pyg4ometry.geant4": ["nist_materials.txt"],
                   "pyg4ometry.visualisation": ["colours.ini"]},
     install_requires=["antlr4-python3-runtime==4.7.1",  # Generated with 4.7.1 - this avoids warnings
                       "matplotlib",
