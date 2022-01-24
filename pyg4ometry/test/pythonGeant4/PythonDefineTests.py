@@ -42,7 +42,7 @@ class PythonDefineTests(_unittest.TestCase) :
         v = pyg4ometry.gdml.Defines.Position("v",0,0,0,"mm",r,False)
 
         # vector 
-        p = pyg4ometry.gdml.Defines.upgradeToVector(v,r,"position",False)
+        p = pyg4ometry.gdml.Defines.upgradeToVector(v,r,"position",unit="",addRegistry=False)
         self.assertEqual(p.eval(),[0,0,0])
 
         # list to position
