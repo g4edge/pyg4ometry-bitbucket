@@ -227,3 +227,15 @@ or ::
   >>> t2 = pyg4ometry.compare.Tests("shapeVolume")
   >>> comparison = pyg4ometry.compare.gdmlFiles("file1.gdml", "file2.gdml", t2)
   >>> comparison.print()
+
+Removing a Test
+***************
+
+A test can be turned off by name: ::
+
+   >>> import pyg4ometry
+   >>> t = pyg4ometry.compare.Tests()
+   >>> t.setFalse("names")
+
+
+
