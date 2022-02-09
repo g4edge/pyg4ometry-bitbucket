@@ -36,6 +36,11 @@ The available tests are described below.
 +==========================+================================================+
 | names                    | Test whether objects have the exact same name. |
 +--------------------------+------------------------------------------------+
+| namesIgnorePointers      | Test whether objects have the exact same name, |
+|                          | but whilst ignorign pointer suffixes such as   |
+|                          | 0x1234567. Note, the geometry will load ok,    |
+|                          | the name stripping is only for comparison.     |
++--------------------------+------------------------------------------------+
 | nDaughters               | Test for a matching number of daughter volumes |
 |                          | in a LogicalVolume or AssemblyVolume.          |
 +--------------------------+------------------------------------------------+
