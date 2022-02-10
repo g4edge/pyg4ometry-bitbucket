@@ -13,10 +13,10 @@ Installation guide
 ==================
 
   * Required libraries VTK, CGAL, pybind11
-  * Optional libraries FreeCAD
-  * clone repository
-  * cd pyg4ometry 
-  * make install or make develop
+  * Optional libraries FreeCAD, ROOT, USD
+  * Install from pypi (pip install pyg4ometry)
+  * Install from source (git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git; cd pyg4ometry; make install or make develop)
+
 
 Instllation guide container
 ===========================
@@ -34,8 +34,7 @@ Run an image (here is my script for Mac and Docker Desktop)
   * export ip=`(ifconfig en0 | grep inet | awk '$1 == "inet" {print $2}')`
   * xhost +$ip
   * docker run -ti -v /tmp/.X11-unix:/tmp/.X11-unix -v /Users/sboogert/Physics:/tmp/Physics -e DISPLAY=$ip:0 centos-bdsim 
-
-
+  
 Documentation 
 =============
 
@@ -56,4 +55,4 @@ Issues, bugs and feature requests
 Citation and academic credit 
 ============================
 
-  * It pyg4ometry has been useful for your work, please in the first instance cite...
+  * It pyg4ometry has been useful for your work, please in the first instance cite [Computer Physics Communications Volume 272, March 2022, 108228](https://www.sciencedirect.com/science/article/pii/S0010465521003404)
