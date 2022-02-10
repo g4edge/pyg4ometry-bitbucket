@@ -6,20 +6,36 @@ Installation
 Requirements
 ------------
 
- * pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated) - developed on 3.9.
- * `VTK (Visualisation toolkit) <https://vtk.org>`_
- * `Freecad  <https://www.freecadweb.org>`_
+pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated). It is developed on Python 3.9 and 3.10.
+
+
+ * `VTK (Visualisation toolkit) <https://vtk.org>`_ (including Python bindings)
  * `antlr4 <https://www.antlr.org>`_
  * `cython <https://cython.org>`_
- * `GitPython <https://gitpython.readthedocs.io/en/stable/>`_
- * `matplotlib <https://matplotlib.org>`_
  * `CGAL <https://www.cgal.org>`_
  * pybind11
+
+Packages that are required but will be found through PIP automatically:
+
+ * `matplotlib <https://matplotlib.org>`_
+ * `GitPython <https://gitpython.readthedocs.io/en/stable/>`_
+ * pandas
+ * pypandoc
+ * networkx
+ * numpy
+ * sympy
+
+**Optional**
+
+ * `Freecad  <https://www.freecadweb.org>`_ for CAD conversion.
+
+.. note:: A full list can be found in :code:`pyg4ometry/setup.py`.
 
 .. note:: if you are choosing a python version, it is worth choosing according to which
 	  version VTK provides a python build of through PIP if you use that. See
 	  https://pypi.org/project/vtk/#files  For example, there are limited builds
 	  for M1 Mac (ARM64).
+
 
 Installation
 ------------
