@@ -70,37 +70,54 @@ if condaExe is not None :
 # conda environments
 
 
+mpfr_include  = "/opt/local/include"
+gmp_include   = "/opt/local/include"
+boost_include = "/opt/local/include"
+mpfr_lib      = "/opt/local/lib"
+gmp_lib       = "/opt/local/lib"
+
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
-                           include_dirs = [*incPath,
+                           include_dirs = [mpfr_include,
+                                           gmp_include,
+                                           boost_include,
                                            pybind11_include],
                            libraries = ['mpfr','gmp'],
-                           library_dirs = [*libPath],
+                           library_dirs = [mpfr_lib,
+                                           gmp_lib],
                            sources = ['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
                            language="c++",
                            extra_compile_args=["-std=c++14"])
 
 cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
-                          include_dirs = [*incPath,
+                          include_dirs = [mpfr_include,
+                                          gmp_include,
+                                          boost_include,
                                           pybind11_include],
                           sources = ['./pyg4ometry/pycgal/geom.cxx'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
-                          include_dirs = [*incPath,
+                          include_dirs = [mpfr_include,
+                                          gmp_include,
+                                          boost_include,
                                           pybind11_include],
                           libraries = ['mpfr','gmp'],
-                          library_dirs = [*libPath],
+                          library_dirs = [mpfr_lib,
+                                          gmp_lib],
                           sources = ['./pyg4ometry/pycgal/algo.cxx'],
                           extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 cgal_core_ext = Extension('pyg4ometry.pycgal.core',
-                          include_dirs = [*incPath,
+                          include_dirs = [mpfr_include,
+                                          gmp_include,
+                                          boost_include,
                                           pybind11_include],
                            libraries = ['mpfr','gmp'],
-                           library_dirs = [*libPath],
+                           library_dirs = [mpfr_lib,
+                                           gmp_lib],
                            sources = ['./pyg4ometry/pycgal/core.cxx'],
                            extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
                                           './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
