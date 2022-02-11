@@ -69,12 +69,19 @@ if condaExe is not None :
 
 # conda environments
 
-
+# Mac OSX mac ports
 mpfr_include  = "/opt/local/include"
 gmp_include   = "/opt/local/include"
 boost_include = "/opt/local/include"
 mpfr_lib      = "/opt/local/lib"
 gmp_lib       = "/opt/local/lib"
+
+# Centos 7 
+mpfr_include  = "/usr/include"
+gmp_include   = "/usr/include"
+boost_include = "/usr/include/boost169"
+mpfr_lib      = "/usr/lib64"
+gmp_lib       = "/usr/lib64"
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
