@@ -163,7 +163,7 @@ setup(
                       "pypandoc",
                       "sympy>=1.7"],
     ext_modules=exts,
-    python_requires=">=3.7.1",
+    python_requires=">=3.6.8",
     author="Stewart T. Boogert",
     author_email="stewart.boogert@rhul.ac.uk",
     description='Geometry package for high energy physics (Geant4, Fluka)',
