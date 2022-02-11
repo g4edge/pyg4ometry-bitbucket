@@ -77,11 +77,11 @@ mpfr_lib      = "/opt/local/lib"
 gmp_lib       = "/opt/local/lib"
 
 # Centos 7 
-mpfr_include  = "/usr/include"
-gmp_include   = "/usr/include"
-boost_include = "/usr/include/boost169"
-mpfr_lib      = "/usr/lib64"
-gmp_lib       = "/usr/lib64"
+#mpfr_include  = "/usr/include"
+#gmp_include   = "/usr/include"
+#boost_include = "/usr/include/boost169"
+#mpfr_lib      = "/usr/lib64"
+#gmp_lib       = "/usr/lib64"
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
@@ -139,7 +139,7 @@ exts.append(cgal_core_ext)
 
 setup(
     name="pyg4ometry",
-    version="1.0",
+    version="1.0.1",
     packages=find_packages(exclude=["docs", "tests"]),
     package_dir={"pyg4ometry.convert": "pyg4ometry/convert",
                  "pyg4ometry.fluka": "pyg4ometry/fluka",
