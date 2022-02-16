@@ -28,7 +28,7 @@ def Test(printOut=False):
     comp3 = pyg4ometry.compare.solids(box1, box2, tests)
     if printOut:
         comp3.print()
-    assert(len(comp3) == 1)
+    assert(len(comp3) == 2) # 2 name tests
 
     testsNoName = pyg4ometry.compare.Tests()
     testsNoName.names = False

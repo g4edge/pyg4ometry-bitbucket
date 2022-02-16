@@ -88,7 +88,7 @@ def Test(printOut=False):
     comp7 = pyg4ometry.compare.assemblyVolumes(a_ass, f_ass, tests, testsAlreadyDone=[])
     if printOut:
         comp7.print()
-    assert (len(comp7) == 2)
+    assert (len(comp7) == 3) # materialName, materialNameIgnorePointer materialNameNIST
 
     # mesh volume / area testing
     r7 = _g4.Registry()
