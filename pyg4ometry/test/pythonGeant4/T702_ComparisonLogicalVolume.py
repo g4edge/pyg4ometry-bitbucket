@@ -113,7 +113,7 @@ def Test(printOut=False):
 
     # update the shape of one solid and convince ourselves the area and volume checks work
     boxB_B.pY = 12
-    boxBLV._reMesh()
+    boxBLV.reMesh()
     comp10 = pyg4ometry.compare.logicalVolumes(boxALV, boxBLV, testVolumeAreaOnly)
     if printOut:
         comp10.print()
