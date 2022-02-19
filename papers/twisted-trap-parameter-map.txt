@@ -1,0 +1,12 @@
+gdml		ROOT		pyg4ometry
+PhiTwist		GetTwistedAngle	twistedAngle
+z		GetDz		pDz
+Theta		GetTheta		pTheta
+Phi		GetPhi		pDPhi
+y1		GetH1		pDy1
+x1		GetBl1		pDx1
+x2		GetTl1		pDx2
+y2		GetH2		pDy2
+x3		GetBl2		pDx3
+x4		GetTl2		pDx4
+Alph		GetAlpha1	pAlp
