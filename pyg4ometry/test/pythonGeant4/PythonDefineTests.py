@@ -46,19 +46,19 @@ class PythonDefineTests(_unittest.TestCase) :
         self.assertEqual(p.eval(),[0,0,0])
 
         # list to position
-        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"position",False)
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"position",addRegistry=False)
         self.assertEqual(p.eval(),[0,0,0])
 
         # list to rotation
-        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"rotation",False)
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"rotation",addRegistry=False)
         self.assertEqual(p.eval(),[0,0,0])        
 
         # list to scale
-        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"scale",False)
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"scale",addRegistry=False)
         self.assertEqual(p.eval(),[0,0,0])
 
         # list to undefined
-        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"undefined",False)
+        p = pyg4ometry.gdml.Defines.upgradeToVector([0,0,0],r,"undefined",addRegistry=False)
         self.assertEqual(p,None)
 
         
