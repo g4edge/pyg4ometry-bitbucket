@@ -28,13 +28,31 @@ def Test(vis = False, interactive = False) :
     prmin    = [prmin1,prmin2]
     prmax    = [prmax1,prmax2]
     pz       = [pz1,pz2]
-    
+
+    psphi_deg  = _gd.Constant("sphi_deg","1/pi*180",reg,True)
+    pdphi_deg  = _gd.Constant("dphi_deg","4/pi*180",reg,True)
+
     wm = _g4.MaterialPredefined("G4_Galactic") 
     pm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ps = _g4.solid.Polyhedra("ps",psphi,pdphi,pnsid,len(pz),pz,prmin,prmax,reg,"mm","rad")
+    assert(ps.evaluateParameterWithUnits('pSPhi') == psphi)
+    assert(ps.evaluateParameterWithUnits('pDPhi') == pdphi)
+    assert(ps.evaluateParameterWithUnits('numSide') == pnsid)
+    assert(ps.evaluateParameterWithUnits('numZPlanes') == len(pz))
+    assert(ps.evaluateParameterWithUnits('zPlane') == [-10, 12])
+    assert(ps.evaluateParameterWithUnits('rInner') == [1, 3])
+    assert(ps.evaluateParameterWithUnits('rOuter') == [9, 5])
+    ps2 = _g4.solid.Polyhedra("ps2",psphi_deg,pdphi_deg,pnsid,len(pz),pz,prmin,prmax,reg,"cm","deg")
+    assert(ps2.evaluateParameterWithUnits('pSPhi') == psphi)
+    assert(ps2.evaluateParameterWithUnits('pDPhi') == pdphi)
+    assert(ps2.evaluateParameterWithUnits('numSide') == pnsid)
+    assert(ps2.evaluateParameterWithUnits('numZPlanes') == len(pz))
+    assert(ps2.evaluateParameterWithUnits('zPlane') == [-100, 120])
+    assert(ps2.evaluateParameterWithUnits('rInner') == [10, 30])
+    assert(ps2.evaluateParameterWithUnits('rOuter') == [90, 50])
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

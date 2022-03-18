@@ -22,6 +22,13 @@ def Test(vis = False, interactive = False, n_slice = 30) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     es = _g4.solid.EllipticalTube("es",ex,ey,ez,reg,nslice = n_slice)
+    assert(es.evaluateParameterWithUnits('pDx') == ex)
+    assert(es.evaluateParameterWithUnits('pDy') == ey)
+    assert(es.evaluateParameterWithUnits('pDz') == ez)
+    es2 = _g4.solid.EllipticalTube("es2",ex,ey,ez,reg,"cm",nslice = n_slice)
+    assert(es2.evaluateParameterWithUnits('pDx') == 10*ex)
+    assert(es2.evaluateParameterWithUnits('pDy') == 10*ey)
+    assert(es2.evaluateParameterWithUnits('pDz') == 10*ez)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
