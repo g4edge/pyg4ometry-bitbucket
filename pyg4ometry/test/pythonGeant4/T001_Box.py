@@ -23,6 +23,13 @@ def Test(vis = False, interactive = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
+    assert(bs.evaluateParameterWithUnits('pX') == bx)
+    assert(bs.evaluateParameterWithUnits('pY') == by)
+    assert(bs.evaluateParameterWithUnits('pZ') == bz)
+    bs2 = _g4.solid.Box("bs2",bx,by,bz, reg, "cm")
+    assert(bs2.evaluateParameterWithUnits('pX') == 10*bx)
+    assert(bs2.evaluateParameterWithUnits('pY') == 10*by)
+    assert(bs2.evaluateParameterWithUnits('pZ') == 10*bz)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

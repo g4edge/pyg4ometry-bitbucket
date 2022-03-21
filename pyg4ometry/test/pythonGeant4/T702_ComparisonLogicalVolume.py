@@ -47,7 +47,7 @@ def Test(printOut=False):
     miniBox3LV = _g4.LogicalVolume(miniBox1, galactic1, "mb3_lv", r1)
     miniBox1PV1 = _g4.PhysicalVolume([0, 0.1,  0], [-1, 0, -10], miniBox1LV, "mb1_pv1", tl1, r1)
     miniBox1PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5,  0, 10],  miniBox1LV, "mb1_pv2", tl1, r1)
-    miniBox1PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox1LV, "mb1_pv3", tl1, r1, copyNumber=3, scale=[1,1,-1])
+    miniBox1PV3 = _g4.PhysicalVolume([0.1, -0.1, 3.14159265], [-5, 0, 30], miniBox1LV, "mb1_pv3", tl1, r1, copyNumber=3, scale=[1,1,-1])
 
     # same daughters
     comp4 = pyg4ometry.compare.logicalVolumes(tl1, tl1, tests, recursive=True) # recursive = check daughter placements
@@ -55,18 +55,20 @@ def Test(printOut=False):
         comp4.print()
     assert (len(comp4) == 0)
 
-    # make it all again in reg2
+    # make it all again in reg2 (adding "pointer" to end of lv and pv names)
     miniBox12 = _g4.solid.Box("mb1", 1, 2, 3, r2)
-    miniBox12LV = _g4.LogicalVolume(miniBox12, galactic2, "mb1_lv", r2)
+    miniBox12LV = _g4.LogicalVolume(miniBox12, galactic2, "mb1_lv0x1234567", r2)
     miniBox22 = _g4.solid.Box("mb2", 1, 2, 3, r2)
-    miniBox22LV = _g4.LogicalVolume(miniBox12, galactic2, "mb2_lv", r2)
+    miniBox22LV = _g4.LogicalVolume(miniBox12, galactic2, "mb2_lv0x1234567", r2)
     miniBox32 = _g4.solid.Box("mb3", 3, 2, 1, r2)
-    miniBox32LV = _g4.LogicalVolume(miniBox12, galactic2, "mb3_lv", r2)
-    miniBox12PV1 = _g4.PhysicalVolume([0, 0.1, 0], [-1, 0, -10], miniBox12LV, "mb1_pv1", tl2, r2)
-    miniBox12PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5, 0, 10], miniBox12LV, "mb1_pv2", tl2, r2)
-    miniBox12PV3 = _g4.PhysicalVolume([0.1, -0.1, 0], [-5, 0, 30], miniBox12LV, "mb1_pv3", tl2, r2, copyNumber=3, scale=[1,1,-1])
+    miniBox32LV = _g4.LogicalVolume(miniBox12, galactic2, "mb3_lv0x1234567", r2)
+    miniBox12PV1 = _g4.PhysicalVolume([0, 0.1, 0], [-1, 0, -10], miniBox12LV, "mb1_pv10x1234567", tl2, r2)
+    miniBox12PV2 = _g4.PhysicalVolume([0, -0.1, 0], [5, 0, 10], miniBox12LV, "mb1_pv20x1234567", tl2, r2)
+    miniBox12PV3 = _g4.PhysicalVolume([0.1, -0.1, -3.14159265], [-5, 0, 30], miniBox12LV, "mb1_pv30x1234567", tl2, r2, copyNumber=3, scale=[1,1,-1])
+    #NOTE rotation of -pi vs pi in miniBox1PV3 - it is equivalent so should not result in an error
 
     # same daughters
+    tests.names = False # disable exact name matching
     comp5 = pyg4ometry.compare.logicalVolumes(tl1, tl2, tests, recursive=True)
     if printOut:
         comp5.print()

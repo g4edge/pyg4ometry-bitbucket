@@ -14,8 +14,8 @@ def Test(printOut=False):
         comp1.print()
     assert(len(comp1) == 0)
 
-    wx = pyg4ometry.gdml.Constant("wx", 100, r)
-    box2 = _g4.solid.Box("box2", "1*wx", 0.8*wx, 0.6*wx, r)
+    wx = pyg4ometry.gdml.Constant("wx", 10, r)
+    box2 = _g4.solid.Box("box2", "1*wx", 0.8*wx, 0.6*wx, r, lunit="cm")
 
     # solid with itself - using expressions
     comp2 = pyg4ometry.compare.solids(box2, box2, tests)
@@ -66,6 +66,15 @@ def Test(printOut=False):
     if printOut:
         comp7.print()
     assert (len(comp7) > 0)
+
+    # different units
+    polygon3 = [[-2, -2], [-2, 2], [2, 2], [2, 1], [-1, 1], [-1, 1], [2, -1], [2, -2]]
+    slices3 = [[-2, [0.5, 0.5], 1], [0, [-0.5, -0.5], 1], [2, [0, 0], 2]]
+    xs3 = _g4.solid.ExtrudedSolid("xs3", polygon3, slices3, r, lunit="cm")
+    comp8 = pyg4ometry.compare.solids(xs, xs3, tests)
+    if printOut:
+        comp8.print()
+    assert (len(comp8) == 2) # 2 name tests
 
     return {"testStatus": True}
 

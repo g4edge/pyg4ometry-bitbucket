@@ -19,12 +19,27 @@ def Test(vis = False, interactive = False) :
     ty2    = _gd.Constant("ty2","7.5",reg,True)
     tz     = _gd.Constant("tz","10.0",reg,True)
 
+    ttwist_deg = _gd.Constant("tptwist_deg","1.0/pi*180",reg,True)
+
     wm = _g4.MaterialPredefined("G4_Galactic") 
     tm = _g4.MaterialPredefined("G4_Fe") 
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts = _g4.solid.TwistedTrd("ts",ttwist,tx1,ty1,tx2,ty2,tz,reg)
+    ts = _g4.solid.TwistedTrd("ts",ttwist,tx1,tx2,ty1,ty2,tz,reg)
+    assert(ts.evaluateParameterWithUnits('twistedAngle') == ttwist)
+    assert(ts.evaluateParameterWithUnits('pDx1') == tx1)
+    assert(ts.evaluateParameterWithUnits('pDx2') == tx2)
+    assert(ts.evaluateParameterWithUnits('pDy1') == ty1)
+    assert(ts.evaluateParameterWithUnits('pDy2') == ty2)
+    assert(ts.evaluateParameterWithUnits('pDz') == tz)
+    ts2 = _g4.solid.TwistedTrd("ts2",ttwist_deg,tx1,tx2,ty1,ty2,tz,reg,"cm","deg")
+    assert(ts2.evaluateParameterWithUnits('twistedAngle') == ttwist)
+    assert(ts2.evaluateParameterWithUnits('pDx1') == 10*tx1)
+    assert(ts2.evaluateParameterWithUnits('pDx2') == 10*tx2)
+    assert(ts2.evaluateParameterWithUnits('pDy1') == 10*ty1)
+    assert(ts2.evaluateParameterWithUnits('pDy2') == 10*ty2)
+    assert(ts2.evaluateParameterWithUnits('pDz') == 10*tz)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

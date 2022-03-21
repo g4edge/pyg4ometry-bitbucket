@@ -22,6 +22,13 @@ def Test(vis = False, interactive = False,n_slice =16,n_stack=16) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ps = _g4.solid.Paraboloid("ps",pz,prlo,prhi,reg,nslice=n_slice,nstack=n_stack)
+    assert(ps.evaluateParameterWithUnits('pDz') == pz)
+    assert(ps.evaluateParameterWithUnits('pR1') == prlo)
+    assert(ps.evaluateParameterWithUnits('pR2') == prhi)
+    ps2 = _g4.solid.Paraboloid("ps2",pz,prlo,prhi,reg,"cm",nslice=n_slice,nstack=n_stack)
+    assert(ps2.evaluateParameterWithUnits('pDz') == 10*pz)
+    assert(ps2.evaluateParameterWithUnits('pR1') == 10*prlo)
+    assert(ps2.evaluateParameterWithUnits('pR2') == 10*prhi)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

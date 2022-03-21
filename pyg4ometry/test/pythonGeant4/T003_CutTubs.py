@@ -27,6 +27,11 @@ def Test(vis = False, interactive=False, type = normal,n_slice=16) :
     cthighy    = _gd.Constant("cthighy","1",reg,True)
     cthighz    = _gd.Constant("cthighz","1",reg,True)
 
+    ctstartphi_deg = _gd.Constant("startphi_deg","0",reg,True)
+    ctdeltaphi_deg = _gd.Constant("deltaphi_deg","270",reg,True)
+
+    expected_low = [-1, -1, -1]
+    expected_high = [1, 1, 1]
     if type == flat_ends : 
         ctlowx.setExpression(0)
         ctlowy.setExpression(0)
@@ -34,6 +39,8 @@ def Test(vis = False, interactive=False, type = normal,n_slice=16) :
         cthighx.setExpression(0)
         cthighy.setExpression(0)
         cthighz.setExpression(1)
+        expected_low = [0, 0, -1]
+        expected_high = [0, 0, 1]
             
     wm = _g4.Material(name="G4_Galactic") 
     bm = _g4.Material(name="G4_Fe") 
@@ -41,6 +48,23 @@ def Test(vis = False, interactive=False, type = normal,n_slice=16) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg,"mm")
     cts = _g4.solid.CutTubs("ts",ctrmin,ctrmax,ctz,ctstartphi,ctdeltaphi,[ctlowx,ctlowy,ctlowz],[cthighx,cthighy,cthighz],reg,"mm","rad",nslice=n_slice)
+    assert(cts.evaluateParameterWithUnits('pRMin') == ctrmin)
+    assert(cts.evaluateParameterWithUnits('pRMax') == ctrmax)
+    assert(cts.evaluateParameterWithUnits('pDz') == ctz)
+    assert(cts.evaluateParameterWithUnits('pSPhi') == ctstartphi)
+    assert(cts.evaluateParameterWithUnits('pDPhi') == ctdeltaphi)
+    assert(cts.evaluateParameterWithUnits('pLowNorm') == expected_low)
+    assert(cts.evaluateParameterWithUnits('pHighNorm') == expected_high)
+    assert(cts.evaluateParameterWithUnits('nslice') == n_slice)
+    cts2 = _g4.solid.CutTubs("ts2",ctrmin,ctrmax,ctz,ctstartphi_deg,ctdeltaphi_deg,[ctlowx,ctlowy,ctlowz],[cthighx,cthighy,cthighz],reg,"cm","deg",nslice=n_slice)
+    assert(cts2.evaluateParameterWithUnits('pRMin') == 10*ctrmin)
+    assert(cts2.evaluateParameterWithUnits('pRMax') == 10*ctrmax)
+    assert(cts2.evaluateParameterWithUnits('pDz') == 10*ctz)
+    assert(cts2.evaluateParameterWithUnits('pSPhi') == ctstartphi)
+    assert(cts2.evaluateParameterWithUnits('pDPhi') == ctdeltaphi)
+    assert(cts2.evaluateParameterWithUnits('pLowNorm') == [10*i for i in expected_low])
+    assert(cts2.evaluateParameterWithUnits('pHighNorm') == [10*i for i in expected_high])
+    assert(cts2.evaluateParameterWithUnits('nslice') == n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
