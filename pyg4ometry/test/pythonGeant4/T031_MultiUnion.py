@@ -26,8 +26,8 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
         bm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
-    ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
+    ws = _g4.solid.Box("ws",wx,wy,wz, reg, "cm")
+    bs = _g4.solid.Box("bs",bx,by,bz, reg, "cm")
 
     nbox = 15
     solids = [] 
@@ -40,9 +40,14 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
         y = r*_np.sin(t)*_np.sin(p)
         z = r*_np.cos(t)
         solids.append(bs)
-        transforms.append([[0,t,p],[x,y,z]])
+        transforms.append([[0,t,p],[x,y,z,"cm"]])
         
     mu = _g4.solid.MultiUnion("mu",solids,transforms,reg,True)
+    mu_trans = mu.evaluateParameterWithUnits('transformations')
+    for i in range(0,nbox,1) :
+        for j in range(0,2,1) :
+            for k in range(0,3,1) :
+                assert( round(mu_trans[i][j][k],6) == round((10.0**j)*transforms[i][j][k],6) )
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

@@ -26,9 +26,10 @@ def Test(vis = False, interactive = False, type = normal,n_slice = 10, writeNIST
     crmin2 = _gd.Constant("crmin2","5",reg,True)
     crmax2 = _gd.Constant("crmax2","10",reg,True)
     cz     = _gd.Constant("cz","100",reg,True)
-    csp    = _gd.Constant("csp","0.0*pi",reg,True)
     cdp    = _gd.Constant("cdp","1.5*pi",reg,True)
     zero   = _gd.Constant("zero","0.0",reg,False)
+
+    cdp_deg = _gd.Constant("cdp_deg","270",reg,True)
 
     if type == r1min_gt_r1max : 
         crmin1.setExpression(21)
@@ -36,8 +37,10 @@ def Test(vis = False, interactive = False, type = normal,n_slice = 10, writeNIST
         crmin2.setExpression(11)
     elif type == dphi_gt_2pi : 
         cdp.setExpression("3*pi")
+        cdp_deg.setExpression("540")
     elif type == dphi_eq_2pi : 
         cdp.setExpression(2*_np.pi)
+        cdp_deg.setExpression("360")
     elif type == cone_up : 
         crmin1.setExpression(5)
         crmax1.setExpression(10)
@@ -57,7 +60,24 @@ def Test(vis = False, interactive = False, type = normal,n_slice = 10, writeNIST
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    cs = _g4.solid.Cons("cs",crmin1,crmax1,crmin2,crmax2,cz,zero,cdp,reg,"mm",nslice=n_slice)
+    cs = _g4.solid.Cons("cs",crmin1,crmax1,crmin2,crmax2,cz,zero,cdp,reg,"mm","rad",nslice=n_slice)
+    assert(cs.evaluateParameterWithUnits('pRmin1') == crmin1)
+    assert(cs.evaluateParameterWithUnits('pRmin2') == crmin2)
+    assert(cs.evaluateParameterWithUnits('pRmax1') == crmax1)
+    assert(cs.evaluateParameterWithUnits('pRmax2') == crmax2)
+    assert(cs.evaluateParameterWithUnits('pDz') == cz)
+    assert(cs.evaluateParameterWithUnits('pSPhi') == zero)
+    assert(cs.evaluateParameterWithUnits('pDPhi') == cdp)
+    assert(cs.evaluateParameterWithUnits('nslice') == n_slice)
+    cs2 = _g4.solid.Cons("cs2",crmin1,crmax1,crmin2,crmax2,cz,zero,cdp_deg,reg,"cm","deg",nslice=n_slice)
+    assert(cs2.evaluateParameterWithUnits('pRmin1') == 10*crmin1)
+    assert(cs2.evaluateParameterWithUnits('pRmin2') == 10*crmin2)
+    assert(cs2.evaluateParameterWithUnits('pRmax1') == 10*crmax1)
+    assert(cs2.evaluateParameterWithUnits('pRmax2') == 10*crmax2)
+    assert(cs2.evaluateParameterWithUnits('pDz') == 10*cz)
+    assert(cs2.evaluateParameterWithUnits('pSPhi') == zero)
+    assert(cs2.evaluateParameterWithUnits('pDPhi') == cdp)
+    assert(cs2.evaluateParameterWithUnits('nslice') == n_slice)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

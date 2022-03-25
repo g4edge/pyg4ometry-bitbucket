@@ -225,6 +225,54 @@ class PythonDefineTests(_unittest.TestCase) :
         xc = pyg4ometry.gdml.Constant("xc","5",r)
         self.assertEqual((-xc).eval(),-5)                
 
+    def test_GdmlDefine_ConstantOperatorEqual(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","5",r)
+        yc = pyg4ometry.gdml.Constant("yc","5",r)
+        zc = pyg4ometry.gdml.Constant("zc","10",r)
+        self.assertTrue(xc == yc)
+        self.assertFalse(xc == zc)
+
+    def test_GdmlDefine_ConstantOperatorNotEqual(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","5",r)
+        yc = pyg4ometry.gdml.Constant("yc","5",r)
+        zc = pyg4ometry.gdml.Constant("zc","10",r)
+        self.assertFalse(xc != yc)
+        self.assertTrue(xc != zc)
+
+    def test_GdmlDefine_ConstantOperatorLessThan(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","5",r)
+        yc = pyg4ometry.gdml.Constant("yc","10",r)
+        self.assertTrue(xc < yc)
+        self.assertFalse(yc < xc)
+
+    def test_GdmlDefine_ConstantOperatorGreaterThan(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","10",r)
+        yc = pyg4ometry.gdml.Constant("yc","5",r)
+        self.assertTrue(xc > yc)
+        self.assertFalse(yc > xc)
+
+    def test_GdmlDefine_ConstantOperatorLessThanOrEqual(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","5",r)
+        yc = pyg4ometry.gdml.Constant("yc","10",r)
+        zc = pyg4ometry.gdml.Constant("zc","5",r)
+        self.assertTrue(xc <= yc)
+        self.assertTrue(xc <= zc)
+        self.assertFalse(yc <= xc)
+
+    def test_GdmlDefine_ConstantOperatorGreaterThanOrEqual(self) :
+        r = pyg4ometry.geant4.Registry()
+        xc = pyg4ometry.gdml.Constant("xc","10",r)
+        yc = pyg4ometry.gdml.Constant("yc","5",r)
+        zc = pyg4ometry.gdml.Constant("zc","10",r)
+        self.assertTrue(xc >= yc)
+        self.assertTrue(xc >= zc)
+        self.assertFalse(yc >= xc)
+
     def test_GdmlDefine_ConstantSinExpression(self) :
         r = pyg4ometry.geant4.Registry()
         xc = pyg4ometry.gdml.Constant("xc","0.1",r)

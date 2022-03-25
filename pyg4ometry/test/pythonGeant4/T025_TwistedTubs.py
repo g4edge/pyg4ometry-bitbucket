@@ -19,6 +19,12 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     tz        = _gd.Constant("tz","50",reg,True)
     tphi      = _gd.Constant("phi","1.5*pi",reg,True)
 
+    ttwist_deg = _gd.Constant("tptwist_deg","1.0/pi*180",reg,True)
+    tphi_deg   = _gd.Constant("tphi_deg","1.5*180",reg,True)
+
+    wm = _g4.Material(name="G4_Galactic") 
+    bm = _g4.Material(name="G4_Fe") 
+
     # materials
     if writeNISTMaterials :
         wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
@@ -30,7 +36,18 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ts = _g4.solid.TwistedTubs("ts",trmin,trmax,tz,tphi,ttwist,reg)
-        
+    assert(ts.evaluateParameterWithUnits('endinnerrad') == trmin)
+    assert(ts.evaluateParameterWithUnits('endouterrad') == trmax)
+    assert(ts.evaluateParameterWithUnits('zlen') == tz)
+    assert(ts.evaluateParameterWithUnits('phi') == tphi)
+    assert(ts.evaluateParameterWithUnits('twistedangle') == ttwist)
+    ts2 = _g4.solid.TwistedTubs("ts2",trmin,trmax,tz,tphi_deg,ttwist_deg,reg,"cm","deg")
+    assert(ts2.evaluateParameterWithUnits('endinnerrad') == 10*trmin)
+    assert(ts2.evaluateParameterWithUnits('endouterrad') == 10*trmax)
+    assert(ts2.evaluateParameterWithUnits('zlen') == 10*tz)
+    assert(ts2.evaluateParameterWithUnits('phi') == tphi)
+    assert(ts2.evaluateParameterWithUnits('twistedangle') == ttwist)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, bm, "tl", reg)

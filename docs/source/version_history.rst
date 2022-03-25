@@ -2,7 +2,36 @@
 Version History
 ===============
 
-v1.0.0 - 2021 / 12 / 17
+
+V1.1.0 - 2022 / XX / XX
+=======================
+
+New Features
+------------
+
+* Function to view the difference between two logical volumes.
+* Comparison test for names that ignores pointers as part of the name.
+
+General
+-------
+
+Bug Fixes
+---------
+
+* Fix deployment of nist_materials.txt and nist_elements.txt package files.
+* Reduce length of names in Geant4 to FLUKA conversion to fix rejected names
+  by FLUKA.
+* Fix import of MutableMappings for Python 3.10
+* Fix units for define vectors.
+* Fix copy number of physical volumes sometimes not being an integer for
+  loaded GDML geometry.
+* Fix missing length unit for GDML writing of Generic Trap.
+* Fix units in GenericTrap class.
+* Reduce verbosity of ROOT tests.
+* Reduce verbostiy of comparison tests.
+* Fix zero division errors in various comparison tests.
+
+v1.0.1 - 2022 / 02 / 10
 =======================
 
 New Features

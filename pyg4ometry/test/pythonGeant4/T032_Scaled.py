@@ -28,6 +28,9 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     ws       = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs       = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
     bsScaled = _g4.solid.Scaled("bsScaled",bs,1,2,3,reg)
+    assert(bsScaled.evaluateParameterWithUnits('pX') == 1)
+    assert(bsScaled.evaluateParameterWithUnits('pY') == 2)
+    assert(bsScaled.evaluateParameterWithUnits('pZ') == 3)
 
     # structure 
     wl       = _g4.LogicalVolume(ws, wm, "wl", reg)

@@ -20,6 +20,12 @@ def Test(vis = False, interactive= False, writeNISTMaterials = False) :
     pTheta = _gd.Constant("pTheta","0.3",reg,True)
     pPhi   = _gd.Constant("pPhi","0.4",reg,True)
 
+    pAlpha_deg = _gd.Constant("pAlpha_deg","0.2/pi*180",reg,True)
+    pTheta_deg = _gd.Constant("pTheta_deg","0.3/pi*180",reg,True)
+    pPhi_deg   = _gd.Constant("pPhi_deg","0.4/pi*180",reg,True)
+
+    wm = _g4.MaterialPredefined("G4_Galactic")
+    pm = _g4.MaterialPredefined("G4_Fe") 
     # materials
     if writeNISTMaterials :
         wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
@@ -31,7 +37,20 @@ def Test(vis = False, interactive= False, writeNISTMaterials = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ps = _g4.solid.Para("ps",px,py,pz,pAlpha,pTheta,pPhi,reg,"mm","rad")
-        
+    assert(ps.evaluateParameterWithUnits('pX') == px)
+    assert(ps.evaluateParameterWithUnits('pY') == py)
+    assert(ps.evaluateParameterWithUnits('pZ') == pz)
+    assert(ps.evaluateParameterWithUnits('pAlpha') == pAlpha)
+    assert(ps.evaluateParameterWithUnits('pPhi') == pPhi)
+    assert(ps.evaluateParameterWithUnits('pTheta') == pTheta)
+    ps2 = _g4.solid.Para("ps2",px,py,pz,pAlpha_deg,pTheta_deg,pPhi_deg,reg,"cm","deg")
+    assert(ps2.evaluateParameterWithUnits('pX') == 10*px)
+    assert(ps2.evaluateParameterWithUnits('pY') == 10*py)
+    assert(ps2.evaluateParameterWithUnits('pZ') == 10*pz)
+    assert(ps2.evaluateParameterWithUnits('pAlpha') == pAlpha)
+    assert(ps2.evaluateParameterWithUnits('pPhi') == pPhi)
+    assert(ps2.evaluateParameterWithUnits('pTheta') == pTheta)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     pl = _g4.LogicalVolume(ps, pm, "pl", reg)

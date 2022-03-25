@@ -25,6 +25,9 @@ def Test(vis = False, interactive = False, n_slice=16, n_stack=16, writeNISTMate
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     os = _g4.solid.Orb("os",ormax,reg,"mm", nslice=n_slice, nstack=n_stack)
+    assert(os.evaluateParameterWithUnits('pRMax') == ormax)
+    os2 = _g4.solid.Orb("os2",ormax,reg,"cm", nslice=n_slice, nstack=n_stack)
+    assert(os2.evaluateParameterWithUnits('pRMax') == 10*ormax)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

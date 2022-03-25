@@ -31,6 +31,12 @@ def Test(vis = False, interactive = False, n_slice = 64, writeNISTMaterials = Fa
     prmin = [prmin1,prmin2,prmin3]
     prmax = [prmax1,prmax2,prmax3]
     pz    = [pz1,pz2,pz3]
+    
+    psphi_deg  = _gd.Constant("sphi_deg","0",reg,True)
+    pdphi_deg  = _gd.Constant("dphi_deg","270",reg,True)
+
+    wm = _g4.MaterialPredefined("G4_Galactic")
+    pm = _g4.MaterialPredefined("G4_Fe") 
 
     # materials
     if writeNISTMaterials :
@@ -43,7 +49,18 @@ def Test(vis = False, interactive = False, n_slice = 64, writeNISTMaterials = Fa
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ps = _g4.solid.Polycone("ps",psphi,pdphi,pz,prmin,prmax,reg,"mm","rad",nslice=n_slice)
-        
+    assert(ps.evaluateParameterWithUnits('pSPhi') == psphi)
+    assert(ps.evaluateParameterWithUnits('pDPhi') == pdphi)
+    assert(ps.evaluateParameterWithUnits('pZpl') == [ -10, 0, 10 ])
+    assert(ps.evaluateParameterWithUnits('pRMin') == [ 1, 5, 3 ])
+    assert(ps.evaluateParameterWithUnits('pRMax') == [ 9, 9, 5 ])
+    ps2 = _g4.solid.Polycone("ps2",psphi_deg,pdphi_deg,pz,prmin,prmax,reg,"cm","deg",nslice=n_slice)
+    assert(ps2.evaluateParameterWithUnits('pSPhi') == psphi)
+    assert(ps2.evaluateParameterWithUnits('pDPhi') == pdphi)
+    assert(ps2.evaluateParameterWithUnits('pZpl') == [ -100, 00, 100 ])
+    assert(ps2.evaluateParameterWithUnits('pRMin') == [ 10, 50, 30 ])
+    assert(ps2.evaluateParameterWithUnits('pRMax') == [ 90, 90, 50 ])
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     pl = _g4.LogicalVolume(ps, pm, "pl", reg)

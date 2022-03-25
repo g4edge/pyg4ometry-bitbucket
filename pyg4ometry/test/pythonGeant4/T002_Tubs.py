@@ -18,7 +18,13 @@ def Test(vis = False, interactive = False, n_slice = 16, writeNISTMaterials = Fa
     tz        = _gd.Constant("tz","50",reg,True)
     tstartphi = _gd.Constant("startphi","0",reg,True)
     tdeltaphi = _gd.Constant("deltaphi","1.5*pi",reg,True)
-    
+
+    tstartphi_deg = _gd.Constant("startphi_deg","0",reg,True)
+    tdeltaphi_deg = _gd.Constant("deltaphi_deg","270",reg,True)
+
+    wm = _g4.Material(name="G4_Galactic") 
+    bm = _g4.Material(name="G4_Fe") 
+
     # materials
     if writeNISTMaterials :
         wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
@@ -30,7 +36,21 @@ def Test(vis = False, interactive = False, n_slice = 16, writeNISTMaterials = Fa
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ts = _g4.solid.Tubs("ts",trmin,trmax,tz,tstartphi,tdeltaphi,reg, "mm","rad",nslice=n_slice)
-        
+
+    assert(ts.evaluateParameterWithUnits('pRMin') == trmin)
+    assert(ts.evaluateParameterWithUnits('pRMax') == trmax)
+    assert(ts.evaluateParameterWithUnits('pDz') == tz)
+    assert(ts.evaluateParameterWithUnits('pSPhi') == tstartphi)
+    assert(ts.evaluateParameterWithUnits('pDPhi') == tdeltaphi)
+    assert(ts.evaluateParameterWithUnits('nslice') == n_slice)
+    ts2 = _g4.solid.Tubs("ts2",trmin,trmax,tz,tstartphi_deg,tdeltaphi_deg,reg, "cm","deg",nslice=n_slice)
+    assert(ts2.evaluateParameterWithUnits('pRMin') == 10*trmin)
+    assert(ts2.evaluateParameterWithUnits('pRMax') == 10*trmax)
+    assert(ts2.evaluateParameterWithUnits('pDz') == 10*tz)
+    assert(ts2.evaluateParameterWithUnits('pSPhi') == tstartphi)
+    assert(ts2.evaluateParameterWithUnits('pDPhi') == tdeltaphi)
+    assert(ts2.evaluateParameterWithUnits('nslice') == n_slice)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, bm, "tl", reg)

@@ -28,7 +28,18 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts = _g4.solid.Trd("ts",tx1,ty1,tx2,ty2,tz,reg,"mm")
+    ts = _g4.solid.Trd("ts",tx1,tx2,ty1,ty2,tz,reg,"mm")
+    assert(ts.evaluateParameterWithUnits('pX1') == tx1)
+    assert(ts.evaluateParameterWithUnits('pX2') == tx2)
+    assert(ts.evaluateParameterWithUnits('pY1') == ty1)
+    assert(ts.evaluateParameterWithUnits('pY2') == ty2)
+    assert(ts.evaluateParameterWithUnits('pZ') == tz)
+    ts2 = _g4.solid.Trd("ts2",tx1,tx2,ty1,ty2,tz,reg,"cm")
+    assert(ts2.evaluateParameterWithUnits('pX1') == 10*tx1)
+    assert(ts2.evaluateParameterWithUnits('pX2') == 10*tx2)
+    assert(ts2.evaluateParameterWithUnits('pY1') == 10*ty1)
+    assert(ts2.evaluateParameterWithUnits('pY2') == 10*ty2)
+    assert(ts2.evaluateParameterWithUnits('pZ') == 10*tz)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

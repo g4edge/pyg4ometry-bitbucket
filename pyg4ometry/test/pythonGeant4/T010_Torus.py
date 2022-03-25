@@ -20,6 +20,13 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20, writeNIST
     tsphi2 = _gd.Constant("sphi2s","0.3*pi",reg,True)
     tdphi  = _gd.Constant("dphi","1.5*pi",reg,True)
 
+    tsphi_deg  = _gd.Constant("sphi_deg","0",reg,True)
+    tsphi2_deg = _gd.Constant("sphi2s_deg","54",reg,True)
+    tdphi_deg  = _gd.Constant("dphi_deg","270",reg,True)
+
+    wm = _g4.MaterialPredefined("G4_Galactic") 
+    tm = _g4.MaterialPredefined("G4_Fe") 
+
     # materials
     if writeNISTMaterials :
         wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
@@ -30,9 +37,31 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20, writeNIST
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts1 = _g4.solid.Torus("ts1",trmin,trmax,trtor,tsphi, tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
+    ts1 = _g4.solid.Torus("ts1",trmin,trmax,trtor,tsphi,tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
+    assert(ts1.evaluateParameterWithUnits('pRmin') == trmin)
+    assert(ts1.evaluateParameterWithUnits('pRmax') == trmax)
+    assert(ts1.evaluateParameterWithUnits('pRtor') == trtor)
+    assert(ts1.evaluateParameterWithUnits('pSPhi') == tsphi)
+    assert(ts1.evaluateParameterWithUnits('pDPhi') == tdphi)
+    assert(ts1.evaluateParameterWithUnits('nslice') == n_slice)
+    assert(ts1.evaluateParameterWithUnits('nstack') == n_stack)
     ts2 = _g4.solid.Torus("ts2",trmin,trmax,trtor,tsphi2,tdphi,reg,"mm","rad",nslice=n_slice,nstack=n_stack)
-        
+    assert(ts2.evaluateParameterWithUnits('pRmin') == trmin)
+    assert(ts2.evaluateParameterWithUnits('pRmax') == trmax)
+    assert(ts2.evaluateParameterWithUnits('pRtor') == trtor)
+    assert(ts2.evaluateParameterWithUnits('pSPhi') == tsphi2)
+    assert(ts2.evaluateParameterWithUnits('pDPhi') == tdphi)
+    assert(ts2.evaluateParameterWithUnits('nslice') == n_slice)
+    assert(ts2.evaluateParameterWithUnits('nstack') == n_stack)
+    ts3 = _g4.solid.Torus("ts3",trmin,trmax,trtor,tsphi_deg,tdphi_deg,reg,"cm","deg",nslice=n_slice,nstack=n_stack)
+    assert(ts3.evaluateParameterWithUnits('pRmin') == 10*trmin)
+    assert(ts3.evaluateParameterWithUnits('pRmax') == 10*trmax)
+    assert(ts3.evaluateParameterWithUnits('pRtor') == 10*trtor)
+    assert(ts3.evaluateParameterWithUnits('pSPhi') == tsphi)
+    assert(ts3.evaluateParameterWithUnits('pDPhi') == tdphi)
+    assert(ts3.evaluateParameterWithUnits('nslice') == n_slice)
+    assert(ts3.evaluateParameterWithUnits('nstack') == n_stack)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl1 = _g4.LogicalVolume(ts1, tm, "tl1", reg)

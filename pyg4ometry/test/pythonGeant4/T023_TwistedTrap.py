@@ -28,6 +28,14 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     tphi   = _gd.Constant("tphi","0.0",reg,True)
     talp   = _gd.Constant("talp","0.0",reg,True)
 
+    ttwist_deg = _gd.Constant("tptwist_deg","1.0/pi*180",reg,True)
+    ttheta_deg = _gd.Constant("ttheta_deg","0.6/pi*180",reg,True)
+    tphi_deg   = _gd.Constant("tphi_deg","0.0/pi*180",reg,True)
+    talp_deg   = _gd.Constant("talp_deg","0.0/pi*180",reg,True)
+
+    wm = _g4.MaterialPredefined("G4_Galactic") 
+    tm = _g4.MaterialPredefined("G4_Fe") 
+
     # materials
     if writeNISTMaterials :
         wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
@@ -39,7 +47,31 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ts = _g4.solid.TwistedTrap("ts",ttwist,tz,ttheta,tphi,ty1,tx1,tx2,ty2,tx3,tx4,talp,reg)
-        
+
+    assert(ts.evaluateParameterWithUnits('twistedAngle') == ttwist)
+    assert(ts.evaluateParameterWithUnits('pDz') == tz)
+    assert(ts.evaluateParameterWithUnits('pTheta') == ttheta)
+    assert(ts.evaluateParameterWithUnits('pDPhi') == tphi)
+    assert(ts.evaluateParameterWithUnits('pDy1') == ty1)
+    assert(ts.evaluateParameterWithUnits('pDx1') == tx1)
+    assert(ts.evaluateParameterWithUnits('pDx2') == tx2)
+    assert(ts.evaluateParameterWithUnits('pDy2') == ty2)
+    assert(ts.evaluateParameterWithUnits('pDx3') == tx3)
+    assert(ts.evaluateParameterWithUnits('pDx4') == tx4)
+    assert(ts.evaluateParameterWithUnits('pAlp') == talp)
+    ts2 = _g4.solid.TwistedTrap("ts2",ttwist_deg,tz,ttheta_deg,tphi_deg,ty1,tx1,tx2,ty2,tx3,tx4,talp_deg,reg,"cm","deg")
+    assert(ts2.evaluateParameterWithUnits('twistedAngle') == ttwist)
+    assert(ts2.evaluateParameterWithUnits('pDz') == 10*tz)
+    assert(ts2.evaluateParameterWithUnits('pTheta') == ttheta)
+    assert(ts2.evaluateParameterWithUnits('pDPhi') == tphi)
+    assert(ts2.evaluateParameterWithUnits('pDy1') == 10*ty1)
+    assert(ts2.evaluateParameterWithUnits('pDx1') == 10*tx1)
+    assert(ts2.evaluateParameterWithUnits('pDx2') == 10*tx2)
+    assert(ts2.evaluateParameterWithUnits('pDy2') == 10*ty2)
+    assert(ts2.evaluateParameterWithUnits('pDx3') == 10*tx3)
+    assert(ts2.evaluateParameterWithUnits('pDx4') == 10*tx4)
+    assert(ts2.evaluateParameterWithUnits('pAlp') == talp)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, tm, "tl", reg)

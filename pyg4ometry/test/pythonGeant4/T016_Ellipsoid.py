@@ -31,6 +31,17 @@ def Test(vis = False, interactive = False, n_slice=25,n_stack=25, writeNISTMater
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     es = _g4.solid.Ellipsoid("es",eax,eby,ecz,ebc,etc,reg,nslice=n_slice,nstack=n_stack)
+    assert(es.evaluateParameterWithUnits('pxSemiAxis') == eax)
+    assert(es.evaluateParameterWithUnits('pySemiAxis') == eby)
+    assert(es.evaluateParameterWithUnits('pzSemiAxis') == ecz)
+    assert(es.evaluateParameterWithUnits('pzBottomCut') == ebc)
+    assert(es.evaluateParameterWithUnits('pzTopCut') == etc)
+    es2 = _g4.solid.Ellipsoid("es2",eax,eby,ecz,ebc,etc,reg,"cm",nslice=n_slice,nstack=n_stack)
+    assert(es2.evaluateParameterWithUnits('pxSemiAxis') == 10*eax)
+    assert(es2.evaluateParameterWithUnits('pySemiAxis') == 10*eby)
+    assert(es2.evaluateParameterWithUnits('pzSemiAxis') == 10*ecz)
+    assert(es2.evaluateParameterWithUnits('pzBottomCut') == 10*ebc)
+    assert(es2.evaluateParameterWithUnits('pzTopCut') == 10*etc)
 
     print(es.mesh())
     # structure

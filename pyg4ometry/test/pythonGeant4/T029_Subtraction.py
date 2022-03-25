@@ -3,6 +3,7 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 import pyg4ometry.exceptions
+import numpy as _np
 
 def Test(vis = False, interactive = False, nullMesh = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
@@ -30,9 +31,13 @@ def Test(vis = False, interactive = False, nullMesh = False, writeNISTMaterials 
     bs1 = _g4.solid.Box("bs1",2*bx,2*by,2*bz, reg, "mm")
 
     if not nullMesh :
-        ss = _g4.solid.Subtraction("us",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
+        ss = _g4.solid.Subtraction("ss",bs,bs,[[0.1,0.2,0.3],[bx/2,by/2,bz/2]],reg)
+        assert(ss.evaluateParameterWithUnits('tra2') == [[0.1,0.2,0.3],[5,5,5]])
+        ss2 = _g4.solid.Subtraction("ss2",bs,bs,[[0.1/_np.pi*180,0.2/_np.pi*180,0.3/_np.pi*180,"deg"],[bx/20,by/20,bz/20,"cm"]],reg)
+        assert(ss.evaluateParameterWithUnits('tra2') == [[0.1,0.2,0.3],[5,5,5]])
     else :
-        ss = _g4.solid.Subtraction("us",bs,bs1,[[0,0,0],[0,0,0]],reg)
+        ss = _g4.solid.Subtraction("ss",bs,bs1,[[0,0,0],[0,0,0]],reg)
+        assert(ss.evaluateParameterWithUnits('tra2') == [[0,0,0],[5,5,5]])
 
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
