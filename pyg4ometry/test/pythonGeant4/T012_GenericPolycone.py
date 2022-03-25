@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 two_planes = 2
 
-def Test(vis = False, interactive = False, type = normal, n_slice = 64) :
+def Test(vis = False, interactive = False, type = normal, n_slice = 64, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -46,9 +46,14 @@ def Test(vis = False, interactive = False, type = normal, n_slice = 64) :
     if type == two_planes : 
         pr  = [pr1,pr2]
         pz  = [pz1,pz2]
-    
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    pm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        pm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        pm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")

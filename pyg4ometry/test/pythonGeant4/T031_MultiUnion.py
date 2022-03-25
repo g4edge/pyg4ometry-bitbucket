@@ -5,7 +5,7 @@ import pyg4ometry.visualisation as _vi
 import random as _rand
 import numpy as _np
 
-def Test(vis = False, interactive = False) : 
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -16,9 +16,14 @@ def Test(vis = False, interactive = False) :
     bx = _gd.Constant("bx","10",reg,True)
     by = _gd.Constant("by","10",reg,True)
     bz = _gd.Constant("bz","10",reg,True)
-    
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    bm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        bm = _g4.nist_material_2geant4Material("G4_Au",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        bm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")

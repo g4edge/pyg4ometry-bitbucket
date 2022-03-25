@@ -3,7 +3,7 @@ import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -18,9 +18,14 @@ def Test(vis = False, interactive = False) :
     trmax     = _gd.Constant("trmax","10.0",reg,True)    
     tz        = _gd.Constant("tz","50",reg,True)
     tphi      = _gd.Constant("phi","1.5*pi",reg,True)
-    
-    wm = _g4.Material(name="G4_Galactic") 
-    bm = _g4.Material(name="G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        bm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.Material(name="G4_Galactic")
+        bm = _g4.Material(name="G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")

@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal     = 1 
 flat_ends  = 2
 
-def Test(vis = False, interactive=False, type = normal,n_slice=16) :
+def Test(vis = False, interactive=False, type = normal,n_slice=16, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -35,8 +35,13 @@ def Test(vis = False, interactive=False, type = normal,n_slice=16) :
         cthighy.setExpression(0)
         cthighz.setExpression(1)
             
-    wm = _g4.Material(name="G4_Galactic") 
-    bm = _g4.Material(name="G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        bm = _g4.nist_material_2geant4Material("G4_Au",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        bm = _g4.MaterialPredefined("G4_Au")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg,"mm")

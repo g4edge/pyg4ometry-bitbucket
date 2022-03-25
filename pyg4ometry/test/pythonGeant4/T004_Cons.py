@@ -12,7 +12,7 @@ dphi_eq_2pi    = 5
 cone_up        = 6
 inner_cylinder = 7
 
-def Test(vis = False, interactive = False, type = normal,n_slice = 10) :
+def Test(vis = False, interactive = False, type = normal,n_slice = 10, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -47,8 +47,13 @@ def Test(vis = False, interactive = False, type = normal,n_slice = 10) :
         crmin1.setExpression(5)
         crmin2.setExpression(5)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    cm = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        cm = _g4.nist_material_2geant4Material("G4_Au",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        cm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
