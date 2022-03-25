@@ -53,7 +53,7 @@ def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ts = _g4.solid.GenericTrap("ts",tv1x,tv1y,tv2x,tv2y,tv3x,tv3y,tv4x,tv4y,tv5x,tv5y,
-                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg,lunit="m")
+                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg,lunit="mm")
     assert(ts.evaluateParameterWithUnits('v1x') == tv1x)
     assert(ts.evaluateParameterWithUnits('v1y') == tv1y)
     assert(ts.evaluateParameterWithUnits('v2x') == tv2x)
