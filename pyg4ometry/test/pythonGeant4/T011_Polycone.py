@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False, n_slice = 64) :
+def Test(vis = False, interactive = False, n_slice = 64, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -35,8 +35,16 @@ def Test(vis = False, interactive = False, n_slice = 64) :
     psphi_deg  = _gd.Constant("sphi_deg","0",reg,True)
     pdphi_deg  = _gd.Constant("dphi_deg","270",reg,True)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
+    wm = _g4.MaterialPredefined("G4_Galactic")
     pm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        pm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        pm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")

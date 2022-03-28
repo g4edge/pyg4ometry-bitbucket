@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
+def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -26,6 +26,14 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
 
     wm = _g4.MaterialPredefined("G4_Galactic") 
     tm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        tm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        tm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
@@ -53,7 +61,7 @@ def Test(vis = False, interactive = False, n_slice = 20, n_stack = 20) :
     assert(ts3.evaluateParameterWithUnits('pDPhi') == tdphi)
     assert(ts3.evaluateParameterWithUnits('nslice') == n_slice)
     assert(ts3.evaluateParameterWithUnits('nstack') == n_stack)
-        
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl1 = _g4.LogicalVolume(ts1, tm, "tl1", reg)

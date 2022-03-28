@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 zero_area_quad = 2
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -42,13 +42,18 @@ def Test(vis = False, interactive = False) :
     
     tz    = _gd.Constant("z","30",reg,True)
 
-    wm = _g4.Material(name="G4_Galactic") 
-    tm = _g4.Material(name="G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        tm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.Material(name="G4_Galactic")
+        tm = _g4.Material(name="G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ts = _g4.solid.GenericTrap("ts",tv1x,tv1y,tv2x,tv2y,tv3x,tv3y,tv4x,tv4y,tv5x,tv5y,
-                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg)
+                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg,lunit="mm")
     assert(ts.evaluateParameterWithUnits('v1x') == tv1x)
     assert(ts.evaluateParameterWithUnits('v1y') == tv1y)
     assert(ts.evaluateParameterWithUnits('v2x') == tv2x)
@@ -85,7 +90,7 @@ def Test(vis = False, interactive = False) :
     assert(ts2.evaluateParameterWithUnits('v8x') == 10*tv8x)
     assert(ts2.evaluateParameterWithUnits('v8y') == 10*tv8y)
     assert(ts2.evaluateParameterWithUnits('dz')  == 10*tz)
-        
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, tm, "tl", reg)

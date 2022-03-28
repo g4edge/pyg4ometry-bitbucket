@@ -107,6 +107,9 @@ import logging as _log
 #logger.disabled = True
 
 class PythonGeantAuthoringTests(_unittest.TestCase) :
+
+    writeNISTMaterials = True
+
     def test_PythonGeant_Plane(self) :
         p = pyg4ometry.geant4.solid.Plane("plane",[0,0,1],1000)
         str(p)
@@ -119,13 +122,13 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T000_SolidBase.Test()["testStatus"])
 
     def test_PythonGeant_T001_Box(self) :
-        self.assertTrue(T001_Box.Test(False,False)["testStatus"])
+        self.assertTrue(T001_Box.Test(False,False,self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T002_Tubs(self) :
-        self.assertTrue(T002_Tubs.Test(False,False))
+        self.assertTrue(T002_Tubs.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T003_CutTubs(self) :
-        self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.normal)["testStatus"])
+        self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.normal, writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
         self.assertTrue(T003_CutTubs.Test(False, False, T003_CutTubs.flat_ends)["testStatus"])
         self.assertTrue(T0031_CutTubs_number.Test(False, False)["testStatus"])
         self.assertTrue(T0032_CutTubs_string.Test(False, False)["testStatus"])
@@ -134,7 +137,7 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
 
     def test_PythonGeant_T004_Cons(self) :
         try :
-            self.assertTrue(T004_Cons.Test(False,False,T004_Cons.r1min_gt_r1max)["testStatus"])
+            self.assertTrue(T004_Cons.Test(False,False,T004_Cons.r1min_gt_r1max,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
         except ValueError :
             pass
 
@@ -155,28 +158,28 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T004_Cons.Test(False,False)["testStatus"])
       
     def test_PythonGeant_T005_Para(self) :
-        self.assertTrue(T005_Para.Test(False,False)["testStatus"])
+        self.assertTrue(T005_Para.Test(False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T006_Trd(self) :
-        self.assertTrue(T006_Trd.Test(False,False)["testStatus"])
+        self.assertTrue(T006_Trd.Test(False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T007_Trap(self) :
-        self.assertTrue(T007_Trap.Test(False,False)["testStatus"])
+        self.assertTrue(T007_Trap.Test(False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T008_Sphere(self) :
-        self.assertTrue(T008_Sphere.Test(False,False))
+        self.assertTrue(T008_Sphere.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T009_Orb(self) :
-        self.assertTrue(T009_Orb.Test(False,False))
+        self.assertTrue(T009_Orb.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T010_Torus(self) :
-        self.assertTrue(T010_Torus.Test(False,False))
+        self.assertTrue(T010_Torus.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T011_Polycone(self) :
-        self.assertTrue(T011_Polycone.Test(False,False))
+        self.assertTrue(T011_Polycone.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T012_GenericPolycone(self) :
-        self.assertTrue(T012_GenericPolycone.Test(False,False,T012_GenericPolycone.normal))
+        self.assertTrue(T012_GenericPolycone.Test(False,False,T012_GenericPolycone.normal,writeNISTMaterials=self.writeNISTMaterials))
 
         try : 
             T012_GenericPolycone.Test(False,False,T012_GenericPolycone.two_planes)
@@ -184,10 +187,10 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
             pass
 
     def test_PythonGeant_T013_Polyhedra(self) :
-        self.assertTrue(T013_Polyhedra.Test())
+        self.assertTrue(T013_Polyhedra.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T014_GenericPolyhedra(self) :
-        self.assertTrue(T014_GenericPolyhedra.Test(False,False,T014_GenericPolyhedra.normal))
+        self.assertTrue(T014_GenericPolyhedra.Test(False,False,T014_GenericPolyhedra.normal,writeNISTMaterials=self.writeNISTMaterials))
 
         try : 
             T014_GenericPolyhedra.Test(False,False, T014_GenericPolyhedra.two_planes)
@@ -195,58 +198,58 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
             pass
 
     def test_PythonGeant_T015_EllipticalTube(self) :
-        self.assertTrue(T015_EllipticalTube.Test())
+        self.assertTrue(T015_EllipticalTube.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T016_Ellipsoid(self) :
-        self.assertTrue(T016_Ellipsoid.Test())
+        self.assertTrue(T016_Ellipsoid.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T017_EllipticalCone(self) :
-        self.assertTrue(T017_EllipticalCone.Test())
+        self.assertTrue(T017_EllipticalCone.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
         
         try : 
-            T017_EllipticalCone.Test(False,False, T017_EllipticalCone.zcut_outofrange)
+            T017_EllipticalCone.Test(False,False, T017_EllipticalCone.zcut_outofrange,writeNISTMaterials=self.writeNISTMaterials)
         except ValueError : 
             pass
 
     def test_PythonGeant_T018_Paraboloid(self) :
-        self.assertTrue(T018_Paraboloid.Test())
+        self.assertTrue(T018_Paraboloid.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T019_Hyperboloid(self) :
-        self.assertTrue(T019_Hyperboloid.Test(False,False,T019_Hyperboloid.normal))
-        self.assertTrue(T019_Hyperboloid.Test(False,False,T019_Hyperboloid.rmin_eq_zero))
+        self.assertTrue(T019_Hyperboloid.Test(False,False,T019_Hyperboloid.normal,writeNISTMaterials=self.writeNISTMaterials))
+        self.assertTrue(T019_Hyperboloid.Test(False,False,T019_Hyperboloid.rmin_eq_zero,writeNISTMaterials=self.writeNISTMaterials))
 
         try : 
-            T019_Hyperboloid.Test(False,False,T019_Hyperboloid.rmin_gt_rmax)
+            T019_Hyperboloid.Test(False,False,T019_Hyperboloid.rmin_gt_rmax,writeNISTMaterials=self.writeNISTMaterials)
         except ValueError : 
             pass
 
     def test_PythonGeant_T020_Tet(self) :
-        self.assertTrue(T020_Tet.Test())        
+        self.assertTrue(T020_Tet.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T021_ExtrudedSolid(self) :
-        self.assertTrue(T021_ExtrudedSolid.Test())        
+        self.assertTrue(T021_ExtrudedSolid.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T022_TwistedBox(self) :
-        self.assertTrue(T022_TwistedBox.Test())
+        self.assertTrue(T022_TwistedBox.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T023_TwistedTrap(self) :
-        self.assertTrue(T023_TwistedTrap.Test())
+        self.assertTrue(T023_TwistedTrap.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T024_TwistedTrd(self) :
-        self.assertTrue(T024_TwistedTrd.Test())
+        self.assertTrue(T024_TwistedTrd.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T025_TwistedTubs(self) :
-        self.assertTrue(T025_TwistedTubs.Test())
+        self.assertTrue(T025_TwistedTubs.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T026_GenericTrap(self) :
-        self.assertTrue(T026_GenericTrap.Test())
+        self.assertTrue(T026_GenericTrap.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T028_Union(self) :
-        self.assertTrue(T028_Union.Test(False,False,False)["testStatus"])
-        self.assertTrue(T028_Union.Test(False,False,True)["testStatus"])
+        self.assertTrue(T028_Union.Test(False,False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
+        self.assertTrue(T028_Union.Test(False,False,True,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T029_Subtraction(self) :
-        self.assertTrue(T029_Subtraction.Test(False,False,False)["testStatus"])
+        self.assertTrue(T029_Subtraction.Test(False,False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
         #try :
         #    T029_Subtraction.Test(False,False,True)
@@ -254,7 +257,7 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         #    pass
 
     def test_PythonGeant_T030_Intersection(self) :
-        self.assertTrue(T030_Intersection.Test(False,False,T030_Intersection.normal))
+        self.assertTrue(T030_Intersection.Test(False,False,T030_Intersection.normal,writeNISTMaterials=self.writeNISTMaterials))
 
         #try :
         #    T030_Intersection.Test(False,False,T030_Intersection.non_intersecting)
@@ -262,13 +265,13 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         #    pass
 
     def test_PythonGeant_T031_MultiUnion(self) :
-        self.assertTrue(T031_MultiUnion.Test())
+        self.assertTrue(T031_MultiUnion.Test(False,False,writeNISTMaterials=self.writeNISTMaterials))
 
     def test_PythonGeant_T032_Scaled(self):
-        self.assertTrue(T032_Scaled.Test()["testStatus"])
+        self.assertTrue(T032_Scaled.Test(False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T033_Tessellated(self):
-        self.assertTrue(T033_TessellatedSolid.Test()["testStatus"])
+        self.assertTrue(T033_TessellatedSolid.Test(False,False,writeNISTMaterials=self.writeNISTMaterials)["testStatus"])
 
     def test_PythonGeant_T101_PhysicalLogical(self):
         self.assertTrue(T101_physical_logical.Test()["testStatus"])

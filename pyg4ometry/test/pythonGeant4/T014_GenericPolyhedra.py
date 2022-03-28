@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 two_planes = 2
 
-def Test(vis = False, interactive = False, type = normal) :
+def Test(vis = False, interactive = False, type = normal, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -42,6 +42,14 @@ def Test(vis = False, interactive = False, type = normal) :
     wm = _g4.MaterialPredefined("G4_Galactic") 
     pm = _g4.MaterialPredefined("G4_Fe") 
 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        pm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        pm = _g4.MaterialPredefined("G4_Fe")
+
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ps = _g4.solid.GenericPolyhedra("ps",psphi,pdphi,pnsid,pr,pz,reg,"mm","rad")
@@ -64,7 +72,7 @@ def Test(vis = False, interactive = False, type = normal) :
     else :
         assert(ps2.evaluateParameterWithUnits('pZ') == [-100, 0, 100])
         assert(ps2.evaluateParameterWithUnits('pR') == [10, 20, 10])
-        
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     pl = _g4.LogicalVolume(ps, pm, "pl", reg)
