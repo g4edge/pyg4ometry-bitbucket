@@ -102,6 +102,7 @@ from . import T433_MergeRegistry_Scale
 from . import T434_MergeRegistry_CollapseAssembly
 from . import T600_LVTessellated
 from . import T601_reflect
+from . import T602_lv_cull_daughters
 
 import logging as _log
 
@@ -438,6 +439,10 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
 
     def test_PythonGeant_T601_reflect(self):
         self.assertTrue(T601_reflect.Test()["testStatus"])
+
+    def test_PythonGeant_T602_lv_cull_daughters(self):
+        self.assertTrue(T602_lv_cull_daughters.Test()["testStatus"]
+        
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
 
