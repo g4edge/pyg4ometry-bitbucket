@@ -61,6 +61,7 @@ def Test(vis=False, interactive=False):
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
+        v.addSolid(clipBox)
         v.view(interactive=interactive)
 
     assert(len(dlv.daughterVolumes) == nX**2)
