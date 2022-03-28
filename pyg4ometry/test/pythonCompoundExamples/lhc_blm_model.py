@@ -553,6 +553,7 @@ def make_lhc_blm(vis=False, interactive=False, n_slice=16):
     # visualisation
     v = 1
     if vis:
+        #v = _vi.VtkViewerColouredMaterial()
         v = _vi.VtkViewer()
         v.addAxes(10)
         v.addLogicalVolume(reg.getWorldVolume())
