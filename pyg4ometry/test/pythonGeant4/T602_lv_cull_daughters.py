@@ -24,11 +24,9 @@ def Test(vis=False, interactive=False):
     nX = 4
     dX = x*1000 / nX
     x0 = -0.5*x*1000 + 0.5*dX
-    print(x0)
     for xi in range(nX):
         for yi in range(nX):
             pos = [x0+xi*dX, x0+yi*dX, 0]
-            print(pos)
             _g4.PhysicalVolume([0,0,0],
                                pos,
                                ddlv,
