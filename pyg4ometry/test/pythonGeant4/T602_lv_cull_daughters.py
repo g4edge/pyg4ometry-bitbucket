@@ -44,7 +44,8 @@ def Test(vis=False, interactive=False):
                        reg)
 
     # now for the culling
-    clipBox = _g4.solid.Box("clipper", 800, 800, 800, reg, "mm")
+    clipFW = 500 # this should cut out the middle 4 from 16
+    clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
     dlv.cullDaughtersOutsideSolid(clipBox)
 
     # set world volume
@@ -64,7 +65,7 @@ def Test(vis=False, interactive=False):
         v.addSolid(clipBox)
         v.view(interactive=interactive)
 
-    assert(len(dlv.daughterVolumes) == nX**2)
+    assert(len(dlv.daughterVolumes) == 4)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
