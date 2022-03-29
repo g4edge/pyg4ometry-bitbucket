@@ -44,8 +44,11 @@ def Test(vis=False, interactive=False):
                        reg)
 
     # now for the culling
-    clipBox = _g4.solid.Box("clipper", 800, 800, 800, reg, "mm")
-    dlv.cullDaughtersOutsideSolid(clipBox)
+    # 800 should mean that the middle 4 out of 16 boxes remain untouched, but
+    # the outer 12 should be intersected
+    clipFW = 800
+    clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
+    dlv.changeSolidAndTrimGeometry(clipBox)
 
     # set world volume
     reg.setWorld(wl)
@@ -53,8 +56,8 @@ def Test(vis=False, interactive=False):
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T602_lv_cull_daughters.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T602_lv_cull_daughters.gmad","T602_lv_cull_daughters.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T603_lv_change_solid_and_trim.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T603_lv_change_solid_and_trim.gmad","T603_lv_change_solid_and_trim.gdml")
     
     # visualisation
     v = None
@@ -63,8 +66,8 @@ def Test(vis=False, interactive=False):
         v.addLogicalVolume(reg.getWorldVolume())
         v.addSolid(clipBox)
         v.view(interactive=interactive)
-
-    assert(len(dlv.daughterVolumes) == nX**2)
+    
+    assert(len(dlv.daughterVolumes) == 16)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
