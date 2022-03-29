@@ -103,6 +103,8 @@ from . import T434_MergeRegistry_CollapseAssembly
 from . import T600_LVTessellated
 from . import T601_reflect
 from . import T602_lv_cull_daughters
+from . import T603_lv_change_solid_and_trim
+from . import T604_lv_change_solid_and_trim_rot
 
 import logging as _log
 
@@ -441,7 +443,13 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
         self.assertTrue(T601_reflect.Test()["testStatus"])
 
     def test_PythonGeant_T602_lv_cull_daughters(self):
-        self.assertTrue(T602_lv_cull_daughters.Test()["testStatus"]
+        self.assertTrue(T602_lv_cull_daughters.Test()["testStatus"])
+
+    def test_PythonGeant_T603_lv_change_solid_and_trim(self):
+        self.assertTrue(T603_lv_change_solid_and_trim.Test()["testStatus"])
+
+    def test_PythonGeant_T604_lv_change_solid_and_trim_rot(self):
+        self.assertTrue(T604_lv_change_solid_and_timr_rot.Test()["testStatus"])
         
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
