@@ -2,6 +2,7 @@ import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
+import numpy as _np
 
 
 def Test(vis=False, interactive=False):
@@ -11,23 +12,27 @@ def Test(vis=False, interactive=False):
     bm = _g4.Material(name="G4_W")
 
     # solids
-    ws = _g4.solid.Box("ws", 3, 3, 3, reg, "m")
+    ws = _g4.solid.Box("ws", 3000, 3000, 3000, reg, "mm")
 
     x = 1
-    ds = _g4.solid.Box("ds", x, x, x, reg, "m")
-    dds = _g4.solid.Box("dds", 0.2, 0.2, 0.2, reg, "m")
-    
+    ds = _g4.solid.Box("ds", 1000, 1000, 1000, reg, "mm")
+    dds = _g4.solid.Box("dds", 200, 200, 200, reg, "mm")
+    ddds = _g4.solid.Box("ddds",150, 150, 150, reg, "mm")
+
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     dlv = _g4.LogicalVolume(ds, wm, "dlv", reg)
     ddlv = _g4.LogicalVolume(dds, bm, "ddlv", reg)
+    dddlv = _g4.LogicalVolume(ddds, bm, "dddlv", reg)
+
+    _g4.PhysicalVolume([0,0,0],[0,0,0],dddlv,"dddpv",ddlv,reg)
 
     nX = 4
     dX = x*1000 / nX
     x0 = -0.5*x*1000 + 0.5*dX
-    for xi in range(nX):
-        for yi in range(nX):
+    for xi in [0,1,2,3]:
+        for yi in [0,1,2,3]:
             pos = [x0+xi*dX, x0+yi*dX, 0]
-            _g4.PhysicalVolume([0,0,0],
+            _g4.PhysicalVolume([0.1,0.2,0.3],
                                pos,
                                ddlv,
                                "ddpv_"+str(xi)+str(yi),
@@ -42,9 +47,17 @@ def Test(vis=False, interactive=False):
                        reg)
 
     # now for the culling
-    clipFW = 500 # this should cut out the middle 4 from 16
+    # 800 should mean that the middle 4 out of 16 boxes remain untouched, but
+    # the outer 12 should be intersected
+    clipFW = 800
+    rotation    = [0,0,0]
+    position    = [0,0,0]
     clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
-    dlv.cullDaughtersOutsideSolid(clipBox)
+
+    # dlv.replaceSolid(clipBox, rotation=rotation, position=position)
+    # dlv.clipGeometry(clipBox,(0,0,0),(0,0,0))
+
+    dlv.clipGeometry(clipBox,rotation,position)
 
     # set world volume
     reg.setWorld(wl)
@@ -52,18 +65,16 @@ def Test(vis=False, interactive=False):
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T602_lv_cull_daughters.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T602_lv_cull_daughters.gmad","T602_lv_cull_daughters.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T608_LvClipSolidRecursive.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T608_LvClipSolidRecursive.gmad"),"T608_LvClipSolidRecursive.gdml")
     
     # visualisation
     v = None
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.addSolid(clipBox)
+        v.addSolid(clipBox, rotation, position)
         v.view(interactive=interactive)
-
-    assert(len(dlv.daughterVolumes) == 4)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 

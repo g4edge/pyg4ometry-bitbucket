@@ -1,7 +1,9 @@
 import os as _os
+import pyg4ometry.transformation as _trans
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
+import numpy as _np
 
 
 def Test(vis=False, interactive=False):
@@ -24,17 +26,17 @@ def Test(vis=False, interactive=False):
     nX = 4
     dX = x*1000 / nX
     x0 = -0.5*x*1000 + 0.5*dX
-    for xi in range(nX):
-        for yi in range(nX):
+    for xi in [0,1,2,3]:
+        for yi in [0,1,2,3]:
             pos = [x0+xi*dX, x0+yi*dX, 0]
-            _g4.PhysicalVolume([0,0,0],
+            _g4.PhysicalVolume([0,0,0.0],
                                pos,
                                ddlv,
                                "ddpv_"+str(xi)+str(yi),
                                dlv,
                                reg)
 
-    _g4.PhysicalVolume([0,0,0],
+    _g4.PhysicalVolume([0,0,0.0],
                        [0,0,0],
                        dlv,
                        "dlv_pv",
@@ -42,9 +44,15 @@ def Test(vis=False, interactive=False):
                        reg)
 
     # now for the culling
-    clipFW = 500 # this should cut out the middle 4 from 16
+    # 800 should mean that the middle 4 out of 16 boxes remain untouched, but
+    # the outer 12 should be intersected
+    clipFW = 800
+    rotation    = [0,_np.pi/4,_np.pi/4]
+    rotation1   = _trans.matrix2tbxyz(_np.linalg.inv(_trans.tbxyz2matrix(rotation)))
+    position    = [0,0,0]
     clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
-    dlv.cullDaughtersOutsideSolid(clipBox)
+
+    dlv.replaceSolid(clipBox, rotation=rotation, position=position)
 
     # set world volume
     reg.setWorld(wl)
@@ -52,18 +60,16 @@ def Test(vis=False, interactive=False):
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T602_lv_cull_daughters.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T602_lv_cull_daughters.gmad","T602_lv_cull_daughters.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T605_LvChangeSolid.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T605_LvChangeSolid.gmad"),"T605_LvChangeSolid.gdml")
     
     # visualisation
     v = None
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.addSolid(clipBox)
+        v.addSolid(clipBox, rotation1, position)
         v.view(interactive=interactive)
-
-    assert(len(dlv.daughterVolumes) == 4)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
