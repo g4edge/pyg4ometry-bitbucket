@@ -102,9 +102,14 @@ from . import T433_MergeRegistry_Scale
 from . import T434_MergeRegistry_CollapseAssembly
 from . import T600_LVTessellated
 from . import T601_reflect
-from . import T602_lv_cull_daughters
-from . import T603_lv_change_solid_and_trim
-from . import T604_lv_change_solid_and_trim_rot
+# from . import T602_lv_cull_daughters
+# from . import T603_lv_change_solid_and_trim
+# from . import T604_lv_change_solid_and_trim_rot
+from . import T605_LvChangeSolid
+from . import T606_LvClipSolid
+from . import T607_LvChangeAndClipSolid
+from . import T608_LvClipSolidRecursive
+from . import T609_LvClipSolidRecursiveAssembly
 
 import logging as _log
 
@@ -442,15 +447,30 @@ class PythonGeantAuthoringTests(_unittest.TestCase) :
     def test_PythonGeant_T601_reflect(self):
         self.assertTrue(T601_reflect.Test()["testStatus"])
 
-    def test_PythonGeant_T602_lv_cull_daughters(self):
-        self.assertTrue(T602_lv_cull_daughters.Test()["testStatus"])
+    #def test_PythonGeant_T602_lv_cull_daughters(self):
+    #    self.assertTrue(T602_lv_cull_daughters.Test()["testStatus"])
 
-    def test_PythonGeant_T603_lv_change_solid_and_trim(self):
-        self.assertTrue(T603_lv_change_solid_and_trim.Test()["testStatus"])
+    #def test_PythonGeant_T603_lv_change_solid_and_trim(self):
+    #    self.assertTrue(T603_lv_change_solid_and_trim.Test()["testStatus"])
 
-    def test_PythonGeant_T604_lv_change_solid_and_trim_rot(self):
-        self.assertTrue(T604_lv_change_solid_and_timr_rot.Test()["testStatus"])
-        
+    #def test_PythonGeant_T604_lv_change_solid_and_trim_rot(self):
+    #    self.assertTrue(T604_lv_change_solid_and_timr_rot.Test()["testStatus"])
+
+    def test_PythonGeant_T605_LvChangeSolid(self):
+        self.assertTrue(T605_LvChangeSolid.Test()["testStatus"])
+
+    def test_PythonGeant_T606_LvClipSolid(self):
+        self.assertTrue(T606_LvClipSolid.Test()["testStatus"])
+
+    def test_PythonGeant_T607_LvChangeAndClipSolid(self):
+        self.assertTrue(T607_LvChangeAndClipSolid.Test()["testStatus"])
+
+    def test_PythonGeant_T608_LvClipSolidRecursive(self):
+        self.assertTrue(T608_LvClipSolidRecursive.Test()["testStatus"])
+
+    def test_PythonGeant_T609_LvClipSolidRecursiveAssembly(self):
+        self.assertTrue(T609_LvClipSolidRecursiveAssembly.Test()["testStatus"])
+
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
 

@@ -50,7 +50,7 @@ def Test(vis=False, interactive=False):
     w = _gd.Writer()
     w.addDetector(reg)
     w.write(_os.path.join(_os.path.dirname(__file__), "T600_LVTessellated.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T600_LVTessellated.gmad","T600_LVTessellated.gdml")
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T600_LVTessellated.gmad"),"T600_LVTessellated.gdml")
 
     # test extent of physical volume
     extentBB = wl.extent(includeBoundingSolid=True)

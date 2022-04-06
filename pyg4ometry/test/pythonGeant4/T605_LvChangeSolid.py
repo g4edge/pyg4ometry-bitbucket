@@ -1,4 +1,5 @@
 import os as _os
+import pyg4ometry.transformation as _trans
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
@@ -35,7 +36,7 @@ def Test(vis=False, interactive=False):
                                dlv,
                                reg)
 
-    _g4.PhysicalVolume([0,0,0],
+    _g4.PhysicalVolume([0,0,0.0],
                        [0,0,0],
                        dlv,
                        "dlv_pv",
@@ -46,11 +47,12 @@ def Test(vis=False, interactive=False):
     # 800 should mean that the middle 4 out of 16 boxes remain untouched, but
     # the outer 12 should be intersected
     clipFW = 800
-    rotation    = [_np.pi/4,_np.pi/4,_np.pi/4]
-    position    = [250,0,0]
+    rotation    = [0,_np.pi/4,_np.pi/4]
+    rotation1   = _trans.matrix2tbxyz(_np.linalg.inv(_trans.tbxyz2matrix(rotation)))
+    position    = [0,0,0]
     clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
-    # dlv.changeSolidAndTrimGeometry(clipBox, rotation=rotation, position=position)
-    [outside, inside, intersections] = dlv.clipGeometry(clipBox, rotation=rotation, position=position)
+
+    dlv.replaceSolid(clipBox, rotation=rotation, position=position)
 
     # set world volume
     reg.setWorld(wl)
@@ -58,55 +60,18 @@ def Test(vis=False, interactive=False):
     # gdml output
     w = _gd.Writer()
     w.addDetector(reg)
-    w.write(_os.path.join(_os.path.dirname(__file__), "T604_lv_change_solid_and_trim_rot.gdml"))
-    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__))+"T604_lv_change_solid_and_trim_rot.gmad","T604_lv_change_solid_and_trim_rot.gdml")
+    w.write(_os.path.join(_os.path.dirname(__file__), "T605_LvChangeSolid.gdml"))
+    w.writeGmadTester(_os.path.join(_os.path.dirname(__file__),"T605_LvChangeSolid.gmad"),"T605_LvChangeSolid.gdml")
     
     # visualisation
     v = None
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.addSolid(clipBox, rotation, position)
-
-        ''''
-        i = 0
-        print("outside")
-        for m in outside :
-            print(i,m)
-            visOptions = _vi.VisualisationOptions()
-            visOptions.colour = [1, 0, 0]
-            visOptions.alpha = 0.0
-
-            v.addMeshSimple(m,visOptions,name="outside_"+str(i))
-
-            i=i+1
-
-        i = 0
-        print("intersection")
-        for m in intersection :
-            print(i,m)
-            visOptions = _vi.VisualisationOptions()
-            visOptions.colour = [0, 1, 0]
-            visOptions.alpha = 0.0
-
-            v.addMeshSimple(m,visOptions,name="inter_"+str(i))
-            i=i+1
-
-        i = 0
-        print("inside")
-        for m in inside :
-            print(i,m)
-            visOptions = _vi.VisualisationOptions()
-            visOptions.colour = [0, 0, 1]
-            visOptions.alpha = 0.0
-
-            v.addMeshSimple(m,visOptions,name="inside_"+str(i))
-            i=i+1
-        '''
-
+        v.addSolid(clipBox, rotation1, position)
         v.view(interactive=interactive)
 
-    return reg, {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 
 if __name__ == "__main__":
