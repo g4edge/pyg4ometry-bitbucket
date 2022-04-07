@@ -232,7 +232,21 @@ Transformation
    :undoc-members:
 
 .. _geometry-compare-module:
+
+Convert
+-------
+
+.. automodule:: pyg4ometry.convert.fluka2Geant4
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.convert.geant42Fluka
+   :members:
+   :undoc-members:
+   :show-inheritance:
       
+
 Compare
 -------
 
