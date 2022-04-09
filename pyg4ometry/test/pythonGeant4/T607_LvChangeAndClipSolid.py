@@ -2,6 +2,7 @@ import os as _os
 import pyg4ometry.gdml as _gd
 import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
+import pyg4ometry.misc as _misc
 import numpy as _np
 
 
@@ -49,9 +50,10 @@ def Test(vis=False, interactive=False):
     rotation    = [0,_np.pi/4.0,_np.pi/4.0]
     position    = [400,400,0]
     clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
+    clipBoxes = _misc.NestedBoxes("clipper",clipFW, clipFW, clipFW, reg, "mm", 50,50,50, dlv.depth())
 
-    dlv.replaceSolid(clipBox, rotation=rotation, position=position)
-    dlv.clipGeometry(clipBox,(0,0,0),(0,0,0))
+    dlv.replaceSolid(clipBoxes[0], rotation=rotation, position=position)
+    dlv.clipGeometry(clipBoxes,(0,0,0),(0,0,0))
 
     # set world volume
     reg.setWorld(wl)
@@ -67,7 +69,7 @@ def Test(vis=False, interactive=False):
     if vis:
         v = _vi.VtkViewer()
         v.addLogicalVolume(reg.getWorldVolume())
-        v.addSolid(clipBox, rotation, position)
+        v.addSolid(clipBoxes[0], rotation, position)
         v.view(interactive=interactive)
 
     return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
