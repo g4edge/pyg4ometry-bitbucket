@@ -48,11 +48,11 @@ def Test(vis=False, interactive=False):
     # the outer 12 should be intersected
     clipFW = 800
     rotation    = [0,_np.pi/4.0,_np.pi/4.0]
-    position    = [400,400,0]
+    position    = [0.4,0.4,0]
     clipBox = _g4.solid.Box("clipper", clipFW, clipFW, clipFW, reg, "mm")
     clipBoxes = _misc.NestedBoxes("clipper",clipFW, clipFW, clipFW, reg, "mm", 50,50,50, dlv.depth())
 
-    dlv.replaceSolid(clipBoxes[0], rotation=rotation, position=position)
+    dlv.replaceSolid(clipBoxes[0], rotation=rotation, position=position, punit="m")
     dlv.clipGeometry(clipBoxes,(0,0,0),(0,0,0))
 
     # set world volume
