@@ -1,4 +1,4 @@
-pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2021
+pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2022
 
 General Information
 ===================
