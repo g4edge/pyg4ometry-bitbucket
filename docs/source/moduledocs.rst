@@ -222,6 +222,14 @@ Fluka module
    :undoc-members:
    :show-inheritance:
 
+IO Module
+---------
+
+.. automodule:: pyg4ometry.io.ROOTTGeo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. _transformation-module:
 
 Transformation
@@ -231,7 +239,12 @@ Transformation
    :members:
    :undoc-members:
 
-.. _geometry-compare-module:
+Misc
+--------------
+
+.. automodule:: pyg4ometry.misc
+   :members:
+   :undoc-members:
 
 Convert
 -------
@@ -245,7 +258,8 @@ Convert
    :members:
    :undoc-members:
    :show-inheritance:
-      
+
+.. _geometry-compare-module:
 
 Compare
 -------
