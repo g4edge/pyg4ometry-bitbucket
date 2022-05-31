@@ -12,7 +12,7 @@ def Test_OpticalSurface():
     ri_a = _gd.Matrix("RIND_Air", 2, [2.034e-06, 1, 2.068e-06, 1, 2.103e-06, 1, 2.139e-06, 1], reg)
     ri_w = _gd.Matrix("RIND_Water", 2, [2.034e-06, 1.3435, 2.068e-06, 1.344, 2.103e-06, 1.3445, 2.139e-06, 1.345], reg)
     al_w = _gd.Matrix("ABSLEN_Water", 2, [2.034e-06, 3448, 2.068e-06, 4082, 2.103e-06, 6329, 2.139e-06, 9174], reg)
-    yr_w = _gd.Constant("YIELDRATIO", "0.8", reg, True)
+    yr_w = _gd.Matrix("YIELDRATIO", 1, [0.8], reg)
 
 
     # World box
