@@ -15,12 +15,12 @@
 			<atom value="16.0"/>
 		</element>
 		<material name="Air">
+			<property name="myproperty1" ref="prop1"/>
+			<property name="myproperty2" ref="prop2"/>
+			<property name="RINDEX" ref="RINDEX"/>
 			<D value="0.00129"/>
 			<fraction ref="Nitrogen" n="0.7"/>
 			<fraction ref="Oxygen" n="0.3"/>
-			<property name="myproperty1" value="prop1"/>
-			<property name="myproperty2" value="prop2"/>
-			<property name="RINDEX" value="RINDEX"/>
 		</material>
 	</materials>
 	<solids>
