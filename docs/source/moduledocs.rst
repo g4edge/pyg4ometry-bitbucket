@@ -171,6 +171,11 @@ Visualisation module
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: pyg4ometry.visualisation.ViewerBase
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Freecad module 
 --------------
 .. automodule:: pyg4ometry.freecad.Reader
