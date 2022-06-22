@@ -1,4 +1,4 @@
-pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2021
+pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2022
 
 General Information
 ===================
@@ -9,7 +9,7 @@ Laurie Nevay          <laurie.nevay@rhul.ac.uk>
 Will Shields          <william.shields.2010@live.rhul.ac.uk>  
 Stuart Walker         <Stuart.Walker.2011@live.rhul.ac.uk>
 
-Installation guide
+Installation Guide
 ==================
 
   * Required libraries VTK, CGAL, pybind11
@@ -18,8 +18,8 @@ Installation guide
   * Install from source (git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git; cd pyg4ometry; make install or make develop)
 
 
-Instllation guide container
-===========================
+Installation Guide Container
+============================
  
 Build the docker container
 
@@ -40,7 +40,7 @@ Documentation
 
 Main online manual can be found at http://www.pp.rhul.ac.uk/bdsim/pyg4ometry/
 
-To build manual within this repo
+To build manual within this repository:
 
   * cd pyg4ometry/docs/
   * make html
@@ -52,7 +52,9 @@ Issues, bugs and feature requests
 
   * For bug reports please use the bitbucket issue trackers
 
-Citation and academic credit 
+https://bitbucket.org/jairhul/pyg4ometry/issues
+
+Citation and Academic Credit 
 ============================
 
   * It pyg4ometry has been useful for your work, please in the first instance cite [Computer Physics Communications Volume 272, March 2022, 108228](https://www.sciencedirect.com/science/article/pii/S0010465521003404)

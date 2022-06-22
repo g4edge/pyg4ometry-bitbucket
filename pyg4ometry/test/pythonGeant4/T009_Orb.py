@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False, n_slice=16, n_stack=16) :
+def Test(vis = False, interactive = False, n_slice=16, n_stack=16, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -14,12 +14,20 @@ def Test(vis = False, interactive = False, n_slice=16, n_stack=16) :
 
     ormax  = _gd.Constant("rmax","10",reg,True)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    om = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        om = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        om = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     os = _g4.solid.Orb("os",ormax,reg,"mm", nslice=n_slice, nstack=n_stack)
+    assert(os.evaluateParameterWithUnits('pRMax') == ormax)
+    os2 = _g4.solid.Orb("os2",ormax,reg,"cm", nslice=n_slice, nstack=n_stack)
+    assert(os2.evaluateParameterWithUnits('pRMax') == 10*ormax)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

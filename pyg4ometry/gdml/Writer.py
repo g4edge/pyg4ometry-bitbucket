@@ -239,6 +239,18 @@ option, preprocessGDML=0;
         else:
             raise Exception("Unrecognised define type: {}".format(type(define)))
 
+    def writeMaterialProps(self, material, oe):
+        for pname, pref in material.properties.items():
+            prop = self.doc.createElement('property')
+            prop.setAttribute('name', str(pname))
+            if not isinstance(pref, _Defines.Matrix):
+                raise ValueError("Only references to matrices can be used for material property {}".format(pname))
+            # If possible, write the variable as a reference to a define
+            if not ( pref.name in self.registry.defineDict ):
+                raise RuntimeError("Invalid ref!")
+            prop.setAttribute('ref', str(pref.name))
+            oe.appendChild(prop)
+
     def writeMaterial(self, material):
         if material.name in self.materials_written:
             return
@@ -248,6 +260,30 @@ option, preprocessGDML=0;
             oe.setAttribute('name', material.name)
             if material.state != "" and material.state != None :
                 oe.setAttribute('state', material.state)
+
+            # No need to add defines for NIST compounds or
+            # materials which are simply names.
+            if material.type != 'nist' and material.type != 'arbitrary':
+                # <property tags must be at the start to be valid GDML
+                self.writeMaterialProps(material, oe)
+
+                # state variable tags must be at the start to be valid GDML
+                for pname in material.state_variables:
+                    if pname == "temperature":
+                        tagname = 'T'
+                    elif pname == "pressure":
+                        tagname = 'P'
+                    else:
+                        continue
+
+                    value = material.state_variables[pname]
+                    if value is None:
+                        continue
+
+                    de = self.doc.createElement(tagname)
+                    de.setAttribute('value', str(value))
+                    de.setAttribute('unit', material.state_variables[pname + "_unit"])
+                    oe.appendChild(de)
 
             de = self.doc.createElement('D')
             de.setAttribute('value', str(material.density))
@@ -267,7 +303,7 @@ option, preprocessGDML=0;
                     if frac_type == "massfraction":
                         se = self.doc.createElement('fraction')
                         se.setAttribute('ref', name)
-                        se.setAttribute('n', str(comp_info[1]))
+                        se.setAttribute('n', self.getValueOrExpr(comp_info[1]))
                         oe.appendChild(se)
                     if frac_type == "natoms":
                         se = self.doc.createElement('composite')
@@ -275,33 +311,6 @@ option, preprocessGDML=0;
                         se.setAttribute('n', str(int(comp_info[1])))
                         oe.appendChild(se)
                 self.materials.appendChild(oe)
-            elif material.type == 'nist' or material.type == 'arbitrary':
-                # No need to add defines for NIST compounds or
-                # materials which are simply names, so do not append child.
-                pass
-
-            for pname in material.state_variables:
-                if pname == "temperature":
-                    tagname = 'T'
-                elif pname == "pressure":
-                    tagname = 'P'
-                else:
-                    continue
-
-                value = material.state_variables[pname]
-                if value is None:
-                    continue
-
-                de = self.doc.createElement(tagname)
-                de.setAttribute('value', str(value))
-                de.setAttribute('unit', material.state_variables[pname + "_unit"])
-                oe.appendChild(de)
-
-            for pname, pref in material.properties.items():
-                prop = self.doc.createElement('property')
-                prop.setAttribute('name', str(pname))
-                prop.setAttribute('value', str(pref))
-                oe.appendChild(prop)
 
         elif isinstance(material, _Element):
             oe = self.doc.createElement('element')
@@ -318,7 +327,7 @@ option, preprocessGDML=0;
                     self.writeMaterial(comp_info[0])
                     se = self.doc.createElement('fraction')
                     se.setAttribute('ref', name)
-                    se.setAttribute('n', str(comp_info[1]))
+                    se.setAttribute('n', self.getValueOrExpr(comp_info[1]))
                     oe.appendChild(se)
             self.materials.appendChild(oe)
 
@@ -943,6 +952,8 @@ option, preprocessGDML=0;
         oe.setAttribute('type', instance.osType)
         oe.setAttribute('value', str(float(instance.value)))
         self.solids.appendChild(oe)
+
+        self.writeMaterialProps(instance, oe)
 
     def writeOrb(self, instance):
         oe = self.doc.createElement('orb')

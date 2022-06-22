@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 two_planes = 2
 
-def Test(vis = False, interactive = False, type = normal, n_slice = 64) :
+def Test(vis = False, interactive = False, type = normal, n_slice = 64, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -43,17 +43,42 @@ def Test(vis = False, interactive = False, type = normal, n_slice = 64) :
     pr    = [pr1,pr2,pr3,pr4,pr5,pr6,pr7]
     pz    = [pz1,pz2,pz3,pz4,pz5,pz6,pz7]
 
+    psphi_deg  = _gd.Constant("sphi_deg","1/pi*180",reg,True)
+    pdphi_deg  = _gd.Constant("dphi_deg","4/pi*180",reg,True)
+
     if type == two_planes : 
         pr  = [pr1,pr2]
         pz  = [pz1,pz2]
-    
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    pm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        pm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        pm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ps = _g4.solid.GenericPolycone("ps",psphi,pdphi,pr,pz,reg,"mm","rad", nslice=n_slice)
-        
+    assert(ps.evaluateParameterWithUnits('pSPhi') == psphi)
+    assert(ps.evaluateParameterWithUnits('pDPhi') == pdphi)
+    if type == two_planes :
+        assert(ps.evaluateParameterWithUnits('pR') == [   5, 7.5 ])
+        assert(ps.evaluateParameterWithUnits('pZ') == [ -10, -10 ])
+    else :
+        assert(ps.evaluateParameterWithUnits('pR') == [   5, 7.5, 10, 20, 7.5,  5, 2 ])
+        assert(ps.evaluateParameterWithUnits('pZ') == [ -10, -10,  0, -5,  10, 10, 5 ])
+    ps2 = _g4.solid.GenericPolycone("ps2",psphi_deg,pdphi_deg,pr,pz,reg,"cm","deg", nslice=n_slice)
+    assert(ps2.evaluateParameterWithUnits('pSPhi') == psphi)
+    assert(ps2.evaluateParameterWithUnits('pDPhi') == pdphi)
+    if type == two_planes :
+        assert(ps2.evaluateParameterWithUnits('pR') == [   50,   75 ])
+        assert(ps2.evaluateParameterWithUnits('pZ') == [ -100, -100 ])
+    else :
+        assert(ps2.evaluateParameterWithUnits('pR') == [   50,   75, 100, 200,  75,  50, 20 ])
+        assert(ps2.evaluateParameterWithUnits('pZ') == [ -100, -100,  00, -50, 100, 100, 50 ])
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     pl = _g4.LogicalVolume(ps, pm, "pl", reg)

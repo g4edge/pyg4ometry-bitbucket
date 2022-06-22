@@ -1,5 +1,6 @@
 #import time as _time
 import numpy as _np
+from pyg4ometry import config as _config
 
 class SolidBase(object):
     """
@@ -13,6 +14,28 @@ class SolidBase(object):
     def evaluateParameter(self, obj):
         from pyg4ometry.gdml.Defines import evaluateToFloat
         return evaluateToFloat(self.registry, obj)
+
+    def evaluateParameterWithUnits(self, varName):
+        import pyg4ometry.gdml.Units as _Units
+
+        var = getattr(self, varName)
+        varVal = self.evaluateParameter(var)
+
+        whichUnit = self.varUnits[self.varNames.index(varName)]
+        if whichUnit:
+            unitVal = _Units.unit(getattr(self, whichUnit))
+        else:
+            unitVal = 1
+
+        if isinstance(varVal,float):
+            return unitVal * varVal
+        elif isinstance(varVal,list):
+            return [ unitVal * val for val in varVal ]
+        else:
+            # we just deal with the straightforward cases here
+            # solids that are more complicated should override this function
+            # for now, just return the value without dealing with units
+            return varVal
 
     def _addProperty(self, attribute):
         #create local setter and getter with a particular attribute name
@@ -40,8 +63,13 @@ class SolidBase(object):
         return getattr(self, "_" + attribute)
 
     def _twoPiValueCheck(self, attribute, aunit="rad"):
+        """
+        Raises a ValueError if the attribute is over pyg4ometry.config.twoPiComparisonTolerance **over** 2 x pi.
+        """
         import pyg4ometry.gdml.Units as _Units  # TODO move circular import
-        if self.evaluateParameter(getattr(self, attribute)) * (_Units.unit(aunit)) > 2 * _np.pi:
+        v = self.evaluateParameter(getattr(self, attribute)) * (_Units.unit(aunit))
+        # note no abs() on this check on purpose
+        if (v - 2 * _np.pi) > _config.twoPiComparisonTolerance:
             raise ValueError("pDPhi is strictly greater than 2 x pi in solid \"" + self.name + "\"")
 
     @property

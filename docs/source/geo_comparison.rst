@@ -58,6 +58,12 @@ The available tests are described below.
 | placement                | Numerically compare the rotation and           |
 |                          | translations in each placement.                |
 +--------------------------+------------------------------------------------+
+| scale                    | Compare the 'scale' for a physical volume that |
+|                          | can be used for a relfection. No scale is      |
+|                          | equal to unit scale [1,1,1].                   |
++--------------------------+------------------------------------------------+
+| copyNumber               | Compare the copy number for a physical volume. |
++--------------------------+------------------------------------------------+
 | materials                | Whether to do a series of tests of materials   |
 |                          | in a LogicalVolume.                            |
 +--------------------------+------------------------------------------------+
@@ -205,6 +211,7 @@ Here, two ways are shown for creating the set of tests.
    >>> t = pyg4ometry.compare.Tests()
    >>> pyg4ometry.compare.Tests.printAllTestNames()
        "names"
+       "namesIgnorePointer"
        "nDaughters"
        "solidExact"
        "solidExtent"
@@ -212,6 +219,8 @@ Here, two ways are shown for creating the set of tests.
        "shapeVolume"
        "shapeArea"
        "placement"
+       "scale"
+       "copyNumber"
        "materials"
        "materialClassType"
        "materialCompositionType"

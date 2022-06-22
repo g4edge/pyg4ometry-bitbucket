@@ -139,7 +139,7 @@ exts.append(cgal_core_ext)
 
 setup(
     name="pyg4ometry",
-    version="1.0.1",
+    version="1.0.2",
     packages=find_packages(exclude=["docs", "tests"]),
     package_dir={"pyg4ometry.convert": "pyg4ometry/convert",
                  "pyg4ometry.fluka": "pyg4ometry/fluka",

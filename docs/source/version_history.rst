@@ -2,7 +2,51 @@
 Version History
 ===============
 
-v1.0.0 - 2021 / 12 / 17
+
+V1.0.2 - 2022 / 04 / 11
+=======================
+
+New Features
+------------
+
+* Function to view the difference between two logical volumes.
+* Comparison test for names that ignores pointers as part of the name.
+* New :code:`addSolid` function for visualiser to view a solid in the current scene
+  without having a logical volume.
+* Every solid now has the function :code:`convert2Tessellated` to allow it to be
+  easily converted to a tessellated solid.
+* Ability to 'collapse' assemblies (T. Latham)
+
+General
+-------
+
+* All solids now have a list of units to accompany their list of variables for inspection.
+* Checking angles for solids (e.g. start and sweep angle) are within :math:`2\pi` now includes
+  a numerical precision tolerance that is by default floating point precision. See :code:`pyg4ometry.config.twoPiComparisonTolerance`.
+
+Bug Fixes
+---------
+
+* Fix deployment of nist_materials.txt and nist_elements.txt package files.
+* Fix loading of ROOT geometry for material and various solids. Put tests in
+  for parameters that ROOT allows to be 0 but ultimately mean we cannot construct
+  a valid shape from.
+* Reduce length of names in Geant4 to FLUKA conversion to fix rejected names
+  by FLUKA.
+* Fix import of MutableMappings for Python 3.10
+* Fix use of units throughout all solids for the geometry comparison tests.
+* Fix units for define vectors.
+* Fix copy number of physical volumes sometimes not being an integer for
+  loaded GDML geometry.
+* Fix reading and writing of abundance if it is an expression in a GDML material.
+* Fix missing length unit for GDML writing of Generic Trap.
+* Fix units in GenericTrap and Extruded solid classes.
+* Fix renaming of materials (in a recursion chain) when transferring from one registry to another (T. Latham).
+* Reduce verbosity of ROOT tests.
+* Reduce verbostiy of comparison tests.
+* Fix zero division errors in various comparison tests.
+
+v1.0.1 - 2022 / 02 / 10
 =======================
 
 New Features

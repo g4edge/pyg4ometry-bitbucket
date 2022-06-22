@@ -393,7 +393,8 @@ class Reader(object):
                                              "for composite material {}".format(ref, name))
 
                     if comp_type == "fraction":
-                        abundance = float(comp.get("n", 0.0))
+                        # abundance = float(comp.get("n", 0.0))
+                        abundance = _defines.Expression("n", comp.get("n", 0.0),self._registry,False)
 
                         target = self._registry.materialDict[ref]
                         if isinstance(target, _g4.Material):
@@ -418,7 +419,9 @@ class Reader(object):
             # Set the optional properties
             properties = material.get("properties")
             for pname, pref in properties.items():
-                mat.add_property(pname, pref)
+                if pref not in self._registry.defineDict or not isinstance( self._registry.defineDict[pref], _defines.Matrix ):
+                    raise ValueError("Referenced matrix {} not defined for property {} on material {}".format(pref, pname, name))
+                mat.add_property(pname, self._registry.defineDict[pref])
 
     def parseUserInfo(self,xmldoc):
         try:
@@ -1323,7 +1326,21 @@ class Reader(object):
         surf_type = node.attributes['type'].value
         value = _defines.Expression(solid_name+'_value',node.attributes['value'].value,self._registry)
 
-        _g4.solid.OpticalSurface(solid_name, finish, model, surf_type, value, self._registry, True)
+        surf = _g4.solid.OpticalSurface(solid_name, finish, model, surf_type, value, self._registry, True)
+
+        properties = {}
+        for chNode in node.childNodes:
+            if chNode.nodeType != chNode.ELEMENT_NODE:
+                continue # comment
+            if chNode.tagName=="property":
+                try :
+                    properties[chNode.attributes["name"].value] = chNode.attributes["ref"].value
+                except KeyError :
+                    pass
+        for pname, pref in properties.items():
+            if pref not in self._registry.defineDict:
+                raise ValueError("Referenced matrix {} not defined for property {} on optical surface {}".format(pref, pname, solid_name))
+            surf.addProperty(pname, self._registry.defineDict[pref])
 
     def parseScaledSolid(self,node):
         scaledSolid_name = node.attributes['name'].value

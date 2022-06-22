@@ -16,14 +16,36 @@
 		<constant name="cthighy" value="1"/>
 		<constant name="cthighz" value="1"/>
 	</define>
-	<materials/>
+	<materials>
+		<isotope name="G4_H_1" Z="1" N="1">
+			<atom value="1.007825"/>
+		</isotope>
+		<isotope name="G4_H_2" Z="1" N="2">
+			<atom value="2.014102"/>
+		</isotope>
+		<element name="G4_H" formula="H">
+			<fraction ref="G4_H_1" n="0.999885"/>
+			<fraction ref="G4_H_2" n="0.000115"/>
+		</element>
+		<material name="G4_Galactic" state="gas">
+			<D value="1e-25"/>
+			<fraction ref="G4_H" n="1.0"/>
+		</material>
+		<element name="G4_Au" formula="Au" Z="79">
+			<atom value="197"/>
+		</element>
+		<material name="Material_G4_Au" state="solid">
+			<D value="19.32"/>
+			<fraction ref="G4_Au" n="1.0"/>
+		</material>
+	</materials>
 	<solids>
-		<box lunit="mm" name="ws" x="wx" y="wy" z="wz"/>
-		<cutTube aunit="rad" deltaphi="deltaphi" highX="cthighx" highY="cthighy" highZ="cthighz" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" lunit="mm" name="ts" rmax="trmax" rmin="trmin" startphi="startphi" z="tz"/>
+		<box name="ws" x="wx" y="wy" z="wz" lunit="mm"/>
+		<cutTube name="ts" z="tz" rmin="trmin" rmax="trmax" startphi="startphi" deltaphi="deltaphi" lowX="ctlowx" lowY="ctlowy" lowZ="ctlowz" highX="cthighx" highY="cthighy" highZ="cthighz" lunit="mm" aunit="rad"/>
 	</solids>
 	<structure>
 		<volume name="ctl">
-			<materialref ref="G4_Fe"/>
+			<materialref ref="Material_G4_Au"/>
 			<solidref ref="ts"/>
 		</volume>
 		<volume name="wl">

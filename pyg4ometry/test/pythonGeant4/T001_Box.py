@@ -5,7 +5,7 @@ import pyg4ometry.visualisation as _vi
 import pyg4ometry.convert as _conv
 import pyg4ometry.fluka as _flu
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -16,13 +16,25 @@ def Test(vis = False, interactive = False) :
     bx = _gd.Constant("bx","10",reg,True)
     by = _gd.Constant("by","10",reg,True)
     bz = _gd.Constant("bz","10",reg,True)
-    
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    bm = _g4.MaterialPredefined("G4_Au")
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        bm = _g4.nist_material_2geant4Material("G4_Au",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        bm = _g4.MaterialPredefined("G4_Au")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     bs = _g4.solid.Box("bs",bx,by,bz, reg, "mm")
+    assert(bs.evaluateParameterWithUnits('pX') == bx)
+    assert(bs.evaluateParameterWithUnits('pY') == by)
+    assert(bs.evaluateParameterWithUnits('pZ') == bz)
+    bs2 = _g4.solid.Box("bs2",bx,by,bz, reg, "cm")
+    assert(bs2.evaluateParameterWithUnits('pX') == 10*bx)
+    assert(bs2.evaluateParameterWithUnits('pY') == 10*by)
+    assert(bs2.evaluateParameterWithUnits('pZ') == 10*bz)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
@@ -54,7 +66,7 @@ def Test(vis = False, interactive = False) :
         v.view(interactive=interactive)
 
 
-    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
+    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v, "registry":reg}
 
 if __name__ == "__main__":
     Test()

@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -27,13 +27,49 @@ def Test(vis = False, interactive = False) :
     talp1  = _gd.Constant("talp1","0.0",reg,True)
     talp2  = _gd.Constant("talp2","0.0",reg,True)
 
+    ttheta_deg = _gd.Constant("ttheta_deg","0.6/pi*180",reg,True)
+    tphi_deg   = _gd.Constant("tphi_deg","0.0",reg,True)
+    talp1_deg  = _gd.Constant("talp1_deg","0.0",reg,True)
+    talp2_deg  = _gd.Constant("talp2_deg","0.0",reg,True)
+
 
     wm = _g4.MaterialPredefined("G4_Galactic") 
     tm = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        tm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        tm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    ts = _g4.solid.Trap("ts",tz,ttheta,tphi,ty1,tx1,tx2,talp1,ty2,tx3,tx4,talp2,reg,"mm")
+    ts = _g4.solid.Trap("ts",tz,ttheta,tphi,ty1,tx1,tx2,talp1,ty2,tx3,tx4,talp2,reg,"mm","rad")
+
+    assert(ts.evaluateParameterWithUnits('pDz') == tz)
+    assert(ts.evaluateParameterWithUnits('pTheta') == ttheta)
+    assert(ts.evaluateParameterWithUnits('pDPhi') == tphi)
+    assert(ts.evaluateParameterWithUnits('pDy1') == ty1)
+    assert(ts.evaluateParameterWithUnits('pDx1') == tx1)
+    assert(ts.evaluateParameterWithUnits('pDx2') == tx2)
+    assert(ts.evaluateParameterWithUnits('pAlp1') == talp1)
+    assert(ts.evaluateParameterWithUnits('pDy2') == ty2)
+    assert(ts.evaluateParameterWithUnits('pDx3') == tx3)
+    assert(ts.evaluateParameterWithUnits('pDx4') == tx4)
+    assert(ts.evaluateParameterWithUnits('pAlp2') == talp2)
+    ts2 = _g4.solid.Trap("ts2",tz,ttheta_deg,tphi_deg,ty1,tx1,tx2,talp1_deg,ty2,tx3,tx4,talp2_deg,reg,"cm","deg")
+    assert(ts2.evaluateParameterWithUnits('pDz') == 10*tz)
+    assert(ts2.evaluateParameterWithUnits('pTheta') == ttheta)
+    assert(ts2.evaluateParameterWithUnits('pDPhi') == tphi)
+    assert(ts2.evaluateParameterWithUnits('pDy1') == 10*ty1)
+    assert(ts2.evaluateParameterWithUnits('pDx1') == 10*tx1)
+    assert(ts2.evaluateParameterWithUnits('pDx2') == 10*tx2)
+    assert(ts2.evaluateParameterWithUnits('pAlp1') == talp1)
+    assert(ts2.evaluateParameterWithUnits('pDy2') == 10*ty2)
+    assert(ts2.evaluateParameterWithUnits('pDx3') == 10*tx3)
+    assert(ts2.evaluateParameterWithUnits('pDx4') == 10*tx4)
+    assert(ts2.evaluateParameterWithUnits('pAlp2') == talp2)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)

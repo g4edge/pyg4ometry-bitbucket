@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 zero_area_quad = 2
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -42,14 +42,55 @@ def Test(vis = False, interactive = False) :
     
     tz    = _gd.Constant("z","30",reg,True)
 
-    wm = _g4.Material(name="G4_Galactic") 
-    tm = _g4.Material(name="G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        tm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.Material(name="G4_Galactic")
+        tm = _g4.Material(name="G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     ts = _g4.solid.GenericTrap("ts",tv1x,tv1y,tv2x,tv2y,tv3x,tv3y,tv4x,tv4y,tv5x,tv5y,
-                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg)
-        
+                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg,lunit="mm")
+    assert(ts.evaluateParameterWithUnits('v1x') == tv1x)
+    assert(ts.evaluateParameterWithUnits('v1y') == tv1y)
+    assert(ts.evaluateParameterWithUnits('v2x') == tv2x)
+    assert(ts.evaluateParameterWithUnits('v2y') == tv2y)
+    assert(ts.evaluateParameterWithUnits('v3x') == tv3x)
+    assert(ts.evaluateParameterWithUnits('v3y') == tv3y)
+    assert(ts.evaluateParameterWithUnits('v4x') == tv4x)
+    assert(ts.evaluateParameterWithUnits('v4y') == tv4y)
+    assert(ts.evaluateParameterWithUnits('v5x') == tv5x)
+    assert(ts.evaluateParameterWithUnits('v5y') == tv5y)
+    assert(ts.evaluateParameterWithUnits('v6x') == tv6x)
+    assert(ts.evaluateParameterWithUnits('v6y') == tv6y)
+    assert(ts.evaluateParameterWithUnits('v7x') == tv7x)
+    assert(ts.evaluateParameterWithUnits('v7y') == tv7y)
+    assert(ts.evaluateParameterWithUnits('v8x') == tv8x)
+    assert(ts.evaluateParameterWithUnits('v8y') == tv8y)
+    assert(ts.evaluateParameterWithUnits('dz')  == tz)
+    ts2 = _g4.solid.GenericTrap("ts2",tv1x,tv1y,tv2x,tv2y,tv3x,tv3y,tv4x,tv4y,tv5x,tv5y,
+                               tv6x,tv6y,tv7x,tv7y,tv8x,tv8y,tz,reg,lunit="cm")
+    assert(ts2.evaluateParameterWithUnits('v1x') == 10*tv1x)
+    assert(ts2.evaluateParameterWithUnits('v1y') == 10*tv1y)
+    assert(ts2.evaluateParameterWithUnits('v2x') == 10*tv2x)
+    assert(ts2.evaluateParameterWithUnits('v2y') == 10*tv2y)
+    assert(ts2.evaluateParameterWithUnits('v3x') == 10*tv3x)
+    assert(ts2.evaluateParameterWithUnits('v3y') == 10*tv3y)
+    assert(ts2.evaluateParameterWithUnits('v4x') == 10*tv4x)
+    assert(ts2.evaluateParameterWithUnits('v4y') == 10*tv4y)
+    assert(ts2.evaluateParameterWithUnits('v5x') == 10*tv5x)
+    assert(ts2.evaluateParameterWithUnits('v5y') == 10*tv5y)
+    assert(ts2.evaluateParameterWithUnits('v6x') == 10*tv6x)
+    assert(ts2.evaluateParameterWithUnits('v6y') == 10*tv6y)
+    assert(ts2.evaluateParameterWithUnits('v7x') == 10*tv7x)
+    assert(ts2.evaluateParameterWithUnits('v7y') == 10*tv7y)
+    assert(ts2.evaluateParameterWithUnits('v8x') == 10*tv8x)
+    assert(ts2.evaluateParameterWithUnits('v8y') == 10*tv8y)
+    assert(ts2.evaluateParameterWithUnits('dz')  == 10*tz)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     tl = _g4.LogicalVolume(ts, tm, "tl", reg)

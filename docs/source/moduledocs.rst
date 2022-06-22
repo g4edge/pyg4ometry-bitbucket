@@ -9,7 +9,7 @@ Defines and variables
 ---------------------
 
 .. automodule:: pyg4ometry.gdml.Defines
-   :members: upgradeToStringExpression
+   :members: upgradeToStringExpression, sin, cos, tan, asin, acos, atan, exp, log, log10, sqrt, upgradeToVector, upgradeToTransformation
 
 .. autoclass:: pyg4ometry.gdml.Defines.ScalarBase
    :members: 
@@ -37,9 +37,6 @@ Defines and variables
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: pyg4ometry.gdml.Defines
-   :members: sin, cos, tan, asin, acos, atan, exp, log, log10, sqrt
-
 .. autoclass:: pyg4ometry.gdml.Defines.VectorBase
    :members: 
    :undoc-members:
@@ -65,10 +62,6 @@ Defines and variables
    :members:
    :undoc-members:
    :show-inheritance:
-
-.. automodule:: pyg4ometry.gdml.Defines
-   :members: upgradeToVector, upgradeToTransformation
-
 
 .. _all-solids:
 
@@ -170,8 +163,9 @@ Geant4 module
    :undoc-members:
    :show-inheritance:
 
-VTK module
-----------
+Visualisation module
+--------------------
+
 .. automodule:: pyg4ometry.visualisation.VtkViewer
    :members:
    :undoc-members:
@@ -232,7 +226,35 @@ Transformation
    :undoc-members:
 
 .. _geometry-compare-module:
-      
+
+Convert
+-------
+
+.. automodule:: pyg4ometry.convert.fluka2g4materials
+   :members:
+   :undoc-members:
+
+.. automodule:: pyg4ometry.convert.fluka2Geant4
+   :members:
+   :undoc-members:
+
+.. automodule:: pyg4ometry.convert.freecad2Fluka
+   :members:
+   :undoc-members:
+
+.. automodule:: pyg4ometry.convert.geant42Fluka
+   :members:
+   :undoc-members:
+
+.. automodule:: pyg4ometry.convert.geant42Geant4
+   :members:
+   :undoc-members:
+
+.. automodule:: pyg4ometry.convert.stl2gdml
+   :members:
+   :undoc-members:
+
+
 Compare
 -------
 
@@ -259,3 +281,12 @@ Compare
 .. automodule:: pyg4ometry.compare._Compare
    :members:
    :undoc-members:
+
+Features
+--------
+
+.. automodule:: pyg4ometry.features.algos
+   :members:
+   :undoc-members:
+
+

@@ -6,7 +6,7 @@ import pyg4ometry.visualisation as _vi
 normal = 1
 zcut_outofrange = 2
 
-def Test(vis = False, interactive = False, type = normal,n_slice=16) :
+def Test(vis = False, interactive = False, type = normal,n_slice=16, writeNISTMaterials = False) :
     reg = _g4.Registry()
 
     # defines
@@ -23,13 +23,27 @@ def Test(vis = False, interactive = False, type = normal,n_slice=16) :
     if type == zcut_outofrange :
         ezcut.setExpression(30)
 
-    wm = _g4.MaterialPredefined("G4_Galactic")
-    em = _g4.MaterialPredefined("G4_Fe")
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        em = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        em = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ubox = _g4.solid.Box("boxxx",500, 500, 500, reg, "mm")
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     es = _g4.solid.EllipticalCone("es",edx,edy,ezmax,ezcut,reg,"mm",nslice=n_slice)
+    assert(es.evaluateParameterWithUnits('pxSemiAxis') == edx)
+    assert(es.evaluateParameterWithUnits('pySemiAxis') == edy)
+    assert(es.evaluateParameterWithUnits('zMax') == ezmax)
+    assert(es.evaluateParameterWithUnits('pzTopCut') == ezcut)
+    es2 = _g4.solid.EllipticalCone("es2",edx,edy,ezmax,ezcut,reg,"cm",nslice=n_slice)
+    assert(es2.evaluateParameterWithUnits('pxSemiAxis') == 10*edx)
+    assert(es2.evaluateParameterWithUnits('pySemiAxis') == 10*edy)
+    assert(es2.evaluateParameterWithUnits('zMax') == 10*ezmax)
+    assert(es2.evaluateParameterWithUnits('pzTopCut') == 10*ezcut)
     union = _g4.solid.Union("myunion", ubox, es, [[0, 0, 0], [0, 0, 0,]], reg)
 
     # structure

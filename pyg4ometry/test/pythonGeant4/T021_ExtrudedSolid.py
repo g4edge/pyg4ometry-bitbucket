@@ -4,7 +4,7 @@ import pyg4ometry.geant4 as _g4
 import pyg4ometry.visualisation as _vi
 
 
-def Test(vis = False, interactive = False) :
+def Test(vis = False, interactive = False, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -54,14 +54,33 @@ def Test(vis = False, interactive = False) :
 
     polygon = [[p1x,p1y], [p2x,p2y], [p3x,p3y], [p4x,p4y], [p5x,p5y], [p6x,p6y], [p7x,p7y], [p8x,p8y]]
     slices  = [[z1,[x1,y1],s1], [z2,[x2,y2],s2], [z3,[x3,y3],s3]]
-          
+
+    polygon_float = [[-20,-20], [-20,20], [20,20], [20,10], [-10,10], [-10,-10], [20,-10], [20,-20]]
+    slices_float  = [[-20,[5,5],1], [0,[-5,-5],1], [20,[0,0],2]]
+
+    polygon_float_cm = [[-200,-200], [-200,200], [200,200], [200,100], [-100,100], [-100,-100], [200,-100], [200,-200]]
+    slices_float_cm  = [[-200,[50,50],1], [00,[-50,-50],1], [200,[00,00],2]]
+
     wm = _g4.MaterialPredefined("G4_Galactic") 
     xm = _g4.MaterialPredefined("G4_Fe") 
+
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        xm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        xm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
     xs = _g4.solid.ExtrudedSolid("xs", polygon,slices, reg)
-        
+    assert(xs.evaluateParameterWithUnits('pPolygon') == polygon_float)
+    assert(xs.evaluateParameterWithUnits('pZslices') == slices_float)
+    xs2 = _g4.solid.ExtrudedSolid("xs2", polygon,slices, reg, "cm")
+    assert(xs2.evaluateParameterWithUnits('pPolygon') == polygon_float_cm)
+    assert(xs2.evaluateParameterWithUnits('pZslices') == slices_float_cm)
+
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
     xl = _g4.LogicalVolume(xs, xm, "xl", reg)

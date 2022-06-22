@@ -7,7 +7,7 @@ normal = 1
 rmin_eq_zero = 2
 rmin_gt_rmax = 3
 
-def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack = 16) :
+def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack = 16, writeNISTMaterials = False) :
     reg = _g4.Registry()
     
     # defines 
@@ -21,7 +21,10 @@ def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack 
     hz    = _gd.Constant("hz","50.0",reg,True)
     hinst = _gd.Constant("hinst","0.7",reg,True)
     houtst= _gd.Constant("houtst","0.7",reg,True)
-    
+
+    hinst_deg = _gd.Constant("hinst_deg","0.7/pi*180",reg,True)
+    houtst_deg= _gd.Constant("houtst_deg","0.7/pi*180",reg,True)
+
     if type == rmin_eq_zero : 
         hrmin.setExpression(0)
 
@@ -29,12 +32,28 @@ def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack 
         hrmin.setExpression(2)
         hrmax.setExpression(1)
 
-    wm = _g4.MaterialPredefined("G4_Galactic") 
-    hm = _g4.MaterialPredefined("G4_Fe") 
+    # materials
+    if writeNISTMaterials :
+        wm = _g4.nist_material_2geant4Material("G4_Galactic",reg)
+        hm = _g4.nist_material_2geant4Material("G4_Fe",reg)
+    else :
+        wm = _g4.MaterialPredefined("G4_Galactic")
+        hm = _g4.MaterialPredefined("G4_Fe")
 
     # solids
     ws = _g4.solid.Box("ws",wx,wy,wz, reg, "mm")
-    hs = _g4.solid.Hype("ps",hrmin, hrmax, hinst, houtst, hz, reg,nslice=n_slice,nstack=n_stack)
+    hs = _g4.solid.Hype("hs",hrmin, hrmax, hinst, houtst, hz, reg,nslice=n_slice,nstack=n_stack)
+    assert(hs.evaluateParameterWithUnits('innerRadius') == hrmin)
+    assert(hs.evaluateParameterWithUnits('outerRadius') == hrmax)
+    assert(hs.evaluateParameterWithUnits('innerStereo') == hinst)
+    assert(hs.evaluateParameterWithUnits('outerStereo') == houtst)
+    assert(hs.evaluateParameterWithUnits('lenZ') == hz)
+    hs2 = _g4.solid.Hype("hs2",hrmin, hrmax, hinst, houtst, hz, reg, "cm",nslice=n_slice,nstack=n_stack)
+    assert(hs2.evaluateParameterWithUnits('innerRadius') == 10*hrmin)
+    assert(hs2.evaluateParameterWithUnits('outerRadius') == 10*hrmax)
+    assert(hs2.evaluateParameterWithUnits('innerStereo') == hinst)
+    assert(hs2.evaluateParameterWithUnits('outerStereo') == houtst)
+    assert(hs2.evaluateParameterWithUnits('lenZ') == 10*hz)
         
     # structure 
     wl = _g4.LogicalVolume(ws, wm, "wl", reg)
