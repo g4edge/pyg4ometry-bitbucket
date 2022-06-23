@@ -94,6 +94,9 @@ elif platform.system() == "Linux":
             mpfr_lib      = "/usr/lib64"
             gmp_lib       = "/usr/lib64"
     except AttributeError :
+        pass
+
+    try : 
         import lsb_release 
         if lsb_release.get_os_release()['ID'] == "Ubuntu" :
             # TODO needs replacing        
@@ -102,7 +105,9 @@ elif platform.system() == "Linux":
             boost_include = "/usr/include/boost169"
             mpfr_lib      = "/usr/lib64"
             gmp_lib       = "/usr/lib64"
-        
+    except ModuleNotFoundError :
+        print("could not find lsb_release")
+              
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
                                            gmp_include,
