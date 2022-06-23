@@ -106,7 +106,7 @@ elif platform.system() == "Linux":
             mpfr_lib      = "/usr/lib64"
             gmp_lib       = "/usr/lib64"
     except AttributeError :
-        pass
+        print("Cannot find platform.dist()")
 
     try : 
         import lsb_release 
