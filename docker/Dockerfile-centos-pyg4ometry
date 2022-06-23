@@ -49,7 +49,7 @@ RUN source scl_source enable rh-python38 && \
 RUN yum -y install boost169-devel libjpeg-turbo-devel
 
 # pyg4ometry
-ARG PYG4_TAG=1
+ARG PYG4_TAG=2
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git 
 
 RUN cd pyg4ometry && \
