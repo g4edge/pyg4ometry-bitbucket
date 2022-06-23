@@ -93,33 +93,23 @@ if platform.system() == "Darwin" :
         boost_include = "/opt/local/include"
         mpfr_lib      = "/opt/local/lib"
         gmp_lib       = "/opt/local/lib"        
-# Centos 7 
 elif platform.system() == "Linux":
-    print("Linux")    
-    try :
-        print(platform.dist())
-        if platform.dist()[0] == "centos" :
-            print("Centos")    
-            mpfr_include  = "/usr/include"
-            gmp_include   = "/usr/include"
-            boost_include = "/usr/include/boost169"
-            mpfr_lib      = "/usr/lib64"
-            gmp_lib       = "/usr/lib64"
-    except AttributeError :
-        print("Cannot find platform.dist()")
-
-    try : 
-        import lsb_release 
-        if lsb_release.get_os_release()['ID'] == "Ubuntu" :
-            print("ubuntu")
-            # TODO needs replacing        
-            mpfr_include  = "/usr/include"
-            gmp_include   = "/usr/include"
-            boost_include = "/usr/include/boost169"
-            mpfr_lib      = "/usr/lib64"
-            gmp_lib       = "/usr/lib64"
-    except ModuleNotFoundError :
-        print("Cannot find lsb_release")
+    import distro
+    if distro.linux_distribution()[0] == "CentOS Linux" :
+        print("Centos")    
+        mpfr_include  = "/usr/include"
+        gmp_include   = "/usr/include"
+        boost_include = "/usr/include/boost169"
+        mpfr_lib      = "/usr/lib64"
+        gmp_lib       = "/usr/lib64"
+    elif distro.linux_distribution()[0] == "Ubuntu" :
+        print("ubuntu")
+        # TODO needs replacing        
+        mpfr_include  = "/usr/include"
+        gmp_include   = "/usr/include"
+        boost_include = "/usr/include/boost169"
+        mpfr_lib      = "/usr/lib64"
+        gmp_lib       = "/usr/lib64"
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
