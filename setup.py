@@ -13,6 +13,7 @@ import site
 site.ENABLE_USER_SITE = True
 
 plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
+print("platform>",plat)
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
 

@@ -55,7 +55,6 @@ RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git
 #RUN cd pyg4ometry && \
 #    source scl_source enable devtoolset-7 && \
 #    source scl_source enable rh-python38 && \
-#    python setup.py build_ext && \
 #    pip install --editable . --user
 
 # RUN yum -y install nano
