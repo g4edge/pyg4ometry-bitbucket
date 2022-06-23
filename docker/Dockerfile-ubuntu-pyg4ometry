@@ -1,6 +1,7 @@
-FROM scratch
+# FROM scratch
+FROM ubuntu:focal
 
-ADD ubuntu-focal-core-cloudimg-amd64-root.tar.gz /
+# ADD ubuntu-focal-core-cloudimg-amd64-root.tar.gz /
 # verify that the APT lists files do not exist
 RUN [ -z "$(apt-get indextargets)" ]
 # (see https://bugs.launchpad.net/cloud-images/+bug/1699913)
@@ -88,11 +89,11 @@ RUN pip3 install pandas
 
 # pyg4ometry
 RUN apt-get -y install libmpfr-dev libgmp-dev pybind11-dev
-ARG PYG4OMETRY_VER=2
+ARG PYG4_TAG=5
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
     git checkout develop
 
 RUN cd pyg4ometry && \
-    make build_ext && \
-    make develop
+    pip install --editable . --user && \
+    python setup.py build_ext --inplace

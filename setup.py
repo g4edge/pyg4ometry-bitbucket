@@ -97,6 +97,7 @@ if platform.system() == "Darwin" :
 elif platform.system() == "Linux":
     print("Linux")    
     try :
+        print(platform.dist())
         if platform.dist()[0] == "centos" :
             print("Centos")    
             mpfr_include  = "/usr/include"
@@ -119,7 +120,7 @@ elif platform.system() == "Linux":
             gmp_lib       = "/usr/lib64"
     except ModuleNotFoundError :
         print("Cannot find lsb_release")
-              
+
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
                                            gmp_include,

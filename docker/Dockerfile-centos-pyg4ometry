@@ -8,7 +8,7 @@ RUN ls
 RUN yum -y install epel-release
 
 # python
-RUN yum -y install python3-pip python3 python3-devel python36-devel 
+# RUN yum -y install python3-pip python3 python3-devel python36-devel 
 
 # X11 
 RUN yum -y install xorg-x11-server-Xorg xorg-x11-xauth libX11-devel \
@@ -28,6 +28,9 @@ RUN yum -y install git wget cmake3
 RUN yum -y install centos-release-scl && \
     yum -y install devtoolset-7
 
+# python
+RUN yum -y install rh-python38-python-pip rh-python38-python-devel rh-python38-python
+
 # CGAL
 RUN wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.1.tar.gz && \
     tar zxf v5.3.1.tar.gz && \
@@ -41,16 +44,18 @@ RUN wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.1.tar.gz && \
     rm -rf build v5.3.1.tar.gz
 
 # pyg4ometry deps 
-RUN pip3 install cython pybind11 auditwheel ipython
+RUN source scl_source enable rh-python38 && \
+    pip install cython pybind11 auditwheel ipython
 RUN yum -y install boost169-devel libjpeg-turbo-devel
 
 # pyg4ometry
-ARG PYG4_TAG=1.0.1
+ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git 
 
 RUN cd pyg4ometry && \
     source scl_source enable devtoolset-7 && \
-    python3.6 setup.py build_ext && \
-    pip3.6 install --editable . --user
+    source scl_source enable rh-python38 && \
+    python setup.py build_ext && \
+    pip install --editable . --user
 
 RUN yum -y install nano
