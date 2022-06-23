@@ -69,9 +69,17 @@ if condaExe is not None :
 
 # conda environments
 
+mpfr_include  = "/opt/local/include"
+gmp_include   = "/opt/local/include"
+boost_include = "/opt/local/include"
+mpfr_lib      = "/opt/local/lib"
+gmp_lib       = "/opt/local/lib"
+
 # Mac OSX mac ports
 if platform.system() == "Darwin" :
+    print("MacOX")
     if which("port") is not None :
+        print("port")
         mpfr_include  = "/opt/local/include"
         gmp_include   = "/opt/local/include"
         boost_include = "/opt/local/include"
@@ -79,6 +87,7 @@ if platform.system() == "Darwin" :
         gmp_lib       = "/opt/local/lib"
     elif which("brew") is not None :
         # TODO needs replacing
+        print("brew")
         mpfr_include  = "/opt/local/include"
         gmp_include   = "/opt/local/include"
         boost_include = "/opt/local/include"
@@ -86,8 +95,10 @@ if platform.system() == "Darwin" :
         gmp_lib       = "/opt/local/lib"        
 # Centos 7 
 elif platform.system() == "Linux":
+    print("Linux")    
     try :
-        if platform.dist()[0] == "centos" :  
+        if platform.dist()[0] == "centos" :
+            print("Centos")    
             mpfr_include  = "/usr/include"
             gmp_include   = "/usr/include"
             boost_include = "/usr/include/boost169"
@@ -99,6 +110,7 @@ elif platform.system() == "Linux":
     try : 
         import lsb_release 
         if lsb_release.get_os_release()['ID'] == "Ubuntu" :
+            print("ubuntu")
             # TODO needs replacing        
             mpfr_include  = "/usr/include"
             gmp_include   = "/usr/include"
@@ -106,12 +118,7 @@ elif platform.system() == "Linux":
             mpfr_lib      = "/usr/lib64"
             gmp_lib       = "/usr/lib64"
     except ModuleNotFoundError :
-        mpfr_include  = "/usr/include"
-        gmp_include   = "/usr/include"
-        boost_include = "/opt/local/include"
-        mpfr_lib      = "/usr/lib"
-        gmp_lib       = "/usr/lib"
-        print("could not find lsb_release")
+        print("Cannot find lsb_release")
               
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
