@@ -106,6 +106,11 @@ elif platform.system() == "Linux":
             mpfr_lib      = "/usr/lib64"
             gmp_lib       = "/usr/lib64"
     except ModuleNotFoundError :
+        mpfr_include  = "/usr/include"
+        gmp_include   = "/usr/include"
+        boost_include = "/opt/local/include"
+        mpfr_lib      = "/usr/lib"
+        gmp_lib       = "/usr/lib"
         print("could not find lsb_release")
               
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
