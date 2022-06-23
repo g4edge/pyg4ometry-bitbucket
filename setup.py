@@ -5,7 +5,8 @@ from Cython.Build import cythonize
 from subprocess import run
 from shutil import which
 import sys
-import platform 
+import platform
+import lsb_release
 
 import pybind11
 
@@ -87,13 +88,14 @@ if platform.system() == "Darwin" :
         gmp_lib       = "/opt/local/lib"        
 # Centos 7 
 elif platform.system() == "Linux":
-    if platform.dist()[0] == "centos" :  
-        mpfr_include  = "/usr/include"
-        gmp_include   = "/usr/include"
-        boost_include = "/usr/include/boost169"
-        mpfr_lib      = "/usr/lib64"
-        gmp_lib       = "/usr/lib64"
-    else :
+    if plaform.dist :
+        if platform.dist()[0] == "centos" :  
+            mpfr_include  = "/usr/include"
+            gmp_include   = "/usr/include"
+            boost_include = "/usr/include/boost169"
+            mpfr_lib      = "/usr/lib64"
+            gmp_lib       = "/usr/lib64"
+    elif lsb_release.get_os_release()['ID'] == "Ubuntu" :
         # TODO needs replacing        
         mpfr_include  = "/usr/include"
         gmp_include   = "/usr/include"
