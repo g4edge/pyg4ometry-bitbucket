@@ -4,6 +4,7 @@ SHELL ["/bin/bash", "-c"]
 
 WORKDIR /tmp
 
+RUN ls
 RUN yum -y install epel-release
 
 # python
@@ -41,15 +42,15 @@ RUN wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.1.tar.gz && \
 
 # pyg4ometry deps 
 RUN pip3 install cython pybind11 auditwheel ipython
-RUN yum -y install boost169-devel
+RUN yum -y install boost169-devel libjpeg-turbo-devel
 
 # pyg4ometry
 ARG PYG4_TAG=1.0.0
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git 
 
-#RUN cd pyg4ometry && \
-#    source scl_source enable devtoolset-7 && \
-#    python3.6 setup.py build_ext && \
-#    pip3.6 install --editable . --user
+RUN cd pyg4ometry && \
+    source scl_source enable devtoolset-7 && \
+    python3.6 setup.py build_ext && \
+    pip3.6 install --editable . --user
 
 RUN yum -y install nano

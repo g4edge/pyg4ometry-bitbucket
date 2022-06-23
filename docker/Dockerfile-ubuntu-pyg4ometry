@@ -81,12 +81,17 @@ RUN pip install ipython
 # git
 RUN apt-get -y install git
 
+# pyg4ometry deps
+RUN pip3 install pybind11
+RUN apt-get -y install libcgal-dev
+RUN pip3 install pandas
+
 # pyg4ometry
 RUN apt-get -y install libmpfr-dev libgmp-dev pybind11-dev
 ARG PYG4OMETRY_VER=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
-    git checkout develop_python3
+    git checkout develop
 
 RUN cd pyg4ometry && \
     make build_ext && \

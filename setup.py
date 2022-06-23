@@ -5,6 +5,7 @@ from Cython.Build import cythonize
 from subprocess import run
 from shutil import which
 import sys
+import platform 
 
 import pybind11
 
@@ -70,19 +71,36 @@ if condaExe is not None :
 # conda environments
 
 # Mac OSX mac ports
-mpfr_include  = "/opt/local/include"
-gmp_include   = "/opt/local/include"
-boost_include = "/opt/local/include"
-mpfr_lib      = "/opt/local/lib"
-gmp_lib       = "/opt/local/lib"
-
+if platform.system() == "Darwin" :
+    if which("port") is not None :
+        mpfr_include  = "/opt/local/include"
+        gmp_include   = "/opt/local/include"
+        boost_include = "/opt/local/include"
+        mpfr_lib      = "/opt/local/lib"
+        gmp_lib       = "/opt/local/lib"
+    elif which("brew") is not None :
+        # TODO needs replacing
+        mpfr_include  = "/opt/local/include"
+        gmp_include   = "/opt/local/include"
+        boost_include = "/opt/local/include"
+        mpfr_lib      = "/opt/local/lib"
+        gmp_lib       = "/opt/local/lib"        
 # Centos 7 
-#mpfr_include  = "/usr/include"
-#gmp_include   = "/usr/include"
-#boost_include = "/usr/include/boost169"
-#mpfr_lib      = "/usr/lib64"
-#gmp_lib       = "/usr/lib64"
-
+elif platform.system() == "Linux":
+    if platform.dist()[0] == "centos" :  
+        mpfr_include  = "/usr/include"
+        gmp_include   = "/usr/include"
+        boost_include = "/usr/include/boost169"
+        mpfr_lib      = "/usr/lib64"
+        gmp_lib       = "/usr/lib64"
+    else :
+        # TODO needs replacing        
+        mpfr_include  = "/usr/include"
+        gmp_include   = "/usr/include"
+        boost_include = "/usr/include/boost169"
+        mpfr_lib      = "/usr/lib64"
+        gmp_lib       = "/usr/lib64"
+        
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
                                            gmp_include,
