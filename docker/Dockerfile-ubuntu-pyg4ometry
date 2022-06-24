@@ -89,10 +89,14 @@ RUN pip3 install pandas distro
 
 # pyg4ometry
 RUN apt-get -y install libmpfr-dev libgmp-dev pybind11-dev
-ARG PYG4_TAG=6
+ARG PYG4_TAG=7
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
     git checkout develop
 
-#RUN cd pyg4ometry && \
-#    pip install --editable . --user
+RUN cd pyg4ometry && \
+    python setup.py build_ext --inplace && \
+    pip install --editable . --user 
+
+    
+
