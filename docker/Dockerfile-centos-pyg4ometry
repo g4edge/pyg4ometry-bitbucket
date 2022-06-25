@@ -15,8 +15,8 @@ RUN yum -y install xorg-x11-server-Xorg xorg-x11-xauth libX11-devel \
     libXpm-devel libXft-devel libXext-devel \
     libXt-devel
 
-# OpenGL
-RUN yum -y install mesa-libGL-devel
+# OpenGL / x11vnc / fvwm 
+RUN yum -y install mesa-libGL-devel mesa-dri-drivers x11vnc fvwm
 
 # mpfr, gmp
 RUN yum -y install mpfr-devel gmp-devel
@@ -30,6 +30,9 @@ RUN yum -y install centos-release-scl && \
 
 # python
 RUN yum -y install rh-python38-python-pip rh-python38-python-devel rh-python38-python
+
+# misc useful
+RUN yum -y install nano xterm
 
 # CGAL
 RUN wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.1.tar.gz && \
@@ -58,4 +61,7 @@ RUN cd pyg4ometry && \
     python setup.py build_ext --inplace && \
     pip install --editable . --user 
 
-RUN yum -y install nano
+RUN echo "source scl_source enable devtoolset-7" >> /root/.bashrc && \
+    echo "source scl_source enable rh-python38" >> /root/.bashrc && \
+    echo "export MESA_GL_VERSION_OVERRIDE=3.2" >> /root/.bashrc && \
+    echo "export MESA_GLSL_VERSION_OVERRIDE=150" >> /root/.bashrc
