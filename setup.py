@@ -51,12 +51,11 @@ incPathSet = set()
 libPathSet = set()
 
 # TODO does not handle lists properly
-incPath = findPackage("mpfr",includeSearchDirs); incPathSet.add(*set(incPath))
-libPath = findPackage("mpfr",librarySearchDirs); libPathSet.add(*set(libPath))
-incPath = findPackage("gmp",includeSearchDirs); incPathSet.add(*set(incPath))
-libPath = findPackage("gmp",librarySearchDirs); libPathSet.add(*set(libPath))
+incPath = findPackage("mpfr",includeSearchDirs); incPathSet.union(set(incPath))
+libPath = findPackage("mpfr",librarySearchDirs); libPathSet.union(set(libPath))
+libPath = findPackage("gmp",librarySearchDirs); libPathSet.union(set(libPath))
 # incPath = findPackage("pybind11",includeSearchDirs); incPathSet.add(*set(incPath))
-incPath = findPackage("CGAL",includeSearchDirs); incPathSet.add(*set(incPath))
+incPath = findPackage("CGAL",includeSearchDirs); incPathSet.union(set(incPath))
 
 print("Using include paths : ",incPath)
 print("Using library paths : ",libPath)
