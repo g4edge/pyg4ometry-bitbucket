@@ -8,6 +8,12 @@ from . import gdml
 from . import io
 from . import geant4
 from . import pycgal
+try :
+    from . import pyusd
+except ImportError :
+    import warnings                                                                                                                                                              
+    warnings.warn("Failed to import pyg4ometry.usd subpackage.")                                                                                                                  
+    del warnings   
 #try:
 #    from . import gui
 #except ImportError:
