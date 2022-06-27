@@ -159,11 +159,26 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
+oce_ext = Extension('pyg4ometry.pyoce.oce',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include],
+                    libraries = ['mpfr','gmp'],
+                    library_dirs = [mpfr_lib,
+                                    gmp_lib],
+                    sources = ['./pyg4ometry/pyoce/oce.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
 
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
 exts.append(cgal_core_ext)
+exts.append(oce_ext)
 
 setup(
     name="pyg4ometry",
