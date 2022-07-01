@@ -7,12 +7,17 @@ from shutil import which
 import sys
 import platform
 import pybind11
+from packagine import version
 
 # https://github.com/pypa/pip/issues/7953
 import site
 site.ENABLE_USER_SITE = True
 
-plat = build_ext.get_platform()+'-'+ sys.implementation.cache_tag
+if version.parse(setuptools.__version__) >= version.parse("62.1.0") :
+    plat = build_ext.get_platform()+'-'+ sys.implementation.cache_tag
+else :
+    plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
+
 print("platform>",plat)
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])

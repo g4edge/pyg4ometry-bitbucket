@@ -16,5 +16,5 @@ RUN pip install distro
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git
 
 RUN cd pyg4ometry && \
-    python setup.py build_ext --inplace && \
+    # python setup.py build_ext --inplace && \
     pip install --editable . --user 
