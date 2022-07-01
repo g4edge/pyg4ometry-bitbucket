@@ -1,3 +1,4 @@
+import setuptools 
 from setuptools import find_packages
 from distutils.command import build_ext
 from distutils.core import setup, Extension
@@ -7,7 +8,7 @@ from shutil import which
 import sys
 import platform
 import pybind11
-from packagine import version
+from packaging import version
 
 # https://github.com/pypa/pip/issues/7953
 import site
