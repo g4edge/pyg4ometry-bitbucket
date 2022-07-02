@@ -13,7 +13,9 @@ RUN pacman -Sy && \
 
 RUN pip install distro 
 
-RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git
+RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
+    cd pyg4ometry && \
+    git checkout CITests
 
 RUN cd pyg4ometry && \
     # python setup.py build_ext --inplace && \
