@@ -42,7 +42,7 @@ RUN wget https://github.com/CGAL/cgal/archive/refs/tags/v5.3.1.tar.gz && \
     rm -rf build v5.3.1.tar.gz
 
 # pyg4ometry
-ARG PYG4_TAG=5
+ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry && \
 git checkout CITests

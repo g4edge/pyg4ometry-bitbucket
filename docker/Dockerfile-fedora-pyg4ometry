@@ -10,7 +10,7 @@ RUN yum -y install python3-Cython
 
 RUN pip3 install pybind11 distro
 
-ARG PYG4_TAG=5
+ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry && \
     git checkout CITests

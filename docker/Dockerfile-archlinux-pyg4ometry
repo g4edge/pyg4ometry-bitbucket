@@ -13,6 +13,7 @@ RUN pacman -Sy && \
 
 RUN pip install distro 
 
+ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry && \
     git checkout CITests

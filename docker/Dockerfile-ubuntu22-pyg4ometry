@@ -34,7 +34,7 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
 # pyg4ometry
-ARG PYG4_TAG=10
+ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
     git checkout develop
