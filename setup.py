@@ -91,14 +91,6 @@ if platform.system() == "Darwin" :
         boost_include = "/opt/local/include"
         mpfr_lib      = "/opt/local/lib"
         gmp_lib       = "/opt/local/lib"
-    elif which("brew") is not None :
-        # TODO needs replacing
-        print("brew")
-        mpfr_include  = "/opt/local/include"
-        gmp_include   = "/opt/local/include"
-        boost_include = "/opt/local/include"
-        mpfr_lib      = "/opt/local/lib"
-        gmp_lib       = "/opt/local/lib"        
 elif platform.system() == "Linux":
     import distro
     if distro.linux_distribution()[0] == "CentOS Linux" :
@@ -116,6 +108,12 @@ elif platform.system() == "Linux":
         boost_include = "/usr/include/boost169"
         mpfr_lib      = "/usr/lib64"
         gmp_lib       = "/usr/lib64"
+
+print(mpfr_include)
+print(gmp_include)
+print(boost_include)
+print(mpfr_lib)
+print(gmp_lib)
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
@@ -171,6 +169,10 @@ exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
 exts.append(cgal_core_ext)
 
+entry_points={
+    'console_scripts': [
+        'pyg4 = pyg4ometry.cli.main:main',],}
+
 setup(
     name="pyg4ometry",
     version="1.0.2",
@@ -204,4 +206,5 @@ setup(
     license='GPL3',
     url='https://bitbucket.org/jairhul/pyg4ometry/',
     keywords='geometry bdsim particle physics accelerators',
+    entry_points=entry_points,
 )
