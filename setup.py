@@ -1,3 +1,4 @@
+import setuptools
 from setuptools import find_packages
 from distutils.command import build_ext
 from distutils.core import setup, Extension
@@ -8,11 +9,16 @@ import sys
 import platform
 import pybind11
 
+
 # https://github.com/pypa/pip/issues/7953
 import site
 site.ENABLE_USER_SITE = True
 
-plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
+if setuptools.version.pkg_resources.parse_version(setuptools.__version__) >= setuptools.version.pkg_resources.parse_version("62.1.0") :
+    plat = build_ext.get_platform()+'-'+ sys.implementation.cache_tag
+else :
+    plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
+
 print("platform>",plat)
 
 exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
