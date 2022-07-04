@@ -32,7 +32,7 @@ pythonMinorVersion = sys.version_info[1]
 
 print("Python version : {}.{}".format(pythonMajorVersion,pythonMinorVersion))
 
-# start with system dirs (and port/brew and default miniconda)
+# start with system dirs (and port, brew and default miniconda)
 includeSearchDirs = ["/usr/include","/usr/local/include","/opt/local/include/","/usr/local/Cellar/include/","/opt/miniconda3/include/"]
 librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/usr/lib/x86_64-linux-gnu/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/"]
 
@@ -85,12 +85,14 @@ gmp_lib       = "/opt/local/lib"
 if platform.system() == "Darwin" :
     print("MacOX")
     if which("port") is not None :
-        print("port")
+        print("Mac ports")
         mpfr_include  = "/opt/local/include"
         gmp_include   = "/opt/local/include"
         boost_include = "/opt/local/include"
         mpfr_lib      = "/opt/local/lib"
         gmp_lib       = "/opt/local/lib"
+    elif which("brew") is not None :
+        print("Homebrew : path needs implementing")
 elif platform.system() == "Linux":
     import distro
     if distro.linux_distribution()[0] == "CentOS Linux" :
@@ -108,12 +110,6 @@ elif platform.system() == "Linux":
         boost_include = "/usr/include/boost169"
         mpfr_lib      = "/usr/lib64"
         gmp_lib       = "/usr/lib64"
-
-print(mpfr_include)
-print(gmp_include)
-print(boost_include)
-print(mpfr_lib)
-print(gmp_lib)
 
 pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            include_dirs = [mpfr_include,
