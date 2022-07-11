@@ -1,0 +1,22 @@
+FROM fedora:latest
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /tmp
+
+RUN yum -y install git gcc-c++ cmake python3-ipython python-vtk CGAL-devel freecad 
+
+RUN yum -y install python3-Cython
+
+RUN pip3 install pybind11 distro
+
+ARG PYG4_TAG=1
+RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
+    cd pyg4ometry && \
+    git checkout CITests
+
+RUN cd pyg4ometry && \
+    export export SETUPTOOLS_USE_DISTUTILS=stdlib && \
+    pip3 install --editable . --user
+
+RUN yum -y install x11vnc xterm fvwm

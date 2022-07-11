@@ -1,0 +1,23 @@
+FROM archlinux:latest
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /tmp
+
+RUN pacman -Sy && \
+    pacman --noconfirm -S cgal python ipython python-pip gcc gcc-fortran cmake make && \
+    pacman --noconfirm -S vtk libjpeg-turbo libpng libtiff fmt freetype2 xorg-server libxcursor glew openmpi && \
+    pacman --noconfirm -S ospray qt5 openvr ffmpeg hdf5 libpqxx netcdf pdal unixodbc liblas cgns && \
+    pacman --noconfirm -S adios2 libharu gl2ps git cython mpfr freecad x11vnc xorg-server-xvfb xterm xorg-twm && \
+    pacman --noconfirm -S emacs 
+
+RUN pip install distro 
+
+ARG PYG4_TAG=1
+RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
+    cd pyg4ometry && \
+    git checkout CITests
+
+RUN cd pyg4ometry && \
+    # python setup.py build_ext --inplace && \
+    pip install --editable . --user 
