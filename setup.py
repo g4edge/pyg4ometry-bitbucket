@@ -94,11 +94,11 @@ if platform.system() == "Darwin" :
     elif which("brew") is not None :
         # TODO needs replacing
         print("brew")
-        mpfr_include  = "/opt/local/include"
-        gmp_include   = "/opt/local/include"
-        boost_include = "/opt/local/include"
-        mpfr_lib      = "/opt/local/lib"
-        gmp_lib       = "/opt/local/lib"        
+        mpfr_include  = "/usr/local/include"
+        gmp_include   = "/usr/local/include"
+        boost_include = "/usr/local/include"
+        mpfr_lib      = "/usr/local/lib"
+        gmp_lib       = "/usr/local/lib"
 elif platform.system() == "Linux":
     import distro
     if distro.linux_distribution()[0] == "CentOS Linux" :
