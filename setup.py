@@ -94,11 +94,18 @@ if platform.system() == "Darwin" :
     elif which("brew") is not None :
         # TODO needs replacing
         print("brew")
-        mpfr_include  = "/opt/homebrew/include"
-        gmp_include   = "/opt/homebrew/include"
-        boost_include = "/opt/homebrew/include"
-        mpfr_lib      = "/opt/homebrew/lib"
-        gmp_lib       = "/opt/homebrew/lib"
+        if platform.machine() == "arm64":  # apple silicon
+            mpfr_include  = "/opt/homebrew/include"
+            gmp_include   = "/opt/homebrew/include"
+            boost_include = "/opt/homebrew/include"
+            mpfr_lib      = "/opt/homebrew/lib"
+            gmp_lib       = "/opt/homebrew/lib"
+        else:
+            mpfr_include  = "/usr/local/include"
+            gmp_include   = "/usr/local/include"
+            boost_include = "/usr/local/include"
+            mpfr_lib      = "/usr/local/lib"
+            gmp_lib       = "/usr/local/lib"
 elif platform.system() == "Linux":
     import distro
     if distro.linux_distribution()[0] == "CentOS Linux" :
