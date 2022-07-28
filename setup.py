@@ -33,8 +33,8 @@ pythonMinorVersion = sys.version_info[1]
 print("Python version : {}.{}".format(pythonMajorVersion,pythonMinorVersion))
 
 # start with system dirs (and port/brew and default miniconda)
-includeSearchDirs = ["/usr/include","/usr/local/include","/opt/local/include/","/usr/local/Cellar/include/","/opt/miniconda3/include/"]
-librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/usr/lib/x86_64-linux-gnu/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/"]
+includeSearchDirs = ["/usr/include","/usr/local/include","/opt/local/include/","/usr/local/Cellar/include/","/opt/miniconda3/include/","/opt/homebrew/include/"]
+librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/usr/lib/x86_64-linux-gnu/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/","/opt/homebrew/lib/"]
 
 # search for cgal, pybind11 (only if pybind11_include is not set), mpfr, gmp in the search dirs
 def findPackage(name, searchDirs) :
@@ -94,11 +94,18 @@ if platform.system() == "Darwin" :
     elif which("brew") is not None :
         # TODO needs replacing
         print("brew")
-        mpfr_include  = "/opt/local/include"
-        gmp_include   = "/opt/local/include"
-        boost_include = "/opt/local/include"
-        mpfr_lib      = "/opt/local/lib"
-        gmp_lib       = "/opt/local/lib"        
+        if platform.machine() == "arm64":  # apple silicon
+            mpfr_include  = "/opt/homebrew/include"
+            gmp_include   = "/opt/homebrew/include"
+            boost_include = "/opt/homebrew/include"
+            mpfr_lib      = "/opt/homebrew/lib"
+            gmp_lib       = "/opt/homebrew/lib"
+        else:
+            mpfr_include  = "/usr/local/include"
+            gmp_include   = "/usr/local/include"
+            boost_include = "/usr/local/include"
+            mpfr_lib      = "/usr/local/lib"
+            gmp_lib       = "/usr/local/lib"
 elif platform.system() == "Linux":
     import distro
     if distro.linux_distribution()[0] == "CentOS Linux" :
