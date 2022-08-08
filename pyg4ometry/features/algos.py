@@ -14,6 +14,9 @@ class Line :
         self.point = point
         self.dir   = dir
 
+    def eval(self, par):
+        return par*_np.array(self.dir)+_np.array(self.point)
+
     def intersectPlane(self, plane):
         '''Intersection of line (self) with plane (unimplemented)
 
@@ -25,10 +28,26 @@ class Line :
 
         '''
 
-        pass
+        return plane.intersectLine(self)
 
     def __repr__(self):
         return "p0: "+repr(self.point)+" d: "+repr(self.dir)
+
+    def __iter__(self):
+        self.i = -1
+        return self
+
+    def __next__(self):
+        self.i += 1
+        if self.i < 3 :
+            return self.point[self.i]
+        elif self.i >= 3 and self.i < 6 :
+            return self.dir[self.i-3]
+        else:
+            raise StopIteration
+
+    def flatten(self):
+        return iter(self)
 
 class Plane :
     '''Plane class taking a point on plane and normal
@@ -52,14 +71,15 @@ class Plane :
         '''
 
         if type(object) == Line:
-            self.intersectLine(object)
+            return self.intersectLine(object)
         elif type(object) == Plane:
-            self.intersectLine(object)
+            return self.intersectPlane(object)
 
     def intersectLine(self,line):
         '''Intersection between plane (self) and line'''
 
-        pass
+        par = _np.dot(self.normal,_np.array(self.point) - _np.array(line.point))/_np.dot(self.normal, line.dir)
+        return line.eval(par)
 
     def intersectPlane(self,plane):
         '''Compute intersection between two planes self and plane'''
@@ -75,11 +95,10 @@ class Plane :
         d1 = _np.dot(n1,p1)
         d2 = _np.dot(n2,p2)
 
-        dv = _np.array([d1,d2])
-        m  = _np.array([[n1[0],n1[1]],[n2[0],n2[1]]])
-
-        p0xy = _np.dot(_np.linalg.inv(m),dv)
-        p = _np.array([p0xy[0],p0xy[1],0])
+        # https://mathworld.wolfram.com/Plane-PlaneIntersection.html
+        m = _np.vstack([n1,n2])
+        b = -_np.array([d1,d2])
+        p = _np.dot(_np.linalg.pinv(m),b)
 
         l = Line(p,d)
         return l
@@ -101,6 +120,81 @@ class Plane :
     def __repr__(self):
         return "p0: "+repr(self.point)+" n: "+repr(self.normal)
 
+    def __iter__(self):
+        self.i = -1
+        return self
+
+    def __next__(self):
+        self.i += 1
+        if self.i < 3 :
+            return self.point[self.i]
+        elif self.i >= 3 and self.i < 6 :
+            return self.normal[self.i-3]
+        else:
+            raise StopIteration
+
+    def flatten(self):
+        return iter(self)
+
+class CoordinateSystem :
+    def __init__(self, origin = [0,0,0], e1 = [1,0,0], e2 = [0,1,0]):
+        self.origin = _np.array(origin)
+        self.e1 = _np.array(e1)
+        self.e2 = _np.array(e2)
+        self._commonInit()
+
+    def _commonInit(self):
+        self.e3 = _np.cross(self.e1,self.e2)
+
+        if not _np.isclose(_np.dot(self.e1,self.e2),0) :
+            raise Exception("CoorindateSystem","Not orthogonal")
+
+        self.rot = _np.vstack([self.e1,self.e2,self.e3])
+
+    def makeFromPlanes(self, p1, p2, p3):
+        l1 = p2.intersect(p1)
+        l2 = p1.intersect(p3)
+        e1 = l1.dir
+        e2 = l2.dir
+
+        o = p3.intersect(l1)
+
+        self.e1 = _np.array(e1)
+        self.e2 = _np.array(e2)
+
+        self._commonInit()
+
+        print(e1)
+        print(e2)
+        print(o)
+
+    def plane(self, **kwargs) :
+        if "theta" in kwargs :
+            nx = _np.sin(kwargs["theta"])*_np.cos(kwargs["phi"])
+            ny = _np.sin(kwargs["theta"])*_np.sin(kwargs["phi"])
+            nz = _np.cos(kwargs["theta"])
+            print("polar plane")
+        elif "phi" in kwargs :
+            print("cylindical plane")
+
+            nz = 0
+        elif "nx" in kwargs :
+            print("cartesian plane")
+            nx = kwargs["nx"]
+            ny = kwargs["ny"]
+            nz = kwargs["nz"]
+
+        n = _np.array([nx,ny,nz])
+        np = _np.dot(self.rot, n)
+
+        o = kwargs["point"]
+        op = o + self.origin
+
+        return Plane(op, np)
+
+    def __repr__(self):
+        return "origin="+str(self.origin)+" e1="+str(self.e1)+" e2="+str(self.e2)+" e3="+str(self.e3)
+
 class vtkViewer :
 
     '''
@@ -116,6 +210,7 @@ class vtkViewer :
         # Create a rendering window and renderer
         self.ren = _vtk.vtkRenderer()
         self.renWin = _vtk.vtkRenderWindow()
+        self.renWin.SetSize(1024, 1024)
         self.renWin.AddRenderer(self.ren)
         # Create a RenderWindowInteractor to permit manipulating the camera
         self.iren = _vtk.vtkRenderWindowInteractor()
@@ -163,6 +258,12 @@ class vtkViewer :
         axes.SetUserTransform(tran)
         self.ren.AddActor(axes)
 
+    def addPlane(self, plane):
+        pass
+
+    def addLine(self, line):
+        pass
+
     def view(self):
         self.iren.Initialize()
         self.renWin.Render()
@@ -189,6 +290,16 @@ def vtkPolydataToActor(polydata) :
     return actor
 
 def vtkPolydataToConnectedEdges(polydata, angle = 89) :
+    if type(polydata) == list :
+        rL = []
+        for e in polydata :
+            i = _vtkPolydataToConnectedEdges(e, angle)
+            rL.extend(i)
+        return rL
+    else :
+        return _vtkPolydataToConnectedEdges(polydata, angle)
+
+def _vtkPolydataToConnectedEdges(polydata, angle = 89) :
     '''Feature extract from polydata given an angular cut
 
     :param angle: Angle between plane > angle is returned
@@ -347,7 +458,7 @@ def pyg4PlaneToVtkPlane(pyg4Plane) :
 
     vtkPlane = _vtk.vtkPlane()
     vtkPlane.SetNormal(pyg4Plane.normal)
-    vtkPlane.SetOrigin(pyg4Plane.position)
+    vtkPlane.SetOrigin(pyg4Plane.point)
     return vtkPlane
 
 def pyg4ArrayToVtkPolydataLine(pyg4Array) :
@@ -368,24 +479,174 @@ def pyg4ArrayToVtkPolydataLine(pyg4Array) :
 
     return vtkPolydata
 
-def cutterPlane(plane, polydata) :
+def vtkCutterPlane(plane, polydata) :
+    '''Calculate path information for 2D vtkPolydata lines
+
+    :param polydata: Geometry to extract information
+    :type polydata: vtkPlydata or list of vtkPolydata
+    :return: Information on each boundary
+    :rtype: list of information dict
+
+    '''
+
+    if type(plane) == list :
+        rL = []
+        for p in plane :
+            i = _vtkCutterPlane(p, polydata)
+            rL.append(i)
+        return rL
+    else :
+        return _vtkCutterPlane(plane, polydata)
+
+def _vtkCutterPlane(plane, polydata) :
     '''Cutter plane on polydata'''
 
     cutter = _vtk.vtkCutter()
     cutter.SetInputData(polydata)
-    cutter.SetCutFunction(plane)
+    cutter.SetCutFunction(pyg4PlaneToVtkPlane(plane))
     cutter.Update()
     return cutter.GetOutput()
 
-def circular(s) :
-    '''Create planes from circular path (unimplemented)'''
+def extract(inputFileName,
+            angle = 89,
+            planeQuality = 0.1,
+            circumference = 300,
+            outputFileName = None ,
+            planes = [],
+            bViewer= False) :
 
-    pass
+    p = vtkLoadStl(inputFileName)
+    e = vtkPolydataToConnectedEdges(p, angle)
+    i = vtkPolydataEdgeInformation(e)
 
-def planeFromCurvilinearPath(pathFnc, s) :
-    '''Create planes from curvilinear path (unimplemented)'''
+    cpdList = []
+    cpdiList = []
+    ciList = []
+    for plane in planes :
+        cpd = vtkCutterPlane(plane,p)
+        cpdi = vtkPolydataEdgeInformation(cpd)
+        ce = vtkPolydataToConnectedEdges(cpd,0)
+        ci = vtkPolydataEdgeInformation(ce)
 
-    pass
+        cpdList.append(cpd)
+        cpdiList.append(cpdi)
+        ciList.append(ci)
+
+    if outputFileName is not None :
+
+        def iterToStr(iterable) :
+            s = ''
+
+            if iterable is None :
+                return s
+
+            for i in iterable.flatten() :
+                s+= str(i) + " "
+
+            return s
+
+        of = open(outputFileName,"w")
+        for io in i :
+            if io["planeQuality"] < planeQuality and io["circumference"] > circumference :
+                of.write("feature\n")
+                for k in io :
+                    of.write(k+": "+iterToStr(io[k])+"\n")
+
+        for j, pi, ic in zip(range(0,len(planes),1),planes,cpdiList) :
+            of.write("cutter\n")
+            for k in ic:
+                of.write(k + ": " + iterToStr(ic[k]) + "\n")
+
+            for ic in ciList[j] :
+                of.write("cutter-feature \n")
+                for k in ic :
+                    of.write(k + ": " + iterToStr(ic[k]) + "\n")
+
+        of.close()
+
+    if not bViewer :
+        return
+
+    v = vtkViewer()
+    v.addPolydata(p,p,[0,0,1,0.1])
+    #v.addAxis([0,0,0],[200,200,200])
+
+    for edge,info,id in zip(e,i,range(0,len(i),1)) :
+        if info["planeQuality"] < planeQuality:
+            if info["circumference"] > circumference :
+                v.addPolydata(edge, edge, [0,0,1,1])
+                v.addAxis(info["centre"],info["range"])
+            else :
+                v.addPolydata(edge,edge, [0,1,0,1])
+        else :
+            v.addPolydata(edge,edge, [1,0,0,1])
+
+    for cut in cpdList :
+        v.addPolydata(cut, cut, [0, 0, 0, 1])
+
+    v.view()
+
+class FeatureData :
+
+    def __init__(self):
+        self.features = []
+        self.cutters  = []
+
+    def readFile(self, fileName):
+        f = open(fileName,'r')
+
+        def readInfo(f) :
+            d = {}
+            # center
+            d['centre'] = _np.array(list(map(float,f.readline().split()[1:])))
+            d['plane'] = _np.array(list(map(float,f.readline().split()[1:])))
+            d['planeQuality'] = float(f.readline().split()[1])
+            d['circumference'] = float(f.readline().split()[1])
+            d['max'] = _np.array(list(map(float, f.readline().split()[1:])))
+            d['min'] = _np.array(list(map(float, f.readline().split()[1:])))
+            d['range'] = _np.array(list(map(float, f.readline().split()[1:])))
+            d['uniquepoints'] = _np.reshape(_np.array(list(map(float, f.readline().split()[1:]))),(-1,3))
+            d['uniquepointsxy'] = _np.reshape(_np.array(list(map(float, f.readline().split()[1:]))),(-1,3))
+
+            return d
+
+        while True :
+            l = f.readline()
+            if l.rfind("cutter-feature") != -1 :
+                d = readInfo(f)
+                self.cutters[-1]["features"].append(d)
+            elif l.rfind("feature") != -1 :
+                d = readInfo(f)
+                self.features.append(d)
+            elif l.rfind("cutter") != -1:
+                d = readInfo(f)
+                d["features"] = []
+                self.cutters.append(d)
+            elif l == '' :
+                break
+
+    def plotFeature(self, iFeature):
+        f = _plt.figure(1)
+
+        featureData = self.features[iFeature]
+        featureUXY      = featureData["uniquepointsxy"]
+
+        _plt.plot(featureUXY[:,0],featureUXY[:,1],"+")
+
+    def plotCutter(self, iCutter):
+        f = _plt.figure(1)
+
+        cutData = self.cutters[iCutter]
+        cutDataUXY      = cutData["uniquepointsxy"]
+        cutDataFeatures = cutData["features"]
+
+        #_plt.plot(cutDataUXY[:,0],cutDataUXY[:,1],"-")
+
+        for feature in cutDataFeatures :
+            featureUXY = feature["uniquepointsxy"]
+            _plt.plot(featureUXY[:, 0], featureUXY[:, 1], "+")
+
+
 
 def test(fileName, featureIndexList = [], planeQuality = 0.1, circumference = 300, bPlotRadii = False) :
     p = vtkLoadStl(fileName)
