@@ -50,16 +50,30 @@ The following units (as strings) are accepted:
 +-------------+------------------+
 | eV          | 1e-3             |
 +-------------+------------------+
+| keV         | 1                |
++-------------+------------------+
+| MeV         | 1e+3             |
++-------------+------------------+
 | none        | 1                |
 +-------------+------------------+
+| ns          | 1e-9             |
++-------------+------------------+
+| us          | 1e-6             |
++-------------+------------------+
+| ms          | 1e-3             |
++-------------+------------------+
+| s           | 1                |
++-------------+------------------+
 
-Examples: ::
+Examples:
 
+.. code-block:: python
   reg = pyg4ometry.geant4.Registry()
   boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg)
 
-This defines a box with the default units (none specifed), so mm. We can specify them: ::
+This defines a box with the default units (none specifed), so mm. We can specify them:
 
+.. code-block:: python
   boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg, "cm")
 
 
@@ -70,7 +84,7 @@ Making use of pyg4ometry requires the following modules
 
 .. code-block :: python
 
-   import pyg4ometry               
+   import pyg4ometry
 
 To make a simple geometry of a box located at the origin
 
@@ -78,11 +92,11 @@ To make a simple geometry of a box located at the origin
    :linenos:
 
    # load pyg4ometry
-   import pyg4ometry               
+   import pyg4ometry
 
    # registry to store gdml data
    reg  = pyg4ometry.geant4.Registry()
-  
+
    # world solid and logical
    ws   = pyg4ometry.geant4.solid.Box("ws",50,50,50,reg)
    wl   = pyg4ometry.geant4.LogicalVolume(ws,"G4_Galactic","wl",reg)
@@ -191,12 +205,12 @@ So the box example above can be rewritten using constants
 .. warning::
    Avoid reassigning variables used as defines, this can have unexpected consequences so for example 
 
-.. code-block :: python
-   :linenos:
+   .. code-block:: python
+      :linenos:
 
-   b1   = pyg4ometry.geant4.solid.Box("b1",bx,by,bz,reg)
-   b1.pX = 20              # do not do this
-   b1.pX.setExpression(20) # rather do this
+      b1   = pyg4ometry.geant4.solid.Box("b1",bx,by,bz,reg)
+      b1.pX = 20              # do not do this
+      b1.pX.setExpression(20) # rather do this
 
 Solids
 ------
@@ -212,7 +226,7 @@ The python geant4 solids match the Geant4 constructors as much possible (differe
    G4Box(const G4String& pName, G4double  pX, G4double  pY, G4double pZ)
 
 A full list of solids can be found in :ref:`all-solids`.
-   
+
 .. warning::
    The parameters stick to the GDML convention of **full** lengths opposed to half lengths.
 
