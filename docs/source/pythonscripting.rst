@@ -426,6 +426,48 @@ There are utility functions for translation between different transformations in
 Optical Surfaces
 ----------------
 
+Optical surfaces can be created in a similar way as in Geant4 C++. A
+:class:`pyg4ometry.geant4.solid.OpticalSurface` instance holds all the needed properties of the
+surface (including extra properties, e.g. for optical processes). This is then assigned to
+the surface between either
+
+* two physical volumes: :class:`pyg4ometry.geant4.BorderSurface`, or
+* a logical volume and all its neighbouring volumes: :class:`pyg4ometry.geant4.SkinSurface`.
+
+.. code-block:: python
+   :linenos:
+   opa = _g4.solid.OpticalSurface("AirSurface", finish="polished", model="glisur", surf_type="dielectric_dielectric", value="1", registry=reg)
+   opw = _g4.solid.OpticalSurface("WaterSurface", finish="ground", model="unified", surf_type="dielectric_dielectric", value="0", registry=reg)
+
+   _g4.SkinSurface("AirSurface", air_lv.name, opa.name, reg)
+   _g4.BorderSurface("WaterSurface", water_phys.name, world_phys.name, opw.name, reg)
+
+Properties of Materials and Optical Surfaces
+--------------------------------------------
+
+Materials and optical surfaces support adding properties that can be used by Geant4 to
+influence processes, e.g. for scintillation, refraction or other optical processes.
+
+In the GDML, a matrix is used to hold the value(s) of the property.
+
+* :code:`addProperty(name, matrix)` - Add a property based on an existing :class:`pyg4ometry.gdml.Matrix` object.
+* :code:`addVecProperty(name, e, v, eunit='eV', vunit='')` - Add a property based on a energy vector and a value vector.
+* :code:`addConstProperty(name, value, vunit='')`- Add a property that has only one constant value.
+
+Units can be specified by setting the parameters ``eunit`` for the energy vector and
+``vunit`` for the values. The given vectors are expected to be homogeneous in their units.
+
+.. note:: Optical properties can only use units (or combinations of units) that are also
+     defined in pyg4ometry. If needed, additional units can be added:
+     :code:`pyg4ometry.gdml.Units.units['ps'] = 1e-12`.
+
+.. code-block:: python
+   :linenos:
+   scint = _g4.Material(...)
+   scint.addConstProperty('SCINTILLATIONTIMECONSTANT1', 2.5, vunit='ns')
+   scint.addConstProperty('SCINTILLATIONYIELD', 8000, vunit='/MeV')
+   scint.addVecProperty('RINDEX', [1, 10], [1.3, 1.05])
+
 Registry and GDML Output
 ------------------------
 
