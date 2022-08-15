@@ -45,13 +45,13 @@ def Test_OpticalSurface():
     air = _g4.MaterialCompound("Air", 1.290e-3, 2, reg)
     air.add_element_massfraction(ne, 0.7)
     air.add_element_massfraction(oe, 0.3)
-    air.add_property("RINDEX", ri_a.name)
+    air.add_property("RINDEX", ri_a)
 
     water = _g4.MaterialCompound("Water", 1.0, 2, reg)
     water.add_element_massfraction(he, 0.112)
     water.add_element_massfraction(oe, 0.888)
-    water.add_property("RINDEX", ri_w.name)
-    water.add_property("YIELDRATIO", yr_w.name)
+    water.add_property("RINDEX", ri_w)
+    water.add_property("YIELDRATIO", yr_w)
 
     # solids
     ws = _g4.solid.Box("ws", wx, wy, wz, reg, "mm")
@@ -70,8 +70,8 @@ def Test_OpticalSurface():
     op = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], ol, "bigbox_pv", wl, reg)
     tp = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], tl, "tank_pv1", ol, reg)
     bp = _g4.PhysicalVolume([0, 0, 0], [0, 2.5, 0], bl, "bubble_pv1", tl, reg)
-    _g4.SkinSurface("AirSurface", bl.name, "AirSurface", reg)
-    _g4.BorderSurface("WaterSurface", bp.name, op.name, "WaterSurface", reg)
+    _g4.SkinSurface("AirSurface", bl, opa, reg)
+    _g4.BorderSurface("WaterSurface", bp, op, opw, reg)
 
     #######################################################################################
 
