@@ -28,7 +28,7 @@ def Test(vis=True, interactive=True):
                                circumference=2*_np.pi*8,
                                planes=[],
                                outputFileName=datFileName,
-                               bViewer=vis,
+                               bViewer=True,
                                bViewerInteractive=False)
 
     fd = _pyg4.features.algos.FeatureData()
@@ -52,7 +52,7 @@ def Test(vis=True, interactive=True):
     v.addPlane(cs.origin, cs.e1, cs.e2, cs.dist)
     v.addPlane(cs.origin, cs1.e1, cs1.e2, cs.dist)
     v.addAxis(cs.origin,[cs.dist,cs.dist,cs.dist],cs.rot,label=True,disableCone=True)
-    v.view(interactive=True)
+    v.view(interactive=interactive)
 
     v = _pyg4.features.extract(stlFileName,
                                angle = 46,
@@ -60,7 +60,7 @@ def Test(vis=True, interactive=True):
                                planes=[cs1,cs2,cs3,cs4],
                                outputFileName=datFileName,
                                bViewer=vis,
-                               bViewerInteractive=True)
+                               bViewerInteractive=interactive)
 
     return True
 
