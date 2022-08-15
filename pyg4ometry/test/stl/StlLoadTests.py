@@ -14,7 +14,7 @@ def LoadStl(fileName) :
     reg = _g4.Registry()
     r = _stl.Reader(fileName, registry=reg)
     s = r.getSolid()
-        
+
     return True, s
 
 def _pj(filename): # path join
@@ -28,13 +28,13 @@ class StlLoadTests(_unittest.TestCase) :
     def test_StlLoad_Dog(self) :
         ret,s = LoadStl(_pj("dog.stl"))
         self.assertTrue(ret)
-                
+
     def test_StlLoad_Dragon(self) :
         self.assertTrue(LoadStl(_pj("dragon.stl")))
 
-    # def test_StlLoad_Robot(self) :
-    # robot.stl is in binary format
-    #     self.assertTrue(LoadStl(_pj("robot.stl")))
+    def test_StlLoad_Robot(self) :
+        # robot.stl is in binary format
+        self.assertTrue(LoadStl(_pj("robot.stl")))
 
     def test_StlLoad_Teapot(self) :
         self.assertTrue(LoadStl(_pj("utahteapot.stl")))
@@ -51,4 +51,4 @@ class StlLoadTests(_unittest.TestCase) :
         pyg4ometry.visualisation.Writer.writeVtkPolyDataAsSTLFile(_os.path.join(_os.path.dirname(__file__),"T001_Box.stl"),[pd])
 
 if __name__ == '__main__':
-    _unittest.main(verbosity=2)        
+    _unittest.main(verbosity=2)
