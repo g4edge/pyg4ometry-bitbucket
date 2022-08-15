@@ -439,8 +439,8 @@ the surface between either
    opa = _g4.solid.OpticalSurface("AirSurface", finish="polished", model="glisur", surf_type="dielectric_dielectric", value="1", registry=reg)
    opw = _g4.solid.OpticalSurface("WaterSurface", finish="ground", model="unified", surf_type="dielectric_dielectric", value="0", registry=reg)
 
-   _g4.SkinSurface("AirSurface", air_lv.name, opa.name, reg)
-   _g4.BorderSurface("WaterSurface", water_phys.name, world_phys.name, opw.name, reg)
+   _g4.SkinSurface("AirSurface", air_lv, opa, reg)
+   _g4.BorderSurface("WaterSurface", water_phys, world_phys, opw, reg)
 
 Properties of Materials and Optical Surfaces
 --------------------------------------------
