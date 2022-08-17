@@ -7,14 +7,6 @@ import pyg4ometry.gdml   as _gd
 def Test_OpticalSurface():
     reg = _g4.Registry()
 
-    # defines
-    # first dimension is energy, second dimension is a value of interest - e.g. refrective index
-    ri_a = _gd.Matrix("RIND_Air", 2, [2.034e-06, 1, 2.068e-06, 1, 2.103e-06, 1, 2.139e-06, 1], reg)
-    ri_w = _gd.Matrix("RIND_Water", 2, [2.034e-06, 1.3435, 2.068e-06, 1.344, 2.103e-06, 1.3445, 2.139e-06, 1.345], reg)
-    al_w = _gd.Matrix("ABSLEN_Water", 2, [2.034e-06, 3448, 2.068e-06, 4082, 2.103e-06, 6329, 2.139e-06, 9174], reg)
-    yr_w = _gd.Matrix("YIELDRATIO", 1, [0.8], reg)
-
-
     # World box
     wx = _gd.Constant("wx", "150", reg, True)
     wy = _gd.Constant("wy", "150", reg, True)
@@ -45,13 +37,14 @@ def Test_OpticalSurface():
     air = _g4.MaterialCompound("Air", 1.290e-3, 2, reg)
     air.add_element_massfraction(ne, 0.7)
     air.add_element_massfraction(oe, 0.3)
-    air.add_property("RINDEX", ri_a.name)
+    air.addVecProperty("RINDEX", [2.034e-03, 2.068e-03, 2.103e-03, 2.139e-03], [1,1,1,1])
 
     water = _g4.MaterialCompound("Water", 1.0, 2, reg)
     water.add_element_massfraction(he, 0.112)
     water.add_element_massfraction(oe, 0.888)
-    water.add_property("RINDEX", ri_w.name)
-    water.add_property("YIELDRATIO", yr_w.name)
+    water.addVecProperty("RINDEX", [2.034e-03, 2.068e-03, 2.103e-03, 2.139e-03], [1.3435,1.344,1.3445,1.345])
+    water.addVecProperty("ABSLENGTH", [2.034e-03, 2.068e-03, 2.103e-03, 2.139e-03], [3448,4082,6329,9174], vunit='m')
+    water.addConstProperty("YIELDRATIO", 0.8)
 
     # solids
     ws = _g4.solid.Box("ws", wx, wy, wz, reg, "mm")
@@ -70,8 +63,8 @@ def Test_OpticalSurface():
     op = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], ol, "bigbox_pv", wl, reg)
     tp = _g4.PhysicalVolume([0, 0, 0], [0, 0, 0], tl, "tank_pv1", ol, reg)
     bp = _g4.PhysicalVolume([0, 0, 0], [0, 2.5, 0], bl, "bubble_pv1", tl, reg)
-    _g4.SkinSurface("AirSurface", bl.name, "AirSurface", reg)
-    _g4.BorderSurface("WaterSurface", bp.name, op.name, "WaterSurface", reg)
+    _g4.SkinSurface("AirSurface", bl, opa, reg)
+    _g4.BorderSurface("WaterSurface", bp, op, opw, reg)
 
     #######################################################################################
 

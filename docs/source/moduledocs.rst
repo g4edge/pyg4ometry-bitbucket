@@ -63,6 +63,8 @@ Defines and variables
    :undoc-members:
    :show-inheritance:
 
+.. autofunction:: pyg4ometry.gdml.MatrixFromVectors
+
 .. _all-solids:
 
 Geant4 solids
@@ -127,9 +129,13 @@ Geant4 solids
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Union
    :members:
+.. automodule:: pyg4ometry.geant4.solid.MultiUnion
+   :members:
 .. automodule:: pyg4ometry.geant4.solid.Intersection
    :members:
 .. automodule:: pyg4ometry.geant4.solid.Subtraction
+   :members:
+.. automodule:: pyg4ometry.geant4.solid.OpticalSurface
    :members:
 
 .. _g4-module:
@@ -162,6 +168,10 @@ Geant4 module
    :members:
    :undoc-members:
    :show-inheritance:
+.. automodule:: pyg4ometry.geant4.BorderSurface
+   :members:
+.. automodule:: pyg4ometry.geant4.SkinSurface
+   :members:
 
 Visualisation module
 --------------------
