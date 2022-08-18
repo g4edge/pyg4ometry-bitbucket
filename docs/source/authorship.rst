@@ -13,3 +13,5 @@ The following people have contributed to pyg4ometry:
 * Ben Shellswell (former RHUL)
 * Eliott Ramoisiaux (ULB)
 * Stuart Walker (RHUL -> DESY)
+* Luigi Pertoldi (TUM)
+* Manuel Huber (TUM)
