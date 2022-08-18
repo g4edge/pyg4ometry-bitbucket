@@ -54,8 +54,8 @@ def pyg4ometryLoadWriteTest(filename, vis=False, interactive=False):
 def geant4LoadTest(filename, visualiser=False, physics=False, verbose=True):
 
     # check if GDML file has updated
-    if not checkIfGdmlFileUpdated(filename) :
-        return True
+    # if not checkIfGdmlFileUpdated(filename) :
+    #     return True
 
     print("geant4LoadTest> running G4")
     script_path = _pj("simple_G4_loader/build/simple_loader")
@@ -77,7 +77,7 @@ def geant4LoadTest(filename, visualiser=False, physics=False, verbose=True):
 
 def checkIfGdmlFileUpdated(filename) :
     filename    = _os.path.basename(filename)
-    repo        = _git.Repo(_os.path.join(_os.path.dirname(__file__),"../../../"))
+    repo        = _git.Repo(_os.path.join(_os.path.dirname(__file__),"../../../../"))
     head_commit = repo.head.commit
     diffs       = head_commit.diff(None)
 

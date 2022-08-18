@@ -21,7 +21,7 @@ else :
 
 print("platform>",plat)
 
-exts = cythonize(["pyg4ometry/pycsg/geom.pyx", "pyg4ometry/pycsg/core.pyx"])
+exts = cythonize(["src/pyg4ometry/pycsg/geom.pyx", "src/pyg4ometry/pycsg/core.pyx"])
 
 # pybind11 include directory  (header only library)
 pybind11_include = pybind11.get_include()
@@ -132,7 +132,7 @@ pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
                            libraries = ['mpfr','gmp'],
                            library_dirs = [mpfr_lib,
                                            gmp_lib],
-                           sources = ['./pyg4ometry/pycgal/pyg4_cgal.cpp'],
+                           sources = ['./src/pyg4ometry/pycgal/pyg4_cgal.cpp'],
                            language="c++",
                            extra_compile_args=["-std=c++14"])
 
@@ -141,7 +141,7 @@ cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
                                           gmp_include,
                                           boost_include,
                                           pybind11_include],
-                          sources = ['./pyg4ometry/pycgal/geom.cxx'],
+                          sources = ['./src/pyg4ometry/pycgal/geom.cxx'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
@@ -153,7 +153,7 @@ cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
                           libraries = ['mpfr','gmp'],
                           library_dirs = [mpfr_lib,
                                           gmp_lib],
-                          sources = ['./pyg4ometry/pycgal/algo.cxx'],
+                          sources = ['./src/pyg4ometry/pycgal/algo.cxx'],
                           extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
@@ -166,7 +166,7 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            libraries = ['mpfr','gmp'],
                            library_dirs = [mpfr_lib,
                                            gmp_lib],
-                           sources = ['./pyg4ometry/pycgal/core.cxx'],
+                           sources = ['./src/pyg4ometry/pycgal/core.cxx'],
                            extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
                                           './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
                            language="c++",
@@ -180,7 +180,7 @@ oce_ext = Extension('pyg4ometry.pyoce.oce',
                                     "/opt/local/include/opencascade/"],
                     library_dirs=['/opt/local/lib/'],
                     libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
-                    sources = ['./pyg4ometry/pyoce/oce.cxx'],
+                    sources = ['./src/pyg4ometry/pyoce/oce.cxx'],
                     extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
                                    './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
                     language="c++",
@@ -196,11 +196,10 @@ exts.append(oce_ext)
 setup(
     name="pyg4ometry",
     version="1.0.2",
-    packages=find_packages(exclude=["docs", "tests"]),
-    package_dir={"pyg4ometry.convert": "pyg4ometry/convert",
-                 "pyg4ometry.fluka": "pyg4ometry/fluka",
-                 "pyg4ometry.geant4": "pyg4ometry/geant4",
-                 "pyg4ometry.visualisation": "pyg4ometry/visualisation"},
+    package_dir={"": "src/"},
+    packages=find_packages(
+        where='src'
+    ),
     package_data={"pyg4ometry.convert": ["periodic-table.csv"],
                   "pyg4ometry.fluka": ["flair_template.flair"],
                   "pyg4ometry.geant4": ["nist_elements.txt", "nist_materials.txt"],

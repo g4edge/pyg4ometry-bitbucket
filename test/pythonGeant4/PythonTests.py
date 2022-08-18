@@ -253,32 +253,32 @@ class PythonTests(_unittest.TestCase) :
     ##############################
 
     def test_Python_VisualisationVtk_setOpacity(self):
-        import pyg4ometry.test.pythonGeant4.T001_Box
+        from pyg4ometry.commontest import BoxTest
 
-        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        r = BoxTest(True,False)
         v  = r['vtkViewer']
         v.setOpacity(0,0)
         v.setOpacity(0.5,-1)
 
     def test_Python_VisualisationVtk_setWireframe(self):
-        import pyg4ometry.test.pythonGeant4.T001_Box
+        from pyg4ometry.commontest import BoxTest
 
-        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        r = BoxTest(True,False)
         v  = r['vtkViewer']
         v.setWireframe()
 
     def test_Python_VisualisationVtk_setSurface(self):
-        import pyg4ometry.test.pythonGeant4.T001_Box
+        from pyg4ometry.commontest import BoxTest
 
-        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        r = BoxTest(True,False)
         v  = r['vtkViewer']
         v.setSurface()
 
     def test_Python_VisualisationVtk_setWireframe_VisualisationOptions(self):
-        import pyg4ometry.test.pythonGeant4.T001_Box
+        from pyg4ometry.commontest import BoxTest
         import pyg4ometry.visualisation.VtkViewer
 
-        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(True,False)
+        r = BoxTest(True,False)
         lv = r['logicalVolume']
         dv = lv.daughterVolumes[0]
         dv.visOptions.representation = "wireframe"
@@ -288,49 +288,50 @@ class PythonTests(_unittest.TestCase) :
         v.view(interactive=False)
 
     def test_Python_VisualisationVtk_setOpacityOverlap(self):
-        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+        from pyg4ometry.commontest import OverlapCoplTest
 
-        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        r = OverlapCoplTest(True,False)
         v  = r['vtkViewer']
         v.setOpacityOverlap(0)
 
     def test_Python_VisualisationVtk_setWireframeOverlap(self):
-        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+        from pyg4ometry.commontest import OverlapCoplTest
 
-        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        r = OverlapCoplTest(True,False)
         v  = r['vtkViewer']
         v.setWireframeOverlap()
 
     def test_Python_VisualisationVtk_setSurfaceOverlap(self):
-        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+        from pyg4ometry.commontest.OverlapCopl import OverlapCoplTest
 
-        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        r = OverlapCoplTest(True,False)
         v  = r['vtkViewer']
         v.setSurfaceOverlap()
 
     def test_Python_VisualisationVtk_setRandomColours(self):
-        import pyg4ometry.test.pythonGeant4.T103_overlap_copl
+        from pyg4ometry.commontest.OverlapCopl import OverlapCoplTest
 
-        r = pyg4ometry.test.pythonGeant4.T103_overlap_copl.Test(True,False)
+        r = OverlapCoplTest(True,False)
         v  = r['vtkViewer']
         v.setRandomColours()
 
     def test_Python_VisualisationVtk_RandomColour(self):
-        import pyg4ometry.test.pythonCompoundExamples.lhc_blm_model as lhc_blm_model
+        from pyg4ometry.commontest import LhcBlmModel as lhc_blm_model
         import pyg4ometry
+
         wlv = lhc_blm_model.make_lhc_blm()
         v = pyg4ometry.visualisation.VtkViewerColoured(defaultColour="random")
         v.addLogicalVolume(wlv)
 
     def test_Python_VisualisationVtk_DefaultMaterial(self):
-        import pyg4ometry.test.pythonCompoundExamples.lhc_blm_model as lhc_blm_model
+        from pyg4ometry.commontest import LhcBlmModel as lhc_blm_model
         import pyg4ometry
         wlv = lhc_blm_model.make_lhc_blm()
         v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
         v.addLogicalVolume(wlv)
 
     def test_Python_VisualisationVtk_CustomMaterialColours(self):
-        import pyg4ometry.test.pythonCompoundExamples.lhc_blm_model as lhc_blm_model
+        from pyg4ometry.commontest import LhcBlmModel as lhc_blm_model
         import pyg4ometry
         wlv = lhc_blm_model.make_lhc_blm()
         colours = lhc_blm_model.materialToColour

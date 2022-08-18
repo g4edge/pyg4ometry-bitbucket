@@ -1,6 +1,6 @@
 [submodule "pyg4ometry/external/cgal"]
-	path = pyg4ometry/external/cgal
+	path = src/pyg4ometry/external/cgal
 	url = https://github.com/CGAL/cgal.git
 [submodule "pyg4ometry/external/pybind11"]
-	path = pyg4ometry/external/pybind11
+	path = src/pyg4ometry/external/pybind11
 	url = https://github.com/pybind/pybind11.git

@@ -40,11 +40,11 @@ class StlLoadTests(_unittest.TestCase) :
         self.assertTrue(LoadStl(_pj("utahteapot.stl")))
 
     def test_StlWrite_T001_Box(self):
-        import pyg4ometry.test.pythonGeant4.T001_Box
+        from pyg4ometry.commontest import BoxTest as BoxTest
         import pyg4ometry.visualisation.Convert
         import pyg4ometry.visualisation.Writer
 
-        r = pyg4ometry.test.pythonGeant4.T001_Box.Test(False,False)
+        r = BoxTest(False,False)
         lv = r['logicalVolume']
         m  = lv.daughterVolumes[0].logicalVolume.mesh.localmesh
         pd = pyg4ometry.visualisation.Convert.pycsgMeshToVtkPolyData(m)
