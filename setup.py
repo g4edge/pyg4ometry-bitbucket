@@ -187,11 +187,12 @@ oce_ext = Extension('pyg4ometry.pyoce.oce',
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 
+exts.append(oce_ext)
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
 exts.append(cgal_core_ext)
-exts.append(oce_ext)
+
 
 setup(
     name="pyg4ometry",
