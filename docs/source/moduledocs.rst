@@ -170,8 +170,12 @@ Geant4 module
    :show-inheritance:
 .. automodule:: pyg4ometry.geant4.BorderSurface
    :members:
+   :undoc-members:
+   :show-inheritance:
 .. automodule:: pyg4ometry.geant4.SkinSurface
    :members:
+   :undoc-members:
+   :show-inheritance:
 
 Visualisation module
 --------------------
