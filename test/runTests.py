@@ -1,6 +1,6 @@
 #!/opt/local/bin/python
 
-from freecadExamples        import FreeCADLoadingTests
+# from freecadExamples        import FreeCADLoadingTests
 from pythonGeant4           import PythonTests
 from pythonGeant4           import PythonDefineTests
 from pythonGeant4           import PythonGeantAuthoringTests
