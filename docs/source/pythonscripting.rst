@@ -68,12 +68,14 @@ The following units (as strings) are accepted:
 Examples:
 
 .. code-block:: python
+
   reg = pyg4ometry.geant4.Registry()
   boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg)
 
 This defines a box with the default units (none specifed), so mm. We can specify them:
 
 .. code-block:: python
+
   boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg, "cm")
 
 
@@ -436,6 +438,7 @@ the surface between either
 
 .. code-block:: python
    :linenos:
+
    opa = _g4.solid.OpticalSurface("AirSurface", finish="polished", model="glisur", surf_type="dielectric_dielectric", value="1", registry=reg)
    opw = _g4.solid.OpticalSurface("WaterSurface", finish="ground", model="unified", surf_type="dielectric_dielectric", value="0", registry=reg)
 
@@ -463,6 +466,7 @@ Units can be specified by setting the parameters ``eunit`` for the energy vector
 
 .. code-block:: python
    :linenos:
+
    scint = _g4.Material(...)
    scint.addConstProperty('SCINTILLATIONTIMECONSTANT1', 2.5, vunit='ns')
    scint.addConstProperty('SCINTILLATIONYIELD', 8000, vunit='/MeV')
