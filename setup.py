@@ -172,6 +172,34 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
+oceTCollection_ext = Extension('pyg4ometry.pyoce.TCollection',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TCollection.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTDF_ext = Extension('pyg4ometry.pyoce.TDF',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TDF.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
 oce_ext = Extension('pyg4ometry.pyoce.oce',
                     include_dirs = [mpfr_include,
                                     gmp_include,
@@ -187,12 +215,13 @@ oce_ext = Extension('pyg4ometry.pyoce.oce',
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
 
-exts.append(oce_ext)
+#exts.append(oceTCollection_ext)
+#exts.append(oceTDF_ext)
+#exts.append(oce_ext)
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
 exts.append(cgal_core_ext)
-
 
 setup(
     name="pyg4ometry",
