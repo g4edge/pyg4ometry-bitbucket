@@ -55,3 +55,4 @@ profile/fluka/profile-results/*
 **/*.vtm
 **/*.vtp
 *.root
+*.dat
