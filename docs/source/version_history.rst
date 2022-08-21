@@ -2,6 +2,15 @@
 Version History
 ===============
 
+V1.0.3 - 2022 / 08 / XX
+
+New features
+
+* Feature extraction from tesselated meshes (with some accelerator applications)
+* New opencascade based step/iges loading
+* Command line interface
+* Clipping of geometry when top level solid is moved (rotated/translated) or changed
+* New more efficient visualisation
 
 V1.0.2 - 2022 / 04 / 11
 =======================
