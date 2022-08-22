@@ -186,6 +186,62 @@ oceTCollection_ext = Extension('pyg4ometry.pyoce.TCollection',
                     language="c++",
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
+oceTKernel_ext = Extension('pyg4ometry.pyoce.TKernel',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TKernel.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTDocStd_ext = Extension('pyg4ometry.pyoce.TDocStd',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TDocStd.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTDataStd_ext = Extension('pyg4ometry.pyoce.TDataStd',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TDataStd.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTNaming_ext = Extension('pyg4ometry.pyoce.TNaming',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TNaming.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
 oceTDF_ext = Extension('pyg4ometry.pyoce.TDF',
                     include_dirs = [mpfr_include,
                                     gmp_include,
@@ -195,6 +251,202 @@ oceTDF_ext = Extension('pyg4ometry.pyoce.TDF',
                     library_dirs=['/opt/local/lib/'],
                     libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
                     sources = ['./src/pyg4ometry/pyoce/TDF.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTopoDS_ext = Extension('pyg4ometry.pyoce.TopoDS',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TopoDS.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+ocegp_ext = Extension('pyg4ometry.pyoce.gp',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/gp.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceGeom_ext = Extension('pyg4ometry.pyoce.Geom',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/Geom.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+ocePoly_ext = Extension('pyg4ometry.pyoce.Poly',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/Poly.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceXCAFDoc_ext = Extension('pyg4ometry.pyoce.XCAFDoc',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/XCAFDoc.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTopAbs_ext = Extension('pyg4ometry.pyoce.TopAbs',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TopAbs.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTopLoc_ext = Extension('pyg4ometry.pyoce.TopLoc',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TopLoc.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceTopExp_ext = Extension('pyg4ometry.pyoce.TopExp',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/TopExp.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceMessage_ext = Extension('pyg4ometry.pyoce.Message',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/Message.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceBRep_ext = Extension('pyg4ometry.pyoce.BRep',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/BRep.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceBRepMesh_ext = Extension('pyg4ometry.pyoce.BRepMesh',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/BRepMesh.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceStlAPI_ext = Extension('pyg4ometry.pyoce.StlAPI',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/StlAPI.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceXCAFApp_ext = Extension('pyg4ometry.pyoce.XCAFApp',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/XCAFApp.cxx'],
+                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    language="c++",
+                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+
+oceSTEPCAFControl_ext = Extension('pyg4ometry.pyoce.STEPCAFControl',
+                    include_dirs = [mpfr_include,
+                                    gmp_include,
+                                    boost_include,
+                                    pybind11_include,
+                                    "/opt/local/include/opencascade/"],
+                    library_dirs=['/opt/local/lib/'],
+                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
+                    sources = ['./src/pyg4ometry/pyoce/STEPCAFControl.cxx'],
                     extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
                                    './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
                     language="c++",
@@ -214,10 +466,27 @@ oce_ext = Extension('pyg4ometry.pyoce.oce',
                     language="c++",
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
-
-#exts.append(oceTCollection_ext)
-#exts.append(oceTDF_ext)
-#exts.append(oce_ext)
+exts.append(oceTCollection_ext)
+exts.append(oceTKernel_ext)
+exts.append(oceTDataStd_ext)
+exts.append(oceTDocStd_ext)
+exts.append(oceTNaming_ext)
+exts.append(oceTDF_ext)
+exts.append(oceTopoDS_ext)
+exts.append(ocegp_ext)
+exts.append(oceGeom_ext)
+exts.append(ocePoly_ext)
+exts.append(oceXCAFDoc_ext)
+exts.append(oceXCAFApp_ext)
+exts.append(oceTopAbs_ext)
+exts.append(oceTopLoc_ext)
+exts.append(oceTopExp_ext)
+exts.append(oceMessage_ext)
+exts.append(oceBRep_ext)
+exts.append(oceBRepMesh_ext)
+exts.append(oceStlAPI_ext)
+exts.append(oceSTEPCAFControl_ext)
+# exts.append(oce_ext)
 exts.append(pyg4_cgal_ext)
 exts.append(cgal_geom_ext)
 exts.append(cgal_algo_ext)
