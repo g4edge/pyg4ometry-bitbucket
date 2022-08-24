@@ -1,5 +1,6 @@
 import pyg4ometry as _pyg4
 
+
 def commonCode(fileName, mats ={}, skip = [], mesh = {}) :
     r = _pyg4.pyoce.Reader(fileName)
     #r.shapeTool.Dump()
