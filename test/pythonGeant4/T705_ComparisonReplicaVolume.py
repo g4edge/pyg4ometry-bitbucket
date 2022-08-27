@@ -40,7 +40,7 @@ def Test(printOut=False):
     assert(len(comp3) == 1)
 
     
-    return {"testStatus": True}
+    return {"teststatus": True}
 
 if __name__ == "__main__":
     Test()

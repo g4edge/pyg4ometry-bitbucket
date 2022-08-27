@@ -1,7 +1,8 @@
 import pyg4ometry as _pyg4
-
+import os as _os
 
 def commonCode(fileName, mats ={}, skip = [], mesh = {}) :
+    fileName = _os.path.join(_os.path.dirname(__file__), fileName)
     r = _pyg4.pyoce.Reader(fileName)
     #r.shapeTool.Dump()
     ls = r.freeShapes()
@@ -54,7 +55,7 @@ def test_13_Mesh() :
     commonCode("10_SectorBendSmall.step",mesh=mesh)
 
 def test_14_MonolithicConversion() :
-    r = _pyg4.pyoce.Reader("1_BasicSolids_Bodies.step")
+    r = _pyg4.pyoce.Reader(_os.path.join(_os.path.dirname(__file__),"1_BasicSolids_Bodies.step"))
     ls = r.freeShapes()
     worldName = _pyg4.pyoce.pythonHelpers.get_TDataStd_Name_From_Label(ls.Value(1))
     worldShape = r.shapeTool.GetShape(ls.Value(1))

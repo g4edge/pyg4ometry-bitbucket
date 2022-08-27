@@ -18,7 +18,7 @@ def Test(printOut=False):
 
     #TBC
     
-    return {"testStatus": True}
+    return {"teststatus": True}
 
 if __name__ == "__main__":
     Test()

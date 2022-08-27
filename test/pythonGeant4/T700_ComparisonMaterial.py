@@ -115,7 +115,7 @@ def Test(printOut=False):
         comp12.print()
     assert (len(comp12) > 0)
 
-    return {"testStatus": True}
+    return {"teststatus": True}
 
 if __name__ == "__main__":
     Test()

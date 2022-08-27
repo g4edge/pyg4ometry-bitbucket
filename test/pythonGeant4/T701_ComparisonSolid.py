@@ -76,7 +76,7 @@ def Test(printOut=False):
         comp8.print()
     assert (len(comp8) == 2) # 2 name tests
 
-    return {"testStatus": True}
+    return {"teststatus": True}
 
 if __name__ == "__main__":
     Test()
