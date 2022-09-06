@@ -154,7 +154,7 @@ cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
                           library_dirs = [mpfr_lib,
                                           gmp_lib],
                           sources = ['./src/pyg4ometry/pycgal/algo.cxx'],
-                          extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o'],
+                          extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o'],
                           language="c++",
                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
@@ -167,8 +167,8 @@ cgal_core_ext = Extension('pyg4ometry.pycgal.core',
                            library_dirs = [mpfr_lib,
                                            gmp_lib],
                            sources = ['./src/pyg4ometry/pycgal/core.cxx'],
-                           extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
-                                          './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                           extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
+                                          './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
                            language="c++",
                            extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
@@ -181,8 +181,8 @@ oceTCollection_ext = Extension('pyg4ometry.pyoce.TCollection',
                     library_dirs=['/opt/local/lib/'],
                     libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
                     sources = ['./src/pyg4ometry/pyoce/TCollection.cxx'],
-                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
-                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
                     language="c++",
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
@@ -251,8 +251,8 @@ oceTDF_ext = Extension('pyg4ometry.pyoce.TDF',
                     library_dirs=['/opt/local/lib/'],
                     libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
                     sources = ['./src/pyg4ometry/pyoce/TDF.cxx'],
-                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
-                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
                     language="c++",
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
@@ -461,8 +461,8 @@ oce_ext = Extension('pyg4ometry.pyoce.oce',
                     library_dirs=['/opt/local/lib/'],
                     libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
                     sources = ['./src/pyg4ometry/pyoce/oce.cxx'],
-                    extra_objects=['./build/temp.'+plat+'/pyg4ometry/pycgal/geom.o',
-                                   './build/temp.'+plat+'/pyg4ometry/pycgal/algo.o'],
+                    extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
+                                   './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
                     language="c++",
                     extra_compile_args=["-std=c++14","-fvisibility=hidden"])
 
