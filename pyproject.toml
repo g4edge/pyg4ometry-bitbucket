@@ -1,3 +1,30 @@
 [build-system]
-requires = ["setuptools", "wheel", "cython", "pybind11","distro"]
+requires = [
+    "cmake>=3.22",
+    "Cython",  # still needed?
+    "pybind11~=2.9.2",
+    "setuptools>=42",
+    "setuptools_scm[toml]>=3.4",
+    "scikit-build>=0.15.0",
+    "mesonpep517"
+]
 
+build-backend = "mesonpep517.buildapi"
+
+[tool.mesonpep517.metadata]
+summary = ""
+
+[tool.setuptools_scm]
+write_to = "src/pyg4ometry/_version.py"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = "error"
+log_cli_level = "info"
+testpaths = "tests"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
