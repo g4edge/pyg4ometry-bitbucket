@@ -18,4 +18,4 @@ else()
 endif()
 
 add_subdirectory(src/pyg4ometry/pycgal)
-# add_subdirectory(src/pyg4ometry/pyoce)
+add_subdirectory(src/pyg4ometry/pyoce)

@@ -6,13 +6,9 @@ requires = [
     "setuptools>=42",
     "setuptools_scm[toml]>=3.4",
     "scikit-build>=0.15.0",
-    "mesonpep517"
 ]
 
-build-backend = "mesonpep517.buildapi"
-
-[tool.mesonpep517.metadata]
-summary = ""
+build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 write_to = "src/pyg4ometry/_version.py"
