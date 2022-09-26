@@ -13,6 +13,8 @@ cgal_extensions = {'pyg4ometry.pycgal.geom':['src/pyg4ometry/pycgal/geom.cxx'],
                    'pyg4ometry.pycgal.CGAL':['src/pyg4ometry/pycgal/CGAL.cxx'],
                    'pyg4ometry.pycgal.Aff_transformation_3':['src/pyg4ometry/pycgal/Aff_transformation_3.cxx'],
                    'pyg4ometry.pycgal.Surface_mesh':['src/pyg4ometry/pycgal/Surface_mesh.cxx'],
+                   'pyg4ometry.pycgal.Polyhedron_3':['src/pyg4ometry/pycgal/Polyhedron_3.cxx'],
+                   'pyg4ometry.pycgal.Nef_polyhedron_3': ['src/pyg4ometry/pycgal/Nef_polyhedron_3.cxx'],
                    'pyg4ometry.pycgal.Polygon_mesh_processing':['src/pyg4ometry/pycgal/Polygon_mesh_processing.cxx'],
                    'pyg4ometry.pycgal.Polygon_2':['src/pyg4ometry/pycgal/Polygon_2.cxx']}
 
