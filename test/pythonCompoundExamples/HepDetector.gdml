@@ -15,17 +15,17 @@
 	</define>
 	<materials>
 		<material name="lead_tungstate" state="solid">
+			<T value="293" unit="K"/>
 			<D value="8.28"/>
 			<fraction ref="G4_Pb" n="0.45"/>
 			<fraction ref="G4_W" n="0.4"/>
 			<fraction ref="G4_O" n="0.15"/>
-			<T value="293" unit="K"/>
 		</material>
 		<material name="nbti" state="solid">
+			<T value="4" unit="K"/>
 			<D value="5.7"/>
 			<fraction ref="G4_Sn" n="0.3"/>
 			<fraction ref="G4_Nb" n="0.7"/>
-			<T value="4" unit="K"/>
 		</material>
 	</materials>
 	<solids>
@@ -96,21 +96,21 @@
 				<volumeref ref="sensorBarrelLV"/>
 				<position name="sensorBarrelPv1_pos" x="0.000000000000000" y="-0.040000000000000" z="0.001500000000000" unit="m"/>
 			</physvol>
-			<physvol name="sensorBarrelPv1_1">
+			<physvol name="sensorBarrelPv2">
 				<volumeref ref="sensorBarrelLV"/>
-				<position name="sensorBarrelPv1_pos" x="0.000000000000000" y="0.040000000000000" z="0.001500000000000" unit="m"/>
+				<position name="sensorBarrelPv2_pos" x="0.000000000000000" y="0.040000000000000" z="0.001500000000000" unit="m"/>
+			</physvol>
+			<physvol name="sensorPv3">
+				<volumeref ref="sensorBarrelLV"/>
+				<position name="sensorPv3_pos" x="-0.003486229709906" y="-0.039847787923670" z="-0.001500000000000" unit="m"/>
+				<rotation name="sensorPv3_rot" x="0.000000000000000" y="0.000000000000000" z="0.087266462599716" unit="rad"/>
+			</physvol>
+			<physvol name="sensorPv4">
+				<volumeref ref="sensorBarrelLV"/>
+				<position name="sensorPv4_pos" x="0.003486229709906" y="0.039847787923670" z="-0.001500000000000" unit="m"/>
+				<rotation name="sensorPv4_rot" x="0.000000000000000" y="0.000000000000000" z="0.087266462599716" unit="rad"/>
 			</physvol>
 			<physvol name="sensorPv1">
-				<volumeref ref="sensorBarrelLV"/>
-				<position name="sensorPv1_pos" x="-0.003486229709906" y="-0.039847787923670" z="-0.001500000000000" unit="m"/>
-				<rotation name="sensorPv1_rot" x="0.000000000000000" y="0.000000000000000" z="0.087266462599716" unit="rad"/>
-			</physvol>
-			<physvol name="sensorPv1_1">
-				<volumeref ref="sensorBarrelLV"/>
-				<position name="sensorPv1_pos" x="0.003486229709906" y="0.039847787923670" z="-0.001500000000000" unit="m"/>
-				<rotation name="sensorPv1_rot" x="0.000000000000000" y="0.000000000000000" z="0.087266462599716" unit="rad"/>
-			</physvol>
-			<physvol name="sensorPv1_2">
 				<volumeref ref="pcbLV"/>
 				<position name="sensorPv1_pos" x="0.000000000000000" y="-0.007500000000000" z="0.005000000000000" unit="m"/>
 			</physvol>
@@ -4761,7 +4761,7 @@
 			</physvol>
 			<physvol name="endcapAv_modulePv21">
 				<volumeref ref="endcapModuleAv"/>
-				<position name="endcapAv_modulePv21_pos" x="0.408954302006916" y="-0.132877307581227" z="0.005000000000000" unit="m"/>
+				<position name="endcapAv_modulePv21_pos" x="0.408954302006916" y="-0.132877307581228" z="0.005000000000000" unit="m"/>
 				<rotation name="endcapAv_modulePv21_rot" x="1.570796326794897" y="4.398229715025710" z="0.000000000000000" unit="rad"/>
 			</physvol>
 			<physvol name="endcapAv_modulePv22">

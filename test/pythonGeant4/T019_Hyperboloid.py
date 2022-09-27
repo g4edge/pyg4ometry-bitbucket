@@ -84,7 +84,7 @@ def Test(vis = False, interactive = False, type = normal, n_slice = 16, n_stack 
         v.addAxes(_vi.axesFromExtents(extentBB)[0])
         v.view(interactive = interactive)
 
-    return {"testStatus": True, "logicalVolume":wl, "vtkViewer":v}
+    return {"teststatus": True, "logicalVolume":wl, "vtkViewer":v}
 
 if __name__ == "__main__":
     Test()

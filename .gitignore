@@ -56,3 +56,8 @@ profile/fluka/profile-results/*
 **/*.vtp
 *.root
 *.dat
+*.ipynb
+*.step
+*.stp
+_skbuild
+build_cmake

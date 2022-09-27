@@ -1,258 +1,130 @@
-import setuptools
+import os
+import sys
+
+import setuptools 
 from setuptools import find_packages
+from Cython.Build import cythonize
 from distutils.command import build_ext
 from distutils.core import setup, Extension
-from Cython.Build import cythonize
-from subprocess import run
-from shutil import which
-import sys
-import platform
-import pybind11
+import subprocess
 
+cgal_extensions = {'pyg4ometry.pycgal.geom':['src/pyg4ometry/pycgal/geom.cxx'],
+                   'pyg4ometry.pycgal.Point_3':['src/pyg4ometry/pycgal/Point_3.cxx'],
+                   'pyg4ometry.pycgal.Point_2':['src/pyg4ometry/pycgal/Point_2.cxx'],
+                   'pyg4ometry.pycgal.Vector_3':['src/pyg4ometry/pycgal/Vector_3.cxx'],
+                   'pyg4ometry.pycgal.CGAL':['src/pyg4ometry/pycgal/CGAL.cxx'],
+                   'pyg4ometry.pycgal.Aff_transformation_3':['src/pyg4ometry/pycgal/Aff_transformation_3.cxx'],
+                   'pyg4ometry.pycgal.Surface_mesh':['src/pyg4ometry/pycgal/Surface_mesh.cxx'],
+                   'pyg4ometry.pycgal.Polyhedron_3':['src/pyg4ometry/pycgal/Polyhedron_3.cxx'],
+                   'pyg4ometry.pycgal.Nef_polyhedron_3': ['src/pyg4ometry/pycgal/Nef_polyhedron_3.cxx'],
+                   'pyg4ometry.pycgal.Polygon_mesh_processing':['src/pyg4ometry/pycgal/Polygon_mesh_processing.cxx'],
+                   'pyg4ometry.pycgal.Polygon_2':['src/pyg4ometry/pycgal/Polygon_2.cxx']}
 
-# https://github.com/pypa/pip/issues/7953
-import site
-site.ENABLE_USER_SITE = True
+oce_extensions = {'pyg4ometry.pyoce.TCollection':['src/pyg4ometry/pyoce/TCollection.cxx'],
+                 'pyg4ometry.pyoce.TKernel':['src/pyg4ometry/pyoce/TKernel.cxx'],
+                 'pyg4ometry.pyoce.TDocStd':['src/pyg4ometry/pyoce/TDocStd.cxx'],
+                 'pyg4ometry.pyoce.TDataStd':['src/pyg4ometry/pyoce/TDataStd.cxx'],
+                 'pyg4ometry.pyoce.TNaming':['src/pyg4ometry/pyoce/TNaming.cxx'],
+                 'pyg4ometry.pyoce.TDF':['src/pyg4ometry/pyoce/TDF.cxx'],
+                 'pyg4ometry.pyoce.TopoDS':['src/pyg4ometry/pyoce/TopoDS.cxx'],
+                 'pyg4ometry.pyoce.gp':['src/pyg4ometry/pyoce/gp.cxx'],
+                 'pyg4ometry.pyoce.Geom':['src/pyg4ometry/pyoce/Geom.cxx'],
+                 'pyg4ometry.pyoce.Poly':['src/pyg4ometry/pyoce/Poly.cxx'],
+                 'pyg4ometry.pyoce.XCAFDoc':['src/pyg4ometry/pyoce/XCAFDoc.cxx'],
+                 'pyg4ometry.pyoce.TopAbs':['src/pyg4ometry/pyoce/TopAbs.cxx'],
+                 'pyg4ometry.pyoce.TopLoc':['src/pyg4ometry/pyoce/TopLoc.cxx'],
+                 'pyg4ometry.pyoce.TopExp':['src/pyg4ometry/pyoce/TopExp.cxx'],
+                 'pyg4ometry.pyoce.Message':['src/pyg4ometry/pyoce/Message.cxx'],
+                 'pyg4ometry.pyoce.BRep':['src/pyg4ometry/pyoce/BRep.cxx'],
+                 'pyg4ometry.pyoce.BRepMesh':['src/pyg4ometry/pyoce/BRepMesh.cxx'],
+                 'pyg4ometry.pyoce.StlAPI':['src/pyg4ometry/pyoce/StlAPI.cxx'],
+                 'pyg4ometry.pyoce.XCAFApp':['src/pyg4ometry/pyoce/XCAFApp.cxx'],
+                 'pyg4ometry.pyoce.STEPCAFControl':['src/pyg4ometry/pyoce/STEPCAFControl.cxx']}
 
-if setuptools.version.pkg_resources.parse_version(setuptools.__version__) >= setuptools.version.pkg_resources.parse_version("62.1.0") :
-    plat = build_ext.get_platform()+'-'+ sys.implementation.cache_tag
-else :
-    plat = build_ext.get_platform()+'-'+build_ext.get_python_version()
+def cmake_discovery() :
+    print('running cmake')
 
-print("platform>",plat)
+    os.system("mkdir .cmake")
+    os.system("cp CMakeLists_setup.txt .cmake/CMakeLists.txt")
+    p = subprocess.Popen("cmake . ",shell=True, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
 
-exts = cythonize(["src/pyg4ometry/pycsg/geom.pyx", "src/pyg4ometry/pycsg/core.pyx"])
+    config = {}
 
-# pybind11 include directory  (header only library)
-pybind11_include = pybind11.get_include()
+    for l in out.decode('UTF-8').splitlines() :
+        sl = l.split()
+        if sl[1] == "HAVFOUND" :
+            if sl[2] == "Boost" :
+                config["BOOST_INC"] = sl[3]
+            elif sl[2] == "pybind11" :
+                config["PYBIND11_INC"] = sl[3].split(";")[0]
+            elif sl[2] == "OpenCASCADE" :
+                config["OPENCASCADE_INC"] = sl[3]
+                config["OPENCASCADE_LIBDIR"] = sl[4]
+            elif sl[2] == "CGAL" :
+                config["CGAL_INC"] = sl[3]
+            elif sl[2] == "MPFR" :
+                config["MPFR_INC"] = sl[3]
+                config["MPFR_LIBDIR"] = sl[4]
+                config["MPFR_LIB"] = sl[5]
+            elif sl[2] == "GMP" :
+                config["GMP_INC"] = sl[3]
+                config["GMP_LIB"] = sl[4]
 
-# detect python version
-pythonMajorVersion = sys.version_info[0]
-pythonMinorVersion = sys.version_info[1]
+    print(config)
+    os.system("rm -rf .cmake")
+    return config
 
-print("Python version : {}.{}".format(pythonMajorVersion,pythonMinorVersion))
+def pybind11_CGAL_extensions(extDict,config) :
+    extensions = []
+    for ext in extDict :
+        code = extDict[ext]
+        extension = Extension(ext,
+                              include_dirs = [config['PYBIND11_INC'],
+                                              config['BOOST_INC'],
+                                              config['CGAL_INC']],
+                              library_dirs=[config['MPFR_LIBDIR']],
+                              libraries = ['mpfr','gmp'],
+                              sources = code,
+                              language="c++",
+                              extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+        extensions.append(extension)
 
-# start with system dirs (and port/brew and default miniconda)
-includeSearchDirs = ["/usr/include","/usr/local/include","/opt/local/include/","/usr/local/Cellar/include/","/opt/miniconda3/include/","/opt/homebrew/include/"]
-librarySearchDirs = ["/usr/lib/","/usr/lib64/","/usr/local/lib/","/usr/local/lib64/","/usr/lib/x86_64-linux-gnu/","/opt/local/lib/","/usr/local/Cellar/lib/","/opt/miniconda3/lib/","/opt/homebrew/lib/"]
+    return extensions
 
-# search for cgal, pybind11 (only if pybind11_include is not set), mpfr, gmp in the search dirs
-def findPackage(name, searchDirs) :
-    import glob
-    import os.path
+def pybind11_OCE_extensions(extDict, config) :
 
-    path = set()
-    for d in searchDirs :
-        for f in glob.glob(d+"/*"+name+"*") :
-            path.add(os.path.dirname(f))
+    extensions = []
+    for ext in extDict :
+        code = extDict[ext]
+        extension = Extension(ext,
+                              include_dirs = [config['PYBIND11_INC'],
+                                              config['OPENCASCADE_INC']],
+                              library_dirs=[config['OPENCASCADE_LIBDIR']],
+                              libraries = ['TKXCAF','TKXDESTEP','TKSTL'],
+                              sources = code,
+                              language="c++",
+                              extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+        extensions.append(extension)
 
-    print("Found "+name,list(path))
-    if len(path) == 0:
-        print("Could not find "+name,path)
-        return list()
-    else :
-        print(list(path))
-        return list(path)
+    return extensions
+                              
+    
+config = cmake_discovery()
 
-incPathSet = set()
-libPathSet = set()
+csgExts  = cythonize(["src/pyg4ometry/pycsg/geom.pyx", "src/pyg4ometry/pycsg/core.pyx"])
+cgalExts = pybind11_CGAL_extensions(cgal_extensions,config)
+oceExts  = pybind11_OCE_extensions(oce_extensions,config)
 
-# TODO does not handle lists properly
-incPath = findPackage("mpfr",includeSearchDirs); incPathSet.union(set(incPath))
-libPath = findPackage("mpfr",librarySearchDirs); libPathSet.union(set(libPath))
-libPath = findPackage("gmp",librarySearchDirs); libPathSet.union(set(libPath))
-# incPath = findPackage("pybind11",includeSearchDirs); incPathSet.add(*set(incPath))
-incPath = findPackage("CGAL",includeSearchDirs); incPathSet.union(set(incPath))
-
-print("Using include paths : ",incPath)
-print("Using library paths : ",libPath)
-
-# detect conda
-condaExe    = which("conda")
-if condaExe is not None :
-    condaDetect = run([condaExe,"-V"], capture_output=True)
-    print("Found conda {}".format(condaExe))
-
-# conda environments
-
-mpfr_include  = "/opt/local/include"
-gmp_include   = "/opt/local/include"
-boost_include = "/opt/local/include"
-mpfr_lib      = "/opt/local/lib"
-gmp_lib       = "/opt/local/lib"
-
-# Mac OSX mac ports
-if platform.system() == "Darwin" :
-    print("MacOX")
-    if which("port") is not None :
-        print("port")
-        mpfr_include  = "/opt/local/include"
-        gmp_include   = "/opt/local/include"
-        boost_include = "/opt/local/include"
-        mpfr_lib      = "/opt/local/lib"
-        gmp_lib       = "/opt/local/lib"
-    elif which("brew") is not None :
-        # TODO needs replacing
-        print("brew")
-        if platform.machine() == "arm64":  # apple silicon
-            mpfr_include  = "/opt/homebrew/include"
-            gmp_include   = "/opt/homebrew/include"
-            boost_include = "/opt/homebrew/include"
-            mpfr_lib      = "/opt/homebrew/lib"
-            gmp_lib       = "/opt/homebrew/lib"
-        else:
-            mpfr_include  = "/usr/local/include"
-            gmp_include   = "/usr/local/include"
-            boost_include = "/usr/local/include"
-            mpfr_lib      = "/usr/local/lib"
-            gmp_lib       = "/usr/local/lib"
-elif platform.system() == "Linux":
-    import distro
-    if distro.linux_distribution()[0] == "CentOS Linux" :
-        print("Centos")    
-        mpfr_include  = "/usr/include"
-        gmp_include   = "/usr/include"
-        boost_include = "/usr/include/boost169"
-        mpfr_lib      = "/usr/lib64"
-        gmp_lib       = "/usr/lib64"
-    elif distro.linux_distribution()[0] == "Ubuntu" :
-        print("ubuntu")
-        # TODO needs replacing        
-        mpfr_include  = "/usr/include"
-        gmp_include   = "/usr/include"
-        boost_include = "/usr/include/boost169"
-        mpfr_lib      = "/usr/lib64"
-        gmp_lib       = "/usr/lib64"
-
-pyg4_cgal_ext  = Extension('pyg4ometry.pycgal.pyg4_cgal',
-                           include_dirs = [mpfr_include,
-                                           gmp_include,
-                                           boost_include,
-                                           pybind11_include],
-                           libraries = ['mpfr','gmp'],
-                           library_dirs = [mpfr_lib,
-                                           gmp_lib],
-                           sources = ['./src/pyg4ometry/pycgal/pyg4_cgal.cpp'],
-                           language="c++",
-                           extra_compile_args=["-std=c++14"])
-
-cgal_geom_ext = Extension('pyg4ometry.pycgal.geom',
-                          include_dirs = [mpfr_include,
-                                          gmp_include,
-                                          boost_include,
-                                          pybind11_include],
-                          sources = ['./src/pyg4ometry/pycgal/geom.cxx'],
-                          language="c++",
-                          extra_compile_args=["-std=c++14","-fvisibility=hidden"])
-
-cgal_algo_ext = Extension('pyg4ometry.pycgal.algo',
-                          include_dirs = [mpfr_include,
-                                          gmp_include,
-                                          boost_include,
-                                          pybind11_include],
-                          libraries = ['mpfr','gmp'],
-                          library_dirs = [mpfr_lib,
-                                          gmp_lib],
-                          sources = ['./src/pyg4ometry/pycgal/algo.cxx'],
-                          extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o'],
-                          language="c++",
-                          extra_compile_args=["-std=c++14","-fvisibility=hidden"])
-
-cgal_core_ext = Extension('pyg4ometry.pycgal.core',
-                          include_dirs = [mpfr_include,
-                                          gmp_include,
-                                          boost_include,
-                                          pybind11_include],
-                           libraries = ['mpfr','gmp'],
-                           library_dirs = [mpfr_lib,
-                                           gmp_lib],
-                           sources = ['./src/pyg4ometry/pycgal/core.cxx'],
-                           extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
-                                          './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
-                           language="c++",
-                           extra_compile_args=["-std=c++14","-fvisibility=hidden"])
-
-oceTCollection_ext = Extension('pyg4ometry.pyoce.TCollection',
-                    include_dirs = [mpfr_include,
-                                    gmp_include,
-                                    boost_include,
-                                    pybind11_include,
-                                    "/opt/local/include/opencascade/"],
-                    library_dirs=['/opt/local/lib/'],
-                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
-                    sources = ['./src/pyg4ometry/pyoce/TCollection.cxx'],
-                    extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
-                                   './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
-                    language="c++",
-                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
-
-oceTDF_ext = Extension('pyg4ometry.pyoce.TDF',
-                    include_dirs = [mpfr_include,
-                                    gmp_include,
-                                    boost_include,
-                                    pybind11_include,
-                                    "/opt/local/include/opencascade/"],
-                    library_dirs=['/opt/local/lib/'],
-                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
-                    sources = ['./src/pyg4ometry/pyoce/TDF.cxx'],
-                    extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
-                                   './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
-                    language="c++",
-                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
-
-oce_ext = Extension('pyg4ometry.pyoce.oce',
-                    include_dirs = [mpfr_include,
-                                    gmp_include,
-                                    boost_include,
-                                    pybind11_include,
-                                    "/opt/local/include/opencascade/"],
-                    library_dirs=['/opt/local/lib/'],
-                    libraries = ['mpfr','gmp','TKXCAF','TKXDESTEP','TKSTL'],
-                    sources = ['./src/pyg4ometry/pyoce/oce.cxx'],
-                    extra_objects=['./build/temp.'+plat+'/src/pyg4ometry/pycgal/geom.o',
-                                   './build/temp.'+plat+'/src/pyg4ometry/pycgal/algo.o'],
-                    language="c++",
-                    extra_compile_args=["-std=c++14","-fvisibility=hidden"])
-
-
-#exts.append(oceTCollection_ext)
-#exts.append(oceTDF_ext)
-#exts.append(oce_ext)
-exts.append(pyg4_cgal_ext)
-exts.append(cgal_geom_ext)
-exts.append(cgal_algo_ext)
-exts.append(cgal_core_ext)
+exts = []
+exts.extend(csgExts)
+exts.extend(cgalExts)
+exts.extend(oceExts)
 
 setup(
-    name="pyg4ometry",
-    version="1.0.2",
-    package_dir={"": "src/"},
-    packages=find_packages(
-        where='src'
-    ),
-    package_data={"pyg4ometry.convert": ["periodic-table.csv"],
-                  "pyg4ometry.fluka": ["flair_template.flair"],
-                  "pyg4ometry.geant4": ["nist_elements.txt", "nist_materials.txt"],
-                  "pyg4ometry.visualisation": ["colours.ini"]},
-    install_requires=["antlr4-python3-runtime==4.7.1",  # Generated with 4.7.1 - this avoids warnings
-                      "matplotlib",
-                      "pandas",
-                      "networkx",
-                      "numpy",
-                      "vtk",
-                      "cython",
-                      "GitPython",
-                      "configparser",
-                      "testtools",
-                      "pypandoc",
-                      "sympy>=1.7",
-                      "scipy"],
-    ext_modules=exts,
-    python_requires=">=3.6.8",
-    author="Stewart T. Boogert",
-    author_email="stewart.boogert@rhul.ac.uk",
-    description='Geometry package for high energy physics (Geant4, Fluka)',
-    license='GPL3',
-    url='https://bitbucket.org/jairhul/pyg4ometry/',
-    keywords='geometry bdsim particle physics accelerators',
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    include_package_data=True,
+    # package_data={}, # TODO
+    ext_modules=exts
 )
