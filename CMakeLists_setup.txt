@@ -9,7 +9,7 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.71.0 QUIET COMPONENTS system) # header only libraries must not be added here
 
 if(Boost_FOUND)
-  message(STATUS "HAVFOUND Boost ${Boost_VERSION} ${Boost_INCLUDE_DIRS}")
+  message(STATUS "HAVFOUND Boost ${Boost_INCLUDE_DIRS}")
   include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 else()
   message(STATUS "NOTFOUND boost")
@@ -33,10 +33,12 @@ else()
 endif()
 
 # opencascade
-find_package(OpenCASCADE)
-
+# /opt/local/lib/cmake/opencascade/OpenCASCADEConfig.cmake
+find_package(OpenCASCADE QUIET)
 if (OpenCASCADE_FOUND)
-  message(STATUS "HAVFOUND OpenCASCADE")
+  message(STATUS "HAVFOUND OpenCASCADE ${OpenCASCADE_INCLUDE_DIR} ${OpenCASCADE_LIBRARY_DIR}")
+else()
+  message(STATUS "NOTFOUND OpenCASCADE")
 endif()
 
 # cgal

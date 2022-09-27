@@ -1,3 +1,4 @@
+import os
 import sys
 
 import setuptools 
@@ -5,6 +6,7 @@ from setuptools import find_packages
 from Cython.Build import cythonize
 from distutils.command import build_ext
 from distutils.core import setup, Extension
+import subprocess
 
 cgal_extensions = {'pyg4ometry.pycgal.geom':['src/pyg4ometry/pycgal/geom.cxx'],
                    'pyg4ometry.pycgal.Point_3':['src/pyg4ometry/pycgal/Point_3.cxx'],
@@ -41,21 +43,45 @@ oce_extensions = {'pyg4ometry.pyoce.TCollection':['src/pyg4ometry/pyoce/TCollect
 
 def cmake_discovery() :
     print('running cmake')
-    pass
 
-def meson_discovery() :
-    print('running meson')
-    pass
-    
-def pybind11_CGAL_extensions(extDict,depDict) :
+    os.system("mkdir .cmake")
+    os.system("cp CMakeLists_setup.txt .cmake/CMakeLists.txt")
+    p = subprocess.Popen("cmake . ",shell=True, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+
+    config = {}
+
+    for l in out.decode('UTF-8').splitlines() :
+        sl = l.split()
+        if sl[1] == "HAVFOUND" :
+            if sl[2] == "Boost" :
+                config["BOOST_INC"] = sl[3]
+            elif sl[2] == "pybind11" :
+                config["PYBIND11_INC"] = sl[3].split(";")[0]
+            elif sl[2] == "OpenCASCADE" :
+                config["OPENCASCADE_INC"] = sl[3]
+                config["OPENCASCADE_LIBDIR"] = sl[4]
+            elif sl[2] == "CGAL" :
+                config["CGAL_INC"] = sl[3]
+            elif sl[2] == "MPFR" :
+                config["MPFR_INC"] = sl[3]
+                config["MPFR_LIB"] = sl[5]
+            elif sl[2] == "GMP" :
+                config["GMP_INC"] = sl[3]
+                config["GMP_LIB"] = sl[4]
+
+    print(config)
+    os.system("rm -rf .cmake")
+    return config
+
+def pybind11_CGAL_extensions(extDict,config) :
     extensions = []
     for ext in extDict :
         code = extDict[ext]
         extension = Extension(ext,
-                              include_dirs = ["/opt/local/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/pybind11/include/",
-                                              "/opt/local/include/"],
-                              library_dirs=['/opt/local/lib/'],
-                              libraries = ['mpfr','gmp'],
+                              include_dirs = [config['PYBIND11_INC'],
+                                              config['BOOST_INC']],
+                              libraries = [config['MPFR_LIB'],config['GMP_LIB']],
                               sources = code,
                               language="c++",
                               extra_compile_args=["-std=c++14","-fvisibility=hidden"])
@@ -63,15 +89,15 @@ def pybind11_CGAL_extensions(extDict,depDict) :
 
     return extensions
 
-def pybind11_OCE_extensions(extDict, depDict) :
+def pybind11_OCE_extensions(extDict, config) :
 
     extensions = []
     for ext in extDict :
         code = extDict[ext]
         extension = Extension(ext,
-                              include_dirs = ["/opt/local/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/pybind11/include/",
-                                              "/opt/local/include/opencascade/"],
-                              library_dirs=['/opt/local/lib/'],
+                              include_dirs = [config['PYBIND11_INC'],
+                                              config['OPENCASCADE_INC']],
+                              library_dirs=[config['OPENCASCADE_LIBDIR']],
                               libraries = ['TKXCAF','TKXDESTEP','TKSTL'],
                               sources = code,
                               language="c++",
@@ -81,11 +107,11 @@ def pybind11_OCE_extensions(extDict, depDict) :
     return extensions
                               
     
-deps = cmake_discovery()
+config = cmake_discovery()
 
 csgExts  = cythonize(["src/pyg4ometry/pycsg/geom.pyx", "src/pyg4ometry/pycsg/core.pyx"])
-cgalExts = pybind11_CGAL_extensions(cgal_extensions,deps)
-oceExts  = pybind11_OCE_extensions(oce_extensions,deps)
+cgalExts = pybind11_CGAL_extensions(cgal_extensions,config)
+oceExts  = pybind11_OCE_extensions(oce_extensions,config)
 
 exts = []
 exts.extend(csgExts)
