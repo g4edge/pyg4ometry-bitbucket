@@ -36,7 +36,12 @@ Geometry key concepts
 Implementation concepts
 -----------------------
 
- * Registry 
+.. _introduction-registry:
+
+Registry
+********
+
+
  * Parameter
  * ParameterVector
  * Pycsg
