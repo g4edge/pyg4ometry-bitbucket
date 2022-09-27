@@ -37,6 +37,9 @@ Defines and variables
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: pyg4ometry.gdml.Defines
+   :members: sin, cos, tan, asin, acos, atan, exp, log, log10, sqrt
+
 .. autoclass:: pyg4ometry.gdml.Defines.VectorBase
    :members: 
    :undoc-members:
@@ -235,6 +238,14 @@ Fluka module
    :undoc-members:
    :show-inheritance:
 
+IO Module
+---------
+
+.. automodule:: pyg4ometry.io.ROOTTGeo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. _transformation-module:
 
 Transformation
@@ -244,7 +255,13 @@ Transformation
    :members:
    :undoc-members:
 
-.. _geometry-compare-module:
+Misc
+--------------
+
+.. automodule:: pyg4ometry.misc
+   :members:
+   :undoc-members:
+
 
 Convert
 -------
@@ -272,6 +289,7 @@ Convert
 .. automodule:: pyg4ometry.convert.stl2gdml
    :members:
    :undoc-members:
+
 
 
 Compare
