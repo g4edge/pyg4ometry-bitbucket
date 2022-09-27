@@ -24,7 +24,8 @@ output
 GDML Output
 -----------
 
-To write an GDML file file given a :code:`pyg4ometry.geant4.registy` instance  :code:`reg`.   
+To write an GDML file, a :code:`pyg4ometry.geant4.registy` instance (:code:`reg` here),
+must be supplied.
 
 .. code-block :: python
    :emphasize-lines: 3
@@ -54,7 +55,7 @@ Export scene to unity/unreal
 
 The quickest way to get geometry to Unity/Unreal is to use a standard asset 
 format. This takes a vtkRenderer and creates a OBJ file. The vtkRenderer 
-managed within pyg4ometry from the vtkViewer class, once a geometry is created
+managed within pyg4ometry from the VtkViewer class, once a geometry is created
 (either from any source) then an OBJ file can be created. Taking the
 example in ``pyg4ometry/test/pythonCompoundExamples/``
 
@@ -71,7 +72,7 @@ example in ``pyg4ometry/test/pythonCompoundExamples/``
 
 ``obj`` files are written ``Chamber.obj`` and ``Chamber.mtl``.
 
-For a Fluka file, first it must be converted to geant4 and then the same process should be 
+For a FLUKA file, first it must be converted to Geant4 and then the same process should be 
 followed.
 
 .. code-block :: python
@@ -94,7 +95,7 @@ have to be UV-ed and textured. Tools like Blender and Gaffer can be used for thi
 but require meshes for each object and their placement. To enable there is a special 
 writer 
 
-.. code-block :: python
+.. code-block:: python
    :linenos:
    :emphasize-lines: 4-6
 

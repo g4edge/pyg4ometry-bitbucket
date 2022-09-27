@@ -4,7 +4,7 @@ pyg4ometry Documentation
 pyg4ometry is a package to create, load, write and visualise solid geometry for particle tracking simulations. 
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    licence
    authorship
@@ -20,9 +20,6 @@ pyg4ometry is a package to create, load, write and visualise solid geometry for 
    combining
    comparing
    analysing
-   pythonscripting
-   tutorials
-   tutorialsAdvanced
    moduledocs
    developer
    version_history

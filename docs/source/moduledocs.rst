@@ -177,6 +177,8 @@ Geant4 module
    :undoc-members:
    :show-inheritance:
 
+.. _module-docs-visualisation:
+      
 Visualisation module
 --------------------
 

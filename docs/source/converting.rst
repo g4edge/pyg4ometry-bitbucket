@@ -9,13 +9,24 @@ Converting Geometry
 Assembly Conversion
 -------------------
 
-Given two sources of geometry, placement of top level world logical volume solids will
-likely result in an overlap. To avoid these types of problems, it might required to convert
-one of the logical volumes to an AssemblyVolume.
+It is possible transform a logical volume into an assembly volume. This
+is useful in the case of two sources of geometry: placement of top level world
+logical volume solids will likely result in an overlap. This effectively removes
+the outermost logical volume but keeps the daughters. The produced assembly
+volume can then be placed or imprinted somewhere in the geometry.
+
+An assembly **cannot** be used as an outermost 'world' volume for a geometry hierarchy.
+
+Assuming :code:`lv` is a :code:`pyg4ometry.geant4.LogicalVolume` instance:
+
+.. code-block::
+
+   av = lv.assemblyVolume()
 
 
-GDML Conversion to FLUKA
-------------------------
+
+GDML to FLUKA
+-------------
 
 It is possible convert a pyg4ometry geometry to FLUKA. This is currently a work in
 progress and not all Geant4-GDML constructions are implemented, although they can
@@ -63,8 +74,8 @@ method
    forward to implement, like Materials and the non-Placement physical volumes can be done quickly if a user
    requires it.
 
-Conversion of FLUKA To GDML
----------------------------
+FLUKA To GDML
+-------------
 
 FLUKA geometry can be converted to GDML using
 ``pyg4ometry.convert.fluka2geant4``. The conversion process is robust and
@@ -114,7 +125,7 @@ complex and requires further explanation. In Pyg4ometry the mesh and GDML
 representations of FLUKA infinite circular cylinders, elliptical cylinders
 and half-spaces are all finite (but very large) cylinders, elliptical
 cylinders and boxes.  This is robust as increasing the length of cylinders
-and depth/bredth of boxes does not increase the number of polygons used in
+and depth/breadth of boxes does not increase the number of polygons used in
 the underlying mesh representation for that solid.  However, this is not
 true of the quadric surface.  A quadric surface cannot simply be generated
 to be "very large", as the number of polygons will grow quickly, along with

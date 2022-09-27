@@ -15,7 +15,7 @@ used for visualisation or other operations.
 
       In directory :code:`pyg4ometry/test/gdmlG4examples/ChargeExchangeMC/`
 
-      .. code-block :: python
+      .. code-block:: python
 	    :linenos:
 
 	    import pyg4ometry
@@ -38,7 +38,7 @@ used for visualisation or other operations.
       **Note** FLUKA geometry can be loaded but cannot be visualised directly without
       conversion to a Geant4 model. This is not necessary for loading, but shown here.
 
-      .. code-block :: python
+      .. code-block:: python
 	    :linenos:
 	       
 	    import pyg4ometry
@@ -62,7 +62,7 @@ used for visualisation or other operations.
 
       In directory :code:`pyg4ometry/test/root2Gdml`
 	    
-      .. code-block :: python
+      .. code-block:: python
 	    :linenos:
 
 	    import pyg4ometry
@@ -85,9 +85,9 @@ used for visualisation or other operations.
 
       STL files are typically used for a single watertight solid mesh. This mesh is
       converted to a TesselatedSolid and then a logical volume which can be placed
-      in a geometry. In directory ``pyg4ometry/test/stl``.
+      in a geometry. In directory :code:`pyg4ometry/test/stl`.
 
-      .. code-block :: python
+      .. code-block:: python
 
 	    import pyg4ometry
 	    reg = pyg4ometry.geant4.Registry()
@@ -108,11 +108,11 @@ used for visualisation or other operations.
 
       In directory :code:`pyg4ometry/test/freecad`
 
-      .. code-block :: python
+      .. code-block:: python
 	    :linenos:
 
 	    import pyg4ometry
-	    r  = pyg4ometry.freecad.Reader("./08_AshTray.step")
+	    r  = pyg4ometry.freecad.Reader("08_AshTray.step")
 	    r.relabelModel()
 	    r.convertFlat()
 	    l = r.getRegistry().getWorldVolume()

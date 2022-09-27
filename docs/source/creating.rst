@@ -74,7 +74,7 @@ Examples:
   reg = pyg4ometry.geant4.Registry()
   boxSolid = pyg4ometry.genat4.solid.Box("aBox", 10, 20, 30, reg)
 
-This defines a box with the default units (none specifed), so mm. We can specify them:
+This defines a box with the default units (none specified), so mm. We can specify them:
 
 .. code-block:: python
 
@@ -474,26 +474,9 @@ Units can be specified by setting the parameters ``eunit`` for the energy vector
    scint.addConstProperty('SCINTILLATIONYIELD', 8000, vunit='/MeV')
    scint.addVecProperty('RINDEX', [1, 10], [1.3, 1.05])
 
-Registry and GDML Output
-------------------------
 
-Strictly speaking a registry class to store all of the GDML is not required. 
-As with normal Geant4 given a ``lv`` pointer it should possible to form an aggregation 
-hierarchy that contains all necessary objects. Now GDML breaks this as the
-structure is built up using ``name`` tags. For example a placement requires 
-a position. In Geant4 this would just be a pointer to an transformation object, but GDML 
-has two mechanisms to represent this, firstly child nodes of a PhysicalVolume tag 
-or secondly a position define, see below
-
-The registry class is a storage class for a complete GDML file. At the
-construction stage of almost all objects a registry is required. If the 
-object is added to the registry then it will appear explicitly in the GDML 
-output.
-
-
-
-Fluka geometry scripting
-------------------------
+FLUKA Geometry Creation
+-----------------------
 
 In a very similar way to geant4 geometry authoring it is possible to 
 use pyg4ometry to create fluka output. To create a simple region consisting 
