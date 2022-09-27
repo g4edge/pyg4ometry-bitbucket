@@ -65,6 +65,7 @@ def cmake_discovery() :
                 config["CGAL_INC"] = sl[3]
             elif sl[2] == "MPFR" :
                 config["MPFR_INC"] = sl[3]
+                config["MPFR_LIBDIR"] = sl[4]
                 config["MPFR_LIB"] = sl[5]
             elif sl[2] == "GMP" :
                 config["GMP_INC"] = sl[3]
@@ -80,8 +81,10 @@ def pybind11_CGAL_extensions(extDict,config) :
         code = extDict[ext]
         extension = Extension(ext,
                               include_dirs = [config['PYBIND11_INC'],
-                                              config['BOOST_INC']],
-                              libraries = [config['MPFR_LIB'],config['GMP_LIB']],
+                                              config['BOOST_INC'],
+                                              config['CGAL_INC']],
+                              library_dirs=[config['MPFR_LIBDIR']],
+                              libraries = ['mpfr','gmp'],
                               sources = code,
                               language="c++",
                               extra_compile_args=["-std=c++14","-fvisibility=hidden"])
