@@ -32,3 +32,7 @@ The bibtex citation from `<https://inspirehep.net/literature/1821231>`_:
 
 Citations allow the authors to demonstrably show the code usage and therefore to
 continue to support the development and maintenance of pyg4ometry.
+
+Other publications on pyg4ometry:
+
+ * `Pyg4ometry : A Tool To Create Geometries For Geant4, Bdsim, G4Beamline and Fluka For Particle Loss and Energy Deposit Studies, IPAC2019, Melbourne, Australia, 2019 <https://doi.org/10.18429/JACoW-IPAC2019-WEPTS054>`_ Google scholar `cites <https://scholar.google.com/scholar?cites=7483314837088930734&as_sdt=2005&sciodt=0,5&hl=en>`_

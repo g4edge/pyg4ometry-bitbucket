@@ -1,6 +1,8 @@
-===================
-Geometry Comparison
-===================
+.. _comparing:
+
+==================
+Comparing Geometry
+==================
 
 When converting or preparing geometry, it is useful to compare to other
 geometry to validate work. Examples of use include:
@@ -198,7 +200,7 @@ but also you can print select sets of tests or only certain results.
 Examples
 --------
 
-See :code:`pyg4ometry/pyg4ometry/test/pythonGeant4/T7*.py` for examples that form the tests of this code.
+See :code:`pyg4ometry/test/pythonGeant4/T7*.py` for examples that form the tests of this code.
 
 Only Volume
 ***********
