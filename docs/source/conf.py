@@ -34,7 +34,8 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.doctest',
               'sphinx.ext.inheritance_diagram',
               'sphinx.ext.mathjax',
-              'sphinx.ext.todo']
+              'sphinx.ext.todo',
+              'sphinx_tabs.tabs']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -67,7 +68,7 @@ release = u'1.0.2'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
