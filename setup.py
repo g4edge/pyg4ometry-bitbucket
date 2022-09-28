@@ -8,6 +8,9 @@ from distutils.command import build_ext
 from distutils.core import setup, Extension
 import subprocess
 
+import site
+site.ENABLE_USER_SITE = True
+
 cgal_extensions = {'pyg4ometry.pycgal.geom':['src/pyg4ometry/pycgal/geom.cxx'],
                    'pyg4ometry.pycgal.Point_3':['src/pyg4ometry/pycgal/Point_3.cxx'],
                    'pyg4ometry.pycgal.Point_2':['src/pyg4ometry/pycgal/Point_2.cxx'],
