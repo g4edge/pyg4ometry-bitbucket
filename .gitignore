@@ -16,7 +16,6 @@ docs/build*/*
 *.java
 FM.pdf
 *.g4e
-tests/*.py
 *.tar.gz
 *.log
 *.gdml
