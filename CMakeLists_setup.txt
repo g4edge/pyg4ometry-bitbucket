@@ -43,7 +43,7 @@ endif()
 
 # cgal
 # there are lots of possible components you can search for...
-find_package(CGAL 5.0 QUIET)
+find_package(CGAL QUIET)
 if (CGAL_FOUND)
 # CGAL_ROOT is the root directory of it
   message(STATUS "HAVFOUND CGAL ${CGAL_INCLUDE_DIRS} ${CGAL_ROOT} ${CGAL_LIBRARIES}")
