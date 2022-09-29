@@ -13,8 +13,15 @@ RUN pacman -Sy && \
 
 RUN pip install distro setuptools
 
-ARG PYG4_TAG=1
+ARG PYG4_TAG=3
+RUN pacman --noconfirm -S patch
+
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry && \
-    git checkout develop
+    git checkout develop && \
+    patch -R /usr/include/opencascade/TDocStd_Application.hxx < docker/patches/TDocStd_Application.patch
+
+RUN cd pyg4ometry &&\
+    python setup.py build_ext &&\
+    pip install --editable .
 

@@ -36,18 +36,18 @@ RUN git clone https://github.com/Open-Cascade-SAS/OCCT.git && \
     make -j4 &&\
     make install &&\
     cd ../ 
-    
 
 # default python
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
 # pyg4ometry
-ARG PYG4_TAG=1
+ARG PYG4_TAG=5
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
-    git checkout develop
-    
+    git checkout develop &&\
+    patch -R /usr/local/include/opencascade/TDocStd_Application.hxx < docker/patches/TDocStd_Application.patch    
+        
 #RUN cd pyg4ometry && \
 #    export export SETUPTOOLS_USE_DISTUTILS=stdlib && \
 #    pip install --editable . --user
