@@ -104,7 +104,7 @@ def pybind11_OCE_extensions(extDict, config) :
                               include_dirs = [config['PYBIND11_INC'],
                                               config['OPENCASCADE_INC']],
                               library_dirs=[config['OPENCASCADE_LIBDIR']],
-                              libraries = ['TKXCAF','TKXDESTEP','TKSTL'],
+                              libraries = ['TKernel','TKBO','TKBRep','TKBin','TKBinL','TKBinTObj','TKBinXCAF','TKBool','TKXCAF','TKXDESTEP','TKSTL'],
                               sources = code,
                               language="c++",
                               extra_compile_args=["-std=c++14","-fvisibility=hidden"])
