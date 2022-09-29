@@ -48,11 +48,6 @@ RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     git checkout develop &&\
     patch -R /usr/local/include/opencascade/TDocStd_Application.hxx < docker/patches/TDocStd_Application.patch    
         
-#RUN cd pyg4ometry && \
-#    export export SETUPTOOLS_USE_DISTUTILS=stdlib && \
-#    pip install --editable . --user
-
-
-# libxi-dev
-# libxmu-dev
-# https://github.com/Open-Cascade-SAS/OCCT.git 7_5_1
+RUN cd pyg4ometry && \
+    export export SETUPTOOLS_USE_DISTUTILS=stdlib && \
+    pip install --editable .
