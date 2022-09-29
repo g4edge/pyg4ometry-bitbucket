@@ -14,8 +14,8 @@ RUN apt -y install build-essential
 
 # required packages
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata libxt-dev libglx-dev libgl1-mesa-dev \
-    wget libboost-all-dev emacs xvfb x11vnc fvwm libcgal-dev git libmpfr-dev libgmp-dev pybind11-dev \
-    cmake libcgal-dev libxi-dev libxmu-dev
+    wget libboost-all-dev emacs xvfb x11vnc fvwm git libmpfr-dev libgmp-dev pybind11-dev \
+    cmake libxi-dev libxmu-dev
 
 # python 
 RUN apt-get -y install python3 python3-pip && \
@@ -37,17 +37,22 @@ RUN git clone https://github.com/Open-Cascade-SAS/OCCT.git && \
     make install &&\
     cd ../
 
+# CGAL
+RUN git clone https://github.com/CGAL/cgal.git && \
+    cd cgal && git checkout v5.4.1 && cd ../ && \
+    mkdir cgal-build && cd cgal-build && cmake ../cgal && make install 
+
 # default python
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
 # pyg4ometry
-ARG PYG4_TAG=2
+ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
     cd pyg4ometry &&\
     git checkout develop &&\
     patch -R /usr/local/include/opencascade/TDocStd_Application.hxx < docker/patches/TDocStd_Application.patch    
 
-# RUN cd pyg4ometry && \
-#    pip install --editable . --user    
+RUN cd pyg4ometry && \
+    pip install --editable . 
 
