@@ -21,10 +21,7 @@ jobs:
 
       - run:
           name: "Build pyg4ometry py10"
-          command: "pwd &&\
-                    ls && \
-                    cd pyg4ometry && \
-                    python3.10 setup.py bdist_wheel"
+          command: "python3.10 setup.py bdist_wheel"
 
       - run:
           name: "Say hello"
