@@ -30,7 +30,7 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "python3.10 -m pip install  &&\
+          command: "python3.10 -m pip install .   &&\
                     mkdir test-results &&\
                     pytest --junitxml=test-results/junit.xml"
 
