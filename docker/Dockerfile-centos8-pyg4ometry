@@ -1,0 +1,11 @@
+FROM  quay.io/centos/centos:stream8
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /tmp
+
+RUN yum -y install epel-release
+
+RUN yum -y install python39 python3-ipython gcc cmake git \
+           xorg-x11-server-Xorg xorg-x11-xauth libX11-devel libXpm-devel libXft-devel libXext-devel libXt-devel \
+	   x11vnc xterm

@@ -12,11 +12,13 @@ Stuart Walker         <Stuart.Walker.2011@live.rhul.ac.uk>
 Installation Guide
 ==================
 
-  * Required libraries VTK, CGAL, pybind11
-  * Optional libraries FreeCAD, ROOT, USD
+  * Required libraries VTK, CGAL, pybind11, opencascade
+  * Optional libraries ROOT, USD
   * Install from pypi (pip install pyg4ometry)
   * Install from source (git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git; cd pyg4ometry; make install or make develop)
-
+  * Mac ports deps (cgal5, opencascade, boost, cmake, python3X)
+  * Mac brew deps (cgal, opencascade, cmake, python3X)
+  * Ubuntu deps (cgal, opencascade (V7_5_1) from source and patched, cmake, python3X)
 
 Installation Guide Container
 ============================
