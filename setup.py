@@ -74,6 +74,13 @@ def cmake_discovery() :
                 config["GMP_INC"] = sl[3]
                 config["GMP_LIB"] = sl[4]
 
+    if 'PYBIND11_INC' not in config.keys() :
+        try :
+            import pybind11
+            config['PYBIND11_INC'] = pybind11.get_include()
+        except :
+            pass
+
     print(config)
     os.system("rm -rf .cmake")
     return config
