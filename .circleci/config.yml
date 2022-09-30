@@ -21,12 +21,13 @@ jobs:
       - checkout
 
       - run:
+          name: "Install pytest"
+          command: "python3.10 -m pip install pytest"
+
+      - run:
           name: "Build pyg4ometry py310"
           command: "python3.10 setup.py bdist_wheel"
 
-      - run:
-          name: "Install pytest"
-          command: "python3.10 -m pip install pytest"
       - run:
           name: "Test pyg4ometry"
           command: "pytest"
