@@ -20,16 +20,16 @@ jobs:
 
       - run:
           name: "Pip requirements"
-          command: "curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 \\ &
-                    python3.10 -m pip install pybdind11"
+          command: "curl -sS https://bootstrap.pypa.io/get-pip.py | /opt/homebrew/bin/python3.10 \\ &
+                    /opt/homebrew/bin/python3.10 -m pip install pybdind11"
 
       - run:
           name: "Install pytest"
-          command: "python3.10 -m pip install pytest"
+          command: "/opt/homebrew/bin/python3.10 -m pip install pytest"
 
       - run:
           name: "Build pyg4ometry py310"
-          command: "python3.10 setup.py bdist_wheel"
+          command: "/opt/homebrew/bin/python3.10 setup.py bdist_wheel"
 
   pyg4ometry-linux:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
