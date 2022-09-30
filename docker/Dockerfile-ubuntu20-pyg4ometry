@@ -56,3 +56,28 @@ RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
 RUN cd pyg4ometry && \
     pip install --editable . 
 
+RUN apt install -y patchelf && \
+    pip install auditwheel twine
+
+# Stuff for packaging on pypi (remember already have py3.8)
+RUN apt install -y software-properties-common curl &&\
+    add-apt-repository -y ppa:deadsnakes/ppa &&\
+    apt update &&\
+    apt install -y python3.7-dev python3.9-dev python3.10-dev python3.11-dev &&\
+    apt install -y python3.7-distutils python3.9-distutils python3.10-distutils python3.11-distutils &&\
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11 &&\
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 &&\
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.9 &&\
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.7 &&\
+    python3.11 -m pip install cython &&\
+    python3.10 -m pip install cython &&\
+    python3.9 -m pip install cython &&\
+    python3.7 -m pip install cython 
+
+#RUN cd pyg4ometry && \
+#    python3.7 setup.py bdist_wheel && \
+#    python setup.py bdist_wheel && \
+#    python3.9 setup.py bdist_wheel && \
+#    python3.10 setup.py bdist_wheel && \
+#    python3.11 setup.py bdist_wheel && \
+#    auditwheel repair dist/*whl -w dist/ --plat manylinux_2_31_x86_64
