@@ -21,12 +21,24 @@ jobs:
       - checkout
 
       - run:
-          name: "Build pyg4ometry py10"
+          name: "Build pyg4ometry py310"
           command: "python3.10 setup.py bdist_wheel"
 
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Test pyg4ometry py310"
+          command: "pytest"
+
+      #- run:
+      #    name: "Build pyg4ometry py39"
+      #    command: "python3.9 setup.py bdist_wheel"
+
+      #- run:
+      #    name: "Build pyg4ometry py38"
+      #    command: "python setup.py bdist_wheel"
+
+      #- run:
+      #    name: "Build pyg4ometry py37"
+      #    command: "python3.7 setup.py bdist_wheel"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
