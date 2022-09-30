@@ -5,22 +5,53 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
+  pyg4ometry-linux:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    resource_class: large
+
     docker:
-      - image: cimg/base:stable
+      - image: sboogert/pyg4ometry-ubuntu20
+        auth:
+          username: mydockerhub-user  # can specify string literal values
+          password: $DOCKERHUB_PASSWORD  # or project environment variable reference
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Install pytest"
+          command: "python3.10 -m pip install pytest"
+
+      - run:
+          name: "Build pyg4ometry py310"
+          command: "python3.10 setup.py bdist_wheel"
+
+      - run:
+          name: "Test pyg4ometry"
+          command: "python3.10 -m pip install  &&\
+                    mkdir test-results &&\
+                    pytest --junitxml=test-results/junit.xml"
+
+      - store_test_results:
+          path: test-results
+
+      #- run:
+      #    name: "Build pyg4ometry py39"
+      #    command: "python3.9 setup.py bdist_wheel"
+
+      #- run:
+      #    name: "Build pyg4ometry py38"
+      #    command: "python setup.py bdist_wheel"
+
+      #- run:
+      #    name: "Build pyg4ometry py37"
+      #    command: "python3.7 setup.py bdist_wheel"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  pyg4ometry-build:
     jobs:
-      - say-hello
+      - pyg4ometry-linux
