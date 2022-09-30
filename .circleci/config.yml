@@ -58,7 +58,7 @@ jobs:
           name: "Test pyg4ometry"
           command: "python3.10 -m pip install .   &&\
                     mkdir test-results &&\
-                    pytest --junitxml=test-results/junit.xml"
+                    python3.10 -m pytest --junitxml=test-results/junit.xml"
 
       - store_test_results:
           path: test-results
