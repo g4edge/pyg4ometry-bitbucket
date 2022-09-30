@@ -30,7 +30,7 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "python3.10 setup.py install bdist/*wheel"
+          command: "python3.10 setup.py install bdist/*wheel &&\
                     mkdir test-results &&\
                     pytest --junitxml=test-results/junit.xml"
 
