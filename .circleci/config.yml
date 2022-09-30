@@ -25,7 +25,10 @@ jobs:
           command: "python3.10 setup.py bdist_wheel"
 
       - run:
-          name: "Test pyg4ometry py310"
+          name: "Install pytest"
+          command: "python3.10 -m pip install pytest"
+      - run:
+          name: "Test pyg4ometry"
           command: "pytest"
 
       #- run:
