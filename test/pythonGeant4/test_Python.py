@@ -270,7 +270,7 @@ def test_Python_VisualisationVtk_setWireframe_VisualisationOptions():
 
     v = pyg4ometry.visualisation.VtkViewer()
     v.addLogicalVolume(lv)
-    v.view(interactive=False)
+    #v.view(interactive=False)
 
 def test_Python_VisualisationVtk_setOpacityOverlap():
     from pyg4ometry.commontest import OverlapCoplTest
