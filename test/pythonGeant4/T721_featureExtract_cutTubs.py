@@ -2,7 +2,7 @@ import pyg4ometry as _pyg4
 import os as _os
 import numpy as _np
 
-def Test(vis=True, interactive=True):
+def Test(vis=False, interactive=False):
 
     reg = _pyg4.geant4.Registry()
     radius1 = 7
