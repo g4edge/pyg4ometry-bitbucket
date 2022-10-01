@@ -5,6 +5,14 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+
+  pyg4ometry-win: # name of your job
+    machine:
+      image: win/server-2022
+    steps:
+        - checkout
+        - run: Write-Host 'Hello, Windows
+
   pyg4ometry-mac:
     resource_class: medium
 
@@ -25,7 +33,7 @@ jobs:
 
       - run:
           name: "Install pytest"
-          command: "python3 -m pip install pytest setuptools"
+          command: "python3 -m pip install pytest"
 
       - run:
           name: "Build pyg4ometry py310"
@@ -35,7 +43,7 @@ jobs:
           name: "Test pyg4ometry"
           command: "python3 -m pip install .   &&\
                     mkdir test-results &&\
-                    python3 -m pytest --junitxml=test-results/junit.xml"
+                    python3 -m pytest -W ignore:DeprecationWarning -W ignore::PendingDeprecationWarning -W ignore::ImportWarning --disable-pytest-warnings --junitxml=test-results/junit.xml"
 
       - store_test_results:
           path: test-results
@@ -57,7 +65,7 @@ jobs:
 
       - run:
           name: "Install pytest"
-          command: "python3.10 -m pip install pytest importlib-metadata setuptools"
+          command: "python3.10 -m pip install pytest"
 
       - run:
           name: "Build pyg4ometry py310"
@@ -67,7 +75,11 @@ jobs:
           name: "Test pyg4ometry"
           command: "python3.10 -m pip install .   &&\
                     mkdir test-results &&\
-                    python3.10 -m pytest --junitxml=test-results/junit.xml"
+                    python3.10 -m pytest -W ignore:DeprecationWarning -W ignore::PendingDeprecationWarning -W ignore::ImportWarning --disable-pytest-warnings --junitxml=test-results/junit.xml"
+
+      # many linux
+      # deploy via ssh
+
 
       - store_test_results:
           path: test-results
@@ -79,3 +91,4 @@ workflows:
     jobs:
       - pyg4ometry-mac
       - pyg4ometry-linux
+      #- pyg4ometry-win
