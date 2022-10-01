@@ -8,7 +8,7 @@ import pyg4ometry.fluka as _fluka
 
 from os import path as _path
 
-def Test(vis = True, interactive = False, gdml = True, fluka = False) :
+def Test(vis = False, interactive = False, gdml = True, fluka = False) :
     
     reg = _g4.Registry()
     

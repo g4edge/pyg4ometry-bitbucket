@@ -3,9 +3,9 @@ requires = [
     "cmake>=3.22",
     "Cython",  # still needed?
     "pybind11~=2.9.2",
-    "setuptools>=42",
-    "setuptools_scm[toml]>=3.4",
-    "scikit-build>=0.15.0",
+    "setuptools==65.4.1",
+    #"setuptools_scm[toml]>=3.4",
+    #"scikit-build>=0.15.0"
 ]
 
 build-backend = "setuptools.build_meta"
@@ -15,10 +15,10 @@ write_to = "src/pyg4ometry/_version.py"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
-xfail_strict = true
-filterwarnings = "error"
-log_cli_level = "info"
+#addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+#xfail_strict = true
+#filterwarnings = "error"
+#log_cli_level = "info"
 testpaths = "test"
 
 [tool.isort]

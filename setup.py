@@ -58,7 +58,10 @@ def cmake_discovery() :
         sl = l.split()
         if sl[1] == "HAVFOUND" :
             if sl[2] == "Boost" :
-                config["BOOST_INC"] = sl[3]
+                if len(sl) < 3 :
+                    config["BOOST_INC"] = sl[1]
+                else :
+                    config["BOOST_INC"] = sl[2]
             elif sl[2] == "pybind11" :
                 config["PYBIND11_INC"] = sl[3].split(";")[0]
             elif sl[2] == "OpenCASCADE" :
@@ -73,6 +76,13 @@ def cmake_discovery() :
             elif sl[2] == "GMP" :
                 config["GMP_INC"] = sl[3]
                 config["GMP_LIB"] = sl[4]
+
+    if 'PYBIND11_INC' not in config.keys() :
+        try :
+            import pybind11
+            config['PYBIND11_INC'] = pybind11.get_include()
+        except :
+            pass
 
     print(config)
     os.system("rm -rf .cmake")

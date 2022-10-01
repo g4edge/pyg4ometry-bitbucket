@@ -5,11 +5,11 @@ from . import VacuumSystems
 from . import Support
 
 def test_CavityBpm() :
-    DipoleCbpm.Test(True,False)
+    DipoleCbpm.Test(False,False)
 
 def test_SphericalChamber():
-    VacuumSystems.Test(True,False)
+    VacuumSystems.Test(False,False)
 
 def test_SupportTable():
-    Support.Test(True,False)
+    Support.Test(False,False)
 

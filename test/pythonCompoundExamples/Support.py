@@ -16,7 +16,7 @@ def SupportMagnet(name = "supportMagnet", shape = "polygonal", parameters = {"nf
 def SupportTable(name = "support",
                  length = 4, width = 2.0, height = 1.5, thickness = 0.05,
                  nSupport = 4, sectionSize = 0.1, sectionThickness = 0.005, horizontalPad = 0.90, verticalPad = 0.90,
-                 reg = None, vis=True, interactive = False) :
+                 reg = None, vis=False, interactive = False) :
 
     if reg == None :
         reg = _g4.Registry()
@@ -112,7 +112,7 @@ def SupportTable(name = "support",
 
     return {'logical':supportLogical}
 
-def Test(vis = True, interactive = False ) :
+def Test(vis = False, interactive = False ) :
 
     reg = _g4.Registry()
 

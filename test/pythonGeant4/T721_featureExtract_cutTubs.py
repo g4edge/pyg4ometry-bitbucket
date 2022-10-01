@@ -2,7 +2,7 @@ import pyg4ometry as _pyg4
 import os as _os
 import numpy as _np
 
-def Test(vis=True, interactive=True):
+def Test(vis=False, interactive=False):
 
     reg = _pyg4.geant4.Registry()
     radius1 = 7
@@ -28,8 +28,8 @@ def Test(vis=True, interactive=True):
                                circumference=2*_np.pi*8,
                                planes=[],
                                outputFileName=datFileName,
-                               bViewer=True,
-                               bViewerInteractive=False)
+                               bViewer=vis,
+                               bViewerInteractive=interactive)
 
     fd = _pyg4.features.algos.FeatureData()
     fd.readFile(datFileName)

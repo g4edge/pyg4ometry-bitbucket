@@ -5,6 +5,49 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+
+  pyg4ometry-win: # name of your job
+    machine:
+      image: win/server-2022
+    steps:
+        - checkout
+        - run: Write-Host 'Hello, Windows
+
+  pyg4ometry-mac:
+    resource_class: medium
+
+    macos:
+      xcode: 13.4.1
+
+    steps:
+      - checkout
+
+      - run:
+          name: "Homebrew requirements"
+          command: "brew install python@3.10 cmake gmp mpfr boost cgal opencascade"
+
+      - run:
+          name: "Pip requirements"
+          command: "curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \\ &
+                    python3 -m pip install pybind11 cython"
+
+      - run:
+          name: "Install pytest"
+          command: "python3 -m pip install pytest"
+
+      - run:
+          name: "Build pyg4ometry py310"
+          command: "python3 setup.py bdist_wheel"
+
+      - run:
+          name: "Test pyg4ometry"
+          command: "python3 -m pip install --editable .   &&\
+                    mkdir test-results &&\
+                    python3 -m pytest --junitxml=test-results/junit.xml"
+
+      - store_test_results:
+          path: test-results
+
   pyg4ometry-linux:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -30,28 +73,22 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "python3.10 -m pip install  &&\
+          command: "python3.10 -m pip install --editable .   &&\
                     mkdir test-results &&\
-                    pytest --junitxml=test-results/junit.xml"
+                    python3.10 -m pytest --junitxml=test-results/junit.xml"
+
+      # many linux
+      # deploy via ssh
+
 
       - store_test_results:
           path: test-results
-
-      #- run:
-      #    name: "Build pyg4ometry py39"
-      #    command: "python3.9 setup.py bdist_wheel"
-
-      #- run:
-      #    name: "Build pyg4ometry py38"
-      #    command: "python setup.py bdist_wheel"
-
-      #- run:
-      #    name: "Build pyg4ometry py37"
-      #    command: "python3.7 setup.py bdist_wheel"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   pyg4ometry-build:
     jobs:
+      - pyg4ometry-mac
       - pyg4ometry-linux
+      #- pyg4ometry-win
