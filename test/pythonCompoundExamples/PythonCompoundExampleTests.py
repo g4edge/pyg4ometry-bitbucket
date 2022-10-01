@@ -13,13 +13,13 @@ import logging as _log
 
 class PythonCompoundExampleTests(_unittest.TestCase) :
     def test_CavityBpm(self) :
-        DipoleCbpm.Test(True,False)
+        DipoleCbpm.Test(False,False)
 
     def test_SphericalChamber(self):
-        VacuumSystems.Test(True,False)
+        VacuumSystems.Test(False,False)
 
     def test_SupportTable(self):
-        Support.Test(True,False)
+        Support.Test(False,False)
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)        

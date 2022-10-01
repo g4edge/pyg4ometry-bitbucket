@@ -11,7 +11,7 @@ import pyg4ometry.visualisation as _vis
 
 lengthSafety = 1e-5
 
-def CF_BlankFlange(name = "flange1", cf_dn = 'DN16', reg = None, vis=True, write=True) :
+def CF_BlankFlange(name = "flange1", cf_dn = 'DN16', reg = None, vis=False, write=True) :
 
     if reg == None :
         reg = _g4.Registry()
