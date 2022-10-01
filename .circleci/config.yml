@@ -31,6 +31,15 @@ jobs:
           name: "Build pyg4ometry py310"
           command: "python3 setup.py bdist_wheel"
 
+      - run:
+          name: "Test pyg4ometry"
+          command: "python3 -m pip install .   &&\
+                    mkdir test-results &&\
+                    python3 -m pytest --junitxml=test-results/junit.xml"
+
+      - store_test_results:
+          path: test-results
+
   pyg4ometry-linux:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -62,18 +71,6 @@ jobs:
 
       - store_test_results:
           path: test-results
-
-      #- run:
-      #    name: "Build pyg4ometry py39"
-      #    command: "python3.9 setup.py bdist_wheel"
-
-      #- run:
-      #    name: "Build pyg4ometry py38"
-      #    command: "python setup.py bdist_wheel"
-
-      #- run:
-      #    name: "Build pyg4ometry py37"
-      #    command: "python3.7 setup.py bdist_wheel"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
