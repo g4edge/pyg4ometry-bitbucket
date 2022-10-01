@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: "Install pytest"
-          command: "python3 -m pip install pytest"
+          command: "python3 -m pip install pytest setuptools"
 
       - run:
           name: "Build pyg4ometry py310"
@@ -48,7 +48,7 @@ jobs:
 
       - run:
           name: "Install pytest"
-          command: "python3.10 -m pip install pytest importlib-metadata"
+          command: "python3.10 -m pip install pytest importlib-metadata setuptools"
 
       - run:
           name: "Build pyg4ometry py310"
