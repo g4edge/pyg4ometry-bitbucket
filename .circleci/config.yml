@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: "Homebrew requirements"
-          command: "brew install python@3.10 cmake gmp mpfr cgal opencascade"
+          command: "brew install python@3.10 cmake gmp mpfr boost cgal opencascade"
 
       - run:
           name: "Pip requirements"
@@ -41,9 +41,9 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "python3 -m pip install .   &&\
+          command: "python3 -m pip install --editable .   &&\
                     mkdir test-results &&\
-                    python3 -m pytest -W ignore:DeprecationWarning -W ignore::PendingDeprecationWarning -W ignore::ImportWarning --disable-pytest-warnings --junitxml=test-results/junit.xml"
+                    python3 -m pytest --junitxml=test-results/junit.xml"
 
       - store_test_results:
           path: test-results
@@ -73,9 +73,9 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "python3.10 -m pip install .   &&\
+          command: "python3.10 -m pip install --editable .   &&\
                     mkdir test-results &&\
-                    python3.10 -m pytest -W ignore:DeprecationWarning -W ignore::PendingDeprecationWarning -W ignore::ImportWarning --disable-pytest-warnings --junitxml=test-results/junit.xml"
+                    python3.10 -m pytest --junitxml=test-results/junit.xml"
 
       # many linux
       # deploy via ssh
