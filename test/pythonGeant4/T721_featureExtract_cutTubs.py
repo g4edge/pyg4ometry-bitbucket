@@ -28,8 +28,8 @@ def Test(vis=False, interactive=False):
                                circumference=2*_np.pi*8,
                                planes=[],
                                outputFileName=datFileName,
-                               bViewer=True,
-                               bViewerInteractive=False)
+                               bViewer=vis,
+                               bViewerInteractive=interactive)
 
     fd = _pyg4.features.algos.FeatureData()
     fd.readFile(datFileName)
