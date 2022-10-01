@@ -112,7 +112,7 @@ def SupportTable(name = "support",
 
     return {'logical':supportLogical}
 
-def Test(vis = True, interactive = False ) :
+def Test(vis = False, interactive = False ) :
 
     reg = _g4.Registry()
 
