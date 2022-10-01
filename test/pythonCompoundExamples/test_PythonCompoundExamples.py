@@ -11,5 +11,5 @@ def test_SphericalChamber():
     VacuumSystems.Test(False,False)
 
 def test_SupportTable():
-    Support.Test(True,False)
+    Support.Test(False,False)
 
