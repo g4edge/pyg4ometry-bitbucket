@@ -240,7 +240,7 @@ def test_Python_ExceptionIdenticalNameError() :
 def test_Python_VisualisationVtk_setOpacity():
     from pyg4ometry.commontest import BoxTest
 
-    r = BoxTest(True,False)
+    r = BoxTest(False,False)
     v  = r['vtkViewer']
     v.setOpacity(0,0)
     v.setOpacity(0.5,-1)
@@ -248,14 +248,14 @@ def test_Python_VisualisationVtk_setOpacity():
 def test_Python_VisualisationVtk_setWireframe():
     from pyg4ometry.commontest import BoxTest
 
-    r = BoxTest(True,False)
+    r = BoxTest(False,False)
     v  = r['vtkViewer']
     v.setWireframe()
 
 def test_Python_VisualisationVtk_setSurface():
     from pyg4ometry.commontest import BoxTest
 
-    r = BoxTest(True,False)
+    r = BoxTest(False,False)
     v  = r['vtkViewer']
     v.setSurface()
 
@@ -263,7 +263,7 @@ def test_Python_VisualisationVtk_setWireframe_VisualisationOptions():
     from pyg4ometry.commontest import BoxTest
     import pyg4ometry.visualisation.VtkViewer
 
-    r = BoxTest(True,False)
+    r = BoxTest(False,False)
     lv = r['logicalVolume']
     dv = lv.daughterVolumes[0]
     dv.visOptions.representation = "wireframe"
@@ -275,28 +275,28 @@ def test_Python_VisualisationVtk_setWireframe_VisualisationOptions():
 def test_Python_VisualisationVtk_setOpacityOverlap():
     from pyg4ometry.commontest import OverlapCoplTest
 
-    r = OverlapCoplTest(True,False)
+    r = OverlapCoplTest(False,False)
     v  = r['vtkViewer']
     v.setOpacityOverlap(0)
 
 def test_Python_VisualisationVtk_setWireframeOverlap():
     from pyg4ometry.commontest import OverlapCoplTest
 
-    r = OverlapCoplTest(True,False)
+    r = OverlapCoplTest(False,False)
     v  = r['vtkViewer']
     v.setWireframeOverlap()
 
 def test_Python_VisualisationVtk_setSurfaceOverlap():
     from pyg4ometry.commontest.OverlapCopl import OverlapCoplTest
 
-    r = OverlapCoplTest(True,False)
+    r = OverlapCoplTest(False,False)
     v  = r['vtkViewer']
     v.setSurfaceOverlap()
 
 def test_Python_VisualisationVtk_setRandomColours():
     from pyg4ometry.commontest.OverlapCopl import OverlapCoplTest
 
-    r = OverlapCoplTest(True,False)
+    r = OverlapCoplTest(False,False)
     v  = r['vtkViewer']
     v.setRandomColours()
 
