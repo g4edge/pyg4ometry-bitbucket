@@ -49,7 +49,9 @@ def cmake_discovery() :
 
     os.system("mkdir .cmake")
     os.system("cp CMakeLists_setup.txt .cmake/CMakeLists.txt")
-    p = subprocess.Popen("cmake . ",shell=True, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    os.system("ls")
+    os.system("env")
+    p = subprocess.Popen("cmake .",shell=True, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 
     config = {}
@@ -129,8 +131,7 @@ def pybind11_OCE_extensions(extDict, config) :
         extensions.append(extension)
 
     return extensions
-                              
-    
+
 config = cmake_discovery()
 
 csgExts  = cythonize(["src/pyg4ometry/pycsg/geom.pyx", "src/pyg4ometry/pycsg/core.pyx"])
