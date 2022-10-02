@@ -49,7 +49,7 @@ def cmake_discovery() :
 
     os.system("mkdir .cmake")
     os.system("cp CMakeLists_setup.txt .cmake/CMakeLists.txt")
-    p = subprocess.Popen(["cmake","."],shell=False, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(["cmake","."],shell=True, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 
     config = {}
