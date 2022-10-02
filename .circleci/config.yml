@@ -41,8 +41,7 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "export PYTHONVERBOSE=1 &&\
-                    python3 -m pip install --editable .   &&\
+          command: "python3 -m pip install --editable .   &&\
                     mkdir test-results &&\
                     python3 -m pytest --junitxml=test-results/junit.xml"
 
