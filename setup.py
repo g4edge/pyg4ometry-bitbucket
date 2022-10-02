@@ -84,7 +84,12 @@ def cmake_discovery() :
         except :
             pass
 
+    # if boost not found inject another path
+    if 'BOOST_INC' not in config.keys() :
+        config['BOOST_INC'] = config["MPFR_INC"]
+
     print(config)
+
     os.system("rm -rf .cmake")
     return config
 
