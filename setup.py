@@ -131,8 +131,7 @@ def pybind11_OCE_extensions(extDict, config) :
         extensions.append(extension)
 
     return extensions
-                              
-    
+
 config = cmake_discovery()
 
 csgExts  = cythonize(["src/pyg4ometry/pycsg/geom.pyx", "src/pyg4ometry/pycsg/core.pyx"])
