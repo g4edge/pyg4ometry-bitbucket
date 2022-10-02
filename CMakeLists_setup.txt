@@ -8,7 +8,7 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.71.0 QUIET COMPONENTS system) # header only libraries must not be added here
 
-if(Boost_FOUND)
+if(${Boost_FOUND})
   message(STATUS "HAVFOUND Boost ${Boost_INCLUDE_DIRS}")
   include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 else()
