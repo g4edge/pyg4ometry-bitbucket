@@ -49,6 +49,9 @@ def Test(vis=False, interactive=False):
     cs3 = cs.coordinateSystem(0,0.03,0)
     cs4 = cs.coordinateSystem(0,0.04,0)
 
+    if v is None :
+        return True
+
     v.addPlane(cs.origin, cs.e1, cs.e2, cs.dist)
     v.addPlane(cs.origin, cs1.e1, cs1.e2, cs.dist)
     v.addAxis(cs.origin,[cs.dist,cs.dist,cs.dist],cs.rot,label=True,disableCone=True)
