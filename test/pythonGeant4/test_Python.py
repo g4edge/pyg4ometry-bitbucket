@@ -85,40 +85,40 @@ def test_Python_TwoVector_T006Mul():
 # Transformation
 # #############################
 def test_Python_Rad2Deg() :
-    assert(_trans.rad2deg(_np.pi) == 180)
+    assert _trans.rad2deg(_np.pi) == 180
 
 def test_Python_Deg2Rad() :
-    assert(_trans.deg2rad(180) == _np.pi)
+    assert _trans.deg2rad(180) == _np.pi
 
 def test_Python_Tbxyz2axisangleX() :
-    assert(_trans.tbxyz2axisangle([_np.pi/2.0,0.0,0.0]) == [[1.0, 0.0, 0.0], 1.5707963267948966])
+    assert _trans.tbxyz2axisangle([_np.pi/2.0,0.0,0.0]) == [[1.0, 0.0, 0.0], 1.5707963267948966]
 
 def test_Python_Tbxyz2axisangleY() :
-    assert(_trans.tbxyz2axisangle([0.0,_np.pi/2.0,0.0]) == [[0.0, 1.0, 0.0], 1.5707963267948966])
+    assert _trans.tbxyz2axisangle([0.0,_np.pi/2.0,0.0]) == [[0.0, 1.0, 0.0], 1.5707963267948966]
 
 def test_Python_Tbxyz2axisangleZ() :
-    assert(_trans.tbxyz2axisangle([0.0,0.0,_np.pi/2.0]) == [[0.0, 0.0, 1.0], 1.5707963267948966])
+    assert _trans.tbxyz2axisangle([0.0,0.0,_np.pi/2.0]) == [[0.0, 0.0, 1.0], 1.5707963267948966]
 
 def test_Python_Matrix2axisangleX() :
     theta = 0.5
     m = _np.array([[             1,              0,              0],
                    [             0, _np.cos(theta),-_np.sin(theta)],
                    [             0, _np.sin(theta), _np.cos(theta)]])
-    assert(_trans.matrix2axisangle(m) == [[1.0000000000000002,0.0,0.0], 0.4999999999999999])
+    assert _trans.matrix2axisangle(m) == [[1.0000000000000002,0.0,0.0], 0.4999999999999999]
 
 def test_Python_Matrix2axisangleY() :
     theta = 0.5
     m = _np.array([[_np.cos(theta),              0,-_np.sin(theta)],
                    [             0,              1,              0],
                    [_np.sin(theta),              0, _np.cos(theta)]])
-    assert(_trans.matrix2axisangle(m) == [[0.0, -1.0000000000000002,0.0], 0.4999999999999999])
+    assert _trans.matrix2axisangle(m) == [[0.0, -1.0000000000000002,0.0], 0.4999999999999999]
 
 def test_Python_Matrix2axisangleZ() :
     theta = 0.5
     m = _np.array([[_np.cos(theta), -_np.sin(theta),0],
                    [_np.sin(theta), _np.cos(theta) , 0],
                    [             0,               0, 1]])
-    assert(_trans.matrix2axisangle(m) == [[0.0, 0.0, 1.0000000000000002], 0.4999999999999999])
+    assert _trans.matrix2axisangle(m) == [[0.0, 0.0, 1.0000000000000002], 0.4999999999999999]
 
 
 def test_Python_Axisangle2matrixX() :
