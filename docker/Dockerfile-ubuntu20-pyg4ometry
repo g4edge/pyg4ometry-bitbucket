@@ -46,6 +46,10 @@ RUN git clone https://github.com/CGAL/cgal.git && \
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
+# ROOT
+RUN wget https://root.cern/download/root_v6.26.06.Linux-ubuntu20-x86_64-gcc9.4.tar.gz &&\
+    tar zxf root_v6.26.06.Linux-ubuntu20-x86_64-gcc9.4.tar.gz
+
 # pyg4ometry
 ARG PYG4_TAG=1
 RUN git clone https://stewartboogert@bitbucket.org/jairhul/pyg4ometry.git && \
