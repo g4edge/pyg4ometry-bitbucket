@@ -36,14 +36,14 @@ jobs:
           command: "python3 -m pip install pytest"
 
       - run:
+          name: "Build pyg4ometry py310"
+          command: "python3 setup.py bdist_wheel"
+
+      - run:
           name: "Test pyg4ometry"
           command: "python3 -m pip install --editable .  &&\
                     mkdir test-results &&\
                     python3 -m pytest --junitxml=test-results/junit.xml"
-
-      - run:
-          name: "Build pyg4ometry py310"
-          command: "python3 setup.py bdist_wheel"
 
       - store_test_results:
           path: test-results
@@ -68,14 +68,14 @@ jobs:
           command: "python3.10 -m pip install pytest"
 
       - run:
+          name: "Build pyg4ometry py310"
+          command: "python3.10 setup.py bdist_wheel"
+
+      - run:
           name: "Test pyg4ometry"
           command: "python3.10 -m pip install --editable .   &&\
                     mkdir test-results &&\
                     python3.10 -m pytest --junitxml=test-results/junit.xml"
-
-      - run:
-          name: "Build pyg4ometry py310"
-          command: "python3.10 setup.py bdist_wheel"
 
       # many linux
       # deploy via ssh
