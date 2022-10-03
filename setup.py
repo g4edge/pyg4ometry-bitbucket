@@ -49,8 +49,6 @@ def cmake_discovery() :
 
     os.system("mkdir .cmake")
     os.system("cp CMakeLists_setup.txt .cmake/CMakeLists.txt")
-    os.system("ls")
-    os.system("env")
     p = subprocess.Popen("cmake .",shell=True, cwd=".cmake",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 
@@ -147,6 +145,5 @@ setup(
     # packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
-    # package_data={}, # TODO
     ext_modules=exts
 )
