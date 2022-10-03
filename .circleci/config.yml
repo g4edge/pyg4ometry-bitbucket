@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: "Homebrew requirements"
-          command: "brew install python@3.10 cmake gmp mpfr boost cgal opencascade"
+          command: "brew install python@3.10 cmake gmp mpfr boost cgal opencascade root"
 
       - run:
           name: "Pip requirements"
