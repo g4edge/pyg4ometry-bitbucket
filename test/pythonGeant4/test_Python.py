@@ -16,8 +16,8 @@ def test_Python_TwoVector_T002Repr():
 
 def test_Python_TwoVector_T003GetItem():
     v = TwoVector(1,2)
-    assert(v[0] ==1)
-    assert(v[1]  == 2)
+    assert v[0] ==1
+    assert v[1]  == 2
     try :
         print(v[2])
     except IndexError :
@@ -31,14 +31,14 @@ def test_Python_TwoVector_T004Add():
     f = 6.0
     s = "r"
 
-    assert((v1+v2)[0] == 4)
-    assert((v1+v2)[1] == 6)
+    assert (v1+v2)[0] == 4
+    assert (v1+v2)[1] == 6
 
-    assert((v1+i)[0] == 6)
-    assert((v1+i)[1] == 7)
+    assert (v1+i)[0] == 6
+    assert (v1+i)[1] == 7
 
-    assert((v1+f)[0] == 7.0)
-    assert((v1+f)[1] == 8.0)
+    assert (v1+f)[0] == 7.0
+    assert (v1+f)[1] == 8.0
 
     try :
         v1+s
@@ -53,14 +53,14 @@ def test_Python_TwoVector_T005Sub():
     f = 6.0
     s = "r"
 
-    assert((v1-v2)[0] == -2)
-    assert((v1-v2)[1] == -2)
+    assert (v1-v2)[0] == -2
+    assert (v1-v2)[1] == -2
 
-    assert((v1-i)[0] == -4)
-    assert((v1-i)[1] == -3)
+    assert (v1-i)[0] == -4
+    assert (v1-i)[1] == -3
 
-    assert((v1-f)[0] == -5.0)
-    assert((v1-f)[1] == -4.0)
+    assert (v1-f)[0] == -5.0
+    assert (v1-f)[1] == -4.0
 
     try :
         v1-s
@@ -74,8 +74,8 @@ def test_Python_TwoVector_T006Mul():
     f = 5
     s = "r"
 
-    assert((v1*f)[0],5)
-    assert((v1*f)[1],10)
+    assert (v1*f)[0] == 5
+    assert (v1*f)[1] == 10
 
     try :
         vv = v1*s
