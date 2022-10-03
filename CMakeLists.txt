@@ -1,66 +1,21 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+project(pyg4ometry)
 
-project(pyg4ometry-cmake)
+# Set a default build type if none was specified
+# CHANGEME when first stable version is out
+set(default_build_type "Release")
 
-# boost
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.71.0 QUIET COMPONENTS system) # header only libraries must not be added here
-
-if(Boost_FOUND)
-  message(STATUS "HAVFOUND Boost ${Boost_VERSION} ${Boost_INCLUDE_DIRS}")
-  include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE
+      "${default_build_type}"
+      CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE
+      PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 else()
-  message(STATUS "NOTFOUND boost")
+  message(STATUS "Setting build type to '${CMAKE_BUILD_TYPE}'")
 endif()
 
-# pybind11
-# /opt/local/share/cmake/pybind11/pybind11Config.cmake
-#``pybind11_INCLUDE_DIRS``
-#  Directories where pybind11 and python headers are located.
-#``pybind11_INCLUDE_DIR``
-#  Directory where pybind11 headers are located.
-#``pybind11_DEFINITIONS``
-#  Definitions necessary to use pybind11, namely USING_pybind11.
-#``pybind11_LIBRARIES``
-#  Compile flags and python libraries (as needed) to link against.
-find_package(pybind11 QUIET)
-if (pybind11_FOUND)
-  message(STATUS "HAVFOUND pybind11 ${pybind11_INCLUDE_DIRS} ${pybind11_LIBRARIES}")
-else()
-  message(STATUS "NOTFOUND pybind11")
-endif()
-
-# opencascade
-find_package(OpenCASCADE)
-
-if (OpenCASCADE_FOUND)
-  message(STATUS "HAVFOUND OpenCASCADE")
-endif()
-
-# cgal
-# there are lots of possible components you can search for...
-find_package(CGAL 5.0 QUIET)
-if (CGAL_FOUND)
-# CGAL_ROOT is the root directory of it
-  message(STATUS "HAVFOUND CGAL ${CGAL_INCLUDE_DIRS} ${CGAL_ROOT} ${CGAL_LIBRARIES}")
-else()
-  message(STATUS "NOTFOUND CGAL")
-endif()
-
-# mfpr
-find_package(MFPR QUIET)
-if (MPFR_FOUND)
-  message(STATUS "HAVFOUND MPFR ${MPFR_INCLUDE_DIR} ${MPFR_LIBRARIES_DIR} ${MPFR_LIBRARIES}")
-else()
-  message(STATUS "NOTFOUND MPFR")
-endif()
-
-# gmp
-find_package(gmp QUIET)
-if (GMP_FOUND)
-  message(STATUS "HAVFOUND GMP ${GMP_INCLUDE_DIR} ${GMP_LIBRARIES_DIR} ${GMP_LIBRARIES}")
-else()
-  message(STATUS "NOTFOUND GMP")
-endif()
+add_subdirectory(src/pyg4ometry/pycgal)
+add_subdirectory(src/pyg4ometry/pyoce)
