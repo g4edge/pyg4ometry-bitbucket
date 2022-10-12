@@ -78,6 +78,21 @@ RUN apt install -y software-properties-common curl &&\
     python3.9 -m pip install cython &&\
     python3.7 -m pip install cython 
 
+RUN wget https://root.cern/download/root_v6.26.06.source.tar.gz &&\
+    tar zxf root_v6.26.06.source.tar.gz &&\
+    mkdir build_root_py37     &&\
+    mkdir build_root_py38     &&\
+    mkdir build_root_py39     &&\
+    mkdir build_root_py310    &&\
+    mkdir install_root_py37   &&\
+    mkdir install_root_py38   &&\
+    mkdir install_root_py39   &&\
+    mkdir install_root_py310  &&\    
+    cd build_root_py39       
+#   cmake -DCMAKE_INSTALL_PREFIX=../install_root_py39 ../root-6.26.06 &&\
+#   make -j4 install
+    
+    
 #RUN cd pyg4ometry && \
 #    python3.7 setup.py bdist_wheel && \
 #    python setup.py bdist_wheel && \
