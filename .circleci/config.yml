@@ -41,7 +41,8 @@ jobs:
 
       - run:
           name: "Test pyg4ometry"
-          command: "python3 -m pip install --editable .  &&\
+          command: "export DYLD_LIBRARY_PATH=/opt/local/lib/ &&\
+                    python3 -m pip install --editable .  &&\
                     mkdir test-results &&\
                     python3 -m pytest --junitxml=test-results/junit.xml"
 
