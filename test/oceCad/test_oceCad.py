@@ -9,7 +9,7 @@ def commonCode(fileName, mats ={}, skip = [], mesh = {}) :
     worldName = _pyg4.pyoce.pythonHelpers.get_TDataStd_Name_From_Label(ls.Value(1))
     reg = _pyg4.convert.oce2Geant4(r.shapeTool, worldName,mats,skip,mesh)
     wa = reg.logicalVolumeDict[worldName]
-    wl = wa.makeWorldVolume()
+    # wl = wa.makeWorldVolume()
 
 def test_1_BasicSolids_Bodies() :
     commonCode("1_BasicSolids_Bodies.step")
