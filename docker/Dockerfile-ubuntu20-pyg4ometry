@@ -15,7 +15,7 @@ RUN apt -y install build-essential
 # required packages
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata libxt-dev libglx-dev libgl1-mesa-dev \
     wget libboost-all-dev emacs xvfb x11vnc fvwm git libmpfr-dev libgmp-dev pybind11-dev \
-    cmake libxi-dev libxmu-dev
+    cmake libxi-dev libxmu-dev libxpm-dev
 
 # python 
 RUN apt-get -y install python3 python3-pip && \
@@ -23,7 +23,8 @@ RUN apt-get -y install python3 python3-pip && \
 
 # vtk 
 RUN wget https://www.vtk.org/files/release/9.0/vtk-9.0.0rc3-cp38-cp38-linux_x86_64.whl && \
-    pip3 install vtk-9.0.0rc3-cp38-cp38-linux_x86_64.whl
+    pip3 install vtk-9.0.0rc3-cp38-cp38-linux_x86_64.whl &&\
+    rm -rf vtk-9.0.0rc3-cp38-cp38-linux_x86_64.whl
 
 # open cascade
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install occt* occt-misc
@@ -35,20 +36,18 @@ RUN git clone https://github.com/Open-Cascade-SAS/OCCT.git && \
     cmake ../OCCT &&\
     make -j4 &&\
     make install &&\
-    cd ../
+    cd ../ &&\
+    rm -rf OCCT-build OCCT
 
 # CGAL
 RUN git clone https://github.com/CGAL/cgal.git && \
     cd cgal && git checkout v5.4.1 && cd ../ && \
-    mkdir cgal-build && cd cgal-build && cmake ../cgal && make install 
+    mkdir cgal-build && cd cgal-build && cmake ../cgal && make install &&\
+    cd ../ && rm -rf cgal-build cgal
 
 # default python
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-
-# ROOT
-RUN wget https://root.cern/download/root_v6.26.06.Linux-ubuntu20-x86_64-gcc9.4.tar.gz &&\
-    tar zxf root_v6.26.06.Linux-ubuntu20-x86_64-gcc9.4.tar.gz
 
 # pyg4ometry
 ARG PYG4_TAG=1
@@ -73,10 +72,10 @@ RUN apt install -y software-properties-common curl &&\
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 &&\
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.9 &&\
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.7 &&\
-    python3.11 -m pip install cython &&\
-    python3.10 -m pip install cython &&\
-    python3.9 -m pip install cython &&\
-    python3.7 -m pip install cython 
+    python3.11 -m pip install cython numpy &&\
+    python3.10 -m pip install cython numpy &&\
+    python3.9 -m pip install cython numpy &&\
+    python3.7 -m pip install cython numpy 
 
 RUN wget https://root.cern/download/root_v6.26.06.source.tar.gz &&\
     tar zxf root_v6.26.06.source.tar.gz &&\
@@ -84,19 +83,47 @@ RUN wget https://root.cern/download/root_v6.26.06.source.tar.gz &&\
     mkdir build_root_py38     &&\
     mkdir build_root_py39     &&\
     mkdir build_root_py310    &&\
+    mkdir build_root_py311    &&\
     mkdir install_root_py37   &&\
     mkdir install_root_py38   &&\
     mkdir install_root_py39   &&\
-    mkdir install_root_py310  &&\    
-    cd build_root_py39       
-#   cmake -DCMAKE_INSTALL_PREFIX=../install_root_py39 ../root-6.26.06 &&\
-#   make -j4 install
-    
-    
-#RUN cd pyg4ometry && \
-#    python3.7 setup.py bdist_wheel && \
-#    python setup.py bdist_wheel && \
-#    python3.9 setup.py bdist_wheel && \
-#    python3.10 setup.py bdist_wheel && \
-#    python3.11 setup.py bdist_wheel && \
-#    auditwheel repair dist/*whl -w dist/ --plat manylinux_2_31_x86_64
+    mkdir install_root_py310  &&\
+    mkdir install_root_py311
+
+#RUN cd build_root_py311       &&\
+#    cmake -DPYTHON_EXECUTABLE=/usr/bin/python3.11 -DCMAKE_INSTALL_PREFIX=../install_root_py311/ ../root-6.26.06/ &&\
+#    make -j4 install          &&\
+#    cd ../                    &&\
+#    rm -rf build_root_py311   
+
+RUN cd build_root_py310       &&\
+    cmake -DPYTHON_EXECUTABLE=/usr/bin/python3.10 -DCMAKE_INSTALL_PREFIX=../install_root_py310/ ../root-6.26.06/ &&\
+    make -j4 install          &&\
+    cd ../                    &&\
+    rm -rf build_root_py310   
+
+RUN cd build_root_py39        &&\
+    cmake -DPYTHON_EXECUTABLE=/usr/bin/python3.9 -DCMAKE_INSTALL_PREFIX=../install_root_py39/ ../root-6.26.06/ &&\
+    make -j4 install          &&\
+    cd ../                    &&\
+    rm -rf build_root_py39   
+
+RUN cd build_root_py38        &&\
+    cmake -DPYTHON_EXECUTABLE=/usr/bin/python3.8 -DCMAKE_INSTALL_PREFIX=../install_root_py38/ ../root-6.26.06/ &&\
+    make -j4 install          &&\
+    cd ../                    &&\
+    rm -rf build_root_py38    
+
+RUN cd build_root_py37        &&\
+    cmake -DPYTHON_EXECUTABLE=/usr/bin/python3.7 -DCMAKE_INSTALL_PREFIX=../install_root_py37/ ../root-6.26.06/ &&\
+    make -j4 install          &&\
+    cd ../                    &&\
+    rm -rf build_root_py37 root_v6.26.06.source.tar.gz root-6.26.06
+
+RUN cd pyg4ometry && \
+    git pull && \
+    python3.7 setup.py bdist_wheel && \
+    python setup.py bdist_wheel && \
+    python3.9 setup.py bdist_wheel && \
+    python3.10 setup.py bdist_wheel 
+#   auditwheel repair dist/*whl -w dist/ --plat manylinux_2_31_x86_64

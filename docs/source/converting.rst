@@ -137,3 +137,68 @@ larger than formally necessary to ensure a correct conversion.  Providing
 the bounding box ensures that an efficient and accurate mesh of the QUA
 bodies can be generated meaning that the conversion to be performed in a
 tractable amount of time as well giving more performant tracking in Geant4.
+
+CAD (STEP/IGES) To GDML
+-----------------------
+
+The conersion from CAD (STEP) to GDML uses OpenCascade to read, interrogate 
+and tesselate the geometry. A CAD file might have a significant number of parts and assemblies. This naturally lends itself to the logical and physical volume structure 
+of Geant4/GDML. Often the entire CAD file does not need to be converted, only
+a sub-assembly. To determine what the stucture of the CAD file is the following commands
+can be called, creation of a CAD reader and dumping to the terminal the structure 
+of the CAD file.  
+
+
+.. code-block :: python 
+    
+    r = _pyg4.pyoce.Reader("1_BasicSolids_Bodies.step")
+    r.shapeTool.Dump()
+
+This particular example with have the following output 
+
+
+.. code-block :: console 
+
+      XCAFDoc_ShapeTool Trans. 0; Valid;  ID = efd212ee-6dfd-11d4-b9c8-0060b0ee281b
+
+   PART COMPOUND 0:1:1:1 "1_BasicSolids_Bodies v2" 
+      SOLID 0:1:1:1:1
+      SOLID 0:1:1:1:2
+      SOLID 0:1:1:1:3
+      SOLID 0:1:1:1:4
+      SOLID 0:1:1:1:5
+
+
+   Free Shapes: 1
+   PART COMPOUND  0:1:1:1 "1_BasicSolids_Bodies v2" 
+
+
+This example is 5 basic solids. So they are stored as a COMPOUND 0:1:1:1 and each SOLID is labelled 0:1:1:1:(1,2,3,4,5). Elements of the file do not need to have a name, it is more helpful to the user if they do. To convert a CAD model or a sub-assembly of a model the label is required. So a geant4 pyg4ometry registry can be created by calling.  
+
+.. code-block :: python
+
+   reg = pyg4ometry.convert.oce2Geant4(r.shapeTool,"1_BasicSolids_Bodies v2")
+
+It is also possible to call with the numerical tag, so 
+
+.. code-block :: python 
+
+   reg = pyg4ometry.convert.oce2Geant4(r.shapeTool,"0:1:1:1")
+
+
+Either way of accessing a particular SOLID, COMPOUND or ASSEMBLY. Once created the registry can be written as described in the Exporting Geometry section. So putting it all together
+
+
+.. code-block :: python 
+    
+   r = _pyg4.pyoce.Reader("1_BasicSolids_Bodies.step")
+   reg = pyg4ometry.convert.oce2Geant4(r.shapeTool,"1_BasicSolids_Bodies v2")
+   w = p4gometry.gdml.Writer()
+   w.addDetector(reg)
+   w.write('1_BasicSolids_Bodies.gdml')
+
+
+
+
+
+
