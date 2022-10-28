@@ -220,6 +220,183 @@ GDML module
    :undoc-members:
    :show-inheritance:
 
+
+CGAL module
+-----------
+
+.. automodule:: pyg4ometry.pycgal.Aff_transformation_3
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.CGAL
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.geom
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Nef_polyhedron_3
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Point_2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Point_3
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Polygon_2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Polygon_mesh_processing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Polyhedron_3
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Surface_mesh
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pycgal.Vector_3
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+OpenCascade module
+------------------
+
+.. automodule:: pyg4ometry.pyoce.pythonHelpers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.BRep
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.BRepMesh
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.Geom
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.gp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.Message
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.Poly
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.Reader
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.STEPCAFControl
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.StlAPI
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TCollection
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TDataStd
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TDF
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TDocStd
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TKernel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TNaming
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TopAbs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TopExp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TopLoc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.TopoDS
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.XCAFApp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.pyoce.XCAFDoc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Fluka bodies
 ------------
 .. automodule:: pyg4ometry.fluka.body
@@ -292,6 +469,9 @@ Convert
    :members:
    :undoc-members:
 
+.. automodule:: pyg4ometry.convert.oce2Geant4
+   :members:
+   :undoc-members:
 
 
 Compare
