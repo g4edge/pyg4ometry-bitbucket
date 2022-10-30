@@ -195,15 +195,9 @@ Visualisation module
    :undoc-members:
    :show-inheritance:
 
-Freecad module 
---------------
-.. automodule:: pyg4ometry.freecad.Reader
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 STL module
 ----------
+
 .. automodule:: pyg4ometry.stl.Reader
    :members:
    :undoc-members:
@@ -407,12 +401,63 @@ Fluka bodies
 
 Fluka module
 ------------
-.. automodule:: pyg4ometry.fluka.FlukaRegistry
+
+.. automodule:: pyg4ometry.fluka.card
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: pyg4ometry.fluka.Reader
+.. automodule:: pyg4ometry.fluka.directive
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.flair
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.fluka_registry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.lattice
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.material
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.preprocessor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.reader
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.region
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.vector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.vis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: pyg4ometry.fluka.Writer
    :members:
    :undoc-members:
    :show-inheritance:
@@ -437,7 +482,7 @@ Transformation
 Misc
 --------------
 
-.. automodule:: pyg4ometry.misc
+.. automodule:: pyg4ometry.misc.NestedSolids
    :members:
    :undoc-members:
 
