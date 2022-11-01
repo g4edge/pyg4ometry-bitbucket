@@ -21,7 +21,9 @@ cgal_extensions = {'pyg4ometry.pycgal.geom':['src/pyg4ometry/pycgal/geom.cxx'],
                    'pyg4ometry.pycgal.Polyhedron_3':['src/pyg4ometry/pycgal/Polyhedron_3.cxx'],
                    'pyg4ometry.pycgal.Nef_polyhedron_3': ['src/pyg4ometry/pycgal/Nef_polyhedron_3.cxx'],
                    'pyg4ometry.pycgal.Polygon_mesh_processing':['src/pyg4ometry/pycgal/Polygon_mesh_processing.cxx'],
-                   'pyg4ometry.pycgal.Polygon_2':['src/pyg4ometry/pycgal/Polygon_2.cxx']}
+                   'pyg4ometry.pycgal.Polygon_2':['src/pyg4ometry/pycgal/Polygon_2.cxx'],
+                   'pyg4ometry.pycgal.Partition_traits_2_Polygon_2':['src/pyg4ometry/pycgal/Partition_traits_2_Polygon_2.cxx'],
+                   'pyg4ometry.pycgal.Polygon_with_holes_2':['src/pyg4ometry/pycgal/Polygon_with_holes_2.cxx']}
 
 oce_extensions = {'pyg4ometry.pyoce.TCollection':['src/pyg4ometry/pyoce/TCollection.cxx'],
                  'pyg4ometry.pyoce.TKernel':['src/pyg4ometry/pyoce/TKernel.cxx'],
