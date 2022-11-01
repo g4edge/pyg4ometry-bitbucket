@@ -5,8 +5,8 @@ uninstall:
 	pip uninstall pyg4ometry
 
 develop:
-	pip install --editable . --user
 	python setup.py build_ext --inplace
+	pip install --editable . --user
 
 build_ext:
 	python setup.py build_ext --inplace
