@@ -105,7 +105,7 @@ def pybind11_CGAL_extensions(extDict,config) :
                               libraries = ['mpfr','gmp'],
                               sources = code,
                               language="c++",
-                              extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+                              extra_compile_args=["-O0","-std=c++14","-fvisibility=hidden"])
         extensions.append(extension)
 
     return extensions
