@@ -5,7 +5,7 @@ def makeSquare(sizex = 1, sizey = 1, offsetx = 0, offsety=0):
 	p1 = pyg4ometry.pycgal.Point_2.Point_2_EPECK(offsetx,offsety)
 	p2 = pyg4ometry.pycgal.Point_2.Point_2_EPECK(offsetx,sizey+offsety)
 	p3 = pyg4ometry.pycgal.Point_2.Point_2_EPECK(sizex+offsetx,sizey+offsety)
-	p4 = pyg4ometry.pycgal.Point_2.Point_2_EPECK(sizex+offsetx,0)
+	p4 = pyg4ometry.pycgal.Point_2.Point_2_EPECK(sizex+offsetx,offsety)
 
 	pa.push_back(p1)
 	pa.push_back(p2)
