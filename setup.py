@@ -12,22 +12,24 @@ import site
 site.ENABLE_USER_SITE = True
 
 cgal_extensions = {'pyg4ometry.pycgal.geom':['src/pyg4ometry/pycgal/geom.cxx'],
+                   'pyg4ometry.pycgal.Point_2': ['src/pyg4ometry/pycgal/Point_2.cxx'],
+                   'pyg4ometry.pycgal.Vector_2': ['src/pyg4ometry/pycgal/Vector_2.cxx'],
+                   'pyg4ometry.pycgal.Polygon_2': ['src/pyg4ometry/pycgal/Polygon_2.cxx'],
+                   'pyg4ometry.pycgal.Partition_traits_2_Polygon_2': [
+                   'src/pyg4ometry/pycgal/Partition_traits_2_Polygon_2.cxx'],
+                   'pyg4ometry.pycgal.Polygon_with_holes_2': ['src/pyg4ometry/pycgal/Polygon_with_holes_2.cxx'],
+                   'pyg4ometry.pycgal.Aff_transformation_3': ['src/pyg4ometry/pycgal/Aff_transformation_3.cxx'],
+                   'pyg4ometry.pycgal.Bbox_3': ['src/pyg4ometry/pycgal/Bbox_3.cxx'],
                    'pyg4ometry.pycgal.Point_3':['src/pyg4ometry/pycgal/Point_3.cxx'],
-                   'pyg4ometry.pycgal.Point_2':['src/pyg4ometry/pycgal/Point_2.cxx'],
-                   'pyg4ometry.pycgal.Vector_2':['src/pyg4ometry/pycgal/Vector_2.cxx'],
-                   'pyg4ometry.pycgal.Vector_3':['src/pyg4ometry/pycgal/Vector_3.cxx'],
                    'pyg4ometry.pycgal.Direction_3': ['src/pyg4ometry/pycgal/Direction_3.cxx'],
-                   'pyg4ometry.pycgal.Triangle_3':['src/pyg4ometry/pycgal/Triangle_3.cxx'],
                    'pyg4ometry.pycgal.Plane_3': ['src/pyg4ometry/pycgal/Plane_3.cxx'],
+                   'pyg4ometry.pycgal.Triangle_3':['src/pyg4ometry/pycgal/Triangle_3.cxx'],
+                   'pyg4ometry.pycgal.Vector_3': ['src/pyg4ometry/pycgal/Vector_3.cxx'],
                    'pyg4ometry.pycgal.CGAL':['src/pyg4ometry/pycgal/CGAL.cxx'],
-                   'pyg4ometry.pycgal.Aff_transformation_3':['src/pyg4ometry/pycgal/Aff_transformation_3.cxx'],
                    'pyg4ometry.pycgal.Surface_mesh':['src/pyg4ometry/pycgal/Surface_mesh.cxx'],
                    'pyg4ometry.pycgal.Polyhedron_3':['src/pyg4ometry/pycgal/Polyhedron_3.cxx'],
                    'pyg4ometry.pycgal.Nef_polyhedron_3': ['src/pyg4ometry/pycgal/Nef_polyhedron_3.cxx'],
-                   'pyg4ometry.pycgal.Polygon_mesh_processing':['src/pyg4ometry/pycgal/Polygon_mesh_processing.cxx'],
-                   'pyg4ometry.pycgal.Polygon_2':['src/pyg4ometry/pycgal/Polygon_2.cxx'],
-                   'pyg4ometry.pycgal.Partition_traits_2_Polygon_2':['src/pyg4ometry/pycgal/Partition_traits_2_Polygon_2.cxx'],
-                   'pyg4ometry.pycgal.Polygon_with_holes_2':['src/pyg4ometry/pycgal/Polygon_with_holes_2.cxx']}
+                   'pyg4ometry.pycgal.Polygon_mesh_processing':['src/pyg4ometry/pycgal/Polygon_mesh_processing.cxx']}
 
 oce_extensions = {'pyg4ometry.pyoce.TCollection':['src/pyg4ometry/pyoce/TCollection.cxx'],
                  'pyg4ometry.pyoce.TKernel':['src/pyg4ometry/pyoce/TKernel.cxx'],
