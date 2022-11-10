@@ -43,6 +43,7 @@ from . import T033_TessellatedSolid
 from . import T101_physical_logical
 from . import T102_overlap_none
 from . import T103_overlap_copl
+from . import T103_overlap_copl_simple
 from . import T104_overlap_volu
 from . import T105_assembly
 from . import T106_replica_x
@@ -283,6 +284,9 @@ def test_PythonGeant_T102_OverlapMone():
 
 def test_PythonGeant_T103_OverlapCopl():
     assert T103_overlap_copl.Test()["testStatus"]
+
+def test_PythonGeant_T103_OverlapCopl_Simple():
+    assert T103_overlap_copl_simple.Test()["testStatus"]
 
 def test_PythonGeant_T104_OverlapVolu():
     assert T104_overlap_volu.Test()["testStatus"]
