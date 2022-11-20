@@ -1,7 +1,7 @@
 .. _cli-interface:
 
 ======================
-Command line interface
+Command Line Interface
 ======================
 
 pyg4ometry provides a command line interface that it can be used by rather than starting python
