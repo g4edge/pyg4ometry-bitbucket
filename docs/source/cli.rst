@@ -1,3 +1,5 @@
+.. _cli-interface:
+
 ======================
 Command line interface
 ======================

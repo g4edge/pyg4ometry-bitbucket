@@ -13,7 +13,6 @@ Cascade. As pyg4ometry just wraps OpenCascade classes the manual for OpenCascade
 * https://dev.opencascade.org/doc/refman/html/
 
 
-
 Controlling tesselation
 -----------------------
 
@@ -22,7 +21,6 @@ There are two parameters to control the tesselation quality, the linear and angu
 
 Setting materials
 -----------------
-
 
 
 Object names
