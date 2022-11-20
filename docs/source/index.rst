@@ -27,6 +27,7 @@ pyg4ometry is a package to create, load, write and visualise solid geometry for 
    comparing
    analysing
    cad
+   cli
    moduledocs
    developer
    version_history

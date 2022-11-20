@@ -1,4 +1,4 @@
-.. _analysing:
+.. _cad-interface:
 
 =============
 CAD interface
@@ -14,24 +14,24 @@ Cascade. As pyg4ometry just wraps OpenCascade classes the manual for OpenCascade
 
 
 
-Controlling tesselation 
+Controlling tesselation
 -----------------------
 
 There are two parameters to control the tesselation quality, the linear and angular deviation. 
 
 
-Setting materials 
+Setting materials
 -----------------
 
 
 
-Object names 
+Object names
 ------------ 
 
 Two (or more) object within a CAD file can have the same name. This will cause a problem for the GDML (and the Registry). 
 
 
-Tetrahedralisation 
+Tetrahedralisation
 ------------------
 
 Sometimes it is appropriate to use a tetrahedralisation opposed to a surface mesh. 
