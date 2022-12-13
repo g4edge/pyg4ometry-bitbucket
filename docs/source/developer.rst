@@ -7,7 +7,7 @@ Unit tests
 .. code-block :: console 
 
    cd pyg4ometry/pyg4ometry/test
-   python2.7 runTests.py
+   python runTests.py
 
 Coverage
 --------
@@ -22,11 +22,11 @@ Profiling
 
 .. code-block :: console
 
-   python2.7 -m cProfile -s tottime myscript.py > myscript.log
+   python -m cProfile -s tottime myscript.py > myscript.log
 
 .. code-block :: console
 
-   pycallgraph-2.7 graphviz -- ../pyg4ometry/test/python/T008_Sphere.py
+   pycallgraph graphviz -- ../pyg4ometry/test/python/T008_Sphere.py
 
 Updating A Version
 ------------------
