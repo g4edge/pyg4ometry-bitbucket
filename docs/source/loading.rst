@@ -66,7 +66,7 @@ used for visualisation or other operations.
 	    :linenos:
 
 	    import pyg4ometry
-	    r = pyg4ometry.io.ROOTTGeo.Reader("example.root")
+	    r = pyg4ometry.io.ROOTTGeo.Reader("example_lht.root")
 	    l = r.getRegistry().getWorldVolume()
 	    v = pyg4ometry.visualisation.VtkViewerColouredMaterial()
 	    v.addLogicalVolume(l)
