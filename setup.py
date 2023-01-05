@@ -112,11 +112,14 @@ def pybind11_CGAL_extensions(extDict,config) :
                               include_dirs = [config['PYBIND11_INC'],
                                               config['BOOST_INC'],
                                               config['CGAL_INC']],
+                                              #'/usr/local/include/eigen3/',
+                                              #'/usr/local/include/ceres/'],
                               library_dirs=[config['MPFR_LIBDIR']],
-                              libraries = ['mpfr','gmp'],
+                              libraries=['mpfr', 'gmp'],
+                              # libraries = ['mpfr','gmp','ceres','glog'],
                               sources = code,
                               language="c++",
-                              extra_compile_args=["-O0","-std=c++14","-fvisibility=hidden"])
+                              extra_compile_args=["-O0","-std=c++17","-fvisibility=hidden"])
         extensions.append(extension)
 
     return extensions
@@ -139,7 +142,7 @@ def pybind11_OCE_extensions(extDict, config) :
                                            'TKXmlTObj','TKXmlXCAF','TKernel'],
                               sources = code,
                               language="c++",
-                              extra_compile_args=["-std=c++14","-fvisibility=hidden"])
+                              extra_compile_args=["-std=c++17","-fvisibility=hidden"])
         extensions.append(extension)
 
     return extensions
