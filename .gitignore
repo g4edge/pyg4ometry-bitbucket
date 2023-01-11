@@ -58,6 +58,13 @@ profile/fluka/profile-results/*
 *.ipynb
 *.step
 *.stp
+*.usd
+*.usdz
+*.glb
+*.gltf
+*.off
+*.ply
+*.blend
 _skbuild
 build_cmake
 cmake-build-*
