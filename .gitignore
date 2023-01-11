@@ -60,3 +60,4 @@ profile/fluka/profile-results/*
 *.stp
 _skbuild
 build_cmake
+cmake-build-*
