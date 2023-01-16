@@ -1,0 +1,3 @@
+include one_of_each_base.gmad;
+
+option, magnetGeometryType="polessquare";

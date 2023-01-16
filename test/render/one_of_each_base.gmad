@@ -1,0 +1,41 @@
+d1: drift, l=0.4*m;
+!d2: drift, l=0.05*m;
+d3: drift, l=1*m;
+q1: quadrupole, l=0.5*m, k1=1.31, outerDiameter=1*m;
+sex1: sextupole, l=0.5*m, k2=0.31,aper1=2*cm;
+oct1: octupole, l=0.5*m, k3=3.31, outerDiameter=0.876*m;
+dec1: decapole, l=0.5*m, k4=3.31, outerDiameter=0.876*m;
+sol1: solenoid, l=0.5*m, ks=1.31, outerDiameter=1.234*m;
+sb1: sbend, l=0.5*m, angle=0.1, apertureType="elliptical", aper1=2*cm, aper2=3*cm, beampipeThickness=0.1*cm, outerDiameter=0.80*m;
+rb1: rbend, l=2.5*m, angle= 0.1, outerDiameter=0.5*m;
+endoftheline: marker;
+hk1: hkicker, l=0.2*m, outerDiameter=0.4*m, angle=0.1*mrad;
+vk1: vkicker, l=0.2*m, outerDiameter=0.3*m, angle=-0.1*mrad;
+mul1 : multipole, l=0.5*m , knl={ 0,0,1 } , ksl={ 0,0,0 }, outerDiameter=0.876*m;
+musp1 : muspoiler,l=0.5*m, aper1=1*cm, outerDiameter=240*cm, B=1.5;
+
+rf1 : rfcavity, l=0.13*m, gradient = 0.1 * MV / m, outerDiameter=0.3*m, material = "Copper", cavityModel = "Tesla9Cell", frequency = 8*MHz;
+Tesla9Cell: cavitymodel,
+       type="elliptical",
+       irisRadius = 35*mm,
+       equatorRadius = 103.3*mm,
+!      halfCellLength = 57.7*mm,
+       equatorHorizontalAxis = 40*mm,
+       equatorVerticalAxis = 42*mm,
+       irisHorizontalAxis = 12*mm,
+       irisVerticalAxis = 19*mm,
+       tangentLineAngle = 13.3*pi/180,
+       thickness = 1*mm,
+       numberOfPoints = 24,
+       numberOfCells = 1;
+
+l1: line = (d1,q1,d1,sex1,d1,oct1,d1,dec1,d1,sol1,d1,sb1,d3,rb1,d1,hk1,d1,vk1,d1,mul1,d1,musp1,d1,rf1,d1,endoftheline);
+
+use,period=l1;
+
+option, ngenerate=1,
+	beampipeRadius=4.0*cm,
+	checkOverlaps=1;
+
+beam, particle="proton",
+      energy=45.0*GeV;
