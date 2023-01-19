@@ -68,3 +68,9 @@ profile/fluka/profile-results/*
 _skbuild
 build_cmake
 cmake-build-*
+node_modules
+*.json
+*.css
+*.html
+*.exr
+*.hdr
