@@ -40,7 +40,7 @@ def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
         v.view(interactive=interactive)
 
     # Fluka writer
-    freg = _convert.geant4Logical2Fluka(worldLogical)
+    freg = _convert.geant4Reg2FlukaReg(registry)
 
     w = _fluka.Writer()
     w.addDetector(freg)
