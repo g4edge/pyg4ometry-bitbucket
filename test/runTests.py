@@ -15,6 +15,7 @@ from flairFluka             import FlairLoadTests
 from root2Gdml              import ROOTTests
 from bdsim                  import PythonBdsimAuthoringTests
 from gdmlBdsim              import GdmlBdsimLoadTests
+from gdmlBdsim              import T200_MergeRegistryRealistic
 # from paraviewExport         import VtkExporter
 
 import unittest as _unittest
