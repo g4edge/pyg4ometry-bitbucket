@@ -33,9 +33,16 @@ l1: line = (d1,q1,d1,sex1,d1,oct1,d1,dec1,d1,sol1,d1,sb1,d3,rb1,d1,hk1,d1,vk1,d1
 
 use,period=l1;
 
+sample, all;
+
 option, ngenerate=1,
+	physicsList = "em qgsp_bert",
 	beampipeRadius=4.0*cm,
-	checkOverlaps=1;
+	checkOverlaps=1,
+	storeTrajectory=1,
+	storeTrajectoryAllVariables=1,
+	storeTrajectoryDepth=-1;
 
 beam, particle="proton",
-      energy=45.0*GeV;
+      energy=45.0*GeV,
+      Xp0=0.01;
