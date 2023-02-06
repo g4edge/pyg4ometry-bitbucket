@@ -2,9 +2,11 @@
 Version History
 ===============
 
-V1.0.3 - 2022 / 08 / XX
+V1.1.0 - 2023 / 02 / XX
+=======================
 
 New features
+------------
 
 * Feature extraction from tesselated meshes (with some accelerator applications)
 * New opencascade based step/iges loading
