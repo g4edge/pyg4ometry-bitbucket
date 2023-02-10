@@ -1,5 +1,4 @@
 import unittest as _unittest
-import numpy as _np
 import os as _os
 
 import ROOT as _ROOT
@@ -27,11 +26,7 @@ def visGeometry(wl, vis = False, interactive = False):
         v.view(interactive=interactive)
         return v
 
-class ROOTTests(_unittest.TestCase) :
-
-    # #############################
-    #
-    # #############################
+class ROOTTests(_unittest.TestCase):
     def test_ROOT_T001Box(self,  vis = False, interactive = False):
         gdml2ROOT("T001_Box.gdml","T001_Box.root")
         r = loadROOTFile("T001_Box.root")
@@ -55,7 +50,6 @@ class ROOTTests(_unittest.TestCase) :
         v = visGeometry(r.getRegistry().getWorldVolume(), vis, interactive)
         deleteROOTFile("T003_CutTubs.root")
         return {"testStatus": True, "logicalVolume":l, "vtkViewer":v}
-
 
     def test_ROOT_T004Cons(self,  vis = False, interactive = False):
         gdml2ROOT("T004_Cons.gdml","T004_Cons.root")

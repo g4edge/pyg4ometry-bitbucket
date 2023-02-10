@@ -42,6 +42,7 @@ gdmlLoader_4.10.5.1
 *interp
 pyg4ometry/visualisation/vtk/
 pyg4ometry/test/root/
+test/gdmlBdsim/*.flair
 *.stl
 *.inp
 *.mtl

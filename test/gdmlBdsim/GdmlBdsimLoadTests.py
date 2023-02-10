@@ -24,7 +24,6 @@ def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
     reader = pyg4ometry.gdml.Reader(filepath)
     registry = reader.getRegistry()
 
-    # World logical
     worldLogical = registry.getWorldVolume()
 
     # test extent of physical volume
@@ -34,13 +33,13 @@ def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
     v = None
     if vis :
         v = pyg4ometry.visualisation.VtkViewer()
-        v.addLogicalVolume(registry.getWorldVolume())
+        v.addLogicalVolume(worldLogical)
         v.setRandomColours()
         v.addAxes(pyg4ometry.visualisation.axesFromExtents(extentBB)[0])
         v.view(interactive=interactive)
 
     # Fluka writer
-    freg = _convert.geant4Logical2Fluka(worldLogical)
+    freg = _convert.geant4Reg2FlukaReg(registry)
 
     w = _fluka.Writer()
     w.addDetector(freg)
@@ -50,7 +49,6 @@ def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
     f = _fluka.Flair(_path.basename(filename).split(".")[0]+".inp",extentBB)
     f.write(_path.join(_path.dirname(__file__),_path.basename(filename).split(".")[0]+".flair"))
 
-
     # Render writer
     rw = pyg4ometry.visualisation.RenderWriter()
     rw.addLogicalVolumeRecursive(worldLogical)
@@ -59,9 +57,12 @@ def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
     return {"logicalVolume":worldLogical,"registy":registry, "vtkViewer":v, "renderWriter":rw}
 
 
-class GdmlBdsimLoadTests(_unittest.TestCase) :
+class GdmlBdsimLoadTests(_unittest.TestCase):
     def test_GdmlBdsimLoad_001_001_Layout(self):
         ret = gdmlBdsimLoadTest("001_001_layout.gdml")
+
+    def test_GdmlBdsimLoad_001_002_One_Of_Each(self):
+        ret = gdmlBdsimLoadTest("001_002_one_of_each.gdml")
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
