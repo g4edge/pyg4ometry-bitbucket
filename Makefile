@@ -1,12 +1,19 @@
 install:
 	pip install . --user
 
+install_venv:
+	pip install .
+
 uninstall:
 	pip uninstall pyg4ometry
 
 develop:
 	python setup.py build_ext --inplace
 	pip install --editable . --user
+
+develop_venv:
+	python setup.py build_ext --inplace
+	pip install --editable .
 
 build_ext:
 	python setup.py build_ext --inplace
