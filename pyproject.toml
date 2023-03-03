@@ -4,11 +4,15 @@ requires = [
     "pybind11~=2.9.2",
     "setuptools==65.4.1",
     "pbr",
-    #"setuptools_scm[toml]>=3.4",
+    "setuptools_scm[toml]>=3.4",
     #"scikit-build>=0.15.0"
 ]
 
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyg4ometry"
+dynamic = ["version"]
 
 [tool.setuptools_scm]
 write_to = "src/pyg4ometry/_version.py"
