@@ -2,17 +2,44 @@
 Version History
 ===============
 
-V1.1.0 - 2023 / 02 / XX
+V1.0.5 - 2023 / 03 / 03
 =======================
 
 New features
 ------------
 
-* Feature extraction from tesselated meshes (with some accelerator applications)
-* New opencascade based step/iges loading
+* Feature extraction from tessellated meshes (with some accelerator applications)
+* New OpenCascade based STEP/IGES loading
 * Command line interface
 * Clipping of geometry when top level solid is moved (rotated/translated) or changed
-* New more efficient visualisation
+* New more efficient visualisation based on pipelines and introduces new visualiser class
+  with old ones remaining for backwards compatibility.
+* Geant4 solids all have a method `convert2Tessellated` now.
+* FLUKA conversion can now write useable complete model by including all the necessary cards.
+
+
+Build
+-----
+
+* New docker files for archlinux, centos7, centos8, fedora, ubuntu20, ubuntu22.
+
+General
+-------
+
+* Restructured documentation.
+* Restructured package - main source now in :code:`pyg4ometry/src/pyg4ometry`.
+* Rewrite of CGAL interface using pybind11.
+* New interface to OpenCascade using pybind11.
+
+Bug Fixes
+---------
+
+* Length unit in reading GDML for some classes.
+* Many fixes to ROOT geometry loading and completion of development of this.
+* More tolerance for adding a recursive Boolean mesh to the visualiser from a solid.
+* Units fixes in Geant4 twisted solid classes.
+* Fix registry merging with assemblies and some solids.
+
 
 V1.0.2 - 2022 / 04 / 11
 =======================
