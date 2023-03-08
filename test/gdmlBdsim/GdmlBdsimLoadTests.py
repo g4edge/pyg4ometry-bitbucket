@@ -17,11 +17,11 @@ def localPath(filename):
 def localFile(filename) :
     return _os.path.join(_os.path.dirname(__file__), filename)
 
-def gdmlBdsimLoadTest(filename, vis = False, interactive=False):
+def gdmlBdsimLoadTest(filename, vis = False, interactive=False, reduceNISTMaterialsToPredefined=False):
     filepath = localPath(filename)
 
     # Loading
-    reader = pyg4ometry.gdml.Reader(filepath)
+    reader = pyg4ometry.gdml.Reader(filepath, reduceNISTMaterialsToPredefined=reduceNISTMaterialsToPredefined)
     registry = reader.getRegistry()
 
     worldLogical = registry.getWorldVolume()
@@ -63,6 +63,9 @@ class GdmlBdsimLoadTests(_unittest.TestCase):
 
     def test_GdmlBdsimLoad_001_002_One_Of_Each(self):
         ret = gdmlBdsimLoadTest("001_002_one_of_each.gdml")
+
+    def test_Gdml_reduceNISTMaterialsToPredefined(self):
+        ret = gdmlBdsimLoadTest("001_005_beamline_transform.gdml", reduceNISTMaterialsToPredefined=True)
 
 if __name__ == '__main__':
     _unittest.main(verbosity=2)
