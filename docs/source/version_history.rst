@@ -2,6 +2,16 @@
 Version History
 ===============
 
+V1.0.6 - 2023 / XX / XX
+=======================
+
+Bug Fixes
+---------
+
+* Fix GDML matrix loading for material properties where loading would create duplicate Expressions
+  that would ultimately lead to conflicting definitions being written out. The written GDML file
+  wouldn't be loadable in Geant4.
+
 V1.0.5 - 2023 / 03 / 03
 =======================
 
@@ -15,7 +25,7 @@ New features
 * New more efficient visualisation based on pipelines and introduces new visualiser class
   with old ones remaining for backwards compatibility.
 * Geant4 solids all have a method `convert2Tessellated` now.
-* FLUKA conversion can now write useable complete model by including all the necessary cards.
+* FLUKA conversion can now write usable complete model by including all the necessary cards.
 
 
 Build
