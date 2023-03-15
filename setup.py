@@ -96,8 +96,11 @@ def cmake_discovery() :
             pass
 
     # if boost not found inject another path
-    if 'BOOST_INC' not in config.keys() :
-        config['BOOST_INC'] = config["MPFR_INC"]
+    if 'BOOST_INC' not in config.keys():
+        try:
+            config['BOOST_INC'] = config["MPFR_INC"]
+        except KeyError:
+            config['BOOST_INC'] = ""
 
     print(config)
 
