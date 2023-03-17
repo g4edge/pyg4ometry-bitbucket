@@ -72,10 +72,11 @@ RUN apt install -y software-properties-common curl &&\
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 &&\
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.9 &&\
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.7 &&\
-    python3.11 -m pip install cython numpy &&\
-    python3.10 -m pip install cython numpy &&\
-    python3.9 -m pip install cython numpy &&\
-    python3.7 -m pip install cython numpy 
+    python3.11 -m pip install cython numpy setuptools_scm patchelf &&\
+    python3.10 -m pip install cython numpy setuptools_scm patchelf &&\ 
+    python3.9 -m pip install cython numpy setuptools_scm patchelf &&\
+    pip3  install cython numpy setuptools_scm patchelf &&\    
+    python3.7 -m pip install cython numpy setuptools_scm patchelf 
 
 RUN wget https://root.cern/download/root_v6.26.06.source.tar.gz &&\
     tar zxf root_v6.26.06.source.tar.gz &&\
@@ -121,12 +122,16 @@ RUN cd build_root_py37        &&\
     rm -rf build_root_py37 root_v6.26.06.source.tar.gz root-6.26.06
 
 RUN cd pyg4ometry && \
-    git pull && \
-    python3.7 setup.py bdist_wheel && \
-    python setup.py bdist_wheel && \
-    python3.9 setup.py bdist_wheel && \
-    python3.10 setup.py bdist_wheel 
-#   auditwheel repair dist/*whl -w dist/ --plat manylinux_2_31_x86_64
+    git pull
+    
+RUN cd pyg4ometry; python3.7 setup.py bdist_wheel 
+RUN cd pyg4ometry; python3 setup.py bdist_wheel 
+RUN cd pyg4ometry; python3.9 setup.py bdist_wheel 
+RUN python3.10 -m pip install setuptools
+RUN python3.10 -m pip install importlib
+RUN cd pyg4ometry; python3.10 setup.py bdist_wheel 
+
+RUN auditwheel repair dist/*whl -w dist/ --plat manylinux_2_31_x86_64
 
 RUN cd pyg4ometry && \
     pip install --editable . 
