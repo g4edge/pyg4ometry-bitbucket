@@ -426,7 +426,9 @@ class ViewerBase :
             for p in self.instancePlacements[k] :
                 t = p['translation']
                 r = p['transformation']
-                aa = _transformation.matrix2axisangle(r)
+                rotation, reflection = _np.linalg.qr(r)
+                gdmlReflection = [reflection.item(0, 0), reflection.item(1, 1), reflection.item(2, 2)]
+                aa = _transformation.matrix2axisangle(rotation)
                 axis = aa[0]
                 angle = aa[1]
 
@@ -436,7 +438,8 @@ class ViewerBase :
                                   rotation=[axis[0]*_np.sin(angle/2),
                                             axis[1]*_np.sin(angle/2),
                                             axis[2]*_np.sin(angle/2),
-                                            _np.cos(angle/2)]))
+                                            _np.cos(angle/2)],
+                                            scale=gdmlReflection))
 
                 # Only make a single instance
                 if singleInstance :
