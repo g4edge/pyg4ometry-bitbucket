@@ -7,7 +7,7 @@ Unit tests
 .. code-block :: console 
 
    cd pyg4ometry/test
-   python runTests.py
+   pytest
 
 Coverage
 --------

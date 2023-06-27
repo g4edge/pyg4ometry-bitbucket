@@ -4,19 +4,36 @@ from   xml.dom import minidom            as _minidom
 import xml.parsers.expat                 as _expat
 from . import Defines                    as _defines
 import logging                           as _log
-import pyg4ometry.geant4                          as _g4
+import pyg4ometry.geant4                 as _g4
 
 class Reader(object):
-    def __init__(self, fileName, registryOn = True):
-        super(Reader, self).__init__()
-        self.filename   = fileName    
-        self.registryOn = registryOn    
+    """
+    Read a GDML file.
 
-        if self.registryOn : 
+    :param fileName: path to gdml file to load
+    :type fileName: str
+    :param registryOn: whether to build a registry
+    :type registryOn: bool
+    :param reduceNISTMaterialsToPredefined: change NIST-named materials to predefined ones
+    :type reduceNISTMaterialsToPredefined: bool
+
+    When loading a GDML file that was exported by Geant4, the NIST materials may be
+    fully expanded to include their full element / isotope composition. With the
+    reduceNISTMaterialsToPredefined flag set to True, these will be ignored and the
+    materials that have a name that matches a NIST one will be 'reduced' back to a
+    predefined material by name only.
+    """
+    def __init__(self, fileName, registryOn=True, reduceNISTMaterialsToPredefined=False):
+        super(Reader, self).__init__()
+        self.filename   = fileName
+        self.registryOn = registryOn
+        self._reduceNISTMaterialsToPredefined = reduceNISTMaterialsToPredefined
+
+        if self.registryOn :
             self._registry = _g4.Registry()
 
         self._physVolumeNameCount = _defaultdict(int)
-        
+
         # load file
         self.load()
 
@@ -24,8 +41,8 @@ class Reader(object):
         _log.info('Reader.load>')
         self._physVolumeNameCount.clear()
 
-        # open file 
-        data  = open(self.filename)
+        # open file
+        data = open(self.filename)
 
         # Render out the ENTITY includes
         # Only look at the starting block - no need to iterate over the whole file
@@ -94,9 +111,9 @@ class Reader(object):
 
         # parse xml for defines, materials, solids and structure (#TODO optical surfaces?)
         self.parseDefines(xmldoc)
-        self.parseMaterials(xmldoc)
+        materialSubstitutionNames = self.parseMaterials(xmldoc)
         self.parseSolids(xmldoc)
-        self.parseStructure(xmldoc)
+        self.parseStructure(xmldoc, materialSubstitutionNames)
         self.parseUserInfo(xmldoc)
 
         data.close()
@@ -131,16 +148,11 @@ class Reader(object):
 
             # parse matrices
             def getMatrix(def_attrs) :
-                try : 
+                try:
                     coldim = def_attrs['coldim']
-                except KeyError : 
+                except KeyError:
                     coldim = 0
-
-                #                try : 
                 values = def_attrs['values'].split()
-                #               except KeyError : 
-                #                   values = []
-                
                 return (coldim, values)
 
             if(define_type == "constant"):
@@ -312,7 +324,7 @@ class Reader(object):
                         comp["comp_type"] = "fraction"
                         components.append(comp)
 
-                    elif chNode.tagName=="property":
+                    elif chNode.tagName == "property":
                         try :
                             properties[chNode.attributes["name"].value] = chNode.attributes["value"].value
                         except KeyError :
@@ -328,13 +340,24 @@ class Reader(object):
                 materials.append(def_attrs)
 
             else:
-                print("Urecognised define: ", mat_type)
+                print("Unrecognised define: ", mat_type)
 
-        self._makeMaterials(materials, elements, isotopes)
+        materialSubstitutionNames = self._makeMaterials(materials, elements, isotopes)
+        return materialSubstitutionNames
 
     def _makeMaterials(self, materials, elements, isotopes):
+        """
+        Construct the isotopes, elements and materials in that order. These aren't returned,
+        but simply constructed in and therefore exist in the registry.
+        """
         isotope_dict = {}
         element_dict = {} # No material dict as materials go into the registry
+
+        # if we find any NIST materials, and we're reducing them back to predefine,
+        # keep a dictionary of original name : NIST name for later substitution
+        substitueDictionary = {}
+
+        nistMaterialDict = _g4.getNistMaterialDict()
 
         # Build the objects in order
         for isotope in isotopes:
@@ -365,6 +388,14 @@ class Reader(object):
 
         for material in materials:
             name = str(material.get("name", ""))
+
+            nameNoPointer = _StripPointer(name)
+            # check if it's a NIST one and whether to simplify it
+            if nameNoPointer in nistMaterialDict and self._reduceNISTMaterialsToPredefined:
+                _g4.MaterialPredefined(nameNoPointer, self._registry)
+                substitueDictionary[name] = nameNoPointer
+                continue
+
             state = str(material.get("state",""))
             density = float(material.get("density", 0.0))
 
@@ -387,10 +418,8 @@ class Reader(object):
                         # Try to register the material as predefined
                         try:
                             _g4.MaterialPredefined(ref, registry=self._registry)
-
                         except ValueError:
-                            raise ValueError("Component {} not defined"
-                                             "for composite material {}".format(ref, name))
+                            raise ValueError("Component {} not defined for composite material {}".format(ref, name))
 
                     if comp_type == "fraction":
                         # abundance = float(comp.get("n", 0.0))
@@ -422,6 +451,8 @@ class Reader(object):
                 if pref not in self._registry.defineDict or not isinstance( self._registry.defineDict[pref], _defines.Matrix ):
                     raise ValueError("Referenced matrix {} not defined for property {} on material {}".format(pref, pname, name))
                 mat.addProperty(pname, self._registry.defineDict[pref])
+
+        return substitueDictionary
 
     def parseUserInfo(self,xmldoc):
         try:
@@ -1361,14 +1392,14 @@ class Reader(object):
 
     def parseSolidLoop(self, node):
         pass
-        
-    def parseStructure(self,xmldoc):
-        
+
+    def parseStructure(self, xmldoc, materialSubstitutionNames=None):
+
         self.xmlstructure = xmldoc.getElementsByTagName("structure")[0]
         
         # loop over child nodes 
         for node in self.xmlstructure.childNodes :
-            self.extractStructureNodeData(node)
+            self.extractStructureNodeData(node, materialSubstitutionNames)
 
         # find world logical volume 
         self.xmlsetup = xmldoc.getElementsByTagName("setup")[0]
@@ -1376,16 +1407,21 @@ class Reader(object):
         self._registry.orderLogicalVolumes(worldLvName)
         self._registry.setWorld(worldLvName)
 
-    def extractStructureNodeData(self, node) : 
-        
-        if node.nodeType == node.ELEMENT_NODE : 
-            node_name = node.tagName 
+    def extractStructureNodeData(self, node, materialSubstitutionNames=None):
+
+        if node.nodeType == node.ELEMENT_NODE :
+            node_name = node.tagName
 
             if node_name == "volume" :
                 name      = node.attributes["name"].value
                 material  = node.getElementsByTagName("materialref")[0].attributes["ref"].value
                 solid     = node.getElementsByTagName("solidref")[0].attributes["ref"].value
-                
+
+                # see if it should be substituted on load for another name, i.e. predefined NIST one
+                if materialSubstitutionNames:
+                    if material in materialSubstitutionNames:
+                        material = materialSubstitutionNames[material]
+
                 if material in self._registry.materialDict:
                     mat = self._registry.materialDict[material]
                 else:
@@ -1921,3 +1957,8 @@ class Reader(object):
                                        self._registry,
                                        True,
                                        unit)
+
+def _StripPointer(name):
+    pattern = r'(0x\w{7,})'
+    rNameToObject = _re.sub(pattern, '', name)
+    return rNameToObject

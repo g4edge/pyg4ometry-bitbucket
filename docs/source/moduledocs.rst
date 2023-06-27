@@ -519,6 +519,8 @@ Convert
    :undoc-members:
 
 
+.. _geometry-compare-module:
+      
 Compare
 -------
 

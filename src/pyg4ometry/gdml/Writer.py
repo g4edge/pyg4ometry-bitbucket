@@ -37,13 +37,13 @@ class Writer(object):
         self.logicalVolumeList = []
         self.physicalVolumeList= []
 
-    def addDetector(self, registry) :
+    def addDetector(self, registry):
         self.registry = registry
 
         if not self.registry.userInfo:
             # Geant4 version earlier than 10.1 do not support userinfo
             # If no user info is specified, remove the userinfo tag from the GDML document
-            # This is done here, because the regsitry is not available at construction time
+            # This is done here, because the registry is not available at construction time
             self.top.removeChild([n for n in self.top.childNodes if n.tagName == "userinfo"][0])
 
         # Set the world again to force a refresh on the
@@ -176,7 +176,7 @@ option, preprocessGDML=0;
 
     def writeVectorVariable(self, node, vector_var, allow_ref=True, suppress_trivial=True):
         """
-        Writes an XML child node for a vector variable - position, roration, scale.
+        Writes an XML child node for a vector variable - position, rotation, scale.
         If allow_ref is enabled, it will write a ref to a registry define where possible.
         If suppress_trivial is enabled it won't write vectors with all elements zero.
         """
@@ -257,10 +257,10 @@ option, preprocessGDML=0;
         if material.name in self.materials_written:
             return
 
-        if isinstance(material, _Material) :
+        if isinstance(material, _Material):
             oe = self.doc.createElement('material')
             oe.setAttribute('name', material.name)
-            if material.state != "" and material.state != None :
+            if material.state != "" and material.state is not None:
                 oe.setAttribute('state', material.state)
 
             # No need to add defines for NIST compounds or

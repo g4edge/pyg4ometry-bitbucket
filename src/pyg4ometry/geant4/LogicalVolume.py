@@ -66,6 +66,9 @@ class LogicalVolume(object):
 
         self.type  = "logical"
         self.solid = solid
+
+        if registry is None and addRegistry:
+            raise ValueError("No registry supplied by (by default) addRegistry=True in logical volume \""+name+"\"")
  
         if isinstance(material, _mat.Material):
             self.material = material
@@ -218,13 +221,10 @@ class LogicalVolume(object):
         :type runit: str
         :param punit: length unit for position (m,mm,km)
         :type punit: str
-
         """
-
         self.replaceSolid(self.solid,rotation, position, runit, punit)
 
     def replaceSolid(self, newSolid, rotation = (0,0,0), position=(0,0,0), runit="rad", punit="mm") :
-
         """
         Replace the outer solid with optional position and rotation
 
@@ -287,7 +287,6 @@ class LogicalVolume(object):
         :param lvUsageCount: lv name dictionary for replacement recursion (DO NOT USE)
         :type lvUsageCount: defaultdict
         """
-
         # increment the recursion depth
         depth += 1
 
@@ -506,7 +505,7 @@ class LogicalVolume(object):
                 # inside the solid - just update placement transform
                 _updateRotoTranslation(pv)
             else:
-                # by elimination it's protruding
+                # by elimination, it's protruding
                 _updateRotoTranslation(pv)
                 # We keep the 1st object in the intersection the original so its frame
                 # is preserved. We therefore use the inverse of the (new and updated)

@@ -2,20 +2,29 @@
 Installation
 ============
 
+pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated). It is developed on Python 3.9, 3.10, 3.11.
+
 
 Requirements
 ------------
 
-pyg4ometry is developed exclusively for Python 3 (Python2 is deprecated). It is developed on Python 3.9 and 3.10.
+The following should be installed using your package manager (e.g. homebrew, macports, apt, yum). These are not
+Python package, but need to be available on your system.
 
+**System Requirements**
 
  * `VTK (Visualisation toolkit) <https://vtk.org>`_ (including Python bindings)
  * `antlr4 <https://www.antlr.org>`_
  * `cython <https://cython.org>`_
  * `CGAL <https://www.cgal.org>`_
  * pybind11
+ * opencascade
+ * boost
+ * mpfr
 
-Packages that are required but will be found through PIP automatically:
+Python packages that are required but will be found through PIP automatically:
+
+**Python Requirements (automatically installed)**
 
  * `matplotlib <https://matplotlib.org>`_
  * `GitPython <https://gitpython.readthedocs.io/en/stable/>`_
@@ -24,6 +33,8 @@ Packages that are required but will be found through PIP automatically:
  * networkx
  * numpy
  * sympy
+ * vtk
+ * pbr (for building)
 
 **Optional**
 
@@ -31,17 +42,35 @@ Packages that are required but will be found through PIP automatically:
 
 .. note:: A full list can be found in :code:`pyg4ometry/setup.py`.
 
-.. note:: if you are choosing a python version, it is worth choosing according to which
+.. note:: if you are choosing a Python version, it is worth choosing according to which
 	  version VTK provides a python build of through PIP if you use that. See
 	  https://pypi.org/project/vtk/#files  For example, there are limited builds
 	  for M1 Mac (ARM64).
+
+**Example Setup With HomeBrew on Mac**
+
+::
+
+   brew install vtk cgal antlr4-cpp-runtime pybind11 cython opencascade mpfr
+
 
 
 Installation
 ------------
 
-To install pyg4ometry, simply run ``make install`` from the root pyg4ometry
-directory::
+To install pyg4ometry, you can install it from the website PyPi provided you have the
+system requirements available listed above. ::
+
+  pip install pyg4ometry
+
+
+We try to provide many builds of pyg4ometry to match different python and architectures, but
+it is possible such a combination is not available and pip will not 'find' the package.
+
+Alternatively, you can install the package from source. First, clone the git repository, then
+follow the setup steps. We provide some example commands in a Makefile in the top level
+directory (just a text file). To use this, simply run ``make install`` or one of the "rules"
+listed below after `make` from the root pyg4ometry directory::
 
   cd /my/path/to/repositories/
   git clone http://bitbucket.org/jairhul/pyg4ometry
@@ -50,13 +79,32 @@ directory::
   
   make install
 
-.. note::
-   To build using the git directory and not installing into /usr/local use ``make develop`` 
-   instead of ``make install``
+or ::
 
-To build pycsg with cpython::
+  make install_venv
 
-  make build_ext
+
+All of the "rules" provided are listed here. The ones with the suffix "venv" will work
+if using a Python virtual environment.
+
++---------------------+-------------------------------------------------------------+
+| **Makefile Rule**   | **Description**                                             |
++=====================+=============================================================+
+| install             | Install in a user directory and not the system one          |
++---------------------+-------------------------------------------------------------+
+| install_venv        | Install in the system directory including venv              |
++---------------------+-------------------------------------------------------------+
+| uninstall           | Remove pyg4ometry                                           |
++---------------------+-------------------------------------------------------------+
+| develop             | Build in place and install with Python such that it         |
+|                     | uses the files from the git directory rather than a copy    |
++---------------------+-------------------------------------------------------------+
+| develop_venv        | Similar to develop, but compatible with venv                |
++---------------------+-------------------------------------------------------------+
+| build_ext           | Compile the C++ libraries only                              |
++---------------------+-------------------------------------------------------------+
+| build_clean         | Clean all build products                                    |
++---------------------+-------------------------------------------------------------+
 
 Or install from pypi::
 
@@ -104,7 +152,7 @@ installation for each of these OSes.
 FreeCAD support for CAD to GDML conversion
 ------------------------------------------
 
-For FreeCAD support and you already have it installed you  need to add library to PYTHONPATH, for example 
+For FreeCAD support and you already have it installed you need to add library to PYTHONPATH, for example 
 
 .. code-block :: console 
    
@@ -117,12 +165,12 @@ Building FreeCAD can be a pain for MAC so
    mkdir FreeCAD
    cd FreeCAD 
    set FCROOT=$pwd
-   wget  https://github.com/FreeCAD/FreeCAD/archive/0.19_pre.tar.gz
-   tar zxf 0.19_pre.tar.gz
+   wget  https://github.com/FreeCAD/FreeCAD/archive/refs/tags/0.19.4.tar.gz
+   tar zxf 0.19.4.tar.gz
    mkdir build
    mkdir install 
    cd build
-   cmake ../FreeCAD-0.18.4 -DCMAKE_INSTALL_PREFIX=../install \
+   cmake ../FreeCAD-0.19.4 -DCMAKE_INSTALL_PREFIX=../install \
    -DCOIN3D_LIBRARIES=/opt/local/Library/Frameworks/Inventor.framework/Libraries/libCoin.dylib -DBUILD_FEM=0 \
    -DBUILD_MATERIAL=0 -DBUILD_SHIP=0 -DBUILD_DRAFT=0 -DBUILD_TUX=0 -DBUILD_ARCH=0 -DBUILD_PLOT=0 \
    -DBUILD_OPENSCAD=0  
