@@ -79,7 +79,7 @@ class Registry:
         self.logicalVolumeMeshSkip = []
         self.userInfo = []
 
-        self.definNameCount.clear()
+        self.defineNameCount.clear()
         self.materialNameCount.clear()
         self.materialUsageCount.clear()
         self.solidNameCount.clear()

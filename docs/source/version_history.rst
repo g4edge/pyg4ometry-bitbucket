@@ -11,6 +11,7 @@ Bug Fixes
 * Fix GDML matrix loading for material properties where loading would create duplicate Expressions
   that would ultimately lead to conflicting definitions being written out. The written GDML file
   wouldn't be loadable in Geant4.
+* Fix geant4.Registry clear() function which had a variable error in it.
 
 V1.0.5 - 2023 / 03 / 03
 =======================
