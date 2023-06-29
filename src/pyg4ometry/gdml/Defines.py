@@ -106,18 +106,14 @@ def evaluateToFloat(reg, obj):
             raise AttributeError
         ans = [evaluateToFloat(reg, item) for item in obj.__iter__()]
     except (AttributeError, ):
-        if isinstance(obj, _numbers.Number) or isinstance(obj, ScalarBase):
-            evaluatable = obj
-        elif isinstance(obj, VectorBase):
-            return obj.eval()
-        elif isinstance(obj, BasicExpression):
+        if isinstance(obj, _numbers.Number) or isinstance(obj, BasicExpression):
             return float(obj)
+        elif isinstance(obj, ScalarBase) or isinstance(obj, VectorBase):
+            return obj.eval()
         else:
             evaluatable = BasicExpression("",obj,reg)
-        ans = float(evaluatable)
-
+        ans = float(evaluatable.eval())
     return ans
-
 
 def upgradeToExpression(reg, obj):
     """
