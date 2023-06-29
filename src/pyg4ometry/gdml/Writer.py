@@ -1069,9 +1069,9 @@ option, preprocessGDML=0;
     def createPosition(self,name, x, y, z):
         p = self.doc.createElement('position')
         p.setAttribute('name',str(name))
-        p.setAttribute('x', x.expression)
-        p.setAttribute('y', y.expression)
-        p.setAttribute('z', z.expression)
+        p.setAttribute('x', x.expressionString)
+        p.setAttribute('y', y.expressionString)
+        p.setAttribute('z', z.expressionString)
         return p
 
     def writeTet(self, instance):
