@@ -643,7 +643,15 @@ class Registry:
                 dv_copy_name = dv.name
                 for name in names_copy :
                     dv_copy_name =  name + '_' + dv_copy_name
-                dv_copy = _PhysicalVolume( dv.rotation, dv.position, dv.logicalVolume, dv_copy_name, motherVol, None, dv.copyNumber, False, dv.scale)
+                dv_copy = _PhysicalVolume(dv.rotation,
+                                          dv.position,
+                                          dv.logicalVolume,
+                                          dv_copy_name,
+                                          motherVol,
+                                          assemblyPV.registry,
+                                          dv.copyNumber,
+                                          True,
+                                          dv.scale)
 
                 # redefine the position and rotation of the daughter volume to
                 # be in the reference frame of the new mother volume, using the
@@ -663,8 +671,8 @@ class Registry:
                 new_pos = new_tra.tolist()
 
                 # update the position and rotation information
-                dv_copy.position = _Defines.Position( dv_copy.name + dv_copy.position.name.removeprefix(dv.name), new_pos[0], new_pos[1], new_pos[2],  "mm", self, False )
-                dv_copy.rotation = _Defines.Rotation( dv_copy.name + dv_copy.rotation.name.removeprefix(dv.name), new_rot[0], new_rot[1], new_rot[2], "rad", self, False )
+                dv_copy.position = _Defines.Position( dv_copy.name + dv_copy.position.name.removeprefix(dv.name), new_pos[0], new_pos[1], new_pos[2],  "mm", self, True )
+                dv_copy.rotation = _Defines.Rotation( dv_copy.name + dv_copy.rotation.name.removeprefix(dv.name), new_rot[0], new_rot[1], new_rot[2], "rad", self, True )
 
                 # add this volume recursively to the registry
                 self.addVolumeRecursive(dv_copy, True, incrementRenameDict, userRenameDict)
