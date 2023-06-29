@@ -908,7 +908,7 @@ def MatrixFromVectors(e, v, name, registry, eunit='eV', vunit=''):
     return Matrix(name, 2, res, registry)
 
 
-class Auxiliary(object):
+class Auxiliary:
     """
     Auxiliary information container object
     """
