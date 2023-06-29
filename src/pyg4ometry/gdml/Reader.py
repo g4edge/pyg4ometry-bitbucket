@@ -157,33 +157,33 @@ class Reader(object):
 
             if(define_type == "constant"):
                 value = def_attrs['value']
-                _defines.Constant(name, value, self._registry)
+                _defines.Constant(name, value, self._registry, True)
             elif(define_type == "quantity"):
                 value = def_attrs['value']
                 unit  = def_attrs['unit']
                 qtype  = def_attrs['type']
-                _defines.Quantity(name, value, unit, qtype, self._registry)
+                _defines.Quantity(name, value, unit, qtype, self._registry, True)
             elif(define_type == "variable"):
                 value = def_attrs['value']
-                _defines.Variable(name, value, self._registry)
+                _defines.Variable(name, value, self._registry, True)
             elif(define_type == "expression"):
                 value = df.childNodes[0].nodeValue
                 _defines.Expression(name, value, self._registry, True)
             elif(define_type == "position"):
                 (x,y,z,u) = getXYZ(def_attrs)
                 unit = u if u else "mm"
-                _defines.Position(name, x, y, z, unit, self._registry)
+                _defines.Position(name, x, y, z, unit, self._registry, True)
             elif(define_type == "rotation"):
                 (x,y,z,u) = getXYZ(def_attrs)
                 unit = u if u else "rad"
-                _defines.Rotation(name, x, y, z, unit, self._registry)
+                _defines.Rotation(name, x, y, z, unit, self._registry, True)
             elif(define_type == "scale"):
                 (x,y,z,u) = getXYZ(def_attrs)
                 unit = u if u else "none"
-                _defines.Scale(name, x, y, z, unit, self._registry)
+                _defines.Scale(name, x, y, z, unit, self._registry, True)
             elif(define_type == "matrix"):
                 (coldim, values) = getMatrix(def_attrs)
-                _defines.Matrix(name, coldim, values, self._registry)
+                _defines.Matrix(name, coldim, values, self._registry, True)
             else:
                 print("Warning : unrecognised define: ", define_type)
 
