@@ -1926,22 +1926,19 @@ class Reader(object):
                     offs = chNode.attributes["offset"].value
                 except KeyError:
                     offs = 0
-                offset = _defines.Expression(pvol_name+"_offset",
-                                                offs, self._registry, False)
+                offset = _defines.Expression(pvol_name+"_offset", offs, self._registry, False)
 
                 try:
                     wdt = chNode.attributes["width"].value
                 except KeyError:
                     wdt = -1
-                width = _defines.Expression(pvol_name+"_width",
-                                                wdt, self._registry, False)
+                width = _defines.Expression(pvol_name+"_width", wdt, self._registry, False)
 
                 try:
                     num = chNode.attributes["number"].value
                 except KeyError:
                     num = -1
-                ndivisions = _defines.Expression(pvol_name+"_ndivisions",
-                                                 num, self._registry, False)
+                ndivisions = _defines.Expression(pvol_name+"_ndivisions", num, self._registry, False)
 
                 try:
                     unit = chNode.attributes["unit"].value
