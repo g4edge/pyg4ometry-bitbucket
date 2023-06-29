@@ -225,7 +225,7 @@ option, preprocessGDML=0;
             oe = self.doc.createElement('matrix')
             oe.setAttribute('name',define.name)
             oe.setAttribute('coldim',str(define.coldim))
-            oe.setAttribute('values', " ".join([val.expr.expression for val in define.values]))
+            oe.setAttribute('values', " ".join([val.expression.expressionString for val in define.values]))
             self.defines.appendChild(oe)
         elif isinstance(define, _Defines.Expression):
             oe = self.doc.createElement('expression')
@@ -987,9 +987,9 @@ option, preprocessGDML=0;
         d.setAttribute('rmax',self.getValueOrExpr(rOuter))
         d.setAttribute('z', self.getValueOrExpr(zplane)) 
 
-        # d.setAttribute('rmin',str(rInner.expr.expression))
-        # d.setAttribute('rmax', str(rOuter.expr.expression))
-        # d.setAttribute('z', str(zplane.expr.expression))
+        # d.setAttribute('rmin',str(rInner.expression))
+        # d.setAttribute('rmax', str(rOuter.expression))
+        # d.setAttribute('z', str(zplane.expression))
         
         return d
 
