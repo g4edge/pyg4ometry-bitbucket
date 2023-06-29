@@ -25,5 +25,4 @@ from .SkinSurface import *
 from .BorderSurface import *
 from .Registry import *
 from ._Material import *
-from .Expression import *
 from . import solid

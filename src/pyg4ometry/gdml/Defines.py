@@ -1,8 +1,49 @@
 import numbers as _numbers
-from pyg4ometry.geant4 import Expression as _Expression
+import numpy as _np
 from pyg4ometry.gdml import Units as _Units
 
-import numpy as _np
+
+class BasicExpression:
+    def __init__(self, name, expressionString, registry):
+        self.name = name
+        self.expressionString = expressionString
+        self.parseTree = None
+        self.registry = registry
+
+    def eval(self):
+        expressionParser = self.registry.getExpressionParser()
+        self.parseTree = expressionParser.parse(self.expressionString)
+        value = expressionParser.evaluate(self.parseTree, self.registry.defineDict)
+        return value
+
+    def variables(self, allDependents=False):
+        expressionParser = self.registry.getExpressionParser()
+        self.parseTree = expressionParser.parse(self.expressionString)
+        variables = expressionParser.get_variables(self.parseTree)
+        if allDependents:
+            dependents = []
+            for v in variables:
+                if v in self.registry.defineDict:
+                    define = self.registry.defineDict[v]
+                    dependents = define.expression.variables() + dependents # prepend
+            variables = dependents + variables # prepend
+        result = []
+        [result.append(v) for v in variables if v not in result] # remove duplicates but preserve prepended order
+        return result
+
+    def simp(self):
+        # find all variables of the expression and create
+        pass
+
+    def __repr__(self):
+        return "{} : {}".format(self.name, self.expressionString)
+
+    def __float__(self):
+        return self.eval()
+
+    def str(self):
+        return 'BasicExpression : '+self.name+' : '+str(float(self))
+
 
 def upgradeToStringExpression(reg, obj):
     """
@@ -23,8 +64,8 @@ def upgradeToStringExpression(reg, obj):
         if obj in reg.defineDict:  # not sure if this is needed
             return obj
         else :
-            e = _Expression("",obj,reg)
-            try :
+            e = BasicExpression("", obj, reg)
+            try:
                 e.eval()
                 return obj
             except Exception as err:
@@ -54,7 +95,7 @@ def evaluateToFloat(reg, obj):
         elif isinstance(obj, VectorBase):
             return obj.eval()
         else:
-            evaluatable = _Expression("",obj,reg)
+            evaluatable = BasicExpression("",obj,reg)
         ans = float(evaluatable)
 
     return ans
@@ -67,7 +108,7 @@ def upgradeToExpression(reg, obj):
 
     # TODO: consider merging into/reusing the upgradeToStringExpression
     as_string  = upgradeToStringExpression(reg, obj)
-    expression = _Expression("",as_string,reg)
+    expression = BasicExpression("" ,as_string, reg)
 
     try:
         float(expression)

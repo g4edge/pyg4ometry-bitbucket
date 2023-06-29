@@ -3,11 +3,8 @@ from ..geant4._Material import Material as _Material
 from ..geant4._Material import Element as _Element
 from ..geant4._Material import Isotope as _Isotope
 from ..gdml import Defines as _Defines
-from . import Expression as _Expression
 import pyg4ometry.geant4 as _g4
 import logging as _log
-
-from pyg4ometry.geant4 import Expression as _Expression
 
 class Writer(object):
     def __init__(self, prepend = ''):
@@ -661,15 +658,12 @@ option, preprocessGDML=0;
     # TODO got to be removed
     def getValueOrExpr(self, var) :
         # pyg4ometry expression (evaluatable string)
-        if isinstance(var, _Expression):
-            return str(var.expression)
+        if isinstance(var, _Defines.BasicExpression):
+            return str(var.expressionString)
 
         # Expression, Constant, Quantity or Variable
-        elif isinstance(var, _Defines.Expression) or isinstance(var, _Defines.Constant) or isinstance(var, _Defines.Quantity) or isinstance(var, _Defines.Variable):
-            if var.name in self.registry.defineDict:
-                return var.name
-            else :
-                return str(var.expr.expression)
+        elif isinstance(var, _Defines.ScalarBase):
+            return str(var.expression.expressionString)
         else:
             return str(var)
 
