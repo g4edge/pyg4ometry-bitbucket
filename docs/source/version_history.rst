@@ -13,6 +13,7 @@ Bug Fixes
   wouldn't be loadable in Geant4.
 * Fix geant4.Registry.clear() function which had a variable error in it.
 * Fix geant4.Registry.findPhysicalVolumeByName function.
+* Fix the merging of registries where GDML defines are used that have dependent (chained) variables.
 
 V1.0.5 - 2023 / 03 / 03
 =======================

@@ -396,7 +396,7 @@ class Registry:
 
         self.defineNameCount[define.name] += 1
 
-    def transferDefines(self, var, incrementRenameDict={}, userRenameDict=None):
+    def transferDefines(self, var, otherRegistry, incrementRenameDict={}, userRenameDict=None):
         """
         This function tolerates all types of defines including vector ones.
 
@@ -414,23 +414,23 @@ class Registry:
             for vi in (var.x, var.y, var.z):
                 # any variables inside each component
                 for v in vi.variables():
-                    if v in self._registryOld.defineDict: # only if it's in the other registry
-                        self.transferDefines(self._registryOld.defineDict[v], incrementRenameDict, userRenameDict)
-            if var.name in self._registryOld.defineDict:
+                    if v in otherRegistry.defineDict: # only if it's in the other registry
+                        self.transferDefines(otherRegistry.defineDict[v], otherRegistry, incrementRenameDict, userRenameDict)
+            if var.name in otherRegistry.defineDict:
                 self.transferDefine(var, incrementRenameDict, userRenameDict)
 
-        elif isinstance(var, _Defines.ScalarBase): # a normal expression
-            for v in var.expr.variables():                 # loop over all variables needed for an expression
-                if v in self._registryOld.defineDict:      # only if it's in the other registry
-                    self.transferDefine(self._registryOld.defineDict[v], incrementRenameDict, userRenameDict)
-            if var.name in self._registryOld.defineDict:      # check if variable is stored in registry, if so need to be transferred
+        elif isinstance(var, _Defines.ScalarBase):         # a normal expression
+            for v in var.expression.variables(True):                      # loop over all variables needed for an expression
+                if v in otherRegistry.defineDict:          # only if it's in the other registry
+                    self.transferDefine(otherRegistry.defineDict[v], incrementRenameDict, userRenameDict)
+            if var.name in otherRegistry.defineDict:   # check if variable is stored in registry, if so need to be transferred
                 self.transferDefine(var, incrementRenameDict, userRenameDict) # probably best to reuse here
 
         elif isinstance(var, _Defines.Matrix):
             for v in var.values:
-                if v.name in self._registryOld.defineDict:
+                if v.name in otherRegistry.defineDict:
                     self.transferDefine(v, incrementRenameDict, userRenameDict)
-            if var.name in self._registryOld.defineDict:
+            if var.name in otherRegistry.defineDict:
                 self.transferDefine(var, incrementRenameDict, userRenameDict)
         else:
             return
@@ -533,16 +533,15 @@ class Registry:
 
         if incrementRenameDict is None:
             incrementRenameDict = {}
-        self._registryOld = volume.registry
 
         if isinstance(volume, _PhysicalVolume) and volume.type == "placement":
             self.addVolumeRecursive(volume.logicalVolume, collapseAssemblies, incrementRenameDict, userRenameDict)
 
             # add members from physical volume
-            self.transferDefines(volume.position, incrementRenameDict, userRenameDict)
-            self.transferDefines(volume.rotation, incrementRenameDict, userRenameDict)
+            self.transferDefines(volume.position, volume.registry, incrementRenameDict, userRenameDict)
+            self.transferDefines(volume.rotation, volume.registry, incrementRenameDict, userRenameDict)
             if volume.scale:
-                self.transferDefines(volume.scale, incrementRenameDict, userRenameDict)
+                self.transferDefines(volume.scale, volume.registry, incrementRenameDict, userRenameDict)
             self.transferPhysicalVolume(volume, incrementRenameDict, userRenameDict)
 
         elif isinstance(volume, _LogicalVolume):
@@ -712,7 +711,7 @@ class Registry:
                 var = [var]                         # single variable upgraded to list
 
             for v in var:                           # loop over variables
-                self.transferDefines(v, incrementRenameDict, userRenameDict)
+                self.transferDefines(v, solid.registry, incrementRenameDict, userRenameDict)
 
     def volumeTree(self, lvName):
         """Not sure what this method is used for"""
