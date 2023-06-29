@@ -129,15 +129,15 @@ class DivisionVolume(_PhysicalVolume) :
                                False)
 
             if self.axis == self.Axis.kXAxis :
-                solid.pX.expr.expression = str(width)
+                solid.pX.expression.expressionString = str(width)
                 transforms.append([[0,0,0],[v,0,0]])
 
             elif self.axis == self.Axis.kYAxis :
-                solid.pY.expr.expression = str(width)
+                solid.pY.expression.expressionString = str(width)
                 transforms.append([[0,0,0],[0,v,0]])
 
             elif self.axis == self.Axis.kZAxis :
-                solid.pZ.expr.expression = str(width)
+                solid.pZ.expression.expressionString = str(width)
                 transforms.append([[0,0,0],[0,0,v]])
 
             meshes.append(_Mesh(solid))
