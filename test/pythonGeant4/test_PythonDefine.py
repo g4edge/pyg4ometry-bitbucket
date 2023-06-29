@@ -547,5 +547,6 @@ def test_GdmlDefine_MatrixRepr() :
 def test_GdmlDefine_MatrixGetItemInRegistry() :
     r = pyg4ometry.geant4.Registry()
     mat = pyg4ometry.gdml.Matrix("mat",2,[1,2,3,4,5,6,7,8,9,10],r,True)
-    assert mat[0,0].expression == "mat[1,1]"
+    v = mat[0, 0]
+    assert v.expression.expressionString == "mat[1,1]"
 

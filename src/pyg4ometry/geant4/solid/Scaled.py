@@ -40,7 +40,7 @@ class Scaled(_SolidBase):
         return "Scaled : {} {} {} {} {}".format(self.name, self.solid, self.pX, self.pY, self.pZ)
 
     def __str__(self):
-        return "Scaled : name={} solid={} x={} y={} z={}".format(self.name, floself.solid, float(self.pX), float(self.pY), float(self.pZ))
+        return "Scaled : name={} solid={} x={} y={} z={}".format(self.name, self.solid, float(self.pX), float(self.pY), float(self.pZ))
 
     def mesh(self):
         import pyg4ometry.gdml.Units as _Units #TODO move circular import
