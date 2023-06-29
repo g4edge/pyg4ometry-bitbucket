@@ -240,8 +240,14 @@ class ScalarBase(DefineBase):
         super().setName(name)
         self.expression.name = 'expr_{}'.format(name)
 
-    def setExpression(self, expr):
-        self.expression = upgradeToStringExpression(self.registry,expr)
+    def setExpression(self, expressionString):
+        """
+        Take a string and make it into the BasicExpression type for this object.
+
+        :param expressionString: Expression to store.
+        :type expressionString: str
+        """
+        self.expression = BasicExpression('expr_{}'.format(self.name), upgradeToStringExpression(self.registry, expressionString), self.registry)
 
     def setRegistry(self, registry):
         super().setRegistry(registry)
