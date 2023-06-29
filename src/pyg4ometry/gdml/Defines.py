@@ -117,8 +117,6 @@ def upgradeToTransformation(var, reg, addRegistry=False):
     :type var: list of str, float, Constant, Quantity, Variable
     :param reg: registry
     :type reg: Registry
-    :param type: class type of vector (position, rotation, scale)
-    :type type: str
     :param addRegistry: flag to add to registry
     :type addRegistry: bool
     """
@@ -913,11 +911,6 @@ def MatrixFromVectors(e, v, name, registry, eunit='eV', vunit=''):
 class Auxiliary(object):
     """
     Auxiliary information container object
-
-    :param value: string expression
-    :type value: float,str,Constant,Quantity,Variable
-    :param registry: for storing define
-    :type registry: Registry
     """
     # Note that no interpreting or processing is done for auxiliary information
     def __init__(self, auxtype, auxvalue, registry=None, unit=""):

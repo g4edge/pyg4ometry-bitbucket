@@ -516,6 +516,7 @@ class Registry:
         Transfer a volume hierarchy to this registry. Any objects that had a registry set to
         another will be set to this one and will be owned by it effectively.
         :param volume: PhysicalVolume or LogicalVolume or AssemblyVolume.
+        :type volume: pyg4ometry.geant4.PhysicalVolume, pyg4ometry.geant4.LogicalVolume, pyg4ometry.geant4.AssemblyVolume.
         :param collapseAssemblies: if True, daughters of AssemblyVolume's will be attached directly to the mother of the assembly and the AssemblyVolume itself will be eliminated from the geometry tree
         :param incrementRenameDict: ignore - dictionary used internally for potentially incrementing names
         :param userRenameDict: a dictionary of find/replace regex strings to be used to rename volumes/materials/etc.
@@ -736,11 +737,10 @@ class Registry:
         return AnalyseGeometryStructure(self, lv_name, debug, level, df)
 
     def _findDictByName(self, dic, nameFragment):
-        '''
+        """
         Find a object which name matches (or partially matches) nameFragment,
         returns a list of objects
-        '''
-
+        """
         objs = []
 
         for k in dic :
@@ -750,28 +750,25 @@ class Registry:
         return objs
 
     def findSolidByName(self, nameFragment = "box"):
-        '''
+        """
         Find a solid  which name matches (or partially matches) nameFragment,
         returns a list of solids
-        '''
-
+        """
         return self._findDictByName(self.solidDict,nameFragment)
 
     def findMaterialByName(self, nameFragment = "G4_AIR"):
-        '''
+        """
         Find a material which name matches (or partially matches) nameFragment,
         returns a list of materials
-        '''
-
+        """
         return self._findDictByName(self.materialDict,nameFragment)
 
 
     def findLogicalVolumeByName(self, nameFragment = "World"):
-        '''
+        """
         Find a logical volume  which name matches (or partially matches) nameFragment,
         returns a list of LogicalVolumes
-        '''
-
+        """
         return self._findDictByName(self.logicalVolumeDict,nameFragment)
 
 
