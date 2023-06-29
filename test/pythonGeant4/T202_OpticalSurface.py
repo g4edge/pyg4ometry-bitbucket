@@ -77,3 +77,6 @@ def Test_OpticalSurface():
     w.write(_os.path.join(_os.path.dirname(__file__), "T202_Optical.gdml"))
     w.writeGmadTester(_os.path.join(_os.path.dirname(__file__), "T201_Optical.gmad"),
                       "T201_Optical.gdml")
+
+if __name__ == "__main__":
+    Test_OpticalSurface()
