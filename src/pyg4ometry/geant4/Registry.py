@@ -772,13 +772,12 @@ class Registry:
         return self._findDictByName(self.logicalVolumeDict,nameFragment)
 
 
-    def findPhysicalVolumeByame(self,name):
-        '''
+    def findPhysicalVolumeByName(self, nameFragment):
+        """
         Find a physical volume  which name matches (or partially matches) nameFragment,
         returns a list of LogicalVolumes
-        '''
-
-        return self._findDictByName(self.physicalVolumeDict,nameFragment)
+        """
+        return self._findDictByName(self.physicalVolumeDict, nameFragment)
 
 class GeometryComplexityInformation:
     def __init__(self):
