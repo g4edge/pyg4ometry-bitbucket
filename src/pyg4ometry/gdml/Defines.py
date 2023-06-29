@@ -186,12 +186,68 @@ def upgradeToTransformation(var, reg, addRegistry=False):
 
     return [rot,tra]
 
-class ScalarBase(object):
+class DefineBase:
     """
-    Base class for all scalars (Constants, Quantity, Variable and Expression)
+    Common bits for a define. Must have a name and a registry. Adding
+    to the registry can't be done here as it must be done by the derived type.
     """
-    def __init__(self):
-        pass
+    def __init__(self, name="", registry=None):
+        self.name = name
+        self.registry = registry
+
+    def setName(self, name):
+        """
+        Set name of the object.
+
+        :param name: name of object
+        :type name: str
+        """
+        self.name = name
+
+    def setRegistry(self, registry):
+        self.registry = registry
+
+class ScalarBase(DefineBase):
+    """
+    Base class for all scalars (Constants, Quantity, Variable and 'Expression')
+    """
+    def __init__(self, typeName, name="", registry=None):
+        super(ScalarBase, self).__init__(name, registry)
+        self.expression = None
+        self._typeName = typeName
+
+    def setName(self, name):
+        """
+        Set name of scalar
+
+        :param name: name of object
+        :type name: str
+        """
+        super().setName(name)
+        self.expression.name = name
+
+    def setExpression(self, expr):
+        self.expression = upgradeToStringExpression(self.registry,expr)
+
+    def setRegistry(self, registry):
+        super().setRegistry(registry)
+        if self.expression:
+            registry.transferDefine(self)
+
+    def eval(self):
+        """
+        Evaluate the expression
+
+        :return: numerical evaluation of Constant
+        :rtype: float
+        """
+        return self.expression.eval()
+
+    def __repr__(self):
+        return self._typeName + " : {} = {}".format(self.name, str(self.expression))
+
+    def __float__(self):
+        return self.expression.eval()
 
     def __add__(self, other):
                 
@@ -269,26 +325,6 @@ class ScalarBase(object):
 
     __radd__ = __add__
     __rmul__ = __mul__
-
-    def setName(self, name) : 
-        """
-        Set name of scalar
-
-        :param name: name of object
-        :type name: str
-        """
-
-        self.name          = name
-        self.expr.name     = 'expr_{}'.format(name)
-        self.expr.registry = self.registry
-        self.registry.addDefine(self)
-
-    def setExpression(self, expr) : 
-        self.expr.expression = upgradeToStringExpression(self.registry,expr)
-
-    def setRegistry(self, registry) :
-        self.registry = registry
-        self.expr.registry = registry
 
 def sin(arg) : 
     """
@@ -440,26 +476,11 @@ class Constant(ScalarBase):
     :type addRegistry: bool
     """
     def __init__(self, name, value, registry, addRegistry=True):
-        super(Constant, self).__init__()
+        super(Constant, self).__init__("Constant", name, registry)
+        self.expression = BasicExpression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
 
-        self.name = name
-
-        self.expr = _Expression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
-        
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)
-
-    def eval(self):
-        """ 
-        Evaluate constant 
-
-        :return: numerical evaluation of Constant
-        :rtype: float
-
-        """
-        return self.expr.eval()
+        if registry and addRegistry:
+            registry.addDefine(self)
 
     def __eq__(self, other):
         if isinstance(other, Constant):
@@ -497,12 +518,6 @@ class Constant(ScalarBase):
         else:
             return self.eval() >= other
 
-    def __float__(self):
-        return self.expr.eval()
-    
-    def __repr__(self):
-        return "Constant : {} = {}".format(self.name, str(self.expr))
-
 
 class Quantity(ScalarBase):
     """
@@ -522,33 +537,16 @@ class Quantity(ScalarBase):
     :type addRegistry: bool
     """
     def __init__(self, name, value, unit, type, registry, addRegistry=True):
-        super(Quantity, self).__init__()
-        
-        self.name = name
+        super(Quantity, self).__init__("Quantity", name, registry)
         self.unit = unit
         self.type = type
+        self.expression = BasicExpression("expr_{}".format(name), upgradeToStringExpression(registry, value), registry)
 
-        self.expr = _Expression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
-
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)
-
-    def eval(self):
-        """ 
-        Evaluate quantity
-
-        :return: numerical evaluation of Quantity
-        :rtype: float
-        """
-        return self.expr.eval()
-
-    def __float__(self):
-        return self.expr.eval()
+        if registry and addRegistry:
+            registry.addDefine(self)
 
     def __repr__(self):
-        return "Quantity: {} = {} [{}] {}".format(self.name, str(self.expr), self.unit, self.type)
+        return self._typeName + " : {} = {} [{}] {}".format(self.name, str(self.expression), self.unit, self.type)
 
 
 class Variable(ScalarBase):
@@ -563,31 +561,11 @@ class Variable(ScalarBase):
     :type registry: Registry
     """
     def __init__(self, name, value, registry, addRegistry=True):
-        super(Variable, self).__init__()
- 
-        self.name = name
+        super(Variable, self).__init__("Variable", name, registry)
+        self.expression = BasicExpression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
 
-        self.expr = _Expression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
-
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)
-
-    def eval(self):
-        """ 
-        Evaluate variable
-
-        :return: numerical evaluation of Constant
-        :rtype: float
-        """
-        return self.expr.eval()
-
-    def __float__(self):
-        return self.expr.eval()
-
-    def __repr__(self):
-        return "Variable: {} = {}".format(self.name, str(self.expr))
+        if registry and addRegistry:
+            registry.addDefine(self)
 
 class Expression(ScalarBase):
     """
@@ -603,35 +581,15 @@ class Expression(ScalarBase):
     :type addRegistry: bool
     """
     def __init__(self, name, value, registry, addRegistry=False):
-        super(Expression, self).__init__()
+        super(Expression, self).__init__("Expression", name, registry)
+        self.expression = BasicExpression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
 
-        self.name = name
-
-        self.expr = _Expression("expr_{}".format(name), upgradeToStringExpression(registry,value),registry)
-
-        if registry is not None:
-            self.registry = registry
-
-        if addRegistry and registry is not None:
+        if registry and addRegistry:
             registry.addDefine(self)
 
-    def eval(self):
-        """ 
-        Evaluate expression
-
-        :return: numerical evaluation of Constant
-        :rtype: float
-        """
-        return self.expr.eval()
-
-    def __float__(self):
-        return self.expr.eval()
-
     def __int__(self):
-        return int(self.expr.eval())
+        return int(self.expression.eval())
 
-    def __repr__(self) :
-        return "Expression: {} = {}".format(self.name, str(self.expr))    
 
 class VectorBase(object):
     def __init__(self):

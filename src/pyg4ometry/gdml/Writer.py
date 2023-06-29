@@ -193,9 +193,9 @@ option, preprocessGDML=0;
             vn = self.doc.createElement(vtype)
             if vv.name: # Write the name where possible
                 vn.setAttribute('name', vv.name)
-            vn.setAttribute('x', vv.x.expression)
-            vn.setAttribute('y', vv.y.expression)
-            vn.setAttribute('z', vv.z.expression)
+            vn.setAttribute('x', vv.x.expressionString)
+            vn.setAttribute('y', vv.y.expressionString)
+            vn.setAttribute('z', vv.z.expressionString)
             if vv.unit != "none": # Write the unit if it is valid
                 vn.setAttribute('unit', vv.unit)
 
@@ -206,12 +206,12 @@ option, preprocessGDML=0;
         if isinstance(define, _Defines.Constant):
             oe = self.doc.createElement('constant')
             oe.setAttribute('name',define.name)
-            oe.setAttribute('value',str(define.expr.expression))
+            oe.setAttribute('value',str(define.expression.expressionString))
             self.defines.appendChild(oe)
         elif isinstance(define, _Defines.Quantity):
             oe = self.doc.createElement('quantity')
             oe.setAttribute('name',define.name)
-            oe.setAttribute('value',str(define.expr.expression))
+            oe.setAttribute('value',str(define.expression.expressionString))
             oe.setAttribute('type',define.type)
             if define.unit is not None:
                 oe.setAttribute('unit',define.unit)
@@ -219,7 +219,7 @@ option, preprocessGDML=0;
         elif isinstance(define, _Defines.Variable):
             oe = self.doc.createElement('variable')
             oe.setAttribute('name',define.name)
-            oe.setAttribute('value',str(define.expr.expression))
+            oe.setAttribute('value',str(define.expression.expressionString))
             self.defines.appendChild(oe)
         elif isinstance(define, _Defines.Matrix):
             oe = self.doc.createElement('matrix')
@@ -230,7 +230,7 @@ option, preprocessGDML=0;
         elif isinstance(define, _Defines.Expression):
             oe = self.doc.createElement('expression')
             oe.setAttribute('name',define.name)
-            tn = self.doc.createTextNode(define.expr.expression)
+            tn = self.doc.createTextNode(define.expression.expressionString)
             oe.appendChild(tn)
             self.defines.appendChild(oe)
         elif any([isinstance(define, d) for d in [_Defines.Position, _Defines.Rotation, _Defines.Scale]]):
@@ -687,10 +687,10 @@ option, preprocessGDML=0;
     def writeBox(self, instance):
         oe = self.doc.createElement('box')
         oe.setAttribute('name', self.prepend + instance.name)
-        oe.setAttribute('x',self.getValueOrExprFromInstance(instance,'pX'))
-        oe.setAttribute('y',self.getValueOrExprFromInstance(instance,'pY'))
-        oe.setAttribute('z',self.getValueOrExprFromInstance(instance,'pZ'))
-        oe.setAttribute("lunit",instance.lunit)
+        oe.setAttribute('x', self.getValueOrExprFromInstance(instance,'pX'))
+        oe.setAttribute('y', self.getValueOrExprFromInstance(instance,'pY'))
+        oe.setAttribute('z', self.getValueOrExprFromInstance(instance,'pZ'))
+        oe.setAttribute("lunit", instance.lunit)
         self.solids.appendChild(oe)
 
     def writeCons(self, instance):
