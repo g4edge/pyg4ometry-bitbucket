@@ -591,18 +591,24 @@ class Expression(ScalarBase):
         return int(self.expression.eval())
 
 
-class VectorBase(object):
-    def __init__(self):
+class VectorBase:
+    def __init__(self, typeName, name, registry):
+        self._typeName = typeName
+        self.name = name
+        self.registry = registry
         self.x = None
         self.y = None
         self.z = None
         self.unit = None
+
+    def __repr__(self):
+        return self._typeName + " : {} = [{} {} {}]".format(self.name, str(self.x), str(self.y), str(self.z))
     
-    def __add__(self,other):
+    def __add__(self, other):
         p  = Position("vec_{}_add_{}".format(self.name,other.name),
-                      '({})+({})'.format(self.x.expression,other.x.expression),
-                      '({})+({})'.format(self.y.expression,other.y.expression),
-                      '({})+({})'.format(self.z.expression,other.z.expression),
+                      '({})+({})'.format(self.x.expression, other.x.expression),
+                      '({})+({})'.format(self.y.expression, other.y.expression),
+                      '({})+({})'.format(self.z.expression, other.z.expression),
                       self.unit,
                       self.registry,
                       False)
@@ -729,9 +735,7 @@ class Position(VectorBase):
     :type z: float, Constant, Quantity, Variable
     """
     def __init__(self, name, x, y, z, unit="mm", registry=None, addRegistry=True):
-        super(Position, self).__init__()
-
-        self.name = name
+        super(Position, self).__init__("Position", name, registry)
 
         if unit is not None:
             if not isinstance(unit, str):
@@ -740,17 +744,13 @@ class Position(VectorBase):
         else:
             self.unit = "mm"
 
-        self.x = _Expression("expr_pos_x_{}".format(name), upgradeToStringExpression(registry,x), registry=registry)
-        self.y = _Expression("expr_pos_y_{}".format(name), upgradeToStringExpression(registry,y), registry=registry)
-        self.z = _Expression("expr_pos_z_{}".format(name), upgradeToStringExpression(registry,z), registry=registry)
+        self.x = BasicExpression("expr_pos_x_{}".format(name), upgradeToStringExpression(registry,x), registry=registry)
+        self.y = BasicExpression("expr_pos_y_{}".format(name), upgradeToStringExpression(registry,y), registry=registry)
+        self.z = BasicExpression("expr_pos_z_{}".format(name), upgradeToStringExpression(registry,z), registry=registry)
                
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)
+        if registry and addRegistry:
+            self.registry.addDefine(self)
 
-    def __repr__(self):
-        return "Position : {} = [{} {} {}]".format(self.name, str(self.x), str(self.y), str(self.z))
 
 class Rotation(VectorBase):
     """
@@ -764,9 +764,8 @@ class Rotation(VectorBase):
     :type rz: float, Constant, Quantity, Variable
     """
     def __init__(self, name, rx, ry, rz, unit="rad", registry=None, addRegistry=True):
-        super(Rotation, self).__init__()
+        super(Rotation, self).__init__("Rotation", name, registry)
 
-        self.name = name
         if unit is not None:
             if not isinstance(unit, str):
                 raise ValueError("unit must be None or a string")
@@ -777,17 +776,13 @@ class Rotation(VectorBase):
         else:
             self.unit = "rad"
 
-        self.x = _Expression("expr_rot_x_{}".format(name), upgradeToStringExpression(registry,rx), registry=registry)
-        self.y = _Expression("expr_rot_y_{}".format(name), upgradeToStringExpression(registry,ry), registry=registry)
-        self.z = _Expression("expr_rot_z_{}".format(name), upgradeToStringExpression(registry,rz), registry=registry)
+        self.x = BasicExpression("expr_rot_x_{}".format(name), upgradeToStringExpression(registry,rx), registry=registry)
+        self.y = BasicExpression("expr_rot_y_{}".format(name), upgradeToStringExpression(registry,ry), registry=registry)
+        self.z = BasicExpression("expr_rot_z_{}".format(name), upgradeToStringExpression(registry,rz), registry=registry)
 
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)
+        if registry and addRegistry:
+            self.registry.addDefine(self)
 
-    def __repr__(self):
-        return "Rotation : {} = [{} {} {}]".format(self.name, str(self.x), str(self.y), str(self.z))
 
 class Scale(VectorBase):
     """
@@ -801,27 +796,22 @@ class Scale(VectorBase):
     :type sz: float, Constant, Quantity, Variable
     """
     def __init__(self, name, sx, sy, sz, unit=None, registry=None, addRegistry=True):
-        super(Scale, self).__init__()
+        super(Scale, self).__init__("Scale", name, registry)
 
-        self.name = name
-        if unit != None :
+        if unit != None:
             if not isinstance(unit, str):
                 raise ValueError("unit must be None or a string")
             self.unit = unit
-        else :
+        else:
             self.unit = "none"
 
-        self.x = _Expression("expr_scl_x_{}".format(name), upgradeToStringExpression(registry,sx), registry=registry)
-        self.y = _Expression("expr_scl_y_{}".format(name), upgradeToStringExpression(registry,sy), registry=registry)
-        self.z = _Expression("expr_scl_z_{}".format(name), upgradeToStringExpression(registry,sz), registry=registry)
+        self.x = BasicExpression("expr_scl_x_{}".format(name), upgradeToStringExpression(registry,sx), registry=registry)
+        self.y = BasicExpression("expr_scl_y_{}".format(name), upgradeToStringExpression(registry,sy), registry=registry)
+        self.z = BasicExpression("expr_scl_z_{}".format(name), upgradeToStringExpression(registry,sz), registry=registry)
 
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)        
+        if registry and addRegistry:
+            self.registry.addDefine(self)
 
-    def __repr__(self):
-        return "Scale : {} = [{} {} {}]".format(self.name, str(self.x), str(self.y), str(self.z))
 
 class Matrix:
     """
