@@ -224,7 +224,7 @@ class ScalarBase(DefineBase):
         :type name: str
         """
         super().setName(name)
-        self.expression.name = name
+        self.expression.name = 'expr_{}'.format(name)
 
     def setExpression(self, expr):
         self.expression = upgradeToStringExpression(self.registry,expr)
