@@ -4,6 +4,22 @@ from pyg4ometry.gdml import Units as _Units
 
 
 class BasicExpression:
+    """
+    Holds an expression as a string and can use the expression parser
+    in the supplied registry to evaluate it. A registry is required.
+
+    :param name: Name of the expression object
+    :type name: str
+    :param expressionString: Expression itself as a string e.g. "12.0" or "a + 3.0"
+    :type expressionString: str
+    :param registry: The registry object to give context for any variables used.
+    :type registry: pyg4ometry.geant4.Registry.Registry
+
+    >>> r = pyg4ometry.geant4.Registry()
+    >>> a = BasicExpression("a", "3.0", r)
+    >>> float(a)
+    >>> str(a)
+    """
     def __init__(self, name, expressionString, registry):
         self.name = name
         self.expressionString = expressionString
@@ -47,7 +63,7 @@ class BasicExpression:
 
 def upgradeToStringExpression(reg, obj):
     """
-    Take a float, str, ScalarBase and return string expression 
+    Take a float, str, ScalarBase and return string expression.
 
     :param reg: Registry for lookup in define dictionary
     :type reg: Registry
@@ -252,7 +268,6 @@ class ScalarBase(DefineBase):
         return self.expression.eval()
 
     def __add__(self, other):
-                
         v1 = upgradeToStringExpression(self.registry,self)
         v2 = upgradeToStringExpression(self.registry,other)
 
@@ -280,7 +295,6 @@ class ScalarBase(DefineBase):
         return v        
 
     def __mul__(self, other):
-        
         # check to see if other is a vector 
         if isinstance(other,VectorBase) : 
             return other*self
@@ -328,7 +342,7 @@ class ScalarBase(DefineBase):
     __radd__ = __add__
     __rmul__ = __mul__
 
-def sin(arg) : 
+def sin(arg):
     """
     Sin of a ScalarBase object, returns a Constant
     
@@ -340,7 +354,7 @@ def sin(arg) :
     v = Constant("sin_{}".format(v1), 'sin({})'.format(v1),registry=arg.registry, addRegistry=False)
     return v
 
-def cos(arg) : 
+def cos(arg):
     """
     Cosine of a ScalarBase object, returns a Constant
     
@@ -351,7 +365,7 @@ def cos(arg) :
     v = Constant("cos_{}".format(v1), 'cos({})'.format(v1),registry=arg.registry, addRegistry=False)
     return v
 
-def tan(arg) : 
+def tan(arg):
     """
     Tangent of a ScalarBase object, returns a Constant
     
@@ -362,7 +376,7 @@ def tan(arg) :
     v = Constant("tan_{}".format(v1), 'tan({})'.format(v1),registry=arg.registry, addRegistry=False)
     return v
 
-def asin(arg) : 
+def asin(arg):
     """
     ArcSin of a ScalarBase object, returns a Constant
     
@@ -439,7 +453,7 @@ def sqrt(arg):
     v = Constant("sqrt_{}".format(v1), 'sqrt({})'.format(v1),registry=arg.registry, addRegistry=False)
     return v    
 
-def pow(arg,power):
+def pow(arg, power):
     """
     arg raised to power 
     
