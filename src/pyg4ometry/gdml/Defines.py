@@ -828,9 +828,10 @@ class Matrix:
     :param addRegistry: add matrix to registry
     :type addRegistry: bool
     """
-    def __init__(self, name, coldim, values, registry, addRegistry=True):
+    def __init__(self, name, coldim, values, registry=None, addRegistry=True):
         self.name = name
         self.coldim = int(coldim)
+        self.registry = registry
 
         self.values = [] 
         for i, v in enumerate(values):
@@ -840,10 +841,8 @@ class Matrix:
         if self.coldim > 1:
             self.values_asarray = self.values_asarray.reshape(self.coldim, int(len(values)/self.coldim))
 
-        if registry is not None:
-            self.registry = registry
-            if addRegistry:
-                registry.addDefine(self)
+        if registry and addRegistry:
+            self.registry.addDefine(self)
             
     def eval(self):
         """ 
@@ -902,13 +901,14 @@ class Auxiliary:
     Auxiliary information container object
     """
     # Note that no interpreting or processing is done for auxiliary information
-    def __init__(self, auxtype, auxvalue, registry=None, unit=""):
+    def __init__(self, auxtype, auxvalue, registry=None, unit="", addRegistry=True):
         self.auxtype = str(auxtype)
         self.auxvalue = str(auxvalue)
         self.auxunit = str(unit)
         self.subaux = []
-        if registry != None:
-            registry.addAuxiliary(self)
+        self.registry = registry
+        if self.registry and addRegistry:
+            self.registry.addAuxiliary(self)
 
     def addSubAuxiliary(self, aux):
         """
