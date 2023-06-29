@@ -17,7 +17,7 @@ class GdmlExpressionEvalVisitor(GdmlExpressionVisitor):
         self.defines = {}
 
     def visitVariable(self, ctx):
-        name = ctx.VARIABLE().getText();
+        name = ctx.VARIABLE().getText()
 
         try:
             value = self.defines[name]
