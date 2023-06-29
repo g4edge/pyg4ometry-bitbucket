@@ -94,6 +94,8 @@ def evaluateToFloat(reg, obj):
             evaluatable = obj
         elif isinstance(obj, VectorBase):
             return obj.eval()
+        elif isinstance(obj, BasicExpression):
+            return float(obj)
         else:
             evaluatable = BasicExpression("",obj,reg)
         ans = float(evaluatable)
@@ -606,9 +608,9 @@ class VectorBase:
     
     def __add__(self, other):
         p  = Position("vec_{}_add_{}".format(self.name,other.name),
-                      '({})+({})'.format(self.x.expression, other.x.expression),
-                      '({})+({})'.format(self.y.expression, other.y.expression),
-                      '({})+({})'.format(self.z.expression, other.z.expression),
+                      '({})+({})'.format(self.x.expressionString, other.x.expressionString),
+                      '({})+({})'.format(self.y.expressionString, other.y.expressionString),
+                      '({})+({})'.format(self.z.expressionString, other.z.expressionString),
                       self.unit,
                       self.registry,
                       False)
@@ -623,9 +625,9 @@ class VectorBase:
         other = upgradeToVector(other, self.registry, "position", "", False)
 
         p  = Position("vec_{}_sub_{}".format(self.name, other.name),
-                      '({})-({})'.format(self.x.expression, other.x.expression),
-                      '({})-({})'.format(self.y.expression, other.y.expression),
-                      '({})-({})'.format(self.z.expression, other.z.expression),
+                      '({})-({})'.format(self.x.expressionString, other.x.expressionString),
+                      '({})-({})'.format(self.y.expressionString, other.y.expressionString),
+                      '({})-({})'.format(self.z.expressionString, other.z.expressionString),
                       self.unit,
                       self.registry,
                       False)
@@ -639,10 +641,10 @@ class VectorBase:
         #v1 = upgradeToStringExpression(self.registry, self)
         v2 = upgradeToStringExpression(self.registry, other)
         
-        p = Position("vec_{}_mul_{}".format(self.name,v2),
-                     '({})*({})'.format(self.x.expression,v2),
-                     '({})*({})'.format(self.y.expression,v2),
-                     '({})*({})'.format(self.z.expression,v2),
+        p = Position("vec_{}_mul_{}".format(self.name, v2),
+                     '({})*({})'.format(self.x.expressionString, v2),
+                     '({})*({})'.format(self.y.expressionString, v2),
+                     '({})*({})'.format(self.z.expressionString, v2),
                      self.unit,
                      self.registry,
                      False)
@@ -658,10 +660,10 @@ class VectorBase:
         #v1 = upgradeToStringExpression(self.registry,self)
         v2 = upgradeToStringExpression(self.registry,other)
         
-        p = Position("vec_{}_div_{}".format(self.name,v2),
-                     '({})/({})'.format(self.x.expression,v2),
-                     '({})/({})'.format(self.y.expression,v2),
-                     '({})/({})'.format(self.z.expression,v2),
+        p = Position("vec_{}_div_{}".format(self.name, v2),
+                     '({})/({})'.format(self.x.expressionString, v2),
+                     '({})/({})'.format(self.y.expressionString, v2),
+                     '({})/({})'.format(self.z.expressionString, v2),
                      self.unit,
                      self.registry,
                      False)
