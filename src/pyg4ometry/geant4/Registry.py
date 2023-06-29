@@ -560,7 +560,7 @@ class Registry:
                     self.addVolumeRecursive(dv, collapseAssemblies, incrementRenameDict, userRenameDict)
 
             # if we're collapsing assembly volumes, prune any assembly daughters
-            for assemblyName in assembliesToRemove :
+            for assemblyName in assembliesToRemove:
                 assembly = volume._daughterVolumesDict.pop(assemblyName)
                 volume.daughterVolumes.remove(assembly)
 
@@ -754,14 +754,14 @@ class Registry:
         Find a solid  which name matches (or partially matches) nameFragment,
         returns a list of solids
         """
-        return self._findDictByName(self.solidDict,nameFragment)
+        return self._findDictByName(self.solidDict, nameFragment)
 
     def findMaterialByName(self, nameFragment = "G4_AIR"):
         """
         Find a material which name matches (or partially matches) nameFragment,
         returns a list of materials
         """
-        return self._findDictByName(self.materialDict,nameFragment)
+        return self._findDictByName(self.materialDict, nameFragment)
 
 
     def findLogicalVolumeByName(self, nameFragment = "World"):
@@ -769,7 +769,7 @@ class Registry:
         Find a logical volume  which name matches (or partially matches) nameFragment,
         returns a list of LogicalVolumes
         """
-        return self._findDictByName(self.logicalVolumeDict,nameFragment)
+        return self._findDictByName(self.logicalVolumeDict, nameFragment)
 
 
     def findPhysicalVolumeByName(self, nameFragment):

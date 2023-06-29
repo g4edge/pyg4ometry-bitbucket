@@ -34,7 +34,7 @@ def upgradeToStringExpression(reg, obj):
                 err.args = err.args + (msg,)
                 raise
 
-    elif isinstance(obj,ScalarBase):
+    elif isinstance(obj, ScalarBase):
         if obj.name in reg.defineDict:
             return obj.name             # so a scalar expression in registry
         else : 
@@ -649,7 +649,7 @@ class VectorBase(object):
 
     __rmul__ = __mul__
 
-    def __truediv__(self,other):
+    def __truediv__(self, other):
         #v1 = upgradeToStringExpression(self.registry,self)
         v2 = upgradeToStringExpression(self.registry,other)
         
