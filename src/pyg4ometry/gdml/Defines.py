@@ -618,14 +618,14 @@ class VectorBase:
         p.z.registry    = self.registry
         return p
 
-    def __sub__(self,other):
+    def __sub__(self, other):
 
-        other = upgradeToVector(other,self.registry,"position","", False)
+        other = upgradeToVector(other, self.registry, "position", "", False)
 
-        p  = Position("vec_{}_sub_{}".format(self.name,other.name),
-                      '({})-({})'.format(self.x.expression,other.x.expression),
-                      '({})-({})'.format(self.y.expression,other.y.expression),
-                      '({})-({})'.format(self.z.expression,other.z.expression),
+        p  = Position("vec_{}_sub_{}".format(self.name, other.name),
+                      '({})-({})'.format(self.x.expression, other.x.expression),
+                      '({})-({})'.format(self.y.expression, other.y.expression),
+                      '({})-({})'.format(self.z.expression, other.z.expression),
                       self.unit,
                       self.registry,
                       False)
