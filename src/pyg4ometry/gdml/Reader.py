@@ -1546,6 +1546,7 @@ class Reader(object):
                                 
                 repNode   = chNode.getElementsByTagName("replicate_along_axis")[0]
                 dirNode   = repNode.getElementsByTagName("direction")[0]
+                axis = None
                 if 'x' in dirNode.attributes:
                     axis = _g4.ReplicaVolume.Axis.kXAxis 
                 elif 'y' in dirNode.attributes:
