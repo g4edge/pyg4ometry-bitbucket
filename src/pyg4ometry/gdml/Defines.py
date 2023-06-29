@@ -79,7 +79,7 @@ def upgradeToStringExpression(reg, obj):
         if obj.name in reg.defineDict:
             return obj.name             # so a scalar expression in registry
         else:
-            return obj.expression  # so a scalar expression not in registry
+            return obj.expression.expressionString  # so a scalar expression not in registry
 
     else:
         raise ValueError("upgradeToStringExpression> unsupported type ("+str(type(obj))+")")
