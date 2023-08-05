@@ -1,3 +1,8 @@
+> **Warning**
+> This repository is a read-only mirror of https://bitbucket.org/jairhul/pyg4ometry, cloned on 05/08/2023, 18:50 CET.
+> It is stored here for software preservation purposes. Do not use.
+> The development of pyg4ometry has moved to https://github.com/g4edge/pyg4ometry.
+
 pyg4ometry Copyright (c) Royal Holloway, University of London 2015 - 2023
 
 General Information
